@@ -10,7 +10,7 @@
   sudo: yes
   apt: pkg=npm state=latest
 - name: Connect NPM less
-  command: source /home/vagrant/.bashrc
+  command: source ~/.bashrc
 - name: Copy nodejs to node in /usr/bin
   command: sudo cp /usr/bin/nodejs /usr/bin/node
 - name: Install npm less
