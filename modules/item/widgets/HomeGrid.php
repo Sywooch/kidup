@@ -19,7 +19,7 @@ class HomeGrid extends Widget
     public function run()
     {
         $categories = Category::find()->all();
-        $items = Item::find()->limit(3)->orderBy('RAND()')->all();
+        $items = Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
 
         return $this->render('home_grid', [
             'categories' => $categories,

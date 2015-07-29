@@ -1,5 +1,5 @@
 <?php
-require(__DIR__ . '/vendor/autoload.php');
+require(__DIR__ . '/../../vendor/autoload.php');
 require 'recipe/common.php';
 date_default_timezone_set("Europe/Amsterdam");
 
@@ -26,7 +26,7 @@ server('test', '178.62.234.114', 22)
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'develop'), true);
 
-set('repository', 'https://'.$keys['git_repo_username'].':'.$keys['git_repo_password'].'@bitbucket.org/kidup/main.git');
+set('repository', 'https://'.$keys['git_repo_username'].':'.$keys['git_repo_password'].'@github.com/esquire900/kidup.git');
 
 task('deploy:vendors', function () {
     global $keys;

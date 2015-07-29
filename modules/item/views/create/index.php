@@ -102,18 +102,16 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </section>
-<?php $this->registerJs(<<<JS
+<?php $this->registerJs("
     $(document).ready(function() {
         /* Select Categories */
-        $(".category-clickable-button").click(function () {
+        $('.category-clickable-button').click(function () {
             $(this).toggleClass('btn-primary btn-fill');
             var id = $(this).attr('data-id');
-            var hiddenEl = $("#create-item-categories-"+id);
+            var hiddenEl = $('#create-item-categories-'+id);
             var currentVal = hiddenEl.val();
             hiddenEl.val(currentVal == 0 ? 1 : 0);
         });
-    });
-JS
-); ?>
+    });"); ?>
 
 

@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '' marks.
+ * enclosed between a pair of '@@' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,19 +17,20 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Account settings' => 'Brugerindstillinger',
-    'Contact us' => 'Kontakt Os',
-    'Email settings' => 'Email indstillinger',
-    'Item Availability' => 'Genstandens tilg&aelig;nlighed',
-    'Item Details' => 'Detaljer',
-    'Item Prices' => 'Priss&aelig;tning',
-    'Item Rents' => 'Lejeaftaler',
-    'Item images' => 'Ting',
-    'List Your Rents' => 'List dine lejeaftaler',
-    'My items list' => 'Mine ting',
-    'Profile verification' => 'Profil verifikation',
-    'View For Item {0}' => 'Se tingene for {0}',
-    'Your kidup wallet' => 'Din KidUp pung',
+    'Account settings' => '@@Brugerindstillinger@@',
+    'Contact us' => '@@Kontakt Os@@',
+    'Email settings' => '@@Email indstillinger@@',
+    'Item Availability' => '@@Genstandens tilg&aelig;nlighed@@',
+    'Item Details' => '@@Detaljer@@',
+    'Item Prices' => '@@Priss&aelig;tning@@',
+    'Item Rents' => '@@Lejeaftaler@@',
+    'Item images' => '@@Ting@@',
+    'List Your Rents' => '@@List dine lejeaftaler@@',
+    'My items list' => '@@Mine ting@@',
+    'Profile verification' => '@@Profil verifikation@@',
+    'Resend confirmation email' => '@@Gensend bekr&aelig;ftelsesmail@@',
+    'View For Item {0}' => '@@Se tingene for {0}@@',
+    'Your kidup wallet' => '@@Din KidUp pung@@',
     'About our company' => 'Omkring Os',
     'Account Settings' => 'Brugerindstillinger',
     'Admin' => 'Admin',
@@ -53,7 +54,6 @@ return [
     'Privacy' => 'Privathed',
     'Profile settings' => 'Profilindstillinger',
     'Recover your password' => 'Har du glemt dit kodeord?',
-    'Resend confirmation email' => 'Gensend bekr&aelig;ftelsesmail',
     'Respond to booking request' => 'Svar p&aring; booking foresp&oslash;rgsler',
     'Safety' => 'Sikkerhed',
     'Share Kid Stuff' => 'Del dine b&oslash;rneting',

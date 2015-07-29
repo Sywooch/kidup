@@ -119,7 +119,7 @@ class SettingsController extends Controller
         if ($model->load(\Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'img');
             if ($image !== null) {
-                if(!in_array($image->extension, ['png', '.jpg'])) {
+                if(!in_array($image->extension, ['png', 'jpg'])) {
                     throw new NotAcceptableHttpException("File format not allowed");
                 }
                 $model->setAttribute('img', MediaManager::set($image, \Yii::$app->user->id));

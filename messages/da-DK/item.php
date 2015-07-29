@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '' marks.
+ * enclosed between a pair of '@@' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -18,10 +18,17 @@
  */
 return [
     'Add some quality pictures of your product.' => '',
-    'Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as \'billboard\' image on the product page.' => 'Tr&aelig;k og smid billeder eller klik p&aring; kassen for at starte med at uploade. Du kan sortere dine billeder ved at tr&aelig;kke uploade billeder rundt. Det f&oslash;rste billede bliver dit hovedbillede.',
-    'Receive date' => 'Afhentningsdato',
-    'Return date' => 'Afleveringsdato',
-    'Please provide some high quality pictures of your product.' => 'V&aelig;r venlig at uploade nogle h&oslash;j kvalitets billeder af dit produkt.',
+    'Apply filter' => '',
+    'As good as new' => '',
+    'Back' => '',
+    'Choose a filter' => '',
+    'Close' => '',
+    'Lightly damaged' => '',
+    'Minor usage trails' => '',
+    'Price (Weekly)' => '',
+    'Refresh the page if eveyrhting is fixed.' => '',
+    'Please provide some high quality pictures of your product.' => '@@V&aelig;r venlig at uploade nogle h&oslash;j kvalitets billeder af dit produkt.@@',
+    'preferred payout method' => '@@&oslash;nskede udbetalingsmetode@@',
     'Age' => 'Alder',
     'Ages' => 'Alder',
     'An item needs atleast one image.' => 'Et produkt skal bruge mindst et billede.',
@@ -36,6 +43,7 @@ return [
     'Create a new item' => 'Opret et produkt',
     'Description' => 'Beskrivelse',
     'Distance: ' => 'Distance:',
+    'Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as \'billboard\' image on the product page.' => 'Tr&aelig;k og smid billeder eller klik p&aring; kassen for at starte med at uploade. Du kan sortere dine billeder ved at tr&aelig;kke uploade billeder rundt. Det f&oslash;rste billede bliver dit hovedbillede.',
     'Edit' => '&aelig;ndre',
     'Filter' => 'Filter',
     'Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:' => 'Har du problemer med at s&aelig;tte den rigtige pris for dit produkt? Vi kan foresl&aring; dig ind baseret p&aring; nyprisen:',
@@ -61,8 +69,10 @@ return [
     'Publish' => 'Publiser',
     'Publish date' => 'Dato for publisering',
     'Published' => 'Publiseret',
+    'Receive date' => 'Afhentningsdato',
     'Rented by {0} between {1} and {2}' => 'Lejet af {0} mellem {1} og {2}',
     'Respond' => 'Responder',
+    'Return date' => 'Afleveringsdato',
     'Search' => 'S&oslash;g',
     'Special' => 'Special',
     'There are some things left to be fixed before you can preview or publish this item.' => 'Der er nogle f&aring; ting tilbage som skal fikses f&oslash;r du kan se eller publisere denne ting.',
@@ -80,7 +90,6 @@ return [
     'link' => 'link',
     'location settings' => 'lokalitetsindstillinger',
     'month' => 'm&aring;ned',
-    'preferred payout method' => '&oslash;nskede udbetalingsmetode',
     'profile' => 'Profil',
     'step 1 out of 2' => 'Skridt 1 ud af 2',
     'step 2 out of 2' => 'Skridt 2 ud af 2',
