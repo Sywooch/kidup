@@ -14,7 +14,7 @@ window.filterData['categories'] = {
             <?php if ($collapsable) { ?>
             <a data-toggle="collapse" href="#refine-categories" class="collapsed">
                 <?php } ?>
-                Categories
+                <?= Yii::t("item", "Categories") ?>
                 <?php if ($collapsable) { ?>
                 <i class="fa fa-caret-up pull-right"></i>
             </a>

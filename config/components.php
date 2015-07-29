@@ -29,6 +29,7 @@ return [
             ],
         ],
         'assetMap' => [
+            // TODO take general cdn libraries here
 //            'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
 //            'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
         ],
@@ -117,7 +118,6 @@ return [
     'keyStore' => ['class' => 'app\components\KeyStore'],
     'slack' => ['class' => 'app\components\Slack'],
     'clog' => ['class' => 'app\components\Log'],
-    'error' => ['class' => 'app\components\Error'],
     'widgetRequest' => ['class' => 'app\components\WidgetRequest'],
     'pages' => ['class' => 'app\components\Pages']
 ];

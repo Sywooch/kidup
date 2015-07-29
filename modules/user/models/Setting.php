@@ -6,9 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Carbon\Carbon;
-/**
- * This is the model class for table "setting".
- */
+
 class Setting extends \app\models\base\Setting
 {
     const MAIL_BOOKING_REMINDER = 'rent_reminder';

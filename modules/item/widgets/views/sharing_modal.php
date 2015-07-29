@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <!--Login modal-->
 <div class="modal modal-small fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true"
      data-backdrop="static">
-    <div class="dismiss-modal" data-dismiss="modal"><i class="pe-7s-close-circle"></i></div>
+    <div class="dismiss-modal" data-dismiss="modal"><i class="fa fa-close"></i></div>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

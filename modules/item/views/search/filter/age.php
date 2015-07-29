@@ -14,7 +14,7 @@ window.filterData['age'] = {
             <?php if ($collapsable) { ?>
             <a data-toggle="collapse" href="#refineAge" class="collapsed">
             <?php } ?>
-                Age
+                <?= Yii::t("item", "Age") ?>
             <?php if ($collapsable) { ?>
                 <i class="fa fa-caret-up pull-right"></i>
             <?php } ?>

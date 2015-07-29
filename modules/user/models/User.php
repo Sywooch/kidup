@@ -1,38 +1,26 @@
 <?php
 
-/*
- * This file is part of the app\modules project.
- *
- * (c) app\modules project <http://github.com/app\modules/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace app\modules\user\models;
 
 use app\components\Event;
-use app\models\base\Payout;
 use app\modules\item\models\Location;
 use app\modules\mail\models\Token;
 use app\modules\message\models\Conversation;
-use app\modules\user\models\PayoutMethod;
 use app\modules\user\Finder;
 use app\modules\user\helpers\Password;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
-use app\modules\user\models\Setting;
+
 /**
- * User ActiveRecord model.
  *
  * Database fields:
  * @property integer $id
- * @property string  $username
- * @property string  $email
- * @property string  $unconfirmed_email
- * @property string  $password_hash
- * @property string  $auth_key
+ * @property string $username
+ * @property string $email
+ * @property string $unconfirmed_email
+ * @property string $password_hash
+ * @property string $auth_key
  * @property integer $registration_ip
  * @property integer $confirmed_at
  * @property integer $blocked_at
@@ -42,9 +30,7 @@ use app\modules\user\models\Setting;
  *
  * Defined relations:
  * @property Account[] $accounts
- * @property Profile   $profile
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @property \app\modules\user\models\Profile $profile
  */
 class User extends \app\models\base\User implements IdentityInterface
 {
@@ -70,9 +56,6 @@ class User extends \app\models\base\User implements IdentityInterface
 
     /** @var \app\modules\user\Module */
     protected $module;
-
-    /** @var \app\modules\user\Mailer */
-    protected $mailer;
 
     /** @var \app\modules\user\Finder */
     protected $finder;
@@ -278,19 +261,26 @@ class User extends \app\models\base\User implements IdentityInterface
         return false;
     }
 
-    public function hasValidPayoutMethod(){
+    public function hasValidPayoutMethod()
+    {
         $payoutMethod = PayoutMethod::findOne(['user_id' => $this->id]);
-        if($payoutMethod == null) return false;
+        if ($payoutMethod == null) {
+            return false;
+        }
+
         return true;
     }
 
-    public function canMakeBooking(){
+    public function canMakeBooking()
+    {
         $location = Location::findOne($this->locations[0]->id);
-        if(strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0 && $location->isValid()){
+        if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0 && $location->isValid()) {
             return true;
         }
+
         return false;
     }
+
     /**
      * This method attempts user confirmation. It uses finder to find token with given code and if it is expired
      * or does not exist, this method will throw exception.
@@ -320,9 +310,9 @@ class User extends \app\models\base\User implements IdentityInterface
             if ($this->save(false)) {
                 $p = Profile::findOne(['user_id' => \Yii::$app->user->id]);
                 $p->email_verified = 1;
-                if($p->save()){
+                if ($p->save()) {
                     \Yii::$app->session->setFlash('success', \Yii::t('user', 'Thank you, your email is now verified!'));
-                }else{
+                } else {
                     \Yii::$app->clog->debug('profile not saved', $p->getErrors());
                 }
             } else {
@@ -388,14 +378,14 @@ class User extends \app\models\base\User implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
-            if(!\Yii::$app->has('session')){
+            if (!\Yii::$app->has('session')) {
                 // this is probably console environment
                 $lang = 'da-DK';
-            }else{
+            } else {
                 $lang = \Yii::$app->session->has('lang') ? \Yii::$app->session->get('lang') : 'da-DK';
             }
 
-            if($this->id !== 1){
+            if ($this->id !== 1) {
                 $profile = \Yii::createObject([
                     'class' => Profile::className(),
                     'user_id' => $this->id,
@@ -429,7 +419,7 @@ class User extends \app\models\base\User implements IdentityInterface
                 }
 
                 // create conversation with kidup admin
-                $c= \Yii::createObject([
+                $c = \Yii::createObject([
                     'class' => Conversation::className(),
                     'initiater_user_id' => 1,
                     'target_user_id' => $this->id,
@@ -437,16 +427,20 @@ class User extends \app\models\base\User implements IdentityInterface
                     'created_at' => time()
                 ]);
                 $c->save();
-                $c->addMessage(\Yii::t('user', 'Hi there, and welcome to kidup! We hope you have a great time, if you\'ve got any questions, please contact us at info@kidup.dk'), $this->id, 1);
+                $c->addMessage(\Yii::t('user',
+                    'Hi there, and welcome to kidup! We hope you have a great time, if you\'ve got any questions, please contact us at info@kidup.dk'),
+                    $this->id, 1);
             }
         }
 
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return ($this->role === self::ROLE_ADMIN);
     }
+
     /**
      * @return string
      */

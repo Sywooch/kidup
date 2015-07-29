@@ -7,9 +7,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use app\modules\user\models\Country;
-/**
- * This is the model class for table "profile".
- */
+
 class Profile extends \app\models\base\Profile
 {
     public $img;

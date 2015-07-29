@@ -17,6 +17,7 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class CreateController extends Controller
@@ -64,10 +65,10 @@ class CreateController extends Controller
     {
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
-            \Yii::$app->error->notFound('Item does not exist.');
+            throw new NotFoundHttpException('Item does not exist');
         }
         if (!$item->isOwner()) {
-            \Yii::$app->error->forbidden('Not your item.');
+            throw new ForbiddenHttpException();
         }
 
         $model = new Edit($item);
@@ -133,14 +134,14 @@ class CreateController extends Controller
     public function actionUpload($item_id)
     {
         if (!\Yii::$app->request->isPost) {
-            return \Yii::$app->error->forbidden();
+            throw new ForbiddenHttpException();
         }
         $item = Item::findOne($item_id);
         if ($item == null) {
-            \Yii::$app->error->notFound('Item does not exist.');
+            throw new NotFoundHttpException();
         }
         if (!$item->isOwner()) {
-            \Yii::$app->error->forbidden('Not your item.');
+            throw new ForbiddenHttpException();
         }
 
         $image = UploadedFile::getInstanceByName('file');
@@ -173,21 +174,21 @@ class CreateController extends Controller
     public function actionDeleteUpload($item_id)
     {
         if (!\Yii::$app->request->isPost) {
-            return \Yii::$app->error->forbidden();
+            throw new ForbiddenHttpException();
         }
         $item = Item::findOne($item_id);
         if ($item == null) {
-            \Yii::$app->error->notFound('Item does not exist.');
+            throw new NotFoundHttpException();
         }
         if (!$item->isOwner()) {
-            \Yii::$app->error->forbidden('Not your item.');
+            throw new ForbiddenHttpException();
         }
         $media = Media::find()->where([
             'file_name' => str_replace("_thumb", "", \Yii::$app->request->post('imageId'))
         ])->one();
 
         if ($media == null) {
-            \Yii::$app->error->notFound('Media not found.');
+            throw new NotFoundHttpException();
         }
 
         MediaManager::delete($media->file_name);
@@ -203,14 +204,14 @@ class CreateController extends Controller
 
     public function actionImageSort($item_id){
         if (!\Yii::$app->request->isPost) {
-            return \Yii::$app->error->forbidden();
+            throw new ForbiddenHttpException();
         }
         $item = Item::findOne($item_id);
         if ($item == null) {
-            \Yii::$app->error->notFound('Item does not exist.');
+            throw new NotFoundHttpException();
         }
         if (!$item->isOwner()) {
-            \Yii::$app->error->forbidden('Not your item.');
+            throw new ForbiddenHttpException();
         }
         $input = \Yii::$app->request->post('order');
         if(is_array($input)){

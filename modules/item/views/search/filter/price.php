@@ -20,7 +20,7 @@ window.filterData['priceMax'] = {
             <?php if ($collapsable) { ?>
             <a data-toggle="collapse" href="#refinePrice" class="collapsed">
                 <?php } ?>
-                Price (Weekly)
+                <?= Yii::t("item", "Price (Weekly)") ?>
                 <?php if ($collapsable) { ?>
                 <i class="fa fa-caret-up pull-right"></i>
             </a>

@@ -1,6 +1,6 @@
 window.mobileFilter = false;
 window.filterData = {};
-window.deltaFilterData = new Array();
+window.deltaFilterData = [];
 window.currentFilter = null;
 window.appliedFilters = [];
 window.filters = [];
@@ -81,7 +81,7 @@ $(document).on('ready pjax:success', function() {
         $('.btnSelectFilter-' + filter).show();
         setFilter(filter, 'string', '');
         applyFilter();
-    }
+    };
 
     $(':input').change(function(direct) {
         var elm = $(this);
@@ -106,7 +106,7 @@ $(document).on('ready pjax:success', function() {
 function setFilter(variable, type, value) {
     var defaultType = null;
     if (type === 'set') {
-        defaultType = new Array();
+        defaultType = [];
     }
     if (typeof(window.filterData[variable]) !== typeof({})) {
         window.filterData[variable] = {
@@ -144,7 +144,7 @@ function applyFilter() {
         var filter = window.deltaFilterData[i];
         setFilter(filter['variable'], filter['type'], filter['value']);
     }
-    window.deltaFilterData = new Array();
+    window.deltaFilterData = [];
     window.appliedFilters.push(window.currentFilter);
     $.pjax({
         timeout: 20000,
@@ -182,7 +182,7 @@ function updateDistanceValue(val) {
 
 function showFilter(view) {
     window.mobileFilter = true;
-    window.deltaFilterData = new Array();
+    window.deltaFilterData = [];
     window.currentFilter = view;
     $('#filterModal .filterSelect').hide();
     $('#filterModal .filter-' + view).removeClass('hidden');
@@ -192,7 +192,7 @@ function showFilter(view) {
 
 function restoreFilterModal() {
     window.mobileFilter = false;
-    window.deltaFilterData = new Array();
+    window.deltaFilterData = [];
     $('#filterModal .btnBack').addClass('hidden');
     $('#filterModal .filterSelect').show();
     $('#filterModal .filter').addClass('hidden');

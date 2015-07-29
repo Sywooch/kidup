@@ -8,10 +8,29 @@ use yii\helpers\Html;
  * @var yii\web\View $this
  * @var \app\modules\booking\models\Booking $booking
  * @var \app\modules\booking\forms\Confirm $model
+ * @var \app\modules\user\models\Profile $profile
  */
 \app\modules\booking\assets\ConfirmAsset::register($this);
 $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
 ?>
+<?php if(YII_ENV == 'prod'): ?>
+<section class="section" id="checkout">
+    <div class=" site-area-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
+                    <div class="checkout-header">
+                        <h2>
+                            <?= Yii::t("booking", "Kidup is almost ready!") ?><br>
+                            <small><?= Yii::t("booking", "We are working hard to get everything behind the screens running smoothly. In the meantime, you cannot make an actual booking request.") ?></small>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php else: ?>
 <section class="section" id="checkout">
     <div class=" site-area-header">
         <div class="container">
@@ -158,3 +177,4 @@ $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
         </div>
     </div>
 </section>
+<?php endif; ?>

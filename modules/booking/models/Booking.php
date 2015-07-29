@@ -9,6 +9,8 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Json;
+use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
@@ -170,7 +172,7 @@ class Booking extends \app\models\base\Booking
     public function hasBookinger($id)
     {
         if ($this->renter_id !== $id) {
-            new Error("You are not the renter", Error::FORBIDDEN);
+            throw new ForbiddenHttpException("You are not the renter");
         }
 
         return $this;
@@ -179,7 +181,7 @@ class Booking extends \app\models\base\Booking
     public function hasStatus($statusId)
     {
         if ($this->status !== $statusId) {
-            return \Yii::$app->error->badRequest("This action cannot be performed when the rent is in this status");
+            throw new BadRequestHttpException("This action cannot be performed when the rent is in this status");
         }
 
         return $this;

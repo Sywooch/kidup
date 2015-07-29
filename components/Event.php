@@ -8,7 +8,6 @@ class Event extends \yii\base\Event
     public $data;
 
     public static function trigger($obj, $trigger, $data = null){
-
         return \Yii::$app->trigger($obj->className().'-'. $trigger, new \yii\base\Event(['sender' => $obj]));
     }
 

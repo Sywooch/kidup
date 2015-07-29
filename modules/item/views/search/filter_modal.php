@@ -9,7 +9,9 @@ use \yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin(['method' => 'get', 'action' => ['/search']]); ?>
             <div class="modal-header">
                 <button type="button" class="close" onclick="restoreFilterModal()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Choose a filter</h4>
+                <h4 class="modal-title" id="myModalLabel">
+                    <?= Yii::t("item", "Choose a filter") ?>
+                </h4>
             </div>
             <div class="modal-body">
                 <div class="filterSelect">
@@ -36,9 +38,9 @@ use \yii\widgets\ActiveForm;
                 ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="restoreFilterModal()" data-dismiss="modal">Close</button>
-                <button type="button" class="btnBack btn btn-default hidden" onclick="restoreFilterModal()">Back</button>
-                <button type="button" class="btnApply btn btn-danger hidden" onclick="applyFilter()">Apply filter</button>
+                <button type="button" class="btn btn-default" onclick="restoreFilterModal()" data-dismiss="modal"><?= Yii::t("item", "Close") ?></button>
+                <button type="button" class="btnBack btn btn-default hidden" onclick="restoreFilterModal()"><?= Yii::t("item", "Back") ?></button>
+                <button type="button" class="btnApply btn btn-danger hidden" onclick="applyFilter()"><?= Yii::t("item", "Apply filter") ?></button>
             </div>
             <?php ActiveForm::end() ?>
         </div>

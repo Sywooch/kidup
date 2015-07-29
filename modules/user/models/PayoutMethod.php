@@ -7,9 +7,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
-/**
- * This is the model class for table "child".
- */
 class PayoutMethod extends \app\models\base\PayoutMethod
 {
     const TYPE_DK_KONTO = 'dk-konto';

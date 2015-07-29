@@ -10,6 +10,7 @@ use app\components\Error;
 use app\modules\item\models\Item;
 use yii\web\ForbiddenHttpException;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 class ViewController extends Controller
 {
@@ -42,7 +43,7 @@ class ViewController extends Controller
          */
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
-            \Yii::$app->error->notFound('Item not found');
+            throw new NotFoundHttpException();
         }
         if($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id){
             throw new ForbiddenHttpException("This item is not yet available");

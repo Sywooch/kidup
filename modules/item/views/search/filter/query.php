@@ -1,6 +1,4 @@
 <?php
-use yii\helpers\Html;
-
 $this->registerJs("
 window.filterData['query'] = {
     type: 'string',
@@ -15,7 +13,7 @@ window.filterData['query'] = {
             <?php if ($collapsable) { ?>
             <a data-toggle="collapse" href="#refinePrice" class="collapsed">
                 <?php } ?>
-                Search
+                <?= Yii::t("item", "Search") ?>
                 <?php if ($collapsable) { ?>
                 <i class="fa fa-caret-up pull-right"></i>
             </a>

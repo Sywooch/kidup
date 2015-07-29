@@ -1,14 +1,4 @@
 <?php
-
-/*
- * This file is part of the app\modules project.
- *
- * (c) app\modules project <http://github.com/app\modules/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace app\modules\user\models;
 
 use yii\db\ActiveRecord;
@@ -24,7 +14,6 @@ use yii\db\ActiveRecord;
  *
  * @property \app\modules\user\Module $module
  *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class Account extends ActiveRecord
 {

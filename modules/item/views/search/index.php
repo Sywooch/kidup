@@ -30,7 +30,7 @@ echo $this->render('filter_modal.php', [
         <div class="row">
             <div class="pull-left leftPadding">
                 <button class="btn btn-neutral btn-sm filter" data-toggle="modal" data-target="#filterModal">
-                    <i class="pe-7s-filter"></i> <?= Yii::t("item", "Filter") ?>
+                    <i class="fa fa-filter"></i> <?= Yii::t("item", "Filter") ?>
                 </button>
             </div>
             <div class="pull-left leftPadding">
@@ -135,7 +135,7 @@ echo $this->render('filter_modal.php', [
                                         <strong>
                                             <i class="fa fa-close"></i>
                                         </strong>
-                                        Age
+                                        <?= Yii::t("item", "Age") ?>
                                     </div>
                                 <?php }
                                 break;
@@ -147,7 +147,7 @@ echo $this->render('filter_modal.php', [
                                         <strong>
                                             <i class="fa fa-close"></i>
                                         </strong>
-                                        Categories
+                                        <?= Yii::t("item", "Categories") ?>
                                     </div>
                                 <?php }
                                 break;
