@@ -10,3 +10,4 @@ After a couple of minutes (little more if its the first time), a linux installat
 - run sudo /vagrant/devops/environment/init.sh (this might take a while - ~15-20 minutes)
 
 You can now use the url 192.168.33.99 (for example http://192.168.33.99/web/ for the main site) for development.
+
