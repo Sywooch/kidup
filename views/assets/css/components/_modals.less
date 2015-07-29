@@ -1,0 +1,131 @@
+.modal-backdrop{
+  background-color: #000;
+  &.in{
+    opacity: 0.4;
+  }
+}
+.dismiss-modal{
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  font-size: 3em;
+  opacity: 0.5;
+  cursor: pointer;
+  z-index: 999999999;
+  color: white;
+  &:hover{
+    opacity: 1;
+  }
+  @media(max-width: 768px){
+    right: 12px;
+    top: 8px;
+  }
+}
+.modal-dialog {
+  display: block;
+  margin: auto;
+  @media(min-width: 768px) {
+    padding-top: 80px;
+  }
+  .form-control{
+    border-color: @dark-gray;
+  }
+}
+.modal-content{
+  box-shadow: none;
+  border-radius: 0 0 0 0;
+  border: none;
+}
+.modal-header{
+  text-align: center;
+  img{
+    height: 60px;
+    margin-bottom: 20px;
+  }
+}
+.modal-body{
+  .btn-social{
+    width: 100%;
+    margin:0 0 10px 0;
+  }
+}
+.modal-small .divider{
+  margin-top: 20px;
+}
+.modal-footer{
+  a{
+    cursor: pointer;
+  }
+}
+
+
+/*Specific modal for */
+//#filterModal {
+//  .modal-open .modal{
+//    overflow-y: hidden;
+//  }
+//  .modal-dialog {
+//    height: 100vh;
+//    max-height: 800px;
+//  }
+//  .modal-content{
+//    position: relative;
+//    height: 100vh;
+//    max-height: 800px;
+//  }
+//  .apply{
+//    position: absolute;
+//    right: 0;
+//    left: 0;
+//    max-width: 350px;
+//    width: auto;
+//    bottom: 5%;
+//    z-index: 999999999;
+//    margin: auto;
+//  }
+//}
+
+#expandedRegisterModal{
+  .modal-dialog {
+    @media (min-width:768px) {
+      max-width: 450px;
+    }
+  }
+  .label{
+    display: none;
+  }
+  .form-group{
+    position: relative;
+  }
+  .fa-male, .fa-female, .fa-question{
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    color: @primary-color;
+  }
+  .fa-trash{
+    position: absolute;
+    right: 8px!important;
+    top: 12px;
+    color: @danger-color;
+    cursor: pointer;
+  }
+  input{
+    padding-left: 30px!important;
+  }
+  .modal-body{
+    min-height: 250px;
+    small{
+      opacity: 0.8;
+    }
+    .info-area{
+      margin-top: 20px;
+    }
+    .filter-option{
+      padding-left: 13px;
+    }
+  }
+  .modal-footer{
+    padding-bottom: 50px;
+  }
+}

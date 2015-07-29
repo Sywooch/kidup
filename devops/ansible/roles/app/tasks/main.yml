@@ -1,0 +1,20 @@
+---
+# application tasks to be customized and to run after the main provision
+- name: Install supervisor
+  sudo: yes
+  apt: pkg=supervisor state=latest
+- name: Install nodejs
+  sudo: yes
+  apt: pkg=nodejs state=latest
+- name: Install npm
+  sudo: yes
+  apt: pkg=npm state=latest
+- name: Install npm less
+  command: npm install -g less
+  sudo: yes
+- name: Connect NPM less
+  command: source ~/.bashrc
+- name: Copy nodejs to node in /usr/bin
+  command: sudo cp /usr/bin/nodejs /usr/bin/node
+- name: Execute initial script
+  command: /vagrant/devops/environment/init.sh

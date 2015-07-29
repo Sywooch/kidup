@@ -1,0 +1,146 @@
+@import (reference) "./../../../views/assets/css/base/variables.less";
+
+#new-rental{
+  /*Area for header/intro*/
+  margin-top: 120px;
+  .header {
+    position: relative;
+    .content{
+      background-color: @primary-color;
+      border-radius: 4px;
+      h2 {
+        color: @white-color;
+      }
+    }
+    .header-top-image{
+      position: absolute;
+      right: 10px;
+      height: 120px;
+      bottom: -28px;
+      @media (max-width: 768px){
+        display: none;
+      }
+    }
+  }
+  /*3 bullets for info and advice*/
+  .rental-advice{
+    text-align: center;
+    img{
+      max-width: 100%;
+    }
+    small{
+      color: #9a9a9a;
+      font-weight: 300;
+      //      line-height: 1.5;
+    }
+  }
+  /*Giving space for the differenct parts to fill out*/
+  .content .row{
+    margin: 30px 0;
+    position: relative;
+  }
+
+  .feedback{
+    position: absolute;
+    left: 15px;
+    top: 34px;
+    font-size: 20px;
+    color: @primary-color;
+    &.start{
+      color: @danger-color;
+    }
+    @media (max-width: 768px){
+      display: none;
+    }
+  }
+
+  h4{
+    span{
+      font-size: 16px;
+      color: @danger-color;
+      line-height: 1px;
+      margin-top: -5px;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      opacity: 0.3;
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+  .btn-lg.btn-simple {
+    padding-left: 0;
+  }
+  /*categories*/
+  .categories{
+    .btn{
+      margin-bottom: 10px;
+    }
+  }
+
+  /*upload image*/
+  .upload-image-area{
+    border: 2px dashed @medium-gray;
+    min-height: 200px;
+    text-align: center;
+    //    &.image-hovering{
+    &:hover{
+      background-color: rgba(227,227,227, 0.4);
+    }
+    h4{
+      margin-top: 20px;
+    }
+    a{
+      cursor: pointer;
+      &:hover{
+        color: @danger-color;
+      }
+    }
+    .description{
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 80%;
+      z-index: 400;
+    }
+    .uploaded-images{
+      margin-top: 100px;
+      img{
+        display: inline-block;
+        height: 80px;
+        margin: auto;
+        margin: 10px;
+        //        float: left;
+      }
+    }
+
+  }
+  /*row for price*/
+  .price{
+    .average b{
+      color: @primary-color;
+    }
+  }
+  /*row for terms*/
+  .terms{
+    padding-bottom: 20px;
+    .checkbox{
+      font-size: 17px;
+    }
+    .checkbox.checked {
+      color: @text-gray;
+    }
+    a{
+      text-decoration: underline;
+      color: @text-gray;
+      &:hover{
+        color: @danger-color;
+      }
+    }
+  }
+  .dz-progress, .dz-details{
+    visibility: hidden;
+  }
+}

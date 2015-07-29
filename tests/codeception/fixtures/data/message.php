@@ -1,0 +1,66 @@
+<?php
+
+$message = array(
+    array( // row #0
+        'id' => 1,
+        'conversation_id' => 1,
+        'message' => 'Hi there, and welcome to kidup! We hope you have a great time, if you\'ve got any questions, please contact us at info@kidup.dk',
+        'sender_user_id' => 2,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 2,
+        'updated_at' => 1433879030,
+        'created_at' => 1433879030,
+    ),
+    array( // row #1
+        'id' => 3,
+        'conversation_id' => 3,
+        'message' => 'Yo!',
+        'sender_user_id' => 3,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 2,
+        'updated_at' => 1433881309,
+        'created_at' => 1433881309,
+    ),
+    array( // row #2
+        'id' => 4,
+        'conversation_id' => 4,
+        'message' => 'This is an automated message from KidUp.',
+        'sender_user_id' => 3,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 2,
+        'updated_at' => 1433881953,
+        'created_at' => 1433881953,
+    ),
+    array( // row #3
+        'id' => 6,
+        'conversation_id' => 3,
+        'message' => 'Ehm zou vet zijn als...',
+        'sender_user_id' => 3,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 2,
+        'updated_at' => 1433882607,
+        'created_at' => 1433882607,
+    ),
+    array( // row #4
+        'id' => 2,
+        'conversation_id' => 2,
+        'message' => 'Hi there, and welcome to kidup! We hope you have a great time, if you\'ve got any questions, please contact us at info@kidup.dk',
+        'sender_user_id' => 1,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 3,
+        'updated_at' => 1433881074,
+        'created_at' => 1433881074,
+    ),
+    array( // row #5
+        'id' => 5,
+        'conversation_id' => 3,
+        'message' => 'He simon hoe wil je het precies hebben?',
+        'sender_user_id' => 2,
+        'read_by_receiver' => 1,
+        'receiver_user_id' => 3,
+        'updated_at' => 1433882592,
+        'created_at' => 1433882592,
+    ),
+);
+
+return $message;

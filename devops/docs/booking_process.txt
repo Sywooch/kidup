@@ -1,0 +1,31 @@
+KidUp Booking process
+
+This is a short description of the booking process that both an owner (user who owns the booked item) and renter (user who booked the item) goes through.
+
+1. A potential renter selects the preferred dates on the item page. The server checks whether the item doesn't have a 'accepted' booking in this period already and whether the min required renting days is satisfied.
+2. If all is good, the renter goes to the confirmation page, where (s)he is required to input creditcard information and check that they accept the rules.
+3. On submitting the form, a request is send to authorize the payin amount on the creditcard. Once a minute, we check braintree to see if the authorization has been accepted.
+
+3.1 If the authorization has failed (for exmaple not enough room left on the creditcard), the booking is cancelled and the renter get's a payment cancelled mail. 
+
+4. If the authorization is accepted, a booking request is mailed to both the owner and renter. A chat is started as well, stating either the message from the renter filled out in the booking confirmation form, or a static message from kidup. Both users will now get emails once the other user sends a new message, either on our platform or to the specific @reply.kidup.dk email addres. The owner can now access a booking-request page, giving him/her an overview of the booking, and allowing him to accept or decline the booking. If no action has been taken after 48 or the owner declines manually, the booking is terminated and the renter is notified by email. 
+
+5. If the owner accepts, a 'capturing' request is send to the creditcard, to capture the earlier authorized amount. 
+
+5.1 If the capturing fails, the booking is terminated, and a payment failed email is sent to both owner and renter.
+
+6. Once the capture succeeded, a confirmation email is send to both the owner and renter. The invoice for the renter will be generated, and a receipt will be mailed to the renter.
+
+7. Between 48-24h before the booking starts, a reminder is emailed to both parties.
+
+8. A day after the booking started, the payout is generated and marked as 'to be processed'. The invoice for the owner is generated, and a receipt is emailed to the owner.
+
+8.1 The admin has to manually export all the 'to be proccessed' payouts into Danske bank (in bulk). This means that i.e. every friday, the admin will proccess all payouts, taking all 'to be processed' payouts and converts them to 'processed payouts'. KidUp then considerd these payouts to be sent and processed by the Danske bank. So if a booking start for example at monday 14:00, the payout will be created tuesday 14:00, the admin processed the payments on friday 18:00. Then the owner will get his money friday 18:00 plus the time Danske Bank needs (probably a day).
+
+9. 24h after a booking ended, a review request will be mailed to both owner and renter.
+9.1 If the reviews are still not made after 5 days, a reminder will be emailed.
+9.2 If the other party made a review, a 'you're reviewed' emial will be sent.
+
+10. If both reviews are completed, or 2 weeks have passed, all the available reviews will be made public.
+
+No cancellations can be made in the platform at the moment. This means that cancellations have to be processed manually.

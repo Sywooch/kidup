@@ -1,0 +1,69 @@
+@import (reference) "./../../../views/assets/css/base/variables.less";
+
+#rentals {
+
+  .nav-stacked > li {
+    float: left;
+    @media(min-width: 768px){
+      clear: both;
+    }
+    @media(max-width: 767px){
+      padding-right: 40px;
+    }
+  }
+  .nav-icons > li > a {
+    padding: 0 0px;
+    text-align: left;
+  }
+  li.active a {
+    color: @danger-color;
+  }
+  .tab-content{
+    padding: 0 10px 30px;
+  }
+
+  .product-image {
+    background-size: cover;
+    border-radius: 6px;
+    width: 70px;
+    height: 50px;
+  }
+  tr td:first-of-type{
+    width:90px;
+  }
+  @media(max-width: 767px){
+    .nav-icons > li > a i {
+      font-size: 2.4em;
+      margin-bottom: 10px;
+      width: 50px;
+    }
+    .nav-icons > li > a{
+      text-align: center;
+    }
+  }
+  .card{
+    @media(max-width: 767px){
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+  }
+
+  /*#stacked-ads*/
+  #stacked-ads {
+    h4 {
+      float: left;
+    }
+    button#create-new-add{
+      margin-top: 10px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+//      @media(max-width: 768px){
+//        float: left;
+//        width: 100%;
+//        margin-top: 5px;
+//        margin-bottom: 30px;
+//      }
+    }
+  }
+}

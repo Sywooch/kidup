@@ -1,0 +1,74 @@
+/*General design settings*/
+body{
+  background-color: @white-bg;
+}
+#wrapper{
+  margin-bottom: 90px;
+}
+@media only screen and (max-width: 768px) {
+  #wrapper{
+    margin-bottom: 0px;
+  }
+}
+.btn, button{
+  outline: none!important;
+}
+a{
+  cursor: pointer;
+}
+
+/*Top area/header area of site*/
+.site-area-header{
+  background-color: @primary-color;
+  h2{
+    margin-top:10px;
+    color: @white-color;
+    small{
+      color: @white-light;
+    }
+  }
+}
+.site-area-content{
+
+  margin-top: 40px;
+}
+.checkbox.checked .second-icon{
+  color:@primary-color;
+}
+.checkbox.checked {
+  color: @text-gray;
+}
+
+.form-group{
+  label{
+    color:@text-gray;
+    opacity: 0.6;
+  }
+}
+
+.table-responsive{
+  border: 1px solid transparent!important;
+}
+
+.table .td-actions .btn{
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-top: 4px \9;
+  margin-left: 0px;
+}
+
+section, .section{
+  margin-top:70px;
+}
+@media only screen and (max-width: 768px) {
+  section, .section{
+    margin-top:25px;
+  }
+}

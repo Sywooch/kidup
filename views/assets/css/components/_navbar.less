@@ -1,0 +1,147 @@
+/*General navbar*/
+
+// Global top navbar
+.navbar{
+  height: 70px;
+  .navbar-brand{
+    margin:10px;
+    padding: 0;
+    margin-left: 10px!important;
+    @media (max-width: 768px){
+      display: block;
+      margin: auto!important;
+      width: 100px;
+      float: none;
+      padding-top: 10px;
+    }
+  }
+  /*Search modal button for mobile*/
+  .menu-icon {
+    font-size: 18px;
+    margin-right:15px;
+    margin-left:-5px;
+    padding:5px;
+    color: rgb(74, 74, 74);
+  }
+  .menu-icon-kidup {
+    width: 30px;
+    margin-right:0;
+    padding:5px;
+  }
+  #search-btn-mobile{
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+  .form-inline {
+    margin-left: 40px;
+    input {
+      width: auto;
+      min-width: 300px;
+      vertical-align: middle;
+    }
+  }
+  li a.btn-danger{
+    margin-right: 20px!important;
+    color:@danger-color;
+    @media(max-width: 900px){
+      display: none;
+    }
+    &:hover{
+      color:@danger-color;
+    }
+  }
+  li.profile a.profile-image{
+    margin-top: 3px;
+    //    margin-right: 13px;
+    img{
+      width: 44px;
+      height: 44px;
+      border: 2px solid transparent;
+      &:hover, &:active ,&.active{
+        border-color: @primary-color-600;
+      }
+    }
+  }
+  li.profile ul.dropdown-menu{
+    right: 18px;
+    border-radius: 0 !important;
+  }
+  li.message{
+    i{
+      font-size: 30px;
+      &:hover, &:active ,&.active{
+        color:@primary-color;
+      }
+    }
+    a{
+      margin-top: 12px;
+      &:hover, &:active ,&.active{
+        color:@primary-color!important;
+      }
+    }
+    .badge{
+      position: absolute;
+      top: 16px;
+      right: 10px;
+      background-color: @danger-color;
+    }
+  }
+
+}
+
+/*Navbar less for mobile sidebar menu*/
+@media (max-width: 767px) {
+  .navbar-collapse {
+    //    padding: 10px;
+    a {
+      font-size: 16px;
+      margin: 10px 0 !important;
+    }
+    i {
+      width: 25px;
+    }
+    .btn {
+      border-radius: 0;
+    }
+    .img-circle {
+      display: block;
+      margin: auto;
+      padding: 20px 10px;
+    }
+  }
+
+  body > .navbar-collapse .nav > li > a {
+    margin: 10px 0;
+  }
+}
+
+/*Green sub-navbar (search-page)*/
+.navbar-ct-blue{
+  border-radius: 0;
+  height: 55px;
+  margin-top: 70px;
+  h3{
+    color:@white-color;
+    margin-top: 11px;
+  }
+  .btn-neutral{
+    margin-top: 11px;
+    @media (max-width: 768px) {
+      margin-left: 8px;
+    }
+  }
+  i{
+    font-size: 18px;
+    margin-top: 0;
+  }
+  .dropdown-toggle{
+    margin-top: 7px!important;
+  }
+}
+
+@media (min-width: 768px){
+  // solve serach bar bug
+  .navbar .form-inline .form-group, .form-inline .form-control{
+    vertical-align: middle;
+  }
+}
