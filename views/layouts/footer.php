@@ -14,26 +14,26 @@ use yii\helpers\Url;
                         <div class="col-sm-3">
                             <p class="titel"><?= Yii::t("app", "Company") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'About us'), '@web/p/company/about')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Terms and Conditions'), '@web/p/help/terms')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Privacy'), '@web/p/help/privacy')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Contact'), '@web/site/contact')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'About us'), '@web/p/about-kidup')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Terms and Conditions'), '@web/p/terms-and-conditions')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Privacy'), '@web/p/privacy')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Contact'), '@web/p/about-kidup')?></p></li>
                             </ul>
                         </div>
                         <div class="col-sm-3">
                             <p class="titel"><?= Yii::t("app", "Understand") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'Why use kidup?'), '@web/p/tutorial/why')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'How to rent?'), '@web/p/tutorial/rent')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'How to rent out?'), '@web/p/tutorial/out')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Why use kidup?'), '@web/p/why-rent')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'How to rent?'), '@web/p/how-to-rent')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'How to rent out?'), '@web/p/how-to-rentout')?></p></li>
                             </ul>
                         </div>
                         <div class="col-sm-3">
                             <p class="titel"><?= Yii::t("app", "Help") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'Renting guide'), '@web/p/help/guides')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Safety & Insurance'), '@web/p/help/safety')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'FAQ'), '@web/p/help/faq')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Renting guide'), '@web/p/guide')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'Safety & Insurance'), '@web/p/safety')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'FAQ'), '@web/p/faq')?></p></li>
                             </ul>
                         </div>
                     </div>
