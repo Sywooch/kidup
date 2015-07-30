@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'All your parent interactions, securely through KidUp' => 'Alle dine for&aelig;ldreinteraktioner, sikkert gennem KidUp',
+    'All your parent interactions, securely through KidUp' => 'Alle dine forældreinteraktioner, sikkert gennem KidUp',
     'Inbox' => 'Indboks',
     'Send' => 'Sendt',
     'You don\'t have any conversations yet.' => 'Du har ingen samtaler endnu',

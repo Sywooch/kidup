@@ -18,7 +18,7 @@
  */
 return [
     'CCV is invalid' => 'CCV er ikke korrekt',
-    'Credit card expired' => 'Kreditkortet er udl& oslash;bet',
+    'Credit card expired' => 'Kreditkortet er udløbet',
     'Credit card is not active' => 'Kreditkortet er ikke aktiveret',
     'Date is not valid' => 'Datoen er invalid',
     'Internal error at our payment provider (is your card number correct?)' => 'Intern fejl hos vores betalingsudbyder (er dit kortnummer rigtigt?)',

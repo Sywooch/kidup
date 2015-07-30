@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Share a' => '@@Del en@@',
-    'a stroller,a toy,a bike' => '@@en barnevogn, et lejet&oslash;j, en cykel@@',
-    'stroller,toy,bike' => '@@barnevogn,leget&oslash;j,cykel@@',
-    'trolley' => '@@barnevogn@@',
+    'Share a' => 'Del en',
+    'a stroller,a toy,a bike' => 'en barnevogn, et lejetøj, en cykel',
+    'stroller,toy,bike' => 'barnevogn,legetøj,cykel',
+    'trolley' => 'barnevogn',
     'How to use kidup?' => 'Hvordan bruger du KidUp?',
-    'KidUp is your online parent-to-parent marketplace.' => 'KidUp er din online for&aelig;ldre til for&aelig;ldre markedsplads',
+    'KidUp is your online parent-to-parent marketplace.' => 'KidUp er din online forældre til forældre markedsplads',
     'Share' => 'Del',
     'Share the world' => 'Del verdenen',
-    'With a family near you' => 'Med en familie n&aelig;r dig',
-    'a trolley' => 'En l&oslash;bevogn',
+    'With a family near you' => 'Med en familie nær dig',
+    'a trolley' => 'En løbevogn',
 ];
