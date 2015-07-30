@@ -31,6 +31,8 @@ use yii\web\IdentityInterface;
  * Defined relations:
  * @property Account[] $accounts
  * @property \app\modules\user\models\Profile $profile
+ *
+ * @property \app\modules\user\models\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
  */
 class User extends \app\models\base\User implements IdentityInterface
 {

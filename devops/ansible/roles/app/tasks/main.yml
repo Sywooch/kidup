@@ -9,12 +9,3 @@
 - name: Install npm
   sudo: yes
   apt: pkg=npm state=latest
-- name: Connect NPM less
-  command: source ~/.bashrc
-- name: Copy nodejs to node in /usr/bin
-  command: sudo cp /usr/bin/nodejs /usr/bin/node
-- name: Install npm less
-  command: npm install -g less
-  sudo: yes
-- name: Execute initial script
-  command: /vagrant/devops/environment/init.sh

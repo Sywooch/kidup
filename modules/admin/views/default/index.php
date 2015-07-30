@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 $this->title = \Yii::t('title', 'Admin') . ' - ' . Yii::$app->name;
 ?>
@@ -17,7 +16,7 @@ $this->title = \Yii::t('title', 'Admin') . ' - ' . Yii::$app->name;
             <div class="row">
 
                 <div class="col-md-8">
-                    This will output the CSV file which can be loaded into the Danske Bank system. It is <u>important</u>
+                    This will output the CSV file which can be loaded into the Danske Bank system. It is <cite>important</cite>
                     that you directly upload the export to Danske bank and after that <b>delete all</b> the traces of the file
                     from your pc. It is highly private information. The data will only be available once, don't f*ck it up. Please ;)
                 </div>

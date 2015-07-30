@@ -41,8 +41,6 @@ $this->registerJs("
                             'enableAjaxValidation' => false,
                         ]); ?>
                         <div class="row">
-                            <i class="feedback fa fa-thumbs-o-up"></i>
-
                             <div class="col-sm-10 col-sm-offset-1">
                                 <h4><?= Yii::t("item", "Title") ?>
                                     <br>
@@ -55,8 +53,6 @@ $this->registerJs("
                             </div>
                         </div>
                         <div id="select-categories" class="row">
-                            <i class="feedback fa fa-thumbs-o-up"></i>
-
                             <div class="col-sm-10 col-sm-offset-1 categories">
                                 <h4><?= Yii::t("item", "Categories") ?>
                                     <br>
@@ -73,8 +69,6 @@ $this->registerJs("
                             </div>
                         </div>
                         <div id="select-age" class="row">
-                            <i class="feedback fa fa-arrow-right"></i>
-
                             <div class="col-sm-10 col-sm-offset-1 categories">
                                 <h4><?= Yii::t("item", "Age") ?>
                                     <br>
@@ -91,8 +85,6 @@ $this->registerJs("
                             </div>
                         </div>
                         <div id="select-age" class="row">
-                            <i class="feedback fa fa-arrow-right"></i>
-
                             <div class="col-sm-10 col-sm-offset-1 categories">
                                 <h4><?= Yii::t("item", "Special") ?>
                                     <br>
@@ -237,7 +229,7 @@ $this->registerJs("
                                         <?php
                                         if ($model->isPublishable() !== true) {
                                             echo \Yii::t('item', 'There are some things left to be fixed before you can preview or publish this item.');
-                                            echo \Yii::t('item', 'Refresh the page if eveyrhting is fixed.');
+                                            echo \Yii::t('item', 'Refresh the page if everything is fixed.');
                                         }
                                         ?>
                                     </small>

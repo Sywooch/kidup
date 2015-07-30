@@ -14,7 +14,7 @@
     "yiisoft/yii2-imagine": "*",
     "2amigos/yii2-file-upload-widget": "*",
     "2amigos/yii2-leaflet-extension": "*",
-    "willdurand/geocoder": "~3.0",
+    "willdurand/geocoder": "~2.8",
     "kriswallsmith/buzz": "~0.13",
     "giggsey/libphonenumber-for-php": "~7.0",
     "bower-asset/font-awesome": "4.3.0",
@@ -49,7 +49,8 @@
     "zetacomponents/mail": "*",
     "backup-manager/backup-manager": "*",
     "aws/aws-sdk-php": "3.2.2",
-    "league/flysystem-aws-s3-v3": "*"
+    "league/flysystem-aws-s3-v3": "*",
+    "bazilio/yii2-stubs-generator": "dev-master"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",

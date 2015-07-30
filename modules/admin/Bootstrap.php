@@ -2,10 +2,6 @@
 
 namespace app\modules\admin;
 
-use app\components\Event;
-use app\modules\item\models\Rent;
-use app\modules\message\models\Conversation;
-use app\modules\payment\models\Payin;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
 use Yii;
