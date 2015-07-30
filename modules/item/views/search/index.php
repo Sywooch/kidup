@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-$this->title = \Yii::t('title', '{0} KidStuff', [ucfirst($searchModel->query)]) . ' - ' . Yii::$app->name;
+$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} KidStuff', [ucfirst($searchModel->query)]));
 
 /**
  * @var \yii\web\View $this
@@ -23,6 +23,7 @@ echo $this->render('filter_modal.php', [
     'searchModel' => $searchModel,
     'categories' => $categories
 ]);
+\app\modules\item\assets\SearchAsset::register($this);
 ?>
 
 <header id="navbar-sub-menu" class="nav-down">

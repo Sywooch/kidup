@@ -121,10 +121,7 @@ class Search extends Model
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 15,
-            ],
-            'totalCount' => 1
+            'pagination' =>false
         ]);
 
         $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($this->latitude) . ' ) )
@@ -153,6 +150,8 @@ class Search extends Model
                 ':high' => $this->priceMax
             ]);
         }
+
+        $query->andWhere(['is_available' => 1]);
 
         if (isset($this->query)) {
             $query->andWhere(['LIKE', 'name', $this->query]);
