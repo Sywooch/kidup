@@ -5,6 +5,14 @@ $keyFile = __DIR__ . '/../config/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 return [
+    'sendGrid' => [
+        'class' => 'bryglen\sendgrid\Mailer',
+        'username' =>  $keys['sendgrid_user'],
+        'password' => $keys['sendgrid_password'],
+        'viewPath' => '@app/modules/mail/views',
+        'useFileTransport' => false
+        //'viewPath' => '@app/views/mail', // your view path here
+    ],
     'authClientCollection' => [
         'class' => 'yii\authclient\Collection',
         'clients' => [

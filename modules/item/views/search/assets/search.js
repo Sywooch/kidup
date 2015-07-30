@@ -35,9 +35,7 @@ $(document).on('ready pjax:success', function() {
         // select the next element, which is the form
         var hiddenEl = $(this).next();
         var currentVal = hiddenEl.val();
-        alert(currentVal);
         var val = currentVal == 0 ? 1 : 0;
-        alert(val);
         hiddenEl.val(val);
 
         var dataID = $(this).attr('data-id');
