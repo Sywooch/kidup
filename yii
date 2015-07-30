@@ -17,7 +17,7 @@ defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 
 
 require(__DIR__ . '/vendor/autoload.php');
-require(__DIR__ . '/components/Yii.php');
+require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');
 
 $config = require(__DIR__ . '/config/console.php');
 if(is_file(__DIR__ . '/config/config-local.php')){

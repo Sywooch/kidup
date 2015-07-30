@@ -49,8 +49,7 @@
     "zetacomponents/mail": "*",
     "backup-manager/backup-manager": "*",
     "aws/aws-sdk-php": "3.2.2",
-    "league/flysystem-aws-s3-v3": "*",
-    "bazilio/yii2-stubs-generator": "dev-master"
+    "league/flysystem-aws-s3-v3": "*"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",
@@ -63,7 +62,8 @@
     "codeception/codeception": "2.0.15",
     "codeception/specify": "0.4.1",
     "codeception/verify": "0.2.7",
-    "yiisoft/yii2-faker": "2.0.3"
+    "yiisoft/yii2-faker": "2.0.3",
+    "bazilio/yii2-stubs-generator": "dev-master"
   },
   "config": {
     "process-timeout": 1800

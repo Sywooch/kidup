@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f1bf7197b1a66ed73ac3c1495e30a329",
+    "hash": "8fd2b04e49ad0569714e82e83a040465",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1239,85 +1239,6 @@
             "time": "2015-04-01 19:36:40"
         },
         {
-            "name": "egeloen/http-adapter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/egeloen/ivory-http-adapter.git",
-                "reference": "aa9c449493bd8da51559d526261dcea48a98c767"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/ivory-http-adapter/zipball/aa9c449493bd8da51559d526261dcea48a98c767",
-                "reference": "aa9c449493bd8da51559d526261dcea48a98c767",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.8",
-                "zendframework/zend-diactoros": "^1.1"
-            },
-            "require-dev": {
-                "cakephp/cakephp": "^3.0.3",
-                "ext-curl": "*",
-                "guzzle/guzzle": "^3.9.4@dev",
-                "guzzlehttp/guzzle": "^4.1.4|^5.0",
-                "guzzlehttp/streams": "^1.5|^2.0|^3.0",
-                "kriswallsmith/buzz": "^0.13",
-                "nategood/httpful": "^0.2.17",
-                "phpunit/phpunit": "^4.0",
-                "phpunit/phpunit-mock-objects": "dev-matcher-verify as 2.3.x-dev",
-                "psr/log": "^1.0",
-                "react/dns": "^0.4.1",
-                "react/http-client": "^0.4",
-                "satooshi/php-coveralls": "^0.6",
-                "symfony/event-dispatcher": "^2.0",
-                "zendframework/zend-http": "^2.3.4",
-                "zendframework/zendframework1": "^1.12.9"
-            },
-            "suggest": {
-                "ext-curl": "Allows you to use the cURL adapter",
-                "ext-http": "Allows you to use the PECL adapter",
-                "guzzle/guzzle": "Allows you to use the Guzzle 3 adapter",
-                "guzzlehttp/guzzle": "Allows you to use the Guzzle 4 adapter",
-                "kriswallsmith/buzz": "Allows you to use the Buzz adapter",
-                "nategood/httpful": "Allows you to use the httpful adapter",
-                "psr/log": "Allows you to use the logger event subscriber",
-                "symfony/event-dispatcher": "Allows you to use the event lifecycle",
-                "symfony/stopwatch": "Allows you to use the stopwatch http adapter and event subscriber",
-                "zendframework/zend-http": "Allows you to use the Zend 2 adapter",
-                "zendframework/zendframework1": "Allows you to use the Zend 1 adapter"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.8-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ivory\\HttpAdapter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eric GELOEN",
-                    "email": "geloen.eric@gmail.com"
-                }
-            ],
-            "description": "Issue HTTP request for PHP 5.3+.",
-            "keywords": [
-                "http",
-                "http-adapter",
-                "http-client",
-                "psr-7"
-            ],
-            "time": "2015-07-12 20:19:48"
-        },
-        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.6.0",
             "source": {
@@ -1731,51 +1652,6 @@
                 "stream"
             ],
             "time": "2015-01-22 00:01:34"
-        },
-        {
-            "name": "igorw/get-in",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/igorw/get-in.git",
-                "reference": "e2bfd524906ba62fe03a80cd3efd3ec635850a1b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/igorw/get-in/zipball/e2bfd524906ba62fe03a80cd3efd3ec635850a1b",
-                "reference": "e2bfd524906ba62fe03a80cd3efd3ec635850a1b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/get_in.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                }
-            ],
-            "description": "Functions for hash map (assoc array) traversal.",
-            "keywords": [
-                "assoc-array",
-                "hash-map"
-            ],
-            "time": "2015-01-07 21:56:59"
         },
         {
             "name": "imagine/imagine",
@@ -2289,12 +2165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "5e5229fd7ea30d65cdde15db073ea8cb1a39be68"
+                "reference": "f1bdf1f687c0f2774e90a368e26544017e6918b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/5e5229fd7ea30d65cdde15db073ea8cb1a39be68",
-                "reference": "5e5229fd7ea30d65cdde15db073ea8cb1a39be68",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/f1bdf1f687c0f2774e90a368e26544017e6918b2",
+                "reference": "f1bdf1f687c0f2774e90a368e26544017e6918b2",
                 "shasum": ""
             },
             "require": {
@@ -2325,7 +2201,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-07-14 19:20:52"
+            "time": "2015-07-30 10:39:45"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -2766,12 +2642,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38"
+                "reference": "ef0eb81ee461955cf53cee007ed2328a6656c633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/368b181ef658c05707fe41dd16eee4d9ffd9da38",
-                "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/ef0eb81ee461955cf53cee007ed2328a6656c633",
+                "reference": "ef0eb81ee461955cf53cee007ed2328a6656c633",
                 "shasum": ""
             },
             "require": {
@@ -2807,7 +2683,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-07-19 04:49:03"
+            "time": "2015-07-30 12:11:14"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
@@ -2913,12 +2789,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
-                "reference": "98fa590f051669fee9f8e5731e6604c058ae0901"
+                "reference": "77b2b355b52dd1b4487ed5143e4553d6f612c247"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/98fa590f051669fee9f8e5731e6604c058ae0901",
-                "reference": "98fa590f051669fee9f8e5731e6604c058ae0901",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/77b2b355b52dd1b4487ed5143e4553d6f612c247",
+                "reference": "77b2b355b52dd1b4487ed5143e4553d6f612c247",
                 "shasum": ""
             },
             "require": {
@@ -2955,7 +2831,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-07-21 03:34:31"
+            "time": "2015-07-30 12:13:45"
         },
         {
             "name": "kartik-v/yii2-widget-growl",
@@ -4357,37 +4233,41 @@
         },
         {
             "name": "willdurand/geocoder",
-            "version": "v3.0.0-alpha2",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/Geocoder.git",
-                "reference": "88a859af3fd49144505466d5636ac0aadccbe201"
+                "reference": "7380e422b209855fa9752b71dbb8f5feb2b824cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/88a859af3fd49144505466d5636ac0aadccbe201",
-                "reference": "88a859af3fd49144505466d5636ac0aadccbe201",
+                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/7380e422b209855fa9752b71dbb8f5feb2b824cb",
+                "reference": "7380e422b209855fa9752b71dbb8f5feb2b824cb",
                 "shasum": ""
             },
             "require": {
-                "egeloen/http-adapter": "~0.1",
-                "igorw/get-in": "~1.0",
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "require-dev": {
+                "geoip/geoip": "~1.13",
                 "geoip2/geoip2": "~0.6",
-                "symfony/stopwatch": "~2.5"
+                "guzzle/guzzle": "@stable",
+                "kriswallsmith/buzz": "@stable",
+                "zendframework/zend-http": "~2.1"
             },
             "suggest": {
+                "ext-curl": "Enabling the curl extension allows you to use the CurlHttpAdapter.",
                 "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
                 "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension).",
                 "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider.",
-                "symfony/stopwatch": "If you want to use the TimedGeocoder"
+                "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+                "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
+                "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -4405,7 +4285,7 @@
                     "email": "william.durand1@gmail.com"
                 }
             ],
-            "description": "The almost missing Geocoder PHP 5.4 library.",
+            "description": "The almost missing Geocoder PHP 5.3 library.",
             "homepage": "http://geocoder-php.org",
             "keywords": [
                 "abstraction",
@@ -4413,7 +4293,7 @@
                 "geocoding",
                 "geoip"
             ],
-            "time": "2014-12-22 12:59:34"
+            "time": "2015-01-07 13:31:32"
         },
         {
             "name": "yiisoft/yii2",
@@ -4421,12 +4301,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "fa734b786ddefa9aa75ded97da1695abb465a91d"
+                "reference": "beddff7178c4ed0f6542a947caef056dd57f3855"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/fa734b786ddefa9aa75ded97da1695abb465a91d",
-                "reference": "fa734b786ddefa9aa75ded97da1695abb465a91d",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/beddff7178c4ed0f6542a947caef056dd57f3855",
+                "reference": "beddff7178c4ed0f6542a947caef056dd57f3855",
                 "shasum": ""
             },
             "require": {
@@ -4501,7 +4381,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-07-29 14:10:51"
+            "time": "2015-07-29 19:46:10"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -4797,56 +4677,6 @@
             "time": "2015-06-18 08:31:25"
         },
         {
-            "name": "zendframework/zend-diactoros",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "727f863820d3575d8193ab3a95f99f978324a118"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/727f863820d3575d8193ab3a95f99f978324a118",
-                "reference": "727f863820d3575d8193ab3a95f99f978324a118",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "~1.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.6",
-                "squizlabs/php_codesniffer": "^2.3.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev",
-                    "dev-develop": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Diactoros\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "PSR HTTP Message implementations",
-            "homepage": "https://github.com/zendframework/zend-diactoros",
-            "keywords": [
-                "http",
-                "psr",
-                "psr-7"
-            ],
-            "time": "2015-07-29 20:52:45"
-        },
-        {
             "name": "zetacomponents/base",
             "version": "1.9",
             "source": {
@@ -4986,6 +4816,48 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bazilio/yii2-stubs-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bazilio91/yii2-stubs-generator.git",
+                "reference": "640853f9dd5b2139b49ccbab9be478ad267ab128"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bazilio91/yii2-stubs-generator/zipball/640853f9dd5b2139b49ccbab9be478ad267ab128",
+                "reference": "640853f9dd5b2139b49ccbab9be478ad267ab128",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bazilio\\stubsgenerator\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vasily Ostanin",
+                    "email": "bazilio91@gmail.com"
+                }
+            ],
+            "description": "Yii2 component stubs generator for Yii::$app",
+            "keywords": [
+                "autocomplete",
+                "phpstorm",
+                "stubs",
+                "yii2"
+            ],
+            "time": "2015-07-24 12:14:15"
+        },
         {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
@@ -6220,12 +6092,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e"
+                "reference": "66fb20c9e1b3617651c3f66be7a1747479d96ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/7ae5513327cb536431847bcc0c10edba2701064e",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/66fb20c9e1b3617651c3f66be7a1747479d96ba5",
+                "reference": "66fb20c9e1b3617651c3f66be7a1747479d96ba5",
                 "shasum": ""
             },
             "require": {
@@ -6233,12 +6105,13 @@
                 "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
+                "ext-mbstring": "*",
                 "phpunit/phpunit": "~4.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -6278,7 +6151,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-06-21 07:55:53"
+            "time": "2015-07-30 09:58:30"
         },
         {
             "name": "sebastian/global-state",
@@ -6844,12 +6717,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "cb5227389b60ca8303825172535778589d96e3f3"
+                "reference": "10b89bf195c552cc11206fb4812815e552a092f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/cb5227389b60ca8303825172535778589d96e3f3",
-                "reference": "cb5227389b60ca8303825172535778589d96e3f3",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/10b89bf195c552cc11206fb4812815e552a092f3",
+                "reference": "10b89bf195c552cc11206fb4812815e552a092f3",
                 "shasum": ""
             },
             "require": {
@@ -6883,7 +6756,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2015-07-28 06:21:00"
+            "time": "2015-07-30 07:07:01"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -6997,7 +6870,8 @@
         "josegonzalez/dotenv": 20,
         "nesbot/carbon": 20,
         "maknz/slack": 20,
-        "monolog/monolog": 20
+        "monolog/monolog": 20,
+        "bazilio/yii2-stubs-generator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
