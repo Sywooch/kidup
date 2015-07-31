@@ -4,6 +4,7 @@ use Yii;
 use yii\codeception\TestCase;
 use Codeception\Specify;
 
+// @todo remove
 class SearchModelTest extends TestCase
 {
     use Specify;
