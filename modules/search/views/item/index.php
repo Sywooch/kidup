@@ -5,6 +5,12 @@ $this->title = \Yii::t('title', '{0} KidStuff', ['query!']) . ' - ' . Yii::$app-
 // load the assets
 \app\modules\search\assets\SearchAsset::register($this);
 
+// load the variables
+$vars = [
+    'model' => $model,
+    'results' => $results
+];
+
 // load Angular
 echo '<div ng-app="searchModule">';
 
@@ -12,10 +18,10 @@ echo '<div ng-app="searchModule">';
 echo '<div ng-controller="SearchController">';
 
 // load the modal view
-echo $this->render('method/modal/index');
+echo $this->render('method/modal/index', $vars);
 
 // load the default view
-echo $this->render('method/default/index');
+echo $this->render('method/default/index', $vars);
 
 echo '</div>';
 

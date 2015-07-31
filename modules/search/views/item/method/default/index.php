@@ -1,14 +1,25 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 ?>
 
-<section class="section show-lg show-md hidden-sm hidden-xs" id="search-sidebar">
+<section class="section show-lg show-md hidden-sm hidden-xs search-sidebar">
     <div class="container-fluid">
-
-        <h1>Hello {{ sometext }}</h1>
 
         <!-- Search filters -->
         <div class="row">
+
+            <?php
+            $form = ActiveForm::begin([
+                'options' => [
+                    'class' => 'form-vertical',
+                    'name' => 'itemSearch'
+                ],
+                'action' => '',
+                'method' => 'get'
+            ]);
+            ?>
 
             <div class="col-md-3 col-lg-3 hidden-sm hidden-xs">
                 <div class="card card-refine">
@@ -23,13 +34,27 @@ use yii\helpers\Html;
 
                     </div>
                     <div class="content">
-                        Content
+                        <!-- Load the query filter -->
+                        <?= $this->render('../../filter/query/default', [
+                            'form' => $form,
+                            'model' => $model
+                        ]) ?>
+
+                        <!-- Load the location filter -->
+                        <?= $this->render('../../filter/location/default', [
+                            'form' => $form,
+                            'model' => $model
+                        ]) ?>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-9 col-md-9">
-                <?= $this->render('../../results'); ?>
+            <?php ActiveForm::end(); ?>
+
+            <div class="col-lg-9 col-md-9 results-default">
+                <?= $this->render('../../results/index', [
+                    'results' => $results
+                ]); ?>
             </div>
 
         </div>

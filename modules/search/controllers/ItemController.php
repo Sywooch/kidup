@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\search\controllers;
 
+use app\modules\search\models\ItemModel;
 use Yii;
 use app\controllers\Controller;
 use yii\filters\AccessControl;
@@ -61,8 +62,17 @@ class ItemController extends Controller {
         $this->noFooter = true;
         $this->noContainer = true;
 
+        // load the item search model
+        $model = new ItemModel();
+
+        // load the search results
+        $results = $model->findItems();
+
         // render the index
-        return $this->render('index', []);
+        return $this->render('index', [
+            'model' => $model,
+            'results' => $results
+        ]);
     }
 
 }
