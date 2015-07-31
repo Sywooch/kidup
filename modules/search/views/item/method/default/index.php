@@ -5,6 +5,8 @@ use yii\helpers\Html;
 <section class="section show-lg show-md hidden-sm hidden-xs" id="search-sidebar">
     <div class="container-fluid">
 
+        <h1>Hello {{ sometext }}</h1>
+
         <!-- Search filters -->
         <div class="row">
 

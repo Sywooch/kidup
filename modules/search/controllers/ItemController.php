@@ -37,13 +37,31 @@ class ItemController extends Controller {
     }
 
     /**
-     * This action is called on default.
+     * Actions before loading the requested action.
+     *
+     * @param \yii\base\Action $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action){
+        // force assets to republish when in debug mode
+        if (defined('YII_DEBUG') && YII_DEBUG) {
+            Yii::$app->assetManager->forceCopy = true;
+        }
+        return parent::beforeAction($action);
+    }
+
+    /**
+     * This is the default action.
      *
      * @return string
      */
     public function actionIndex() {
+        // make sure that there is no footer and there is no container
         $this->noFooter = true;
         $this->noContainer = true;
+
+        // render the index
         return $this->render('index', []);
     }
 
