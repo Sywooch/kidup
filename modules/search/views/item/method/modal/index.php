@@ -26,6 +26,8 @@ echo $this->render('modal');
         <!-- Search results -->
         <div class="row results-modal">
             <div class="col-sm-12 col-xs-12">
+                <?= $this->render('../../filter/buttons', []); ?>
+
                 <?= $this->render('../../results/index', [
                     'results' => $results
                 ]); ?>

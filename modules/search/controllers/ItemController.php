@@ -65,6 +65,9 @@ class ItemController extends Controller {
         // load the item search model
         $model = new ItemModel();
 
+        // load the parameters
+        $model->loadParameters($this->getParameters());
+
         // load the search results
         $results = $model->findItems();
 
@@ -73,6 +76,55 @@ class ItemController extends Controller {
             'model' => $model,
             'results' => $results
         ]);
+    }
+
+    /**
+     * An action that only loads the results.
+     *
+     * @return string
+     */
+    public function actionResults() {
+        // load the item search model
+        $model = new ItemModel();
+
+        // load the parameters
+        $model->loadParameters($this->getParameters());
+
+        // load the search results
+        $results = $model->findItems();
+
+        // render the results
+        return $this->renderPartial('results/index', [
+            'results' => $results
+        ]);
+    }
+
+    /**
+     * Get the current parameters.
+     *
+     * @return array
+     */
+    public function getParameters() {
+        if (isset($_GET['q'])) {
+            $params = [];
+            $url = $_GET['q'];
+            $parts = explode('|', $url);
+            $index = 0;
+            $key = null;
+            foreach ($parts as $part) {
+                if ($index % 2 == 0) {
+                    $key = $part;
+                } else {
+                    if ($key !== null) {
+                        $params[$key] = $part;
+                        $key = null;
+                    }
+                }
+                $index++;
+            }
+            return $params;
+        }
+        return [];
     }
 
 }

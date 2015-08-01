@@ -5,7 +5,6 @@ namespace app\modules\item\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Json;
 
 /**
  * Class Search
@@ -25,8 +24,6 @@ class Search extends Model
     public $categories = [];
     public $age = [];
     public $priceRange = '0,999';
-    private $latitude;
-    private $longitude;
 
     /**
      * Load and set the default parameters for the search.
@@ -61,7 +58,7 @@ class Search extends Model
         }
 
         // calculate some properties
-        if ($this->categories == '') {
+        /*if ($this->categories == '') {
             $this->categories = [];
         } else {
             $this->categories = explode(',', $this->categories);
@@ -107,7 +104,7 @@ class Search extends Model
             $this->distance = -1;
         }
 
-        $this->distanceIndex = $this->calculateDistanceIndex($this->distance);
+        $this->distanceIndex = $this->calculateDistanceIndex($this->distance);*/
     }
 
     public function formName()
@@ -124,21 +121,21 @@ class Search extends Model
             'pagination' =>false
         ]);
 
-        $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($this->latitude) . ' ) )
+        /*$distanceQ = '( 6371  * acos( cos( radians( ' . floatval($this->latitude) . ' ) )
                     * cos( radians( `location`.`latitude` ) )
                     * cos( radians( `location`.`longitude` ) - radians(' . floatval($this->longitude) . ') )
                     + sin( radians(' . floatval($this->latitude) . ') )
-                    * sin( radians( `location`.`latitude` ) ) ) )';
+                    * sin( radians( `location`.`latitude` ) ) ) )';*/
 
-        $query->select($distanceQ . ' as distance, `item`.*');
-        $query->orderBy('distance');
-        $query->innerJoinWith(['location', 'itemHasCategories']);
+        $query->select('`item`.*');
+        //$query->orderBy('distance');
+        //$query->innerJoinWith(['location', 'itemHasCategories']);
 
 //        if(isset($this->distance)){
 //            $query->andWhere('distance < :meters', [':meters' => $this->convertDistanceInternal($this->distance)]);
 //        }
 
-        if(isset($this->categories)){
+        /*if(isset($this->categories)){
             foreach ($this->categories as $id) {
                 $query->andWhere('category_id = :id', [':id' => $id]);
             }
@@ -151,7 +148,7 @@ class Search extends Model
             ]);
         }
 
-        $query->andWhere(['is_available' => 1]);
+        $query->andWhere(['is_available' => 1]);*/
 
         if (isset($this->query)) {
             $query->andWhere(['LIKE', 'name', $this->query]);
@@ -161,10 +158,7 @@ class Search extends Model
     }
 
     /**
-     * Convert a distance (double) to a readable distance (string).
-     *
-     * @param $d        distance to convert
-     * @return string   readable distance
+     * Convert a distance (double) to a readable distance (string)
      */
     public function convertDistance($d)
     {

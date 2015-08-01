@@ -18,6 +18,12 @@ class ItemModel extends Model {
     public $query = null;
     public $location = null;
 
+    public function loadParameters($params) {
+        if (isset($params['query'])) {
+            $this->query = $params['query'];
+        }
+    }
+
     public function findItems() {
         $query = Item::find();
 

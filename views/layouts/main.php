@@ -35,47 +35,6 @@ BootstrapPluginAsset::register($this);
         <meta property="og:site_name" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
         <meta property="og:url" content="http://kidup.dk"/>
 <!--        <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>-->
-
-        <style>
-            /* Fix modal CSS */
-            .modal {
-                padding: 15px !important;
-            }
-
-            .modal-open {
-                overflow: scroll;
-                padding-right: 0px !important;
-            }
-
-            /* Fix Google Autocomplete in modal */
-            .pac-container {
-                z-index: 1051;
-            }
-
-            .ui-autocomplete {
-                position: fixed;
-            }
-
-            /* Helpers */
-            .bottomMargin {
-                margin-bottom: 5px;
-            }
-
-            .smallBottomMargin {
-                margin-bottom: 3px;
-            }
-
-            .leftPadding {
-                padding-left: 24px;
-            }
-
-            /* Classes */
-            .itemCount {
-                margin-top: 18px;
-                font-weight: 300;
-                color: #FFFFFF;
-            }
-        </style>
     </head>
     <body>
     <?php $this->beginBody() ?>

@@ -13,6 +13,8 @@
                     ->label(false)
                     ->textInput([
                         'name' => 'query',
+                        'ng-model' => 'query',
+                        'ng-init' => "query='" . $model->query . "'",
                         'placeholder' => Yii::t("item", "Search term")
                     ])
                 ?>

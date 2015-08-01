@@ -27,7 +27,10 @@ use yii\widgets\ActiveForm;
 
                         <!-- Button to clear all filters -->
                         <?= Html::button(\Yii::t('item', "Clear"),
-                            ['class' => 'btn btn-danger btn-xs pull-right']) ?>
+                            [
+                                'class' => 'btn btn-danger btn-xs pull-right',
+                                'name' => 'clear'
+                            ]) ?>
 
                         <!-- Title -->
                         <h4 class="title"><?= Yii::t("item", "Filter") ?></h4>
@@ -52,6 +55,8 @@ use yii\widgets\ActiveForm;
             <?php ActiveForm::end(); ?>
 
             <div class="col-lg-9 col-md-9 results-default">
+                <?= $this->render('../../filter/buttons', []); ?>
+
                 <?= $this->render('../../results/index', [
                     'results' => $results
                 ]); ?>

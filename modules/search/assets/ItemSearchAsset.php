@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
  * @package app\modules\search\assets
  * @author kevin91nl
  */
-class SearchAsset extends AssetBundle
+class ItemSearchAsset extends AssetBundle
 {
 
     public $sourcePath = '@app/modules/search/views/assets';
@@ -20,8 +20,16 @@ class SearchAsset extends AssetBundle
     ];
 
     public $js = [
-        'search/search.module.js',
-        'search/search.controller.js'
+        'item/search.module.js',
+
+        // load filters
+        'item/filter/query.factory.js',
+        'item/filter/location.factory.js',
+
+        // load main components
+        'item/search.controller.js',
+        'item/search.factory.js',
+        'item/filter.factory.js',
     ];
 
     public $depends = [
