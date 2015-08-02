@@ -3,8 +3,6 @@ namespace app\controllers;
 
 use app\modules\user\models\Profile;
 use Yii;
-use Carbon\Carbon;
-use yii\helpers\Json;
 class Controller extends \yii\web\Controller
 {
     public $transparentNav;
@@ -76,4 +74,5 @@ class Controller extends \yii\web\Controller
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
         return parent::__construct($id, $controller);
     }
+
 }

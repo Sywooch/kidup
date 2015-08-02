@@ -23,4 +23,4 @@ modules:
 #            url: http://192.168.33.99/web/
         WebDriver:
             url: http://192.168.33.99/web/
-            browser: firefox
+            browser: phantomjs

@@ -1,7 +1,6 @@
 <?php
 use app\components\WidgetRequest;
 use yii\helpers\Url;
-use app\modules\item\models\Search;
 
 // create the navbar
 $class = 'navbar navbar-default ';
@@ -15,11 +14,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <!-- Search engine -->
-
-                <button id="search-btn-mobile" class="btn btn-danger btn-xs pull-right visible-xs" data-toggle="modal"
+                <button id="search-btn-mobile" class="btn btn-danger pull-right visible-xs" data-toggle="modal"
                         data-target="#searchModal"><i class="fa fa-search"></i></button>
-                <button id="search-btn-mobile" class="btn btn-danger btn-xs pull-right visible-xs" data-toggle="modal"
-                        data-target="#searchModal"><i class="pe-7s-search"></i></button>
                 <button type="button" class="navbar-toggle pull-left" data-toggle="collapse"
                         data-target="#navigation-default2">
                     <span class="sr-only">Toggle navigation</span>
@@ -83,7 +79,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?= Url::to('@web/booking/current') ?>">
-                                        <i class="fa fa-list-ul menu-icon""></i>
+                                        <i class="fa fa-list-ul menu-icon"></i>
                                         <?= Yii::t("app", "Your Bookings") ?>
                                     </a>
                                 </li>
@@ -96,7 +92,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?= Url::to('@web/user/settings/profile') ?>">
-                                        <i class="fa fa-gears menu-icon""></i>
+                                        <i class="fa fa-gears menu-icon"></i>
                                         <?= Yii::t("app", "Settings") ?>
                                     </a>
                                 </li>
@@ -104,7 +100,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <?php if (\Yii::$app->user->identity->isAdmin()): ?>
                                     <li>
                                         <a href="<?= Url::to('@web/admin') ?>">
-                                            <i class="fa fa-gears menu-icon""></i>
+                                            <i class="fa fa-gears menu-icon"></i>
                                             <?= Yii::t("app", "Admin") ?>
                                         </a>
                                     </li>

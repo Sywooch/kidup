@@ -20,6 +20,7 @@ $config = [
         'app\\modules\\splash\\Bootstrap',
         'app\\modules\\pages\\Bootstrap',
         'app\\modules\\admin\\Bootstrap',
+        'app\\modules\\search\\Bootstrap',
     ],
     'extensions' => array_merge(
         require($vendorDir . '/yiisoft/extensions.php')
@@ -39,11 +40,12 @@ $config = [
         'item' =>           ['class' => 'app\modules\item\Module'],
         'message' =>        ['class' => 'app\modules\message\Module'],
         'booking' =>        ['class' => 'app\modules\booking\Module'],
-        'splash' =>        ['class' => 'app\modules\splash\Module'],
-        'mail' =>        ['class' => 'app\modules\mail\Module'],
-        'pages' =>        ['class' => 'app\modules\pages\Module'],
-        'review' =>        ['class' => 'app\modules\review\Module'],
-        'admin' =>        ['class' => 'app\modules\admin\Module'],
+        'splash' =>         ['class' => 'app\modules\splash\Module'],
+        'mail' =>           ['class' => 'app\modules\mail\Module'],
+        'pages' =>          ['class' => 'app\modules\pages\Module'],
+        'review' =>         ['class' => 'app\modules\review\Module'],
+        'admin' =>          ['class' => 'app\modules\admin\Module'],
+        'search' =>         ['class' => 'app\modules\search\Module'],
         'social' => [
             // the module class
             'class' => 'kartik\social\Module',
