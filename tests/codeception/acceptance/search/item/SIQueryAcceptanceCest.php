@@ -7,7 +7,7 @@ use app\tests\codeception\_support\FixtureHelper;
  *
  * @author kevin91nl
  */
-class SearchCest {
+class SIQueryAcceptanceCest {
 
     /**
      * Initialize the test.
@@ -23,7 +23,7 @@ class SearchCest {
      *
      * @param FunctionalTester $I
      */
-    public function searchByQueryDefault(\AcceptanceTester $I) {
+    public function searchByDefault(\AcceptanceTester $I) {
         $I->wantTo('ensure that I can find related items when searching for a particular search term');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(1024, 500);

@@ -13,7 +13,7 @@ use Codeception\Specify;
  * @package app\modules\item\models
  * @author kevin91nl
  */
-class SearchItemModelTest extends TestCase
+class SIModelTest extends TestCase
 {
     use Specify;
 

@@ -8,7 +8,7 @@ use tests\codeception\_pages\ItemSearchPage;
  *
  * @author kevin91nl
  */
-class FormCest {
+class SIFormFunctionalCest {
 
     /**
      * Initialize the test.
