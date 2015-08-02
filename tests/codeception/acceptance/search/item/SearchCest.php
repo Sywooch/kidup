@@ -30,7 +30,7 @@ class SearchCest {
         $query = 'strange search term';
 
         $I->waitForElementVisible('input[name=query]', 5);
-        $I->fillField('.search-sidebar input[name=query]', $query);
+        $I->fillField('.search-default input[name=query]', $query);
         $I->wait(2);
 
         // check the number of corresponding items
