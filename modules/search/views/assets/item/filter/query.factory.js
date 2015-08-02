@@ -11,7 +11,10 @@ function QueryFilterFactory(FilterFactory) {
         'clear': clear,
         'setValue': setValue,
         'getValue': getValue,
+        'apply': apply,
+        'loadFilterButton': loadFilterButton,
         'getFilterButton': getFilterButton,
+        'updateFilterButton': updateFilterButton,
         'getURLPart': getURLPart,
         'setUpdateStateCallback': setUpdateStateCallback
     };
@@ -22,8 +25,20 @@ function QueryFilterFactory(FilterFactory) {
      * Initialize the filter.
      */
     function initialize() {
-        FilterFactory.delayedInputChange('#itemSearch input[name=query]', function() {
+        filter._inputSelectors = '#itemSearch input[name=query]';
+        var defaultSearchInputSelector = '#itemSearch .search-default input[name=query]';
+        FilterFactory.delayedInputChange($(defaultSearchInputSelector), function() {
             filter.updateState(true);
+        });
+        filter._value = $(defaultSearchInputSelector).val();
+        _updateTitle(filter._value);
+        $(filter._inputSelectors).on('keyup', function() {
+            filter._value = $(this).val();
+        });
+        $(defaultSearchInputSelector).on('keyup', function() {
+            filter._value = $(this).val();
+            updateFilterButton();
+            _updateTitle(filter._value);
         });
     }
 
@@ -33,6 +48,7 @@ function QueryFilterFactory(FilterFactory) {
     function clear() {
         setValue('');
         filter.updateState(true);
+        getFilterButton().hide();
     }
 
     /**
@@ -41,7 +57,8 @@ function QueryFilterFactory(FilterFactory) {
      * @param value
      */
     function setValue(value) {
-        $('#itemSearch input[name=query]').val(value);
+        $(filter._inputSelectors).val(value);
+        filter._value = value;
     }
 
     /**
@@ -50,7 +67,16 @@ function QueryFilterFactory(FilterFactory) {
      * @return value
      */
     function getValue() {
-        return $('#itemSearch input[name=query]').val();
+        return filter._value;
+    }
+
+    /**
+     * Apply the filter.
+     */
+    function apply() {
+        updateFilterButton();
+        _updateTitle(filter._value);
+        filter.updateState(true);
     }
 
     /**
@@ -58,8 +84,33 @@ function QueryFilterFactory(FilterFactory) {
      *
      * @return the filter button
      */
+    function loadFilterButton() {
+        return $('<button />')
+            .addClass('btn btn-xs btn-filter-query')
+            .html('<i class="fa fa-close"></i> Search term: <span class="value"></span>')
+            .click(clear)
+        ;
+    }
+
+    /**
+     * Get all filter buttons.
+     *
+     * @returns {*|jQuery|HTMLElement}
+     */
     function getFilterButton() {
-        console.log('query filter getFilterButton');
+        return $('.btn-filter-query');
+    }
+
+    /**
+     * Update the view of the filter button.
+     */
+    function updateFilterButton() {
+        if (getValue().length == 0) {
+            getFilterButton().hide();
+        } else {
+            getFilterButton().find('.value').text(getValue());
+            getFilterButton().show();
+        }
     }
 
     /**
@@ -80,6 +131,16 @@ function QueryFilterFactory(FilterFactory) {
      */
     function setUpdateStateCallback(callback) {
         filter.updateState = callback;
+    }
+
+    /**
+     * Update the page title.
+     *
+     * @param value the current search term
+     * @private
+     */
+    function _updateTitle(value) {
+        document.title = value + ' | KidStuff';
     }
 
 }

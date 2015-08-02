@@ -4,7 +4,10 @@ angular.module('ItemSearchModule')
 /**
  * The controller of the item search.
  */
-function ItemSearchController(ItemSearchFactory) {
+function ItemSearchController($scope, ItemSearchFactory) {
+
+    $scope.ItemSearchFactory = ItemSearchFactory;
+    $scope.applyFilter = applyFilter;
 
     /**
      * Initialize the controller.
@@ -15,6 +18,15 @@ function ItemSearchController(ItemSearchFactory) {
         $('#itemSearch button[name=clear]').on('click', function() {
             ItemSearchFactory.clear();
         });
+    }
+
+    /**
+     * Apply a filter.
+     *
+     * @param filter
+     */
+    function applyFilter(filter) {
+        filter.apply();
     }
 
     /**

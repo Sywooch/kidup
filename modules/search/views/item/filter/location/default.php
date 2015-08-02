@@ -26,6 +26,18 @@ use app\modules\item\widgets\GoogleAutoComplete;
                         ]
                     ]);
                 ?>
+
+                <?=
+                $form->field($model, '_distanceSliderIndex')->label(false)->widget(\yii\jui\SliderInput::classname(), [
+                    'clientOptions' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.05,
+                        'value' => 0,
+                        'id' => 'slider-default'
+                    ]
+                ])
+                ?>
             </div>
          </div>
     </div>

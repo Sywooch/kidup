@@ -26,7 +26,7 @@ class ModuleBehaviourCest {
         $I->wantTo('ensure that the filter button is shown on small windows');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(500, 700);
-        $I->canSeeElement('button[name=filter]');
+        $I->canSeeElement('#itemSearch button[name=filter]');
     }
 
     /**
@@ -38,7 +38,7 @@ class ModuleBehaviourCest {
         $I->wantTo('ensure that the filter button is not shown on large windows');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(1024, 700);
-        $I->dontSeeElement('button[name=filter]');
+        $I->dontSeeElement('#itemSearch button[name=filter]');
     }
 
     /**
@@ -50,7 +50,7 @@ class ModuleBehaviourCest {
         $I->wantTo('ensure that the search sidebar is not shown on small windows');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(500, 700);
-        $I->dontSeeElement('.search-sidebar');
+        $I->dontSeeElement('#itemSearch .search-sidebar');
     }
 
     /**
@@ -62,7 +62,7 @@ class ModuleBehaviourCest {
         $I->wantTo('ensure that the search sidebar is shown on large windows');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(1024, 700);
-        $I->canSeeElement('.search-sidebar');
+        $I->canSeeElement('#itemSearch .search-sidebar');
     }
 
 }

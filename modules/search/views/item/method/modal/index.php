@@ -2,10 +2,12 @@
 use yii\helpers\Html;
 
 // load the modal
-echo $this->render('modal');
+echo $this->render('modal', [
+    'model' => $model
+]);
 ?>
 
-<section class="section hidden-lg hidden-md show-sm show-xs" id="search-sidebar">
+<section class="section hidden-lg hidden-md show-sm show-xs search-modal">
     <!-- Search results -->
     <div class="container-fluid">
 
@@ -18,6 +20,7 @@ echo $this->render('modal');
                         'class' => 'btn btn-danger btn-fill',
                         'data-toggle' => 'modal',
                         'data-target' => '#filterModal',
+                        'ng-click' => "modal = ''",
                         'name' => 'filter'
                     ]) ?>
             </div>

@@ -28,7 +28,7 @@ class FormCest {
     public function checkFormExists(\FunctionalTester $I) {
         $I->wantTo('ensure that the item search form exists');
         ItemSearchPage::openBy($I);
-        $I->canSeeElement('form[name=itemSearch]');
+        $I->canSeeElement('#itemSearch form[name=itemSearch]');
     }
 
     /**
@@ -39,7 +39,7 @@ class FormCest {
     public function checkQueryInputExists(\FunctionalTester $I) {
         $I->wantTo('ensure that the search term input field exists');
         ItemSearchPage::openBy($I);
-        $I->canSeeElement('form[name=itemSearch] input[name=query]');
+        $I->canSeeElement('#itemSearch input[name=query]');
     }
 
     /**
@@ -51,7 +51,7 @@ class FormCest {
         $I->wantTo('ensure that all the items are shown on the default view');
         ItemSearchPage::openBy($I);
         $numItems = Item::find()->count();
-        $I->canSeeNumberOfElements('.results-default .item', $numItems);
+        $I->canSeeNumberOfElements('#itemSearch .results-default .item', $numItems);
     }
 
     /**
@@ -63,7 +63,7 @@ class FormCest {
         $I->wantTo('ensure that all the items are shown on the modal view');
         ItemSearchPage::openBy($I);
         $numItems = Item::find()->count();
-        $I->canSeeNumberOfElements('.results-modal .item', $numItems);
+        $I->canSeeNumberOfElements('#itemSearch .results-modal .item', $numItems);
     }
 
 }

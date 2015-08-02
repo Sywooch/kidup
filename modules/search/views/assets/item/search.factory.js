@@ -6,11 +6,13 @@ angular.module('ItemSearchModule')
  */
 function ItemSearchFactory(QueryFilterFactory) {
 
-    return {
+    var factory = {
         'initialize': initialize,
         'getURL': getURL,
         'clear': clear
     };
+
+    return factory;
 
     /**
      * Get a list of all filters.
@@ -19,8 +21,8 @@ function ItemSearchFactory(QueryFilterFactory) {
      * @private
      */
     function _getFilters() {
-        var filters = [];
-        filters.push(QueryFilterFactory);
+        var filters = {};
+        filters['query'] = QueryFilterFactory;
         return filters;
     }
 
@@ -28,9 +30,13 @@ function ItemSearchFactory(QueryFilterFactory) {
      * Initialize all filters.
      */
     function initialize() {
+        factory.filters = _getFilters();
         angular.forEach(_getFilters(), function(filter) {
             filter.initialize();
             filter.setUpdateStateCallback(updateState);
+            $('#itemSearch .search-default .filterButtons').append(filter.loadFilterButton());
+            $('#itemSearch .search-modal .filterButtons').append(filter.loadFilterButton());
+            filter.updateFilterButton();
         });
         updateState(false);
     }

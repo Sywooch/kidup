@@ -1,9 +1,6 @@
 <?php
 use app\modules\search\assets\ItemSearchAsset;
 
-// set the title
-$this->title = \Yii::t('title', '{0} KidStuff', ['query!']) . ' - ' . Yii::$app->name;
-
 // load the assets
 ItemSearchAsset::register($this);
 

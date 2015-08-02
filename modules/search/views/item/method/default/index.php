@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<section class="section show-lg show-md hidden-sm hidden-xs search-sidebar">
+<section class="section show-lg show-md hidden-sm hidden-xs search-default">
     <div class="container-fluid">
 
         <!-- Search filters -->

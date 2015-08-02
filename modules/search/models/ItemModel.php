@@ -17,6 +17,7 @@ class ItemModel extends Model {
 
     public $query = null;
     public $location = null;
+    public $_distanceSliderIndex = 1;
 
     public function loadParameters($params) {
         if (isset($params['query'])) {
