@@ -46,7 +46,7 @@
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
         <div class="panel-body">
-            <div id="price-slider" ng-model="searchCtrl.filter.prices"></div>
+            <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
         </div>
         <div class="minPrice">
             {{searchCtrl.filter.minPrice}} DKK
@@ -67,7 +67,7 @@
     <div class="panel-body" ng-init='searchCtrl.filter.categories = <?= $model->getCategories('main') ?>'>
         <div ng-repeat="category in searchCtrl.filter.categories"
              class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary': category.value == 1}"
+             ng-class="{'btn-primary btn-fill': category.value == 1}"
              ng-click="searchCtrl.selectCategory(category.id)">
             {{category.name}}
         </div>
@@ -84,7 +84,7 @@
     <div class="panel-body" ng-init='searchCtrl.filter.ages = <?= $model->getCategories('age') ?>'>
         <div ng-repeat="age in searchCtrl.filter.ages"
              class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary': age.value == 1}"
+             ng-class="{'btn-primary btn-fill': age.value == 1}"
              ng-click="searchCtrl.selectCategory(age.id)">
             {{age.name}}
         </div>

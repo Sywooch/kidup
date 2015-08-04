@@ -30,7 +30,7 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     scope.init = function () {
-        $("#price-slider").slider({
+        var sliderConf = {
             range: true,
             min: 0,
             max: 499,
@@ -45,7 +45,9 @@ var SearchController = function ($location, $http, $scope, $window) {
                 $scope.$apply();
                 scope.filterChange();
             }
-        });
+        };
+        $("#price-slider").slider(sliderConf);
+        $("#price-slider-mobile").slider(sliderConf);
     };
 
     var getActiveCategories = function () {
