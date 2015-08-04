@@ -6,8 +6,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
 ?>
 <div ng-app="kidup.search" id="search">
     <div ng-controller="SearchCtrl as searchCtrl">
-        <a href="" ng-click="alert(1)">1asfasfas <br>sdfsadasdas <br>dsassadas</a>
-        <section class="section" id="search-cards">
+        <section class="section" id="search-cards" ng-cloak>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 ">
@@ -24,7 +23,8 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                             </div>
                             <div class="content">
                                 <?= $this->render('filters', [
-                                    'model' => $model
+                                    'model' => $model,
+                                    'mobile' => false
                                 ]) ?>
                             </div>
                         </div>
@@ -32,30 +32,36 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                     </div>
                     <div class="col-md-9 col-log-10">
                         <div class="row col-xs-12 hidden-xs hidden-sm">
-                            <div class="btn btn-info btn-xs smallBottomMargin">
-                                <strong>
-                                    <i class="fa fa-close"></i>
-                                </strong>
+                            <div>
+                                <?= Yii::t("item", "Active filters:") ?>
                             </div>
-                            <div class="btn btn-info btn-xs smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin">
                                 <strong>
-                                    <i class="fa fa-close"></i>
+                                    <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
+                                <?= Yii::t("item", "Search") ?>
                             </div>
-                            <div class="btn btn-info btn-xs smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin">
                                 <strong>
-                                    <i class="fa fa-close"></i>
+                                    <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
+                                <?= Yii::t("item", "Location") ?>
                             </div>
-                            <div class="btn btn-info btn-xs smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin">
                                 <strong>
-                                    <i class="fa fa-close"></i>
+                                    <i class="fa fa-close" style="font-size: 16px"></i>
+                                </strong>
+                                <?= Yii::t("item", "Price") ?>
+                            </div>
+                            <div class="btn btn-default btn-sm smallBottomMargin">
+                                <strong>
+                                    <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Age") ?>
                             </div>
-                            <div class="btn btn-info btn-xs smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin">
                                 <strong>
-                                    <i class="fa fa-close"></i>
+                                    <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Categories") ?>
                             </div>
@@ -95,7 +101,8 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                     </div>
                     <div class="modal-body" >
                         <?= $this->render('filters', [
-                            'model' => $model
+                            'model' => $model,
+                            'mobile' => true
                         ]) ?>
                     </div>
                     <div class="modal-footer">

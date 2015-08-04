@@ -14,7 +14,6 @@ var SearchController = function ($location, $http, $scope, $window) {
     scope.maxPrice = 499;
 
     scope.selectCategory = function (id) {
-        alert(id);
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
                 return scope.filter.categories[i].value = (scope.filter.categories[i].value == 1) ? 0 : 1;
@@ -29,7 +28,7 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     scope.init = function () {
-        $("#price-slider").slider({
+        var sliderConf = {
             range: true,
             min: 0,
             max: 499,
@@ -38,7 +37,9 @@ var SearchController = function ($location, $http, $scope, $window) {
                 scope.maxPrice = ui.values[1];
                 $scope.$apply();
             }
-        });
+        };
+        $("#price-slider").slider(sliderConf);
+        $("#price-slider-mobile").slider(sliderConf);
     };
 
     var getActiveCategories = function () {
