@@ -116,7 +116,7 @@ class SearchModel extends Model
     public function filterCategories($query, $categories = null) {
         if (isset($categories) && $categories !== null) {
             foreach ($categories as $id) {
-                $query->orWhere(['IN', 'category_id', $categories);
+                $query->orWhere(['IN', 'category_id', $categories]);
             }
         }
     }
