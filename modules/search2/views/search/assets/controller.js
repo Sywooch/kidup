@@ -10,7 +10,8 @@ var SearchController = function ($location, $http, $scope, $window) {
         ages: []
     };
 
-    scope.alert = window.alert;
+    scope.minPrice = 0;
+    scope.maxPrice = 499;
 
     scope.selectCategory = function (id) {
         $.map(scope.filter.categories, function (el, i) {
@@ -30,13 +31,12 @@ var SearchController = function ($location, $http, $scope, $window) {
         $("#price-slider").slider({
             range: true,
             min: 0,
-            max: 500
-        });
-
-        $("#distance-slider").slider({
-            range: false,
-            min: 0,
-            max: 100000
+            max: 499,
+            slide: function(val, ui){
+                scope.minPrice = ui.values[0];
+                scope.maxPrice = ui.values[1];
+                $scope.$apply();
+            }
         });
     };
 
@@ -63,8 +63,6 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     scope.setUrl = function () {
-
-
         //window.history.pushState({}, 'title', url);
     };
 

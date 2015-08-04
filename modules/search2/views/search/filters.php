@@ -48,6 +48,12 @@
         <div class="panel-body">
             <div id="price-slider" ng-model="searchCtrl.filter.prices"></div>
         </div>
+        <div class="minPrice">
+            {{searchCtrl.minPrice}}
+        </div>
+        <div class="maxPrice">
+            {{searchCtrl.maxPrice}}
+        </div>
     </div>
 </div>
 

@@ -6,6 +6,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
 ?>
 <div ng-app="kidup.search" id="search">
     <div ng-controller="SearchCtrl as searchCtrl">
+        <a href="" ng-click="alert(1)">1asfasfas <br>sdfsadasdas <br>dsassadas</a>
         <section class="section" id="search-cards">
             <div class="container-fluid">
                 <div class="row">
