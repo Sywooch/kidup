@@ -23,7 +23,6 @@ class SearchModel extends Model
     public $categories = [];
     public $priceMin = null;
     public $priceMax = null;
-    public $_distanceSliderIndex = 1;
 
     /**
      * Find items.
