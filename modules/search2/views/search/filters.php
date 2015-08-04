@@ -46,7 +46,7 @@
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
         <div class="panel-body">
-            <div id="price-slider"></div>
+            <div id="price-slider" ng-model="searchCtrl.filter.prices"></div>
         </div>
         <div class="minPrice">
             {{searchCtrl.minPrice}}

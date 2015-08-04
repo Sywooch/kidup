@@ -1,8 +1,6 @@
 var SearchController = function ($location, $http, $scope, $window) {
     var scope = {};
 
-    _mainUrl = $location.absUrl().replace($location.url(), '');
-
     scope.filter = {
         query: '',
         prices: [],
@@ -16,6 +14,7 @@ var SearchController = function ($location, $http, $scope, $window) {
     scope.maxPrice = 499;
 
     scope.selectCategory = function (id) {
+        alert(id);
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
                 return scope.filter.categories[i].value = (scope.filter.categories[i].value == 1) ? 0 : 1;
@@ -39,18 +38,6 @@ var SearchController = function ($location, $http, $scope, $window) {
                 scope.maxPrice = ui.values[1];
                 $scope.$apply();
             }
-        });
-
-        $http.get(_mainUrl + 'categories').then(function (res) {
-            $.map(res.data, function (category) {
-                category.value = 0;
-                if (category.type === 'main') {
-                    scope.filter.categories.push(category);
-                }
-                if (category.type === 'age') {
-                    scope.filter.ages.push(category);
-                }
-            });
         });
     };
 
