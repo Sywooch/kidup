@@ -1,7 +1,7 @@
 <!-- query -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h6 class="panel-title" style="padding: 17px 15px;">
+        <h6 class="panel-title">
             <?= Yii::t("item", "Search") ?>
         </h6>
     </div>
@@ -14,30 +14,25 @@
 
 <!--location-->
 
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h6 class="panel-title">
-                <?= Yii::t("item", "Location") ?>
-            </h6>
-        </div>
-        <div id="refine-location" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
-                    'options' => [
-                        'class' => 'form-control',
-                        'ng-model' => 'searchCtrl.filter.location',
-                        'ng-change' => "searchCtrl.filterChange()"
-                    ],
-                    'autocompleteOptions' => [
-                        'types' => ['geocode']
-                    ],
-                    'name' => 'autoCompleteLocation'
-                ]); ?>
-                <br>
-
-                <div id="distance-slider" ng-model="searchCtrl.filter.locationDistance" ng-change="searchCtrl.filterChange()"></div>
-            </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <?= Yii::t("item", "Location") ?>
+        </h6>
+    </div>
+    <div id="refine-location" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
+                'options' => [
+                    'class' => 'form-control',
+                    'ng-model' => 'searchCtrl.filter.location',
+                    'ng-change' => "searchCtrl.filterChange()"
+                ],
+                'autocompleteOptions' => [
+                    'types' => ['geocode']
+                ],
+                'name' => 'autoCompleteLocation'
+            ]); ?>
         </div>
     </div>
 </div>

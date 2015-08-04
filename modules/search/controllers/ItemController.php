@@ -44,13 +44,13 @@ class ItemController extends Controller {
      * @return bool
      * @throws \yii\web\BadRequestHttpException
      */
-    public function beforeAction($action){
+    /*public function beforeAction($action){
         // force assets to republish when in debug mode
         if (defined('YII_DEBUG') && YII_DEBUG) {
             Yii::$app->assetManager->forceCopy = true;
         }
         return parent::beforeAction($action);
-    }
+    }*/
 
     /**
      * This is the default action.
