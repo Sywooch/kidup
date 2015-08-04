@@ -40,9 +40,6 @@ var SearchController = function ($location, $http, $scope, $window) {
                 $scope.$apply();
             },
             change: function(val, ui) {
-                scope.filter.minPrice = ui.values[0];
-                scope.filter.maxPrice = ui.values[1];
-                $scope.$apply();
                 scope.filterChange();
             }
         };
@@ -89,7 +86,6 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     scope.filterChange = function () {
-        scope.setUrl();
         if (scope._timer !== null) {
             clearTimeout(scope._timer)
         }
