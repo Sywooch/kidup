@@ -10,8 +10,9 @@ var SearchController = function ($location, $http, $scope, $window) {
         ages: []
     };
 
+    scope.alert = window.alert;
+
     scope.selectCategory = function (id) {
-        alert(id);
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
                 return scope.filter.categories[i].value = (scope.filter.categories[i].value == 1) ? 0 : 1;
