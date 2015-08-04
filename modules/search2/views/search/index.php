@@ -66,7 +66,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                                 <?php
                                 // render the results
                                 echo $this->render('results', [
-//                                                    'dataProvider' => $dataProvider
+                                    'results' => $results
                                 ]);
                                 ?>
                             </div>
