@@ -1,12 +1,13 @@
 <?php
 namespace app\modules\search2\models;
 
-use app\modules\item\models\Category;
+use app\modules\item\models\IpLocation;
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
 
 /**
  * The item model of the search module is used for handling data related to searching items.
