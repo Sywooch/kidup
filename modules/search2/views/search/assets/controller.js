@@ -13,6 +13,8 @@ var SearchController = function ($location, $http, $scope, $window) {
     scope.minPrice = 0;
     scope.maxPrice = 499;
 
+    scope._timer = null;
+
     scope.selectCategory = function (id) {
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
@@ -83,9 +85,12 @@ var SearchController = function ($location, $http, $scope, $window) {
 
     scope.filterChange = function () {
         scope.setUrl();
-        setTimeout(function () {
+        if (scope._timer !== null) {
+            clearTimeout(scope._timer)
+        }
+        scope._timer = setTimeout(function () {
             update();
-        }, 400);
+        }, 600);
     };
 
     scope.init();
