@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\search\assets;
+namespace app\modules\search2\assets;
 
 use yii\web\AssetBundle;
 
@@ -13,29 +13,20 @@ use yii\web\AssetBundle;
 class ItemSearchAsset extends AssetBundle
 {
 
-    public $sourcePath = '@app/modules/search/views/assets';
+    public $sourcePath = '@app/modules/search2/views/search/assets';
 
     public $css = [
         'search.less'
     ];
 
     public $js = [
-        'item/search.module.js',
-
-        // load filters
-        'item/filter/query.factory.js',
-        'item/filter/location.factory.js',
-        'item/filter/categories.factory.js',
-
-        // load main components
-        'item/search.controller.js',
-        'item/search.factory.js',
-        'item/filter.factory.js',
+        'controller.js',
     ];
 
     public $depends = [
         '\app\assets\AngularAsset',
         '\yii\web\JqueryAsset',
+        '\yii\jui\JuiAsset',
         '\yii\widgets\PjaxAsset'
     ];
 

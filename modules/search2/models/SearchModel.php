@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\search\models;
+namespace app\modules\search2\models;
 
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
@@ -14,25 +14,26 @@ use yii\data\ActiveDataProvider;
  * @package app\modules\search\models
  * @author kevin91nl
  */
-class ItemModel extends Model {
+class SearchModel extends Model
+{
 
     public $query = null;
     public $location = null;
     public $categories = [];
     public $_distanceSliderIndex = 1;
 
-    public function loadParameters($params) {
-        if (isset($params['query'])) {
-            $this->query = $params['query'];
-        }
+    public function loadParameters($params)
+    {
+        $this->parseQueryString($params);
     }
 
-    public function findItems() {
+    public function findItems()
+    {
         $query = Item::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' =>false
+            'pagination' => false
         ]);
 
         $query->select('`item`.*');
@@ -74,8 +75,22 @@ class ItemModel extends Model {
         return $dataProvider;
     }
 
-    public function getCategories($type){
+    public function getCategories($type)
+    {
         return Category::find()->where(['type' => $type])->all();
     }
 
+    public function parseQueryString($query)
+    {
+        $params = [];
+        $parts = explode('|', $query);
+        foreach ($parts as $i => $part) {
+            if (isset($parts[$i + 1]) && property_exists($this, $part)) {
+                $params[$part] = $parts[$i + 1];
+            }
+            continue;
+        }
+
+        return $params;
+    }
 }

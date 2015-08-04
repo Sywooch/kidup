@@ -34,7 +34,6 @@ BootstrapPluginAsset::register($this);
         <meta property="og:title" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
         <meta property="og:site_name" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
         <meta property="og:url" content="http://kidup.dk"/>
-<!--        <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>-->
     </head>
     <body>
     <?php $this->beginBody() ?>
