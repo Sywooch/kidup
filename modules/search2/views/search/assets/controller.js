@@ -35,13 +35,13 @@ var SearchController = function ($location, $http, $scope, $window) {
             min: 0,
             max: 499,
             slide: function(val, ui){
-                scope.minPrice = ui.values[0];
-                scope.maxPrice = ui.values[1];
+                scope.filter.minPrice = ui.values[0];
+                scope.filter.maxPrice = ui.values[1];
                 $scope.$apply();
             },
             change: function(val, ui) {
-                scope.minPrice = ui.values[0];
-                scope.maxPrice = ui.values[1];
+                scope.filter.minPrice = ui.values[0];
+                scope.filter.maxPrice = ui.values[1];
                 $scope.$apply();
                 scope.filterChange();
             }
@@ -68,17 +68,20 @@ var SearchController = function ($location, $http, $scope, $window) {
         }).done(function (data) {
             $('.searchResults').replaceWith(data);
         });
+        scope.setUrl();
     };
 
     scope.setUrl = function () {
-        //window.history.pushState({}, 'title', url);
+        window.history.pushState({}, document.title, '?q=' + getUrl());
     };
 
     getUrl = function () {
         var q = [];
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
-        if (scope.filter.distance !== '') q.push('distance|' + scope.filter.location);
+        if (scope.filter.minPrice !== '' && scope.filter.maxPrice !== '') {
+            q.push('price|' + scope.filter.minPrice + ',' + scope.filter.maxPrice);
+        }
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
         return q.join("|");
     };
@@ -90,7 +93,7 @@ var SearchController = function ($location, $http, $scope, $window) {
         }
         scope._timer = setTimeout(function () {
             update();
-        }, 600);
+        }, 700);
     };
 
     scope.init();

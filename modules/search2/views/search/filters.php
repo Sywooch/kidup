@@ -49,10 +49,10 @@
             <div id="price-slider" ng-model="searchCtrl.filter.prices"></div>
         </div>
         <div class="minPrice">
-            {{searchCtrl.minPrice}}
+            {{searchCtrl.filter.minPrice}} DKK
         </div>
         <div class="maxPrice">
-            {{searchCtrl.maxPrice}}
+            {{searchCtrl.filter.maxPrice}} DKK
         </div>
     </div>
 </div>
