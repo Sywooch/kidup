@@ -45,7 +45,12 @@
         </h6>
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
-        <div class="panel-body">
+        <div class="panel-body"
+             ng-init='
+                searchCtrl.filter.minPrice = <?= $model->priceMin ?>;
+                searchCtrl.filter.maxPrice = <?= $model->priceMax ?>;
+                searchCtrl.updateSlider(<?= $model->priceMin ?>, <?= $model->priceMax ?>);
+            '>
             <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
         </div>
         <div class="minPrice">
