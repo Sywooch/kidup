@@ -46,8 +46,8 @@ class SearchModel extends Model
         $this->filterIsAvailable($query);
         $this->pageResults($query);
 
-        // give back the data provider
-        return $this->getDataProvider($query);
+        // give back the results
+        return $this->getResults($query);
     }
 
     /**
@@ -64,17 +64,14 @@ class SearchModel extends Model
     }
 
     /**
-     * Get a data provider.
+     * Get the results.
      *
      * @param ActiveQuery $query query object
-     * @return ActiveDataProvider data provider
+     * @return array results
      */
-    public function getDataProvider($query)
+    public function getResults($query)
     {
-        return $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false
-        ]);
+        return $query->asArray()->all();
     }
 
     /**
