@@ -58,8 +58,8 @@
             <?= Yii::t("item", "Categories") ?>
         </h6>
     </div>
-    <div class="panel-body" ng-init='categories = <?= $model->getCategories('main') ?>'>
-        <div ng-repeat="category in categories"
+    <div class="panel-body" ng-init='searchCtrl.filter.categories = <?= $model->getCategories('main') ?>'>
+        <div ng-repeat="category in searchCtrl.filter.categories"
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': category.value == 1}"
              ng-click="searchCtrl.selectCategory(category.id)">
@@ -75,8 +75,8 @@
             <?= Yii::t("item", "Age") ?>
         </h6>
     </div>
-    <div class="panel-body" ng-init='ages = <?= $model->getCategories('age') ?>'>
-        <div ng-repeat="age in ages"
+    <div class="panel-body" ng-init='searchCtrl.filter.ages = <?= $model->getCategories('age') ?>'>
+        <div ng-repeat="age in searchCtrl.filter.ages"
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': age.value == 1}"
              ng-click="searchCtrl.selectCategory(age.id)">
