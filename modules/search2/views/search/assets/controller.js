@@ -17,8 +17,8 @@ var SearchController = function ($location, $http, $scope, $window) {
         location: false
     };
 
-    scope.minPrice = 0;
-    scope.maxPrice = 499;
+    scope.priceMin = 0;
+    scope.priceMax = 499;
 
     scope._timer = null;
     scope._lastLocation = null;
@@ -43,8 +43,8 @@ var SearchController = function ($location, $http, $scope, $window) {
             min: 0,
             max: 499,
             slide: function(val, ui){
-                scope.filter.minPrice = ui.values[0];
-                scope.filter.maxPrice = ui.values[1];
+                scope.filter.priceMin = ui.values[0];
+                scope.filter.priceMax = ui.values[1];
                 $scope.$apply();
             },
             change: function(val, ui) {
@@ -63,11 +63,11 @@ var SearchController = function ($location, $http, $scope, $window) {
         }, 200);
     };
 
-    scope.updateSlider = function(minPrice, maxPrice) {
-        scope.filter.minPrice = minPrice;
-        scope.filter.maxPrice = maxPrice;
+    scope.updateSlider = function(priceMin, priceMax) {
+        scope.filter.priceMin = priceMin;
+        scope.filter.priceMax = priceMax;
         var values = {
-            'values': [parseInt(scope.filter.minPrice), parseInt(scope.filter.maxPrice)],
+            'values': [parseInt(scope.filter.priceMin), parseInt(scope.filter.priceMax)],
             'range': true,
             'min': 0,
             'max': 499
@@ -97,7 +97,7 @@ var SearchController = function ($location, $http, $scope, $window) {
         updateActiveFilters();
         $.ajax({
             'method': 'GET',
-            'url': 'results?q=' + getUrl()
+            'url': 'search/results?q=' + getUrl() + '&p=0'
         }).done(function (data) {
             $('.searchResults').replaceWith(data);
         });
@@ -114,7 +114,7 @@ var SearchController = function ($location, $http, $scope, $window) {
         };
         if (scope.filter.query !== '')      scope.activeFilter.search = true;
         if (scope.filter.location !== '')   scope.activeFilter.location = true;
-        if (scope.filter.minPrice !== '' && scope.filter.maxPrice !== '') {
+        if (scope.filter.priceMin !== '' && scope.filter.priceMax !== '') {
             scope.activeFilter.price = true;
         }
         if (getActiveCategories('category').length > 0){
@@ -127,7 +127,10 @@ var SearchController = function ($location, $http, $scope, $window) {
 
     scope.activeFilterRemove = function(filter){
         if(filter == 'search') scope.filter.query = '';
-        if(filter == 'price') scope.filter.prices = [0,499];
+        if(filter == 'price') {
+            scope.filter.priceMin = 0;
+            scope.filter.priceMax = 499;
+        }
         if(filter == 'location') scope.filter.location = '';
         if(filter == 'category'){
             $.map(scope.filter.categories, function(x){
@@ -158,8 +161,8 @@ var SearchController = function ($location, $http, $scope, $window) {
         var q = [];
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
-        if (scope.filter.minPrice !== 0 && scope.filter.maxPrice !== 499) {
-            q.push('price|' + scope.filter.minPrice + ',' + scope.filter.maxPrice);
+        if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499) {
+            q.push('price|' + scope.filter.priceMin + ',' + scope.filter.priceMax);
         }
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
         return q.join("|");

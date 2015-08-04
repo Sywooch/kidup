@@ -47,17 +47,17 @@
     <div id="refinePrice" class="panel-collapse collapse in">
         <div class="panel-body"
              ng-init='
-                searchCtrl.filter.minPrice = <?= $model->priceMin ?>;
-                searchCtrl.filter.maxPrice = <?= $model->priceMax ?>;
+                searchCtrl.filter.priceMin = <?= $model->priceMin ?>;
+                searchCtrl.filter.priceMax = <?= $model->priceMax ?>;
                 searchCtrl.updateSlider(<?= $model->priceMin ?>, <?= $model->priceMax ?>);
             '>
             <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
         </div>
         <div class="minPrice">
-            {{searchCtrl.filter.minPrice}} DKK
+            {{searchCtrl.filter.priceMin}} DKK
         </div>
         <div class="maxPrice">
-            {{searchCtrl.filter.maxPrice}} DKK
+            {{searchCtrl.filter.priceMax}} DKK
         </div>
     </div>
 </div>

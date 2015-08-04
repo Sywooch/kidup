@@ -25,8 +25,8 @@ class SearchModel extends Model
     public $location = null;
     public $categories = [];
     public $price = null;
-    public $priceMin = null;
-    public $priceMax = null;
+    public $priceMin = 0;
+    public $priceMax = 499;
     public $page = 0;
 
     /**
@@ -40,7 +40,7 @@ class SearchModel extends Model
         $query = $this->initQuery();
 
         // apply filters
-        $this->filterLocation($query, $this->location, 25 * 1000 * 99999999);
+        $this->filterLocation($query, $this->location, null);
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);
         $this->filterPrice($query, $this->priceMin, $this->priceMax);
@@ -116,7 +116,7 @@ class SearchModel extends Model
      */
     public function filterLocation($query, $location = null, $distance = null)
     {
-        if ($distance !== null && $location !== null) {
+        if ($location !== null) {
             $geodata = $this->_getGeoData($location);
             if ($geodata['success']) {
                 $latitude = $geodata['latitude'];
@@ -129,7 +129,9 @@ class SearchModel extends Model
 
                 $query->select($distanceQ . ' as distance, `item`.*');
                 $query->innerJoinWith('location');
-                $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
+                if ($distance !== null) {
+                    $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
+                }
                 $query->orderBy('distance');
             }
         }
@@ -143,9 +145,9 @@ class SearchModel extends Model
      */
     public function filterCategories($query, $categories = [])
     {
-        if (isset($categories) && $categories !== null) {
+        if (isset($categories) && $categories !== null && count($categories) > 0) {
             $query->innerJoinWith('itemHasCategories');
-            $query->andWhere(['IN', 'category_id', $categories]);
+            $query->where(['in', 'category_id', $categories]);
         }
     }
 
