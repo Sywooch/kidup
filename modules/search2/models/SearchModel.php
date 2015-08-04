@@ -67,11 +67,11 @@ class SearchModel extends Model
      * Get the results.
      *
      * @param ActiveQuery $query query object
-     * @return array results
+     * @return Object results
      */
     public function getResults($query)
     {
-        return $query->asArray()->all();
+        return $query->all();
     }
 
     /**
