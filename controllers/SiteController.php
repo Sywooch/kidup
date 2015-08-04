@@ -78,6 +78,10 @@ class SiteController extends Controller
                 debug_backtrace(); exit();
             }
             $message = $this->defaultMessage ?: Yii::t('yii', 'An internal server error occurred.');
+            if(YII_DEBUG){
+                get_call_stack();
+                exit();
+            }
         }
 
         \Yii::$app->clog->notice('page.error.'.$code, [

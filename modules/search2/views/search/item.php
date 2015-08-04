@@ -1,7 +1,6 @@
 <?php
 use yii\helpers\Url;
 use app\components\WidgetRequest;
-if($model->is_available == 0) return false;
 ?>
 
 <div class="item card-width col-xs-12 col-sm-6 col-md-4 col-lg-3">

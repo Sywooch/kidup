@@ -1,5 +1,4 @@
 <?php
-use yii\helpers\Url;
 
 $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} KidStuff'));
 \app\modules\search2\assets\ItemSearchAsset::register($this);
@@ -14,11 +13,10 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                             <div class="header">
                                 <h4 class="title">
                                     <?= Yii::t("item", "Filter") ?>
-                                    <a href="<?= Url::to('@web/search') ?>">
-                                        <button class="btn btn-danger btn-xs pull-right">
-                                            <i class="fa fa-close"></i><?= Yii::t("item", "Clear") ?>
-                                        </button>
-                                    </a>
+                                    <button class="btn btn-danger btn-xs pull-right"
+                                            ng-click="searchCtrl.removeAllActiveFilters()">
+                                        <i class="fa fa-close"></i><?= Yii::t("item", "Clear") ?>
+                                    </button>
                                 </h4>
                             </div>
                             <div class="content">
@@ -35,31 +33,38 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                             <div>
                                 <?= Yii::t("item", "Active filters:") ?>
                             </div>
-                            <div class="btn btn-default btn-sm smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin" ng-if="searchCtrl.activeFilter.search"
+                                 ng-click="searchCtrl.activeFilterRemove('search')">
                                 <strong>
                                     <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Search") ?>
                             </div>
-                            <div class="btn btn-default btn-sm smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin"
+                                 ng-if="searchCtrl.activeFilter.location"
+                                 ng-click="searchCtrl.activeFilterRemove('location')">
                                 <strong>
                                     <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Location") ?>
                             </div>
-                            <div class="btn btn-default btn-sm smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin" ng-if="searchCtrl.activeFilter.price"
+                                 ng-click="searchCtrl.activeFilterRemove('price')">
                                 <strong>
                                     <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Price") ?>
                             </div>
-                            <div class="btn btn-default btn-sm smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin" ng-if="searchCtrl.activeFilter.age"
+                                 ng-click="searchCtrl.activeFilterRemove('age')">
                                 <strong>
                                     <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
                                 <?= Yii::t("item", "Age") ?>
                             </div>
-                            <div class="btn btn-default btn-sm smallBottomMargin">
+                            <div class="btn btn-default btn-sm smallBottomMargin"
+                                 ng-if="searchCtrl.activeFilter.category"
+                                 ng-click="searchCtrl.activeFilterRemove('category')">
                                 <strong>
                                     <i class="fa fa-close" style="font-size: 16px"></i>
                                 </strong>
@@ -85,7 +90,8 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
         <!-- mobile filters -->
 
         <div class="buttonContainer">
-            <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal" data-target="#mobileFiltersModal">
+            <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
+                    data-target="#mobileFiltersModal">
                 <?= Yii::t("item", "Filters") ?>
             </button>
         </div>
@@ -99,7 +105,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                             <?= Yii::t("item", "Filters") ?><br>
                         </h4>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <?= $this->render('filters', [
                             'model' => $model,
                             'mobile' => true
