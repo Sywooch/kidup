@@ -48,6 +48,12 @@ use yii\widgets\ActiveForm;
                             'form' => $form,
                             'model' => $model
                         ]) ?>
+
+                        <!--category filter -->
+                        <?= $this->render('../../filter/category/default', [
+                            'form' => $form,
+                            'model' => $model
+                        ]) ?>
                     </div>
                 </div>
             </div>

@@ -4,24 +4,8 @@ use yii\helpers\Url;
 $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} KidStuff'));
 \app\modules\search2\assets\ItemSearchAsset::register($this);
 ?>
-<div ng-app="kidup.search" >
+<div ng-app="kidup.search">
     <div ng-controller="SearchCtrl as searchCtrl">
-        <header id="navbar-sub-menu" class="nav-down">
-            <div class="fluid-container">
-                <div class="row">
-                    <div class="pull-left leftPadding">
-                        <button class="btn btn-neutral btn-sm filter" data-toggle="modal" data-target="#filterModal">
-                            <i class="fa fa-filter"></i> <?= Yii::t("item", "Filter") ?>
-                        </button>
-                    </div>
-                    <div class="pull-left leftPadding">
-                        <div class="itemCount">x
-                            <?= Yii::t("item", "items") ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
 
         <section class="section" id="search-cards">
             <div class="container-fluid">
@@ -89,31 +73,42 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                 </div>
             </div>
         </section>
-    </div>
+        <!-- mobile filters -->
 
-</div>
+        <div class="buttonContainer">
+            <button type="button" class="btn btn-danger btn-md visible-xs btn-fill" data-toggle="modal" data-target="#mobileFiltersModal">
+                <?= Yii::t("item", "Filters") ?>
+            </button>
+        </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <?= $this->render('filters') ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+        <!-- Modal -->
+        <div class="modal fade" id="mobileFiltersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                            <?= Yii::t("item", "Filters") ?><br>
+                        </h4>
+                    </div>
+                    <div class="modal-body" >
+                        <?= $this->render('filters') ?>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 100%">
+                                    <?= Yii::t("item", "Cancel") ?>
+                                </button>
+                            </div>
+                            <div class="col-xs-8">
+                                <button type="button" class="btn btn-danger btn-fill" style="width: 100%">
+                                    <?= Yii::t("item", "Apply Filters") ?>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

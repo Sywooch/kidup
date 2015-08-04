@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\search\models;
 
+use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use Yii;
 use yii\base\Model;
@@ -17,6 +18,7 @@ class ItemModel extends Model {
 
     public $query = null;
     public $location = null;
+    public $categories = [];
     public $_distanceSliderIndex = 1;
 
     public function loadParameters($params) {
@@ -70,6 +72,10 @@ class ItemModel extends Model {
         }
 
         return $dataProvider;
+    }
+
+    public function getCategories($type){
+        return Category::find()->where(['type' => $type])->all();
     }
 
 }

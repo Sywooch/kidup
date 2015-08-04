@@ -25,6 +25,7 @@ class ItemSearchAsset extends AssetBundle
         // load filters
         'item/filter/query.factory.js',
         'item/filter/location.factory.js',
+        'item/filter/categories.factory.js',
 
         // load main components
         'item/search.controller.js',

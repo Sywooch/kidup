@@ -184,3 +184,4 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
         </div>
     </section>
 </div>
+
