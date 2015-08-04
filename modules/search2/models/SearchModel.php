@@ -21,9 +21,10 @@ use yii\helpers\Json;
 class SearchModel extends Model
 {
 
-    public $query = 'bla';
-    public $location = 'bla2';
+    public $query = null;
+    public $location = null;
     public $categories = [];
+    public $price = null;
     public $priceMin = null;
     public $priceMax = null;
     public $page = 0;
@@ -256,6 +257,20 @@ class SearchModel extends Model
                 $params[$part] = $parts[$i + 1];
             }
             continue;
+        }
+
+        if (isset($params['price'])) {
+            $parts = explode(',', $params['price']);
+            if (count($parts) == 2) {
+                $params['priceMin'] = $parts[0];
+                $params['priceMax'] = $parts[1];
+            } else {
+                unset($params['price']);
+            }
+        }
+
+        if (isset($params['categories'])) {
+            $params['categories'] = explode(',', $params['categories']);
         }
 
         return $params;

@@ -47,15 +47,25 @@ var SearchController = function ($location, $http, $scope, $window) {
                 $scope.$apply();
             },
             change: function(val, ui) {
-                scope.filter.minPrice = ui.values[0];
-                scope.filter.maxPrice = ui.values[1];
-                $scope.$apply();
                 scope.filterChange();
             }
         };
         $("#price-slider").slider(sliderConf);
         $("#price-slider-mobile").slider(sliderConf);
     };
+
+    scope.updateSlider = function(minPrice, maxPrice) {
+        scope.filter.minPrice = minPrice;
+        scope.filter.maxPrice = maxPrice;
+        var values = {
+            'values': [parseInt(scope.filter.minPrice), parseInt(scope.filter.maxPrice)],
+            'range': true,
+            'min': 0,
+            'max': 499
+        };
+        $("#price-slider").slider(values);
+        $("#price-slider-mobile").slider(values);
+    }
 
     var getActiveCategories = function (type) {
         var res = [];
@@ -147,7 +157,6 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     scope.filterChange = function () {
-        scope.setUrl();
         if (scope._timer !== null) {
             clearTimeout(scope._timer)
         }
