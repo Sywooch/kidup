@@ -62,7 +62,8 @@
         <div ng-repeat="category in searchCtrl.filter.categories"
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': category.value == 1}"
-             ng-click="searchCtrl.selectCategory(category.id)">
+             ng-click="searchCtrl.selectCategory(category.id)"
+            onclick="alert('test')">
             {{category.name}} {{category.id}}
         </div>
     </div>
