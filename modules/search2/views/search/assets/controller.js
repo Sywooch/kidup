@@ -5,9 +5,16 @@ var SearchController = function ($location, $http, $scope, $window) {
         query: '',
         prices: [],
         location: '',
-        distance: '',
         categories: [],
         ages: []
+    };
+
+    scope.activeFilter = {
+        search: false,
+        price: false,
+        age: false,
+        category: false,
+        location: false
     };
 
     scope.minPrice = 0;
@@ -69,20 +76,25 @@ var SearchController = function ($location, $http, $scope, $window) {
         $("#price-slider-mobile").slider(values);
     }
 
-    var getActiveCategories = function () {
+    var getActiveCategories = function (type) {
         var res = [];
-        $.map(scope.filter.categories, function (cat) {
-            if (cat.value == 1) res.push(cat.id);
-        });
+        if(typeof type === "undefined" || type == "category"){
+            $.map(scope.filter.categories, function (cat) {
+                if (cat.value == 1) res.push(cat.id);
+            });
+        }
 
-        $.map(scope.filter.ages, function (cat) {
-            if (cat.value == 1) res.push(cat.id);
-        });
+        if(typeof type === "undefined" || type == "age") {
+            $.map(scope.filter.ages, function (cat) {
+                if (cat.value == 1) res.push(cat.id);
+            });
+        }
 
         return res;
     };
 
     var update = function () {
+        updateActiveFilters();
         $.ajax({
             'method': 'GET',
             'url': 'results?q=' + getUrl()
@@ -90,6 +102,52 @@ var SearchController = function ($location, $http, $scope, $window) {
             $('.searchResults').replaceWith(data);
         });
         scope.setUrl();
+    };
+
+    var updateActiveFilters = function(){
+        scope.activeFilter = {
+            search: false,
+            price: false,
+            age: false,
+            category: false,
+            location: false
+        };
+        if (scope.filter.query !== '')      scope.activeFilter.search = true;
+        if (scope.filter.location !== '')   scope.activeFilter.location = true;
+        if (scope.filter.minPrice !== '' && scope.filter.maxPrice !== '') {
+            scope.activeFilter.price = true;
+        }
+        if (getActiveCategories('category').length > 0){
+            scope.activeFilter.category = true;
+        }
+        if (getActiveCategories('age').length > 0){
+            scope.activeFilter.age = true;
+        }
+    };
+
+    scope.activeFilterRemove = function(filter){
+        if(filter == 'search') scope.filter.query = '';
+        if(filter == 'price') scope.filter.prices = [0,499];
+        if(filter == 'location') scope.filter.location = '';
+        if(filter == 'category'){
+            $.map(scope.filter.categories, function(x){
+                x.value = 0;
+            })
+        }
+        if(filter == 'age') {
+            $.map(scope.filter.ages, function(x){
+                x.value = 0;
+            })
+        }
+        scope.activeFilter[filter] = false;
+    };
+
+    scope.removeAllActiveFilters = function(){
+        scope.activeFilterRemove('search');
+        scope.activeFilterRemove('price');
+        scope.activeFilterRemove('category');
+        scope.activeFilterRemove('age');
+        scope.activeFilterRemove('location');
     };
 
     scope.setUrl = function () {
@@ -100,7 +158,7 @@ var SearchController = function ($location, $http, $scope, $window) {
         var q = [];
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
-        if (scope.filter.minPrice !== '' && scope.filter.maxPrice !== '') {
+        if (scope.filter.minPrice !== 0 && scope.filter.maxPrice !== 499) {
             q.push('price|' + scope.filter.minPrice + ',' + scope.filter.maxPrice);
         }
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
@@ -121,10 +179,6 @@ var SearchController = function ($location, $http, $scope, $window) {
     return scope;
 };
 
-angular.module('kidup.search', []).config(function ($locationProvider) {
-    //$locationProvider.html5Mode({
-    //    enabled: true
-    //});
-});
+angular.module('kidup.search', []);
 
 angular.module('kidup.search').controller('SearchCtrl', SearchController);
