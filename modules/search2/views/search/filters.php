@@ -23,7 +23,7 @@
         <div class="panel-body">
             <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
                 'options' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control location-input',
                     'ng-model' => 'searchCtrl.filter.location',
                     'ng-change' => "searchCtrl.filterChange()",
                     'ng-init' => 'searchCtrl.filter.location = "' . $model->location . '"'

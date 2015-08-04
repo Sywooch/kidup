@@ -279,11 +279,18 @@ class SearchModel extends Model
     public function getCategories($type) {
         $categories = Category::find();
         $categories->andWhere('type = :type', [':type' => $type]);
-        return Json::encode(
-            $categories
-                ->asArray()
-                ->all()
-        );
+        $cats = $categories
+            ->asArray()
+            ->all()
+        ;
+        foreach ($cats as $index => $cat) {
+            if (in_array($cat['id'], $this->categories)) {
+                $cats[$index]['value'] = true;
+            } else {
+                $cats[$index]['value'] = false;
+            }
+        }
+        return Json::encode($cats);
     }
 
 }

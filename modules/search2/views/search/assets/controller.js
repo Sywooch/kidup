@@ -14,6 +14,7 @@ var SearchController = function ($location, $http, $scope, $window) {
     scope.maxPrice = 499;
 
     scope._timer = null;
+    scope._lastLocation = null;
 
     scope.selectCategory = function (id) {
         $.map(scope.filter.categories, function (el, i) {
@@ -45,6 +46,14 @@ var SearchController = function ($location, $http, $scope, $window) {
         };
         $("#price-slider").slider(sliderConf);
         $("#price-slider-mobile").slider(sliderConf);
+        setInterval(function() {
+            var location = $('.location-input').val();
+            if (location !== scope._lastLocation) {
+                scope._lastLocation = location;
+                scope.filter.location = location;
+                scope.filterChange();
+            }
+        }, 200);
     };
 
     scope.updateSlider = function(minPrice, maxPrice) {
