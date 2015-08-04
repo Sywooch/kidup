@@ -78,7 +78,7 @@ class SearchController extends Controller {
         $results = $model->findItems();
 
         // render the results
-        return $this->renderPartial('results/index', [
+        return $this->renderPartial('results', [
             'results' => $results
         ]);
     }

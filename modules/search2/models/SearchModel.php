@@ -3,6 +3,7 @@ namespace app\modules\search2\models;
 
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
+use app\modules\item\models\Location;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -20,66 +21,194 @@ class SearchModel extends Model
     public $query = null;
     public $location = null;
     public $categories = [];
-    public $_distanceSliderIndex = 1;
+    public $priceMin = null;
+    public $priceMax = null;
 
-    public function loadParameters($params)
-    {
-        $this->parseQueryString($params);
-    }
-
+    /**
+     * Find items.
+     *
+     * @return ActiveDataProvider the results
+     */
     public function findItems()
     {
-        $query = Item::find();
+        // initialize the query
+        $query = $this->initQuery();
 
-        $dataProvider = new ActiveDataProvider([
+        // apply filters
+        $this->filterLocation($query, $this->location, 25 * 1000);
+        $this->filterSearchTerm($query, $this->query);
+        $this->filterCategories($query, $this->categories);
+        $this->filterPrice($query, $this->priceMin, $this->priceMax);
+
+        // give back the data provider
+        return $this->getDataProvider($query);
+    }
+
+    /**
+     * Initialize the query.
+     *
+     * @return query object
+     */
+    public function initQuery() {
+        $query = Item::find();
+        $query->select('`item`.*');
+        return $query;
+    }
+
+    /**
+     * Get a data provider.
+     *
+     * @param $query query object
+     * @return ActiveDataProvider data provider
+     */
+    public function getDataProvider($query) {
+        return $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false
         ]);
+    }
 
-        $query->select('`item`.*');
+    /**
+     * Filter on a search term.
+     *
+     * @param $query
+     * @param $searchTerm
+     */
+    public function filterSearchTerm($query, $searchTerm = null) {
+        if ($searchTerm !== null) {
+            $query->andWhere(['LIKE', 'name', $searchTerm]);
+        }
+    }
 
-        /*$distanceQ = '( 6371  * acos( cos( radians( ' . floatval($this->latitude) . ' ) )
-                    * cos( radians( `location`.`latitude` ) )
-                    * cos( radians( `location`.`longitude` ) - radians(' . floatval($this->longitude) . ') )
-                    + sin( radians(' . floatval($this->latitude) . ') )
-                    * sin( radians( `location`.`latitude` ) ) ) )';
+    /**
+     * Filter the results by location.
+     *
+     * @param $query        the query object to apply the filter on
+     * @param $location     the location to filter on
+     * @param $distance     the distance (in meters)
+     */
+    public function filterLocation($query, $location = null, $distance = null) {
+        if ($distance !== null) {
+            $geodata = $this->_getGeoData($location);
+            if ($geodata['success']) {
+                $latitude = $geodata['latitude'];
+                $longitude = $geodata['longitude'];
+                $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($latitude) . ' ) )
+                        * cos( radians( `location`.`latitude` ) )
+                        * cos( radians( `location`.`longitude` ) - radians(' . floatval($longitude) . ') )
+                        + sin( radians(' . floatval($latitude) . ') )
+                        * sin( radians( `location`.`latitude` ) ) ) )';
 
-        $query->select($distanceQ . ' as distance, `item`.*');
-        $query->orderBy('distance');
-        $query->innerJoinWith(['location', 'itemHasCategories']);*/
-
-//        if(isset($this->distance)){
-//            $query->andWhere('distance < :meters', [':meters' => $this->convertDistanceInternal($this->distance)]);
-//        }
-
-        /*if(isset($this->categories)){
-            foreach ($this->categories as $id) {
-                $query->andWhere('category_id = :id', [':id' => $id]);
+                $query->select($distanceQ . ' as distance, `item`.*');
+                $query->innerJoinWith('location');
+                $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
+                $query->orderBy('distance');
             }
         }
+    }
 
-        if (isset($this->priceMin) && isset($this->priceMax)) {
-            $query->andWhere('price_week > :low and price_week < :high', [
-                ':low' => $this->priceMin,
-                ':high' => $this->priceMax
+    /**
+     * Filter the results by categories.
+     *
+     * @param $query        the query object to apply the filter on
+     * @param $categories   the categories (ids) to filter on
+     */
+    public function filterCategories($query, $categories = null) {
+        if (isset($categories) && $categories !== null) {
+            foreach ($categories as $id) {
+                $query->orWhere(['IN', 'category_id', $categories);
+            }
+        }
+    }
+
+    /**
+     * Filter the results by price.
+     *
+     * @param $query        the query object to apply the filter on
+     * @param $priceMin     the minimum price to search for
+     * @param $priceMax     the maximum price to search for
+     */
+    public function filterPrice($query, $priceMin = null, $priceMax = null) {
+        if (isset($priceMin) && $priceMin !== null) {
+            $query->andWhere('price_week >= :low', [
+                ':low' => $priceMin,
             ]);
         }
-
-        $query->andWhere(['is_available' => 1]);*/
-
-        // search for the query
-        if ($this->query !== null) {
-            $query->andWhere(['LIKE', 'name', $this->query]);
+        if (isset($priceMax) && $priceMax !== null) {
+            $query->andWhere('price_week <= :high', [
+                ':high' => $priceMax,
+            ]);
         }
-
-        return $dataProvider;
     }
 
-    public function getCategories($type)
+    /**
+     * Get geographical data for a given location.
+     *
+     * @param null $location    the location to retrieve the geographical data for
+     * @return array with keys:
+     *              longitude   the found longitude for location
+     *              latitude    the found latitude for location
+     *              success     whether the geographical data was found
+     */
+    private function _getGeoData($location = null) {
+        if (!isset($location) || $location === null) {
+            if (\Yii::$app->session->has('location_cache')) {
+                $l = Json::decode(\Yii::$app->session->get('location_cache'));
+                $latitude = $l['latitude'];
+                $longitude = $l['longitude'];
+            } else {
+                $location = IpLocation::get(IpLocation::getIp());
+                $latitude = $location->latitude;
+                $longitude = $location->longitude;
+                $location = $location->city . "," . $location->country;
+                \Yii::$app->session->set('location_cache', Json::encode([
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'location' => $location,
+                ]));
+            }
+        } else {
+            $location = Location::getByAddress($location);
+            $latitude = $location['latitude'];
+            $longitude = $location['longitude'];
+        }
+        return [
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+            'success' => (strlen($longitude) > 0 && strlen($latitude) > 0 && $location !== null)
+        ];
+    }
+
+    /**
+     * Load the parameters.
+     *
+     * @param $params parameters (result from parse query string)
+     */
+    public function loadParameters($params)
     {
-        return Category::find()->where(['type' => $type])->all();
+        if (isset($params['query'])) {
+            $this->query = $params['query'];
+        }
+        if (isset($params['location'])) {
+            $this->location = $params['location'];
+        }
+        if (isset($params['priceMin'])) {
+            $this->priceMin = $params['priceMin'];
+        }
+        if (isset($params['priceMax'])) {
+            $this->priceMax = $params['priceMax'];
+        }
+        if (isset($params['categories'])) {
+            $this->categories = $params['categories'];
+        }
     }
 
+    /**
+     * Parse the query string.
+     *
+     * @param $query query string
+     * @return array query parameters
+     */
     public function parseQueryString($query)
     {
         $params = [];
@@ -93,4 +222,5 @@ class SearchModel extends Model
 
         return $params;
     }
+
 }
