@@ -2,14 +2,14 @@
 
 namespace app\modules\item\controllers;
 
+use app\components\Error;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
-use yii\bootstrap\Html;
-use yii\helpers\Url;
-use app\components\Error;
 use app\modules\item\models\Item;
-use yii\web\ForbiddenHttpException;
+use yii\bootstrap\Html;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class ViewController extends Controller
@@ -29,12 +29,19 @@ class ViewController extends Controller
                     ],
                 ],
             ],
+            'cache' => [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60,
+                'variations' => [
+                    \Yii::$app->language,
+                ],
+            ],
         ];
     }
 
     public function actionIndex($id)
     {
-//        $this->transparentNav = true;
         $this->noContainer = true;
         Url::remember();
 
@@ -45,7 +52,7 @@ class ViewController extends Controller
         if ($item == null) {
             throw new NotFoundHttpException();
         }
-        if($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id){
+        if ($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id) {
             throw new ForbiddenHttpException("This item is not yet available");
         }
         $location = $item->location;
@@ -63,13 +70,13 @@ class ViewController extends Controller
 
         $price = $item->getAdPrice();
 
-        if($item->is_available == 0){
+        if ($item->is_available == 0) {
             $bookingForm = \Yii::t('item', 'This is a preview. Go here {0} to publish this item.', [
-                Html::a(\Yii::t('item', 'link'), '@web/item/'.$item->id.'/edit')
+                Html::a(\Yii::t('item', 'link'), '@web/item/' . $item->id . '/edit')
             ]);
-        }elseif($item->owner_id == \Yii::$app->user->id){
+        } elseif ($item->owner_id == \Yii::$app->user->id) {
             $bookingForm = \Yii::t('app', 'This item belongs to you.');
-        }else{
+        } else {
             $bookingForm = WidgetRequest::request(WidgetRequest::BOOKING_CREATE_FORM, [
                 'item_id' => $item->id,
                 'currency_id' => $item->currency_id,
@@ -80,7 +87,8 @@ class ViewController extends Controller
                 ]
             ]);
         }
-        return $this->render('view', [
+
+        $res = [
             'model' => $item,
             'location' => $location,
             'images' => $images,
@@ -90,6 +98,8 @@ class ViewController extends Controller
                 'currency' => $item->currency->forex_name
             ],
             'bookingForm' => $bookingForm,
-        ]);
+        ];
+
+        return $this->render('view', $res);
     }
 }

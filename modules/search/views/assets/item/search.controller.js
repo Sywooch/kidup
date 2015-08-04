@@ -33,5 +33,4 @@ function ItemSearchController($scope, ItemSearchFactory) {
      * Initialize the search module.
      */
     initialize();
-
 }
