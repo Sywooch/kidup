@@ -63,7 +63,7 @@
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': category.value == 1}"
              ng-click="searchCtrl.selectCategory(category.id)">
-            {{category.name}}
+            {{category.name}} {{category.id}}
         </div>
     </div>
 </div>
