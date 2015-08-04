@@ -36,6 +36,12 @@ var SearchController = function ($location, $http, $scope, $window) {
                 scope.minPrice = ui.values[0];
                 scope.maxPrice = ui.values[1];
                 $scope.$apply();
+            },
+            change: function(val, ui) {
+                scope.minPrice = ui.values[0];
+                scope.maxPrice = ui.values[1];
+                $scope.$apply();
+                scope.filterChange();
             }
         });
     };
