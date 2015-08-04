@@ -46,7 +46,13 @@
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
         <div class="panel-body">
-            <div id="price-slider" ng-model="searchCtrl.filter.prices"></div>
+            <div id="price-slider"></div>
+        </div>
+        <div class="minPrice">
+            {{searchCtrl.minPrice}}
+        </div>
+        <div class="maxPrice">
+            {{searchCtrl.maxPrice}}
         </div>
     </div>
 </div>
@@ -63,7 +69,7 @@
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': category.value == 1}"
              ng-click="searchCtrl.selectCategory(category.id)">
-            {{category.name}} {{category.id}}
+            {{category.name}}
         </div>
     </div>
 </div>
