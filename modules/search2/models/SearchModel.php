@@ -97,7 +97,7 @@ class SearchModel extends Model
     }
 
     /**
-     * Filter on a search term.
+     * Filter on whether an item is available.
      *
      * @param ActiveQuery $query
      */
@@ -143,7 +143,8 @@ class SearchModel extends Model
     public function filterCategories($query, $categories = [])
     {
         if (isset($categories) && $categories !== null) {
-            $query->orWhere(['IN', 'category_id', $categories]);
+            $query->innerJoinWith('itemHasCategories');
+            $query->andWhere(['IN', 'category_id', $categories]);
         }
     }
 
