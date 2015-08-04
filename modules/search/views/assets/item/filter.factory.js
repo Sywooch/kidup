@@ -29,5 +29,4 @@ function FilterFactory() {
             }, 700));
         });
     }
-
 }
