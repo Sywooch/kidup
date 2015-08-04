@@ -40,7 +40,7 @@ class SearchModel extends Model
         $query = $this->initQuery();
 
         // apply filters
-        $this->filterLocation($query, $this->location, 25 * 1000);
+        $this->filterLocation($query, $this->location, 25 * 1000 * 99999999);
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);
         $this->filterPrice($query, $this->priceMin, $this->priceMax);
