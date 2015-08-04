@@ -21,6 +21,7 @@ class ItemSearchAsset extends AssetBundle
 
     public $js = [
         'controller.js',
+        'infinity.directive.js',
     ];
 
     public $depends = [

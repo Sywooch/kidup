@@ -9,7 +9,6 @@ if($model->is_available == 0) return false;
         <div class="card">
             <div class="image"
                  style="background-image: url('<?= $model->getImageUrls()[0]['medium'] ?>'); background-size: cover; background-position: 50% 50%;">
-                <div class="filter filter-primary"></div>
                 <div class="price-badge"><span>dkk</span> <?= $model->price_week ?></div>
             </div>
             <div class="content">

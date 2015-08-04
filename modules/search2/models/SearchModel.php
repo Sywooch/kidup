@@ -7,6 +7,7 @@ use app\modules\item\models\Location;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\helpers\Json;
 
 /**
@@ -24,6 +25,7 @@ class SearchModel extends Model
     public $categories = [];
     public $priceMin = null;
     public $priceMax = null;
+    public $page = 0;
 
     /**
      * Find items.
@@ -40,6 +42,8 @@ class SearchModel extends Model
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);
         $this->filterPrice($query, $this->priceMin, $this->priceMax);
+        $this->filterIsAvailable($query);
+        $this->pageResults($query);
 
         // give back the data provider
         return $this->getDataProvider($query);
@@ -48,21 +52,24 @@ class SearchModel extends Model
     /**
      * Initialize the query.
      *
-     * @return query object
+     * @return ActiveQuery query object
      */
-    public function initQuery() {
+    public function initQuery()
+    {
         $query = Item::find();
         $query->select('`item`.*');
+
         return $query;
     }
 
     /**
      * Get a data provider.
      *
-     * @param $query query object
+     * @param ActiveQuery $query query object
      * @return ActiveDataProvider data provider
      */
-    public function getDataProvider($query) {
+    public function getDataProvider($query)
+    {
         return $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false
@@ -70,26 +77,47 @@ class SearchModel extends Model
     }
 
     /**
+     * Get a data provider.
+     *
+     * @param ActiveQuery $query query object
+     */
+    public function pageResults($query){
+        $query->limit(10)->offset(round($this->page) * 10);
+    }
+
+    /**
      * Filter on a search term.
      *
-     * @param $query
+     * @param ActiveQuery $query
      * @param $searchTerm
      */
-    public function filterSearchTerm($query, $searchTerm = null) {
+    public function filterSearchTerm($query, $searchTerm = null)
+    {
         if ($searchTerm !== null) {
             $query->andWhere(['LIKE', 'name', $searchTerm]);
         }
     }
 
     /**
+     * Filter on a search term.
+     *
+     * @param ActiveQuery $query
+     */
+    public function filterIsAvailable($query)
+    {
+        $query->andWhere(['is_available' => 1]);
+    }
+
+    /**
      * Filter the results by location.
      *
-     * @param $query        the query object to apply the filter on
-     * @param $location     the location to filter on
-     * @param $distance     the distance (in meters)
+     * @param ActiveQuery $query the query object to apply the filter on
+     * @param array $location location: array with longitude and latitude properties
+     * @param int $distance the distance (in meters)
      */
-    public function filterLocation($query, $location = null, $distance = null) {
-        if ($distance !== null) {
+    public function filterLocation($query, $location = null, $distance = null)
+    {
+        if ($distance !== null && $location !== null) {
             $geodata = $this->_getGeoData($location);
             if ($geodata['success']) {
                 $latitude = $geodata['latitude'];
@@ -111,10 +139,11 @@ class SearchModel extends Model
     /**
      * Filter the results by categories.
      *
-     * @param $query        the query object to apply the filter on
-     * @param $categories   the categories (ids) to filter on
+     * @param ActiveQuery $query the query object to apply the filter on
+     * @param array $categories the categories (ids) to filter on
      */
-    public function filterCategories($query, $categories = []) {
+    public function filterCategories($query, $categories = [])
+    {
         if (isset($categories) && $categories !== null) {
             $query->orWhere(['IN', 'category_id', $categories]);
         }
@@ -123,11 +152,12 @@ class SearchModel extends Model
     /**
      * Filter the results by price.
      *
-     * @param $query        the query object to apply the filter on
-     * @param $priceMin     the minimum price to search for
-     * @param $priceMax     the maximum price to search for
+     * @param ActiveQuery $query the query object to apply the filter on
+     * @param int $priceMin the minimum price to search for
+     * @param int $priceMax the maximum price to search for
      */
-    public function filterPrice($query, $priceMin = null, $priceMax = null) {
+    public function filterPrice($query, $priceMin = null, $priceMax = null)
+    {
         if (isset($priceMin) && $priceMin !== null) {
             $query->andWhere('price_week >= :low', [
                 ':low' => $priceMin,
@@ -143,14 +173,15 @@ class SearchModel extends Model
     /**
      * Get geographical data for a given location.
      *
-     * @param null $location    the location to retrieve the geographical data for
+     * @param null $location the location to retrieve the geographical data for
      * @return array with keys:
      *              longitude   the found longitude for location
      *              latitude    the found latitude for location
      *              success     whether the geographical data was found
      */
-    private function _getGeoData($location = null) {
-        if (!isset($location) || $location === null) {
+    private function _getGeoData($location = null)
+    {
+        if (isset($location) && $location !== null) {
             if (\Yii::$app->session->has('location_cache')) {
                 $l = Json::decode(\Yii::$app->session->get('location_cache'));
                 $latitude = $l['latitude'];
@@ -171,6 +202,7 @@ class SearchModel extends Model
             $latitude = $location['latitude'];
             $longitude = $location['longitude'];
         }
+
         return [
             'longitude' => $longitude,
             'latitude' => $latitude,
@@ -181,7 +213,7 @@ class SearchModel extends Model
     /**
      * Load the parameters.
      *
-     * @param $params parameters (result from parse query string)
+     * @param array $params array parameters (result from parse query string)
      */
     public function loadParameters($params)
     {
@@ -203,9 +235,17 @@ class SearchModel extends Model
     }
 
     /**
+     * Sets the page number of the requested results
+     * @param int $page
+     */
+    public function setPage($page){
+        $this->page = $page;
+    }
+
+    /**
      * Parse the query string.
      *
-     * @param $query query string
+     * @param string $query query string
      * @return array query parameters
      */
     public function parseQueryString($query)

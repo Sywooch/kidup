@@ -4,9 +4,8 @@ use yii\helpers\Url;
 $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} KidStuff'));
 \app\modules\search2\assets\ItemSearchAsset::register($this);
 ?>
-<div ng-app="kidup.search">
+<div ng-app="kidup.search" id="search">
     <div ng-controller="SearchCtrl as searchCtrl">
-
         <section class="section" id="search-cards">
             <div class="container-fluid">
                 <div class="row">
@@ -29,7 +28,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                         <!-- end card -->
                     </div>
                     <div class="col-md-9 col-log-10">
-                        <div class="row col-xs-12">
+                        <div class="row col-xs-12 hidden-xs hidden-sm">
                             <div class="btn btn-info btn-xs smallBottomMargin">
                                 <strong>
                                     <i class="fa fa-close"></i>
@@ -60,15 +59,16 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                         </div>
                         <br/><br/>
 
-                        <div class="row col-xs-12">
-                            <?php
-                            // render the results
-                            //                    echo $this->render('results', [
-                            ////                        'dataProvider' => $dataProvider
-                            //                    ]);
-                            ?>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php
+                                // render the results
+                                echo $this->render('results', [
+//                                                    'dataProvider' => $dataProvider
+                                ]);
+                                ?>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -23,12 +23,12 @@ class SearchController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index', 'results'],
                 'rules' => [
                     [
                         // all users
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'results'],
                         'roles' => ['?', '@'],
                     ],
                 ],
@@ -41,7 +41,7 @@ class SearchController extends Controller {
      *
      * @return string
      */
-    public function actionIndex($q = '') {
+    public function actionIndex($q = '', $p = 0) {
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
         $this->noContainer = true;
@@ -50,7 +50,9 @@ class SearchController extends Controller {
         $model = new SearchModel();
 
         // load the parameters
-        $model->loadParameters($q);
+        $model->loadParameters($model->parseQueryString($q));
+
+        $model->setPage($p);
 
         // load the search results
         $results = $model->findItems();
@@ -67,12 +69,14 @@ class SearchController extends Controller {
      *
      * @return string
      */
-    public function actionResults($q) {
+    public function actionResults($q, $p = 0) {
         // load the item search model
         $model = new SearchModel();
 
         // load the parameters
-        $model->loadParameters($q);
+        $model->loadParameters($model->parseQueryString($q));
+
+        $model->setPage($p);
 
         // load the search results
         $results = $model->findItems();
