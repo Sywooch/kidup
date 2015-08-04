@@ -6,14 +6,13 @@
         </h6>
     </div>
     <div id="refineQuery" class="panel-collapse collapse in">
-        <div class="panel-body">
+        <div class="panel-body" ng-init='searchCtrl.filter.query = "<?= $model->query ?>"'>
             <input class="form-control" type="text" ng-model="searchCtrl.filter.query" ng-change="searchCtrl.filterChange()"/>
         </div>
     </div>
 </div>
 
 <!--location-->
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h6 class="panel-title">
@@ -26,7 +25,8 @@
                 'options' => [
                     'class' => 'form-control',
                     'ng-model' => 'searchCtrl.filter.location',
-                    'ng-change' => "searchCtrl.filterChange()"
+                    'ng-change' => "searchCtrl.filterChange()",
+                    'ng-init' => 'searchCtrl.filter.location = "' . $model->location . '"'
                 ],
                 'autocompleteOptions' => [
                     'types' => ['geocode']
@@ -58,8 +58,8 @@
             <?= Yii::t("item", "Categories") ?>
         </h6>
     </div>
-    <div class="panel-body ">
-        <div ng-repeat="category in searchCtrl.filter.categories"
+    <div class="panel-body" ng-init='categories = <?= $model->getCategories('main') ?>'>
+        <div ng-repeat="category in categories"
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': category.value == 1}"
              ng-click="searchCtrl.selectCategory(category.id)">
@@ -75,8 +75,8 @@
             <?= Yii::t("item", "Age") ?>
         </h6>
     </div>
-    <div class="panel-body">
-        <div ng-repeat="age in searchCtrl.filter.ages"
+    <div class="panel-body" ng-init='ages = <?= $model->getCategories('age') ?>'>
+        <div ng-repeat="age in ages"
              class="btn btn-default btn-xs smallBottomMargin"
              ng-class="{'btn-primary': age.value == 1}"
              ng-click="searchCtrl.selectCategory(age.id)">

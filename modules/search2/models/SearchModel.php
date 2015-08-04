@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\search2\models;
 
+use app\modules\item\models\Category;
 use app\modules\item\models\IpLocation;
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
@@ -19,8 +20,8 @@ use yii\helpers\Json;
 class SearchModel extends Model
 {
 
-    public $query = null;
-    public $location = null;
+    public $query = 'bla';
+    public $location = 'bla2';
     public $categories = [];
     public $priceMin = null;
     public $priceMax = null;
@@ -220,6 +221,16 @@ class SearchModel extends Model
         }
 
         return $params;
+    }
+
+    public function getCategories($type) {
+        $categories = Category::find();
+        $categories->andWhere('type = :type', [':type' => $type]);
+        return Json::encode(
+            $categories
+                ->asArray()
+                ->all()
+        );
     }
 
 }

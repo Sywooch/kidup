@@ -23,7 +23,9 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                                 </h4>
                             </div>
                             <div class="content">
-                                <?= $this->render('filters') ?>
+                                <?= $this->render('filters', [
+                                    'model' => $model
+                                ]) ?>
                             </div>
                         </div>
                         <!-- end card -->
@@ -76,7 +78,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
         <!-- mobile filters -->
 
         <div class="buttonContainer">
-            <button type="button" class="btn btn-danger btn-md visible-xs btn-fill" data-toggle="modal" data-target="#mobileFiltersModal">
+            <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal" data-target="#mobileFiltersModal">
                 <?= Yii::t("item", "Filters") ?>
             </button>
         </div>
@@ -91,7 +93,9 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} Ki
                         </h4>
                     </div>
                     <div class="modal-body" >
-                        <?= $this->render('filters') ?>
+                        <?= $this->render('filters', [
+                            'model' => $model
+                        ]) ?>
                     </div>
                     <div class="modal-footer">
                         <div class="row">
