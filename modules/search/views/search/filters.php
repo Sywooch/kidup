@@ -6,7 +6,7 @@
         </h6>
     </div>
     <div id="refineQuery" class="panel-collapse collapse in">
-        <div class="panel-body" ng-init='searchCtrl.filter.query = "<?= $model->query ?>"'>
+        <div class="panel-body" ng-init="searchCtrl.filter.query = '<?= $model->query ?>'">
             <input class="form-control" type="text" ng-model="searchCtrl.filter.query" ng-change="searchCtrl.filterChange()"/>
         </div>
     </div>

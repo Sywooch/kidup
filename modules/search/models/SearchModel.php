@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\search2\models;
+namespace app\modules\search\models;
 
 use app\modules\item\models\Category;
 use app\modules\item\models\IpLocation;
@@ -81,7 +81,7 @@ class SearchModel extends Model
      * @param ActiveQuery $query query object
      */
     public function pageResults($query){
-        $query->limit(10)->offset(round($this->page) * 10);
+        $query->limit(12)->offset(round($this->page) * 12);
     }
 
     /**

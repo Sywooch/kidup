@@ -1,4 +1,4 @@
-var SearchController = function ($location, $http, $scope, $window) {
+var SearchController = function ($location, $http, $scope, $rootScope) {
     var scope = {};
 
     scope.filter = {
@@ -37,33 +37,7 @@ var SearchController = function ($location, $http, $scope, $window) {
         scope.filterChange();
     };
 
-    scope.init = function () {
-        var sliderConf = {
-            range: true,
-            min: 0,
-            max: 499,
-            slide: function(val, ui){
-                scope.filter.priceMin = ui.values[0];
-                scope.filter.priceMax = ui.values[1];
-                $scope.$apply();
-            },
-            change: function(val, ui) {
-                scope.filterChange();
-            }
-        };
-        $("#price-slider").slider(sliderConf);
-        $("#price-slider-mobile").slider(sliderConf);
-        setInterval(function() {
-            var location = $('.location-input').val();
-            if (location !== scope._lastLocation) {
-                scope._lastLocation = location;
-                scope.filter.location = location;
-                scope.filterChange();
-            }
-        }, 200);
-    };
-
-    scope.updateSlider = function(priceMin, priceMax) {
+    scope.updateSlider = function (priceMin, priceMax) {
         scope.filter.priceMin = priceMin;
         scope.filter.priceMax = priceMax;
         var values = {
@@ -74,17 +48,17 @@ var SearchController = function ($location, $http, $scope, $window) {
         };
         $("#price-slider").slider(values);
         $("#price-slider-mobile").slider(values);
-    }
+    };
 
     var getActiveCategories = function (type) {
         var res = [];
-        if(typeof type === "undefined" || type == "category"){
+        if (typeof type === "undefined" || type == "category") {
             $.map(scope.filter.categories, function (cat) {
                 if (cat.value == 1) res.push(cat.id);
             });
         }
 
-        if(typeof type === "undefined" || type == "age") {
+        if (typeof type === "undefined" || type == "age") {
             $.map(scope.filter.ages, function (cat) {
                 if (cat.value == 1) res.push(cat.id);
             });
@@ -94,17 +68,18 @@ var SearchController = function ($location, $http, $scope, $window) {
     };
 
     var update = function () {
-        updateActiveFilters();
+        // using $http here fucks up something with the url, use $.ajax!
         $.ajax({
             'method': 'GET',
-            'url': 'search/results?q=' + getUrl() + '&p=0'
+            'url': 'search-results?q=' + getUrl() + '&p=0'
         }).done(function (data) {
             $('.searchResults').replaceWith(data);
         });
         scope.setUrl();
+        updateActiveFilters();
     };
 
-    var updateActiveFilters = function(){
+    var updateActiveFilters = function () {
         scope.activeFilter = {
             search: false,
             price: false,
@@ -114,46 +89,48 @@ var SearchController = function ($location, $http, $scope, $window) {
         };
         if (scope.filter.query !== '')      scope.activeFilter.search = true;
         if (scope.filter.location !== '')   scope.activeFilter.location = true;
-        if (scope.filter.priceMin !== '' && scope.filter.priceMax !== '') {
+        if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499) {
             scope.activeFilter.price = true;
         }
-        if (getActiveCategories('category').length > 0){
+        if (getActiveCategories('category').length > 0) {
             scope.activeFilter.category = true;
         }
-        if (getActiveCategories('age').length > 0){
+        if (getActiveCategories('age').length > 0) {
             scope.activeFilter.age = true;
         }
     };
 
-    scope.activeFilterRemove = function(filter){
-        if(filter == 'search') scope.filter.query = '';
-        if(filter == 'price') {
+    scope.activeFilterRemove = function (filter) {
+        if (filter == 'search') scope.filter.query = '';
+        if (filter == 'price') {
             scope.filter.priceMin = 0;
             scope.filter.priceMax = 499;
+            $("#price-slider").slider({"values": [0,499]});
+            $("#price-slider-mobile").slider({"values": [0,499]});
         }
-        if(filter == 'location') scope.filter.location = '';
-        if(filter == 'category'){
-            $.map(scope.filter.categories, function(x){
+        if (filter == 'location') scope.filter.location = '';
+        if (filter == 'category') {
+            $.map(scope.filter.categories, function (x) {
                 x.value = 0;
             })
         }
-        if(filter == 'age') {
-            $.map(scope.filter.ages, function(x){
+        if (filter == 'age') {
+            $.map(scope.filter.ages, function (x) {
                 x.value = 0;
             })
         }
         scope.activeFilter[filter] = false;
+        scope.filterChange();
     };
 
-    scope.removeAllActiveFilters = function(){
-        scope.activeFilterRemove('search');
-        scope.activeFilterRemove('price');
-        scope.activeFilterRemove('category');
-        scope.activeFilterRemove('age');
-        scope.activeFilterRemove('location');
+    scope.removeAllActiveFilters = function () {
+        $.map(['search', 'price', 'category', 'age', 'location'], function(i){
+            scope.activeFilterRemove(i);
+        });
     };
 
     scope.setUrl = function () {
+        console.log(getUrl());
         window.history.pushState({}, document.title, '?q=' + getUrl());
     };
 
@@ -175,6 +152,33 @@ var SearchController = function ($location, $http, $scope, $window) {
         scope._timer = setTimeout(function () {
             update();
         }, 700);
+    };
+
+    scope.init = function () {
+        var sliderConf = {
+            range: true,
+            min: 0,
+            max: 499,
+            slide: function (val, ui) {
+                scope.filter.priceMin = ui.values[0];
+                scope.filter.priceMax = ui.values[1];
+                $scope.$apply();
+            },
+            change: function (val, ui) {
+                scope.filterChange();
+            }
+        };
+        $("#price-slider").slider(sliderConf);
+        $("#price-slider-mobile").slider(sliderConf);
+        setInterval(function () {
+            var location = $('.location-input').val();
+            if (location !== scope._lastLocation) {
+                scope._lastLocation = location;
+                scope.filter.location = location;
+                scope.filterChange();
+            }
+        }, 200);
+        updateActiveFilters();
     };
 
     scope.init();
