@@ -11,6 +11,7 @@
 
 namespace app\modules\user\forms;
 
+use app\components\Encrypter;
 use app\modules\user\models\PayoutMethod;
 use app\modules\user\models\Country;
 use app\modules\user\models\User;
@@ -26,7 +27,9 @@ class PayoutPreference extends Model
     public $country_id;
     public $type;
     public $identifier_1;
+    public $identifier_1_encrypted;
     public $identifier_2;
+    public $identifier_2_encrypted;
 
     private $method;
 
@@ -39,6 +42,8 @@ class PayoutPreference extends Model
             $this->country_id = Country::findOne(1)->id; // denmark for now
             $this->type = PayoutMethod::TYPE_DK_KONTO;
         }
+        $this->identifier_1_encrypted = '';
+        $this->identifier_2_encrypted = '';
 
         return parent::__construct();
     }
@@ -57,21 +62,27 @@ class PayoutPreference extends Model
     public function rules()
     {
         return [
-            [['identifier_1', 'identifier_2', 'payee_name'], 'required'],
-            [['identifier_1'], 'integer', 'max' => 9999999999],
-            [['identifier_2'], 'integer', 'max' => 9999],
-            [['bank_name', 'payee_name'], 'string'],
+            [['identifier_1_encrypted', 'identifier_2_encrypted', 'payee_name'], 'required'],
+            [['identifier_1_encrypted'], 'integer', 'max' => 9999999999],
+            [['identifier_2_encrypted'], 'integer', 'max' => 9999],
+            [['bank_name', 'payee_name', 'identifier_1','identifier_2'], 'string'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'identifier_1' => \Yii::t('user', 'Konto Number'),
-            'identifier_2' => \Yii::t('user', 'Bank Number'),
+            'identifier_1_encrypted' => \Yii::t('user', 'Konto Number'),
+            'identifier_2_encrypted' => \Yii::t('user', 'Bank Number'),
             'bank_name' => \Yii::t('user', 'Bank Name'),
             'payee_name' => \Yii::t('user', 'Payee Name'),
         ];
+    }
+
+    private function transformToSafe($input, $leaveUntouched = 4){
+        $length = strlen($input);
+        $input = substr($input, $length - $leaveUntouched);
+        return str_repeat("*",  $length - $leaveUntouched).$input;
     }
 
     public function save()
@@ -87,8 +98,11 @@ class PayoutPreference extends Model
             }
             $method->bank_name = 'unknown';
             $method->payee_name = $this->payee_name;
-            $method->identifier_1 = $this->identifier_1;
-            $method->identifier_2 = $this->identifier_2;
+
+            $method->identifier_1 = $this->transformToSafe($this->identifier_1_encrypted, 4);
+            $method->identifier_1_encrypted = \app\components\Encrypter::encrypt($this->identifier_1_encrypted, Encrypter::SIZE_1024);
+            $method->identifier_2 = $this->transformToSafe($this->identifier_2_encrypted, 2);
+            $method->identifier_2_encrypted = \app\components\Encrypter::encrypt($this->identifier_2_encrypted, Encrypter::SIZE_1024);
 
             if($method->save()){
                 return true;

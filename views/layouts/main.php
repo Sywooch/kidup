@@ -64,9 +64,9 @@ BootstrapPluginAsset::register($this);
 
     <!-- Load modals -->
     <?php
-    echo $this->render('../../modules/item/widgets/views/menu_search_modal.php', [
-        'model' => new Search(\Yii::$app->request->get())
-    ]);
+    //echo $this->render('../../modules/item/widgets/views/menu_search_modal.php', [
+    //    'model' => new Search(\Yii::$app->request->get())
+    //]);
     ?>
 
     <?php

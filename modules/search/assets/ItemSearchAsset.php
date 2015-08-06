@@ -13,29 +13,21 @@ use yii\web\AssetBundle;
 class ItemSearchAsset extends AssetBundle
 {
 
-    public $sourcePath = '@app/modules/search/views/assets';
+    public $sourcePath = '@app/modules/search/views/search/assets';
 
     public $css = [
         'search.less'
     ];
 
     public $js = [
-        'item/search.module.js',
-
-        // load filters
-        'item/filter/query.factory.js',
-        'item/filter/location.factory.js',
-        'item/filter/categories.factory.js',
-
-        // load main components
-        'item/search.controller.js',
-        'item/search.factory.js',
-        'item/filter.factory.js',
+        'controller.js',
+        'infinity.directive.js',
     ];
 
     public $depends = [
         '\app\assets\AngularAsset',
         '\yii\web\JqueryAsset',
+        '\yii\jui\JuiAsset',
         '\yii\widgets\PjaxAsset'
     ];
 

@@ -20,6 +20,7 @@ return [
                 'class' => 'yii\authclient\clients\Facebook',
                 'clientId' => '1515825585365803',
                 'clientSecret' => $keys['facebook_oauth_secret'],
+                'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500]
             ],
             'twitter' => [
                 'class' => 'yii\authclient\clients\Twitter',
@@ -76,7 +77,8 @@ return [
             '/splash' => 'splash/default/index',
             '/thanks' => 'splash/default/thanks',
             'home' => 'home/home',
-            'search' => 'item/search',
+            'search' => 'search/search',
+            'search-results' => 'search/search/results',
             'login' => 'user/login',
             'logout' => 'user/security/logout',
             'user/logout' => 'user/security/logout',

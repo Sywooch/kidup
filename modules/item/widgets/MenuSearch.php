@@ -3,8 +3,7 @@
 
 namespace app\modules\item\widgets;
 
-use app\interfaces\RequestableWidgetInterface;
-use app\modules\item\models\Search;
+use app\modules\search\models\SearchModel;
 use yii\bootstrap\Widget;
 use yii\helpers\Url;
 
@@ -19,10 +18,10 @@ class MenuSearch extends Widget
     public function run()
     {
         \Yii::trace('menu_search_widget');
-        if(strpos(Url::current(), '/web/search') == 0){
+        if(strpos(Url::current(), 'web/search') == 1){
             return '';
         }
-        $model = new Search([]);
+        $model = new SearchModel([]);
         return $this->render('menu_search', [
             'model' => $model
         ]);

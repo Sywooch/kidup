@@ -21,7 +21,6 @@ $config = [
         'app\\modules\\pages\\Bootstrap',
         'app\\modules\\admin\\Bootstrap',
         'app\\modules\\search\\Bootstrap',
-        'app\\modules\\search2\\Bootstrap',
     ],
     'extensions' => array_merge(
         require($vendorDir . '/yiisoft/extensions.php')
@@ -47,7 +46,6 @@ $config = [
         'review' =>         ['class' => 'app\modules\review\Module'],
         'admin' =>          ['class' => 'app\modules\admin\Module'],
         'search' =>         ['class' => 'app\modules\search\Module'],
-        'search2' =>         ['class' => 'app\modules\search2\Module'],
         'social' => [
             // the module class
             'class' => 'kartik\social\Module',

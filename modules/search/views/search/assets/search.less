@@ -1,0 +1,61 @@
+#search{
+  @media only screen and (min-width : 992px) {
+    .panel-title {
+      padding: 16px 16px 0;
+    }
+  }
+
+  .modal-backdrop {
+    opacity: 0 !important;
+  }
+
+  .minPrice{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .maxPrice{
+    float: right;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .modal {
+    padding-top: 10px;
+    .modal-footer {
+      text-align: left;
+    }
+
+    .modal-body{
+      padding:0 !important;
+      margin-top:-20px;
+    }
+  }
+
+  .buttonContainer {
+    button {
+      border-radius: 2px;
+      width: 80vw;
+      font-size: 16px;
+    }
+    position: fixed;
+    top: 85vh;
+    right: 50%;
+    left: 50%;
+    margin-left: -40vw;
+  }
+
+  .btn-xs{
+    margin:4px;
+  }
+
+  @media only screen and (max-width : 768px) {
+    .card-width{
+      padding:0;
+      margin:0;
+    }
+    .card{
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+}

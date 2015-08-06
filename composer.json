@@ -29,7 +29,7 @@
     "league/flysystem": "*",
     "dmstr/yii2-db": "dev-master",
     "bryglen/yii2-sendgrid": "*",
-    "bower-asset/angular": "~1.4.3",
+    "bower-asset/angular": "1.4.4",
     "bower-asset/momentjs": "dev-master",
     "bower-asset/dropzone": "4.0.1",
     "kartik-v/yii2-social": "dev-master",

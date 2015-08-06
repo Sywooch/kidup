@@ -29,14 +29,6 @@ class ViewController extends Controller
                     ],
                 ],
             ],
-            'cache' => [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
-                'duration' => 60,
-                'variations' => [
-                    \Yii::$app->language,
-                ],
-            ],
         ];
     }
 
