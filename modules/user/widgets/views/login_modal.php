@@ -14,7 +14,7 @@ use yii\helpers\Url;
             <div class="modal-body">
                 <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
                     'baseAuthUrl' => ['/user/security/auth'],
-                    'options' => ['style' => 'overflow:none'] // needed to counter some yii stuff
+                    'options' => ['style' => 'overflow:none'], // needed to counter some yii stuff
                 ]) ?>
 
                 <div class="social-area">
