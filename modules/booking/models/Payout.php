@@ -74,7 +74,7 @@ class Payout extends \app\models\base\Payout
         $field[1] = 'CMBOD';
         $field[2] = '1244214124'; // kidup account
         $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->booking->item->owner_id])->one();
-        $field[3] = $payoutMethod->identifier_2 . '+' . $payoutMethod->identifier_1; // to account
+        $field[3] = $payoutMethod->identifier_2_encrypted . '+' . $payoutMethod->identifier_1_encrypted; // to account
         $field[4] = $this->amount; // to account
         $field[20] = "KidUp Payout ".$this->id;
 
