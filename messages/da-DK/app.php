@@ -17,11 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Ip' => '',
-    'Mail Account Name' => '',
-    'Please add a payment method' => '',
-    'Session ID' => '',
-    'This website uses cookies to ensure you get the best possible KidUp experience.' => '',
+    'Ip' => 'IP',
+    'Mail Account Name' => 'Mailkontonavn',
+    'Please add a payment method' => 'Tilføj venligst en betalingsmetode',
+    'Session ID' => 'Session ID',
+    'This website uses cookies to ensure you get the best possible KidUp experience.' => 'Denne hjemmeside bruger cookies til at sikre at du får den bedst mulige KidUp oplevelse.',
     '' => '',
     '1) What is it?' => 'Hvad er det?',
     '2) What does it look like?' => 'Hvad ligner det?',
