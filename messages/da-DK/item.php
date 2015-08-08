@@ -17,15 +17,20 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Active filters:' => '',
-    'Apply Filters' => '',
-    'Filters' => '',
+    'Active filters:' => 'Aktive filtre',
+    'Apply Filters' => 'Tilføj filtre',
+    'Filters' => 'Filtre',
     'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.' => '',
+                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
+alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
+alderskasser.',
     'Kidup is about trust too. If you see a personal
-                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => '',
+                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
+forskellige ting, så får man ro i maven. Det giver troværdighed og
+tillid.',
     'To rent and rent out is about seeing what we are truly renting.
-                                                In other words KidUp is about taking really good pictures.' => '',
+                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
+På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Apply filter' => 'Tilføj filter',
     'Back' => 'Tilbage',
     'Choose a filter' => 'Vælg et filter',
