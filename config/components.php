@@ -144,12 +144,4 @@ $components = [
     'pages' => ['class' => 'app\components\Pages']
 ];
 
-if (YII_ENV == 'prod') {
-    $components['assetManager']['assetMap'] = [
-        'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-        'angular.min.js' => 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.min.js',
-        'bootstrap.js' => 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.min.js',
-    ];
-}
-
 return $components;

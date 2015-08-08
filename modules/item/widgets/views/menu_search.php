@@ -13,7 +13,7 @@ use yii\helpers\Url;
                placeholder="<?= \Yii::t('item', 'What are you looking for?') ?>">
     </div>
     <button class="btn btn-fill btn-danger" type="button"
-            onclick="window.location.href = '<?= Url::base(true) ?>/search?q=query|'+$('.menubar-search-query').val()">>
+            onclick="window.location.href = '<?= Url::base(true) ?>/search?q=query|'+$('.menubar-search-query').val()">
         <?= Yii::t("item", "Search") ?>
     </button>
 </form>
