@@ -20,7 +20,6 @@ class Bootstrap implements BootstrapInterface
         /** @var $module Module */
         if ($app->hasModule('admin') && ($module = $app->getModule('admin')) instanceof Module) {
             Yii::setAlias('@admin', __DIR__);
-            Yii::setAlias('@adminAssets', Yii::getAlias('@web').'/assets_web/modules/admin');
         }
     }
 }

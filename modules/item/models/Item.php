@@ -2,7 +2,6 @@
 
 namespace app\modules\item\models;
 
-use app\modules\item\components\MediaManager;
 use app\modules\user\models\User;
 use Carbon\Carbon;
 use Yii;
@@ -98,25 +97,14 @@ class Item extends \app\models\base\Item
 
     public function getImageUrls()
     {
-        $ihms = $this->itemHasMedia;
+        $ihms = ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->all();
         usort($ihms, function($a, $b){
             return ($a->order < $b->order) ? -1 : 1;
         });
 
         $this->images = [];
         foreach ($ihms as $ihm) {
-            $media = $ihm->media->toArray();
-            $media['thumb'] = MediaManager::getUrl($media['file_name'], MediaManager::THUMB);
-            $media['original'] = MediaManager::getUrl($media['file_name'], MediaManager::ORIGINAL);
-            $media['medium'] = MediaManager::getUrl($media['file_name'], MediaManager::MEDIUM);
-            $this->images[] = $media;
-        }
-        while (count($this->images) < 3) {
-            $this->images[] = [
-                'thumb' => 'http://placehold.it/300x300',
-                'original' => 'http://placehold.it/300x300',
-                'medium' => 'http://placehold.it/300x300'
-            ];
+            $this->images[] = $ihm->media->file_name;
         }
         return $this->images;
     }

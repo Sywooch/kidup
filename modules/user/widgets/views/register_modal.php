@@ -2,6 +2,7 @@
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
+use app\modules\images\components\ImageHelper;
 ?>
 
 <!--register-->
@@ -11,7 +12,7 @@ use yii\helpers\Url;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <img src="<?= Url::to('@web/img/logo/horizontal.png') ?>" height="30px">
+                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 70, 'h' => 30]) ?>
 
                 <h2 class="modal-title text-center"><?= Yii::t("user", "Register") ?></h2>
             </div>

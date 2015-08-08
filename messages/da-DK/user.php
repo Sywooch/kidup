@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'If you\'d like to change them, please re-enter them below.' => '',
+    'Your current payout method is stored securely in our database.' => '',
     '(not set)' => '(ikke defineret)',
     'A confirmation message has been sent to your new email address' => 'En bekræfftigelsesmail er blevet sendt til din nye mailadresse',
     'A message has been sent to your email address. It contains a confirmation link that you must click to complete registration.' => 'En besked er blevet afsendt til din mailadresse. Den indeholder et link som du kan klikke p& aring; for at fulføre din registrering.',

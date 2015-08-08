@@ -17,8 +17,10 @@ class MenuSearch extends Widget
 
     public function run()
     {
-        \Yii::trace('menu_search_widget');
-        if(strpos(Url::current(), 'web/search') == 1){
+        if(
+            \Yii::$app->controller->className() == 'app\\modules\\search\\controllers\\SearchController' ||
+            \Yii::$app->controller->className() == 'app\\modules\\home\\controllers\\HomeController'
+        ){
             return '';
         }
         $model = new SearchModel([]);

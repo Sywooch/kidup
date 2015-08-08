@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use \app\components\ViewHelper;
+use app\modules\images\components\ImageHelper;
+
 /**
  * @var yii\web\View $this
  * @var app\modules\user\models\User $user
@@ -19,9 +21,12 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registra
 
         <div class="col-sm-6 col-sm-offset-3 card">
             <br/><br/>
+
             <div class="text-center">
-                <img src="<?= Url::to('@web/img/logo/horizontal.png') ?>" height="60px">
-                <h4 class="modal-title"><?= Yii::t("user", "We'd like to get to know you!") ?></h4>
+                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 70, 'h' => 60]) ?>
+                <h4 class="modal-title">
+                    <?= Yii::t("user", "We'd like to get to know you!") ?>
+                </h4>
             </div>
             <br/>
             <?php $form = ActiveForm::begin([

@@ -246,6 +246,7 @@ return [
     'Your wallet contains {0}' => 'Din pung indeholder {0}',
     'a stroller,a toy,a bike' => 'en barnevogn, et legetøj, en cykel',
     'a trolley' => 'en legevogn',
+    'all' => 'Alle',
     'here' => 'her',
     'link' => 'link',
     'no' => 'nej',
@@ -412,6 +413,5 @@ return [
     'Your Bookings' => 'Dine bookings',
     'Your Listings' => 'Dine listings',
     'Zip Code' => 'Postnummer',
-    'all' => 'Alle',
     'per {period}' => 'Per {period}',
 ];

@@ -21,7 +21,6 @@ class Bootstrap implements BootstrapInterface
         /** @var $module Module */
         if ($app->hasModule('pages') && ($module = $app->getModule('pages')) instanceof Module) {
             Yii::setAlias('@pages', __DIR__);
-            Yii::setAlias('@pagesAssets', Yii::getAlias('@web').'/assets_web/modules/pages');
         }
     }
 }

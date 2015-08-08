@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use kartik\rating\StarRating;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-
+use app\modules\images\components\ImageHelper;
 /**
  * @var $this \yii\web\View
  * @var $booking \app\modules\booking\models\Booking
@@ -27,7 +27,7 @@ use yii\helpers\Html;
     <div class="container site-area-content">
         <div class="row">
             <div class="col-md-3 col-md-offset-1">
-                <img src="<?= $item->getImageUrls()[0]['medium'] ?>" width="100%"/>
+                <?= ImageHelper::img($item->getImageUrls()[0], ['q' => 90, 'w' => 600]) ?>
 
                 <div style="margin-top:-25px">
                     <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [

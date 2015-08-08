@@ -63,11 +63,7 @@ BootstrapPluginAsset::register($this);
     </div>
 
     <!-- Load modals -->
-    <?php
-    //echo $this->render('../../modules/item/widgets/views/menu_search_modal.php', [
-    //    'model' => new Search(\Yii::$app->request->get())
-    //]);
-    ?>
+    <?= $this->render('../../modules/item/widgets/views/menu_search_modal.php'); ?>
 
     <?php
     if (!isset($this->context->noFooter) || $this->context->noFooter !== true) {
