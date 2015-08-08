@@ -8,7 +8,7 @@ Dropzone.options.dropzoneForm = {
                 myDropzone.emit("addedfile", mockFile);
 
                 // And optionally show the thumbnail of the file:
-                myDropzone.emit("thumbnail", mockFile, window.fileUrl+mockFile.name);
+                myDropzone.emit("thumbnail", mockFile, mockFile.name);
 
             });
             $(".dz-remove").on("click", function (e) {

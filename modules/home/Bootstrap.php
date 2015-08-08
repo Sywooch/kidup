@@ -24,7 +24,6 @@ class Bootstrap implements BootstrapInterface
         /** @var $module Module */
         if ($app->hasModule('home') && ($module = $app->getModule('home')) instanceof Module) {
             Yii::setAlias('@home', __DIR__);
-            Yii::setAlias('@homeAssets', Yii::getAlias('@web').'/assets_web/modules/home');
         }
     }
 }

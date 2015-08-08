@@ -5,6 +5,7 @@ namespace app\modules\item\controllers;
 use app\components\Error;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
+use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Item;
 use yii\bootstrap\Html;
 use yii\filters\AccessControl;
@@ -50,13 +51,12 @@ class ViewController extends Controller
         $location = $item->location;
 
         $itemImages = $item->getImageUrls();
-
         // prepare for carousel
         $images = [];
         foreach ($itemImages as $img) {
             $images[] = [
-                'src' => $img['medium'],
-                'url' => $img['original'],
+                'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
+                'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
             ];
         }
 

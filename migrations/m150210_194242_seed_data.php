@@ -64,7 +64,7 @@ class m150210_194242_seed_data extends Migration
             'description' => 'KidUp Admin - ask me anything!',
             'first_name' => 'KidUp',
             'last_name' => 'Admin',
-            'img' => \app\modules\item\components\MediaManager::DEFAULT_USER_IMG,
+            'img' => 'user/face0.jpg',
             'phone_country' => null,
             'phone_number' => null,
             'email_verified' => 1,

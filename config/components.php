@@ -4,14 +4,27 @@ $params = require(__DIR__ . '/params.php');
 $keyFile = __DIR__ . '/../config/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
-return [
+$components = [
     'sendGrid' => [
         'class' => 'bryglen\sendgrid\Mailer',
-        'username' =>  $keys['sendgrid_user'],
+        'username' => $keys['sendgrid_user'],
         'password' => $keys['sendgrid_password'],
         'viewPath' => '@app/modules/mail/views',
         'useFileTransport' => false
         //'viewPath' => '@app/views/mail', // your view path here
+    ],
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.sendgrid.net',
+            'username' => $keys['sendgrid_user'],
+            'password' => $keys['sendgrid_password'],
+            'port' => '587',
+            'encryption' => 'tls',
+        ],
+        'useFileTransport' => YII_ENV == 'prod' ? true : false,
+        'viewPath' => '@app/modules/mail/views',
     ],
     'authClientCollection' => [
         'class' => 'yii\authclient\Collection',
@@ -34,14 +47,10 @@ return [
             'class' => 'yii\web\AssetConverter',
             'commands' => [
                 // compile less, minify if in production
-                'less' => ['css', 'lessc {from} {to} --no-color'. (YII_ENV == 'prod' ? '-x' : '')],
+                'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
             ],
         ],
-        'assetMap' => [
-            // TODO take general cdn libraries here
-//            'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
-//            'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
-        ],
+
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
@@ -107,7 +116,10 @@ return [
             'review/create/<bookingId:\d+>' => 'review/create/index',
             'messages/<id:\d+>' => 'message/chat/index',
             'messages' => 'message/chat/index',
-            'file/<id>' => 'file/index',
+            'images/<id>' => 'images/index',
+            'images/<folder1>/<id>' => 'images/index',
+            'images/<folder1>/<folder2>/<id>' => 'images/index',
+            'images/<folder1>/<folder2>/<folder3>/<id>' => 'images/index',
             'conversation/<id:\d+>' => 'message.conversation',
             'p/<page>' => 'pages/default/wordpress',
             'p/<page>/<view>' => 'pages/default/<page>',
@@ -131,3 +143,5 @@ return [
     'widgetRequest' => ['class' => 'app\components\WidgetRequest'],
     'pages' => ['class' => 'app\components\Pages']
 ];
+
+return $components;

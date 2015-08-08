@@ -394,7 +394,7 @@ class User extends \app\models\base\User implements IdentityInterface
                     'currency_id' => 1,
                     'language' => $lang
                 ]);
-                $profile->setAttribute('img', \app\modules\item\components\MediaManager::DEFAULT_USER_IMG);
+                $profile->setAttribute('img', 'kidup/user/default-face.jpg');
                 $profile->save(false);
                 $location = \Yii::createObject([
                     'class' => Location::className(),

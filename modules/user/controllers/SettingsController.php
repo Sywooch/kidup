@@ -13,24 +13,21 @@ namespace app\modules\user\controllers;
 
 use app\components\Event;
 use app\controllers\Controller;
-use app\modules\item\components\MediaManager;
+use app\modules\images\components\ImageManager;
 use app\modules\mail\models\Token;
 use app\modules\user\Finder;
 use app\modules\user\models\Account;
 use app\modules\user\forms\LocationForm;
-use app\modules\user\forms\PayoutPreference;
 use app\modules\user\forms\Settings;
 use app\modules\user\models\Profile;
 use app\modules\user\helpers\SelectData;
 use app\modules\user\models\User;
-use app\modules\user\Module;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -120,9 +117,11 @@ class SettingsController extends Controller
             $image = UploadedFile::getInstance($model, 'img');
             if ($image !== null) {
                 if(!in_array($image->extension, ['png', 'jpg'])) {
-                    throw new NotAcceptableHttpException("File format not allowed");
+                    \Yii::$app->session->addFlash('warning', \Yii::t('user', "File format not allowed") );
+                    $model->save();
+                    return $this->refresh();
                 }
-                $model->setAttribute('img', MediaManager::set($image, \Yii::$app->user->id));
+                $model->setAttribute('img', (new ImageManager())->upload($image));
             } else {
                 $model->setAttribute('img', $model->oldAttributes['img']);
             }

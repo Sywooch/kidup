@@ -3,3 +3,4 @@
     sys_packages: ["git","htop","imagemagick","nodejs","npm"]
     dist: precise
     php_packages: ["php5-cli","php5-imagick","php5-curl","php5-intl","php5-mcrypt","php5-memcache","php5-memcached","php5-mysql"]
+    pecl_packages: ["Fileinfo"]

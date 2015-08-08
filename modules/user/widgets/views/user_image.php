@@ -1,1 +1,0 @@
-<img class="avatar img-circle" src="<?= $url ?>" style=" width: <?= $width ?>; height: <?= $width ?>">

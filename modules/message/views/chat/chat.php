@@ -7,14 +7,15 @@ use yii\widgets\ListView;
 
 /*
  * @var \app\modules\message\models\Conversation $conversation
+ * @var dataProvider $conversationDataProvider
  * @var $conversationDataProvider
  * @var yii\web\View $this
  */
-
+\app\modules\message\assets\MessageAsset::register($this);
 $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
 ?>
 
-<section class="section" id="inbox" style="margin-top: 70px">
+<section class="section" id="inbox" style="">
     <div class="site-area-header">
         <div class="container">
             <div class="row">

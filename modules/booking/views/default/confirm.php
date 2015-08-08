@@ -11,6 +11,7 @@ use yii\helpers\Html;
  * @var \app\modules\user\models\Profile $profile
  */
 \app\modules\booking\assets\ConfirmAsset::register($this);
+\yii\web\JqueryAsset::register($this);
 $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
 ?>
 <?php if(YII_ENV == 'prod'): ?>

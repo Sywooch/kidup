@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-
+use app\modules\images\components\ImageHelper;
 /**
  * @var \yii\web\View $this
  * @var \app\modules\item\models\Item $model
@@ -28,10 +28,11 @@ $this->registerJs("
             <div class=" col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
                 <div class="card header">
                     <div class="content ">
-                        <h2 class="title"><?= Yii::t("item", "Create a new item") ?> <b>(<?= Yii::t("item",
-                                    "step 2 out of 2") ?>)</b></h2>
-                        <img class="header-top-image"
-                             src="<?= \yii\helpers\Url::to('@web/img/graphics/rentout.png') ?>">
+                        <h2 class="title">
+                            <?= Yii::t("item", "Create a new item") ?>
+                            <b>(<?= Yii::t("item", "step 2 out of 2") ?>)</b>
+                        </h2>
+                        <?= ImageHelper::img('kidup/graphics/rentout.png', ['w' => 120, 'h' => 120], ['class' => 'header-top-image']) ?>
                     </div>
                 </div>
                 <div class="card">

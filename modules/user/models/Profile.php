@@ -2,7 +2,8 @@
 
 namespace app\modules\user\models;
 
-use app\modules\item\components\MediaManager;
+use app\modules\images\components\ImageHelper;
+use app\modules\images\components\ImageManager;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
@@ -90,7 +91,7 @@ class Profile extends \app\models\base\Profile
     }
 
     public function getImgUrl(){
-        return MediaManager::getUrl($this->getAttribute('img'), MediaManager::THUMB);
+        return ImageHelper::url($this->getAttribute('img'), ['q' => 90, 'w' => 300]);
     }
 
     public function beforeSave($insert){
