@@ -185,17 +185,17 @@ class CreateController extends Controller
     public function actionDeleteUpload($item_id)
     {
         if (!\Yii::$app->request->isPost) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException('Only POST accepted');
         }
         $item = Item::findOne($item_id);
         if ($item == null) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Item not found');
         }
         if (!$item->isOwner()) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException("Not the owner of this item");
         }
         $media = Media::find()->where([
-            'file_name' => str_replace("_thumb", "", \Yii::$app->request->post('imageId'))
+            'file_name' => ImageHelper::urlToFilename(\Yii::$app->request->post('imageId'))
         ])->one();
 
         if ($media == null) {
