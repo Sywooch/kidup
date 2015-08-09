@@ -75,6 +75,9 @@ class ProfileController extends Controller
      */
     public function actionShow($id)
     {
+        /**
+         * @var $profile \app\modules\user\models\Profile
+         */
         $profile = Profile::find()->where(['user_id' => $id])->one();
         if ($profile === null) {
             throw new NotFoundHttpException;
@@ -94,9 +97,17 @@ class ProfileController extends Controller
             ],
         ]);
 
-
+        $fbVerified = false;
+        $twVerified = false;
+        $accs = $profile->user->socialAccounts;
+        foreach ($accs as $a) {
+            if($a->provider == 'facebook') $fbVerified = true;
+            if($a->provider == 'twitter') $fbVerified = true;
+        }
 
         return $this->render('show', [
+            'fbVerified' => $fbVerified,
+            'twVerified' => $twVerified,
             'profile' => $profile,
             'itemProvider' => $itemProvider,
             'reviewProvider' => $reviewProvider,
