@@ -23,8 +23,9 @@ class UserImage extends Widget
 
         return ImageHelper::img($img, [
             'q' => 70,
-            'w' => $this->width,
-            'h' => $this->width
+            'w' => str_replace('px', '', $this->width),
+            'h' => str_replace('px', '', $this->width),
+            'fit' => 'crop'
         ],['class' => "avatar img-circle"]);
     }
 }

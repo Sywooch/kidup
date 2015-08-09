@@ -2,6 +2,7 @@
 use app\components\WidgetRequest;
 use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+
 // create the navbar
 $class = 'navbar navbar-default ';
 $class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-navbar-product';
@@ -9,7 +10,8 @@ $class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-nav
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
 ?>
 
-    <nav class="navbar navbar-default <?= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-fixed-top' ?>">
+    <nav
+        class="navbar navbar-default <?= isset($this->context->transparentNav) ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -24,7 +26,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <?= ImageHelper::img('kidup/logo/horizontal.png', ['q'=>90,'h'=>46]) ?>
+                    <?= ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
                 </a>
             </div>
 
@@ -85,7 +87,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 </li>
                                 <li>
                                     <a href="<?= Url::to('@web/item/list') ?>">
-                                        <?= ImageHelper::img('kidup/logo/balloon.png', ['q'=>90],['class' => "menu-icon-kidup"]) ?>
+                                        <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 30, 'h' => 30],
+                                            ['class' => "menu-icon-kidup"]) ?>
                                         <?= Yii::t("app", "Your Listings") ?>
                                     </a>
                                 </li>
@@ -117,7 +120,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif; ?>
                     <!--Always shown on desktop-md+ -->
                     <li>
-                        <a href="<?= Url::to('@web/item/create') ?>" class="btn btn-danger hidden-xs">
+                        <a href="<?= Url::to('@web/item/create') ?>"
+                           class="btn btn-danger hidden-xs <?= isset($this->context->transparentNav) ? 'btn-fill' : '' ?>">
                             <?= Yii::t("app", "Create Listing") ?>
                         </a>
                     </li>
@@ -128,7 +132,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in2-->
                         <li>
-                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['q'=>90,'w'=>30],
+                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 90, 'w' => 30],
                                 ['style' => "padding-left: 25%; padding-top:10px;padding-bottom: 10px"]) ?>
                         </li>
 

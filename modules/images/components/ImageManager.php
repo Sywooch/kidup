@@ -65,7 +65,7 @@ class ImageManager
     {
         // generate a unique file name
 
-        $filename = str_replace("_", '-', \Yii::$app->security->generateRandomString());
+        $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
         $dir = '';
         if(YII_ENV == 'dev'){
             $dir = 'runtime/';
@@ -86,14 +86,18 @@ class ImageManager
         $this->filesystem->delete($dir);
     }
 
-    public function getServer()
+    public function getServer($isStatic = false)
     {
 
         if(YII_ENV == 'dev'){
-            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
             $cache = new Filesystem(new Adapter(\Yii::$aliases['@runtime'].'/cache/images'));
         }else{
             $cache = $this->filesystem;
+        }
+
+        if($isStatic){
+            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
+        }else{
             $source = $this->filesystem;
         }
 

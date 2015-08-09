@@ -35,11 +35,21 @@ class ImageHelper extends BaseHtml{
     }
 
     public static function url($filename, $options = []){
-        $server = (new ImageManager())->getServer();
+        $isStaticFile = false;
+        $folders = explode("/", $filename);
+        if($folders[0] == 'kidup'){
+            $isStaticFile = true;
+        }
+        $server = (new ImageManager())->getServer($isStaticFile);
 
         $folders = explode("/", $filename);
 
         if($folders[0] == 'kidup'){
+            if(YII_ENV !== 'dev'){
+                // remove the kidup/ from the filename in prod/staging
+
+                $filename = substr($filename, 6);
+            }
             $server->setSourcePathPrefix('/modules/images/images/');
         }else{
             if(YII_ENV == 'dev'){
@@ -54,8 +64,6 @@ class ImageHelper extends BaseHtml{
             $options['fm'] = 'pjpg';
         }
         if(YII_ENV != 'dev'){
-            // remove the kidup/ from the filename in prod/staging
-            $filename = substr($filename, 6);
 
             if(!$server->cacheFileExists($filename, $options)){
                 $server->makeImage($filename, $options);
