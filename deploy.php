@@ -22,9 +22,8 @@ server('test', '178.62.234.114', 22)
     ->path('/var/www/')
     ->user('root', $keys['test_server_password']);
 
-stage('test', array('test'), ['branch'=>'images-on-s3'], true);
 stage('development', array('test'), ['branch'=>'develop'], true);
-stage('production', array('production-primary'), array('branch'=>'develop'), true);
+stage('production', array('production-primary'), array('branch'=>'master'), true);
 
 set('repository', 'https://'.$keys['git_repo_username'].':'.$keys['git_repo_password'].'@github.com/esquire900/kidup.git');
 
@@ -67,6 +66,7 @@ task('deploy', [
     'deploy:vendors',
     'deploy:folder_permissions',
     'deploy:shared',
+    'deploy:symlink',
     'deploy:update_database',
     'deploy:writeable_dirs',
     'deploy:symlink',

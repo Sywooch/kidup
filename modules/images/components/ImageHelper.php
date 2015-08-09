@@ -49,9 +49,12 @@ class ImageHelper extends BaseHtml{
         if(isset($options['q'])){
             $options['fm'] = 'pjpg';
         }
-        // filename
-        if($server->cacheFileExists($filename, $options) && YII_ENV != 'dev'){
+        // remove the kidup/ from the filename in prod/staging
+        if(YII_ENV != 'dev'){
             $filename = substr($filename, 6);
+        }
+
+        if($server->cacheFileExists($filename, $options) && YII_ENV != 'dev'){
             $url = 'https://s3.eu-central-1.amazonaws.com/kidup-images/'.$server->getCachePath($filename, $options);
         }else{
             $url = Url::to(\Yii::$aliases['@web'].'/images/'.$filename.'?'.http_build_query($options), true);

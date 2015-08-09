@@ -82,7 +82,7 @@ $components = [
         // 'enableStrictParsing' => true,
         'showScriptName' => false,
         'rules' => [
-            '/' => YII_ENV == 'dev' || YII_ENV == 'test' || $_SERVER['HTTP_HOST'] == 'beta.kidup.dk' || $_SERVER['HTTP_HOST'] == 'test.kidup.dk' ? 'home/home' : 'splash/default/index',
+            '/' => YII_ENV == 'dev' || YII_ENV == 'stage' || $_SERVER['HTTP_HOST'] == 'beta.kidup.dk' || $_SERVER['HTTP_HOST'] == 'test.kidup.dk' ? 'home/home' : 'splash/default/index',
             '/splash' => 'splash/default/index',
             '/thanks' => 'splash/default/thanks',
             'home' => 'home/home',

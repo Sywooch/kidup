@@ -23,7 +23,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=1') ?>">
                     <div class="card card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 70, 'w' => 300]) ?>">
+                             style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -40,7 +40,7 @@ use \app\modules\images\components\ImageHelper;
                 <div class="col-md-4">
                     <a href="<?= Url::to('@web/item/' . $items[0]->id) ?>">
                         <div class="card  card-background">
-                            <div class="image" style="<?= ImageHelper::bgImg($items[0]->getImageUrls()[0]['medium'],
+                            <div class="image" style="<?= ImageHelper::bgImg($items[0]->getImageUrls()[0],
                                 ['q' => 90, 'w' => 300]) ?>; width: 100%">
                             </div>
                             <div class="content">
@@ -69,7 +69,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=7') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
-                            ['q' => 70, 'w' => 600]) ?>">
+                            ['q' => 90, 'w' => 600]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -88,7 +88,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=2') ?>">
                     <div class="card  card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 70, 'w' => 600]) ?>">
+                             style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 600]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -133,7 +133,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=2') ?>">
                     <div class="card  card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 70, 'w' => 300]) ?>">
+                             style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -180,7 +180,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=6') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
-                            ['q' => 70, 'w' => 300]) ?>">
+                            ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -196,7 +196,7 @@ use \app\modules\images\components\ImageHelper;
                 <a href="<?= Url::to('@web/search?category=2') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
-                            ['q' => 70, 'w' => 600]) ?>">
+                            ['q' => 90, 'w' => 600]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
