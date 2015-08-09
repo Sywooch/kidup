@@ -269,9 +269,12 @@ class SettingsController extends Controller
                 'user_id' => $this->user->id,
                 'type' => Token::TYPE_PHONE_CODE,
             ]);
-            $token->save(false);
+            $token->save();
             if ($profile->sendPhoneVerification($token)) {
-                $this->redirect('phonecode');
+                return $this->redirect('phonecode');
+            }else{
+                \Yii::$app->session->addFlash('info', \Yii::t('user', 'SMS could not be send, please try again.'));
+                return $this->refresh();
             }
         }
 

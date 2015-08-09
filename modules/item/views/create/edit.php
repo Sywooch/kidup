@@ -241,7 +241,7 @@ $this->registerJs("
                                         'data-toggle' => "checkbox"
                                     ]);
                                     echo Html::button(\Yii::t('app', 'Publish'), [
-                                        'class' => "btn btn-danger btn-lg pull-right",
+                                        'class' => "btn btn-danger pull-right",
                                         'id' => 'submit-publish'
                                     ]);
                                     echo Html::button(\Yii::t('app', 'Preview'), [

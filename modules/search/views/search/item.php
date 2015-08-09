@@ -17,10 +17,10 @@ use app\components\WidgetRequest;
                     $categories = [];
                     foreach ($model->categories as $c) {
                         if($c->type !== 'main') continue;
-                        if(count($categories) > 2) continue;
+                        if(count($categories) >= 2) continue;
                         $categories[] = $c->name;
                     }
-                    echo implode($categories, ' , ');
+                    echo implode($categories, ' ,');
                     ?>
                 </h4>
 

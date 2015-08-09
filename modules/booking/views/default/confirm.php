@@ -67,7 +67,7 @@ $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
                                         <ul class="list-unstyled list-lines">
                                             <li>
                                                 <i class="fa fa-info-circle"></i><?= Yii::t("booking", "item") ?>
-                                                <b><?= $item->name ?></b>
+                                                <b><?= substr($item->name,0,25) ?><?= strlen($item->name > 25) ? '...' : '' ?></b>
                                             </li>
                                             <li>
                                                 <i class="fa fa-calendar"></i><?= Yii::t("booking", "Dates") ?> <b>

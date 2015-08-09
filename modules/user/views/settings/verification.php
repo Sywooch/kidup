@@ -15,6 +15,7 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
+ * @var \app\modules\user\models\Profile $profile
  */
 
 ?>
@@ -47,7 +48,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <br/>
+        <hr/>
         <?php $auth = Connect::begin([
             'baseAuthUrl' => ['/user/settings/connect'],
             'accounts' => $user->accounts,
@@ -57,7 +58,7 @@ use yii\helpers\Html;
         <?php foreach ($auth->getClients() as $client): ?>
             <label><?= $client->getTitle() ?></label>
 
-            <div class="row">
+            <div class="row" style="padding-bottom: 5px;">
                 <div class="col-md-6">
                     <?= Yii::t("user",
                         "Adding {0} as social network account enables us and others to verify you.",
@@ -67,10 +68,10 @@ use yii\helpers\Html;
                     <?= $auth->isConnected($client) ?
                         '<button class="btn btn-social btn-' . strtolower($client->getTitle())
                         . '" disabled><i class="fa fa-' . strtolower($client->getTitle()) . '"></i>
-                                                Approved
+                                                ' . \Yii::t("user", "Approved ") . '
                                             </button>' :
                         Html::a(Html::button('<i class="fa fa-' . strtolower($client->getTitle()) . '"></i>' .
-                            Yii::t('user', 'Connect with ' . $client->getTitle()),
+                            Yii::t('user', 'Connect with ') . $client->getTitle(),
                             ['class' => 'btn btn-social btn-' . strtolower($client->getTitle())]),
                             $auth->createClientUrl($client)
                         )
@@ -78,10 +79,10 @@ use yii\helpers\Html;
                     <br/>
                 </div>
             </div>
+            <hr>
         <?php endforeach; ?>
         <?php Connect::end() ?>
 
-        <!--Phone vericifation-->
         <div class="form-group">
             <label><?= Yii::t("user", "Phone") ?></label>
 
