@@ -1,27 +1,46 @@
 <?php
 
 use yii\helpers\Html;
+use app\modules\images\components\ImageHelper;
 
 /* @var $this yii\web\View */
 /* @var $name string */
 /* @var $message string */
 /* @var $exception Exception */
 
-$this->title = Yii::$app->name. ' - ' . \Yii::t('title', 'Error');
+$this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
 ?>
 <section class="section container">
-    <div class="site-error">
 
-        <h1 style="color:black">Woeps.. :(</h1>
-
-        <div class="alert alert-danger" style="background-color: #ee7772">
-            <?= Html::encode($this->title) .': '.nl2br(Html::encode($message)) ?>
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-4">
+            <?= ImageHelper::img('kidup/error/error.png', ['w' => 300]) ?>
         </div>
+        <div class="col-md-8">
+            <h1 style="color:black">
+                <?= Yii::t("app", "Oh no! An error happened") ?>
+            </h1>
 
-        <p>
-            <?= Yii::t("app", "We are kind of embarresed, but an error occured. Please retry, and contact us if it fails again.") ?>
-        </p>
+            <p>
+                <?= Yii::t("app", "We'd like to describe it like '{0}'",
+                    ["<b>" . nl2br(Html::encode($message)) . "</b>"]) ?>
+            </p>
 
+            <p>
+                <?= Yii::t("app",
+                    "We're sorry you're experiencing this issue. We're aware of the error and try to get it fixed for you!") ?>
+            </p>
+
+            <p>
+                <?= Yii::t("app", "In the meantime, perhaps you can:") ?>
+                <ul>
+                    <li><?= Html::a(\Yii::t("app", 'Search for interesting products'), '@web/search?q=') ?></li>
+                    <li><?= Html::a(\Yii::t("app", 'Upload one of your own'), '@web/item/create') ?></li>
+                    <li><?= Html::a(\Yii::t("app", 'Visit the homepage'), '@web/home') ?></li>
+                </ul>
+
+            </p>
+        </div>
     </div>
 
 </section>

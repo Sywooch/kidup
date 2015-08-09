@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Carseat' => '',
+    'Room' => '',
+    'Stroller' => '',
     '1-2 years' => '1-2 år',
     '2-4 years' => '2-4 år',
     '4-6 years' => '4-6 år',

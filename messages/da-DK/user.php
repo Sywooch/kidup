@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'File format not allowed' => '',
     'If you\'d like to change them, please re-enter them below.' => '',
     'Your current payout method is stored securely in our database.' => '',
     '(not set)' => '(ikke defineret)',
