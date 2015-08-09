@@ -5,7 +5,7 @@ use kartik\growl\Growl;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+use app\modules\images\components\ImageHelper;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -24,13 +24,13 @@ BootstrapPluginAsset::register($this);
             <?= Html::encode($this->title) ?>
         </title>
         <?php $this->head() ?>
-        <link rel='shortcut icon' type='image/x-icon' href='<?= Url::to('@assets/img/logo/favicon.png') ?>'/>
+        <link rel='shortcut icon' type='image/x-icon' href='<?= ImageHelper::url('kidup/logo/favicon.png') ?>'/>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!--Facebook meta tags - Important for sharing links-->
-        <meta property="og:image" content="<?= Url::to('@assets/img/facebook-kidupdk.jpg', true) ?>">
-        <meta property="og:image:secure_url" content="<?= Url::to('@assets/img/facebook-kidupdk.jpg', true) ?>">
+        <meta property="og:image" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
+        <meta property="og:image:secure_url" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
         <meta property="og:title" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
         <meta property="og:site_name" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
         <meta property="og:url" content="http://kidup.dk"/>

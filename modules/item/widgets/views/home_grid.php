@@ -153,7 +153,7 @@ use \app\modules\images\components\ImageHelper;
                     <a href="<?= Url::to('@web/item/' . $items[2]->id) ?>">
                         <div class="card  card-background">
                             <div class="image"
-                                 style="background-image: url('<?= $items[2]->getImageUrls()[0]['medium'] ?>'); width:100%">
+                                 style="background-image: url('<?= $items[2]->getImageUrls()[0] ?>'); width:100%">
                             </div>
                             <div class="content">
                                 <h5 class="price">

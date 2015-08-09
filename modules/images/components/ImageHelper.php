@@ -42,19 +42,24 @@ class ImageHelper extends BaseHtml{
         if($folders[0] == 'kidup'){
             $server->setSourcePathPrefix('/modules/images/images/');
         }else{
-            $server->setSourcePathPrefix('/runtime/user-uploads/'.ImageManager::createSubFolders($filename));
+            if(YII_ENV == 'dev'){
+                $server->setSourcePathPrefix('/runtime/user-uploads/'.ImageManager::createSubFolders($filename));
+            }else{
+                $server->setSourcePathPrefix('/user-uploads/'.ImageManager::createSubFolders($filename));
+            }
         }
 
         // settings for image
         if(isset($options['q'])){
             $options['fm'] = 'pjpg';
         }
-        // remove the kidup/ from the filename in prod/staging
         if(YII_ENV != 'dev'){
+            // remove the kidup/ from the filename in prod/staging
             $filename = substr($filename, 6);
-        }
 
-        if($server->cacheFileExists($filename, $options) && YII_ENV != 'dev'){
+            if(!$server->cacheFileExists($filename, $options)){
+                $server->makeImage($filename, $options);
+            }
             $url = 'https://s3.eu-central-1.amazonaws.com/kidup-images/'.$server->getCachePath($filename, $options);
         }else{
             $url = Url::to(\Yii::$aliases['@web'].'/images/'.$filename.'?'.http_build_query($options), true);
