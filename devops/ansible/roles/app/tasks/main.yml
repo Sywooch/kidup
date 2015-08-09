@@ -9,4 +9,4 @@
 - name: Install npm
   sudo: yes
   apt: pkg=npm state=latest
-- cron: name="kidup cron" minute="0" job="php /vagrant/yii schedule/run --scheduleFile=@console/config/schedule.php 1>> /dev/null 2>&1"
+- cron: name="kidup cron" minute="*" job="php /vagrant/yii schedule/run --scheduleFile=@app/config/schedule.php 1>> /dev/null 2>&1"

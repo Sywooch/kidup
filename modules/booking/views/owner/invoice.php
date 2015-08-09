@@ -10,7 +10,7 @@ use app\modules\booking\models\Payout;
 ?>
 <br/><br/>
 <section class="section" id="checkout">
-    <div class="row" style="max-width: 98%">
+    <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
                 <div class="checkout-header">
@@ -29,7 +29,7 @@ use app\modules\booking\models\Payout;
                     <div class="col-md-4 col-md-offset-1">
                         <div style="text-align: left">
                             <br/>
-                            <b>KidUp</b><br/>
+                            <b class="pull-right">KidUp</b><br/>
                             <?= \Yii::$app->params['kidupAddressLine1'] ?> <br/>
                             <?= \Yii::$app->params['kidupAddressLine2'] ?>
                         </div>
@@ -39,7 +39,7 @@ use app\modules\booking\models\Payout;
                             <br/>
                             <img src="<?=Url::to('@assets/img/logo/horizontal.png', true) ?>" width="100px"/>
                             <br/>
-                            <b><?= Yii::t("booking", "Generated on {0}", [
+                            <b class="pull-right"><?= Yii::t("booking", "Generated on {0}", [
                                     Carbon::now(\Yii::$app->params['serverTimeZone'])->toFormattedDateString()
                                 ]) ?></b>
                         </div>
@@ -51,13 +51,13 @@ use app\modules\booking\models\Payout;
                         <ul class="list-unstyled list-lines">
                             <li>
                                 <?= Yii::t("booking", "Name") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= \Yii::$app->user->identity->profile->first_name . ' ' . \Yii::$app->user->identity->profile->last_name ?>
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Address") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?php  $l = \Yii::$app->user->identity->locations[0];
                                     $loc = [];
                                     $loc[] = $l->street_name . ' ' . $l->street_number;
@@ -68,22 +68,22 @@ use app\modules\booking\models\Payout;
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Date of Service Rendered") ?> <b>
+                                <?= Yii::t("booking", "Date of Service Rendered") ?> <b class="pull-right">
                                     <?= Carbon::createFromTimestamp($booking->time_from, \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Item") ?> <b>
+                                <?= Yii::t("booking", "Item") ?> <b class="pull-right">
                                     <?= $item->name ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "VAT Country") ?> <b>
+                                <?= Yii::t("booking", "VAT Country") ?> <b class="pull-right">
                                     <?= \Yii::$app->user->identity->locations[0]->country0->name ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "VAT Rate") ?> <b>
+                                <?= Yii::t("booking", "VAT Rate") ?> <b class="pull-right">
                                     <?= \Yii::$app->user->identity->locations[0]->country0->vat ?>%
                                 </b>
                             </li>
@@ -93,21 +93,21 @@ use app\modules\booking\models\Payout;
                         <h3><?= Yii::t("booking", "KidUp Service Fee for use of the platform") ?></h3>
                         <ul class="list-unstyled list-lines">
                             <li>
-                                <?= Yii::t("booking", "Base Fee") ?>
-                                <b>
-                                    <?= $booking->amount_payout_fee ?> DKK
+                                <?= Yii::t("booking", "KidUp Service Fee") ?>
+                                <b class="pull-right">
+                                    <?= round($booking->amount_payout_fee,2) ?> DKK
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "KidUp Service Fees") ?>
-                                <b>
-                                    <?= $booking->amount_payout_fee_tax ?> DKK
+                                <?= Yii::t("booking", "TAX") ?>
+                                <b class="pull-right">
+                                    <?= round($booking->amount_payout_fee_tax,2) ?> DKK
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Total Service Fee") ?>
-                                <b>
-                                    <?= $booking->amount_payout_fee + $booking->amount_payout_fee_tax ?> DKK
+                                <?= Yii::t("booking", "Total") ?>
+                                <b class="pull-right">
+                                    <?= round($booking->amount_payout_fee + $booking->amount_payout_fee_tax,2) ?> DKK
                                 </b>
                             </li>
                         </ul>

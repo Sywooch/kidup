@@ -90,6 +90,25 @@
 
 }
 
+.navbar-transparant{
+  z-index:999;
+  background: transparent;
+  .message{
+    .fa{
+      color:white;
+    }
+  }
+  .profile{
+    color:white;
+  }
+  li a.btn-danger{
+    color:white;
+  }
+  .navbar-nav > li > a:not(.btn){
+    color:white;
+  }
+}
+
 /*Navbar less for mobile sidebar menu*/
 @media (max-width: 767px) {
   .navbar-collapse {

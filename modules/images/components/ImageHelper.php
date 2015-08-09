@@ -14,11 +14,15 @@ class ImageHelper extends BaseHtml{
         $htmlOptions['style'] = '';
         if(isset($options['w'])){
             $htmlOptions['width'] = $options['w'];
-            $htmlOptions['style'] .= 'width:'.$options['w'].';';
+            if(!isset($htmlOptions['width'])){
+                $htmlOptions['style'] .= 'width:'.str_replace("px", '', $options['w']).'px;';
+            }
         }
         if(isset($options['h'])){
             $htmlOptions['height'] = $options['h'];
-            $htmlOptions['style'] .= 'height:'.$options['h'].';';
+            if(!isset($htmlOptions['height'])){
+                $htmlOptions['style'] .= 'height:'.str_replace("px", '', $options['h']).'px;';
+            }
         }
         if (!isset($htmlOptions['alt'])) {
             $htmlOptions['alt'] = '';
@@ -35,11 +39,21 @@ class ImageHelper extends BaseHtml{
     }
 
     public static function url($filename, $options = []){
-        $server = (new ImageManager())->getServer();
+        $isStaticFile = false;
+        $folders = explode("/", $filename);
+        if($folders[0] == 'kidup'){
+            $isStaticFile = true;
+        }
+        $server = (new ImageManager())->getServer($isStaticFile);
 
         $folders = explode("/", $filename);
 
         if($folders[0] == 'kidup'){
+            if(YII_ENV !== 'dev'){
+                // remove the kidup/ from the filename in prod/staging
+
+                $filename = substr($filename, 6);
+            }
             $server->setSourcePathPrefix('/modules/images/images/');
         }else{
             if(YII_ENV == 'dev'){
@@ -54,8 +68,6 @@ class ImageHelper extends BaseHtml{
             $options['fm'] = 'pjpg';
         }
         if(YII_ENV != 'dev'){
-            // remove the kidup/ from the filename in prod/staging
-            $filename = substr($filename, 6);
 
             if(!$server->cacheFileExists($filename, $options)){
                 $server->makeImage($filename, $options);

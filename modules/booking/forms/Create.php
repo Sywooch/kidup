@@ -59,6 +59,9 @@ class Create extends Model
             return false;
         }
 
+        /**
+         * @var $user \app\modules\user\models\User
+         */
         $user = User::findOne(\Yii::$app->user->id);
         if($user->canMakeBooking() !== true){
             \Yii::$app->session->setFlash("error", \Yii::t('booking', "Please finish your {0} and {1} before making a booking.", [

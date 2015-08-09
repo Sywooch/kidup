@@ -110,7 +110,11 @@ class CreateController extends Controller
 
         // preload images to load in dropzone
         $preload = [];
-        foreach ($item->media as $media) {
+        $allMedia = Media::find()->where(['item_has_media.item_id' => $id])
+            ->innerJoinWith('itemHasMedia')
+            ->orderBy('item_has_media.order')
+            ->all();
+        foreach ($allMedia as $media) {
             $preload[] = [
                 'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
                 'size' => 10,
