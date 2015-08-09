@@ -13,8 +13,8 @@ use \app\modules\images\components\ImageHelper;
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2>Opdag børneting</h2>
-                <h4>Find de ting som passer til din familie</h4>
+                <h2><?= Yii::t("home", "Find Kids stuff") ?></h2>
+                <h4><?= Yii::t("home", "Find the things which fits your family") ?></h4>
             </div>
         </div>
         <!--new row with stuff-->
@@ -29,7 +29,7 @@ use \app\modules\images\components\ImageHelper;
                             <br>
                             <br>
 
-                            <h2 class="category-name">Cykler</h2>
+                            <h2 class="category-name"><?= Yii::t("categories", "Bikes") ?></h2>
                         </div>
                     </div>
                     <!-- end card -->
@@ -75,7 +75,7 @@ use \app\modules\images\components\ImageHelper;
                             <br>
                             <br>
 
-                            <h2 class="category-name">Barnevogne</h2>
+                            <h2 class="category-name"><?= Yii::t("categories", "Stroller") ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
@@ -94,7 +94,7 @@ use \app\modules\images\components\ImageHelper;
                             <br>
                             <br>
 
-                            <h2 class="category-name">Legetøj</h2>
+                            <h2 class="category-name"><?= Yii::t("categories", "Toys") ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
@@ -138,8 +138,8 @@ use \app\modules\images\components\ImageHelper;
                         <div class="content text-center">
                             <br>
                             <br>
+                            <h2 class="category-name"><?= Yii::t("categories", "Room") ?></h2>
 
-                            <h2 class="category-name">Værelse</h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
@@ -186,7 +186,7 @@ use \app\modules\images\components\ImageHelper;
                             <br>
                             <br>
 
-                            <h2 class="category-name">Udendørs</h2>
+                            <h2 class="category-name"><?= Yii::t("categories", "Outdoor") ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
@@ -202,7 +202,7 @@ use \app\modules\images\components\ImageHelper;
                             <br>
                             <br>
 
-                            <h2 class="category-name">Autostole</h2>
+                            <h2 class="category-name"><?= Yii::t("categories", "Carseat") ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
