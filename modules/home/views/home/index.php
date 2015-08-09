@@ -140,8 +140,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
-                            <h1><?= \Yii::t('home', 'You cannot have everything') ?>Man kan ikke få alt</h1>
-                            <h4<?= \Yii::t('home', 'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.') ?>
+                            <h1><?= \Yii::t('home', 'You cannot have everything') ?></h1>
+                            <h4><?= \Yii::t('home', 'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.') ?>
                             </h4>
                         </div>
                     </div>
