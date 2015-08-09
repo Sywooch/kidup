@@ -104,6 +104,8 @@ class Mailer
     {
         $folder = strtolower(explode('.', $type)[0]);
         $file = explode('.', $type)[1];
+        $folder = str_replace('bookingrenter', 'bookingRenter', $folder);
+        $folder = str_replace('bookingowner', 'bookingOwner', $folder);
         return $folder . '/' . $file;
     }
 }

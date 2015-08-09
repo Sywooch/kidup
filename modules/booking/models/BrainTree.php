@@ -18,7 +18,7 @@ class BrainTree extends Model
 
     public function init()
     {
-        \Braintree_Configuration::environment('sandbox');
+        \Braintree_Configuration::environment(\Yii::$app->keyStore->get('braintree_type'));
         \Braintree_Configuration::merchantId(   \Yii::$app->keyStore->get('braintree_merchant_id'));
         \Braintree_Configuration::publicKey(    \Yii::$app->keyStore->get('braintree_public_key'));
         \Braintree_Configuration::privateKey(   \Yii::$app->keyStore->get('braintree_private_key'));
@@ -43,7 +43,7 @@ class BrainTree extends Model
             'options' => array(
                 'submitForSettlement' => false
             ),
-            'merchantAccountId' => 'dkk-merchant'
+            'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
         if($transaction->success === false){
             if($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.'){

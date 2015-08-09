@@ -25,10 +25,16 @@ class CronController extends Model
 
         $payins = Payin::findAll(['status' => Payin::STATUS_SETTLING]);
         foreach ($payins as $payin) {
+            /**
+             * @var $payin \app\modules\booking\models\Payin
+             */
             if (\Yii::$app->keyStore->get('braintree_type') == 'sandbox') {
                 require(Yii::$aliases['@vendor'] . '/braintree/braintree_php/tests/TestHelper.php');
                 $b = new BrainTree($payin);
                 $b->sandboxSettlementAccept();
+            }else{
+                $b = new BrainTree($payin);
+                $b->capture();
             }
             $payin->booking->updateStatus();
         }

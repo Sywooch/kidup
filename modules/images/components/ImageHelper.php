@@ -38,6 +38,16 @@ class ImageHelper extends BaseHtml{
         return "background-image: url('".static::url($filename, $options)."')";
     }
 
+    public static function urlToFilename($url){
+        $expl = explode("/", $url);
+        foreach ($expl as $e) {
+            if(strpos($e, '.png') !== false || strpos($e, '.jpg') !== false){
+                return $e;
+            }
+        }
+        return false;
+    }
+
     public static function url($filename, $options = []){
         $isStaticFile = false;
         $folders = explode("/", $filename);

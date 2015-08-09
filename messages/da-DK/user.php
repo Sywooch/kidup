@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'File format not allowed' => '',
-    'If you\'d like to change them, please re-enter them below.' => '',
-    'Your current payout method is stored securely in our database.' => '',
+    'File format not allowed' => 'Filformatet er ikke understøttet.',
+    'If you\'d like to change them, please re-enter them below.' => 'Hvis du vil ændre det, så skriv det igen nedenunder.',
+    'Your current payout method is stored securely in our database.' => 'Din nuværende udbetalingsmetode er gemt sikkert i vores database.',
     '(not set)' => '(ikke defineret)',
     'A confirmation message has been sent to your new email address' => 'En bekræfftigelsesmail er blevet sendt til din nye mailadresse',
     'A message has been sent to your email address. It contains a confirmation link that you must click to complete registration.' => 'En besked er blevet afsendt til din mailadresse. Den indeholder et link som du kan klikke p& aring; for at fulføre din registrering.',
-    'A message has been sent to your email address. It contains a password that we generated for you.' => '',
-    'A message has been sent to your email address. It contains your password and a confirmation link that you must click to complete registration.' => '',
+    'A message has been sent to your email address. It contains a password that we generated for you.' => 'En besked er blevet sendt til din emailadresse. Det indeholder et kodeord vi har genereret for dig.',
+    'A message has been sent to your email address. It contains your password and a confirmation link that you must click to complete registration.' => 'En besked er blevet sendt til din emailadresse. Det indeholder dit kodeord og et bekræftelseslink som du skal klikke på, for at fuldføre din registrering.',
     'A new confirmation link has been sent' => 'Et nyt link er blevet afsent til dig.',
     'A password will be generated automatically if not provided' => 'Hvis du vil have genereret et kodeord automatisk, så lad feltet forblive tomt',
     'Account' => 'Bruger',

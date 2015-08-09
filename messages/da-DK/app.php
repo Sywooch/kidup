@@ -17,13 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'In the meantime, perhaps you can:' => '',
-    'Oh no! An error happened' => '',
-    'Search for interesting products' => '',
-    'Upload one of your own' => '',
-    'Visit the homepage' => '',
-    'We\'d like to describe it like \'{0}\'' => '',
-    'We\'re sorry you\'re experiencing this issue. We\'re aware of the error and try to get it fixed for you!' => '',
+    'In the meantime, perhaps you can:' => 'I mellemtiden kan du muligvis',
+    'Oh no! An error happened' => 'Åh nej! Der skete en fejl',
+    'Search for interesting products' => 'Søg for interessante produkter',
+    'Upload one of your own' => 'Upload et af dine egne',
+    'Visit the homepage' => 'Besøg hjemmesiden',
+    'We\'d like to describe it like \'{0}\'' => 'Vi vil beskrive det som \'{0}\'',
+    'We\'re sorry you\'re experiencing this issue. We\'re aware of the error and try to get it fixed for you!' => 'Vi er kede af at du oplever dette problem. Vi har fortalt vores udviklere om det, og vi prøver at fikse det!',
     '' => '',
     '1) What is it?' => 'Hvad er det?',
     '2) What does it look like?' => 'Hvad ligner det?',
