@@ -12,7 +12,7 @@ use app\modules\images\components\ImageHelper;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 70, 'h' => 30]) ?>
+                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 70, 'w' => 105]) ?>
 
                 <h2 class="modal-title text-center"><?= Yii::t("user", "Register") ?></h2>
             </div>

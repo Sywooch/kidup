@@ -22,7 +22,7 @@ class UserImage extends Widget
         $img = $this->profile->getAttribute('img');
 
         return ImageHelper::img($img, [
-            'q' => 70,
+            'q' => 90,
             'w' => str_replace('px', '', $this->width),
             'h' => str_replace('px', '', $this->width),
             'fit' => 'crop'

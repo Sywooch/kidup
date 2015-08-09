@@ -1,6 +1,6 @@
 <?php
 
-$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', '{0} KidStuff'));
+$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
 \app\modules\search\assets\ItemSearchAsset::register($this);
 ?>
 <div ng-app="kidup.search" id="search">

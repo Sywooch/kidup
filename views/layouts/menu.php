@@ -132,7 +132,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in2-->
                         <li>
-                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 90, 'w' => 30],
+                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['w' => 30],
                                 ['style' => "padding-left: 25%; padding-top:10px;padding-bottom: 10px"]) ?>
                         </li>
 
