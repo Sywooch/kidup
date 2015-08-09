@@ -22,5 +22,6 @@ modules:
 # PLEASE ADJUST IT TO THE ACTUAL ENTRY POINT WITHOUT PATH INFO
 #            url: http://192.168.33.99/web/
         WebDriver:
-            url: http://192.168.33.99/web/
+            #url: http://192.168.33.99/web/
+            url: http://kidup.com/
             browser: phantomjs
