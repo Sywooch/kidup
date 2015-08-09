@@ -56,7 +56,7 @@ class Mailer
 
     protected function sendMessage($data)
     {
-        $mailer = Yii::$app->sendGrid;
+        $mailer = Yii::$app->mailer;
         $mailer->viewPath = $this->viewPath;
         $mailer->getView()->theme = \Yii::$app->view->theme;
         $logId = MailLog::getUniqueId();

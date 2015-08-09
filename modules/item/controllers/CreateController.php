@@ -95,6 +95,11 @@ class CreateController extends Controller
                 }
                 if ($button == "submit-publish") {
                     // todo check stuff here
+                    if (\Yii::$app->request->post()['edit-item']['rules'] != 1) {
+                        \Yii::$app->session->addFlash('warning', \Yii::t('item',
+                            'The terms and conditions have to be accepted before an item can be published'));
+                        return $this->redirect(['/item/' . $model->item->id . '/edit']);
+                    }
                     $item->is_available = 1;
                     $item->save();
                     $this->redirect(['/item/' . $model->item->id]);
@@ -225,8 +230,10 @@ class CreateController extends Controller
             foreach ($input as $order => &$image) {
                 $imageName = explode("/", $image);
                 foreach ($imageName as $i) {
-                    if(empty($i)) continue;
-                    if(strpos($i, '.png') !== false || strpos($i, '.jpg') !== false){
+                    if (empty($i)) {
+                        continue;
+                    }
+                    if (strpos($i, '.png') !== false || strpos($i, '.jpg') !== false) {
                         $image = explode("?", $i)[0];
                     }
                 }
