@@ -50,7 +50,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="col-sm-12 text-center step-area">
                     <div class="row">
                         <div id="step-item-1" class="col-sm-3 step-item active">
-                            <?= ImageHelper::img('kidup/graphics/find.png',['q' => 70, 'w' => 130], ['class' => 'steps']) ?>
+                            <?= ImageHelper::img('kidup/graphics/find.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
 
                             <div class="number">1</div>
                             <div class="row step-lines">
@@ -59,7 +59,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-2" class="col-sm-3 step-item">
-                            <?= ImageHelper::img('kidup/graphics/photograph.png',['q' => 70, 'w' => 130], ['class' => 'steps']) ?>
+                            <?= ImageHelper::img('kidup/graphics/photograph.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
 
 
                             <div class="number">2</div>
@@ -68,7 +68,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-3" class="col-sm-3 step-item">
-                            <?= ImageHelper::img('kidup/graphics/pickup.png',['q' => 70, 'w' => 130], ['class' => 'steps']) ?>
+                            <?= ImageHelper::img('kidup/graphics/pickup.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
 
 
                             <div class="number">3</div>
@@ -77,7 +77,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-4" class="col-sm-3 step-item">
-                            <?= ImageHelper::img('kidup/graphics/review.png',['q' => 70, 'w' => 130], ['class' => 'steps']) ?>
+                            <?= ImageHelper::img('kidup/graphics/review.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
 
 
                             <div class="number">4</div>
@@ -123,7 +123,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     <div id="owl-kidup" class="owl-carousel">
         <div class="item">
             <div id="content-owl" class="expert"
-                 style="<?= ImageHelper::bgImg('kidup/home/slider/approved-expert.png', ['q' => 70, 'w' => 2000]) ?>">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/approved-expert.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -140,7 +140,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
         <div class="item">
             <div id="content-owl" class="sad"
-                 style="<?= ImageHelper::bgImg('kidup/home/slider/wishes.png', ['q' => 70, 'w' => 2000]) ?>">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/wishes.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -156,7 +156,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
         <div class="item">
             <div id="content-owl" class="share"
-                 style="<?= ImageHelper::bgImg('kidup/home/slider/share.png', ['q' => 70, 'w' => 2000]) ?>">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/share.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">

@@ -19,7 +19,6 @@ server('production-primary', '31.187.70.130', 22)
     ->user('root', $keys['main_server_password']);
 
 server('test', '178.62.234.114', 22)
-
     ->path('/var/www/')
     ->user('root', $keys['test_server_password']);
 

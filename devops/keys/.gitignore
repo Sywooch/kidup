@@ -1,3 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 main_server/*
 private/*
+env-files/*
