@@ -21,25 +21,21 @@ $this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
                 <?= Yii::t("app", "Oh no! An error happened") ?>
             </h1>
 
-            <p>
-                <?= Yii::t("app", "We'd like to describe it like '{0}'",
-                    ["<b>" . nl2br(Html::encode($message)) . "</b>"]) ?>
-            </p>
-
-            <p>
+            <span style="font-size: 16px">
+                 <?= Yii::t("app", "We'd like to describe it like '{0}'",
+                     ["<b>" . nl2br(Html::encode($message)) . "</b>"]) ?>
+                <br><br>
                 <?= Yii::t("app",
                     "We're sorry you're experiencing this issue. We're aware of the error and try to get it fixed for you!") ?>
-            </p>
-
-            <p>
                 <?= Yii::t("app", "In the meantime, perhaps you can:") ?>
+                <br><br>
                 <ul>
                     <li><?= Html::a(\Yii::t("app", 'Search for interesting products'), '@web/search?q=') ?></li>
                     <li><?= Html::a(\Yii::t("app", 'Upload one of your own'), '@web/item/create') ?></li>
                     <li><?= Html::a(\Yii::t("app", 'Visit the homepage'), '@web/home') ?></li>
                 </ul>
+            </span>
 
-            </p>
         </div>
     </div>
 

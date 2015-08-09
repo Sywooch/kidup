@@ -85,7 +85,7 @@ class Token extends \app\models\base\Token
         if ($this->isNewRecord) {
             $this->setAttribute('created_at', time());
             if($this->type == self::TYPE_PHONE_CODE){
-                $this->setAttribute('code', rand(10000,99999));
+                $this->setAttribute('code', ''.rand(10000,99999));
             }else{
                 $this->setAttribute('code', \Yii::$app->security->generateRandomString());
             }

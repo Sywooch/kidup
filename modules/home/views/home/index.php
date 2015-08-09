@@ -150,7 +150,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
                             <h1><?= \Yii::t('home', 'You cannot have everything') ?></h1>
-                            <h4><?= \Yii::t('home', 'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.') ?>
+                            <h4><?= \Yii::t('home',
+                                    'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.') ?>
                             </h4>
                         </div>
                     </div>
@@ -173,7 +174,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </div>
 
-
     <!--Area for story-->
     <Section id="content-stories">
         <div class="container">
@@ -185,13 +185,14 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     <h4>Sabine Clasen</h4>
 
                     <h3><?= \Yii::t('home', 'We can help other families') ?></h3>
-
-                    <p><?= \Yii::t('home',
-                            'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.') ?></p>
-
-                    <p><?= \Yii::t('home',
-                            'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.') ?></p>
-
+                    <br>
+                    <div style="font-size: 17px">
+                        <?= \Yii::t('home',
+                            'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.') ?>
+                        <br><br>
+                        <?= \Yii::t('home',
+                            'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.') ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,6 +208,4 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             </div>
         </div>
     </Section>
-
-
 </div>

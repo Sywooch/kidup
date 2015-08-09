@@ -83,7 +83,6 @@ use \app\modules\images\components\ImageHelper;
                                             <small>
                                                 <?= Yii::t("item", "KidUp is about larger items, like strollers, cribs, alarmsystems etc.
                                                  If you can only supply a small item, you can combine those in the age-packages.") ?>
-                                                ">
                                             </small>
                                         </div>
                                     </div>
