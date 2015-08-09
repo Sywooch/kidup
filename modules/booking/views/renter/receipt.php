@@ -2,6 +2,7 @@
 use Carbon\Carbon;
 use yii\helpers\Url;
 use app\modules\booking\models\Payin;
+use app\modules\images\components\ImageHelper;
 /**
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item
@@ -9,7 +10,7 @@ use app\modules\booking\models\Payin;
 ?>
 <br/><br/>
 <section class="section" id="checkout">
-    <div class="row" style="max-width: 98%">
+    <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
                 <div class="checkout-header">
@@ -26,7 +27,7 @@ use app\modules\booking\models\Payin;
                     <div class="col-md-4 col-md-offset-1">
                         <div style="text-align: left">
                             <br/>
-                            <b>KidUp</b><br/>
+                            <b class="pull-right">KidUp</b><br/>
                             <?= \Yii::$app->params['kidupAddressLine1'] ?> <br/>
                             <?= \Yii::$app->params['kidupAddressLine2'] ?>
                         </div>
@@ -34,9 +35,9 @@ use app\modules\booking\models\Payin;
                     <div class="col-md-6">
                         <div style="text-align: right">
                             <br/>
-                            <img src="<?= Url::to('@assets/img/logo/horizontal.png') ?>" width="100px"/>
+                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['w' => 100]) ?>
                             <br/>
-                            <b><?= Yii::t("booking", "Generated on {0}", [
+                            <b class="pull-right"><?= Yii::t("booking", "Generated on {0}", [
                                     Carbon::now(\Yii::$app->params['serverTimeZone'])->toFormattedDateString()
                                 ]) ?></b>
                         </div>
@@ -48,23 +49,23 @@ use app\modules\booking\models\Payin;
                         <ul class="list-unstyled list-lines">
                             <li>
                                 <?= Yii::t("booking", "Name") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= \Yii::$app->user->identity->profile->first_name . ' ' . \Yii::$app->user->identity->profile->last_name ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Dates") ?> <b>
+                                <?= Yii::t("booking", "Dates") ?> <b class="pull-right">
                                     <?= Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
                                     - <?= Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Item Owner") ?> <b>
+                                <?= Yii::t("booking", "Item Owner") ?> <b class="pull-right">
                                     <?= $booking->item->owner->profile->first_name . ' ' . $booking->item->owner->profile->last_name ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Pickup Address") ?> <b>
+                                <?= Yii::t("booking", "Pickup Address") ?> <b class="pull-right">
                                     <?= $item->location->street_name ?> <?= $item->location->street_number ?>
                                     , <?= $item->location->city ?>, <?= $item->location->country0->name ?>
                                 </b>
@@ -77,7 +78,7 @@ use app\modules\booking\models\Payin;
                                 <?= Yii::t("booking", "Rent for {0} days", [
                                     Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to))
                                 ]) ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $booking->amount_item ?> DKK
                                 </b>
                             </li>
@@ -85,13 +86,13 @@ use app\modules\booking\models\Payin;
                                 <?= Yii::t("booking", "KidUp Service Fees ") ?>
                                 <br/>
                                 <?= Yii::t("booking", "(including VAT)") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $booking->amount_payin - $booking->amount_item ?> DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Total") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $booking->amount_payin ?> DKK
                                 </b>
                             </li>
@@ -99,7 +100,7 @@ use app\modules\booking\models\Payin;
                             <li>
                                 <?= Yii::t("booking", "Payment Received") ?>
                                 <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? $booking->amount_payin : 0 ?>
                                     DKK
                                 </b>
@@ -107,13 +108,14 @@ use app\modules\booking\models\Payin;
                             <li>
                                 <?= Yii::t("booking", "Balance") ?>
                                 <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? 0 : $booking->amount_payin ?>
                                     DKK
                                 </b>
                             </li>
                             <br/>
-                            <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*'. \Yii::t('booking', "Payment will be processed automatically when the owner accepts this booking.") ?>
+                            <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' . \Yii::t('booking',
+                                    "Payment will be processed automatically when the owner accepts this booking.") ?>
                         </ul>
                     </div>
                 </div>

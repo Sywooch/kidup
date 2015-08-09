@@ -24,7 +24,7 @@ class Mailer
     const BOOKING_OWNER_CANCELLED = 'BookingRenter.cancel';
 
     const BOOKING_OWNER_CONFIRMATION = 'BookingOwner.confirmation';
-    const BOOKING_OWNER_PAYOUT ='BookingOwner.payout';
+    const BOOKING_OWNER_PAYOUT = 'BookingOwner.payout';
     const BOOKING_OWNER_REQUEST = 'BookingOwner.request';
     const BOOKING_OWNER_STARTS = 'BookingOwner.start';
     const BOOKING_OWNER_PAYMENT_FAILED = 'BookingOwner.failed';
@@ -48,7 +48,7 @@ class Mailer
 
     public static function send($type, $data)
     {
-        $mailerClassName = "app\\modules\\mail\\mails\\".explode('.', $type)[0];
+        $mailerClassName = "app\\modules\\mail\\mails\\" . explode('.', $type)[0];
         $mailer = new $mailerClassName();
 
         return $mailer->{explode('.', $type)[1]}($data);
@@ -56,7 +56,7 @@ class Mailer
 
     protected function sendMessage($data)
     {
-        $mailer =  Yii::$app->sendGrid;;
+        $mailer = Yii::$app->sendGrid;
         $mailer->viewPath = $this->viewPath;
         $mailer->getView()->theme = \Yii::$app->view->theme;
         $logId = MailLog::getUniqueId();
@@ -82,7 +82,8 @@ class Mailer
             ->send();
     }
 
-    public function sendTemplateTester($template){
+    public function sendTemplateTester($template)
+    {
         $mailer = \Yii::$app->mailer;
         $mailer->viewPath = $this->viewPath;
         $mailer->getView()->theme = \Yii::$app->view->theme;

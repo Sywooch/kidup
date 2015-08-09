@@ -3,13 +3,14 @@ use yii\helpers\Html;
 use Carbon\Carbon;
 use yii\helpers\Url;
 use app\modules\booking\models\Payout;
+use app\modules\images\components\ImageHelper;
 /**
  * @var array $invoice
  */
 ?>
 <br/><br/>
 <section class="section" id="checkout">
-    <div class="row" style="max-width: 98%">
+    <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
                 <div class="checkout-header">
@@ -34,7 +35,7 @@ use app\modules\booking\models\Payout;
                     <div class="col-md-6">
                         <div style="text-align: right">
                             <br/>
-                            <img src="<?=Url::to('@assets/img/logo/horizontal.png', true) ?>" width="100px"/>
+                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['w' => 100]) ?>
                             <br/>
                             <b><?= Yii::t("booking", "Generated on {0}", [
                                     Carbon::createFromTimestamp( $invoice['created_at'], \Yii::$app->params['serverTimeZone'])->toFormattedDateString()
@@ -48,33 +49,33 @@ use app\modules\booking\models\Payout;
                         <ul class="list-unstyled list-lines">
                             <li>
                                 <?= Yii::t("booking", "Name") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $invoice['data']['renterProfile']['first_name'] ?> <?= $invoice['data']['renterProfile']['last_name'] ?>
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Address") ?>
-                                <b>
+                                <b class="pull-right">
                                     <?= $invoice['data']['renterAddress'] ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Date of Service Rendered") ?> <b>
+                                <?= Yii::t("booking", "Date of Service Rendered") ?> <b class="pull-right">
                                     <?= Carbon::createFromTimestamp($invoice['data']['booking']['time_from'], \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Item") ?> <b>
+                                <?= Yii::t("booking", "Item") ?> <b class="pull-right">
                                     <?= $invoice['data']['item']['name'] ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "VAT Country") ?> <b>
+                                <?= Yii::t("booking", "VAT Country") ?> <b class="pull-right">
                                     <?= $invoice['data']['renterCountry']['name'] ?>
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "VAT Rate") ?> <b>
+                                <?= Yii::t("booking", "VAT Rate") ?> <b class="pull-right">
                                     <?= $invoice['data']['renterCountry']['vat'] ?>%
                                 </b>
                             </li>
@@ -84,21 +85,21 @@ use app\modules\booking\models\Payout;
                         <h3><?= Yii::t("booking", "KidUp Service Fee for use of the platform") ?></h3>
                         <ul class="list-unstyled list-lines">
                             <li>
-                                <?= Yii::t("booking", "Base Fee") ?>
-                                <b>
-                                    <?= $invoice['data']['booking']['amount_payin_fee'] ?> DKK
-                                </b>
-                            </li>
-                            <li>
                                 <?= Yii::t("booking", "KidUp Service Fees") ?>
-                                <b>
-                                    <?= $invoice['data']['booking']['amount_payin_fee_tax'] ?> DKK
+                                <b class="pull-right">
+                                    <?= round($invoice['data']['booking']['amount_payin_fee'],2) ?> DKK
                                 </b>
                             </li>
                             <li>
-                                <?= Yii::t("booking", "Total Service Fee") ?>
-                                <b>
-                                    <?= $invoice['data']['booking']['amount_payin_fee'] + $invoice['data']['booking']['amount_payin_fee_tax'] ?> DKK
+                                <?= Yii::t("booking", "VAT") ?>
+                                <b class="pull-right">
+                                    <?= round($invoice['data']['booking']['amount_payin_fee_tax'],2) ?> DKK
+                                </b>
+                            </li>
+                            <li>
+                                <?= Yii::t("booking", "Total") ?>
+                                <b class="pull-right">
+                                    <?= round($invoice['data']['booking']['amount_payin_fee'] + $invoice['data']['booking']['amount_payin_fee_tax'],2) ?> DKK
                                 </b>
                             </li>
                         </ul>

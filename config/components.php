@@ -10,8 +10,7 @@ $components = [
         'username' => $keys['sendgrid_user'],
         'password' => $keys['sendgrid_password'],
         'viewPath' => '@app/modules/mail/views',
-        'useFileTransport' => false
-        //'viewPath' => '@app/views/mail', // your view path here
+        'useFileTransport' => YII_ENV == 'dev' ? true : false
     ],
     'mailer' => [
         'class' => 'yii\swiftmailer\Mailer',

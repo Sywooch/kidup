@@ -19,7 +19,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registra
     <div id="login" class="row">
         <br/><br/>
 
-        <div class="col-sm-6 col-sm-offset-3 card">
+        <div class="col-md-6 col-md-offset-3 card col-sm-8 col-sm-offset-2">
             <br/><br/>
 
             <div class="text-center">

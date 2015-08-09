@@ -6,6 +6,7 @@ Yii::setAlias('@assets', YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test
 $keyFile = __DIR__ . '/../config/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 $params = require(__DIR__ . '/params.php');
+$allComponents = require(__DIR__ . '/components.php');
 
 return [
     'id' => 'basic-console',
@@ -72,6 +73,7 @@ return [
         'widgetRequest' =>  ['class' => 'app\components\WidgetRequest'],
         'pages' =>  ['class' => 'app\components\Pages'],
         'clog' => ['class' => 'app\components\Log'],
+        'sendGrid' => $allComponents['sendGrid'],
     ],
     'params' => $params,
 ];

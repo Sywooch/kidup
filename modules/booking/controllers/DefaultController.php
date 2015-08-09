@@ -85,7 +85,7 @@ class DefaultController extends Controller
         if($booking->payin->status !== Payin::STATUS_AUTHORIZED){
             if($booking->payin->status == Payin::STATUS_PENDING){
                 \Yii::$app->session->addFlash('info', \Yii::t('booking', 'The payment has to be confirmed before the booking can be accepted. Please try again in a couple of minutes'));
-                return $this->goBack(\Yii::$app->homeUrl);
+                return $this->redirect('@web/item/list');
             }
             throw new ServerErrorHttpException("Please contact support with error message: Payin status should be authorized, booking id {$booking->id}");
         }

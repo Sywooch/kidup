@@ -18,7 +18,7 @@ $this->title = ucfirst(\Yii::t('title', 'Log In')) . ' - ' . Yii::$app->name;
     <div id="login" class="row">
         <br/><br/>
 
-        <div class="col-sm-4 col-sm-offset-4 card">
+        <div class="col-md-4 col-md-offset-4 card col-sm-8 col-sm-offset-2">
             <h3>
                 <center><?= Yii::t('user', "Login to KidUp") ?></center>
             </h3>

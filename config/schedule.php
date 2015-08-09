@@ -3,8 +3,8 @@
 
 /**
  * Make sure to have to following cron script running (dev and live):
- // * * * * * php /vagrant/yii schedule/run --scheduleFile=@console/config/schedule.php 1>> /dev/null 2>&1
- // * * * * * php /var/www/current/yii schedule/run --scheduleFile=@console/config/schedule.php 1>> /dev/null 2>&1
+ // * * * * * php /vagrant/yii schedule/run --scheduleFile=@app/config/schedule.php 1>> /dev/null 2>&1
+ // * * * * * php /var/www/current/yii schedule/run --scheduleFile=@app/config/schedule.php 1>> /dev/null 2>&1
  */
 /**
  * @var \omnilight\scheduling\Schedule $schedule
@@ -16,7 +16,7 @@
 $schedule->exec('ls')->everyFiveMinutes();
 
 // This command will execute migration command of your application every hour
-$schedule->command('cron/minute')->minutely();
+$schedule->command('cron/minute')->everyMinute();
 $schedule->command('cron/hour')->hourly();
 $schedule->command('cron/hour')->daily();
 

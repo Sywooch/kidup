@@ -14,11 +14,15 @@ class ImageHelper extends BaseHtml{
         $htmlOptions['style'] = '';
         if(isset($options['w'])){
             $htmlOptions['width'] = $options['w'];
-            $htmlOptions['style'] .= 'width:'.$options['w'].';';
+            if(!isset($htmlOptions['width'])){
+                $htmlOptions['style'] .= 'width:'.str_replace("px", '', $options['w']).'px;';
+            }
         }
         if(isset($options['h'])){
             $htmlOptions['height'] = $options['h'];
-            $htmlOptions['style'] .= 'height:'.$options['h'].';';
+            if(!isset($htmlOptions['height'])){
+                $htmlOptions['style'] .= 'height:'.str_replace("px", '', $options['h']).'px;';
+            }
         }
         if (!isset($htmlOptions['alt'])) {
             $htmlOptions['alt'] = '';

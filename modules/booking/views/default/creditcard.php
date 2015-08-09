@@ -6,7 +6,7 @@ use yii\bootstrap\Modal;
  * @var string $clientToken
  */
 ?>
-
+<?= Yii::t("booking", "Please add a payment method for this booking.") ?><br>
 <?php
 Modal::begin([
     'header' => '<h2>' . Yii::t("booking", "Add Payment Method") . '</h2>',

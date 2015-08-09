@@ -5,6 +5,7 @@ namespace app\modules\booking\models;
 use app\components\Event;
 use app\modules\user\models\PayoutMethod;
 use Carbon\Carbon;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -50,7 +51,8 @@ class Payout extends \app\models\base\Payout
         $payout->save();
         $booking->payout_id = $this->id;
         if(!$booking->save()){
-            \yii\helpers\VarDumper::dump($booking,10,true); exit();
+            (new \app\components\Log)->warning("Payout id not set", $booking->getErrors);
+            throw new InternalErrorException();
         }
         return $booking->save();
     }

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use \app\modules\images\components\ImageHelper;
+
 \yii\web\JqueryAsset::register($this);
 \app\modules\item\assets\CreateAsset::register($this);
 /**
@@ -16,7 +17,8 @@ use \app\modules\images\components\ImageHelper;
                     <div class="content ">
                         <h2 class="title"><?= Yii::t("item", "Create a new item") ?> <b>(<?= Yii::t("item",
                                     "step 1 out of 2") ?>)</b></h2>
-                        <?= ImageHelper::img('kidup/graphics/rentout.png', ['w' => 120, 'h' => 120], ['class' => 'header-top-image']) ?>
+                        <?= ImageHelper::img('kidup/graphics/rentout.png', ['w' => 120, 'h' => 120],
+                            ['class' => 'header-top-image']) ?>
                     </div>
                 </div>
                 <div class="card">
@@ -56,26 +58,33 @@ use \app\modules\images\components\ImageHelper;
                                 <div class="col-sm-10 col-sm-offset-1 text-left">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/photograph.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
+                                            <?= ImageHelper::img('kidup/graphics/photograph.png',
+                                                ['w' => 160, 'h' => 160, 'q' => 90],
+                                                ['width' => '100%', 'height' => '100%']) ?>
                                             <small>
                                                 <?= Yii::t("item", "To rent and rent out is about seeing what we are truly renting.
                                                 In other words KidUp is about taking really good pictures.") ?>
                                             </small>
                                         </div>
                                         <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/pickup.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
+                                            <?= ImageHelper::img('kidup/graphics/pickup.png',
+                                                ['w' => 160, 'h' => 160, 'q' => 90],
+                                                ['width' => '100%', 'height' => '100%']) ?>
 
                                             <small>
                                                 <?= Yii::t("item", "Kidup is about trust too. If you see a personal
                                                 description of different things, it gives credibility. Trust and personality is the essence of KidUp") ?>
-                                                </small>
+                                            </small>
                                         </div>
                                         <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/meet.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
+                                            <?= ImageHelper::img('kidup/graphics/meet.png',
+                                                ['w' => 160, 'h' => 160, 'q' => 90],
+                                                ['width' => '100%', 'height' => '100%']) ?>
                                             <small>
                                                 <?= Yii::t("item", "KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.") ?>">
-                                                </small>
+                                                 If you can only supply a small item, you can combine those in the age-packages.") ?>
+                                                ">
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
