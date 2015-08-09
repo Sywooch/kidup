@@ -51,12 +51,12 @@ class ImageManager
         return $this->filesystem;
     }
 
-    public static function createSubFolders($filename, $depth = 2)
+    public static function createSubFolders($filename, $depth = 3)
     {
         $folder = [];
         for ($i = $depth; $depth > 0; $depth--) {
-            $folder[] = substr($filename, 0, 3);
-            $filename = substr($filename, 3);
+            $folder[] = substr($filename, 0, 1);
+            $filename = substr($filename, 1);
         }
         return implode("/", $folder);
     }
@@ -65,7 +65,7 @@ class ImageManager
     {
         // generate a unique file name
 
-        $filename = \Yii::$app->security->generateRandomString();
+        $filename = str_replace("_", '-', \Yii::$app->security->generateRandomString());
         $dir = '';
         if(YII_ENV == 'dev'){
             $dir = 'runtime/';
@@ -88,12 +88,13 @@ class ImageManager
 
     public function getServer()
     {
-        $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
 
         if(YII_ENV == 'dev'){
+            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
             $cache = new Filesystem(new Adapter(\Yii::$aliases['@runtime'].'/cache/images'));
         }else{
             $cache = $this->filesystem;
+            $source = $this->filesystem;
         }
 
         $imageManager = new \Intervention\Image\ImageManager([
