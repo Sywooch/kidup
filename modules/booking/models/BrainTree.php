@@ -43,7 +43,7 @@ class BrainTree extends Model
             'options' => array(
                 'submitForSettlement' => false
             ),
-            'merchantAccountId' => 'dkk-merchant'
+            'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
         if($transaction->success === false){
             if($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.'){
