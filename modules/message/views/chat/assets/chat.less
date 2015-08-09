@@ -1,0 +1,80 @@
+@import (reference) "./../../../views/assets/css/base/variables.less";
+
+/*Mail*/
+#inbox {
+  margin-top: 70px;
+  .card-mail{
+    margin-top: 40px;
+    box-shadow: none;
+    background-color:transparent;
+  }
+  .mail-avatar{
+    display: block;
+    margin: auto;
+    width: 100px;
+    text-align: center;
+    .avatar{
+      width: 100px;
+      height: 100px;
+      margin: -50px 0 0 0;
+    }
+  }
+  .mail-content{
+    padding: 15px;
+    @media(max-width: 768px){
+      margin: 15px;
+    }
+  }
+  .author{
+    position: relative;
+  }
+  .badge{
+    position: absolute;
+    left: -6px;
+    top: 23px;
+    height: 10px;
+    padding: 0;
+    background-color: @danger-color;
+  }
+  .badge:empty{
+    display: block;
+  }
+
+  /*Navigation less*/
+  .nav-tabs {
+    border: 1px solid #ddd;
+  }
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    border: none;
+  }
+  .nav-tabs > li > a{
+    border: none!important;
+    border-radius: 0px;
+    margin: 0;
+    &:hover {
+      background: @light-gray;
+    }
+  }
+  .tab-content{
+    margin-top: 37px;
+  }
+  .panel-title a{
+    padding: 12px;
+  }
+  .panel{
+    margin-bottom: 0px;
+
+  }
+  .panel-default > .panel-heading {
+    border-color: transparent;
+  }
+
+  .selected{
+    border: 1px solid @primary-color;
+    border-right: 0px;
+    border-radius: 0px;
+  }
+  .message{
+    padding: 20px;
+  }
+}

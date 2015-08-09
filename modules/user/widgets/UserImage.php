@@ -1,8 +1,7 @@
 <?php
 namespace app\modules\user\widgets;
 
-use app\interfaces\RequestableWidgetInterface;
-use app\modules\item\components\MediaManager;
+use app\modules\images\components\ImageHelper;
 use app\modules\user\models\Profile;
 use kartik\widgets\Widget;
 
@@ -12,7 +11,8 @@ class UserImage extends Widget
     public $width = '50px';
     private $profile;
 
-    public function init($data = null){
+    public function init($data = null)
+    {
     }
 
     public function run()
@@ -21,12 +21,10 @@ class UserImage extends Widget
 
         $img = $this->profile->getAttribute('img');
 
-        $url = MediaManager::getUrl($img, MediaManager::THUMB);
-
-        return $this->render('user_image', [
-            'url' => $url,
-            'profile' => $this->profile,
-            'width' => $this->width
-        ]);
+        return ImageHelper::img($img, [
+            'q' => 70,
+            'w' => $this->width,
+            'h' => $this->width
+        ],['class' => "avatar img-circle"]);
     }
 }

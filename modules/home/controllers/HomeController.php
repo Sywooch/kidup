@@ -48,6 +48,7 @@ class HomeController extends Controller
 
     public function cache($id, $function)
     {
+        if(YII_CACHE == false) return $function();
         $data = Yii::$app->cache->get($id);
         if ($data != false) {
             return $data;

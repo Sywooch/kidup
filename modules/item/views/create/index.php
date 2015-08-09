@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use \app\modules\images\components\ImageHelper;
 \yii\web\JqueryAsset::register($this);
 \app\modules\item\assets\CreateAsset::register($this);
 /**
@@ -16,8 +16,7 @@ use yii\widgets\ActiveForm;
                     <div class="content ">
                         <h2 class="title"><?= Yii::t("item", "Create a new item") ?> <b>(<?= Yii::t("item",
                                     "step 1 out of 2") ?>)</b></h2>
-                        <img class="header-top-image"
-                             src="<?= \yii\helpers\Url::to('@web/img/graphics/rentout.png') ?>">
+                        <?= ImageHelper::img('kidup/graphics/rentout.png', ['w' => 120, 'h' => 120], ['class' => 'header-top-image']) ?>
                     </div>
                 </div>
                 <div class="card">
@@ -57,30 +56,26 @@ use yii\widgets\ActiveForm;
                                 <div class="col-sm-10 col-sm-offset-1 text-left">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <img style="width: 100%"
-                                                 src="<?= \yii\helpers\Url::to('@web/img/graphics/photograph.png') ?>">
+                                            <?= ImageHelper::img('kidup/graphics/photograph.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
                                             <small>
-                                                At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
-                                                På KidUp handler det altså om, at du tager nogle knaldgode billeder.
+                                                <?= Yii::t("item", "To rent and rent out is about seeing what we are truly renting.
+                                                In other words KidUp is about taking really good pictures.") ?>
                                             </small>
                                         </div>
                                         <div class="col-sm-4">
-                                            <img style="width: 100%"
-                                                 src="<?= \yii\helpers\Url::to('@web/img/graphics/pickup.png') ?>">
+                                            <?= ImageHelper::img('kidup/graphics/pickup.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
+
                                             <small>
-                                                KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
-                                                forskellige ting, så får man ro i maven. Det giver troværdighed og
-                                                tillid.
-                                            </small>
+                                                <?= Yii::t("item", "Kidup is about trust too. If you see a personal
+                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp") ?>
+                                                </small>
                                         </div>
                                         <div class="col-sm-4">
-                                            <img style="width: 100%"
-                                                 src="<?= \yii\helpers\Url::to('@web/img/graphics/meet.png') ?>">
+                                            <?= ImageHelper::img('kidup/graphics/meet.png', ['w' => 160, 'h' => 160, 'q' => 90]) ?>
                                             <small>
-                                                KidUp henvender sig til større ting, såsom barnevogne, vugger,
-                                                alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
-                                                alderskasser.
-                                            </small>
+                                                <?= Yii::t("item", "KidUp is about larger items, like strollers, cribs, alarmsystems etc.
+                                                 If you can only supply a small item, you can combine those in the age-packages.") ?>">
+                                                </small>
                                         </div>
                                     </div>
                                 </div>

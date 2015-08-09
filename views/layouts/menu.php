@@ -1,7 +1,7 @@
 <?php
 use app\components\WidgetRequest;
 use yii\helpers\Url;
-
+use app\modules\images\components\ImageHelper;
 // create the navbar
 $class = 'navbar navbar-default ';
 $class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-navbar-product';
@@ -24,7 +24,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <img src="<?= $logoUrl ?>" height="46px">
+                    <?= ImageHelper::img('kidup/logo/horizontal.png', ['q'=>90,'h'=>46]) ?>
                 </a>
             </div>
 
@@ -85,7 +85,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 </li>
                                 <li>
                                     <a href="<?= Url::to('@web/item/list') ?>">
-                                        <img src="<?= Url::to('@web/img/logo/balloon.png')?>" class="menu-icon-kidup">
+                                        <?= ImageHelper::img('kidup/logo/balloon.png', ['q'=>90],['class' => "menu-icon-kidup"]) ?>
                                         <?= Yii::t("app", "Your Listings") ?>
                                     </a>
                                 </li>
@@ -128,8 +128,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in2-->
                         <li>
-                            <img src="<?= $logoUrl ?>" alt="" width="75%"
-                                 style="padding-left: 25%; padding-top:10px;padding-bottom: 10px"/>
+                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['q'=>90,'w'=>30],
+                                ['style' => "padding-left: 25%; padding-top:10px;padding-bottom: 10px"]) ?>
                         </li>
 
                         <li>

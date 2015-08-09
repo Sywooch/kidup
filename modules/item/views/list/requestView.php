@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use app\modules\images\components\ImageHelper;
+
 $item = \app\modules\item\models\Item::findOne($model->item_id);
 \app\modules\item\assets\ListAsset::register($this);
 
@@ -9,7 +11,7 @@ $item = \app\modules\item\models\Item::findOne($model->item_id);
 <tr>
     <td class="text-center ">
         <div class="product-image"
-             style="background-image: url('<?= $item->getImageUrls()[0]['thumb'] ?>'); background-size: cover; background-position: 50% 50%;" >
+             style="<?= ImageHelper::bgImg($item->getImageUrls()[0], ['q' => 90, 'w' => 700]) ?>; background-size: cover; background-position: 50% 50%;" >
         </div>
     </td>
     <td><?= $item->name ?></td>

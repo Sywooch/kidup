@@ -3,7 +3,8 @@
 namespace app\modules\item\controllers;
 
 use app\controllers\Controller;
-use app\modules\item\components\MediaManager;
+use app\modules\images\components\ImageHelper;
+use app\modules\images\components\ImageManager;
 use app\modules\item\forms\Create;
 use app\modules\item\forms\Edit;
 use app\modules\item\models\Category;
@@ -111,7 +112,7 @@ class CreateController extends Controller
         $preload = [];
         foreach ($item->media as $media) {
             $preload[] = [
-                'name' => MediaManager::fileversion($media->file_name, MediaManager::THUMB),
+                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
                 'size' => 10,
             ];
         }
@@ -145,13 +146,14 @@ class CreateController extends Controller
         }
 
         $image = UploadedFile::getInstanceByName('file');
-        if(!in_array($image->extension, ['png', 'jpg'])){
-            throw new NotAcceptableHttpException("File format not allowed");
+        if (!in_array($image->extension, ['png', 'jpg'])) {
+            Yii::$app->session->addFlash('warning', \Yii::t('item', "File format not allowed"));
+            return false;
         }
         $i = new Media();
         $i->setAttributes([
             'user_id' => \Yii::$app->user->id,
-            'file_name' => MediaManager::set($image, \Yii::$app->user->id),
+            'file_name' => (new ImageManager())->upload($image),
             'type' => Media::TYPE_IMG,
             'storage' => Media::LOC_LOCAL,
             'created_at' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp,
@@ -191,7 +193,7 @@ class CreateController extends Controller
             throw new NotFoundHttpException();
         }
 
-        MediaManager::delete($media->file_name);
+        (new ImageManager)->delete($media->file_name);
 
         foreach ($media->itemHasMedia as $m) {
             $m->delete();
@@ -202,7 +204,8 @@ class CreateController extends Controller
         return true;
     }
 
-    public function actionImageSort($item_id){
+    public function actionImageSort($item_id)
+    {
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException();
         }
@@ -214,18 +217,25 @@ class CreateController extends Controller
             throw new ForbiddenHttpException();
         }
         $input = \Yii::$app->request->post('order');
-        if(is_array($input)){
-            foreach($input as $order => &$image){
-                $media = Media::find()->where(['file_name' => str_replace('_thumb', '' , $image)])->one();
-                if($media->user_id !==\Yii::$app->user->id){
+        if (is_array($input)) {
+            foreach ($input as $order => &$image) {
+                $imageName = explode("/", $image);
+                foreach ($imageName as $i) {
+                    if(empty($i)) continue;
+                    if(strpos($i, '.png') !== false || strpos($i, '.jpg') !== false){
+                        $image = explode("?", $i)[0];
+                    }
+                }
+                $media = Media::find()->where(['file_name' => $image])->one();
+                if ($media->user_id !== \Yii::$app->user->id) {
                     throw new ForbiddenHttpException();
                 }
                 $connection = ItemHasMedia::find()->where([
                     'item_id' => $item_id,
                     'media_id' => $media->id
                 ])->one();
-                if($connection !== null){
-                    $connection->order=$order+1;
+                if ($connection !== null) {
+                    $connection->order = $order + 1;
                     $connection->save();
                 }
             }

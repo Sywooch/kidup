@@ -1,9 +1,9 @@
 <?php
 
-use app\modules\item\components\MediaManager;
 use kartik\form\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\helpers\Html;
+use app\modules\images\components\ImageHelper;
 
 /**
  * @var yii\web\View $this
@@ -43,10 +43,9 @@ $settings = [
     'overwriteInitial' => true
 ];
 if ($model->getAttribute('img') !== null) {
-    $settings['initialPreview'] = [
-        Html::img(MediaManager::getUrl($model->getAttribute('img'), MediaManager::MEDIUM),
-            ['class' => 'file-preview-image', 'title' => 'Profile Image']),
-    ];
+    $settings['initialPreview'] = ImageHelper::img($model->getAttribute('img'),
+        ['q' => 70, 'w' => 200, 'h' => 200, 'fit' => 'crop'],
+        ['class' => 'file-preview-image', 'title' => 'Profile Image']);
 }
 echo $form->field($model, 'img')->widget(FileInput::classname(), [
     'options' => ['multiple' => false, 'accept' => 'image/*'],

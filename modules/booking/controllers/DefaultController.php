@@ -2,12 +2,11 @@
 
 namespace app\modules\booking\controllers;
 
-use app\components\Error;
 use app\controllers\Controller;
 use app\modules\booking\forms\Confirm;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
-use app\modules\item\components\MediaManager;
+use app\modules\images\components\ImageHelper;
 use Carbon\Carbon;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
@@ -64,7 +63,7 @@ class DefaultController extends Controller
             'booking' => $booking,
             'model' => $model,
             'item' => $booking->item,
-            'itemImage' => MediaManager::getUrl($booking->item->media[0]->file_name, MediaManager::MEDIUM),
+            'itemImage' => ImageHelper::url($booking->item->media[0]->file_name),
             'profile' => $booking->item->owner->profile
         ]);
     }

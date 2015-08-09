@@ -25,7 +25,6 @@ class Bootstrap implements BootstrapInterface
         /** @var $module Module */
         if ($app->hasModule('splash') && ($module = $app->getModule('splash')) instanceof Module) {
             Yii::setAlias('@splash', '@web/splash');
-            Yii::setAlias('@splashAssets', '@web/assets_web/modules/splash');
         }
     }
 }

@@ -1,16 +1,18 @@
 <?php
 use yii\helpers\Url;
 use app\components\ViewHelper;
+use app\modules\images\components\ImageHelper;
 
 \app\modules\home\assets\HomeAssets::register($this);
-
+\app\assets\AngularAsset::register($this);
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 ?>
 
 <div id="home">
     <!--Area for background-image, tag-line and sign-up -->
     <header id="header-home">
-        <div class="cover-home" style="background-image: url('<?= Url::to('@web/img/home/header.png') ?>')"></div>
+        <div class="cover-home"
+             style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>"></div>
         <div class="header-content">
             <div class="row ">
                 <div class=" col-xs-12 col-sm-12 col-md-10 col-md-offset-1 text-center ">
@@ -35,7 +37,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
     <!-- Steps explanation area-->
     <div id="content-home-steps" class=" hidden-xs">
-        <div class="divider"><img src="<?= Url::to('@web/img/logo/balloon.png') ?>"></div>
+        <div class="divider">
+            <?= ImageHelper::img('kidup/logo/balloon.png') ?>
+        </div>
+
         <div class="container ">
             <div class="row ">
                 <div class="col-sm-12 text-center">
@@ -45,8 +50,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="col-sm-12 text-center step-area">
                     <div class="row">
                         <div id="step-item-1" class="col-sm-3 step-item active">
-                            <img class="steps" src="<?= Url::to('@web/img/graphics/find.png') ?>"
-                                 height="130px">
+                            <?= ImageHelper::img('kidup/graphics/find.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
 
                             <div class="number">1</div>
                             <div class="row step-lines">
@@ -55,8 +59,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-2" class="col-sm-3 step-item">
-                            <img class="steps" src="<?= Url::to('@web/img/graphics/photograph.png') ?>"
-                                 height="130px">
+                            <?= ImageHelper::img('kidup/graphics/photograph.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
+
 
                             <div class="number">2</div>
                             <div class="row step-lines">
@@ -64,9 +68,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-3" class="col-sm-3 step-item">
-                            <img class="steps"
-                                 src="<?= Url::to('@web/img/graphics/pickup.png') ?>"
-                                 height="130px">
+                            <?= ImageHelper::img('kidup/graphics/pickup.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
+
 
                             <div class="number">3</div>
                             <div class="row step-lines">
@@ -74,9 +77,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             </div>
                         </div>
                         <div id="step-item-4" class="col-sm-3 step-item">
-                            <img class="steps"
-                                 src="<?= Url::to('@web/img/graphics/review.png') ?>"
-                                 height="130px">
+                            <?= ImageHelper::img('kidup/graphics/review.png',['q' => 90, 'w' => 130], ['class' => 'steps']) ?>
+
 
                             <div class="number">4</div>
                             <div class="row step-lines">
@@ -117,61 +119,11 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </div>
 
-    <Section id="content-blocks " class="hidden">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h2>Hør om andre</h2>
-                    <h4>Oplev hvordan andre familier har anvendt KidUp til at hjælpe dem.</h4>
-                </div>
-            </div>
-            <div class="row ">
-                <a>
-                    <div class="col-sm-12 col-md-6">
-                        <div class=" block-box">
-                            <div class="block-half"
-                                 style="background-image: url('<?= Url::to('@web/img/categories/room2.png') ?>')"></div>
-                            <h3 class="one">Blog 1</h3>
-
-                            <p>Tekst om blog 1</p>
-                        </div>
-                    </div>
-                </a>
-                <a>
-                    <div class="col-sm-6 col-md-3">
-                        <div class=" block-box">
-                            <div class="block-full"
-                                 style="background-image: url('<?= Url::to('@web/img/categories/playfull2.png') ?>')">
-                                <div class="full-text">
-                                    <h4>Tips fra KidUp</h4>
-
-                                    <p>Forklaring omkring hvad dette går ud på.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a>
-                    <div class="col-sm-6 col-md-3">
-                        <div class=" block-box">
-                            <div class="block-half"
-                                 style="background-image: url('<?= Url::to('@web/img/categories/outdoor2.png') ?>')"></div>
-                            <h4 class="two">Få større indsigt</h4>
-
-                            <p>Nogensinde været frusteret over hvordan og hvorledes at du kan gøre sån her og derefter
-                                sån her?</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </Section>
-
     <!--Owl area-->
     <div id="owl-kidup" class="owl-carousel">
         <div class="item">
             <div id="content-owl" class="expert"
-                 style="background: url(<?= Url::to('@web/img/home/slider/approved-expert.png') ?>);">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/approved-expert.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -188,7 +140,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
         <div class="item">
             <div id="content-owl" class="sad"
-                 style="background: url(<?= Url::to('@web/img/home/slider/wishes.png') ?>) no-repeat center right;">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/wishes.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -204,7 +156,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
         <div class="item">
             <div id="content-owl" class="share"
-                 style="background: url(<?= Url::to('@web/img/home/slider/share.png') ?>);">
+                 style="<?= ImageHelper::bgImg('kidup/home/slider/share.png', ['q' => 70, 'w' => 1600]) ?>">
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -224,7 +176,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         <div class="container">
             <div class="row ">
                 <div class="col-xs-4 col-sm-4 col-sm-offset-1 text-center">
-                    <img class="" src="<?= Url::to('@web/img/home/mom-in-balloon.png') ?>">
+                    <?= ImageHelper::img('kidup/home/mom-in-balloon.png', ['q' => 70, 'w' => 400]) ?>
                 </div>
                 <div class="col-sm-6 col-sm-offset-1 ">
                     <h4>Sabine Clasen</h4>
@@ -253,18 +205,5 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </Section>
 
-    <!--Area for testimonial-->
-    <Section id="content-testimonial" class="hide">
-        <div class="container">
-            <div class="row ">
-                <div class="col-sm-12 text-center">
-                    <h4>Andre taler også om KidUp</h4>
-                </div>
-            </div>
-            <div class="row logos">
-                <div class="col-sm-12 text-center">
-                </div>
-            </div>
-        </div>
-    </Section>
+
 </div>

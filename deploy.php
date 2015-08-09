@@ -19,10 +19,10 @@ server('production-primary', '31.187.70.130', 22)
     ->user('root', $keys['main_server_password']);
 
 server('test', '178.62.234.114', 22)
-
     ->path('/var/www/')
     ->user('root', $keys['test_server_password']);
 
+stage('test', array('test'), ['branch'=>'images-on-s3'], true);
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'develop'), true);
 
@@ -57,7 +57,7 @@ task('deploy:update_database', function () {
 task('deploy:replace_index', function () {
     $releasePath = env()->getReleasePath()."/web";
     cd($releasePath);
-    run('mv -f index-production.php index.php');
+//    run('mv -f index-production.php index.php');
 })->desc('Update database');
 
 task('deploy', [
@@ -67,10 +67,10 @@ task('deploy', [
     'deploy:vendors',
     'deploy:folder_permissions',
     'deploy:shared',
-    'deploy:symlink',
     'deploy:update_database',
     'deploy:writeable_dirs',
-    'deploy:replace_index',
+    'deploy:symlink',
+//    'deploy:replace_index',
     'cleanup',
     'deploy:end'
 ])->desc('Deploy your project');
