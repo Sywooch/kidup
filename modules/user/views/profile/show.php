@@ -81,6 +81,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                 <p class="description">
                     <?= $profile->description ?>
                 </p>
+                <hr>
                 <h4><?= Yii::t("user", "Reviews ") ?><br>
                     <small><?= Yii::t("user", "Reviews from other families") ?></small>
                 </h4>

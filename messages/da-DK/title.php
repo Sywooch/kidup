@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Search KidStuff' => '',
     'Account settings' => 'Brugerindstillinger',
     'Contact us' => 'Kontakt Os',
     'Email settings' => 'Email indstillinger',
@@ -31,6 +32,7 @@ return [
     'Resend confirmation email' => 'Gensend bekræftelsesmail',
     'View For Item {0}' => 'Se tingene for {0}',
     'Your kidup wallet' => 'Din KidUp pung',
+    '{0} KidStuff' => '{0} Børneting',
     'About our company' => 'Omkring Os',
     'Account Settings' => 'Brugerindstillinger',
     'Admin' => 'Admin',
@@ -67,5 +69,4 @@ return [
     'Your Previous Bookings' => 'Dine tidligere bookings',
     'reset your password' => 'Reset dit kodeord',
     '{0}' => '{0}',
-    '{0} KidStuff' => '{0} Børneting',
 ];

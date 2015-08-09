@@ -20,9 +20,9 @@ $components = [
             'username' => $keys['sendgrid_user'],
             'password' => $keys['sendgrid_password'],
             'port' => '587',
-            'encryption' => 'tls',
+//            'encryption' => 'tls',
         ],
-        'useFileTransport' => YII_ENV == 'prod' ? true : false,
+        'useFileTransport' => YII_ENV == 'dev' ? true : false,
         'viewPath' => '@app/modules/mail/views',
     ],
     'authClientCollection' => [
@@ -121,7 +121,7 @@ $components = [
             'conversation/<id:\d+>' => 'message.conversation',
             'p/<page>' => 'pages/default/wordpress',
             'p/<page>/<view>' => 'pages/default/<page>',
-        ]
+        ],
     ],
     'i18n' => [
         'translations' => [
