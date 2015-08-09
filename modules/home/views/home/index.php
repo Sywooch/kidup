@@ -170,7 +170,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         <div class="container">
             <div class="row ">
                 <div class="col-xs-4 col-sm-4 col-sm-offset-1 text-center">
-                    <?= ImageHelper::img('kidup/home/mom-in-balloon.png', ['q' => 70, 'w' => 400]) ?>
+                    <?= ImageHelper::img('kidup/home/mom-in-balloon.png', ['w' => 400]) ?>
                 </div>
                 <div class="col-sm-6 col-sm-offset-1 ">
                     <h4>Sabine Clasen</h4>

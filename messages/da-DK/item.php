@@ -17,20 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Active filters:' => 'Aktive filtre',
-    'Apply Filters' => 'Tilføj filtre',
-    'Filters' => 'Filtre',
-    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
-alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
-alderskasser.',
-    'Kidup is about trust too. If you see a personal
-                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
-forskellige ting, så får man ro i maven. Det giver troværdighed og
-tillid.',
-    'To rent and rent out is about seeing what we are truly renting.
-                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
-På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
+    'File format not allowed' => '',
     'Apply filter' => 'Tilføj filter',
     'Back' => 'Tilbage',
     'Choose a filter' => 'Vælg et filter',
@@ -40,11 +27,13 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Refresh the page if eveyrhting is fixed.' => 'Opdater siden hvis alt er ordnet.',
     'items' => 'ting',
     'preferred payout method' => 'ønskede udbetalingsmetode',
+    'Active filters:' => 'Aktive filtre',
     'Add some quality pictures of your product.' => 'Tilføj nogle kvalitetsbilleder af dit produkt',
     'Age' => 'Alder',
     'Ages' => 'Alder',
     'An item needs atleast one image.' => 'Et produkt skal bruge mindst et billede.',
     'Anything special about this product?' => 'Noget specielt ved produktet?',
+    'Apply Filters' => 'Tilføj filtre',
     'As good as new' => 'Så god som ny',
     'Bookings' => 'Bookinger',
     'By publishing an item, you agree with our terms and conditions.' => 'Ved at offentliggøre et produkt er du enig med vores Terms and Conditions',
@@ -58,9 +47,18 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as \'billboard\' image on the product page.' => 'Træk og smid billeder eller klik på kassen for at starte med at uploade. Du kan sortere dine billeder ved at trække uploade billeder rundt. Det første billede bliver dit hovedbillede.',
     'Edit' => 'ændre',
     'Filter' => 'Filter',
+    'Filters' => 'Filtre',
     'Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:' => 'Har du problemer med at sætte den rigtige pris for dit produkt? Vi kan foreslå dig ind baseret på nyprisen:',
     'How can you describe your item, in one catchy title?' => 'Hvordan kan du beskrive tingen i en fangende titel?',
     'How much is the item used? What do you enjoy so much about it? What parent-child moments did you experience with this item?' => 'Hvor brugt er udstyret? Hvor glad er du for det? Har du nogle gode historier med det?',
+    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
+                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
+alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
+alderskasser.',
+    'Kidup is about trust too. If you see a personal
+                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
+forskellige ting, så får man ro i maven. Det giver troværdighed og
+tillid.',
     'Lightly damaged' => 'Mere brugt',
     'Listings' => 'Listings',
     'Location' => 'Lokalitet',
@@ -95,6 +93,9 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'This is a list of your published and unpublished listings' => 'Dette er en liste af dine publiseret og ikke publiseret ting.',
     'This is a preview. Go here {0} to publish this item.' => 'Dette er en prøve. Gå her {0} for at publisere.',
     'Title' => 'Titel',
+    'To rent and rent out is about seeing what we are truly renting.
+                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
+På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Unpublish' => 'Upublicer',
     'Unpublished' => 'Upubliceret',
     'View' => 'Se',

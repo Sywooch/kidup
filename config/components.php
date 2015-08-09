@@ -49,7 +49,6 @@ $components = [
                 'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
             ],
         ],
-
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
