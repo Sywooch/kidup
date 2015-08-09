@@ -18,13 +18,31 @@
  */
 return [
     'File format not allowed' => '',
+    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
+                                                 If you can only supply a small item, you can combine those in the age-packages.' => '',
+    'Kidup is about trust too. If you see a personal
+                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => '',
+    'The terms and conditions have to be accepted before an item can be published' => '',
+    'To rent and rent out is about seeing what we are truly renting.
+                                                In other words KidUp is about taking really good pictures.' => '',
     'Apply filter' => 'Tilføj filter',
     'Back' => 'Tilbage',
     'Choose a filter' => 'Vælg et filter',
     'Close' => 'Luk',
     'Distance: ' => 'Distance:',
+    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
+                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
+alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
+alderskasser.',
+    'Kidup is about trust too. If you see a personal
+                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
+forskellige ting, så får man ro i maven. Det giver troværdighed og
+tillid.',
     'Please provide some high quality pictures of your product.' => 'Vær venlig at uploade nogle høj kvalitets billeder af dit produkt.',
     'Refresh the page if eveyrhting is fixed.' => 'Opdater siden hvis alt er ordnet.',
+    'To rent and rent out is about seeing what we are truly renting.
+                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
+På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'items' => 'ting',
     'preferred payout method' => 'ønskede udbetalingsmetode',
     'Active filters:' => 'Aktive filtre',
@@ -51,14 +69,6 @@ return [
     'Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:' => 'Har du problemer med at sætte den rigtige pris for dit produkt? Vi kan foreslå dig ind baseret på nyprisen:',
     'How can you describe your item, in one catchy title?' => 'Hvordan kan du beskrive tingen i en fangende titel?',
     'How much is the item used? What do you enjoy so much about it? What parent-child moments did you experience with this item?' => 'Hvor brugt er udstyret? Hvor glad er du for det? Har du nogle gode historier med det?',
-    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
-alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
-alderskasser.',
-    'Kidup is about trust too. If you see a personal
-                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
-forskellige ting, så får man ro i maven. Det giver troværdighed og
-tillid.',
     'Lightly damaged' => 'Mere brugt',
     'Listings' => 'Listings',
     'Location' => 'Lokalitet',
@@ -93,9 +103,6 @@ tillid.',
     'This is a list of your published and unpublished listings' => 'Dette er en liste af dine publiseret og ikke publiseret ting.',
     'This is a preview. Go here {0} to publish this item.' => 'Dette er en prøve. Gå her {0} for at publisere.',
     'Title' => 'Titel',
-    'To rent and rent out is about seeing what we are truly renting.
-                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
-På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Unpublish' => 'Upublicer',
     'Unpublished' => 'Upubliceret',
     'View' => 'Se',
