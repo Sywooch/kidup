@@ -6,6 +6,7 @@ use app\backup\Database;
 use app\backup\File;
 use app\components\Event;
 use app\modules\booking\models\Payin;
+use app\modules\mail\mails\User;
 use yii\console\Controller;
 use Yii;
 use app\modules\images\components\ImageManager;
@@ -30,5 +31,10 @@ class TestController extends Controller
             $i->filesystem->write($dir . '/' . $d, file_get_contents('/vagrant/users/org/'.$o));
         }
 
+    }
+
+    public function actionEmail(){
+        $user = \app\modules\user\models\User::find()->one();
+        Event::trigger($user, \app\modules\user\models\User::EVENT_USER_REGISTER_DONE);
     }
 }

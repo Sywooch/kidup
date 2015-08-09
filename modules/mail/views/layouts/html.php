@@ -1,14 +1,14 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+use app\modules\images\components\ImageHelper;
 
 /* @var $this \yii\web\View view component instance */
 /* @var $message \yii\mail\MessageInterface the message being composed */
 /* @var $content string main view render result */
 
 // needed to pass urls variable to the template
-if(isset(\Yii::$app->params['tmp_email_params'])){
+if (isset(\Yii::$app->params['tmp_email_params'])) {
     $urls = \Yii::$app->params['tmp_email_params']['urls'];
 }
 
@@ -419,7 +419,7 @@ if(isset(\Yii::$app->params['tmp_email_params'])){
                                     style="font-family: Helvetica, arial, sans-serif; font-size: 10px;color: #303030;text-align:left;"
                                     st-content="viewonline">
                                     <p>
-                                        <a href="<?= $urls['mailInBrowser']  ?>">
+                                        <a href="<?= $urls['mailInBrowser'] ?>">
                                             <?= Yii::t("mail", "Click here to read this mail in your browser") ?>
                                         </a>
                                     </p>
@@ -427,10 +427,10 @@ if(isset(\Yii::$app->params['tmp_email_params'])){
                                 <td width="150px"
                                     style="font-family: Helvetica, arial, sans-serif; font-size: 10px;color: #303030;text-align:center;width: 150px"
                                     st-content="viewonline">
-                                    <p
-                                        style="display: block; border-style: none !important; border: 0 !important;">
+                                    <p style="display: block; border-style: none !important; border: 0 !important;">
                                         <img width="70" border="0" style="display: block; width: 100px;"
-                                             src="<?= Url::to('@assets/img/logo/horizontal.png', true) ?>" alt=""/>
+                                             src="<?= ImageHelper::url('kidup/logo/horizontal.png',
+                                                 ['w' => 70]) ?>" alt=""/>
                                     </p>
                                 </td>
                                 <!-- Spacing -->
@@ -488,7 +488,8 @@ if(isset(\Yii::$app->params['tmp_email_params'])){
                         <p
                             style="display: block; border-style: none !important; border: 0 !important;">
                             <img width="100" border="0" style="display: block;"
-                                 src="<?= Url::to('@assets/img/logo/horizontal.png', true) ?>" alt=""/></p>
+                                 src="<?= ImageHelper::url('kidup/logo/horizontal.png', ['w' => 100]) ?>"
+                                 alt=""/></p>
                     </td>
                 </tr>
             </table>
@@ -535,22 +536,24 @@ if(isset(\Yii::$app->params['tmp_email_params'])){
                                             <td>
                                                 <a href="" style="display: block;">
                                                     <img width="12" border="0" style="display: block; width: auto;"
-                                                         src="<?= Url::to('@mailAssets/img/instagram.png',
-                                                             true) ?>" alt=""/></a>
+                                                         src="<?= ImageHelper::url('kidup/email/instagram.png',
+                                                             ['q' => 90, 'w' => 12]) ?>" alt=""/></a>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <a href="" style="display: block;">
                                                     <img width="6" height="13" border="0"
                                                          style="display: block; width: auto;"
-                                                         src="<?= Url::to('@mailAssets/img/facebook.png', true) ?>"
+                                                         src="<?= ImageHelper::url('kidup/email/facebook.png',
+                                                             ['q' => 90, 'w' => 6]) ?>"
                                                          alt=""/></a>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <a href="" style="display: block;">
                                                     <img width="14" border="0" style="display: block; width: auto;"
-                                                         src="<?= Url::to('@mailAssets/img/twitter.png', true) ?>"
+                                                         src="<?= ImageHelper::url('kidup/email/twitter.png',
+                                                             ['q' => 90, 'w' => 14]) ?>"
                                                          alt=""/></a>
                                             </td>
                                         </tr>

@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-
+use app\modules\images\components\ImageHelper;
 ?>
 
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
@@ -127,7 +127,7 @@ use yii\helpers\Url;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= Url::to('@assets/img/graphics/find.png',true) ?>" alt="" border="0" width="150"
+                                                                <img src="<?= ImageHelper::url('kidup/graphics/find.png', ['q'=>90,'w'=>150]) ?>" alt="" border="0" width="150"
                                                                      height="150"
                                                                      style="display:block; border:none; outline:none; text-decoration:none;"
                                                                      class="col2img" st-image="edit"
@@ -272,7 +272,7 @@ use yii\helpers\Url;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= Url::to('@assets/img/graphics/photograph.png', true) ?>" alt="" border="0" width="150"
+                                                                <img src="<?= ImageHelper::url('kidup/graphics/photograph.png', ['q'=>90,'w'=>150]) ?>" alt="" border="0" width="150"
                                                                      height="150"
                                                                      style="display:block; border:none; outline:none; text-decoration:none;"
                                                                      class="col2img" st-image="edit"
@@ -413,7 +413,7 @@ use yii\helpers\Url;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= Url::to('@assets/img/graphics/review.png', true) ?>" alt="" border="0" width="150"
+                                                                <img src="<?= ImageHelper::url('kidup/graphics/review.png', ['q'=>90,'w'=>150]) ?>" alt="" border="0" width="150"
                                                                      height="150"
                                                                      style="display:block; border:none; outline:none; text-decoration:none;"
                                                                      class="col2img" st-image="edit"
