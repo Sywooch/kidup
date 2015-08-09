@@ -74,6 +74,11 @@ return [
         'pages' =>  ['class' => 'app\components\Pages'],
         'clog' => ['class' => 'app\components\Log'],
         'sendGrid' => $allComponents['sendGrid'],
+        'mailer' => $allComponents['mailer'],
+        'urlManager' => [
+            'scriptUrl' => '/web'
+        ],
     ],
+
     'params' => $params,
 ];

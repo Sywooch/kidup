@@ -23,7 +23,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registra
             <br/><br/>
 
             <div class="text-center">
-                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 70, 'h' => 60]) ?>
+                <?= ImageHelper::img('kidup/logo/horizontal.png', ['q' => 90, 'h' => 60]) ?>
                 <h4 class="modal-title">
                     <?= Yii::t("user", "We'd like to get to know you!") ?>
                 </h4>

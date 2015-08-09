@@ -12,10 +12,10 @@ class Map extends \yii\bootstrap\Widget {
      * Renders the widget.
      */
     public function init(){
-        if($this->addRandCircle == true){
-            $this->latitude += 0.0015;
-            $this->longitude +=-0.001;
-        }
+//        if($this->addRandCircle == true){
+//            $this->latitude += 0.0015;
+//            $this->longitude +=-0.001;
+//        }
         // first lets setup the center of our map
         $center = new \dosamigos\leaflet\types\LatLng([
             'lat' => $this->latitude,
@@ -30,9 +30,9 @@ class Map extends \yii\bootstrap\Widget {
         $tileLayer = new \dosamigos\leaflet\layers\TileLayer([
             'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
             'clientOptions' => [
-                //'attribution' => 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> ' .
-                 //   '<img src="http://developer.mapquest.com/content/osm/mq_logo.png">, ' .
-                 //   'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+//                'attribution' => 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> ' .
+//                    '<img src="http://developer.mapquest.com/content/osm/mq_logo.png">, ' .
+//                    'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
                 'subdomains' => '12324',
             ]
         ]);
@@ -46,11 +46,11 @@ class Map extends \yii\bootstrap\Widget {
             ]
         ]);
         // Different layers can be added to our map using the `addLayer` function.
-        $leaflet->addLayer($marker)// add the marker
+        $leaflet->addLayer($marker) // add the marker
         ->addLayer($tileLayer);  // add the tile layer
-        if($this->addRandCircle){
-            $leaflet->addLayer($circle);
-        }
+//        if($this->addRandCircle){
+//            $leaflet->addLayer($circle);
+//        }
 
         // finally render the widget
         echo \dosamigos\leaflet\widgets\Map::widget(['leafLet' => $leaflet]);
