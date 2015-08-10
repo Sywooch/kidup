@@ -36,6 +36,7 @@ class SearchModel extends Model
      */
     public function findItems()
     {
+
         // initialize the query
         $query = $this->initQuery();
 
@@ -72,6 +73,8 @@ class SearchModel extends Model
      */
     public function getResults($query)
     {
+        // randomize real quickly, only temporarily
+        $query->orderBy('rand()');
         return $query->all();
     }
 
@@ -80,7 +83,8 @@ class SearchModel extends Model
      *
      * @param ActiveQuery $query query object
      */
-    public function pageResults($query){
+    public function pageResults($query)
+    {
         $query->limit(12)->offset(round($this->page) * 12);
     }
 
@@ -240,7 +244,8 @@ class SearchModel extends Model
      * Sets the page number of the requested results
      * @param int $page
      */
-    public function setPage($page){
+    public function setPage($page)
+    {
         $this->page = $page;
     }
 
@@ -278,13 +283,13 @@ class SearchModel extends Model
         return $params;
     }
 
-    public function getCategories($type) {
+    public function getCategories($type)
+    {
         $categories = Category::find();
         $categories->andWhere('type = :type', [':type' => $type]);
         $cats = $categories
             ->asArray()
-            ->all()
-        ;
+            ->all();
         foreach ($cats as $index => $cat) {
             if (in_array($cat['id'], $this->categories)) {
                 $cats[$index]['value'] = true;

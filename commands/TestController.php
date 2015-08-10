@@ -41,27 +41,6 @@ class TestController extends Controller
         Event::trigger($user, \app\modules\user\models\User::EVENT_USER_REGISTER_DONE);
     }
 
-    public function actionExport(){
-        $field = [];
-        $field[1] = 'CMBOD';
-        $field[2] = '11658814'; // kidup account
-        $payoutMethod = PayoutMethod::find()->one();
-        $field[3] = $payoutMethod->identifier_2 . '+' . $payoutMethod->identifier_1; // to account
-        $field[4] = 1.23; // to account
-        $field[20] = "KidUp Payout ".$this->id;
-
-        $str = [];
-        for($i = 1; $i < 76; $i++){
-            if(!isset($field[$i])){
-                $str[] = '';
-            }else{
-                $str[] = $field[$i];
-            }
-        }
-
-        echo '"'.implode('","', $str).'",';
-    }
-
     public function actionMail(){
         $mm = new MailMessage();
         $mm->setAttributes([

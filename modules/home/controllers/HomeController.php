@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\components\Cache;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
 use Yii;
@@ -30,11 +31,11 @@ class HomeController extends Controller
         $this->transparentNav = true;
         $this->noContainer = true;
 
-        $searchWidget = $this->cache('xxx', function () {
+        $searchWidget = Cache::data('searchwidget', function () {
             return WidgetRequest::request(WidgetRequest::ITEM_HOME_SEARCH);
         });
 
-        $gridWidget = $this->cache('xxx2', function () {
+        $gridWidget = Cache::data('gridWidget', function () {
             return WidgetRequest::request(WidgetRequest::ITEM_HOME_GRID);
         });
 

@@ -73,13 +73,18 @@ class Payout extends \app\models\base\Payout
         if($this->status !== self::STATUS_TO_BE_PROCESSED) return false;
         // http://www.danskebank.com/en-uk/ci/Products-Services/Transaction-Services/Online-Services/Integration-Services/Documents/Formats/FormatDescriptionCSV_DK_LocalBulk/CSV_DK_LocalBulk.pdf
         $field = [];
-        $field[1] = 'CMBOD';
-        $field[2] = '1244214124'; // kidup account
-        $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->booking->item->owner_id])->one();
-        $field[3] = $payoutMethod->identifier_2_encrypted . '+' . $payoutMethod->identifier_1_encrypted; // to account
-        $field[4] = $this->amount; // to account
-        $field[20] = "KidUp Payout ".$this->id;
 
+        $field[1] = 'CMBO';
+        $field[2] = '11658814'; // kidup account
+        $payoutMethod = PayoutMethod::find()->one();
+        $field[3] = $payoutMethod->identifier_2_encrypted . '+' . $payoutMethod->identifier_1_encrypted; // to account
+        $field[4] = str_replace(".", ",", $this->amount); // to account
+        $field[6] = "DKK";
+        $field[7] = "N"; // todo check
+        $field[13] = "J"; // todo check
+
+        $field[24] = "KidUp Payout ".$this->id;
+        $field[75] = "You're awesome!";
         $str = [];
         for($i = 1; $i < 76; $i++){
             if(!isset($field[$i])){
@@ -89,7 +94,7 @@ class Payout extends \app\models\base\Payout
             }
         }
 
-        return '"'.implode('","', $str).'",';
+        echo '"'.implode('","', $str).'",';
     }
 
     /**
