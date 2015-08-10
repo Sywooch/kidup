@@ -67,10 +67,9 @@ $(document).ready(function () {
     $('#new-price').keydown(function(){
         setTimeout(function(){
             var val = $('#new-price').val();
-            var dayPrice = val / 50;
-            $(".suggestion-daily").html('<i>Daily price</i>: '+Math.round(dayPrice));
-            $(".suggestion-weekly").html('<i>Weekly price</i>: '+Math.round(dayPrice*5));
-            $(".suggestion-monthly").html('<i>Monthly price</i>: '+Math.round(dayPrice*5*2.5));
+            $(".suggestion-daily").html('<i>Daily price</i>: '+Math.round(val*0.02));
+            $(".suggestion-weekly").html('<i>Weekly price</i>: '+Math.round(val*0.04));
+            $(".suggestion-monthly").html('<i>Monthly price</i>: '+Math.round(val*0.05));
         },100);
     })
 });

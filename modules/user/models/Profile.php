@@ -106,4 +106,11 @@ class Profile extends \app\models\base\Profile
         $this->birthday = date('d-m-Y', $this->birthday);
         return parent::afterFind();
     }
+
+    public function beforeValidate(){
+        if($this->isAttributeChanged('description')){
+            $this->description = \yii\helpers\HtmlPurifier::process($this->description);
+        }
+        return parent::beforeValidate();
+    }
 }

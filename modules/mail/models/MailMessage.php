@@ -5,6 +5,7 @@ namespace app\modules\mail\models;
 use app\modules\message\models\Message;
 use Carbon\Carbon;
 use League\Flysystem\Filesystem;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -61,22 +62,26 @@ class MailMessage extends \app\models\base\MailMessage
         $senderId = $account->user_id == $account->conversation->initiater_user_id ? $account->conversation->target_user_id : $account->conversation->initiater_user_id;
 
         // see if already exists
-        $m = Message::find()->where([
-            'conversation_id' => $account->conversation_id,
-            'message' => $postData['text'],
-            'sender_user_id' => $senderId,
-            'receiver_user_id' => $account->user_id,
-        ])->one();
+        // todo should this be here or not?
+//        $m = Message::find()->where([
+//            'conversation_id' => $account->conversation_id,
+//            'message' => $postData['html'],
+//            'sender_user_id' => $senderId,
+//            'receiver_user_id' => $account->user_id,
+//        ])->one();
+//
+//        if (count($m) > 0) {
+//            return false;
+//        }
 
-        if (count($m) > 0) {
-            return false;
-        }
+        // make the incomming html safe
+        $postData['html'] = \yii\helpers\HtmlPurifier::process($postData['html']);
 
         // create the message
         $m = new Message();
         $m->setAttributes([
             'conversation_id' => $account->conversation_id,
-            'message' => $postData['text'],
+            'message' => $postData['html'],
             'sender_user_id' => $senderId,
             'receiver_user_id' => $account->user_id,
         ]);
@@ -84,14 +89,20 @@ class MailMessage extends \app\models\base\MailMessage
 
         $mm = new MailMessage();
         $mm->setAttributes([
-            'message' => $postData['text'],
+            'message' => $postData['html'],
             'from_email' => $postData['from'],
             'subject' => $postData['subject'],
             'created_at' => time(),
-            'mail_acount_name' => str_replace("@reply.kidup.dk", '', $postData['to']),
             'message_id' => $m->id
         ]);
 
-        return $mm->save();
+        $mm->mail_account_name = $account->name;
+
+        if(!$mm->save()){
+            Yii::$app->clog->debug('MailMessage not created', [$mm, $postData]);
+            throw new InternalErrorException("Incomming email not parsed");
+        }
+
+        return true;
     }
 }

@@ -7,6 +7,7 @@ use app\backup\File;
 use app\components\Event;
 use app\modules\booking\models\Payin;
 use app\modules\mail\mails\User;
+use app\modules\mail\models\MailMessage;
 use app\modules\mail\models\Token;
 use app\modules\user\models\PayoutMethod;
 use yii\console\Controller;
@@ -59,5 +60,23 @@ class TestController extends Controller
         }
 
         echo '"'.implode('","', $str).'",';
+    }
+
+    public function actionMail(){
+        $mm = new MailMessage();
+        $mm->setAttributes([
+            'message' => 'test',
+            'from_email' => 'test',
+            'subject' => 'test',
+            'created_at' => time(),
+            'mail_acount_name' => '83c2c3n23c',
+            'message_id' => 2
+        ]);
+
+        $mm->mail_account_name = '7bZfplYnflxLxhc7W9iNNrq2EQUHhaEV';
+
+        $mm->save();
+        
+        var_dump($mm->getErrors(),10,true); exit();
     }
 }
