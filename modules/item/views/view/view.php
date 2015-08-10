@@ -52,7 +52,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 ?></h4>
 
                             <p class="description">
-                                <?= $model->description ?>
+                                <?= nl2br($model->description) ?>
                             </p>
                         </div>
                     </div>

@@ -26,6 +26,7 @@ class Edit extends Model
     public $description;
     public $rules;
     public $min_renting_days;
+    public $is_available;
     public $condition;
 
     // used for price suggestions
@@ -39,6 +40,7 @@ class Edit extends Model
         $this->price_month = $item->price_month;
         $this->description = $item->description;
         $this->min_renting_days = $item->min_renting_days;
+        $this->is_available = $item->is_available;
         $this->condition = $item->condition;
         $this->categories = [
             Category::TYPE_MAIN         => $item->categoriesMain,

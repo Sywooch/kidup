@@ -211,8 +211,7 @@ $this->registerJs("
                             </div>
                         </div>
                         <!-- leave id for scrolling -->
-
-                        <div class="row " id="publishing">
+                        <div class="row" id="publishing" >
                             <div class="col-md-11">
                                 <?= Html::button(\Yii::t('app', 'Save'), [
                                     'class' => "btn btn-danger btn-fill btn-lg pull-right",
@@ -220,6 +219,8 @@ $this->registerJs("
                                 ]) ?>
                             </div>
                         </div>
+                        <a name="publishing"></a>
+
                         <hr/>
                         <div class="row">
                             <div class="col-sm-10 col-sm-offset-1 terms">
@@ -236,24 +237,29 @@ $this->registerJs("
                                     </small>
                                 </h4>
                                 <?php
-                                if ($model->isPublishable() === true) {
+                                if ($model->isPublishable() === true && $model->is_available == 0) {
                                     echo $form->field($model, 'rules')->checkbox([
                                         'data-toggle' => "checkbox"
                                     ]);
-                                    echo Html::button(\Yii::t('app', 'Publish'), [
-                                        'class' => "btn btn-danger pull-right",
+                                    echo Html::button(\Yii::t('item', 'Publish'), [
+                                        'class' => "btn btn-danger pull-right btn-fill",
                                         'id' => 'submit-publish'
                                     ]);
-                                    echo Html::button(\Yii::t('app', 'Preview'), [
+                                    echo Html::button(\Yii::t('item', 'Preview'), [
                                         'class' => "btn btn-primary",
                                         'id' => 'submit-preview',
                                     ]);
 
-                                } else {
+                                } elseif($model->isPublishable() !== true){
                                     foreach ($model->isPublishable() as $error) {
                                         echo $error . '<BR>';
                                     };
-                                } ?>
+                                }
+                                if($model->item->is_available === 1){
+                                    echo \Yii::t('item', 'The item is now publicly available. If you like to make it unavailable, please {0}',
+                                        [Html::a(\Yii::t('item', 'click here.'), '@web/item/'.$model->item->id.'/unpublish')]);
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
