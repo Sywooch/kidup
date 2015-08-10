@@ -50,7 +50,7 @@ class ViewController extends Controller
         }
         $location = $item->location;
 
-        $itemImages = $item->getImageUrls();
+        $itemImages = $item->getImageNames();
         // prepare for carousel
         $images = [];
         foreach ($itemImages as $img) {

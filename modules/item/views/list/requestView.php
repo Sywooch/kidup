@@ -11,7 +11,7 @@ $item = \app\modules\item\models\Item::findOne($model->item_id);
 <tr>
     <td class="text-center ">
         <div class="product-image"
-             style="<?= ImageHelper::bgImg($item->getImageUrls()[0], ['q' => 90, 'w' => 700]) ?>; background-size: cover; background-position: 50% 50%;" >
+             style="<?= ImageHelper::bgImg($item->getImageName(0), ['q' => 90, 'w' => 700]) ?>; background-size: cover; background-position: 50% 50%;" >
         </div>
     </td>
     <td><?= $item->name ?></td>

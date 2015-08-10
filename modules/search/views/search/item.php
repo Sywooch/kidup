@@ -8,7 +8,7 @@ use app\components\WidgetRequest;
     <a href="<?= Url::to('@web/item/'.$model->id) ?>">
         <div class="card">
             <div class="image"
-                 style="<?= ImageHelper::bgImg($model->getImageUrls()[0], ['q' => 90, 'w' => 600]) ?>; background-size: cover; background-position: 50% 50%;">
+                 style="<?= ImageHelper::bgImg($model->getImageName(0), ['q' => 90, 'w' => 600]) ?>; background-size: cover; background-position: 50% 50%;">
                 <div class="price-badge"><span>dkk</span> <?= $model->price_week ?></div>
             </div>
             <div class="content">

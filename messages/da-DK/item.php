@@ -121,5 +121,5 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'profile' => 'Profil',
     'step 1 out of 2' => 'Skridt 1 ud af 2',
     'step 2 out of 2' => 'Skridt 2 ud af 2',
-    'week' => 'a',
+    'week' => 'uge',
 ];
