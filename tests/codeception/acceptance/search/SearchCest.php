@@ -17,7 +17,7 @@ class SearchCest {
      *
      * @param AcceptanceTester $I
      */
-    public function _before(\AcceptanceTester $I) {
+    public function _before(AcceptanceTester $I) {
         (new FixtureHelper)->fixtures();
     }
 
@@ -26,7 +26,7 @@ class SearchCest {
      *
      * @param AcceptanceTester $I
      */
-    public function checkFilterButton(\AcceptanceTester $I) {
+    public function checkFilterButton(AcceptanceTester $I) {
         $I->wantTo('ensure that the filter button is shown correctly');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(500, 700);
@@ -40,7 +40,7 @@ class SearchCest {
      *
      * @param AcceptanceTester $I
      */
-    public function checkSidebar(\AcceptanceTester $I) {
+    public function checkSidebar(AcceptanceTester $I) {
         $I->wantTo('ensure that the search sidebar is shown correctly');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(500, 700);
@@ -54,7 +54,7 @@ class SearchCest {
      *
      * @param FunctionalTester $I
      */
-    public function checkModalOpens(\AcceptanceTester $I) {
+    public function checkModalOpens(AcceptanceTester $I) {
         $I->wantTo('ensure that the modal opens when clicking the filter button');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(500, 700);
@@ -68,7 +68,7 @@ class SearchCest {
      *
      * @param FunctionalTester $I
      */
-    public function searchByDefault(\AcceptanceTester $I) {
+    public function searchByDefault(AcceptanceTester $I) {
         $I->wantTo('ensure that I can find related items when searching for a particular search term');
         $I->amOnPage('/search/item/index');
         $I->resizeWindow(1024, 500);

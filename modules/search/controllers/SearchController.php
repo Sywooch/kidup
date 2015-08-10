@@ -57,6 +57,9 @@ class SearchController extends Controller {
         // load the search results
         $results = $model->findItems();
 
+        error_reporting(E_ALL);
+        ini_set('display_errors', 'on');
+
         // render the index
         return $this->render('index', [
             'model' => $model,

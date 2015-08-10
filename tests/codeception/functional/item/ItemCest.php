@@ -1,16 +1,16 @@
 <?php
-namespace app\tests\codeception\acceptance\pages;
+namespace app\tests\codeception\functional\item;
 
 use AcceptanceTester;
 use app\tests\codeception\_support\FixtureHelper;
 
 /**
- * Acceptance test for the pages module.
+ * Acceptance test for the item module.
  *
- * Class PagesCest
- * @package app\tests\codeception\acceptance\pages
+ * Class ItemCest
+ * @package app\tests\codeception\acceptance\item
  */
-class PagesCest
+class ItemCest
 {
 
     /**
