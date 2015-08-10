@@ -2,6 +2,8 @@
 namespace app\tests\codeception\acceptance\search;
 
 use AcceptanceTester;
+use app\modules\item\models\Item;
+use app\modules\search\models\SearchModel;
 use app\tests\codeception\_support\FixtureHelper;
 
 /**
@@ -22,17 +24,17 @@ class SearchCest {
     }
 
     /**
-     * Test whether the filter button is shown on small windows.
+     * Test whether the filter button is shown correctly.
      *
      * @param AcceptanceTester $I
      */
     public function checkFilterButton(AcceptanceTester $I) {
         $I->wantTo('ensure that the filter button is shown correctly');
-        $I->amOnPage('/search/item/index');
+        $I->amOnPage('/search/search');
         $I->resizeWindow(500, 700);
-        $I->canSeeElement('#itemSearch button[name=filter]');
+        $I->canSeeElement('button[id=filter-button]');
         $I->resizeWindow(1024, 700);
-        $I->dontSeeElement('#itemSearch button[name=filter]');
+        $I->dontSeeElement('button[id=filter-button]');
     }
 
     /**
@@ -42,11 +44,11 @@ class SearchCest {
      */
     public function checkSidebar(AcceptanceTester $I) {
         $I->wantTo('ensure that the search sidebar is shown correctly');
-        $I->amOnPage('/search/item/index');
+        $I->amOnPage('/search/search');
         $I->resizeWindow(500, 700);
-        $I->dontSeeElement('#itemSearch .search-default');
+        $I->dontSeeElement('#search-sidebar > div');
         $I->resizeWindow(1024, 700);
-        $I->canSeeElement('#itemSearch .search-default');
+        $I->canSeeElement('#search-sidebar > div');
     }
 
     /**
@@ -56,11 +58,12 @@ class SearchCest {
      */
     public function checkModalOpens(AcceptanceTester $I) {
         $I->wantTo('ensure that the modal opens when clicking the filter button');
-        $I->amOnPage('/search/item/index');
+        $I->amOnPage('/search/search');
         $I->resizeWindow(500, 700);
-        $I->dontSeeElement('.filter-modal');
-        $I->click('#itemSearch button[name=filter]');
-        $I->canSeeElement('.filter-modal');
+        $I->dontSeeElement('.modal');
+        $I->click('button[id=filter-button]');
+        $I->wait(2);
+        $I->canSeeElement('.modal');
     }
 
     /**
@@ -70,23 +73,23 @@ class SearchCest {
      */
     public function searchByDefault(AcceptanceTester $I) {
         $I->wantTo('ensure that I can find related items when searching for a particular search term');
-        $I->amOnPage('/search/item/index');
+        $I->amOnPage('/search/search');
         $I->resizeWindow(1024, 500);
         $query = 'strange search term';
 
         $I->waitForElementVisible('input[name=query]', 5);
-        $I->fillField('.search-default input[name=query]', $query);
+        $I->fillField('input[name=query]', $query);
         $I->wait(2);
 
         // check the number of corresponding items
-        $model = new ItemModel();
+        $model = new SearchModel();
         $model->loadParameters([
             'query' => $query
         ]);
         $results = $model->findItems();
         $numItems = $results->count;
 
-        $I->canSeeNumberOfElements('#itemSearch .results-default .item', $numItems);
+        $I->canSeeNumberOfElements('.searchResults .item', $numItems);
     }
 
 }
