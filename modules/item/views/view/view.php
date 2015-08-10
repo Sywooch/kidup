@@ -8,6 +8,7 @@ use yii\helpers\Url;
  * @var array $images
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
+ * @var bool $show_modal
  */
 
 $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$app->name;
@@ -17,8 +18,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \dosamigos\gallery\GalleryAsset::register($this);
 \app\modules\item\assets\ViewAsset::register($this);
 ?>
+<?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
+
 <div id="product">
-    <div class="parallax filter-black" style="background-image: url('<?= $images[0]['url'] ?>')">
+    <div class="parallax filter-black"
+         style="background-image: url('<?= isset($images[0]) ? $images[0]['url'] : '' ?>')">
     </div>
     <!--book-line-fixed -->
     <div id="booking-navbar" class="book-line booking">
@@ -48,7 +52,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 ?></h4>
 
                             <p class="description">
-                                <?= $model->description ?>
+                                <?= nl2br($model->description) ?>
                             </p>
                         </div>
                     </div>
@@ -169,6 +173,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
             </div>
         </div>
 
+
         <div class="container-fluid" style="margin-bottom:-90px;">
             <div class="row">
                 <div class="map1">
@@ -182,6 +187,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                 </div>
             </div>
         </div>
+
     </section>
 </div>
 

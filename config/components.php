@@ -80,7 +80,7 @@ $components = [
         // 'enableStrictParsing' => true,
         'showScriptName' => false,
         'rules' => [
-            '/' => YII_ENV == 'dev' || YII_ENV == 'stage' ? 'home/home' : 'splash/default/index',
+            '/' => 'home/home',
             '/splash' => 'splash/default/index',
             '/thanks' => 'splash/default/thanks',
             'home' => 'home/home',

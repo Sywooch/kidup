@@ -66,7 +66,6 @@ class RecoveryController extends Controller
      */
     public function actionRequest()
     {
-        $location = Location::getByIp(Location::getIp());
         if (!$this->module->enablePasswordRecovery) {
             throw new NotFoundHttpException;
         }

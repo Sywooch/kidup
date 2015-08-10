@@ -27,7 +27,7 @@ use app\modules\images\components\ImageHelper;
     <div class="container site-area-content">
         <div class="row">
             <div class="col-md-3 col-md-offset-1">
-                <?= ImageHelper::img($item->getImageUrls()[0], ['q' => 90, 'w' => 600]) ?>
+                <?= ImageHelper::img($item->getImageName(0), ['q' => 90, 'w' => 600]) ?>
                 <div style="margin-top:-25px">
                     <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
                         'user_id' => $item->owner_id,

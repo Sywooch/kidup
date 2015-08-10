@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
+
 /**
  * This is the model class for table "item".
  */
@@ -95,10 +96,10 @@ class Item extends \app\models\base\Item
         return parent::beforeSave($insert);
     }
 
-    public function getImageUrls()
+    public function getImageNames()
     {
         $ihms = ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->all();
-        usort($ihms, function($a, $b){
+        usort($ihms, function ($a, $b) {
             return ($a->order < $b->order) ? -1 : 1;
         });
 
@@ -109,16 +110,31 @@ class Item extends \app\models\base\Item
         return $this->images;
     }
 
-    public function isOwner($userId = null){
-        if($userId == null){
+    public function getImageName($order)
+    {
+        $ihms = ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->all();
+        usort($ihms, function ($a, $b) {
+            return ($a->order < $b->order) ? -1 : 1;
+        });
+
+        if (isset($ihms[$order])) {
+            return $ihms[$order]->media->file_name;
+        }
+        return false;
+    }
+
+    public function isOwner($userId = null)
+    {
+        if ($userId == null) {
             $userId = \Yii::$app->user->id;
         }
         return $this->owner_id == $userId;
     }
 
-    public function isPublishable(){
+    public function isPublishable()
+    {
         $errors = [];
-        if(!$this->validate()){
+        if (!$this->validate()) {
             foreach ($this->getErrors() as $errorC) {
                 foreach ($errorC as $error) {
                     $errors[] = $error;
@@ -126,18 +142,18 @@ class Item extends \app\models\base\Item
             }
         }
         $location = Location::findOne($this->location_id);
-        if(is_null($location) || !$location->isValid()){
-            $errors[] = \Yii::t('item', 'Please set your location in your {0}.',[
+        if (is_null($location) || !$location->isValid()) {
+            $errors[] = \Yii::t('item', 'Please set your location in your {0}.', [
                 Html::a(\Yii::t('item', 'location settings'), '@web/user/settings/location', ['target' => '_blank'])
             ]);
         }
-        if(strlen($this->owner->profile->first_name) <= 1 || strlen($this->owner->profile->last_name) <= 1){
+        if (strlen($this->owner->profile->first_name) <= 1 || strlen($this->owner->profile->last_name) <= 1) {
             $errors[] = \Yii::t('item', 'Please complete your {0}.', [
                 Html::a(\Yii::t('item', 'profile'), '@web/user/settings/profile', ['target' => '_blank'])
             ]);
         }
         /**
-         * @var \app\modules\user\models\User $u;
+         * @var \app\modules\user\models\User $u ;
          */
         $u = User::findone($this->owner_id);
 //        if(!$u->hasValidPayoutMethod()){
@@ -145,15 +161,16 @@ class Item extends \app\models\base\Item
 //                Html::a(\Yii::t('item', 'preferred payout method'), '@web/user/settings/payout-preference', ['target' => '_blank'])
 //            ]);
 //        }
-        if(count($this->media) == 0){
+        if (count($this->media) == 0) {
             $errors[] = \Yii::t('item', 'An item needs atleast one image.');
         }
 
         return count($errors) == 0 ? true : $errors;
     }
 
-    public function getUserDistance(){
-        if(!\Yii::$app->session->has('location_cache')){
+    public function getUserDistance()
+    {
+        if (!\Yii::$app->session->has('location_cache')) {
             return false;
         }
         $location = \Yii::$app->session->get('location_cache');

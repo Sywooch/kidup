@@ -34,13 +34,9 @@ class MailAccount extends \app\models\base\MailAccount
     }
 
     private function newAddres(){
-        $add = \Yii::$app->security->generateRandomString();
-        $add = str_replace('-', '', $add);
-        $add = str_replace('_', '', $add);
+        $add = md5(\Yii::$app->security->generateRandomString());
         while(MailAccount::find()->where(['name' => $add])->count() > 0){
-            $add = \Yii::$app->security->generateRandomString();
-            $add = str_replace('-', '', $add);
-            $add = str_replace('_', '', $add);
+            return $this->newAddres();
         }
         return $add;
     }

@@ -33,8 +33,10 @@ class ViewController extends Controller
         ];
     }
 
-    public function actionIndex($id)
+    public function actionIndex($id, $new_publish = false)
     {
+
+        if($new_publish !== false) $new_publish = true;
         $this->noContainer = true;
         Url::remember();
 
@@ -50,7 +52,7 @@ class ViewController extends Controller
         }
         $location = $item->location;
 
-        $itemImages = $item->getImageUrls();
+        $itemImages = $item->getImageNames();
         // prepare for carousel
         $images = [];
         foreach ($itemImages as $img) {
@@ -90,6 +92,7 @@ class ViewController extends Controller
                 'currency' => $item->currency->forex_name
             ],
             'bookingForm' => $bookingForm,
+            'show_modal' => $new_publish
         ];
 
         return $this->render('view', $res);

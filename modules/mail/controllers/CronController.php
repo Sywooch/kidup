@@ -17,6 +17,5 @@ class CronController extends Model
 {
     public function minute()
     {
-        (new MailMessage())->parseInbox();
     }
 }

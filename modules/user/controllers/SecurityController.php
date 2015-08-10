@@ -135,6 +135,7 @@ class SecurityController extends Controller
             $this->action->successUrl = Url::to(['/user/registration/connect', 'account_id' => $account->id]);
         } else {
             \Yii::$app->user->login($user, $this->module->rememberFor);
+            $this->action->successUrl = Url::to('@web/user/settings');
         }
     }
 

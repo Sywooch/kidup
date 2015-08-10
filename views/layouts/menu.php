@@ -89,7 +89,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                     <a href="<?= Url::to('@web/item/list') ?>">
                                         <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 30, 'h' => 30],
                                             ['class' => "menu-icon-kidup"]) ?>
-                                        <?= Yii::t("app", "Your Listings") ?>
+                                        <?= Yii::t("app", "Your Products") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
@@ -122,7 +122,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>"
                            class="btn btn-danger hidden-xs <?= isset($this->context->transparentNav) ? 'btn-fill' : '' ?>">
-                            <?= Yii::t("app", "Create Listing") ?>
+                            <?= Yii::t("app", "Rent Out") ?>
                         </a>
                     </li>
                 </ul>
@@ -161,7 +161,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     </li>
                     <li class="">
                         <button class="btn btn-danger btn-fill btn-block">
-                            <?= Yii::t("app", "Create Listing") ?>
+                            <?= Yii::t("app", "Rent Out") ?>
                         </button>
                     </li>
                     <li>
@@ -180,7 +180,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <li>
                         <a href="<?= Url::to('@web/item/list') ?>">
                             <i class="pe-7s-piggy"></i>
-                            <?= Yii::t("app", "Your Listings") ?>
+                            <?= Yii::t("app", "Your Products") ?>
                         </a>
                     </li>
                     <li class="divider"></li>
