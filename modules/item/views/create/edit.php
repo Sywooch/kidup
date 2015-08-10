@@ -129,7 +129,7 @@ $this->registerJs("
                                     </small>
                                 </h4>
                                 <?= $form->field($model,
-                                    'description')->textarea(['class' => 'form-control'])->label(false) ?>
+                                    'description')->textarea(['class' => 'form-control', 'rows' => 6])->label(false) ?>
                             </div>
                         </div>
                         <div class="row price">
