@@ -9,7 +9,7 @@ class ImageHelper extends BaseHtml{
     public static function image($filename, $options = [], $htmlOptions = []){
 
         $url = static::url($filename, $options);
-
+        if(empty($url) || $url == false) return '';
         $htmlOptions['src'] = $url;
         $htmlOptions['style'] = '';
         if(isset($options['w'])){
@@ -49,6 +49,9 @@ class ImageHelper extends BaseHtml{
     }
 
     public static function url($filename, $options = []){
+        if($filename == false || !is_string($filename)){
+            return '';
+        }
         $isStaticFile = false;
         $folders = explode("/", $filename);
         if($folders[0] == 'kidup'){

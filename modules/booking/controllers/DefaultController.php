@@ -53,6 +53,10 @@ class DefaultController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) ){
             if($model->save()) {
+                // booking is confirmed
+                if(YII_ENV == 'prod'){
+                    \Yii::$app->slack->send("New booking payin has been made (id) ".$id);
+                }
                 return $this->redirect(['/booking/' . $id]);
             }else{
                 return $this->refresh();

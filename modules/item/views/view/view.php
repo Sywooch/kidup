@@ -18,7 +18,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \app\modules\item\assets\ViewAsset::register($this);
 ?>
 <div id="product">
-    <div class="parallax filter-black" style="background-image: url('<?= $images[0]['url'] ?>')">
+    <div class="parallax filter-black"
+         style="background-image: url('<?= isset($images[0]) ? $images[0]['url'] : '' ?>')">
     </div>
     <!--book-line-fixed -->
     <div id="booking-navbar" class="book-line booking">
