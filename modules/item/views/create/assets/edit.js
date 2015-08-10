@@ -61,16 +61,18 @@ $(document).ready(function () {
 
     $("[id^=submit]").click(function(){
         var form=$(this).parents("form");
-        form.attr('action', form.attr('action')+"?button="+$(this).attr('id')).submit();
+        var newLink = form.attr('action').replace('?button=submit-save','');
+        newLink.replace('?button=submit-preview','');
+        newLink.replace('?button=submit-publish','');
+        form.attr('action', newLink+"?button="+$(this).attr('id')).submit();
     });
 
     $('#new-price').keydown(function(){
         setTimeout(function(){
             var val = $('#new-price').val();
-            var dayPrice = val / 50;
-            $(".suggestion-daily").html('<i>Daily price</i>: '+Math.round(dayPrice));
-            $(".suggestion-weekly").html('<i>Weekly price</i>: '+Math.round(dayPrice*5));
-            $(".suggestion-monthly").html('<i>Monthly price</i>: '+Math.round(dayPrice*5*2.5));
+            $(".suggestion-daily").html('<i>Daily price</i>: '+Math.round(val*0.02));
+            $(".suggestion-weekly").html('<i>Weekly price</i>: '+Math.round(val*0.04));
+            $(".suggestion-monthly").html('<i>Monthly price</i>: '+Math.round(val*0.05));
         },100);
     })
 });

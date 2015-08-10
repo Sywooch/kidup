@@ -88,10 +88,10 @@ class CreateController extends Controller
             $model->categories = \Yii::$app->request->post($model->formName())['categories'];
             if ($model->save()) {
                 if ($button == "submit-save") {
-                    $this->redirect(['/item/' . $model->item->id . '/edit']);
+                    return $this->redirect(['/item/' . $model->item->id . '/edit#publishing']);
                 }
                 if ($button == "submit-preview") {
-                    $this->redirect(['/item/' . $model->item->id]);
+                    return $this->redirect(['/item/' . $model->item->id]);
                 }
                 if ($button == "submit-publish") {
                     // todo check stuff here
@@ -102,7 +102,7 @@ class CreateController extends Controller
                     }
                     $item->is_available = 1;
                     $item->save();
-                    $this->redirect(['/item/' . $model->item->id]);
+                    return $this->redirect(['/item/' . $model->item->id, 'new_publish' => true]);
                 }
             }
         }
@@ -251,6 +251,22 @@ class CreateController extends Controller
                 }
             }
         }
+    }
+
+    public function actionUnpublish($id){
+        $item = Item::find()->where(['id' => $id])->one();
+        if ($item == null) {
+            throw new NotFoundHttpException('Item does not exist');
+        }
+        if (!$item->isOwner()) {
+            throw new ForbiddenHttpException();
+        }
+        // todo check wheter there are any active bookings or other dependencies that block this
+        $item->is_available = 0;
+        $item->save();
+
+        Yii::$app->session->addFlash('info', \Yii::t('item', 'The item has been made unavailable'));
+        return $this->redirect('@web/item/'.$id.'/edit#publishing');
     }
 }
 

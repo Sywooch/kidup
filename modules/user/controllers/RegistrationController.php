@@ -162,7 +162,7 @@ class RegistrationController extends Controller
         if($model->load(\Yii::$app->request->post()) && $model->save()){
             return $this->goBack();
         }
-        if($user->profile->birthday == null || $user->profile->first_name == null || $user->profile->last_name == null){
+        if($user->profile->description == null || $user->profile->first_name == null || $user->profile->last_name == null){
             return $this->render('post_registration',[
                 'model' => $model,
             ]);

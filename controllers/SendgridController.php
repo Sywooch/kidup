@@ -4,14 +4,11 @@ namespace app\controllers;
 
 use app\modules\mail\models\MailMessage;
 use Yii;
-use yii\base\Exception;
-use yii\base\UserException;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\HttpException;
 
 class SendgridController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -25,6 +22,7 @@ class SendgridController extends Controller
     }
 
     public function actionWebhookApqcbec(){
+
         (new MailMessage())->processSendgridInput($_POST);
     }
 }

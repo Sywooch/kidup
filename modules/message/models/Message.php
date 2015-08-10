@@ -18,6 +18,7 @@ class Message extends \app\models\base\Message
     public function beforeValidate(){
         if($this->isNewRecord){
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
+            $this->message = \yii\helpers\HtmlPurifier::process($this->message);
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         return parent::beforeValidate();
