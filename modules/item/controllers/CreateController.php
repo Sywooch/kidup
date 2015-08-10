@@ -88,10 +88,10 @@ class CreateController extends Controller
             $model->categories = \Yii::$app->request->post($model->formName())['categories'];
             if ($model->save()) {
                 if ($button == "submit-save") {
-                    $this->redirect(['/item/' . $model->item->id . '/edit']);
+                    return $this->redirect(['/item/' . $model->item->id . '/edit']);
                 }
                 if ($button == "submit-preview") {
-                    $this->redirect(['/item/' . $model->item->id]);
+                    return $this->redirect(['/item/' . $model->item->id]);
                 }
                 if ($button == "submit-publish") {
                     // todo check stuff here
@@ -102,7 +102,7 @@ class CreateController extends Controller
                     }
                     $item->is_available = 1;
                     $item->save();
-                    $this->redirect(['/item/' . $model->item->id]);
+                    return $this->redirect(['/item/' . $model->item->id, 'new_publish' => true]);
                 }
             }
         }

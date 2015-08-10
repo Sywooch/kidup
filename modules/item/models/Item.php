@@ -116,10 +116,9 @@ class Item extends \app\models\base\Item
         usort($ihms, function ($a, $b) {
             return ($a->order < $b->order) ? -1 : 1;
         });
-        $order++;
 
-        if (isset($ihm[$order])) {
-            return $ihm[$order]->media->file_name;
+        if (isset($ihms[$order])) {
+            return $ihms[$order]->media->file_name;
         }
         return false;
     }
