@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c14516b9653d135dacd04223c933e836",
+    "hash": "dd633a6ce9393588413ba6decc41da24",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1200,6 +1200,44 @@
             "time": "2015-07-07 23:34:07"
         },
         {
+            "name": "components/flag-icon-css",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lipis/flag-icon-css.git",
+                "reference": "d2b8e0f671ffca87ed34a645bf0890a6d90f3ff6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/d2b8e0f671ffca87ed34a645bf0890a6d90f3ff6",
+                "reference": "d2b8e0f671ffca87ed34a645bf0890a6d90f3ff6",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "name": "flag-icon-css",
+                    "files": [
+                        "less/**",
+                        "css/**",
+                        "flags/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Panayiotis Lipiridis (Lipis)",
+                    "email": "lipiridis@gmail.com"
+                }
+            ],
+            "description": "CSS for vector based country flags",
+            "time": "2015-06-13 09:36:17"
+        },
+        {
             "name": "dmstr/yii2-db",
             "version": "dev-master",
             "source": {
@@ -1332,6 +1370,54 @@
             "time": "2015-04-03 20:31:47"
         },
         {
+            "name": "fortawesome/font-awesome",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "f4308f47398088c45f14480b0541ba53b23ccc1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/f4308f47398088c45f14480b0541ba53b23ccc1c",
+                "reference": "f4308f47398088c45f14480b0541ba53b23ccc1c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "jekyll": "1.0.2",
+                "lessc": "1.4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OFL-1.1",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Gandy",
+                    "email": "dave@fontawesome.io",
+                    "homepage": "http://twitter.com/davegandy",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The iconic font and CSS framework",
+            "homepage": "http://fontawesome.io/",
+            "keywords": [
+                "FontAwesome",
+                "awesome",
+                "bootstrap",
+                "font",
+                "icon"
+            ],
+            "time": "2015-08-02 08:24:47"
+        },
+        {
             "name": "giggsey/libphonenumber-for-php",
             "version": "dev-master",
             "source": {
@@ -1341,7 +1427,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/1eed44e02d3bae0e305c87c74aae5d5ae569a6f4",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/b67f0a54ffccf519e73aee3a0fa20cafc6d41269",
                 "reference": "1eed44e02d3bae0e305c87c74aae5d5ae569a6f4",
                 "shasum": ""
             },
@@ -2008,7 +2094,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/1016d46b3e41565d76a582f98c6f843c46d200fc",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/8d14b538ba6d3e5eaa160fbb203420e91cc779a8",
                 "reference": "1016d46b3e41565d76a582f98c6f843c46d200fc",
                 "shasum": ""
             },
@@ -2125,6 +2211,98 @@
             "time": "2015-06-18 15:13:20"
         },
         {
+            "name": "kartik-v/php-date-formatter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/php-date-formatter.git",
+                "reference": "7d3dc3495dd10bd1909c0dfdecd673967019cc21"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/php-date-formatter/zipball/7d3dc3495dd10bd1909c0dfdecd673967019cc21",
+                "reference": "7d3dc3495dd10bd1909c0dfdecd673967019cc21",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\dateformatter\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A JQuery datetime formatting and manipulation library using PHP date-time formats in javascript.",
+            "homepage": "https://github.com/kartik-v/php-date-formatter",
+            "keywords": [
+                "date",
+                "datetime",
+                "formatter",
+                "javascript",
+                "jquery",
+                "php",
+                "php-date-formatter.js",
+                "time"
+            ],
+            "time": "2015-06-18 15:14:51"
+        },
+        {
+            "name": "kartik-v/yii2-builder",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-builder.git",
+                "reference": "a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8",
+                "reference": "a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-grid": "*",
+                "kartik-v/yii2-krajee-base": "*",
+                "kartik-v/yii2-widget-activeform": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\builder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Build forms (single-row or multi-row/tabular) easily for Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-builder",
+            "keywords": [
+                "builder",
+                "extension",
+                "form",
+                "widget",
+                "yii2"
+            ],
+            "time": "2015-01-28 03:40:28"
+        },
+        {
             "name": "kartik-v/yii2-checkbox-x",
             "version": "dev-master",
             "source": {
@@ -2222,6 +2400,101 @@
             "time": "2015-05-30 11:29:13"
         },
         {
+            "name": "kartik-v/yii2-datecontrol",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-datecontrol.git",
+                "reference": "4e858b5cd38130c37739b2f582b66a044f77c95c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/4e858b5cd38130c37739b2f582b66a044f77c95c",
+                "reference": "4e858b5cd38130c37739b2f582b66a044f77c95c",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/php-date-formatter": ">1.3",
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\datecontrol\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Date control module allowing separation of formats for View and Model for Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-datecontrol",
+            "keywords": [
+                "control",
+                "date",
+                "extension",
+                "format",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-07-30 18:30:18"
+        },
+        {
+            "name": "kartik-v/yii2-detail-view",
+            "version": "v1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-detail-view.git",
+                "reference": "028414cc99fab4e640cb19d28ff97132fdbe79ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/028414cc99fab4e640cb19d28ff97132fdbe79ed",
+                "reference": "028414cc99fab4e640cb19d28ff97132fdbe79ed",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-helpers": "*",
+                "kartik-v/yii2-krajee-base": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\detail\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Various enhancements to the Yii 2 Detail View with ability to edit data and manage Bootstrap 3 styles.",
+            "homepage": "https://github.com/kartik-v/yii2-detail-view",
+            "keywords": [
+                "detail",
+                "detail view",
+                "extension",
+                "form",
+                "grid",
+                "widget",
+                "yii2"
+            ],
+            "time": "2015-05-22 18:11:59"
+        },
+        {
             "name": "kartik-v/yii2-grid",
             "version": "dev-master",
             "source": {
@@ -2264,6 +2537,100 @@
                 "yii2"
             ],
             "time": "2015-07-30 10:39:45"
+        },
+        {
+            "name": "kartik-v/yii2-helpers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-helpers.git",
+                "reference": "daafedf1ae6130d2287e417941b8c50ad59a50c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/daafedf1ae6130d2287e417941b8c50ad59a50c0",
+                "reference": "daafedf1ae6130d2287e417941b8c50ad59a50c0",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\helpers\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A collection of useful helper functions for Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-helpers",
+            "keywords": [
+                "bootstrap",
+                "extension",
+                "helper",
+                "utilities",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-06-15 17:18:24"
+        },
+        {
+            "name": "kartik-v/yii2-icons",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-icons.git",
+                "reference": "bce5f85e8e9b76a11e34dd43156f2db4bdb566a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/bce5f85e8e9b76a11e34dd43156f2db4bdb566a5",
+                "reference": "bce5f85e8e9b76a11e34dd43156f2db4bdb566a5",
+                "shasum": ""
+            },
+            "require": {
+                "components/flag-icon-css": "*",
+                "fortawesome/font-awesome": "*",
+                "kartik-v/yii2-krajee-base": "*",
+                "yiisoft/yii2-jui": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\icons\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://demos.krajee.com/"
+                }
+            ],
+            "description": "Set of icon frameworks for use in Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-icons",
+            "keywords": [
+                "extension",
+                "font",
+                "icon",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-04-21 15:15:10"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -3791,7 +4158,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d93492fb60e05e67522f38796b54b9c5205bba90",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5779c3740ec7902c898dc7353b28d70ab0e690e5",
                 "reference": "d93492fb60e05e67522f38796b54b9c5205bba90",
                 "shasum": ""
             },
@@ -4447,6 +4814,46 @@
             "time": "2015-07-10 04:29:01"
         },
         {
+            "name": "warrence/yii2-kartikgii",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/warrence/yii2-kartikgii.git",
+                "reference": "6b0c0e8714b4e0e0e5327a4fd7fcff72c5732dfb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/warrence/yii2-kartikgii/zipball/6b0c0e8714b4e0e0e5327a4fd7fcff72c5732dfb",
+                "reference": "6b0c0e8714b4e0e0e5327a4fd7fcff72c5732dfb",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-builder": "*",
+                "kartik-v/yii2-datecontrol": "*",
+                "kartik-v/yii2-detail-view": "*",
+                "kartik-v/yii2-grid": "*",
+                "kartik-v/yii2-helpers": "*",
+                "kartik-v/yii2-icons": "*",
+                "kartik-v/yii2-widgets": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "warrence\\kartikgii\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Warrence",
+                    "email": "warrence@gmail.com"
+                }
+            ],
+            "description": "Gii Generator base on Kartik-V extension https://github.com/kartik-v",
+            "time": "2015-01-13 15:55:32"
+        },
+        {
             "name": "willdurand/geocoder",
             "version": "2.x-dev",
             "source": {
@@ -4520,7 +4927,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/cf882497cb749e4ef65dadcde9aec6ad6cfddce0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7435b535cc812a035eb63bcc3cbee2a6f4103086",
                 "reference": "cf882497cb749e4ef65dadcde9aec6ad6cfddce0",
                 "shasum": ""
             },
@@ -5041,7 +5448,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bazilio91/yii2-stubs-generator/zipball/640853f9dd5b2139b49ccbab9be478ad267ab128",
+                "url": "https://api.github.com/repos/bazilio91/yii2-stubs-generator/zipball/6d730d6c9e92157e253eec0876de8c86c9ba1d94",
                 "reference": "640853f9dd5b2139b49ccbab9be478ad267ab128",
                 "shasum": ""
             },
@@ -6041,7 +6448,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/ca2e42cad8446a05691cc4327b7ce3ed45bfdb11",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/dccd8011934fba6fb77c7182c74926ad58c9ecd1",
                 "reference": "ca2e42cad8446a05691cc4327b7ce3ed45bfdb11",
                 "shasum": ""
             },
@@ -6311,7 +6718,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/66fb20c9e1b3617651c3f66be7a1747479d96ba5",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/f88f8936517d54ae6d589166810877fb2015d0a2",
                 "reference": "66fb20c9e1b3617651c3f66be7a1747479d96ba5",
                 "shasum": ""
             },
@@ -6936,7 +7343,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/3c538c518cb514ec907baf527f6f47dc3b7860a1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/2ff05454260008e826f08f02bb12561bc24bdf22",
                 "reference": "3c538c518cb514ec907baf527f6f47dc3b7860a1",
                 "shasum": ""
             },
@@ -7086,6 +7493,7 @@
         "nesbot/carbon": 20,
         "maknz/slack": 20,
         "monolog/monolog": 20,
+        "warrence/yii2-kartikgii": 20,
         "bazilio/yii2-stubs-generator": 20
     },
     "prefer-stable": false,

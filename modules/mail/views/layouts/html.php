@@ -39,7 +39,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
             padding: 0;
         }
 
-        /* Force Outlook to provide a "view in browser" menu link. */
+        /* Force Outlook to provide a "browser" menu link. */
         body {
             width: 100% !important;
             -webkit-text-size-adjust: 100%;
@@ -454,138 +454,184 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
 <?= $content ?>
 
 <!-- ======= 2 columns tables ======= -->
-<table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0">
-
-    <tr>
-        <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
-    </tr>
-
-    <tr>
-        <td align="center">
-
-            <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-                <tr>
-                    <td align="center"
-                        style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #303030;text-align:center;"
-                        class="text_color">
-                        <!-- ======= section subtitle ====== -->
-
-                        <div style="line-height: 24px;">
-
-                            Barnlige hilsner
-
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td align="center"
-                        style="color: #111212; font-size: 15px; font-family: Lato, Calibri, sans-serif; font-weight: 900; mso-line-height-rule: exactly;"
-                        class="title_color">
-                        <p
-                            style="display: block; border-style: none !important; border: 0 !important;">
-                            <img width="100" border="0" style="display: block;"
-                                 src="<?= ImageHelper::url('kidup/logo/horizontal.png', ['w' => 100]) ?>"
-                                 alt=""/></p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-
-</table>
-<!-- ======= end section ======= -->
-
-<!-- ======= contact section ======= -->
-<table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="footer">
-
-    <tr>
-        <td height="15" style="font-size: 15px; line-height: 15px;">&nbsp;</td>
-    </tr>
-
+<table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
+    <tbody>
     <tr>
         <td>
-            <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590 bg_color">
-
+            <table width="560" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth"
+                   hasbackground="true">
+                <tbody>
                 <tr>
-                    <td>
-                        <table border="0" width="240" align="center" cellpadding="0" cellspacing="0"
-                               style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"
-                               class="container590">
+                    <td width="100%">
+                        <table bgcolor="#FFFFFF" width="560" cellpadding="0" cellspacing="0" border="0" align="center"
+                               class="devicewidth">
+                            <tbody>
+                            <!-- Spacing -->
                             <tr>
-                                <td align="center"
-                                    style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #303030;text-align:center; font-weight: 700; mso-line-height-rule: exactly; line-height: 24px;"
-                                    class="title_color">
-
-                                    <!-- ======= main header ======= -->
-
-                                    <div style="line-height: 24px;">
-                                        <?= Yii::t("mail", "KidUp Social") ?>
-                                    </div>
+                                <td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
                                 </td>
                             </tr>
-
+                            <!-- Spacing -->
                             <tr>
-                                <td align="center">
-                                    <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                <td>
+                                    <table width="520" cellpadding="0" cellspacing="0" border="0" align="center"
+                                           class="devicewidthinner">
+
                                         <tr>
-                                            <td>
-                                                <a href="" style="display: block;">
-                                                    <img width="12" border="0" style="display: block; width: auto;"
-                                                         src="<?= ImageHelper::url('kidup/email/instagram.png',
-                                                             ['q' => 90, 'w' => 12]) ?>" alt=""/></a>
+                                            <td align="center"
+                                                style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #303030;text-align:center;"
+                                                class="text_color">
+                                                <!-- ======= section subtitle ====== -->
+
+                                                <div style="line-height: 24px;">
+
+                                                    Barnlige hilsner
+
+                                                </div>
                                             </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <a href="" style="display: block;">
-                                                    <img width="6" height="13" border="0"
-                                                         style="display: block; width: auto;"
-                                                         src="<?= ImageHelper::url('kidup/email/facebook.png',
-                                                             ['q' => 90, 'w' => 6]) ?>"
-                                                         alt=""/></a>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <a href="" style="display: block;">
-                                                    <img width="14" border="0" style="display: block; width: auto;"
-                                                         src="<?= ImageHelper::url('kidup/email/twitter.png',
-                                                             ['q' => 90, 'w' => 14]) ?>"
-                                                         alt=""/></a>
+                                        </tr>
+                                        <tr>
+                                            <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center"
+                                                style="color: #111212; font-size: 15px; font-family: Lato, Calibri, sans-serif; font-weight: 900; mso-line-height-rule: exactly;"
+                                                class="title_color">
+                                                <p
+                                                    style="display: block; border-style: none !important; border: 0 !important;">
+                                                    <img width="100" border="0" style="display: block;"
+                                                         src="<?= ImageHelper::url('kidup/logo/horizontal.png',
+                                                             ['w' => 100]) ?>"
+                                                         alt=""/></p>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
-
+                            <!-- Spacing -->
                             <tr>
-                                <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                            </tr>
-
-                            <tr>
-                                <td align="center"
-                                    style="color: #1a1c20; font-size: 12px; font-family: Helvetica, arial, sans-serif; mso-line-height-rule: exactly; line-height: 25px;"
-                                    class="title_color">
-
-                                    <!-- ======= main header ======= -->
-
-                                    <div style="line-height: 25px;">
-                                        <a href="<?= $urls['changeSettings'] ?>">
-                                            <?= Yii::t("mail", "Change email preferences") ?>
-                                        </a>
-                                    </div>
+                                <td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
                                 </td>
                             </tr>
-
+                            <!-- Spacing --><!-- Spacing -->
+                            <tr>
+                                <td height="1" bgcolor="#EEEEEE"
+                                    style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+                                </td>
+                            </tr>
+                            <!-- Spacing -->
+                            </tbody>
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </td>
     </tr>
+    </tbody>
+</table>
+
+<!-- ======= end section ======= -->
+
+<!-- ======= contact section ======= -->
+<table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
+    <tbody>
+    <tr>
+        <td>
+            <table width="560" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth"
+                   hasbackground="true">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table bgcolor="#FFFFFF" width="560" cellpadding="0" cellspacing="0" border="0" align="center"
+                               class="devicewidth">
+                            <tbody>
+                            <!-- Spacing -->
+                            <tr>
+                                <td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+                                </td>
+                            </tr>
+                            <!-- Spacing -->
+                            <tr>
+                                <td>
+                                    <table width="520" cellpadding="0" cellspacing="0" border="0" align="center"
+                                           class="devicewidthinner">
+                                        <tr>
+                                            <td align="center"
+                                                style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #303030;text-align:center; font-weight: 700; mso-line-height-rule: exactly; line-height: 24px;"
+                                                class="title_color">
+
+                                                <!-- ======= main header ======= -->
+
+                                                <div style="line-height: 24px;">
+                                                    <?= Yii::t("mail", "KidUp Social") ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td align="center">
+                                                <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td>
+                                                            <a href="" style="display: block;">
+                                                                <img width="12" border="0"
+                                                                     style="display: block; width: auto;"
+                                                                     src="<?= ImageHelper::url('kidup/email/instagram.png',
+                                                                         ['w' => 12]) ?>" alt=""/></a>
+                                                        </td>
+                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td>
+                                                            <a href="" style="display: block;">
+                                                                <img width="6" height="13" border="0"
+                                                                     style="display: block; width: auto;"
+                                                                     src="<?= ImageHelper::url('kidup/email/facebook.png',
+                                                                         ['w' => 6]) ?>"
+                                                                     alt=""/></a>
+                                                        </td>
+                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td>
+                                                            <a href="" style="display: block;">
+                                                                <img width="14" border="0"
+                                                                     style="display: block; width: auto;"
+                                                                     src="<?= ImageHelper::url('kidup/email/twitter.png',
+                                                                         ['w' => 14]) ?>"
+                                                                     alt=""/></a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td align="center"
+                                                style="color: #1a1c20; font-size: 12px; font-family: Helvetica, arial, sans-serif; mso-line-height-rule: exactly; line-height: 25px;"
+                                                class="title_color">
+
+                                                <!-- ======= main header ======= -->
+
+                                                <div style="line-height: 25px;">
+                                                    <a href="<?= $urls['changeSettings'] ?>">
+                                                        <?= Yii::t("mail", "Change email preferences") ?>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
 
     <tr>
         <td height="50" style="font-size: 50px; line-height: 50px;">&nbsp;</td>
