@@ -11,6 +11,10 @@ class ViewAsset extends AssetBundle
         'view.less',
     ];
 
+    public $js = [
+        'ie-fix.js'
+    ];
+
     public $depends = [
         'yii\web\JqueryAsset'
     ];

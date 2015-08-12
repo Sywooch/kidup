@@ -170,11 +170,22 @@ class CreateController extends Controller
         ]);
         $i->save();
         if ($i->save()) {
+            // try to find order
+            $orderIhm = ItemHasMedia::find()->where(['item_id' => $item->id, 'media_id' => $i->id,])->orderBy('order DESC')->one();
+            if($orderIhm == null){
+                $order = 1;
+            }else{
+                if( $orderIhm->order == null){
+                    $oder = 1;
+                }else{
+                    $order = $orderIhm->order+1;
+                }
+            }
             $ihm = new ItemHasMedia();
             $ihm->setAttributes([
                 'item_id' => $item->id,
                 'media_id' => $i->id,
-
+                'order' => $order
             ]);
             $ihm->save();
         }
