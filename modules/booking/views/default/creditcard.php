@@ -36,7 +36,7 @@ Modal::begin([
     <form id="checkout" method="post" action="">
         <div id="payment-form"></div>
         <input type="submit" value="<?= Yii::t("booking", "Add your card") ?>"
-               class="btn btn-danger btn-fill pull-right">
+               class="btn btn-primary btn-fill pull-right">
         <br><br>
     </form>
 

@@ -76,17 +76,23 @@ class Payout extends \app\models\base\Payout
 
         $field[1] = 'CMBO';
         $field[2] = '11658814'; // kidup account
-        $payoutMethod = PayoutMethod::find()->one();
-        $field[3] = $payoutMethod->identifier_2_encrypted . '+' . $payoutMethod->identifier_1_encrypted; // to account
+        $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->user_id])->one();
+        if($payoutMethod === null){
+            // todo: what here?
+            return false;
+        }
         $field[4] = str_replace(".", ",", $this->amount); // to account
         $field[6] = "DKK";
         $field[7] = "N"; // todo check
         $field[13] = "J"; // todo check
 
         $field[24] = "KidUp Payout ".$this->id;
-        $field[75] = "You're awesome!";
+        $field[83] = "You're awesome!";
+        // to account, this needs to be processed by externall process.php (in veracrypt container)
+        $field[84] = $payoutMethod->identifier_1_encrypted;
+        $field[85] = $payoutMethod->identifier_2_encrypted; // to account
         $str = [];
-        for($i = 1; $i < 76; $i++){
+        for($i = 1; $i <= 86; $i++){
             if(!isset($field[$i])){
                 $str[] = '';
             }else{
@@ -95,6 +101,7 @@ class Payout extends \app\models\base\Payout
         }
 
         echo '"'.implode('","', $str).'",';
+        return false;
     }
 
     /**
