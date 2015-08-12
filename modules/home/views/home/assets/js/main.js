@@ -37,12 +37,12 @@ $(document).ready(function () {
         autoplayHoverPause: false
     });
 
-    typist = document.querySelector("#typist-element");
+    var typist = document.querySelector("#typist-element");
     new Typist(typist, {
         letterInterval: 60,
         textInterval: 3000,
         onSlide: function(text, options) {
-            var suffix = options.typist.getAttribute("data-typist-suffix");
+            options.typist.getAttribute("data-typist-suffix");
             return false;
         }
     });

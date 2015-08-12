@@ -9,14 +9,15 @@
 
 return [
     // Adjust command/callback for JavaScript files compressing:
-    'jsCompressor' => 'uglifyjs {from} -o {to} -c',
+    'jsCompressor' => 'uglifyjs {from} -o {to} -c --define 1>> /dev/null 2>&1',
     // Adjust command/callback for CSS files compressing:
     'cssCompressor' => 'cleancss -o {to} {from}',
     // The list of asset bundles to compress:
     'bundles' => [
          'app\assets\AppAsset',
          'yii\web\YiiAsset',
-         'yii\web\JqueryAsset'
+         'yii\web\JqueryAsset',
+         'app\modules\home\assets\HomeAsset',
     ],
     // Asset bundle for compression output:
     'targets' => [
