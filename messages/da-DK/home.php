@@ -18,7 +18,6 @@
  */
 return [
     'Share a' => 'Del en',
-    'a stroller,a toy,a bike' => 'en barnevogn,et lejetøj,en cykel',
     'stroller,toy,bike' => 'barnevogn,legetøj,cykel',
     'trolley' => 'barnevogn',
     'Approved by Experts' => 'Godkendt af Eksperter',
@@ -47,5 +46,6 @@ return [
     'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.' => 'De penge vi får ved at leje Vilhelms ting ud kan vi bruge på en sommertur til Legoland med hele familien.',
     'You can quickly explore, see prices, see pictures and rent products through KidUp.' => 'Du kan hurtigt udforske, se priser, billeder og leje produkter gennem KidUp.',
     'You cannot have everything' => 'Du kan ikke få alt',
+    'a stroller,a toy,a bike' => 'en barnevogn,et lejetøj,en cykel',
     'a trolley' => 'En løbevogn',
 ];

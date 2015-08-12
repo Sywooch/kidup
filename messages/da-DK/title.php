@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Search KidStuff' => 'Søg børneting',
     'Account settings' => 'Brugerindstillinger',
     'Contact us' => 'Kontakt Os',
     'Email settings' => 'Email indstillinger',
@@ -58,6 +57,7 @@ return [
     'Recover your password' => 'Har du glemt dit kodeord?',
     'Respond to booking request' => 'Svar på booking forespørgsler',
     'Safety' => 'Sikkerhed',
+    'Search KidStuff' => 'Søg børneting',
     'Share Kid Stuff' => 'Del dine børneting',
     'Sign up' => 'Opret profil',
     'Terms and conditions' => 'Terms and Conditions',

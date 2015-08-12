@@ -17,23 +17,26 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'File format not allowed' => 'Filformatet er ikke tilladt',
-    'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
-alarmsystemer etc. Har du mindre ting, f.eks. tøj, kan du samle det i
-alderskasser.',
-    'Kidup is about trust too. If you see a personal
-                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp' => '',
-    'The terms and conditions have to be accepted before an item can be published' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
-forskellige ting, så får man ro i maven. Det giver troværdighed og
-tillid.',
-    'To rent and rent out is about seeing what we are truly renting.
-                                                In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
-På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
+    'Accurate, detailed information makes your item more trustworthy. Consider adding a personal note.' => '',
+    'Create New' => '',
+    'Edit your product' => '',
+    'Manage the products you\'d like to share with other families' => '',
+    'Preview' => '',
+    'Products' => '',
+    'Provide {b}high-quality images{bOut} of your product.' => '',
+    'Some suggestions to make it more attractive for people to rent your item.' => '',
+    'The item has been made unavailable' => '',
+    'The item is now publicly available. If you like to make it unavailable, please {0}' => '',
+    'Tip: There is a 83% bigger chance to rent out the product within the first 14 days if you share it on Facebook!' => '',
+    'Tips' => '',
+    'Use our price suggestion tool to get optimal pricing.' => '',
+    'Yay! Your product is now online and ready to be rented out!' => '',
+    'click here.' => '',
     'Apply filter' => 'Tilføj filter',
     'Back' => 'Tilbage',
     'Choose a filter' => 'Vælg et filter',
     'Close' => 'Luk',
+    'Create Listing' => 'Lav en listing',
     'Distance: ' => 'Distance:',
     'KidUp is about larger items, like strollers, cribs, alarmsystems etc.
                                                  If you can only supply a small item, you can combine those in the age-packages.' => 'KidUp henvender sig til større ting, såsom barnevogne, vugger,
@@ -43,8 +46,11 @@ alderskasser.',
                                                 description of different things, it gives credibility. Trust and personality is the essence of KidUp' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
 forskellige ting, så får man ro i maven. Det giver troværdighed og
 tillid.',
+    'Listings' => 'Listings',
+    'Manage the item you\'d like to share with other families' => 'Få styr på de ting du vil dele med andre familier',
     'Please provide some high quality pictures of your product.' => 'Vær venlig at uploade nogle høj kvalitets billeder af dit produkt.',
     'Refresh the page if eveyrhting is fixed.' => 'Opdater siden hvis alt er ordnet.',
+    'This is a list of your published and unpublished listings' => 'Dette er en liste af dine publiseret og ikke publiseret ting.',
     'To rent and rent out is about seeing what we are truly renting.
                                                 In other words KidUp is about taking really good pictures.' => 'At leje og udleje ting handler om, at vi virkelig kan se hvad vi lejer.
 På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
@@ -64,20 +70,18 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Chat' => 'Chat',
     'Clear' => 'Ryd',
     'Condition' => 'Stand',
-    'Create Listing' => 'Lav en listing',
     'Create a new item' => 'Opret et produkt',
     'Description' => 'Beskrivelse',
     'Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as \'billboard\' image on the product page.' => 'Træk og smid billeder eller klik på kassen for at starte med at uploade. Du kan sortere dine billeder ved at trække uploade billeder rundt. Det første billede bliver dit hovedbillede.',
     'Edit' => 'ændre',
+    'File format not allowed' => 'Filformatet er ikke tilladt',
     'Filter' => 'Filter',
     'Filters' => 'Filtre',
     'Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:' => 'Har du problemer med at sætte den rigtige pris for dit produkt? Vi kan foreslå dig ind baseret på nyprisen:',
     'How can you describe your item, in one catchy title?' => 'Hvordan kan du beskrive tingen i en fangende titel?',
     'How much is the item used? What do you enjoy so much about it? What parent-child moments did you experience with this item?' => 'Hvor brugt er udstyret? Hvor glad er du for det? Har du nogle gode historier med det?',
     'Lightly damaged' => 'Mere brugt',
-    'Listings' => 'Listings',
     'Location' => 'Lokalitet',
-    'Manage the item you\'d like to share with other families' => 'Få styr på de ting du vil dele med andre familier',
     'Minor usage trails' => 'Mindre brugsspor',
     'New price in DKK' => 'Nypris i DKK',
     'Only the weekly price is required.' => 'Kun den ugentlige pris behøves.',
@@ -104,8 +108,10 @@ På KidUp handler det altså om, at du tager nogle knaldgode billeder.',
     'Return date' => 'Afleveringsdato',
     'Search' => 'Søg',
     'Special' => 'Special',
+    'The terms and conditions have to be accepted before an item can be published' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
+forskellige ting, så får man ro i maven. Det giver troværdighed og
+tillid.',
     'There are some things left to be fixed before you can preview or publish this item.' => 'Der er nogle få ting tilbage som skal fikses før du kan se eller publisere denne ting.',
-    'This is a list of your published and unpublished listings' => 'Dette er en liste af dine publiseret og ikke publiseret ting.',
     'This is a preview. Go here {0} to publish this item.' => 'Dette er en prøve. Gå her {0} for at publisere.',
     'Title' => 'Titel',
     'Unpublish' => 'Upublicer',
