@@ -66,7 +66,6 @@ class CronController extends Model
             ->innerJoinWith('payout')
             ->andWhere(['payout.status' => Payout::STATUS_WAITING_FOR_BOOKING_START])
             ->all();
-        var_dump(count($bookings));exit();
 
         foreach ($bookings as $booking) {
             if ($booking->payout->status == Payout::STATUS_WAITING_FOR_BOOKING_START) {
