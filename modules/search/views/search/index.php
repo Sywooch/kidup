@@ -8,7 +8,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
         <section class="section" id="search-cards">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3 col-lg-3 ">
+                    <div class="col-md-3 col-lg-3" id="search-sidebar">
                         <div class="card card-refine hidden-sm hidden-xs">
                             <div class="header">
                                 <h4 class="title">
@@ -107,7 +107,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
 
         <div class="buttonContainer">
             <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
-                    data-target="#mobileFiltersModal">
+                    data-target="#mobileFiltersModal" id="filter-button">
                 <?= Yii::t("item", "Filters") ?>
             </button>
         </div>

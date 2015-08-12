@@ -10,7 +10,7 @@ use app\tests\codeception\_support\FixtureHelper;
  * Class PagesCest
  * @package app\tests\codeception\acceptance\pages
  */
-class ReviewCest
+class PagesCest
 {
 
     /**
