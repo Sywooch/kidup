@@ -79,6 +79,9 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['192.168.33.1'] // adjust this to your needs
     ];
+    $config['modules']['gii']['generators'] = [
+        'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
+    ];
 }
 
 return $config;

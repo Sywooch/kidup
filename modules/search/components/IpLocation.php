@@ -1,30 +1,25 @@
 <?php
+namespace app\modules\search\components;
 
-namespace app\modules\item\models;
-
+use app\components\Cache;
 use Yii;
-use Carbon\Carbon;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use yii\base\Component;
 use yii\helpers\Json;
 
 /**
  * This is the model class for table "location".
  */
-class IpLocation extends \app\models\base\IpLocation
+class IpLocation extends Component
 {
     public static function get($ip)
     {
-        $ipLocation = IpLocation::findOne(['ip' => $ip]);
-        if($ipLocation === null){
+        return Cache::data('ip'. $ip, function() use ($ip){
             $buzz = new \Buzz\Browser(new \Buzz\Client\Curl());
             $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
             $provider = new \Geocoder\Provider\FreeGeoIpProvider($adapter);
             $geocoder = new \Geocoder\Geocoder($provider);
-
             $address = $geocoder->geocode($ip);
-            $ipLocation = new IpLocation();
-            $ipLocation->setAttributes([
+            $location = [
                 'ip' => $ip,
                 'latitude' => $address->getLatitude(),
                 'longitude' => $address->getLongitude(),
@@ -33,16 +28,14 @@ class IpLocation extends \app\models\base\IpLocation
                 'street_name' => $address->getStreetName(),
                 'street_number' => $address->getStreetNumber(),
                 'data' => Json::encode($address->toArray())
-            ]);
-            $ipLocation->save();
-        }
-
-        return $ipLocation;
+            ];
+            return $location;
+        }, 6*30*24*60*60);
     }
 
     public static function getIp()
     {
-        if(YII_ENV == 'dev'){
+        if (YII_ENV == 'dev') {
             // something else then localhost
             return "83.82.175.173";
         }

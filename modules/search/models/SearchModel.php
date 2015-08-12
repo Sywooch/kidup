@@ -1,8 +1,8 @@
 <?php
 namespace app\modules\search\models;
 
+use app\components\Cache;
 use app\modules\item\models\Category;
-use app\modules\item\models\IpLocation;
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
 use Yii;
@@ -10,6 +10,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\helpers\Json;
+use app\modules\search\components\IpLocation;
 
 /**
  * The item model of the search module is used for handling data related to searching items.
@@ -120,24 +121,22 @@ class SearchModel extends Model
      */
     public function filterLocation($query, $location = null, $distance = null)
     {
-        if ($location !== null) {
-            $geodata = $this->_getGeoData($location);
-            if ($geodata['success']) {
-                $latitude = $geodata['latitude'];
-                $longitude = $geodata['longitude'];
-                $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($latitude) . ' ) )
+        $geodata = $this->_getGeoData($location);
+        if ($geodata['success']) {
+            $latitude = $geodata['latitude'];
+            $longitude = $geodata['longitude'];
+            $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($latitude) . ' ) )
                         * cos( radians( `location`.`latitude` ) )
                         * cos( radians( `location`.`longitude` ) - radians(' . floatval($longitude) . ') )
                         + sin( radians(' . floatval($latitude) . ') )
                         * sin( radians( `location`.`latitude` ) ) ) )';
 
-                $query->select($distanceQ . ' as distance, `item`.*');
-                $query->innerJoinWith('location');
-                if ($distance !== null) {
-                    $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
-                }
-                $query->orderBy('distance');
+            $query->select($distanceQ . ' as distance, `item`.*');
+            $query->innerJoinWith('location');
+            if ($distance !== null) {
+                $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
             }
+            $query->orderBy('distance');
         }
     }
 
@@ -187,24 +186,15 @@ class SearchModel extends Model
      */
     private function _getGeoData($location = null)
     {
-        if (isset($location) && $location !== null) {
-            if (\Yii::$app->session->has('location_cache')) {
-                $l = Json::decode(\Yii::$app->session->get('location_cache'));
-                $latitude = $l['latitude'];
-                $longitude = $l['longitude'];
-            } else {
-                $location = IpLocation::get(IpLocation::getIp());
-                $latitude = $location->latitude;
-                $longitude = $location->longitude;
-                $location = $location->city . "," . $location->country;
-                \Yii::$app->session->set('location_cache', Json::encode([
-                    'latitude' => $latitude,
-                    'longitude' => $longitude,
-                    'location' => $location,
-                ]));
-            }
+        if ($location == null) {
+            $location = IpLocation::get(IpLocation::getIp());
+            $latitude = $location['latitude'];
+            $longitude = $location['longitude'];
+            $location = $location['city'] . "," . $location['country'];
         } else {
-            $location = Location::getByAddress($location);
+            $location = Cache::data('location_'.$location, function() use ($location){
+                return Location::getByAddress($location);
+            }, 30*24*60*60);
             $latitude = $location['latitude'];
             $longitude = $location['longitude'];
         }
