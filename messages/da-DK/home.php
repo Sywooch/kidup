@@ -18,7 +18,7 @@
  */
 return [
     'Share a' => 'Del en',
-    'a stroller,a toy,a bike' => 'en barnevogn, et lejetøj, en cykel',
+    'a stroller,a toy,a bike' => 'en barnevogn,et lejetøj,en cykel',
     'stroller,toy,bike' => 'barnevogn,legetøj,cykel',
     'trolley' => 'barnevogn',
     'Approved by Experts' => 'Godkendt af Eksperter',

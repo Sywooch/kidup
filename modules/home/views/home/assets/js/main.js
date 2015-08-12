@@ -36,5 +36,15 @@ $(document).ready(function () {
         autoplayTimeout: 5000,
         autoplayHoverPause: false
     });
+
+    typist = document.querySelector("#typist-element");
+    new Typist(typist, {
+        letterInterval: 60,
+        textInterval: 3000,
+        onSlide: function(text, options) {
+            var suffix = options.typist.getAttribute("data-typist-suffix");
+            return false;
+        }
+    });
 });
 
