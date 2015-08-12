@@ -121,6 +121,15 @@ class Booking extends \app\models\base\Booking
         return $this->hasOne(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
     }
 
+    public function getConversationId()
+    {
+        $conv = Conversation::find()->where(['booking_id' => $this->id])->one();
+        if($conv == null){
+            return false;
+        }
+        return $conv->id;
+    }
+
     /**
      * Triggers a payin update request
      * @return bool

@@ -73,7 +73,7 @@ class Invoice extends \app\models\base\Invoice
     public function getNewNumber(){
         $i = Invoice::find()->orderBy('invoice_number DESC')->one();
         if($i === null){
-            return 10000000001;
+            return 1;
         }
         return $i->invoice_number+1;
     }

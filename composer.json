@@ -51,7 +51,8 @@
     "aws/aws-sdk-php": "3.2.2",
     "league/flysystem-aws-s3-v3": "*",
     "omnilight/yii2-scheduling": "*",
-    "league/glide": "*"
+    "league/glide": "*",
+    "warrence/yii2-kartikgii": "dev-master"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",

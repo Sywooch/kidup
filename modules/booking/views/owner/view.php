@@ -8,7 +8,7 @@ use yii\helpers\Html;
  */
 ?>
 <br/><br/>
-<section class="section" id="checkout">
+<section class="section container" id="checkout">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
@@ -19,7 +19,6 @@ use yii\helpers\Html;
                     </h2>
                 </div>
             </div>
-            <br/><br/>
 
             <div class="card card-product" id="product">
                 <div class="row">
@@ -86,14 +85,11 @@ use yii\helpers\Html;
                             <?= Yii::t("booking", "Actions") ?>
                         </h4>
                         <?= Html::a(\Yii::t('booking', 'Contact Renter'),
-                            '@web/messages/' . $booking->conversations[0]->id) ?>
-                        <br/>
+                            '@web/messages/' . $booking->getConversationId()) ?>
                         <?= Html::a(\Yii::t('booking', 'View Receipt'), '@web/booking/' . $booking->id . '/receipt', ['target' => '_blank']) ?>
-                        <br/>
                         <?= Html::a(\Yii::t('booking', 'View Invoice'), '@web/booking/' . $booking->id . '/invoice', ['target' => '_blank']) ?>
                     </div>
                 </div>
-                <br/><br/>
             </div>
             <span class="pull-left">
                 <?= Yii::t("booking", "No rights can be derived from the contents of this page.") ?>

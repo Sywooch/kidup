@@ -32,7 +32,7 @@ class CronController extends Model
                 require(Yii::$aliases['@vendor'] . '/braintree/braintree_php/tests/TestHelper.php');
                 $b = new BrainTree($payin);
                 $b->sandboxSettlementAccept();
-            }else{
+            } else {
                 $b = new BrainTree($payin);
                 $b->capture();
             }
@@ -56,12 +56,17 @@ class CronController extends Model
         }
 
         // que the payout if booking has been on for 24 hours
+
         $bookings = Booking::find()->where([
-            'status' => Booking::ACCEPTED
-        ])->andWhere('time_from < :time1 && time_from >= :time2', [
-            ':time1' => Carbon::now(\Yii::$app->params['serverTimeZone'])->subDay()->timestamp,
-            ':time2' => Carbon::now(\Yii::$app->params['serverTimeZone'])->subDay()->subHour()->timestamp,
-        ])->all();
+            'booking.status' => Booking::ACCEPTED
+        ])
+            ->andWhere('time_from < :time1', [
+                ':time1' => Carbon::now(\Yii::$app->params['serverTimeZone'])->subDay()->timestamp,
+            ])
+            ->innerJoinWith('payout')
+            ->andWhere(['payout.status' => Payout::STATUS_WAITING_FOR_BOOKING_START])
+            ->all();
+
         foreach ($bookings as $booking) {
             if ($booking->payout->status == Payout::STATUS_WAITING_FOR_BOOKING_START) {
                 $invoice = new Invoice();
@@ -157,7 +162,7 @@ class CronController extends Model
                     'booking_id' => $booking->id,
                     'user_id' => $booking->item->owner_id
                 ])->count();
-                if($c == 0){
+                if ($c == 0) {
                     Event::trigger($booking, Booking::EVENT_REVIEW_REMINDER_OWNER);
                 }
 
@@ -165,7 +170,7 @@ class CronController extends Model
                     'booking_id' => $booking->id,
                     'user_id' => $booking->renter_id
                 ])->count();
-                if($c == 0){
+                if ($c == 0) {
                     Event::trigger($booking, Booking::EVENT_REVIEW_REMINDER_RENTER);
                 }
             }

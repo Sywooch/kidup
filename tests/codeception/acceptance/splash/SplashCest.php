@@ -24,15 +24,15 @@ class SplashCest
     }
 
     /**
-     * Test whether the filter button is shown on small windows.
+     * Test whether a search input is visible.
      *
      * @param AcceptanceTester $I
      */
     public function checkSignupFormExists(AcceptanceTester $I)
     {
-        $I->wantTo('ensure that a sign-up form is visible');
+        $I->wantTo('ensure that a search input field is displayed');
         $I->amOnPage('/');
-        $I->canSeeElement('#splash-signup-form');
+        $I->canSeeElement('#query');
     }
 
 }

@@ -136,7 +136,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                 <div class="row">
                     <div class="col-xs-12 message card">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-3">
                                 <?php if ($message->sender_user_id === \Yii::$app->user->id): ?>
                                     <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
                                         'user_id' => $message->sender_user_id
@@ -149,10 +149,10 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                                         </i></small>
                                 <?php endif; ?>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8 col-sm-6">
                                 <?= $message->message ?>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-3">
                                 <?php if ($message->sender_user_id !== \Yii::$app->user->id): ?>
                                     <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
                                         'user_id' => $message->sender_user_id

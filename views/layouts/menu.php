@@ -39,7 +39,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in-->
                         <li class="hidden-xs">
-                            <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal">
+                            <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login">
                                 <?= Yii::t("app", "Login") ?>
                             </button>
                         </li>

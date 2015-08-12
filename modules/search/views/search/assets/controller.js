@@ -23,6 +23,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     scope._timer = null;
     scope._lastLocation = null;
 
+    _startTime = new Date().getTime();
+
     scope.selectCategory = function (id) {
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
@@ -130,7 +132,6 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     };
 
     scope.setUrl = function () {
-        console.log(getUrl());
         window.history.pushState({}, document.title, '?q=' + getUrl());
     };
 
@@ -146,6 +147,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     };
 
     scope.filterChange = function () {
+        if (new Date().getTime() - _startTime < 500) return false;
         if (scope._timer !== null) {
             clearTimeout(scope._timer)
         }
@@ -170,15 +172,11 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         };
         $("#price-slider").slider(sliderConf);
         $("#price-slider-mobile").slider(sliderConf);
-        setInterval(function () {
-            var location = $('.location-input').val();
-            if (location !== scope._lastLocation) {
-                scope._lastLocation = location;
-                scope.filter.location = location;
-                scope.filterChange();
-            }
-        }, 200);
-        updateActiveFilters();
+        //$('.location-input').change(function () {
+        //    scope.filter.location = $(this).val();
+        //    scope.filterChange();
+        //});
+        //updateActiveFilters();
     };
 
     scope.init();

@@ -53,10 +53,9 @@ task('deploy:update_database', function () {
     run("php yii migrate/up --interactive=0");
 })->desc('Update database');
 
-task('deploy:replace_index', function () {
-    $releasePath = env()->getReleasePath()."/web";
-    cd($releasePath);
-//    run('mv -f index-production.php index.php');
+task('deploy:minify_assets', function () {
+    $releasePath = env()->getReleasePath();
+    run('sudo php /vagrant/yii asset /vagrant/config/assets/assets.php /vagrant/config/assets/assets-prod.php');
 })->desc('Update database');
 
 task('deploy', [
@@ -70,7 +69,7 @@ task('deploy', [
     'deploy:update_database',
     'deploy:writeable_dirs',
     'deploy:symlink',
-//    'deploy:replace_index',
+    'deploy:minify_assets',
     'cleanup',
     'deploy:end'
 ])->desc('Deploy your project');

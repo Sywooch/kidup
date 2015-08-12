@@ -46,10 +46,10 @@ class ChatController extends Controller
                 ->one();
             if ($c == null) {
                 \Yii::$app->session->addFlash('info', \Yii::t('message', "You don't have any conversations yet."));
-
                 return $this->redirect('@web/home');
+            }else{
+                return $this->redirect('@web/messages/'.$c->id);
             }
-            $id = $c->id;
         } else {
             $c = Conversation::find()->where(['conversation.id' => $id])->one();
             if ($c->initiater_user_id !== \Yii::$app->user->id && $c->target_user_id !== \Yii::$app->user->id) {

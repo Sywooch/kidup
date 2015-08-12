@@ -49,6 +49,7 @@ $components = [
                 'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
             ],
         ],
+        'bundles' => require(__DIR__ . '/assets/' . (YII_ENV == 'prod' ? 'assets-prod.php' : 'assets.php')),
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
@@ -81,8 +82,6 @@ $components = [
         'showScriptName' => false,
         'rules' => [
             '/' => 'home/home',
-            '/splash' => 'splash/default/index',
-            '/thanks' => 'splash/default/thanks',
             'home' => 'home/home',
             'search' => 'search/search',
             'search-results' => 'search/search/results',

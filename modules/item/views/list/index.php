@@ -4,91 +4,114 @@ use yii\helpers\Url;
 $this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name;
 
 \app\modules\item\assets\ListAsset::register($this);
-?>
 
+/**
+ * @var \yii\data\ActiveDataProvider $unpublishedProvider
+ * @var \yii\data\ActiveDataProvider $publishedProvider
+ * @var \yii\data\ActiveDataProvider $requestProvider
+ * @var \yii\web\View $this
+ */
+?>
 <section class="section" id="rentals">
     <div class=" site-area-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-7 col-md-offset-1">
-                    <h2><?= Yii::t("item", "Listings") ?><br>
-                        <small><?= Yii::t("item", "Manage the item you'd like to share with other families") ?></small>
-                    </h2>
-                </div>
-            </div>
-        </div>
+        <div class="container"></div>
     </div>
     <div class="container site-area-content">
         <div class="row">
-            <div class="col-sm-9 col-md-8 col-md-offset-2 card">
+            <div class="col-sm-9 col-md-10 col-md-offset-1 card">
                 <!-- Tab panes -->
                 <div class="row">
-                    <div class="col-sm-12">
-                        <h4>
-                            <?= Yii::t("item", "Listings") ?>
-                            <br>
+                    <div class="col-sm-8">
+                        <h3>
+                            <?= Yii::t("item", "Products") ?><br>
                             <small><?= Yii::t("item",
-                                    "This is a list of your published and unpublished listings") ?></small>
-                        </h4>
+                                    "Manage the products you'd like to share with other families") ?></small>
+                        </h3>
+                    </div>
+                    <div class="col-sm-4">
                         <a href="<?= Url::to('@web/item/create') ?>">
-                            <button id="create-new-add" class="btn btn-danger btn-fill pull-right hidden-xs">
-                                <?= Yii::t("item", "Create Listing") ?>
+                            <button id="create-new-add" class="btn btn-danger btn-fill pull-right hidden-xs"
+                                    style="margin-top:20px">
+                                <?= Yii::t("item", "Create New") ?>
                             </button>
                         </a>
-
                     </div>
                 </div>
                 <div class="row">
+                    <?php $this->beginBlock('pending'); ?>
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <?= \yii\widgets\ListView::widget([
+                                    'dataProvider' => $requestProvider,
+                                    'itemView' => 'requestView',
+                                ]) ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php $this->endBlock(); ?>
+
+                    <?php $this->beginBlock('published'); ?>
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <?= \yii\widgets\ListView::widget([
+                                    'dataProvider' => $publishedProvider,
+                                    'itemView' => 'itemView',
+                                ]) ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php $this->endBlock(); ?>
+                    <?php $this->beginBlock('unpublished'); ?>
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <?= \yii\widgets\ListView::widget([
+                                    'dataProvider' => $unpublishedProvider,
+                                    'itemView' => 'itemView',
+                                ]) ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php $this->endBlock(); ?>
+                    <?= \yii\bootstrap\Tabs::widget(
+                        [
+                            'id' => 'relation-tabs',
+                            'encodeLabels' => false,
+                            'items' => [
+                                [
+                                    'label' => Yii::t("item", "Pending Requests") .
+                                        ' <span class="badge badge-default">' . $requestProvider->count . '</span>',
+                                    'content' => $this->blocks['pending'],
+                                    'active' => true,
+                                ],
+                                [
+                                    'content' => $this->blocks['published'],
+                                    'label' => Yii::t("item", "Published") .
+                                        ' <span class="badge badge-default">' . $publishedProvider->count . '</span>',
+                                    'active' => false,
+                                ],
+                                [
+                                    'content' => $this->blocks['unpublished'],
+                                    'label' => Yii::t("item", "Unpublished") .
+                                        ' <span class="badge badge-default">' . $unpublishedProvider->count . '</span>',
+                                    'active' => false,
+                                ],
+                            ]
+                        ]
+                    );
+                    ?>
                     <div class="col-md-12">
-                        <?php if($requestProvider->count > 0): ?>
-                        <div class="form-group">
-                            <label><?= Yii::t("item", "Pending Requests") ?></label>
 
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <?= \yii\widgets\ListView::widget([
-                                        'dataProvider' => $requestProvider,
-                                        'itemView' => 'requestView',
-                                    ]) ?>
 
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                        <?php endif; ?>
-                        <div class="form-group">
-                            <label><i class="fa fa-check"></i> <?= Yii::t("item", "Published") ?></label>
-
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <?= \yii\widgets\ListView::widget([
-                                        'dataProvider' => $publishedProvider,
-                                        'itemView' => 'itemView',
-                                    ]) ?>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fa fa-times"></i> <?= Yii::t("item", "Unpublished") ?></label>
-
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <?= \yii\widgets\ListView::widget([
-                                        'dataProvider' => $unpublishedProvider,
-                                        'itemView' => 'itemView',
-                                    ]) ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

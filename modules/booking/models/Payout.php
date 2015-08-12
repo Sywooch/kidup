@@ -49,11 +49,7 @@ class Payout extends \app\models\base\Payout
             'created_at' => time(),
         ]);
         $payout->save();
-        $booking->payout_id = $this->id;
-        if(!$booking->save()){
-            (new \app\components\Log)->warning("Payout id not set", $booking->getErrors);
-            throw new InternalErrorException();
-        }
+        $booking->payout_id = $payout->id;
         return $booking->save();
     }
 
@@ -73,15 +69,26 @@ class Payout extends \app\models\base\Payout
         if($this->status !== self::STATUS_TO_BE_PROCESSED) return false;
         // http://www.danskebank.com/en-uk/ci/Products-Services/Transaction-Services/Online-Services/Integration-Services/Documents/Formats/FormatDescriptionCSV_DK_LocalBulk/CSV_DK_LocalBulk.pdf
         $field = [];
-        $field[1] = 'CMBOD';
-        $field[2] = '1244214124'; // kidup account
-        $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->booking->item->owner_id])->one();
-        $field[3] = $payoutMethod->identifier_2_encrypted . '+' . $payoutMethod->identifier_1_encrypted; // to account
-        $field[4] = $this->amount; // to account
-        $field[20] = "KidUp Payout ".$this->id;
 
+        $field[1] = 'CMBO';
+        $field[2] = '11658814'; // kidup account
+        $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->user_id])->one();
+        if($payoutMethod === null){
+            // todo: what here?
+            return false;
+        }
+        $field[4] = str_replace(".", ",", $this->amount); // to account
+        $field[6] = "DKK";
+        $field[7] = "N"; // todo check
+        $field[13] = "J"; // todo check
+
+        $field[24] = "KidUp Payout ".$this->id;
+        $field[83] = "You're awesome!";
+        // to account, this needs to be processed by externall process.php (in veracrypt container)
+        $field[84] = $payoutMethod->identifier_1_encrypted;
+        $field[85] = $payoutMethod->identifier_2_encrypted; // to account
         $str = [];
-        for($i = 1; $i < 76; $i++){
+        for($i = 1; $i <= 86; $i++){
             if(!isset($field[$i])){
                 $str[] = '';
             }else{
@@ -89,7 +96,8 @@ class Payout extends \app\models\base\Payout
             }
         }
 
-        return '"'.implode('","', $str).'",';
+        echo '"'.implode('","', $str).'",';
+        return false;
     }
 
     /**

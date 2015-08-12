@@ -9,7 +9,7 @@ use app\modules\images\components\ImageHelper;
  */
 ?>
 <br/><br/>
-<section class="section" id="checkout">
+<section class="section container" id="checkout">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">

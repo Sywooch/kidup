@@ -1,14 +1,13 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
-
-#checkout{
+#checkout {
   margin-top: 40px;
   /*Test idea of top area*/
 
-  .site-area-header{
+  .site-area-header {
     background-color: transparent;
   }
-  .checkout-header{
+  .checkout-header {
     margin-top: 30px;
     border-radius: 6px;
     padding: 5px 0 20px;
@@ -16,20 +15,20 @@
   }
 
   /*Style for profile you are booking from*/
-  .avatar{
+  .avatar {
     border-color: @primary-color;
   }
-  .footer{
+  .footer {
     color: @dark-gray;
     text-align: center;
   }
 
   /*Booking form*/
   // Btn and price area
-  .btn-book-area{
+  .btn-book-area {
     text-align: center;
     margin-top: 0px;
-    .btn{
+    .btn {
       @media (min-width: 768px) {
         float: right;
         width: 50%;
@@ -37,37 +36,37 @@
       }
     }
   }
-  .price{
+  .price {
     margin-top: 0px;
     @media (min-width: 768px) {
       float: left;
     }
   }
   // Summary
-  .card-summary{
+  .card-summary {
     border-radius: 0;
     box-shadow: none;
     background-color: transparent;
-    h4{
+    h4 {
       margin: 0 0 10px;
     }
   }
-  .card .content{
+  .card .content {
     padding: 20px;
   }
-  h5:first-of-type{
+  h5:first-of-type {
     margin-top: 0;
   }
-  .card-summary, .payment, .message{
+  .card-summary, .payment, .message {
     margin-bottom: 40px;
   }
   .list-lines {
     color: #9a9a9a;
-    li{
-      padding:10px;
+    li {
+      padding: 10px;
       border-bottom: 1px solid @light-gray;
     }
-    i{
+    i {
       color: @primary-color;
       padding-right: 10px;
     }
@@ -81,15 +80,23 @@
       }
     }
   }
-  .img-rounded{
-    border-radius: 6px!important;
+  .img-rounded {
+    border-radius: 6px !important;
   }
-  .dates{
+  .dates {
     color: #9a9a9a;
   }
 
-  .checkout-header{
+  .checkout-header {
     height: 60px;
     padding-top: 1px;
+  }
+}
+
+#creditCardModal {
+  .fa {
+    font-size: 60px;
+    color: @primary-color;
+    margin-left: 26px;
   }
 }

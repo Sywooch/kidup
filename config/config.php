@@ -18,7 +18,6 @@ $config = [
         'app\\modules\\images\\Bootstrap',
         'app\\modules\\booking\\Bootstrap',
         'app\\modules\\home\\Bootstrap',
-        'app\\modules\\splash\\Bootstrap',
         'app\\modules\\pages\\Bootstrap',
         'app\\modules\\admin\\Bootstrap',
         'app\\modules\\search\\Bootstrap',
@@ -42,7 +41,6 @@ $config = [
         'images' =>         ['class' => 'app\modules\images\Module'],
         'message' =>        ['class' => 'app\modules\message\Module'],
         'booking' =>        ['class' => 'app\modules\booking\Module'],
-        'splash' =>         ['class' => 'app\modules\splash\Module'],
         'mail' =>           ['class' => 'app\modules\mail\Module'],
         'pages' =>          ['class' => 'app\modules\pages\Module'],
         'review' =>         ['class' => 'app\modules\review\Module'],
@@ -80,6 +78,9 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['192.168.33.1'] // adjust this to your needs
+    ];
+    $config['modules']['gii']['generators'] = [
+        'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
     ];
 }
 

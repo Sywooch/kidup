@@ -24,14 +24,23 @@ class LoginCest
     }
 
     /**
-     * Test whether login works.
+     * Test whether does not work when wrong credentials are provided.
      *
      * @param AcceptanceTester $I
      */
-    public function checkLogin(AcceptanceTester $I)
+    public function checkLoginWrongCredentials(AcceptanceTester $I)
     {
-        $I->wantTo('ensure that I can login');
+        $I->wantTo('ensure that I can not login with wrong credentials');
         $I->amOnPage('/');
+        $I->resizeWindow(1024, 500);
+        $I->click('#login');
+        $I->wait(2);
+        $I->dontSeeElement('.has-error');
+        $I->fillField('#login-form-login', 'test');
+        $I->fillField('#login-form-password', 'test');
+        $I->click('button[type=submit]');
+        $I->wait(2);
+        $I->canSeeElement('.has-error');
     }
 
 }

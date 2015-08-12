@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\search\controllers;
 
+use app\components\Cache;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
 use app\modules\search\models\SearchModel;
@@ -46,16 +47,19 @@ class SearchController extends Controller {
         $this->noFooter = true;
         $this->noContainer = true;
 
-        // load the item search model
         $model = new SearchModel();
 
-        // load the parameters
-        $model->loadParameters($model->parseQueryString($q));
+        $results = Cache::data('searchResults'.$p.$q, function() use ($p, $q, $model){
+            // load the item search model
 
-        $model->setPage($p);
+            // load the parameters
+            $model->loadParameters($model->parseQueryString($q));
 
-        // load the search results
-        $results = $model->findItems();
+            $model->setPage($p);
+
+            // load the search results
+            return $model->findItems();
+        });
 
         // render the index
         return $this->render('index', [
@@ -73,13 +77,17 @@ class SearchController extends Controller {
         // load the item search model
         $model = new SearchModel();
 
-        // load the parameters
-        $model->loadParameters($model->parseQueryString($q));
+        $results = Cache::data('searchResults'.$p.$q, function() use ($p, $q, $model){
+            // load the item search model
 
-        $model->setPage($p);
+            // load the parameters
+            $model->loadParameters($model->parseQueryString($q));
 
-        // load the search results
-        $results = $model->findItems();
+            $model->setPage($p);
+
+            // load the search results
+            return $model->findItems();
+        });
 
         // render the results
         return $this->renderPartial('results', [
