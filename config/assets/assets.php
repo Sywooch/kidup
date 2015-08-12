@@ -16,8 +16,7 @@ return [
     'bundles' => [
          'app\assets\AppAsset',
          'yii\web\YiiAsset',
-         'yii\web\JqueryAsset',
-         'app\modules\home\assets\HomeAsset',
+         'yii\web\JqueryAsset'
     ],
     // Asset bundle for compression output:
     'targets' => [

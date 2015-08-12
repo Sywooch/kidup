@@ -55,8 +55,9 @@ task('deploy:update_database', function () {
 
 task('deploy:minify_assets', function () {
     $releasePath = env()->getReleasePath();
-    run('sudo php /vagrant/yii asset /vagrant/config/assets/assets.php /vagrant/config/assets/assets-prod.php');
-})->desc('Update database');
+    cd($releasePath);
+    run('sudo php yii asset config/assets/assets.php config/assets/assets-prod.php');
+})->desc('Minifying assets');
 
 task('deploy', [
     'deploy:start',
@@ -68,8 +69,8 @@ task('deploy', [
     'deploy:symlink',
     'deploy:update_database',
     'deploy:writeable_dirs',
-    'deploy:symlink',
     'deploy:minify_assets',
+    'deploy:symlink',
     'cleanup',
     'deploy:end'
 ])->desc('Deploy your project');
