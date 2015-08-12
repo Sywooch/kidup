@@ -9,7 +9,7 @@ use app\modules\images\components\ImageHelper;
  */
 ?>
 <br/><br/>
-<section class="section" id="checkout">
+<section class="section container" id="checkout">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
@@ -99,7 +99,7 @@ use app\modules\images\components\ImageHelper;
                             <br/><br/>
                             <li>
                                 <?= Yii::t("booking", "Payment Received") ?>
-                                <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' ?>
+                                <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? '' : '*' ?>
                                 <b class="pull-right">
                                     <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? $booking->amount_payin : 0 ?>
                                     DKK
@@ -107,14 +107,14 @@ use app\modules\images\components\ImageHelper;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Balance") ?>
-                                <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' ?>
+                                <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? '' : '*' ?>
                                 <b class="pull-right">
                                     <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? 0 : $booking->amount_payin ?>
                                     DKK
                                 </b>
                             </li>
                             <br/>
-                            <?= $booking->payin->status == Payin::STATUS_ACCEPTED ?: '*' . \Yii::t('booking',
+                            <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? '' : '*' . \Yii::t('booking',
                                     "Payment will be processed automatically when the owner accepts this booking.") ?>
                         </ul>
                     </div>

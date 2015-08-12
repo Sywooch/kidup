@@ -1,7 +1,7 @@
 <?php
 use kartik\grid\GridView;
 use yii\helpers\Html;
-
+use app\modules\booking\models\Booking;
 ?>
 
 <div class="row">
@@ -55,14 +55,22 @@ use yii\helpers\Html;
                                     ['/booking/' . $model->id . '/confirm']),
                             ];
                         } else {
-                            $links = [
-                                Html::a(\Yii::t('booking', 'Receipt'), ['/booking/' . $model->id . '/receipt']),
-                                Html::a(\Yii::t('booking', 'Invoice'), ['/booking/' . $model->id . '/invoice']),
-                                Html::a(\Yii::t('booking', 'View Booking'), ['/booking/' . $model->id]),
-                                Html::a(\Yii::t('booking', 'Contact {0}', [
-                                    $model->item->owner->profile->first_name
-                                ]), '@web/messages/' . $model->conversations[0]->id),
-                            ];
+                            /**
+                             * @var \app\modules\booking\models\Booking $model
+                             */
+                            $links = [];
+
+                            if ($model->status !== Booking::DECLINED && $model->status !== Booking::CANCELLED){
+                                $links [] = Html::a(\Yii::t('booking', 'Receipt'),
+                                    '@web/booking/' . $model->id . '/receipt');
+                                $links [] = Html::a(\Yii::t('booking', 'Invoice'),
+                                    '@web/booking/' . $model->id . '/invoice');
+                            };
+
+                            $links[] = Html::a(\Yii::t('booking', 'View Booking'), '@web/booking/' . $model->id );
+                            $links[] = Html::a(\Yii::t('booking', 'Contact {0}', [
+                                $model->item->owner->profile->first_name
+                            ]), ['/messages/' . $model->getConversationId()]);
                         }
 
                         return implode("<br/>", $links);

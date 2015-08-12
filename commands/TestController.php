@@ -10,6 +10,7 @@ use app\modules\mail\mails\User;
 use app\modules\mail\models\MailMessage;
 use app\modules\mail\models\Token;
 use app\modules\user\models\PayoutMethod;
+use Carbon\Carbon;
 use yii\console\Controller;
 use Yii;
 use app\modules\images\components\ImageManager;
@@ -58,4 +59,5 @@ class TestController extends Controller
         
         var_dump($mm->getErrors(),10,true); exit();
     }
+
 }

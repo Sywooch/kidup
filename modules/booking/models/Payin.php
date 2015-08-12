@@ -89,8 +89,7 @@ class Payin extends \app\models\base\Payin
                 if($this->save()){
                     Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);
                 }
-                $payout = new Payout();
-                $payout->createFromBooking($this->booking);
+                (new Payout())->createFromBooking($this->booking);
             }
             if($this->status == self::STATUS_AUTHORIZED){
                 /**

@@ -109,7 +109,7 @@ class DefaultController extends Controller
         if($response == 'decline'){
             $res = $booking->ownerDeclines();
             \Yii::$app->session->addFlash('info', \Yii::t('booking', 'Booking has been successfully declined'));
-            return $this->redirect('@web/home');
+            return $this->redirect('@web/booking/by-item/'.$booking->item_id);
         }
 
         return $this->render('owner_response', [

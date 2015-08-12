@@ -49,11 +49,7 @@ class Payout extends \app\models\base\Payout
             'created_at' => time(),
         ]);
         $payout->save();
-        $booking->payout_id = $this->id;
-        if(!$booking->save()){
-            (new \app\components\Log)->warning("Payout id not set", $booking->getErrors);
-            throw new InternalErrorException();
-        }
+        $booking->payout_id = $payout->id;
         return $booking->save();
     }
 
