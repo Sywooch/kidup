@@ -5,6 +5,8 @@ namespace app\modules\home\controllers;
 use app\components\Cache;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
+use app\modules\item\models\Category;
+use app\modules\item\models\Item;
 use Yii;
 
 class HomeController extends Controller
@@ -31,31 +33,12 @@ class HomeController extends Controller
         $this->transparentNav = true;
         $this->noContainer = true;
 
-        $searchWidget = Cache::data('searchwidget', function () {
-            return WidgetRequest::request(WidgetRequest::ITEM_HOME_SEARCH);
-        });
+        $categories = Category::find()->all();
+        $items = Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
 
-        $gridWidget = Cache::data('gridWidget', function () {
-            return WidgetRequest::request(WidgetRequest::ITEM_HOME_GRID);
-        });
-
-        $res = [
-            'searchWidget' => $searchWidget,
-            'gridWidget' => $gridWidget
-        ];
-
-        return $this->render('index', $res);
-    }
-
-    public function cache($id, $function)
-    {
-        if(YII_CACHE == false) return $function();
-        $data = Yii::$app->cache->get($id);
-        if ($data != false) {
-            return $data;
-        }
-        $data = $function();
-        Yii::$app->cache->set($id, $data);
-        return $function();
+        return $this->render('index', [
+            'categories' => $categories,
+            'items' => $items,
+        ]);
     }
 }

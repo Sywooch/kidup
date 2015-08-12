@@ -6,6 +6,17 @@ use app\modules\images\components\ImageHelper;
 \app\modules\home\assets\HomeAssets::register($this);
 \app\assets\AngularAsset::register($this);
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
+
+
+/**
+ * @var yii\web\View $this
+ * @var array $images
+ * @var app\modules\item\models\Item $model
+ * @var app\modules\item\models\Location $location
+ * @var bool $show_modal
+ */
+
+if($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
 ?>
 
 <div id="home">
@@ -31,9 +42,12 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </header>
 
-    <?= $searchWidget ?>
+    <?= $this->render('search') ?>
 
-    <?= $gridWidget ?>
+    <?= $this->render('grid', [
+        'categories' => $categories,
+        'items' => $items,
+    ]) ?>
 
     <!-- Steps explanation area-->
     <div id="content-home-steps" class=" hidden-xs">
@@ -209,3 +223,5 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </Section>
 </div>
+
+<?php $this->endCache(); endif; ?>
