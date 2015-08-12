@@ -3,7 +3,7 @@ namespace app\modules\home\assets;
 
 use yii\web\AssetBundle;
 
-class HomeAssets extends AssetBundle
+class HomeAsset extends AssetBundle
 {
     public $sourcePath = '@app/modules/home/views/home/assets';
     public $js = [

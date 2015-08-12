@@ -49,6 +49,7 @@ $components = [
                 'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
             ],
         ],
+        'bundles' => require(__DIR__ . '/assets/' . (YII_ENV == 'prod' ? 'assets-prod.php' : 'assets.php')),
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
