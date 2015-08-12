@@ -53,42 +53,7 @@ use \app\modules\images\components\ImageHelper;
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="row hidden-xs">
-                            <div class="rental-advice">
-                                <div class="col-sm-10 col-sm-offset-1 text-left">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/photograph.png',
-                                                ['w' => 160, 'h' => 160, 'q' => 90],
-                                                ['width' => '100%', 'height' => '100%']) ?>
-                                            <small>
-                                                <?= Yii::t("item", "To rent and rent out is about seeing what we are truly renting.
-                                                In other words KidUp is about taking really good pictures.") ?>
-                                            </small>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/pickup.png',
-                                                ['w' => 160, 'h' => 160, 'q' => 90],
-                                                ['width' => '100%', 'height' => '100%']) ?>
 
-                                            <small>
-                                                <?= Yii::t("item", "Kidup is about trust too. If you see a personal
-                                                description of different things, it gives credibility. Trust and personality is the essence of KidUp") ?>
-                                            </small>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <?= ImageHelper::img('kidup/graphics/meet.png',
-                                                ['w' => 160, 'h' => 160, 'q' => 90],
-                                                ['width' => '100%', 'height' => '100%']) ?>
-                                            <small>
-                                                <?= Yii::t("item", "KidUp is about larger items, like strollers, cribs, alarmsystems etc.
-                                                 If you can only supply a small item, you can combine those in the age-packages.") ?>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row ">
                             <div class="col-sm-10 col-sm-offset-1">
                                 <?= Html::submitButton(\Yii::t('app', 'Next step'), [
