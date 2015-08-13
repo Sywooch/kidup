@@ -201,6 +201,21 @@ $this->registerJs("
                                 </h4>
 
                                 <div class="row" style="margin:0">
+                                    <div class="col-md-7">
+                                        <b><?= Yii::t("item", "Price suggestions") ?></b>
+                                        <br/>
+                                        <?= Yii::t("item",
+                                            "Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:") ?>
+                                        <br/><br/>
+                                        <input type="text" class="form-control" id="new-price"
+                                               placeholder="<?= Yii::t("item", "New price in DKK") ?>"
+                                               width="100px"/>
+                                        <br/>
+
+                                        <div class="suggestion-daily"></div>
+                                        <div class="suggestion-weekly"></div>
+                                        <div class="suggestion-monthly"></div>
+                                    </div>
                                     <div class="col-md-5" style="padding-left:0">
                                         <div class="row" style="margin:0">
                                             <div class="col-md-6" style="padding-left:0">
@@ -239,23 +254,7 @@ $this->registerJs("
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-7">
-                                        <b><?= Yii::t("item", "Price suggestions") ?></b>
-                                        <br/>
-                                        <?= Yii::t("item",
-                                            "Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:") ?>
-                                        <br/><br/>
-                                        <input type="text" class="form-control" id="new-price"
-                                               placeholder="<?= Yii::t("item", "New price in DKK") ?>"
-                                               width="100px"/>
-                                        <br/>
-
-                                        <div class="suggestion-daily"></div>
-                                        <div class="suggestion-weekly"></div>
-                                        <div class="suggestion-monthly"></div>
                                     </div>
-                                </div>
-
                             </div>
                         </div>
 

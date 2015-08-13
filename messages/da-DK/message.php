@@ -18,7 +18,7 @@
  */
 return [
     'All your parent interactions, securely through KidUp' => 'Alle dine forældreinteraktioner, sikkert gennem KidUp',
-    'Inbox' => 'Indboks',
+    'Inbox' => 'Inboks',
     'Send' => 'Sendt',
     'You don\'t have any conversations yet.' => 'Du har ingen samtaler endnu',
     'Your personal message to {0}' => 'Dine personlige beskeder',
