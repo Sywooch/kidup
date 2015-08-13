@@ -3,7 +3,10 @@ namespace app\modules\images\controllers;
 
 use app\modules\images\components\ImageManager;
 use Yii;
+use yii\base\DynamicModel;
 use yii\helpers\Html;
+use yii\web\BadRequestHttpException;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -11,7 +14,15 @@ use yii\helpers\Html;
  */
 class IndexController extends \app\controllers\Controller
 {
-    public function actionIndex($id, $w = null, $h = null, $q = null, $fit = null, $folder1 = null, $folder2 = null, $folder3 = null){
+    public function actionIndex($id, $w = null, $h = null, $q = null, $fit = null, $folder1 = null, $folder2 = null, $folder3 = null, $fm=null){
+
+        $model = DynamicModel::validateData(compact('id', 'w', 'h', 'q', 'fit', 'folder1', 'folder2', 'folder3', 'fm'),[
+            [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 32],
+            [['w', 'h', 'q'], 'number']
+        ]);
+        if($model->hasErrors()){
+            throw new BadRequestHttpException((new ActiveForm())->errorSummary($model));
+        }
         $server = (new ImageManager())->getServer();
 
         if(isset($folder1) && $folder1 == 'kidup'){
@@ -25,8 +36,11 @@ class IndexController extends \app\controllers\Controller
         $options = [];
         if($w !== null) $options['w'] = $w;
         if($h !== null) $options['h'] = $h;
+        if($fm !== null) $options['fm'] = $fm;
         if($q !== null){
-            $options['fm'] = 'pjpg';
+            if($fm === null){
+                $options['fm'] = 'pjpg';
+            }
             $options['q'] = $q;
         }
         if($fit !== null){
