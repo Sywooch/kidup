@@ -20,7 +20,7 @@ use \app\modules\images\components\ImageHelper;
         <!--new row with stuff-->
         <div class="row">
             <div class="col-md-3">
-                <a href="<?= Url::to('@web/search?category=1') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|1') ?>">
                     <div class="card card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 300]) ?>">
@@ -66,7 +66,7 @@ use \app\modules\images\components\ImageHelper;
             <?php endif; ?>
 
             <div class="col-md-5">
-                <a href="<?= Url::to('@web/search?category=7') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|7') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
                             ['q' => 90, 'w' => 600]) ?>">
@@ -85,7 +85,7 @@ use \app\modules\images\components\ImageHelper;
         <!--new row with stuff-->
         <div class="row">
             <div class="col-md-6">
-                <a href="<?= Url::to('@web/search?category=2') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|2') ?>">
                     <div class="card  card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 600]) ?>">
@@ -130,7 +130,7 @@ use \app\modules\images\components\ImageHelper;
             <?php endif; ?>
 
             <div class="col-md-3">
-                <a href="<?= Url::to('@web/search?category=2') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|2') ?>">
                     <div class="card  card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 300]) ?>">
@@ -177,7 +177,7 @@ use \app\modules\images\components\ImageHelper;
                 </div>
             <?php endif; ?>
             <div class="col-md-3 col-xs-6">
-                <a href="<?= Url::to('@web/search?category=6') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|6') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
                             ['q' => 90, 'w' => 300]) ?>">
@@ -193,7 +193,7 @@ use \app\modules\images\components\ImageHelper;
                 </a>
             </div>
             <div class="col-md-5 col-xs-6">
-                <a href="<?= Url::to('@web/search?category=2') ?>">
+                <a href="<?= Url::to('@web/search?q=categories|2') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
                             ['q' => 90, 'w' => 600]) ?>">
