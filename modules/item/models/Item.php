@@ -32,8 +32,29 @@ class Item extends \app\models\base\Item
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required']
+            [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required'],
+            [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
+            [['condition'], 'in', 'range' => [0,1,2]]
         ]);
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'price_day' => Yii::t('app', 'Price Day'),
+            'price_week' => Yii::t('app', 'Price Week'),
+            'price_month' => Yii::t('app', 'Price Month'),
+            'owner_id' => Yii::t('app', 'Owner ID'),
+            'condition' => Yii::t('app', 'Condition'),
+            'currency_id' => Yii::t('app', 'Currency ID'),
+            'is_available' => Yii::t('app', 'Is Available'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'age_min' => Yii::t('app', 'Minimal age of use'),
+            'age_max' => Yii::t('app', 'Maximal age of use'),
+        ];
     }
 
     public function scenarios()
@@ -64,26 +85,6 @@ class Item extends \app\models\base\Item
         return $this->save();
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'price_day' => Yii::t('app', 'Price Day'),
-            'price_week' => Yii::t('app', 'Price Week'),
-            'price_month' => Yii::t('app', 'Price Month'),
-            'owner_id' => Yii::t('app', 'Owner ID'),
-            'condition' => Yii::t('app', 'Condition'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'is_available' => Yii::t('app', 'Is Available'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'age_min' => Yii::t('app', 'Minimal age of use'),
-            'age_max' => Yii::t('app', 'Maximal age of use'),
-        ];
-    }
-
-
     public function beforeSave($insert)
     {
         if ($insert == true) {
@@ -94,6 +95,12 @@ class Item extends \app\models\base\Item
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
 
         return parent::beforeSave($insert);
+    }
+
+    public function beforeValidate(){
+        $this->name = \yii\helpers\HtmlPurifier::process($this->name);
+        $this->description = \yii\helpers\HtmlPurifier::process($this->description);
+        return parent::beforeValidate();
     }
 
     public function getImageNames()
@@ -141,7 +148,7 @@ class Item extends \app\models\base\Item
                 }
             }
         }
-        $location = Location::findOne($this->location_id);
+        $location = Location::find()->where(['id' => $this->location_id])->one();
         if (is_null($location) || !$location->isValid()) {
             $errors[] = \Yii::t('item', 'Please set your location in your {0}.', [
                 Html::a(\Yii::t('item', 'location settings'), '@web/user/settings/location', ['target' => '_blank'])

@@ -13,12 +13,18 @@ class Slack extends Component
             'link_names' => true
         ];
 
-        $this->client = new \Maknz\Slack\Client('https://hooks.slack.com/services/'.Yii::$app->keyStore->get('slack_service_url'), $settings);
 
+
+        $this->client = new \Maknz\Slack\Client('https://hooks.slack.com/services/'.Yii::$app->keyStore->get('slack_service_url'), $settings);
         return parent::init();
     }
 
     public function send($message){
-        return $this->client->send($message);
+        try{
+            $this->client->send($message);
+        }catch (\GuzzleHttp\Exception\ServerException $e){
+            // whoops?
+        }
+        return false;
     }
 }

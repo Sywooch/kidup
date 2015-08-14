@@ -40,4 +40,11 @@ class TestController extends Controller
         var_dump($mm->getErrors(),10,true); exit();
     }
 
+    public function actionTest(){
+        $arr = [1,2];
+        array_walk($arr, function($a, $b){
+            echo $b;
+        });
+    }
+
 }
