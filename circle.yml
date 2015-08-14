@@ -1,0 +1,16 @@
+## Customize the test machine
+machine:
+  php:
+    version: 5.6.11
+
+  # Override /etc/hosts
+  hosts:
+    circlehost: 127.0.0.1
+    dev.kidup.dk: 127.0.0.1
+
+
+## Customize dependencies
+dependencies:
+  pre:
+    - npm install less clean-css uglify-js -g  # install from a different package manager
+    - pecl install Fileinfo

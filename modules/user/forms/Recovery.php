@@ -21,8 +21,6 @@ use app\components\Event;
  * Model for collecting data on password recovery.
  *
  * @property \app\modules\user\Module $module
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class Recovery extends Model
 {

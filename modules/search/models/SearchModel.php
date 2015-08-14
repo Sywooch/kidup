@@ -10,7 +10,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\helpers\Json;
-use app\modules\search\components\IpLocation;
+use app\modules\search\models\IpLocation;
 
 /**
  * The item model of the search module is used for handling data related to searching items.
@@ -187,7 +187,7 @@ class SearchModel extends Model
     private function _getGeoData($location = null)
     {
         if ($location == null) {
-            $location = IpLocation::get(IpLocation::getIp());
+            $location = IpLocation::get(\Yii::$app->request->getUserIP());
             $latitude = $location['latitude'];
             $longitude = $location['longitude'];
             $location = $location['city'] . "," . $location['country'];

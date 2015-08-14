@@ -82,6 +82,9 @@ if (YII_ENV_DEV) {
     $config['modules']['gii']['generators'] = [
         'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
     ];
+    $config['modules']['utility'] = [
+        'class' => 'c006\utility\migration\Module',
+    ];
 }
 
 return $config;

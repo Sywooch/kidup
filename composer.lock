@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dd633a6ce9393588413ba6decc41da24",
+    "hash": "91e34e84563bef83498361fbbd42d620",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1914,7 +1914,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/e25e54a87180a46c473fd5a1bb5d8c2fa2699a19",
+                "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/68d6480475c88fa8bb3af1368f39dd5f802e9ef1",
                 "reference": "e25e54a87180a46c473fd5a1bb5d8c2fa2699a19",
                 "shasum": ""
             },
@@ -3124,7 +3124,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/1f182140d999ddff2a840c332ed15da73a2f8f1c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/6fff3dba1fbe706234e28ded9365b23d9c52c312",
                 "reference": "1f182140d999ddff2a840c332ed15da73a2f8f1c",
                 "shasum": ""
             },
@@ -3873,7 +3873,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a53297cfb21e34a17aa2ad29f59b512cd5b80a1f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/e3f7ddb789bcff377c26dd91fb0f98273a386063",
                 "reference": "a53297cfb21e34a17aa2ad29f59b512cd5b80a1f",
                 "shasum": ""
             },
@@ -4927,7 +4927,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7435b535cc812a035eb63bcc3cbee2a6f4103086",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/537aa8a5bbbb8c3593cd6d835557d05282807bf6",
                 "reference": "cf882497cb749e4ef65dadcde9aec6ad6cfddce0",
                 "shasum": ""
             },
@@ -5063,7 +5063,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ad28c10c431e8a56b599a282fa417523961cb5b1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/51ed559fe2ef9d33217e47a0ac77ffaa15f57c30",
                 "reference": "ad28c10c431e8a56b599a282fa417523961cb5b1",
                 "shasum": ""
             },
@@ -5508,6 +5508,45 @@
             }
         },
         {
+            "name": "c006/yii2-migration-utility",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c006/yii2-migration-utility.git",
+                "reference": "a65a341c3456f30c5bad7f4a027a132d7d8a7d54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c006/yii2-migration-utility/zipball/a65a341c3456f30c5bad7f4a027a132d7d8a7d54",
+                "reference": "a65a341c3456f30c5bad7f4a027a132d7d8a7d54",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "c006\\utility\\migration\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Chambers",
+                    "email": "jchambers.dev@gmail.com"
+                }
+            ],
+            "description": "Automatically writes the create tables for migrations or create tables in general",
+            "keywords": [
+                "extension",
+                "migration",
+                "tables",
+                "yii2"
+            ],
+            "time": "2015-08-08 18:07:48"
+        },
+        {
             "name": "codeception/codeception",
             "version": "2.0.15",
             "source": {
@@ -5795,6 +5834,50 @@
             "time": "2015-02-09 19:39:34"
         },
         {
+            "name": "fproject/yii2-migration-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fproject/yii2-migration-generator.git",
+                "reference": "3f405b0771ffe9faf7ee2c12a69d2ba22828a898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fproject/yii2-migration-generator/zipball/3f405b0771ffe9faf7ee2c12a69d2ba22828a898",
+                "reference": "3f405b0771ffe9faf7ee2c12a69d2ba22828a898",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "fproject\\": "fproject/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License 2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bui Sy Nguyen",
+                    "email": "nguyenbs@f-project.net",
+                    "homepage": "http://f-project.net"
+                }
+            ],
+            "description": "Helper class library to generate Yii2 migration script from Database source",
+            "homepage": "https://github.com/fproject/workflowii",
+            "keywords": [
+                "generator",
+                "migration",
+                "yii2"
+            ],
+            "time": "2015-06-25 04:14:58"
+        },
+        {
             "name": "fzaninotto/faker",
             "version": "dev-master",
             "source": {
@@ -6076,7 +6159,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/5700f75b23b0dd3495c0f495fe33a5e6717ee160",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/80da5500014051b9e70740f183c5e5586f38f977",
                 "reference": "5700f75b23b0dd3495c0f495fe33a5e6717ee160",
                 "shasum": ""
             },
@@ -6327,7 +6410,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/09fc125d65c344c53a7c7ad8f261e3f3af9f76c5",
                 "reference": "7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
                 "shasum": ""
             },
@@ -7343,7 +7426,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/2ff05454260008e826f08f02bb12561bc24bdf22",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/b510398a0d7030a9dd6d0431b8c5201540f137b2",
                 "reference": "3c538c518cb514ec907baf527f6f47dc3b7860a1",
                 "shasum": ""
             },
@@ -7437,7 +7520,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/552f9cb837b1ae0ab5e904aef7366ff191233a5a",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/aeec43df7b85e0f100220f4ab5eb179d827f6aa1",
                 "reference": "552f9cb837b1ae0ab5e904aef7366ff191233a5a",
                 "shasum": ""
             },
@@ -7494,7 +7577,7 @@
         "maknz/slack": 20,
         "monolog/monolog": 20,
         "warrence/yii2-kartikgii": 20,
-        "bazilio/yii2-stubs-generator": 20
+        "c006/yii2-migration-utility": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

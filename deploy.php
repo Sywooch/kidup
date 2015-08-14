@@ -56,6 +56,10 @@ task('deploy:update_database', function () {
 task('deploy:minify_assets', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
+    // converts all assets to make sure everything is preparsed into assets
+    run('sudo php yii asset config/assets/assets-all.php config/assets/assets-all-def.php');
+
+    // minify the main bulk into a minified bundle
     run('sudo php yii asset config/assets/assets.php config/assets/assets-prod.php');
 })->desc('Minifying assets');
 

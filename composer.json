@@ -52,7 +52,8 @@
     "league/flysystem-aws-s3-v3": "*",
     "omnilight/yii2-scheduling": "*",
     "league/glide": "*",
-    "warrence/yii2-kartikgii": "dev-master"
+    "warrence/yii2-kartikgii": "dev-master",
+    "deployer/deployer": "2.0"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",
@@ -66,7 +67,8 @@
     "codeception/specify": "0.4.1",
     "codeception/verify": "0.2.7",
     "yiisoft/yii2-faker": "2.0.3",
-    "bazilio/yii2-stubs-generator": "dev-master"
+    "fproject/yii2-migration-generator": "*",
+    "c006/yii2-migration-utility": "dev-master"
   },
   "config": {
     "process-timeout": 1800
