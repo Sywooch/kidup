@@ -10,7 +10,7 @@ class KeyStore extends Component
 
     public function __construct()
     {
-        $keyFile = __DIR__ . '/../config/keys.env';
+        $keyFile = __DIR__ . '/../config/keys/keys.env';
         if (is_file($keyFile)) {
             $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
             $this->keys = $keys;

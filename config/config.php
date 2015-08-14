@@ -2,7 +2,7 @@
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 $components = require(__DIR__ . '/components.php');
-$keyFile = __DIR__ . '/../config/keys.env';
+$keyFile = __DIR__ . '/../config/keys/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 $config = [

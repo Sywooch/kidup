@@ -1,14 +1,14 @@
 <?php
-namespace app\tests\codeception\acceptance\user;
+namespace app\tests\codeception\functional\user;
 
-use AcceptanceTester;
+use functionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
 /**
- * Acceptance test for the login.
+ * functional test for the login.
  *
  * Class LoginCest
- * @package app\tests\codeception\acceptance\user
+ * @package app\tests\codeception\functional\user
  */
 class LoginCest
 {
@@ -16,9 +16,9 @@ class LoginCest
     /**
      * Initialize the test.
      *
-     * @param AcceptanceTester $I
+     * @param functionalTester $I
      */
-    public function _before(AcceptanceTester $I)
+    public function _before(functionalTester $I)
     {
         (new FixtureHelper)->fixtures();
     }
@@ -26,12 +26,17 @@ class LoginCest
     /**
      * Test whether login works.
      *
-     * @param AcceptanceTester $I
+     * @param functionalTester $I
      */
-    public function checkLogin(AcceptanceTester $I)
+    public function checkLogin(functionalTester $I)
     {
         $I->wantTo('ensure that I can login');
-        $I->amOnPage('/');
+        $I->amOnPage('/user/login');
+        $I->canSeeElement('#login-form-login');
+        $I->canSeeElement('#login-form-password');
+        $I->fillField('#login-form-login', 'simon@kidup.dk');
+        $I->fillField('#login-form-password', 'testtest');
+        $I->click('Sign in');
     }
 
 }

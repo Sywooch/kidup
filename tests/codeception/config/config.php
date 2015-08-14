@@ -2,7 +2,8 @@
 /**
  * Application configuration shared by all test types
  */
-return [
+
+$conf = [
     'controllerMap' => [
         'fixture' => [
             'class' => 'yii\faker\FixtureController',
@@ -14,9 +15,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kidup',
-            'username' => 'kidup_148161251',
-            'password' => '89cn289bnc002ncbp248bbp2v',
+            'dsn' => (getenv('CIRCLECI') !== true) ? 'mysql:host=localhost;dbname=kidup_test' : 'mysql:host=localhost;dbname=circle_test',
+            'username' =>  getenv('CIRCLECI') !== true ? 'root' : 'ubuntu',
+            'password' =>  getenv('CIRCLECI') !== true ? '922nc289b4p2vb8b92b02mcm' : '',
             'charset' => 'utf8',
         ],
         'mailer' => [
@@ -27,3 +28,5 @@ return [
         ],
     ],
 ];
+
+return $conf;
