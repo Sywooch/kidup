@@ -9,14 +9,13 @@ $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 
 // verify if keys are actually set - otherwise deployer will say it works while it doesn't
-if(empty($keys['main_server_password'])){
-    echo "Deployment keys not set, check keys.env"; exit();
-}
+
 /////////////////////////////////////////////// DEPLOY API ///////////////////////////////////////////
 
 server('production-primary', '31.187.70.130', 22)
     ->path('/var/www/')
-    ->user('root', $keys['main_server_password']);
+    ->user('root')
+    ->pubKey();
 
 server('test', '178.62.234.114', 22)
     ->path('/var/www/')
