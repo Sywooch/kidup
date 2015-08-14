@@ -38,12 +38,11 @@ stage('production', array('production-primary'), array('branch'=>'master'), true
 $repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
 set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900/kidup.git');
 
-task('deploy:vendors', function () {
-    global $keys;
+task('deploy:vendors', function () use ($repo_password) {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
     run("curl -sS https://getcomposer.org/installer | php");
-    run("php composer.phar config github-oauth.github.com ".$keys['github_oauth']);
+    run("php composer.phar config github-oauth.github.com ".$repo_password);
     run("php composer.phar install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 

@@ -23,6 +23,26 @@ class HomeCest
         (new FixtureHelper)->fixtures();
     }
 
+    public function checkHomePage(functionalTester $I)
+    {
+        $I->wantTo('ensure that I can see the homepage');
+        $I->amOnPage('/home');
+        $I->canSee('KidUp is your online parent-to-parent marketplace.');
+        $I->canSeeElement('input#query');
+        $I->canSee('Stroller');
+        $I->canSeeLink('Sign Up Now');
+    }
+
+    public function checkTranslations(functionalTester $I)
+    {
+        $I->wantTo('make sure translations work');
+        $I->amOnPage('/home');
+        $I->canSee('KidUp is your online parent-to-parent marketplace.');
+        $I->canSeeElement('input#query');
+        $I->canSee('Stroller');
+        $I->canSeeLink('Sign Up Now');
+    }
+
 }
 
 ?>
