@@ -37,12 +37,11 @@ class HomeCest
     {
         $I->wantTo('make sure translations work');
         $I->amOnPage('/home');
-        $I->canSee('KidUp is your online parent-to-parent marketplace.');
+        $I->click('DA');
+        $I->canSee('Hvordan bruger du KidUp?');
         $I->canSeeElement('input#query');
-        $I->canSee('Stroller');
-        $I->canSeeLink('Sign Up Now');
+        $I->canSee('Barnevogn');
+        $I->canSeeLink('Register dig nu');
     }
-
 }
-
 ?>

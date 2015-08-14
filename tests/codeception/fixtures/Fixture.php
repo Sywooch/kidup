@@ -6,6 +6,7 @@ use yii\test\ActiveFixture;
 class Fixture extends ActiveFixture
 {
     public function unload(){
-        return true;
+        $this->unload();
+        parent::unload();
     }
 }

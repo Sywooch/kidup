@@ -35,7 +35,6 @@ class SearchCest
         $I->wantTo('ensure that the search term input field exists');
         ItemSearchPage::openBy($I);
         $I->canSeeElement('#refineQuery > div > input');
-        $I->canSeeElement('#w0');
         $I->canSeeElement('#price-slider');
     }
 

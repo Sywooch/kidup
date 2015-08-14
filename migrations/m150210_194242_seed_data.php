@@ -56,7 +56,7 @@ class m150210_194242_seed_data extends Migration
         $user->setAttributes(array(
             'id' => 1,
             'email' => 'simon@kidup.dk',
-            'password_hash' => '$2y$13$NDOMQAPtRQoORtVBcX/7GuTExkqb.QfCWi8E0VRnvK2f/cDC2xxUS',
+            'password_hash' => '$2y$13$naXyY.agmJRceAozD8Jy6.9GOzcr1ruTnHTiUHGZIlMnzgWT3uTSK',
             'auth_key' => 'NyPoDgo9hIUuoGtk5pQjcAfvxFYu_mUy',
             'confirmed_at' => 1432405898,
             'unconfirmed_email' => null,

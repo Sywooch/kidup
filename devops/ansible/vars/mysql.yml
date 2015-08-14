@@ -2,4 +2,4 @@ mysql:
     root_password: 922nc289b4p2vb8b92b02mcm
     user: kidup_148161251
     password: 89cn289bnc002ncbp248bbp2v
-    database: kidup
+    databases: ["kidup","kidup_test"]
