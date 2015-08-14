@@ -1,7 +1,7 @@
 ## Customize the test machine
 machine:
   php:
-    version: 5.6.11
+    version: 5.6.5
 
   # Override /etc/hosts
   hosts:
