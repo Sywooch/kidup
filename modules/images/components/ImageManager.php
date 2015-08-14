@@ -2,13 +2,14 @@
 
 namespace app\modules\images\components;
 
-use League\Flysystem\Adapter\Local as Adapter;
-use yii\web\UploadedFile;
-use yii;
 use Aws\S3\S3Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League;
+use League\Flysystem\Adapter\Local as Adapter;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
+use yii;
+use yii\web\UploadedFile;
+
 /*
 * @var League\Flysystem\Filesystem $filesystem
 */

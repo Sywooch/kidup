@@ -1,11 +1,12 @@
 <?php
 namespace app\modules\mail\mails;
 
+use app\modules\booking\models\Booking;
 use app\modules\mail\models\Mailer;
 use Carbon\Carbon;
 use Yii;
 use yii\helpers\Url;
-use app\modules\booking\models\Booking;
+
 class BookingRenter extends Mailer
 {
     /**

@@ -2,8 +2,8 @@
 
 namespace app\modules\item\models;
 
-use Yii;
 use Carbon\Carbon;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 

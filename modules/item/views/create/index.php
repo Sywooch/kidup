@@ -1,7 +1,7 @@
 <?php
+use app\modules\images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use \app\modules\images\components\ImageHelper;
 
 \yii\web\JqueryAsset::register($this);
 \app\modules\item\assets\CreateAsset::register($this);

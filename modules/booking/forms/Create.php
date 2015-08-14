@@ -2,12 +2,12 @@
 
 namespace app\modules\booking\forms;
 
+use app\components\Error;
+use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use app\modules\user\models\User;
-use yii\base\Model;
 use Carbon\Carbon;
-use app\modules\booking\models\Booking;
-use app\components\Error;
+use yii\base\Model;
 use yii\helpers\Html;
 
 class Create extends Model

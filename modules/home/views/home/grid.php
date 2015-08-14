@@ -2,9 +2,9 @@
 /**
  * @property \app\modules\item\models\Item[] $items
  */
-use yii\helpers\Url;
 use app\components\WidgetRequest;
-use \app\modules\images\components\ImageHelper;
+use app\modules\images\components\ImageHelper;
+use yii\helpers\Url;
 
 ?>
 

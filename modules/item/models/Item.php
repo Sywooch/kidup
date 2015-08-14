@@ -4,11 +4,10 @@ namespace app\modules\item\models;
 
 use app\modules\user\models\User;
 use Carbon\Carbon;
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
+use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "item".

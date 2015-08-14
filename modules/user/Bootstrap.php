@@ -4,11 +4,9 @@ namespace app\modules\user;
 
 use yii\authclient\Collection;
 use yii\base\BootstrapInterface;
-use yii\base\InvalidConfigException;
+use yii\console\Application as ConsoleApplication;
 use yii\i18n\PhpMessageSource;
 use yii\web\GroupUrlRule;
-use yii\console\Application as ConsoleApplication;
-use yii\web\User;
 
 /**
  * Bootstrap class registers module and user application component. It also creates some url rules which will be applied

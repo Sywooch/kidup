@@ -5,7 +5,6 @@ namespace app\modules\item\widgets;
 
 use app\modules\search\models\SearchModel;
 use yii\bootstrap\Widget;
-use yii\helpers\Url;
 
 class MenuSearch extends Widget
 {

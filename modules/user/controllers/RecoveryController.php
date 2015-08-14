@@ -11,12 +11,11 @@
 
 namespace app\modules\user\controllers;
 
-use app\modules\item\models\Location;
+use app\controllers\Controller;
 use app\modules\mail\models\Token;
 use app\modules\user\Finder;
 use app\modules\user\forms\Recovery;
 use yii\base\Model;
-use app\controllers\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

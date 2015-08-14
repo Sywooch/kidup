@@ -3,11 +3,8 @@
 namespace app\modules\booking\tests;
 
 use app\modules\booking\forms\Create;
-use app\tests\codeception\fixtures\LocationFixture;
 use Carbon\Carbon;
 use Codeception\Specify;
-use app\tests\codeception\fixtures\UserFixture;
-use app\tests\codeception\fixtures\ItemFixture;
 use tests\codeception\_support\FixtureHelper;
 use yii\codeception\TestCase;
 

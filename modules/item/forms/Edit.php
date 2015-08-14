@@ -8,7 +8,6 @@ use app\modules\item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 
 /**
  * This is the model class for table "category".

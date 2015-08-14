@@ -2,9 +2,9 @@
 
 namespace app\modules\pages;
 
-use yii\base\Module;
 use Yii;
 use yii\base\BootstrapInterface;
+use yii\base\Module;
 
 /**
  * Bootstrap class registers module and user application component. It also creates some url rules which will be applied

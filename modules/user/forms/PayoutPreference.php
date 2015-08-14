@@ -12,9 +12,8 @@
 namespace app\modules\user\forms;
 
 use app\components\Encrypter;
-use app\modules\user\models\PayoutMethod;
 use app\modules\user\models\Country;
-use app\modules\user\models\User;
+use app\modules\user\models\PayoutMethod;
 use yii\base\Model;
 use yii\helpers\Json;
 

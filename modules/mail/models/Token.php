@@ -12,10 +12,11 @@
 namespace app\modules\mail\models;
 
 use app\modules\user\models\User;
+use Carbon\Carbon;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
-use yii\behaviors\TimestampBehavior;
-use Carbon\Carbon;
+
 class Token extends \app\models\base\Token
 {
     const TYPE_CONFIRMATION      = 0;

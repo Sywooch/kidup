@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 \app\modules\splash\assets\SplashAsset::register($this);
 $this->title = ucfirst(\Yii::t('title', 'Thank you for signing up')) . ' - '. Yii::$app->name;
 ?>

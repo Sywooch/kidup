@@ -2,7 +2,6 @@
 namespace app\modules\mail\mails;
 
 use app\modules\mail\models\Mailer;
-use Carbon\Carbon;
 use Yii;
 use yii\helpers\Url;
 

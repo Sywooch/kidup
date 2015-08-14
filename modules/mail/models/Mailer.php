@@ -4,7 +4,6 @@ namespace app\modules\mail\models;
 use app\modules\mail\components\MailUrl;
 use app\modules\user\models\Profile;
 use app\modules\user\models\User;
-use Carbon\Carbon;
 use Yii;
 use yii\helpers\Json;
 use yii\helpers\Url;

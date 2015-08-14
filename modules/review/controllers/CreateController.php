@@ -9,7 +9,6 @@ use app\modules\review\forms\OwnerReview;
 use app\modules\review\forms\RenterReview;
 use app\modules\review\models\Review;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

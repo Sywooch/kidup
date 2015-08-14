@@ -1,8 +1,8 @@
 <?php
-use yii\helpers\Html;
 use app\assets\AppAsset;
-use app\widgets\Alert;
 use app\assets\FontAwesomeAsset;
+use app\widgets\Alert;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View */

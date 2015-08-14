@@ -3,7 +3,6 @@ namespace app\modules\mail\models;
 
 use Yii;
 use yii\helpers\Json;
-use yii\helpers\Url;
 
 /**
  * Login form

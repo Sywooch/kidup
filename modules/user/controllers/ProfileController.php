@@ -11,15 +11,15 @@
 
 namespace app\modules\user\controllers;
 
+use app\controllers\Controller;
+use app\modules\item\models\Item;
 use app\modules\review\models\Review;
 use app\modules\user\Finder;
-use app\controllers\Controller;
-use yii\base\Response;
+use app\modules\user\models\Profile;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
-use app\modules\user\models\Profile;
-use app\modules\item\models\Item;
-use Yii;
+
 /**
  * ProfileController shows users profiles.
  *

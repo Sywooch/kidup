@@ -3,11 +3,8 @@
 namespace app\modules\user\models;
 
 use app\modules\images\components\ImageHelper;
-use app\modules\images\components\ImageManager;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\web\UploadedFile;
-use app\modules\user\models\Country;
 
 class Profile extends \app\models\base\Profile
 {

@@ -2,11 +2,8 @@
 
 namespace app\modules\pages\controllers;
 
-use app\components\WidgetRequest;
-use app\controllers\Controller;
-use yii\helpers\Url;
 use app\components\Error;
-use app\modules\item\models\Item;
+use app\controllers\Controller;
 
 class DefaultController extends Controller
 {

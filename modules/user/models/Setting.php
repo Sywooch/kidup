@@ -2,10 +2,10 @@
 
 namespace app\modules\user\models;
 
+use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use Carbon\Carbon;
 
 class Setting extends \app\models\base\Setting
 {

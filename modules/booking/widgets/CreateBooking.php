@@ -3,12 +3,9 @@
 namespace app\modules\booking\widgets;
 
 use app\components\Error;
-use app\components\Event;
 use app\interfaces\RequestableWidgetInterface;
 use app\modules\booking\forms\Create;
-use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
-use Carbon\Carbon;
 use yii\base\Widget;
 
 class CreateBooking extends Widget

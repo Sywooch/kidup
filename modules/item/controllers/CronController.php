@@ -3,10 +3,7 @@
 namespace app\modules\item\controllers;
 
 use app\components\Event;
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\Payout;
 use app\modules\item\models\Item;
-use Carbon\Carbon;
 use Yii;
 use yii\base\Model;
 

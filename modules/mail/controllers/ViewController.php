@@ -4,14 +4,9 @@ namespace app\modules\mail\controllers;
 
 use app\components\Event;
 use app\controllers\Controller;
-use app\models\base\Booking;
 use app\modules\booking\models\Payin;
-use app\modules\item\models\Item;
 use app\modules\mail\models\Mailer;
 use app\modules\mail\models\MailLog;
-use app\modules\mail\models\MailMessage;
-use app\modules\message\models\Message;
-use app\modules\user\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;

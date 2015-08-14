@@ -1,7 +1,8 @@
 
 <?php
-use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Url;
+
 /**
  * @var $model \app\modules\item\models\Item
  *

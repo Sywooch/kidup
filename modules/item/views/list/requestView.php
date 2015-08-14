@@ -1,7 +1,7 @@
 <?php
-use yii\helpers\Url;
-use yii\helpers\Html;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 $item = \app\modules\item\models\Item::findOne($model->item_id);
 \app\modules\item\assets\ListAsset::register($this);

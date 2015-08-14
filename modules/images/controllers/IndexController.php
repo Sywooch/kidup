@@ -4,7 +4,6 @@ namespace app\modules\images\controllers;
 use app\modules\images\components\ImageManager;
 use Yii;
 use yii\base\DynamicModel;
-use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\widgets\ActiveForm;
 

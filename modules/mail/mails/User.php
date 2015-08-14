@@ -2,10 +2,9 @@
 namespace app\modules\mail\mails;
 
 use app\modules\mail\models\Mailer;
-use Carbon\Carbon;
+use app\modules\mail\models\Token;
 use Yii;
 use yii\helpers\Url;
-use app\modules\mail\models\Token;
 
 class User extends Mailer
 {

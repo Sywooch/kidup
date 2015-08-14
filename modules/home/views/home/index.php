@@ -1,7 +1,7 @@
 <?php
-use yii\helpers\Url;
 use app\components\ViewHelper;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Url;
 
 \app\modules\home\assets\HomeAsset::register($this);
 \app\assets\AngularAsset::register($this);

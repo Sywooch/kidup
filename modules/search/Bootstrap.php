@@ -2,9 +2,9 @@
 
 namespace app\modules\search;
 
+use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
-use Yii;
 
 class Bootstrap implements BootstrapInterface {
 

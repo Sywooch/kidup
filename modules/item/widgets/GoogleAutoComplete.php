@@ -1,7 +1,7 @@
 <?php
 namespace app\modules\item\widgets;
-use yii\widgets\InputWidget;
 use yii\helpers\Html;
+use yii\widgets\InputWidget;
 
 class GoogleAutoComplete extends InputWidget {
     const API_URL = 'http://maps.googleapis.com/maps/api/js?';

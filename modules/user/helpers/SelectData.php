@@ -2,10 +2,10 @@
 
 namespace app\modules\user\helpers;
 
-use yii\base\Model;
+use app\models\base\Currency;
 use app\modules\user\models\Country;
 use app\modules\user\models\Language;
-use app\models\base\Currency;
+use yii\base\Model;
 
 class SelectData extends Model{
 

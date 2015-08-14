@@ -11,15 +11,14 @@
 
 namespace app\modules\user\controllers;
 
+use app\controllers\Controller;
 use app\modules\user\Finder;
-use app\modules\user\models\Account;
 use app\modules\user\forms\Login;
-use yii\base\Model;
-use yii\helpers\Url;
-use \app\controllers\Controller;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
+use app\modules\user\models\Account;
 use yii\authclient\ClientInterface;
+use yii\base\Model;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 

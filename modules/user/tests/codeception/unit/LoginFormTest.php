@@ -5,8 +5,6 @@ namespace app\modules\user\tests;
 use app\modules\user\forms\Login;
 use app\modules\user\tests\codeception\_support\FixtureHelper;
 use Codeception\Specify;
-use Codeception\Verify;
-use app\tests\codeception\fixtures\UserFixture;
 use yii\codeception\TestCase;
 
 class LoginFormTest extends TestCase

@@ -4,9 +4,7 @@ namespace app\modules\mail\models;
 
 use app\modules\message\models\Conversation;
 use Yii;
-use Carbon\Carbon;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "mail_account".
  */

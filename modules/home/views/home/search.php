@@ -1,6 +1,6 @@
 <?php
-use \yii\widgets\ActiveForm;
 use yii\helpers\Url;
+
 \app\assets\AngularAsset::register($this);
 ?>
 

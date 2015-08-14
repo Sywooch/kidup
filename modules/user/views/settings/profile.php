@@ -1,9 +1,8 @@
 <?php
 
+use app\modules\images\components\ImageHelper;
 use kartik\form\ActiveForm;
 use kartik\widgets\FileInput;
-use yii\helpers\Html;
-use app\modules\images\components\ImageHelper;
 
 /**
  * @var yii\web\View $this

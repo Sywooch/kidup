@@ -1,7 +1,8 @@
 <?php
+use app\modules\booking\models\Payin;
 use Carbon\Carbon;
 use yii\helpers\Html;
-use app\modules\booking\models\Payin;
+
 /**
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item

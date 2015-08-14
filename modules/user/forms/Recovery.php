@@ -11,11 +11,11 @@
 
 namespace app\modules\user\forms;
 
+use app\components\Event;
 use app\modules\mail\models\Token;
 use app\modules\user\Finder;
 use app\modules\user\models\User;
 use yii\base\Model;
-use app\components\Event;
 
 /**
  * Model for collecting data on password recovery.

@@ -1,7 +1,6 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Html;
 
 /* @var $this \yii\web\View view component instance */
 /* @var $message \yii\mail\MessageInterface the message being composed */

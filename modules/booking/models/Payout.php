@@ -5,11 +5,9 @@ namespace app\modules\booking\models;
 use app\components\Event;
 use app\modules\user\models\PayoutMethod;
 use Carbon\Carbon;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "payin".

@@ -2,11 +2,11 @@
 namespace app\modules\search\controllers;
 
 use app\components\Cache;
+use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
 use app\modules\search\models\SearchModel;
 use Yii;
-use app\controllers\Controller;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
 

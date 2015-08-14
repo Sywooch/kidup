@@ -1,9 +1,7 @@
 <?php
 namespace app\modules\search\models;
 
-use app\components\Cache;
 use Yii;
-use yii\base\Component;
 use yii\helpers\Json;
 
 /**

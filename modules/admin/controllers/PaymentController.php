@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\modules\booking\models\Payout;
 use Yii;
