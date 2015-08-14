@@ -15,9 +15,9 @@ $conf = [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => (getenv('CIRCLECI') !== true) ? 'mysql:host=localhost;dbname=kidup_test' : 'mysql:host=localhost;dbname=circle_test',
-            'username' =>  getenv('CIRCLECI') !== true ? 'root' : 'ubuntu',
-            'password' =>  getenv('CIRCLECI') !== true ? '922nc289b4p2vb8b92b02mcm' : '',
+            'dsn' => (getenv('CIRCLECI') != true) ? 'mysql:host=localhost;dbname=kidup_test' : 'mysql:host=127.0.0.1;dbname=circle_test',
+            'username' =>  getenv('CIRCLECI') != true ? 'root' : 'ubuntu',
+            'password' =>  getenv('CIRCLECI') != true ? '922nc289b4p2vb8b92b02mcm' : '',
             'charset' => 'utf8',
         ],
         'mailer' => [
