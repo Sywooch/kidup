@@ -20,7 +20,8 @@ server('production-primary', '31.187.70.130', 22)
 
 server('test', '178.62.234.114', 22)
     ->path('/var/www/')
-    ->user('root', $keys['test_server_password']);
+    ->user('root')
+    ->pubKey();
 
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'master'), true);

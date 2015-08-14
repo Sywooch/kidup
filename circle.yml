@@ -19,4 +19,14 @@ dependencies:
 
 test:
   override:
-    - cd tests && codecept run
+    - cd ~/kidup/tests && codecept run functional
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - php ~/kidup/deployer.phar deploy development
+  staging:
+    branch: develop
+    commands:
+      - php ~/kidup/deployer.phar deploy development
