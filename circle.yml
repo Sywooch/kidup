@@ -19,7 +19,7 @@ dependencies:
 
 test:
   override:
-    - cd ./tests && ./../vender/codeception/codeception/codecept run functional
+    - cd ./tests && ../vender/codeception/codeception/codecept run functional
 
 deployment:
   production:
