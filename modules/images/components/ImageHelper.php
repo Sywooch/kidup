@@ -52,11 +52,15 @@ class ImageHelper extends BaseHtml{
         if($filename == false || !is_string($filename)){
             return '';
         }
+        if(YII_ENV == 'test'){
+            return "http://placehold.it/2x2";
+        }
         $isStaticFile = false;
         $folders = explode("/", $filename);
         if($folders[0] == 'kidup'){
             $isStaticFile = true;
         }
+
         $server = (new ImageManager())->getServer($isStaticFile);
 
         $folders = explode("/", $filename);
