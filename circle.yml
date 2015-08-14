@@ -12,7 +12,6 @@ machine:
 ## Customize dependencies
 dependencies:
   pre:
-    - sudo apt-get install imagemagick php5-imagick php5-curl php5-intl php5-mcrypt php5-memcache php5-memcached php5-mysql
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
     # - bash ./devops/environment/init_test.sh
