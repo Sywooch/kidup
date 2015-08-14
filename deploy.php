@@ -35,7 +35,8 @@ if(getenv('CIRCLECI_TEST_PASSWORD') != false){
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'master'), true);
 
-set('repository', 'https://'.$keys['git_repo_username'].':'.$keys['git_repo_password'].'@github.com/esquire900/kidup.git');
+$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
+set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900/kidup.git');
 
 task('deploy:vendors', function () {
     global $keys;
