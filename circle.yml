@@ -14,7 +14,7 @@ dependencies:
   pre:
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
-    - sudo ./devops/environments/init_test.sh
+    - sudo ./devops/environment/init_test.sh
     - mv ./config/keys/keys_test.env ./config/keys/keys.env
 
 test:
