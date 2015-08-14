@@ -14,12 +14,12 @@ dependencies:
   pre:
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
-    - bash ./devops/environment/init_test.sh
-    - mv ~/kidup/config/keys/keys_test.env ~/kidup/config/keys/keys.env
+    # - bash ./devops/environment/init_test.sh
+    - mv ./config/keys/keys_test.env ./config/keys/keys.env
 
 test:
   override:
-    - cd ~/kidup/tests && codecept run functional
+    - cd ./tests && ./../vender/codeception/codeception/codecept run functional
 
 deployment:
   production:
