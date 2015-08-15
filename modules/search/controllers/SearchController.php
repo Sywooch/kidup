@@ -49,6 +49,15 @@ class SearchController extends Controller {
 
         $model = new SearchModel();
 
+        // transform a simple search to advanced search
+        $params = \Yii::$app->request->get();
+        if (isset($params['query'])) {
+            if (strlen($q) > 0) {
+                $q .= '|';
+            }
+            $q = 'query|' . $params['query'];
+        }
+
         $results = Cache::data('searchResults'.$p.$q, function() use ($p, $q, $model){
             // load the item search model
 
