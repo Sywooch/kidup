@@ -3,6 +3,7 @@
 namespace app\modules\item\controllers;
 
 use app\controllers\Controller;
+use app\modules\booking\models\Booking;
 use app\modules\images\components\ImageHelper;
 use app\modules\images\components\ImageManager;
 use app\modules\item\forms\Create;
@@ -93,15 +94,16 @@ class CreateController extends Controller
                     return $this->redirect(['/item/' . $model->item->id]);
                 }
                 if ($button == "submit-publish") {
-                    // todo check stuff here
-                    if (\Yii::$app->request->post()['edit-item']['rules'] != 1) {
-                        \Yii::$app->session->addFlash('warning', \Yii::t('item',
-                            'The terms and conditions have to be accepted before an item can be published'));
-                        return $this->redirect(['/item/' . $model->item->id . '/edit']);
+                    if ($model->isPublishable() && $model->is_available === 0) {
+                        if (\Yii::$app->request->post()['edit-item']['rules'] != 1) {
+                            \Yii::$app->session->addFlash('warning', \Yii::t('item',
+                                'The terms and conditions have to be accepted before an item can be published'));
+                            return $this->redirect(['/item/' . $model->item->id . '/edit']);
+                        }
+                        $item->is_available = 1;
+                        $item->save();
+                        return $this->redirect(['/item/' . $model->item->id, 'new_publish' => true]);
                     }
-                    $item->is_available = 1;
-                    $item->save();
-                    return $this->redirect(['/item/' . $model->item->id, 'new_publish' => true]);
                 }
             }
         }
@@ -171,13 +173,13 @@ class CreateController extends Controller
         if ($i->save()) {
             // try to find order
             $orderIhm = ItemHasMedia::find()->where(['item_id' => $item->id, 'media_id' => $i->id,])->orderBy('order DESC')->one();
-            if($orderIhm == null){
+            if ($orderIhm == null) {
                 $order = 1;
-            }else{
-                if( $orderIhm->order == null){
-                    $oder = 1;
-                }else{
-                    $order = $orderIhm->order+1;
+            } else {
+                if ($orderIhm->order == null) {
+                    $order = 1;
+                } else {
+                    $order = $orderIhm->order + 1;
                 }
             }
             $ihm = new ItemHasMedia();
@@ -263,7 +265,8 @@ class CreateController extends Controller
         }
     }
 
-    public function actionUnpublish($id){
+    public function actionUnpublish($id)
+    {
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
             throw new NotFoundHttpException('Item does not exist');
@@ -271,12 +274,33 @@ class CreateController extends Controller
         if (!$item->isOwner()) {
             throw new ForbiddenHttpException();
         }
-        // todo check wheter there are any active bookings or other dependencies that block this
-        $item->is_available = 0;
-        $item->save();
 
-        Yii::$app->session->addFlash('info', \Yii::t('item', 'The item has been made unavailable'));
-        return $this->redirect('@web/item/'.$id.'/edit#publishing');
+        // check bookings
+        $bookingInFuture = false;
+        $bookings = Booking::find()->where(['item_id' => $id])->all();
+        if (count($bookings) !== 0) {
+            // there exists at least one booking
+            foreach ($bookings as $booking) {
+                if ($booking->status !== Booking::AWAITING_PAYMENT) {
+                    if ($booking->time_to > time()) {
+                        // there exists an item which has not the status awaiting payment
+                        // and is reserved in the future, so the item can not be removed
+                        $bookingInFuture = true;
+                    }
+                }
+            }
+        }
+
+        if ($bookingInFuture) {
+            \Yii::$app->session->addFlash('warning', \Yii::t('item',
+                'A booking was made for this product. The product could not be unpublished.'));
+            return $this->redirect(['/item/list']);
+        } else {
+            $item->is_available = 0;
+            $item->save();
+            Yii::$app->session->addFlash('info', \Yii::t('item', 'The product has been made unavailable'));
+            return $this->redirect('@web/item/' . $id . '/edit#publishing');
+        }
     }
 }
 
