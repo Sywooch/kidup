@@ -1,10 +1,11 @@
 <?php
+use app\components\WidgetRequest;
+use app\modules\images\components\ImageHelper;
+use Carbon\Carbon;
 use kartik\rating\StarRating;
 use yii\bootstrap\ActiveForm;
-use \yii\helpers\Html;
-use app\components\WidgetRequest;
-use Carbon\Carbon;
-use app\modules\images\components\ImageHelper;
+use yii\helpers\Html;
+
 /**
  * @var $this \yii\web\View
  * @var $booking \app\modules\booking\models\Booking

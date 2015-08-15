@@ -11,7 +11,7 @@ use yii\codeception\BasePage;
  */
 class ItemSearchPage extends BasePage
 {
-    public $route = 'search/item/index';
+    public $route = 'search';
 
     public function search($term) {
         $this->actor->fillField('query', $term);

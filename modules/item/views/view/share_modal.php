@@ -1,6 +1,6 @@
 <?php
 use yii\bootstrap\Modal;
-use yii\helpers\Url;
+
 Modal::begin([
     'header' => '<h3>'.\Yii::t('item', 'Yay! Your product is now online and ready to be rented out!').'</h3>',
     'id' => 'sharingModal'

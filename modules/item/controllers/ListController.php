@@ -2,12 +2,13 @@
 
 namespace app\modules\item\controllers;
 
+use app\controllers\Controller;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use Yii;
 use yii\data\ActiveDataProvider;
-use app\controllers\Controller;
 use yii\filters\AccessControl;
+
 class ListController extends Controller
 {
     public function behaviors()

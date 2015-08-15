@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this

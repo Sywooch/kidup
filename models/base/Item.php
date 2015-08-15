@@ -22,15 +22,15 @@ use Yii;
  * @property integer $updated_at
  * @property integer $min_renting_days
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\Location $location
- * @property \app\models\Currency $currency
- * @property \app\models\User $owner
- * @property \app\models\ItemHasCategory[] $itemHasCategories
- * @property \app\models\Category[] $categories
- * @property \app\models\ItemHasMedia[] $itemHasMedia
- * @property \app\models\Media[] $media
- * @property \app\models\Review[] $reviews
+ * @property \app\models\base\Booking[] $bookings
+ * @property \app\models\base\Location $location
+ * @property \app\models\base\Currency $currency
+ * @property \app\models\base\User $owner
+ * @property \app\models\base\ItemHasCategory[] $itemHasCategories
+ * @property \app\models\base\Category[] $categories
+ * @property \app\models\base\ItemHasMedia[] $itemHasMedia
+ * @property \app\models\base\Media[] $media
+ * @property \app\models\base\Review[] $reviews
  */
 class Item extends \yii\db\ActiveRecord
 {

@@ -2,15 +2,29 @@
 
 namespace app\modules\item\models;
 
-use Yii;
 use Carbon\Carbon;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "location".
  */
 class Location extends \app\models\base\Location
 {
+    public function rules()
+    {
+        return [
+            [['type', 'country', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['longitude', 'latitude', 'user_id', 'created_at', 'updated_at'], 'required'],
+            [['longitude', 'latitude'], 'number'],
+            [['city'], 'string', 'max' => 100],
+            [['zip_code'], 'string', 'max' => 50],
+            [['street_name'], 'string', 'max' => 256],
+            [['street_number'], 'string', 'max' => 10]
+        ];
+    }
+
     public function behaviors()
     {
         return [
@@ -53,13 +67,28 @@ class Location extends \app\models\base\Location
                 $this->zip_code . ", " .
                 $this->country0->name;
             $res = Location::getByAddress($address);
-            if(!$res){
+            if (!$res) {
                 $this->longitude = 1;
                 $this->latitude = 1;
-            }else{
+            } else {
                 $this->longitude = $res['longitude'];
                 $this->latitude = $res['latitude'];
             }
+        }
+        if ($this->isAttributeChanged('city')) {
+            $this->city = \yii\helpers\HtmlPurifier::process($this->city);
+        }
+        if ($this->isAttributeChanged('zip_code')) {
+            $this->zip_code = \yii\helpers\HtmlPurifier::process($this->zip_code);
+        }
+        if ($this->isAttributeChanged('street_name')) {
+            $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
+        }
+        if ($this->isAttributeChanged('zip_code')) {
+            $this->zip_code = \yii\helpers\HtmlPurifier::process($this->zip_code);
+        }
+        if ($this->isAttributeChanged('street_name')) {
+            $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
         }
         return parent::beforeValidate();
     }
@@ -82,8 +111,9 @@ class Location extends \app\models\base\Location
         }
     }
 
-    public function isValid(){
-        if($this->longitude != 0 && $this->latitude != 0){
+    public function isValid()
+    {
+        if ($this->longitude != 0 && $this->latitude != 0) {
             return true;
         }
         return false;

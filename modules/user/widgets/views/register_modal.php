@@ -1,8 +1,6 @@
 <?php
-use yii\widgets\ActiveForm;
 use yii\bootstrap\Html;
-use yii\helpers\Url;
-use app\modules\images\components\ImageHelper;
+use yii\widgets\ActiveForm;
 
 \yii\bootstrap\Modal::begin([
     'id' => 'registerModal',

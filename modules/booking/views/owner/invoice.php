@@ -1,8 +1,7 @@
 <?php
-use yii\helpers\Html;
 use Carbon\Carbon;
 use yii\helpers\Url;
-use app\modules\booking\models\Payout;
+
 /**
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item

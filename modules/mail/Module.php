@@ -2,10 +2,8 @@
 
 namespace app\modules\mail;
 
-use app\components\Event;
-use app\modules\user\models\User;
-use Yii;
 use app\modules\mail\models\Sender;
+use Yii;
 
 class Module extends \yii\base\Module
 {

@@ -2,9 +2,9 @@
 
 namespace app\modules\review\forms;
 
-use yii\base\Model;
-use app\modules\message\models\Message;
 use app\modules\review\models\Review;
+use yii\base\Model;
+
 class RenterReview extends Model
 {
     public $booking;

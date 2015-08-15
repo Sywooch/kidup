@@ -37,6 +37,7 @@ class SiteController extends Controller
 
     public function actionChangeLanguage($lang){
         $l = \app\modules\user\models\Language::findOne($lang);
+
         if($l !== null){
             Yii::$app->session->set('lang', $lang);
         }

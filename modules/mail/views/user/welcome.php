@@ -1,6 +1,6 @@
 <?php
-use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+
 ?>
 
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">

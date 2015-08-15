@@ -1,7 +1,8 @@
 <?php
-use yii\helpers\Url;
-use app\modules\images\components\ImageHelper;
 use app\components\WidgetRequest;
+use app\modules\images\components\ImageHelper;
+use yii\helpers\Url;
+
 ?>
 
 <div class="item card-width col-xs-12 col-sm-6 col-md-4 col-lg-3">

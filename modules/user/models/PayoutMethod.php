@@ -4,8 +4,6 @@ namespace app\modules\user\models;
 
 use Carbon\Carbon;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 class PayoutMethod extends \app\models\base\PayoutMethod
 {

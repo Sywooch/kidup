@@ -442,6 +442,8 @@ class User extends \app\models\base\User implements IdentityInterface
         parent::afterSave($insert, $changedAttributes);
     }
 
+
+
     public function isAdmin()
     {
         return ($this->role === self::ROLE_ADMIN);

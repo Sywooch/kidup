@@ -17,7 +17,6 @@ use app\modules\user\models\LoginForm;
 use kartik\form\ActiveForm;
 use yii\base\Model;
 use yii\base\Widget;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**

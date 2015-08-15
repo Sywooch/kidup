@@ -1,6 +1,7 @@
 <?php
-use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+
 /**
  * @var \yii\web\View $this
  */

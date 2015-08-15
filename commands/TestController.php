@@ -40,4 +40,18 @@ class TestController extends Controller
         var_dump($mm->getErrors(),10,true); exit();
     }
 
+    public function actionTest(){
+        $k = new \Aws\Kms\KmsClient([
+            'region'            => 'us-east-1',
+            'version'           => '2014-11-01',
+            'credentials' => [
+                'key' => 'AKIAJOPRJWDPXZUWVU4A',
+                'secret' => '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',
+            ]
+        ]);
+        var_dump($k->encrypt([
+            'KeyId' => '1aeaff2a-acff-48c3-add8-0b7ee54407f0',
+            'Plaintext' => 'EncryptMeUp!'
+        ]));
+    }
 }

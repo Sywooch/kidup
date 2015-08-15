@@ -1,14 +1,14 @@
 <?php
 namespace app\tests\codeception\functional\item;
 
-use AcceptanceTester;
+use functionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
 /**
- * Acceptance test for the item module.
+ * functional test for the item module.
  *
  * Class ItemCest
- * @package app\tests\codeception\acceptance\item
+ * @package app\tests\codeception\functional\item
  */
 class ItemCest
 {
@@ -16,9 +16,9 @@ class ItemCest
     /**
      * Initialize the test.
      *
-     * @param AcceptanceTester $I
+     * @param functionalTester $I
      */
-    public function _before(AcceptanceTester $I)
+    public function _before(functionalTester $I)
     {
         (new FixtureHelper)->fixtures();
     }

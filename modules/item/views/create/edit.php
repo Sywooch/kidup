@@ -1,9 +1,9 @@
 <?php
 
+use app\modules\images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use app\modules\images\components\ImageHelper;
 
 /**
  * @var \yii\web\View $this

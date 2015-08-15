@@ -1,0 +1,36 @@
+## Customize the test machine
+machine:
+  php:
+    version: 5.6.5
+
+  # Override /etc/hosts
+  hosts:
+    localhost: 127.0.0.1
+    dev.kidup.dk: 127.0.0.1
+
+
+## Customize dependencies
+dependencies:
+  pre:
+    - npm install less clean-css uglify-js -g  # install from a different package manager
+    - pecl install Fileinfo
+    # - bash ./devops/environment/init_test.sh
+    - mv ./config/keys/keys_test.env ./config/keys/keys.env
+    - composer config github-oauth.github.com $CIRCLECI_GIT_OAUTH
+    - composer global require "fxp/composer-asset-plugin:1.0.3"
+  post:
+    - cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
+
+test:
+  override:
+    - cd ~/kidup/tests && php ../vendor/codeception/codeception/codecept run functional
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - php ~/kidup/deployer.phar deploy development
+  staging:
+    branch: develop
+    commands:
+      - php ~/kidup/deployer.phar deploy development

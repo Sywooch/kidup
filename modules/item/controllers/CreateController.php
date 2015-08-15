@@ -17,7 +17,6 @@ use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 

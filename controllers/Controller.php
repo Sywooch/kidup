@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\modules\search\models\IpLocation;
 use app\modules\user\models\Profile;
 use Yii;
 class Controller extends \yii\web\Controller
@@ -37,7 +38,6 @@ class Controller extends \yii\web\Controller
 
     public function __construct($id, $controller)
     {
-        Yii::setAlias('@assets', Yii::getAlias('@web').'/assets_web');
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web').'/index-test.php');
         }
@@ -49,10 +49,6 @@ class Controller extends \yii\web\Controller
         ];
         \Yii::$app->clog->info('page.view', $data);
 
-//        if (YII_ENV == 'test' || YII_ENV == 'dev') {
-//            Yii::$app->language = 'en-US';
-//            return parent::__construct($id, $controller);
-//        }
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
@@ -65,7 +61,13 @@ class Controller extends \yii\web\Controller
                     Yii::$app->language = 'da-DK';
                 }
             } else {
-                Yii::$app->language = 'da-DK';
+                $location = IpLocation::get(\Yii::$app->request->getUserIP());
+                if($location['country'] == 'Denmark'){
+                    Yii::$app->language = 'da-DK';
+                }else{
+                    Yii::$app->language = 'en-US';
+                }
+                Yii::$app->session->set('lang', Yii::$app->language);
             }
         }
 

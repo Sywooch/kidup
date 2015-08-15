@@ -11,13 +11,13 @@
 
 namespace app\modules\user\controllers;
 
+use app\controllers\Controller;
 use app\modules\user\Finder;
 use app\modules\user\forms\PostRegistration;
 use app\modules\user\forms\PostRegistrationProfile;
 use app\modules\user\forms\Registration;
 use app\modules\user\models\User;
 use yii\base\Model;
-use app\controllers\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

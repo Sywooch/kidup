@@ -4,7 +4,6 @@ namespace app\modules\mail\models;
 
 use app\modules\message\models\Message;
 use Carbon\Carbon;
-use League\Flysystem\Filesystem;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;

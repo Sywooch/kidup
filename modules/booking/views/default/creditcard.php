@@ -1,6 +1,6 @@
 <?php
-use yii\bootstrap\Modal;
 use app\modules\images\components\ImageHelper;
+use yii\bootstrap\Modal;
 
 /*
  * @var yii\web\View $this

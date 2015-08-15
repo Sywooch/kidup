@@ -32,47 +32,11 @@ class SearchCest
      */
     public function checkFormExists(FunctionalTester $I)
     {
-        $I->wantTo('ensure that the item search form exists');
-        ItemSearchPage::openBy($I);
-        $I->canSeeElement('#itemSearch form[name=itemSearch]');
-    }
-
-    /**
-     * Check whether the query input exists.
-     *
-     * @param FunctionalTester $I
-     */
-    public function checkQueryInputExists(FunctionalTester $I)
-    {
         $I->wantTo('ensure that the search term input field exists');
         ItemSearchPage::openBy($I);
-        $I->canSeeElement('#itemSearch input[name=query]');
+        $I->canSeeElement('#refineQuery > div > input');
+        $I->canSeeElement('#price-slider');
     }
 
-    /**
-     * Check whether on default all items are shown (on the default view).
-     *
-     * @param FunctionalTester $I
-     */
-    public function checkNumberOfItemsDefault(FunctionalTester $I)
-    {
-        $I->wantTo('ensure that all the items are shown on the default view');
-        ItemSearchPage::openBy($I);
-        $numItems = Item::find()->count();
-        $I->canSeeNumberOfElements('#itemSearch .results-default .item', $numItems);
-    }
-
-    /**
-     * Check whether on default all items are shown (on the modal view).
-     *
-     * @param FunctionalTester $I
-     */
-    public function checkNumberOfItemsModal(FunctionalTester $I)
-    {
-        $I->wantTo('ensure that all the items are shown on the modal view');
-        ItemSearchPage::openBy($I);
-        $numItems = Item::find()->count();
-        $I->canSeeNumberOfElements('#itemSearch .results-modal .item', $numItems);
-    }
 
 }

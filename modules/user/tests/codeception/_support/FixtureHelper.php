@@ -2,22 +2,8 @@
 
 namespace app\modules\user\tests\codeception\_support;
 
-use app\tests\codeception\fixtures\ConversationFixture;
-use app\tests\codeception\fixtures\ItemFixture;
-use app\tests\codeception\fixtures\ItemHasCategoryFixture;
-use app\tests\codeception\fixtures\ItemHasMediaFixture;
-use app\tests\codeception\fixtures\LocationFixture;
-use app\tests\codeception\fixtures\MediaFixture;
-use app\tests\codeception\fixtures\MessageFixture;
-use app\tests\codeception\fixtures\PayinFixture;
-use app\tests\codeception\fixtures\PayoutMethodFixture;
-use app\tests\codeception\fixtures\ProfileFixture;
-use app\tests\codeception\fixtures\SettingFixture;
-use app\tests\codeception\fixtures\TokenFixture;
 use Codeception\Module;
 use Codeception\TestCase;
-use app\tests\codeception\fixtures\UserFixture;
-
 use yii\test\FixtureTrait;
 
 class FixtureHelper extends Module

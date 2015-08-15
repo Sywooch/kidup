@@ -1,6 +1,6 @@
 <?php
-use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Url;
 
 
 \app\modules\item\assets\ListAsset::register($this);

@@ -4,35 +4,45 @@ require 'recipe/common.php';
 date_default_timezone_set("Europe/Amsterdam");
 
 
-$keyFile = __DIR__ . '/config/keys.env';
+$keyFile = __DIR__ . '/config/keys/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 
 // verify if keys are actually set - otherwise deployer will say it works while it doesn't
-if(empty($keys['main_server_password'])){
-    echo "Deployment keys not set, check keys.env"; exit();
-}
+
 /////////////////////////////////////////////// DEPLOY API ///////////////////////////////////////////
 
-server('production-primary', '31.187.70.130', 22)
-    ->path('/var/www/')
-    ->user('root', $keys['main_server_password']);
+if(getenv('CIRCLECI_TEST_PASSWORD') != false){
+    server('production-primary', '31.187.70.130', 22)
+        ->path('/var/www/')
+        ->user('root');
 
-server('test', '178.62.234.114', 22)
-    ->path('/var/www/')
-    ->user('root', $keys['test_server_password']);
+    server('test', '178.62.234.114', 22)
+        ->path('/var/www/')
+        ->user('root', getenv('CIRCLECI_TEST_PASSWORD'));
+}else{
+    server('production-primary', '31.187.70.130', 22)
+        ->path('/var/www/')
+        ->user('root')
+        ->pubKey();
+
+    server('test', '178.62.234.114', 22)
+        ->path('/var/www/')
+        ->user('root')
+        ->pubKey();
+}
 
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'master'), true);
 
-set('repository', 'https://'.$keys['git_repo_username'].':'.$keys['git_repo_password'].'@github.com/esquire900/kidup.git');
+$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
+set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900/kidup.git');
 
-task('deploy:vendors', function () {
-    global $keys;
+task('deploy:vendors', function () use ($repo_password) {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
     run("curl -sS https://getcomposer.org/installer | php");
-    run("php composer.phar config github-oauth.github.com ".$keys['github_oauth']);
+    run("php composer.phar config github-oauth.github.com ".$repo_password);
     run("php composer.phar install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
@@ -56,6 +66,10 @@ task('deploy:update_database', function () {
 task('deploy:minify_assets', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
+    // converts all assets to make sure everything is preparsed into assets
+    run('sudo php yii asset config/assets/assets-all.php config/assets/assets-all-def.php');
+
+    // minify the main bulk into a minified bundle
     run('sudo php yii asset config/assets/assets.php config/assets/assets-prod.php');
 })->desc('Minifying assets');
 

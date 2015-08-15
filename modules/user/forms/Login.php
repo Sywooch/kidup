@@ -12,8 +12,8 @@
 namespace app\modules\user\forms;
 
 use app\modules\user\Finder;
-use yii\base\Model;
 use app\modules\user\helpers\Password;
+use yii\base\Model;
 
 /**
  * LoginForm get user's login and password, validates them and logs the user in. If user has been blocked, it adds

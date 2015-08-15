@@ -2,8 +2,8 @@
 
 namespace app\modules\review\forms;
 
-use yii\base\Model;
 use app\modules\review\models\Review;
+use yii\base\Model;
 
 class OwnerReview extends Model
 {

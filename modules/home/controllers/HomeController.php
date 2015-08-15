@@ -2,8 +2,6 @@
 
 namespace app\modules\home\controllers;
 
-use app\components\Cache;
-use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;

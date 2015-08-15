@@ -1,8 +1,9 @@
 <?php
 
+use app\components\ViewHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\components\ViewHelper;
+
 /**
  * @var yii\web\View $this
  * @var app\modules\user\models\User $user

@@ -6,13 +6,12 @@ use app\components\Event;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
 use app\modules\item\models\Item;
+use app\modules\mail\models\Mailer;
 use app\modules\message\models\Message;
-use app\modules\review\models\Review;
 use app\modules\user\models\User;
+use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
-use Yii;
-use app\modules\mail\models\Mailer;
 
 class Bootstrap implements BootstrapInterface
 {

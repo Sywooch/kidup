@@ -1,7 +1,7 @@
 <?php
+use app\modules\booking\models\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
-use \app\modules\booking\models\Booking;
 
 /**
  * @var \app\modules\booking\models\Booking $model

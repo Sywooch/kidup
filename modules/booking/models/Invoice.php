@@ -2,13 +2,11 @@
 
 namespace app\modules\booking\models;
 
-use app\modules\message\models\Conversation;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Json;
-use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "Booking".

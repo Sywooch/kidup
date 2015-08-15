@@ -2,7 +2,7 @@
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 $components = require(__DIR__ . '/components.php');
-$keyFile = __DIR__ . '/../config/keys.env';
+$keyFile = __DIR__ . '/../config/keys/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 $config = [
@@ -81,6 +81,9 @@ if (YII_ENV_DEV) {
     ];
     $config['modules']['gii']['generators'] = [
         'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
+    ];
+    $config['modules']['utility'] = [
+        'class' => 'c006\utility\migration\Module',
     ];
 }
 

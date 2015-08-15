@@ -33,8 +33,8 @@ settings:
 config:
     # the entry script URL (with host info) for functional and acceptance tests
     # PLEASE ADJUST IT TO THE ACTUAL ENTRY SCRIPT URL
-    test_entry_url: http://192.168.33.99/web/index-test.php
+    test_entry_url: http://192.168.33.99/index-test.php
 coverage:
     enabled: true
     remote: false
-    c3_url: 'http://192.168.33.99/web/index-test.php'
+    c3_url: 'http://192.168.33.99/index-test.php'
