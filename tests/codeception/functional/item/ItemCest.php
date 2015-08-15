@@ -4,6 +4,8 @@ namespace app\tests\codeception\functional\item;
 use functionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
+// todo add publishing test
+
 /**
  * functional test for the item module.
  *
