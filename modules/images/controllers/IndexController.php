@@ -16,7 +16,7 @@ class IndexController extends \app\controllers\Controller
     public function actionIndex($id, $w = null, $h = null, $q = null, $fit = null, $folder1 = null, $folder2 = null, $folder3 = null, $fm=null){
 
         $model = DynamicModel::validateData(compact('id', 'w', 'h', 'q', 'fit', 'folder1', 'folder2', 'folder3', 'fm'),[
-            [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 32],
+            [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 52],
             [['w', 'h'], 'integer', 'min' => 1, 'max' => 5000],
             [['q'], 'integer', 'min' => 1, 'max' => 100],
             ['fm', 'in', 'range' => ['jpg', 'pjpg', 'png']],
