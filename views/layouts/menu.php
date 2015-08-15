@@ -26,7 +26,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <?= ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
+                    <?= isset($this->context->transparentNav) ? ImageHelper::img('kidup/logo/horizontal-white.png', ['h' => 46], ['style' => 'padding-top:5px;'])
+                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
                 </a>
             </div>
 
