@@ -13,14 +13,16 @@ use yii\helpers\Json;
 /**
  * The item controller of the search module is used for handling actions related to searching items.
  */
-class SearchController extends Controller {
+class SearchController extends Controller
+{
 
     /**
      * Define the behaviour.
      *
      * @return array
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -42,7 +44,8 @@ class SearchController extends Controller {
      *
      * @return string
      */
-    public function actionIndex($q = '', $p = 0) {
+    public function actionIndex($q = '', $p = 0)
+    {
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
         $this->noContainer = true;
@@ -58,7 +61,7 @@ class SearchController extends Controller {
             $q = 'query|' . $params['query'];
         }
 
-        $results = Cache::data('searchResults'.$p.$q, function() use ($p, $q, $model){
+        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
             // load the item search model
 
             // load the parameters
@@ -82,11 +85,12 @@ class SearchController extends Controller {
      *
      * @return string
      */
-    public function actionResults($q, $p = 0) {
+    public function actionResults($q, $p = 0)
+    {
         // load the item search model
         $model = new SearchModel();
 
-        $results = Cache::data('searchResults'.$p.$q, function() use ($p, $q, $model){
+        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
             // load the item search model
 
             // load the parameters
@@ -104,7 +108,8 @@ class SearchController extends Controller {
         ]);
     }
 
-    public function actionCategories(){
+    public function actionCategories()
+    {
         return Json::encode(Category::find()->asArray()->all());
     }
 
