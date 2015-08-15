@@ -128,4 +128,5 @@ tillid.',
     'step 1 out of 2' => 'Skridt 1 ud af 2',
     'step 2 out of 2' => 'Skridt 2 ud af 2',
     'week' => 'uge',
+    'Related products' => 'Relaterede produkter',
 ];
