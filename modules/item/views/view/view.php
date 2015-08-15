@@ -56,7 +56,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             </p>
                         </div>
                     </div>
-                    <!--This part is hidden for now. Then it's easiere to publish a new product-->
+
+                    <!--This part is hidden for now. Then it's easier to publish a new product-->
                     <div class="card card-product">
                         <div class="content">
                             <h4 class="category"><b>
