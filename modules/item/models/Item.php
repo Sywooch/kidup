@@ -230,4 +230,5 @@ class Item extends \app\models\base\Item
             ->asArray()
             ->viaTable('item_has_category', ['item_id' => 'id']);
     }
+
 }
