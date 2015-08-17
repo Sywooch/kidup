@@ -4,7 +4,7 @@ $this->title = $title;
 ?>
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 <section class="section" id="settings">
-    <div class=" site-area-header">
+    <div class=" site-area-header hidden-xs">
         <div class="container">
             <div class="row">
                 <div class="col-sm-7 col-md-offset-1">

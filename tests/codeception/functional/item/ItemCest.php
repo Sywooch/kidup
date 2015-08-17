@@ -25,6 +25,13 @@ class ItemCest
         (new FixtureHelper)->fixtures();
     }
 
+    public function checkItemView(functionalTester $I)
+    {
+        $I->amOnPage('/item/1');
+        $I->see('This is pretty damn awesome!');
+        $I->see('Test Item');
+    }
+
 }
 
 ?>

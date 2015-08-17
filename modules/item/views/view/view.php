@@ -159,7 +159,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <?php
                     if (count($related_items) > 0) {
                         ?>
-                        <div class="card">
+                        <div class="">
                             <div class="content">
                                 <h4 class="category"><b><?= Yii::t('item', 'Related products') ?></b></h4>
 
