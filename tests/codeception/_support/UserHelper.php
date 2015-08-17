@@ -12,7 +12,7 @@ class UserHelper
     /**
      * Login a user.
      *
-     * @param $I FunctionalTester the tester
+     * @param $I FunctionalTester|AcceptanceTester the tester
      * @param $user string the username of the user
      * @param $password string the password of the user
      */

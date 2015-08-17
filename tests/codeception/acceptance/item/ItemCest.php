@@ -23,6 +23,10 @@ class ItemCest
         (new FixtureHelper)->fixtures();
     }
 
+    public function testBooking(AcceptanceTester $I) {
+        UserHelper::login($I, 'simon@kidup.dk', 'testtest');
+    }
+
 }
 
 ?>

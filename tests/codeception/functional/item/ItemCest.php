@@ -30,7 +30,7 @@ class ItemCest
         $I->canSee('Create new');
         $I->click('Create new');
         $I->fillField('#create-item-name', 'New item name');
-
+        // @todo
     }
 
 }
