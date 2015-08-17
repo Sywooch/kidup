@@ -17,8 +17,8 @@ defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 
 require(__DIR__ . '/vendor/autoload.php');
 
-$keyFile = __DIR__ . '/config/keys/keys.env';
-$keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+include_once (__DIR__ . '/config/keys/load_keys.php'); // sets the var keys
+
 defined('YII_DEBUG') or define('YII_DEBUG', $keys['yii_debug']); // bool
 defined('YII_ENV') or define('YII_ENV', $keys['yii_env']); // dev, test, prod, stage
 defined('YII_CACHE') or define('YII_CACHE', $keys['yii_cache']); // use caching
