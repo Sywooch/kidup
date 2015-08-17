@@ -60,7 +60,7 @@ class LoginCest
     public function checkLogin(functionalTester $I)
     {
         $I->wantTo('ensure that I can login');
-        UserHelper::login('simon@kidup.dk', 'testtest');
+        UserHelper::login($I, 'simon@kidup.dk', 'testtest');
     }
 
 }
