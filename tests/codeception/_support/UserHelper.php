@@ -2,6 +2,7 @@
 
 namespace app\tests\codeception\_support;
 use app\modules\user\forms\Login;
+use app\modules\user\models\User;
 use FunctionalTester;
 use AcceptanceTester;
 
@@ -36,12 +37,8 @@ class UserHelper
      * @throws \yii\base\InvalidConfigException
      */
     public static function loginAcceptance($user, $password) {
-        $model = \Yii::createObject(Login::className());
-        $model->load([
-            'login' => $user,
-            'password' => $password
-        ]);
-        $model->login();
+        $user = User::find()->where(['email' => $user])->one();
+        \Yii::$app->user->login($user);
     }
 
 }
