@@ -88,7 +88,7 @@ class SearchController extends Controller
         // load the item search model
         $model = new SearchModel();
 
-        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
+//        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
             // load the item search model
 
             // load the parameters
@@ -97,8 +97,8 @@ class SearchController extends Controller
             $model->setPage($p);
 
             // load the search results
-            return $model->findItems();
-        });
+            $results = $model->findItems();
+//        });
 
         // render the results
         return $this->renderPartial('results', [
