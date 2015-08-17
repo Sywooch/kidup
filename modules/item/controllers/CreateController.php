@@ -64,6 +64,9 @@ class CreateController extends Controller
 
     public function actionEdit($id, $button = null)
     {
+        if (isset($_POST['button'])) {
+            $button = $_POST['button'];
+        }
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
             throw new NotFoundHttpException('Item does not exist');

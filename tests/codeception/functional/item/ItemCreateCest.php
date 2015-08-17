@@ -101,15 +101,20 @@ class ItemCreateCest
         $I->checkOption('#edit-item-rules');
         $I->seeCheckboxIsChecked('#edit-item-rules');
 
-        $I->click("Publish");
+        $I->click("Publish", "#submit-publish");
+        $I->see('This item belongs to you');
 
         $I->seeRecord(Item::className(), [
             'name' => 'Another item name',
-            'description' => 'Some random item_description'
+            'description' => 'Some random item_description',
+            'is_available' => 1,
+            'price_week' => 500
         ]);
-        //$item = Item::find()->where(['name' => 'Another item name'])->one();
-        //var_dump($item);
-        //die();
+
+        $item = Item::find()->where(['name' => 'Another item name'])->one();
+        $I->seeRecord(ItemHasMedia::className(), [
+            'item_id' => $item->id
+        ]);
     }
 }
 
