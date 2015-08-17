@@ -1,6 +1,7 @@
 <?php
 namespace app\tests\codeception\functional\item;
 
+use app\tests\codeception\_support\UserHelper;
 use functionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
@@ -15,22 +16,19 @@ use app\tests\codeception\_support\FixtureHelper;
 class ItemCest
 {
 
-    /**
-     * Initialize the test.
-     *
-     * @param functionalTester $I
-     */
-//    public function _before(functionalTester $I)
-//    {
-//        (new FixtureHelper)->fixtures();
-//    }
-
     public function checkItemView(functionalTester $I)
     {
         $I->amOnPage('/item/1');
         $I->see('This is pretty damn awesome!');
         $I->see('Test Item');
     }
+
+    public function checkCreateNewItem(FunctionalTester $I) {
+        UserHelper::login($I, 'simon@kidup.dk', 'testtest');
+        $I->amOnPage('/item/list');
+        $I->canSee('Create new');
+    }
+
 }
 
 ?>
