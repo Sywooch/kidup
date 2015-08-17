@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\mail\mails;
 
+use app\modules\mail\models\MailAccount;
 use app\modules\mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
@@ -12,11 +13,26 @@ class Conversation extends Mailer
      * @param \app\modules\message\models\Message $message
      * @return bool
      */
-    public function newMessage($message)
+    public function newMessage(\app\modules\message\models\Message $message)
     {
+        // try and find the correct matching mail_account
+        $mailAccount = MailAccount::find()->where([
+            'conversation_id' => $message->conversation_id,
+            'user_id' => $message->sender_user_id])->one();
+        $senderName = '';
+        if($mailAccount !== null){
+            $from = $mailAccount->name."@reply.kidup.dk";
+            $senderName = $message->senderUser->profile->first_name;
+        }else{
+            $from = "info@kidup.dk";
+        }
+
+
         return $this->sendMessage([
             'email' => $message->receiverUser->email,
             'subject' => "RE: {$message->conversation->title}",
+            'sender' => $from,
+            'senderName' => $senderName,
             'type' => self::MESSAGE,
             'params' => [
                 'message' => $message->message,
@@ -29,5 +45,4 @@ class Conversation extends Mailer
             ]
         ]);
     }
-
 }
