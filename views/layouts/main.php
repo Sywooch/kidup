@@ -40,7 +40,7 @@ BootstrapPluginAsset::register($this);
 
     <?= $this->render('menu'); ?>
 
-    <div id="wrapper" style="">
+    <div id="wrapper">
         <?php
         // this is the notification plugin, showing all errors
         foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
