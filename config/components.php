@@ -2,7 +2,7 @@
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 $keyFile = __DIR__ . '/../config/keys/keys.env';
-$keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
 $components = [
     'sendGrid' => [
