@@ -56,7 +56,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             </p>
                         </div>
                     </div>
-                    <!--This part is hidden for now. Then it's easiere to publish a new product-->
+
+                    <!--This part is hidden for now. Then it's easier to publish a new product-->
                     <div class="card card-product">
                         <div class="content">
                             <h4 class="category"><b>
@@ -154,6 +155,29 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             'items' => $images,
                         ]); ?>
                     </div>
+
+                    <?php
+                    if (count($related_items) > 0) {
+                        ?>
+                        <div class="card">
+                            <div class="content">
+                                <h4 class="category"><b><?= Yii::t('item', 'Related products') ?></b></h4>
+
+                                <div class="related">
+                                    <div class="row">
+                                        <?php foreach ($related_items as $item) {
+                                            echo $this->render('item', [
+                                                'model' => $item
+                                            ]);
+                                        } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
                 </div>
                 <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center; margin-top: 20px;">
                     <?= \app\components\WidgetRequest::request(\app\components\WidgetRequest::USER_PROFILE_IMAGE,

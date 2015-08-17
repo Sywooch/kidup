@@ -5,8 +5,8 @@ use yii\test\ActiveFixture;
 
 class Fixture extends ActiveFixture
 {
-    public function unload(){
-        $this->unload();
-        parent::unload();
-    }
+//    public function unload(){
+//        $this->unload();
+//        parent::unload();
+//    }
 }

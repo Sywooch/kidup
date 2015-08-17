@@ -10,20 +10,20 @@ use yii\widgets\ActiveForm;
     ]
 ]);
 ?>
-<!-- this is the date dropbown field-->
+    <!-- this is the date dropbown field-->
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => false,
     'method' => 'post'
 ]); ?>
-<div class="col-sm-2 col-xs-6 col-md-offset-1 ">
-    <?php
-    // pass available dates to javascript
-    $this->registerJs(new JsExpression('window.datesRents = ' . json_encode($periods) . ';'));
-    echo $form->field($model, 'dateFrom')
-        ->label(false)
-        ->widget(DatePicker::className(), [
-            'clientOptions' => [
-                'beforeShowDay' => new JsExpression(<<<JS
+    <div class="col-sm-2  col-md-offset-1 ">
+        <?php
+        // pass available dates to javascript
+        $this->registerJs(new JsExpression('window.datesRents = ' . json_encode($periods) . ';'));
+        echo $form->field($model, 'dateFrom')
+            ->label(false)
+            ->widget(DatePicker::className(), [
+                'clientOptions' => [
+                    'beforeShowDay' => new JsExpression(<<<JS
                         function(date) {
                             var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
                             if(date < tomorrow){
@@ -39,34 +39,34 @@ use yii\widgets\ActiveForm;
                             return [true];
                         }
 JS
-                ),
-                'onSelect' => new JsExpression('function(date){
+                    ),
+                    'onSelect' => new JsExpression('function(date){
                             window.startDate = date;
                             $("#create-booking-datefrom").datepicker("hide");
                             setTimeout(function(){
                                 $("#create-booking-dateto").datepicker("show");
                             },100);
                         }')
-            ],
-            'options' => [
-                'class' => 'form-control',
-                'placeholder' => \Yii::t('item', 'Receive date')
-            ],
-            'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
-            'dateFormat' => 'dd-MM-yyyy',
+                ],
+                'options' => [
+                    'class' => 'form-control',
+                    'placeholder' => \Yii::t('item', 'Receive date')
+                ],
+                'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
+                'dateFormat' => 'dd-MM-yyyy',
 
-        ])
-    ?>
-</div>
-<div class="col-sm-2 col-xs-6">
-    <?php
-    echo $form->field($model, 'dateTo',
-        [
-            'options' => ['class' => 'drp-container form-group'],
-        ])->label(false)->widget(DatePicker::className(),
-        [
-            'clientOptions' => [
-                'beforeShowDay' => new JsExpression(<<<JS
+            ])
+        ?>
+    </div>
+    <div class="col-sm-2 ">
+        <?php
+        echo $form->field($model, 'dateTo',
+            [
+                'options' => ['class' => 'drp-container form-group'],
+            ])->label(false)->widget(DatePicker::className(),
+            [
+                'clientOptions' => [
+                    'beforeShowDay' => new JsExpression(<<<JS
                             function(date) {
                             var startdate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
                             var val = $('#create-booking-datefrom').val().split('-');
@@ -87,18 +87,19 @@ JS
                             return [true];
                             }
 JS
-                )
-            ],
-            'options' => [
-                'class' => 'form-control',
-                'placeholder' => \Yii::t('item', 'Return date')
-            ],
-            'dateFormat' => 'dd-MM-yyyy',
-            'language' => Yii::$app->language == 'en' ? 'en - NZ' : Yii::$app->language,
-        ])
-    ?>
-</div>
-<div class="col-sm-4 col-lg-3">
-    <?= Html::submitButton('Start booking!', ['class' => 'btn btn-danger btn-fill', 'style' =>  'padding-top: 5px']); ?>
-</div>
+                    )
+                ],
+                'options' => [
+                    'class' => 'form-control',
+                    'placeholder' => \Yii::t('item', 'Return date')
+                ],
+                'dateFormat' => 'dd-MM-yyyy',
+                'language' => Yii::$app->language == 'en' ? 'en - NZ' : Yii::$app->language,
+            ])
+        ?>
+    </div>
+    <div class="col-sm-4 col-lg-3">
+        <?= Html::submitButton('Start booking!',
+            ['class' => 'btn btn-danger btn-fill', 'style' => 'padding-top: 5px']); ?>
+    </div>
 <?php ActiveForm::end(); ?>

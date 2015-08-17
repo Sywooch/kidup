@@ -7,6 +7,7 @@ use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Item;
+use app\modules\item\models\ItemRecommender;
 use yii\bootstrap\Html;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -82,6 +83,9 @@ class ViewController extends Controller
             ]);
         }
 
+        // find which items are related
+        $related_items = $item->getRecommendedItems($item->id, 3);
+
         $res = [
             'model' => $item,
             'location' => $location,
@@ -92,7 +96,8 @@ class ViewController extends Controller
                 'currency' => $item->currency->forex_name
             ],
             'bookingForm' => $bookingForm,
-            'show_modal' => $new_publish
+            'show_modal' => $new_publish,
+            'related_items' => $related_items
         ];
 
         return $this->render('view', $res);

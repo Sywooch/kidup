@@ -41,6 +41,10 @@ class Pages extends Component
         return $res->json();
     }
 
+    public function getPages(){
+        return $this->pages;
+    }
+
     public function url($slug){
         if(is_int($slug)){
             $slug = $this->pages[$slug];

@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\modules\search\models\IpLocation;
 use app\modules\user\models\Profile;
 use Yii;
+
 class Controller extends \yii\web\Controller
 {
     public $transparentNav;
@@ -39,8 +40,10 @@ class Controller extends \yii\web\Controller
     public function __construct($id, $controller)
     {
         if (YII_ENV == 'test') {
-            Yii::setAlias('@web', Yii::getAlias('@web').'/index-test.php');
+            Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }
+        // this disallows websites to frame kidup
+        \Yii::$app->view->registerMetaTag(['http-equiv' => 'X-FRAME-OPTIONS', 'content' => 'DENY']);
         $data = [
             'referrer' => \Yii::$app->request->referrer,
             'url' => \Yii::$app->request->getUrl(),
@@ -62,9 +65,9 @@ class Controller extends \yii\web\Controller
                 }
             } else {
                 $location = IpLocation::get(\Yii::$app->request->getUserIP());
-                if($location['country'] == 'Denmark'){
+                if ($location['country'] == 'Denmark') {
                     Yii::$app->language = 'da-DK';
-                }else{
+                } else {
                     Yii::$app->language = 'en-US';
                 }
                 Yii::$app->session->set('lang', Yii::$app->language);
@@ -72,7 +75,7 @@ class Controller extends \yii\web\Controller
         }
 
         // set the locale for Carbon
-        \Carbon\Carbon::setLocale(Yii::$app->language[0].\Yii::$app->language[1]);
+        \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
         return parent::__construct($id, $controller);
     }

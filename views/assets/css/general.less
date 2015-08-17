@@ -1,58 +1,65 @@
 @import (reference) "includer.less";
 
 /*General design settings*/
-body{
+body {
   background-color: @white-bg;
 }
-#wrapper{
+
+#wrapper {
   margin-bottom: 90px;
 }
+
 @media only screen and (max-width: 768px) {
-  #wrapper{
+  #wrapper {
     margin-bottom: 0px;
   }
 }
-.btn, button{
-  outline: none!important;
+
+.btn, button {
+  outline: none !important;
 }
-a{
+
+a {
   cursor: pointer;
 }
 
 /*Top area/header area of site*/
-.site-area-header{
+.site-area-header {
   background-color: @primary-color;
-  h2{
-    margin-top:10px;
+  h2 {
+    margin-top: 10px;
     color: @white-color;
-    small{
+    small {
       color: @white-light;
     }
   }
 }
-.site-area-content{
+
+.site-area-content {
 
   margin-top: 40px;
 }
-.checkbox.checked .second-icon{
-  color:@primary-color;
+
+.checkbox.checked .second-icon {
+  color: @primary-color;
 }
+
 .checkbox.checked {
   color: @text-gray;
 }
 
-.form-group{
-  label{
-    color:@text-gray;
+.form-group {
+  label {
+    color: @text-gray;
     opacity: 0.6;
   }
 }
 
-.table-responsive{
-  border: 1px solid transparent!important;
+.table-responsive {
+  border: 1px solid transparent !important;
 }
 
-.table .td-actions .btn{
+.table .td-actions .btn {
   opacity: 0.8;
   filter: alpha(opacity=80);
 }
@@ -66,12 +73,13 @@ a{
   margin-left: 0px;
 }
 
-section, .section{
-  margin-top:70px;
+section, .section {
+  margin-top: 70px;
 }
+
 @media only screen and (max-width: 768px) {
-  section, .section{
-    margin-top:25px;
+  section, .section {
+    margin-top: 25px;
   }
 }
 
@@ -82,5 +90,23 @@ a {
   &:hover,
   &:focus {
     color: @primary-color;
+  }
+}
+
+// cookies popup thingy
+.cc_banner-wrapper {
+  .cc_container {
+    background-color: rgb(51, 51, 51);
+    height: 50px;
+    font-size: 16px;
+    margin-top: 2px;
+    padding: 10px 10vw;
+    .cc_btn {
+      color: white;
+      background-color: @primary-color;
+    }
+    .cc_message {
+      color: white;
+    }
   }
 }

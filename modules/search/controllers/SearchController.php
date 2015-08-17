@@ -61,17 +61,15 @@ class SearchController extends Controller
             $q = 'query|' . $params['query'];
         }
 
-        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
-            // load the item search model
+        // load the item search model
 
-            // load the parameters
-            $model->loadParameters($model->parseQueryString($q));
+        // load the parameters
+        $model->loadParameters($model->parseQueryString($q));
 
-            $model->setPage($p);
+        $model->setPage($p);
 
-            // load the search results
-            return $model->findItems();
-        });
+        // load the search results
+        $results = $model->findItems();
 
         // render the index
         return $this->render('index', [

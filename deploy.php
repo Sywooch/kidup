@@ -29,7 +29,7 @@ if(getenv('CIRCLECI_TEST_PASSWORD') != false){
     server('test', '178.62.234.114', 22)
         ->path('/var/www/')
         ->user('root')
-        ->pubKey();
+        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
 stage('development', array('test'), ['branch'=>'develop'], true);
@@ -53,7 +53,7 @@ task('deploy:folder_permissions', function () {
     run("php init --env=Production --overwrite=All");
     run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
     set('shared_dirs', ['runtime', 'uploads']);
-    set('shared_files', ['config/keys.env']);
+    set('shared_files', ['config/keys/keys.env']);
     set('writeable_dirs', ['web/assets', 'uploads', 'runtime']);
 })->desc('Setting folder permissions');
 
