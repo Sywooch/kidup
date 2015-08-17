@@ -109,10 +109,6 @@ $this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name
                         ]
                     );
                     ?>
-                    <div class="col-md-12">
-
-
-                    </div>
                 </div>
             </div>
         </div>

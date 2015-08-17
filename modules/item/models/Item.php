@@ -34,7 +34,8 @@ class Item extends \app\models\base\Item
         return array_merge(parent::rules(), [
             [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required'],
             [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
-            [['condition'], 'in', 'range' => [0, 1, 2]]
+            [['condition'], 'in', 'range' => [0, 1, 2]],
+            [['description'], 'string', 'min' => 5]
         ]);
     }
 
