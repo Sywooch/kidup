@@ -13,7 +13,7 @@ use yii\helpers\Url;
                class="form-control menubar-search-query"
                placeholder="<?= \Yii::t('item', 'What are you looking for?') ?>">
     </div>
-    <button class="btn btn-fill btn-danger" type="button">
+    <button class="btn btn-fill btn-danger" type="submit">
         <?= Yii::t("item", "Search") ?>
     </button>
 </form>
