@@ -13,7 +13,7 @@ use app\tests\codeception\_support\FixtureHelper;
  * Class ItemCest
  * @package app\tests\codeception\functional\item
  */
-class ItemCest
+class ItemViewCest
 {
 
     public function checkItemView(functionalTester $I)
@@ -22,17 +22,6 @@ class ItemCest
         $I->see('This is pretty damn awesome!');
         $I->see('Test Item');
     }
-
-    public function checkCreateNewItem(FunctionalTester $I) {
-        $I->wantTo('ensure that I can create a new item');
-        UserHelper::login($I, 'simon@kidup.dk', 'testtest');
-        $I->amOnPage('/item/list');
-        $I->canSee('Create new');
-        $I->click('Create new');
-        $I->fillField('#create-item-name', 'New item name');
-        // @todo
-    }
-
 }
 
 ?>
