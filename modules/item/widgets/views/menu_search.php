@@ -6,7 +6,7 @@ use yii\helpers\Url;
 ?>
 
 <!-- Search button -->
-<form class="form-inline hidden-xs" action="<?= Url::base(true) ?>/search" method="get">
+<form class="form-inline hidden-xs" action="<?= Url::base('@web/search') ?>" method="get">
     <div class="form-group">
         <input type="text"
                name="query"
