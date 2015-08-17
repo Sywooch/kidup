@@ -42,6 +42,7 @@ class Mailer
     public function __construct()
     {
         $this->sender = 'info@kidup.dk';
+        $this->senderName = 'KidUp';
         $this->viewPath = '@app/modules/mail/views';
     }
 
@@ -65,10 +66,17 @@ class Mailer
             $params['urls'][$name] = MailUrl::to($url, $logId);
         }
 
-        $params['receivingProfile'] = Profile::find(['user_id' => User::findOne(['email' => $data['email']])->id])
+        $params['receivingProfile'] = Profile::find()->where(['user_id' => User::findOne(['email' => $data['email']])->id])
             ->select('first_name')->asArray()->one();
         $params['urls']['mailInBrowser'] = MailUrl::to(Url::to('@web/mail/' . $logId, true), $logId);
         $params['urls']['changeSettings'] = MailUrl::to(Url::to('@web/user/settings/profile', true), $logId);
+
+        if(isset($data['sender'])){
+            $this->sender = $data['sender'];
+        }
+        if(isset($data['sender_name'])){
+            $this->senderName = $data['senderName'].' (KidUp)';
+        }
 
         $log = MailLog::create($data['type'], $data['email'], $params, $logId);
 
@@ -76,7 +84,8 @@ class Mailer
         \Yii::$app->params['tmp_email_params'] = $params;
         return $mailer->compose($view, $params)
             ->setTo($data['email'])
-            ->setFrom($this->sender)
+            ->setReplyTo([$this->sender => $this->senderName])
+            ->setFrom(['info@kidup.dk' => $this->senderName])
             ->setSubject($data['subject'])
             ->send();
     }
