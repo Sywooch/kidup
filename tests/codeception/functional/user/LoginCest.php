@@ -61,7 +61,6 @@ class LoginCest
     {
         $I->wantTo('ensure that I can login');
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
-        $I->canSee('Log Out');
     }
 
 }

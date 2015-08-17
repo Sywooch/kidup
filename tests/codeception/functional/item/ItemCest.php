@@ -24,9 +24,13 @@ class ItemCest
     }
 
     public function checkCreateNewItem(FunctionalTester $I) {
+        $I->wantTo('ensure that I can create a new item');
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
         $I->amOnPage('/item/list');
         $I->canSee('Create new');
+        $I->click('Create new');
+        $I->fillField('#create-item-name', 'New item name');
+
     }
 
 }
