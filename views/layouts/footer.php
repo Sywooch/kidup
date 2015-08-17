@@ -5,7 +5,7 @@ use yii\helpers\Url;
 ?>
 
 <!--Kid Up footer-->
-<footer id="footer" class="row">
+<footer id="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
