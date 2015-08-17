@@ -110,3 +110,18 @@ a {
     }
   }
 }
+
+.form-control{
+  .has-success &{
+    color: @primary-color;
+  }
+  .has-success &:focus{
+    border-color: @primary-color;
+  }
+  .has-error &{
+    color: @danger-color;
+  }
+  .has-error &:focus{
+    border-color: @danger-color;
+  }
+}
