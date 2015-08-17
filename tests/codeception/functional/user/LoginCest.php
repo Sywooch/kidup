@@ -1,6 +1,7 @@
 <?php
 namespace app\tests\codeception\functional\user;
 
+use app\tests\codeception\_support\UserHelper;
 use functionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
@@ -25,7 +26,7 @@ class LoginCest
 
     public function checkRegister(functionalTester $I)
     {
-        $I->wantTo('ensure that I can login');
+        $I->wantTo('ensure that I can register');
         $I->amOnPage('/user/register');
         $I->canSeeElement('#register-form-email');
         $I->canSeeElement('#register-form-password');
@@ -59,12 +60,7 @@ class LoginCest
     public function checkLogin(functionalTester $I)
     {
         $I->wantTo('ensure that I can login');
-        $I->amOnPage('/user/login');
-        $I->canSeeElement('#login-form-login');
-        $I->canSeeElement('#login-form-password');
-        $I->fillField('#login-form-login', 'simon@kidup.dk');
-        $I->fillField('#login-form-password', 'testtest');
-        $I->click('Sign in');
+        UserHelper::login('simon@kidup.dk', 'testtest');
     }
 
 }
