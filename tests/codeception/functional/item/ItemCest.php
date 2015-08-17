@@ -20,10 +20,10 @@ class ItemCest
      *
      * @param functionalTester $I
      */
-    public function _before(functionalTester $I)
-    {
-        (new FixtureHelper)->fixtures();
-    }
+//    public function _before(functionalTester $I)
+//    {
+//        (new FixtureHelper)->fixtures();
+//    }
 
     public function checkItemView(functionalTester $I)
     {
@@ -31,7 +31,6 @@ class ItemCest
         $I->see('This is pretty damn awesome!');
         $I->see('Test Item');
     }
-
 }
 
 ?>

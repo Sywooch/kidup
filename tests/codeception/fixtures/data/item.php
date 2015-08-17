@@ -1,6 +1,6 @@
 <?php
 $item = array(
-    'item1' => [
+    [
         'id' => 1,
         'name' => 'Test Item',
         'description' => 'This is pretty damn awesome!',
@@ -16,7 +16,7 @@ $item = array(
         'updated_at' => 1433881019,
         'min_renting_days' => 1,
     ],
-    'item2' => [
+    [
         'id' => 2,
         'name' => 'Test Item 2',
         'description' => 'This is also pretty damn awesome!',
