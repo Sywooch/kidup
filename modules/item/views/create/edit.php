@@ -200,8 +200,8 @@ $this->registerJs("
                                     </small>
                                 </h4>
 
-                                <div class="row" style="margin:0">
-                                    <div class="col-md-7">
+                                <div class="row" >
+                                    <div class="col-md-7" style="padding-left:0">
                                         <b><?= Yii::t("item", "Price suggestions") ?></b>
                                         <br/>
                                         <?= Yii::t("item",

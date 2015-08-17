@@ -2,6 +2,7 @@
 // todo make this a configurable item widget
 use yii\helpers\Url;
 use app\components\WidgetRequest;
+use app\modules\images\components\ImageHelper;
 ?>
 
 <div class="item card-width col-xs-12 col-sm-6 col-md-4">

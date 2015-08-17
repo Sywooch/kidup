@@ -16,7 +16,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
 ?>
 
 <section class="section" id="inbox" style="">
-    <div class="site-area-header">
+    <div class="site-area-header hidden-xs">
         <div class="container">
             <div class="row">
                 <div class="col-sm-10 col-md-offset-1">
