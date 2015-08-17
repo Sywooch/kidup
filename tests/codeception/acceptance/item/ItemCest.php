@@ -3,6 +3,7 @@ namespace app\tests\codeception\acceptance\item;
 
 use AcceptanceTester;
 use app\tests\codeception\_support\FixtureHelper;
+use app\tests\codeception\_support\UserHelper;
 
 /**
  * Acceptance test for the item module.
@@ -21,6 +22,20 @@ class ItemCest
     public function _before(AcceptanceTester $I)
     {
         (new FixtureHelper)->fixtures();
+    }
+
+    public function testBooking(AcceptanceTester $I) {
+        $I->resizeWindow(1024, 500);
+        $from = date('d-m-Y', time() + 24 * 60 * 60);
+        $to = date('d-m-Y', time() + 5 * 24 * 60 * 60);
+        UserHelper::loginAcceptance('simon@kidup.dk', 'testtest');
+        $I->amOnPage('/item/1');
+        $I->fillField('#create-booking-datefrom', $from);
+        $I->fillField('#create-booking-dateto', $to);
+        $I->click('#booking-navbar button[type=submit]');
+        $I->wait(5);
+        $I->canSeeInCurrentUrl('booking');
+        $I->canSeeInCurrentUrl('confirm');
     }
 
 }

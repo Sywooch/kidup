@@ -1,7 +1,7 @@
 <?php
 
 echo json_encode([
-    'staging' => ['root@'.file_get_contents('/vagrant/devops/ansible/test-server/ip.txt')]
+    'staging' => ['ubuntu@52.28.97.213']
 ]);
 
 ?>

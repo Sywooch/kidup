@@ -46,7 +46,7 @@ class ViewController extends Controller
          */
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException("THis item does not exist");
         }
         if ($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id) {
             throw new ForbiddenHttpException("This item is not yet available");

@@ -39,7 +39,9 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
                             <br/>
                             <?= \Yii::t('home', 'With a family near you') ?>
                         </h1>
-                        <h4><?= \Yii::t('home', 'KidUp is your online parent-to-parent marketplace.') ?></h4>
+                        <h4 class="hidden-xs hidden-sm">
+                            <?= \Yii::t('home', 'KidUp is your online parent-to-parent marketplace.') ?>
+                        </h4>
 
                     </div>
                 </div>
@@ -144,7 +146,7 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
         </div>
 
         <!--Owl area-->
-        <div id="owl-kidup" class="owl-carousel">
+        <div id="owl-kidup" class="owl-carousel hidden-xs">
             <div class="item">
                 <div id="content-owl" class="expert"
                      style="<?= ImageHelper::bgImg('kidup/home/slider/approved-expert.png',
@@ -182,7 +184,7 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
                      style="<?= ImageHelper::bgImg('kidup/home/slider/share.png', ['q' => 70, 'w' => 1600]) ?>">
                     <div class="container ">
                         <div class="row values">
-                            <div class="col-sm-8 col-sm-offset-2 text-center">
+                            <div class="col-xs-8 col-xs-offset-2 text-center">
                                 <h1><?= Yii::t("home", "Share the world") ?></h1>
                                 <h4><?= \Yii::t('home', 'Together we can teach our children to share and reuse.') ?>
                                 </h4>
@@ -194,13 +196,13 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
         </div>
 
         <!--Area for story-->
-        <Section id="content-stories">
+        <section id="content-stories">
             <div class="container">
-                <div class="row ">
-                    <div class="col-xs-4 col-sm-4 col-sm-offset-1 text-center">
-                        <?= ImageHelper::img('kidup/home/mom-in-balloon.png', ['w' => 400]) ?>
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-1 hidden-xs text-center">
+                        <?= ImageHelper::img('kidup/home/mom-in-balloon.png') ?>
                     </div>
-                    <div class="col-sm-6 col-sm-offset-1 ">
+                    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
                         <h4>Sabine Clasen</h4>
 
                         <h3><?= \Yii::t('home', 'We can help other families') ?></h3>
@@ -216,19 +218,21 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
                     </div>
                 </div>
             </div>
-        </Section>
+        </section>
         <section id="signup">
-            <div class="row ">
-                <div class="col-sm-12 text-center">
-                    <h4><?= \Yii::t('home', 'Become a part of the KidUp familiy') ?>
-                        <a href="<?= Url::to('@web/user/register') ?>">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12 text-center">
+                        <h4><?= \Yii::t('home', 'Become a part of the KidUp familiy') ?>
+                            <a href="<?= Url::to('@web/user/register') ?>">
+                            </a>
                             <button class="btn btn-danger btn-lg btn-fill"><?= \Yii::t('home',
                                     'Sign Up Now') ?></button>
-                        </a>
-                    </h4>
+                        </h4>
+                    </div>
                 </div>
             </div>
-        </Section>
+        </section>
     </div>
 
     <?php $this->endCache(); endif; ?>

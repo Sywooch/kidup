@@ -64,6 +64,9 @@ class CreateController extends Controller
 
     public function actionEdit($id, $button = null)
     {
+        if (isset($_POST['button'])) {
+            $button = $_POST['button'];
+        }
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
             throw new NotFoundHttpException('Item does not exist');
@@ -95,6 +98,14 @@ class CreateController extends Controller
                 }
                 if ($button == "submit-publish") {
                     if ($model->isPublishable() && $model->is_available === 0) {
+                        if (
+                            !array_key_exists('edit-item', \Yii::$app->request->post()) ||
+                            !array_key_exists('rules', \Yii::$app->request->post()['edit-item'])
+                        ) {
+                            \Yii::$app->session->addFlash('warning', \Yii::t('item',
+                                'Something went wrong in the process, please try again.'));
+                            return $this->redirect(['/item/' . $model->item->id . '/edit']);
+                        }
                         if (\Yii::$app->request->post()['edit-item']['rules'] != 1) {
                             \Yii::$app->session->addFlash('warning', \Yii::t('item',
                                 'The terms and conditions have to be accepted before an item can be published'));

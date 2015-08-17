@@ -3,8 +3,7 @@
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
 Yii::setAlias('@web', YII_ENV == 'dev' ? '/web' : YII_ENV == 'test' ? '/' : '/'); // required to bootstrap the modules
 Yii::setAlias('@assets', YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test' ? '/assets_web' : '/assets_web'); // required to bootstrap the modules
-$keyFile = __DIR__ . '/../config/keys/keys.env';
-$keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
 $params = require(__DIR__ . '/params.php');
 $allComponents = require(__DIR__ . '/components.php');
 

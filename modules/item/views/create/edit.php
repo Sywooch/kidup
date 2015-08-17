@@ -200,8 +200,8 @@ $this->registerJs("
                                     </small>
                                 </h4>
 
-                                <div class="row" style="margin:0">
-                                    <div class="col-md-7">
+                                <div class="row" >
+                                    <div class="col-md-7" style="padding-left:0">
                                         <b><?= Yii::t("item", "Price suggestions") ?></b>
                                         <br/>
                                         <?= Yii::t("item",
@@ -284,31 +284,33 @@ $this->registerJs("
                             <div class="col-sm-10 col-sm-offset-1 terms">
                                 <h4>
                                     <?= Yii::t("item", "Preview & Publishing"); ?>
-                                    <small>
-                                        <br/>
                                         <?php
                                         if ($model->isPublishable() !== true) {
+                                            ?><br /><small><?php
                                             echo \Yii::t('item',
                                                 'There are some things left to be fixed before you can preview or publish this item.');
                                             echo \Yii::t('item', 'Refresh the page if everything is fixed.');
+                                            ?></small><?php
                                         }
                                         ?>
-                                    </small>
                                 </h4>
                                 <?php
                                 if ($model->isPublishable() === true && $model->is_available == 0) {
                                     echo $form->field($model, 'rules')->checkbox([
                                         'data-toggle' => "checkbox"
                                     ]);
-                                    echo Html::button(\Yii::t('item', 'Publish'), [
+                                    echo Html::submitButton(\Yii::t('item', 'Publish'), [
                                         'class' => "btn btn-danger pull-right btn-fill",
+                                        'name' => 'button',
+                                        'value' => 'submit-publish',
                                         'id' => 'submit-publish'
                                     ]);
-                                    echo Html::button(\Yii::t('item', 'Preview'), [
+                                    echo Html::submitButton(\Yii::t('item', 'Preview'), [
                                         'class' => "btn btn-primary",
-                                        'id' => 'submit-preview',
+                                        'name' => 'button',
+                                        'value' => 'submit-preview',
+                                        'id' => 'submit-preview'
                                     ]);
-
                                 } elseif ($model->isPublishable() !== true) {
                                     foreach ($model->isPublishable() as $error) {
                                         echo $error . '<BR>';

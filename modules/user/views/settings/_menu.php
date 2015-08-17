@@ -16,7 +16,7 @@ $user = Yii::$app->user->identity;
 $networksVisible = count(Yii::$app->authClientCollection->clients) > 0;
 function buildMenuItem($icon, $text){
     return '<div class="row">
-    <div class="col-md-1"><i class="fa fa-'. $icon.'"></i></div>
+    <div class="col-md-1 hidden-xs"><i class="fa fa-'. $icon.'"></i></div>
     <div class="col-md-8">'.$text.'</div>
 </div>';
 }

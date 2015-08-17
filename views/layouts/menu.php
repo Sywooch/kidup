@@ -26,7 +26,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <?= isset($this->context->transparentNav) ? ImageHelper::img('kidup/logo/horizontal-white.png', ['h' => 46], ['style' => 'padding-top:5px;'])
+                    <?= isset($this->context->transparentNav) ? ImageHelper::img('kidup/logo/horizontal-white.png',
+                        ['h' => 46], ['style' => 'padding-top:5px;'])
                         : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
                 </a>
             </div>
@@ -52,7 +53,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif;
                     if (!\Yii::$app->user->isGuest): ?>
                         <!--Logged in-->
-                        <li class="message">
+                        <li class="message hidden-xs">
                             <a href="<?= Url::to('@web/messages') ?>"><i class="fa fa-envelope-o"></i></a>
 
                             <div class="badge"><?=
@@ -133,11 +134,6 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in2-->
                         <li>
-                            <?= ImageHelper::img('kidup/logo/horizontal.png', ['w' => 30],
-                                ['style' => "padding-left: 25%; padding-top:10px;padding-bottom: 10px"]) ?>
-                        </li>
-
-                        <li>
                             <a href="<?= Url::to('@web/user/login') ?>">
                                 <button class="btn btn-simple">
                                     <?= Yii::t("app", "Login") ?>
@@ -160,41 +156,45 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                             'width' => '40px'
                         ]) ?>
                     </li>
-                    <li class="">
-                        <button class="btn btn-danger btn-fill btn-block">
+                    <li>
+                        <a href="<?= Url::to('@web/item/create') ?>">
                             <?= Yii::t("app", "Rent Out") ?>
-                        </button>
+                        </a>
+
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/user/' . \Yii::$app->user->id) ?>">
-                            <i class="pe-7s-id"></i>
                             <?= Yii::t("app", "View Profile") ?>
                         </a>
                     </li>
-                    <li class="divider"></li>
+                    <li>
+                        <a href="<?= Url::to('@web/messages') ?>">
+                            <?= Yii::t("app", "Inbox") ?>
+                            <div class="badge"><?=
+                                // todo make this more pretty
+                                \app\models\base\Message::find()->where([
+                                    'receiver_user_id' => \Yii::$app->user->id,
+                                    'read_by_receiver' => 0
+                                ])->count(); ?></div>
+                        </a>
+                    </li>
                     <li>
                         <a href="<?= Url::to('@web/booking/current') ?>">
-                            <i class="pe-7s-bookmarks"></i>
                             <?= Yii::t("app", "Your Bookings") ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/item/list') ?>">
-                            <i class="pe-7s-piggy"></i>
                             <?= Yii::t("app", "Your Products") ?>
                         </a>
                     </li>
-                    <li class="divider"></li>
                     <li>
                         <a href="<?= Url::to('@web/user/settings/profile') ?>">
-                            <i class="pe-7s-tools"></i>
                             <?= Yii::t("app", "Settings") ?>
                         </a>
                     </li>
-                    <li class="divider"></li>
                     <li>
                         <a href="<?= Url::to('@web/user/logout') ?>" class="text-danger">
-                            <i class="pe-7s-close-circle"></i>
                             <?= Yii::t("app", "Log Out") ?>
                         </a>
                     </li>

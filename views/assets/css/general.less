@@ -10,6 +10,9 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
+  #wrapper #home {
+    margin-bottom: 0px;
+  }
   #wrapper {
     margin-bottom: 0px;
   }
@@ -108,5 +111,20 @@ a {
     .cc_message {
       color: white;
     }
+  }
+}
+
+.form-control{
+  .has-success &{
+    color: @primary-color;
+  }
+  .has-success &:focus{
+    border-color: @primary-color;
+  }
+  .has-error &{
+    color: @danger-color;
+  }
+  .has-error &:focus{
+    border-color: @danger-color;
   }
 }

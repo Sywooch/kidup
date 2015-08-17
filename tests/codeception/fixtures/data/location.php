@@ -30,7 +30,7 @@ $location = array(
         'updated_at' => 1433881074,
     ),
     array( // row #0
-        'id' => 1,
+        'id' => 3,
         'type' => 1,
         'country' => 1,
         'city' => 'Aarhus',

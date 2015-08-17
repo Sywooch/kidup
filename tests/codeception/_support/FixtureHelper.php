@@ -20,34 +20,48 @@ use Codeception\TestCase;
 use app\tests\codeception\fixtures\UserFixture;
 
 use yii\test\FixtureTrait;
+use yii\test\InitDbFixture;
 
 class FixtureHelper extends Module
 {
-    use FixtureTrait;
+    /**
+     * Redeclare visibility because codeception includes all public methods that do not start with "_"
+     * and are not excluded by module settings, in actor class.
+     */
+    use FixtureTrait {
+        loadFixtures as protected;
+        fixtures as protected;
+        globalFixtures as protected;
+        unloadFixtures as protected;
+        getFixtures as protected;
+        getFixture as protected;
+    }
+    /**
+     * Method called before any suite tests run. Loads User fixture login user
+     * to use in acceptance and functional tests.
+     * @param array $settings
+     */
+    public function _beforeSuite($settings = [])
+    {
+        $this->loadFixtures();
+    }
+    /**
+     * Method is called after all suite tests run
+     */
+    public function _afterSuite()
+    {
+        $this->unloadFixtures();
+    }
 
     /**
-     * @var array
+     * @inheritdoc
      */
-    public static $excludeActions = ['loadFixtures', 'unloadFixtures', 'getFixtures', 'globalFixtures', 'fixtures'];
-//
-//    /**
-//     * @param TestCase $testcase
-//     */
-//    public function _before(TestCase $testcase)
-//    {
-//        $this->unloadFixtures();
-//        $this->loadFixtures();
-//        parent::_before($testcase);
-//    }
-//
-//    /**
-//     * @param TestCase $testcase
-//     */
-//    public function _after(TestCase $testcase)
-//    {
-//        $this->unloadFixtures();
-//        parent::_after($testcase);
-//    }
+    public function globalFixtures()
+    {
+        return [
+            InitDbFixture::className(),
+        ];
+    }
 
     /**
      * @inheritdoc
