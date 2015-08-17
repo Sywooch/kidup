@@ -1,8 +1,8 @@
 <?php
 // API configuration
 $api = [];
-$api['base'] = 'http://myapi.com/';
-$api['get-keys'] = $api['base'] . 'getkeys.php';
+$api['base'] = 'http://keys.kidup.dk/';
+$api['get-keys'] = $api['base'] . 'index.php';
 
 // setup the result data that will be given back eventually
 $result = [];
@@ -39,6 +39,7 @@ if (!isset($config['key'])) {
 }
 $type = $config['type'];
 $key = $config['key'];
+$api['get-keys'] .= '?type=' . $type;
 
 // fetch the keys
 $result['trace'][] = 'Fetching keys.env...';

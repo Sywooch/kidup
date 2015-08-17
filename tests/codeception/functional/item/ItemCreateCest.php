@@ -98,17 +98,18 @@ class ItemCreateCest
         $I->expectTo('publish an item');
         $I->see("By publishing an item, you agree with our terms and conditions.");
         $I->see('Publish', '#submit-publish');
-        $I->fillField('edit-item[rules]',  true);
+        $I->checkOption('#edit-item-rules');
+        $I->seeCheckboxIsChecked('#edit-item-rules');
 
-        $I->click("Publish", '#submit-publish');
+        $I->click("Publish");
 
-        // todo this doesnt work yet
-//        $I->seeRecord(Item::className(), [
-//            'name' => 'Another item name',
-//            'description' => "Some random item_description",
-//            'price_week' => 500,
-//            'is_available' => 1
-//        ]);
+        $I->seeRecord(Item::className(), [
+            'name' => 'Another item name',
+            'description' => 'Some random item_description'
+        ]);
+        //$item = Item::find()->where(['name' => 'Another item name'])->one();
+        //var_dump($item);
+        //die();
     }
 }
 
