@@ -1,11 +1,13 @@
 <?php
-
 // comment out the following two lines when deployed to production
 defined('YII_CONSOLE') or define('YII_CONSOLE', false); // bool
 
 require(__DIR__ . '/../vendor/autoload.php');
 
 $keyFile = __DIR__ . '/../config/keys/keys.env';
+if (!file_exists($keyFile)) {
+    echo 'keys.env does not exist.';
+}
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 defined('YII_DEBUG') or define('YII_DEBUG', $keys['yii_debug']); // bool
 defined('YII_ENV') or define('YII_ENV', $keys['yii_env']); // dev, test, prod, stage
