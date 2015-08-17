@@ -36,7 +36,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-lg-7 col-md-offset-1">
-                    <br/><br/>
+                    <br/><br/><br/><br/>
 
                     <div class="card">
                         <div class="content product-content">
