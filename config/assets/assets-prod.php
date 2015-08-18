@@ -10,7 +10,7 @@ return [
         'basePath' => '@app/web/release-assets',
         'baseUrl' => '@web/release-assets',
         'js' => [
-            'js/all-8540e93f4be382e36d41c5a868368fd3.js',
+            'https://test.kidup.dk/js/all-8540e93f4be382e36d41c5a868368fd3.js',
         ],
         'css' => [
             'css/all-4aaa18814f2c1e2ed43a7339d6419614.css',

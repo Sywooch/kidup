@@ -7,7 +7,6 @@ use app\modules\images\components\ImageHelper;
 /* @var $name string */
 /* @var $message string */
 /* @var $exception Exception */
-
 $this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
 ?>
 <section class="section container">

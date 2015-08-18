@@ -6,6 +6,8 @@ use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+use \app\components\Cache;
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -38,7 +40,11 @@ BootstrapPluginAsset::register($this);
     <body>
     <?php $this->beginBody() ?>
 
-    <?= $this->render('menu'); ?>
+    <?php
+    Cache::html('menu', function () {
+        return $this->render('menu');
+    }, ['variations' => [\Yii::$app->user->id]]);
+    ?>
 
     <div id="wrapper">
         <?php
@@ -63,21 +69,31 @@ BootstrapPluginAsset::register($this);
     </div>
 
     <!-- Load modals -->
-    <?= $this->render('../../modules/item/widgets/views/menu_search_modal.php'); ?>
-
     <?php
-    if (!isset($this->context->noFooter) || $this->context->noFooter !== true) {
-        // whether to render a footer or not
-        echo $this->render('footer');
-    } ?>
-    <?= \cinghie\cookieconsent\widgets\CookieWidget::widget([
-        'message' => \Yii::t('app', 'This website uses cookies to ensure you get the best possible KidUp experience.'),
-        'dismiss' => \Yii::t('app', 'Accept'),
-        'learnMore' => null,
-        'link' => 'http://silktide.com/privacy-policy',
-        'theme' => 'dark-bottom'
-    ]); ?>
-    <?php echo \kartik\social\GoogleAnalytics::widget([]); ?>
+    Cache::html('search_modal', function () {
+        return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
+    });
+
+    Cache::html('footer', function () {
+        return $this->render('footer.php');
+    }, ['variations' => $this->context->noFooter]);
+
+    Cache::html('cookie_widget', function () {
+        return \cinghie\cookieconsent\widgets\CookieWidget::widget([
+            'message' => \Yii::t('app',
+                'This website uses cookies to ensure you get the best possible KidUp experience.'),
+            'dismiss' => \Yii::t('app', 'Accept'),
+            'learnMore' => null,
+            'link' => 'http://silktide.com/privacy-policy',
+            'theme' => 'dark-bottom'
+        ]);
+    });
+
+    Cache::html('ga', function () {
+        return \kartik\social\GoogleAnalytics::widget([]);
+    });
+    ?>
+
     <?php $this->endBody() ?>
     </body>
     </html>

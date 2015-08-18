@@ -11,5 +11,5 @@ composer global require "codeception/verify=*"
 
 cd /vagrant
 composer install
-php yii migrate/up --interactive=0
+
 

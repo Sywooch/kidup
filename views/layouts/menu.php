@@ -209,4 +209,5 @@ if (\Yii::$app->user->isGuest) {
     echo WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
     echo WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
 }
+
 ?>

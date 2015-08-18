@@ -200,7 +200,7 @@ if ($this->beginCache('home.html', ['variations' => [Yii::$app->language]])):
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-1 hidden-xs text-center">
-                        <?= ImageHelper::img('kidup/home/mom-in-balloon.png') ?>
+                        <?= ImageHelper::img('kidup/home/mom-in-balloon.png', ['w' => 324, 'h' => 366]) ?>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-sm-offset-1">
                         <h4>Sabine Clasen</h4>

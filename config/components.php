@@ -2,9 +2,12 @@
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 $keyFile = __DIR__ . '/../config/keys/keys.env';
-include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
+include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
 $components = [
+    'session' => [
+        'class' => 'yii\web\DbSession'
+    ],
     'sendGrid' => [
         'class' => 'bryglen\sendgrid\Mailer',
         'username' => $keys['sendgrid_user'],
@@ -49,13 +52,18 @@ $components = [
                 'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
             ],
         ],
-        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? 'assets-prod.php' : 'assets.php')),
+        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod') ? 'assets-prod.php' : 'assets.php')),
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
     ],
     'cache' => [
-        'class' => 'yii\caching\FileCache',
+        'class' => 'yii\caching\ApcCache',
+//        'redis' => [
+//                'hostname' => 'localhost',
+//                'port' => 6379,
+//                'database' => 0,
+//            ]
     ],
     'errorHandler' => [
         'errorAction' => 'site/error',
@@ -75,6 +83,11 @@ $components = [
         'username' => $keys['mysql_user'],
         'password' => $keys['mysql_password'],
         'charset' => 'utf8',
+        'enableSchemaCache' => true,
+        // Duration of schema cache.
+        'schemaCacheDuration' => 3600,
+        // Name of the cache component used to store schema information
+        'schemaCache' => 'cache',
     ],
     'urlManager' => [
         'enablePrettyUrl' => true,
