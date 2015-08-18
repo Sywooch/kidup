@@ -56,7 +56,7 @@ $components = [
             'class' => 'yii\web\AssetConverter',
             'commands' => [
                 // compile less, minify if in production
-                'less' => ['css', 'lessc {from} {to} --no-color ' . (YII_ENV == 'prod' ? '-x' : '')],
+                'less' => ['css', 'lessc {from} {to} --no-color ' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? '-x' : '')],
             ],
         ],
         'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod') ? 'assets-prod.php' : 'assets.php')),
