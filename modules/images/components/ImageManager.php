@@ -130,10 +130,6 @@ class ImageManager
             $api
         );
 
-        if (YII_ENV !== 'dev') {
-            $server->setCachePathPrefix('/cache/');
-        }
-
         return $server;
     }
 }
