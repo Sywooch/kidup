@@ -20,6 +20,7 @@ use Carbon\Carbon;
             </div>
 
             <br/><br/>
+
             <div class="card card-product" id="product">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-1">
@@ -36,7 +37,8 @@ use Carbon\Carbon;
                             <?= ImageHelper::img('kidup/logo/horizontal.png', ['w' => 100]) ?>
                             <br/>
                             <b><?= Yii::t("booking", "Generated on {0}", [
-                                    Carbon::createFromTimestamp( $invoice['created_at'], \Yii::$app->params['serverTimeZone'])->toFormattedDateString()
+                                    Carbon::createFromTimestamp($invoice['created_at'],
+                                        \Yii::$app->params['serverTimeZone'])->toFormattedDateString()
                                 ]) ?></b>
                         </div>
                     </div>
@@ -59,7 +61,8 @@ use Carbon\Carbon;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Date of Service Rendered") ?> <b class="pull-right">
-                                    <?= Carbon::createFromTimestamp($invoice['data']['booking']['time_from'], \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
+                                    <?= Carbon::createFromTimestamp($invoice['data']['booking']['time_from'],
+                                        \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
                                 </b>
                             </li>
                             <li>
@@ -85,19 +88,20 @@ use Carbon\Carbon;
                             <li>
                                 <?= Yii::t("booking", "KidUp Service Fees") ?>
                                 <b class="pull-right">
-                                    <?= round($invoice['data']['booking']['amount_payin_fee'],2) ?> DKK
+                                    <?= round($invoice['data']['booking']['amount_payin_fee'], 2) ?> DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "VAT") ?>
                                 <b class="pull-right">
-                                    <?= round($invoice['data']['booking']['amount_payin_fee_tax'],2) ?> DKK
+                                    <?= round($invoice['data']['booking']['amount_payin_fee_tax'], 2) ?> DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Total") ?>
                                 <b class="pull-right">
-                                    <?= round($invoice['data']['booking']['amount_payin_fee'] + $invoice['data']['booking']['amount_payin_fee_tax'],2) ?> DKK
+                                    <?= round($invoice['data']['booking']['amount_payin_fee'] + $invoice['data']['booking']['amount_payin_fee_tax'],
+                                        2) ?> DKK
                                 </b>
                             </li>
                         </ul>
@@ -109,7 +113,7 @@ use Carbon\Carbon;
             <span class="pull-left">
                 <?= Yii::t("booking", "No rights can be derived from the contents of this page.") ?>
             </span>
-            <?php if(!isset($_GET['pdf'])): ?>
+            <?php if (!isset($_GET['pdf'])): ?>
                 <a href="?pdf=true" target="_blank">
                     <div class="pull-right btn btn-primary">
                         <?= Yii::t("booking", "Print") ?>

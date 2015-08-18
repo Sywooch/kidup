@@ -92,7 +92,7 @@ class SecurityController extends Controller
         }
 
         return $this->render('login', [
-            'model'  => $model,
+            'model' => $model,
             'module' => $this->module,
         ]);
     }
@@ -115,17 +115,17 @@ class SecurityController extends Controller
     public function authenticate(ClientInterface $client)
     {
         $attributes = $client->getUserAttributes();
-        $provider   = $client->getId();
-        $clientId   = $attributes['id'];
+        $provider = $client->getId();
+        $clientId = $attributes['id'];
 
         $account = $this->finder->findAccountByProviderAndClientId($provider, $clientId);
 
         if ($account === null) {
             $account = \Yii::createObject([
-                'class'      => Account::className(),
-                'provider'   => $provider,
-                'client_id'  => $clientId,
-                'data'       => json_encode($attributes),
+                'class' => Account::className(),
+                'provider' => $provider,
+                'client_id' => $clientId,
+                'data' => json_encode($attributes),
             ]);
             $account->save(false);
         }

@@ -191,9 +191,9 @@ class SearchModel extends Model
             $longitude = $location['longitude'];
             $location = $location['city'] . "," . $location['country'];
         } else {
-            $location = Cache::data('location_'.$location, function() use ($location){
+            $location = Cache::data('location_' . $location, function () use ($location) {
                 return Location::getByAddress($location);
-            }, 30*24*60*60);
+            }, 30 * 24 * 60 * 60);
             $latitude = $location['latitude'];
             $longitude = $location['longitude'];
         }

@@ -4,8 +4,8 @@ namespace app\commands;
 
 use app\backup\Database;
 use app\backup\File;
-use yii\console\Controller;
 use Yii;
+use yii\console\Controller;
 
 class CronController extends Controller
 {

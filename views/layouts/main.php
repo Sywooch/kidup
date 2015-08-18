@@ -1,11 +1,13 @@
 <?php
-use app\modules\item\models\Search;
 use app\assets\FontAwesomeAsset;
+use app\components\Cache;
+use app\modules\images\components\ImageHelper;
+use app\modules\item\models\Search;
+use app\modules\message\models\Message;
 use kartik\growl\Growl;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use app\modules\images\components\ImageHelper;
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -38,7 +40,14 @@ BootstrapPluginAsset::register($this);
     <body>
     <?php $this->beginBody() ?>
 
-    <?= $this->render('menu'); ?>
+    <?php
+    echo Cache::html('menu', function () {
+        return $this->render('menu');
+    }, ['variations' => [\Yii::$app->user->id, $this->context->transparentNav, Message::find()->where([
+        'receiver_user_id' => \Yii::$app->user->id,
+        'read_by_receiver' => 0
+    ])->count()]]);
+    ?>
 
     <div id="wrapper">
         <?php
@@ -63,21 +72,31 @@ BootstrapPluginAsset::register($this);
     </div>
 
     <!-- Load modals -->
-    <?= $this->render('../../modules/item/widgets/views/menu_search_modal.php'); ?>
-
     <?php
-    if (!isset($this->context->noFooter) || $this->context->noFooter !== true) {
-        // whether to render a footer or not
-        echo $this->render('footer');
-    } ?>
-    <?= \cinghie\cookieconsent\widgets\CookieWidget::widget([
-        'message' => \Yii::t('app', 'This website uses cookies to ensure you get the best possible KidUp experience.'),
-        'dismiss' => \Yii::t('app', 'Accept'),
-        'learnMore' => null,
-        'link' => 'http://silktide.com/privacy-policy',
-        'theme' => 'dark-bottom'
-    ]); ?>
-    <?php echo \kartik\social\GoogleAnalytics::widget([]); ?>
+    echo Cache::html('search_modal', function () {
+        return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
+    });
+
+    echo Cache::html('footer', function () {
+        return $this->render('footer.php');
+    }, ['variations' => $this->context->noFooter]);
+
+    echo Cache::html('cookie_widget', function () {
+        return \cinghie\cookieconsent\widgets\CookieWidget::widget([
+            'message' => \Yii::t('app',
+                'This website uses cookies to ensure you get the best possible KidUp experience.'),
+            'dismiss' => \Yii::t('app', 'Accept'),
+            'learnMore' => null,
+            'link' => 'http://silktide.com/privacy-policy',
+            'theme' => 'dark-bottom'
+        ]);
+    });
+
+    echo Cache::html('ga', function () {
+        return \kartik\social\GoogleAnalytics::widget([]);
+    });
+    ?>
+
     <?php $this->endBody() ?>
     </body>
     </html>

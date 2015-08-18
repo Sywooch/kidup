@@ -57,7 +57,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registra
                     <div class="form-group">
                         <?= $form->field($model, 'description')->textarea([
                             'rows' => 5,
-                            'placeholder' => \Yii::t('user', 'What is interesting for other users to know? Do you have any kids? How old are they?')
+                            'placeholder' => \Yii::t('user',
+                                'What is interesting for other users to know? Do you have any kids? How old are they?')
                         ]); ?>
                     </div>
                     <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::classname(), [

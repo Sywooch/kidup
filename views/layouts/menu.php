@@ -1,7 +1,8 @@
 <?php
 use app\components\WidgetRequest;
-use yii\helpers\Url;
 use app\modules\images\components\ImageHelper;
+use app\modules\message\models\Message;
+use yii\helpers\Url;
 
 // create the navbar
 $class = 'navbar navbar-default ';
@@ -58,7 +59,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 
                             <div class="badge"><?=
                                 // this is ugly
-                                \app\models\base\Message::find()->where([
+                                Message::find()->where([
                                     'receiver_user_id' => \Yii::$app->user->id,
                                     'read_by_receiver' => 0
                                 ])->count(); ?></div>
@@ -209,4 +210,5 @@ if (\Yii::$app->user->isGuest) {
     echo WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
     echo WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
 }
+
 ?>

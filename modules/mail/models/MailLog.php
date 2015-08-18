@@ -9,7 +9,8 @@ use yii\helpers\Json;
  */
 class MailLog extends \app\models\base\MailLog
 {
-    public static function create($type, $email, $data, $id){
+    public static function create($type, $email, $data, $id)
+    {
         $log = new MailLog();
         $log->id = $id;
         $log->type = $type;
@@ -20,7 +21,8 @@ class MailLog extends \app\models\base\MailLog
         return $log;
     }
 
-    public static function getUniqueId(){
+    public static function getUniqueId()
+    {
         return \Yii::$app->security->generateRandomString(64);
     }
 }

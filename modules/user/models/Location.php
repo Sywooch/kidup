@@ -4,12 +4,13 @@ namespace app\modules\user\models;
 
 use Carbon\Carbon;
 
-class Location extends \app\models\base\Location{
+class Location extends \app\models\base\Location
+{
     const TYPE_MAIN = 1;
 
     public function beforeValidate()
     {
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
@@ -36,10 +37,10 @@ class Location extends \app\models\base\Location{
                 $this->zip_code . ", " .
                 $this->country0->name;
             $res = Location::getByAddress($address);
-            if(!$res){
+            if (!$res) {
                 $this->longitude = 1;
                 $this->latitude = 1;
-            }else{
+            } else {
                 $this->longitude = $res['longitude'];
                 $this->latitude = $res['latitude'];
             }
@@ -78,7 +79,7 @@ class Location extends \app\models\base\Location{
 
     public static function getIp()
     {
-        if(YII_ENV == 'dev'){
+        if (YII_ENV == 'dev') {
             return "83.82.175.173";
         }
         $ip = getenv('HTTP_CLIENT_IP') ?:

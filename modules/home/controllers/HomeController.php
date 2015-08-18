@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\components\Cache;
 use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
@@ -31,12 +32,18 @@ class HomeController extends Controller
         $this->transparentNav = true;
         $this->noContainer = true;
 
-        $categories = Category::find()->all();
-        $items = Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
+        return Cache::data('home.render', function () {
+            $categories = Yii::$app->db->cache(function () {
+                return Category::find()->all();
+            });
+            $items = Yii::$app->db->cache(function () {
+                return Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
+            });
 
-        return $this->render('index', [
-            'categories' => $categories,
-            'items' => $items,
-        ]);
+            return $this->render('index', [
+                'categories' => $categories,
+                'items' => $items,
+            ]);
+        }, 1);
     }
 }

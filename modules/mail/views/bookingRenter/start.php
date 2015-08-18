@@ -332,12 +332,14 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    1. <a href="<?= $urls['booking'] ?>">Udskriv og medbring din booking bekræftelse</a>, herunder værtens
+                                                    1. <a href="<?= $urls['booking'] ?>">Udskriv og medbring din booking
+                                                        bekræftelse</a>, herunder værtens
                                                     adresse og telefonnummer.
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    2. <a href="<?= $urls['chat'] ?>">Kontakt værten</a> før udveksling af udstyret for at få
+                                                    2. <a href="<?= $urls['chat'] ?>">Kontakt værten</a> før udveksling
+                                                    af udstyret for at få
                                                     kørselsvejledninger, bekræfte dit afhentningstidspunkt, og
                                                     verificere værtens kontaktoplysninger.
                                                 </p>

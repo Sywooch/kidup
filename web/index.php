@@ -1,7 +1,6 @@
 <?php
 // comment out the following two lines when deployed to production
 defined('YII_CONSOLE') or define('YII_CONSOLE', false); // bool
-
 require(__DIR__ . '/../vendor/autoload.php');
 
 include_once (__DIR__ . '/../config/keys/load_keys.php'); // sets the var keys

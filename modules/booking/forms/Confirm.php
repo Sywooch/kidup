@@ -37,9 +37,9 @@ class Confirm extends Model
 
     private function createPayin($nonce)
     {
-        if($this->booking->payin_id !== null){
+        if ($this->booking->payin_id !== null) {
             $payin = $this->booking->payin;
-        }else{
+        } else {
             $payin = new Payin();
         }
         $payin->nonce = $nonce;
@@ -114,14 +114,14 @@ class Confirm extends Model
                 $this->booking->startConversation($this->message);
                 $this->booking->request_expires_at = time() + 48 * 60 * 60;
 
-                if($this->booking->save()){
+                if ($this->booking->save()) {
                     \Yii::$app->session->addFlash('success', \Yii::t('booking', "You're booking has been made!"));
                     return true;
                 }
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             \Yii::$app->session->addFlash('error', \Yii::t('booking', 'You must agree to the terms and conditions'));
         }
 

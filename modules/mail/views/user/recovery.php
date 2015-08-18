@@ -2,7 +2,8 @@
     <tbody>
     <tr>
         <td>
-            <table width="560" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hasbackground="true">
+            <table width="560" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth"
+                   hasbackground="true">
                 <tbody>
                 <tr>
                     <td width="100%">
@@ -29,8 +30,10 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail", "You've requested a password recovery on KidUp, and here it is!") ?>
-                                                    <?= Yii::t("mail", "Please click the following button to set a new password:") ?>
+                                                    <?= Yii::t("mail",
+                                                        "You've requested a password recovery on KidUp, and here it is!") ?>
+                                                    <?= Yii::t("mail",
+                                                        "Please click the following button to set a new password:") ?>
                                                 </p>
                                             </td>
                                         </tr>
@@ -50,7 +53,8 @@
                                                 <table class="button">
                                                     <tr>
                                                         <td>
-                                                            <a href="<?= $urls['recovery'] ?>"><?= Yii::t("mail", "Password recovery") ?></a>
+                                                            <a href="<?= $urls['recovery'] ?>"><?= Yii::t("mail",
+                                                                    "Password recovery") ?></a>
                                                         </td>
                                                     </tr>
                                                 </table>

@@ -34,10 +34,10 @@ class RecoveryController extends Controller
     protected $finder;
 
     /**
-     * @param string           $id
+     * @param string $id
      * @param \yii\base\Module $module
-     * @param Finder           $finder
-     * @param array            $config
+     * @param Finder $finder
+     * @param array $config
      */
     public function __construct($id, $module, Finder $finder, $config = [])
     {
@@ -70,7 +70,7 @@ class RecoveryController extends Controller
         }
 
         $model = \Yii::createObject([
-            'class'    => Recovery::className(),
+            'class' => Recovery::className(),
             'scenario' => 'request',
         ]);
 
@@ -88,7 +88,7 @@ class RecoveryController extends Controller
     /**
      * Displays page where user can reset password.
      * @param  integer $id
-     * @param  string  $code
+     * @param  string $code
      * @return string
      * @throws \yii\web\NotFoundHttpException
      */
@@ -102,15 +102,16 @@ class RecoveryController extends Controller
         $token = Token::find()->where(['user_id' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
 
         if ($token === null || $token->isExpired || $token->user === null) {
-            \Yii::$app->session->setFlash('danger', \Yii::t('user', 'Recovery link is invalid or expired. Please try requesting a new one.'));
+            \Yii::$app->session->setFlash('danger',
+                \Yii::t('user', 'Recovery link is invalid or expired. Please try requesting a new one.'));
             return $this->render('/message', [
-                'title'  => \Yii::t('user', 'Invalid or expired link'),
+                'title' => \Yii::t('user', 'Invalid or expired link'),
                 'module' => $this->module,
             ]);
         }
 
         $model = \Yii::createObject([
-            'class'    => Recovery::className(),
+            'class' => Recovery::className(),
             'scenario' => 'reset',
         ]);
 

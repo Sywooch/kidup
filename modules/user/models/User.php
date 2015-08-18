@@ -280,7 +280,7 @@ class User extends \app\models\base\User implements IdentityInterface
          */
 //        $location = Location::findOne($this->locations[0]->id);
 //        && $location->isValid()
-        if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0 ) {
+        if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0) {
             return true;
         }
 
@@ -441,7 +441,6 @@ class User extends \app\models\base\User implements IdentityInterface
 
         parent::afterSave($insert, $changedAttributes);
     }
-
 
 
     public function isAdmin()

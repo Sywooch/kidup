@@ -1,7 +1,8 @@
 <?php
-$this->title = ucfirst(\Yii::t('title', 'How to rent to other parents')) . ' - '. Yii::$app->name;
+$this->title = ucfirst(\Yii::t('title', 'How to rent to other parents')) . ' - ' . Yii::$app->name;
 
-?><div id="how-to">
+?>
+<div id="how-to">
     <div class="intro">
         <div class="row">
             <div class="col-sm-12">
@@ -61,7 +62,8 @@ $this->title = ucfirst(\Yii::t('title', 'How to rent to other parents')) . ' - '
                             <h2>Mød lejeren og tjen penge</h2>
 
                             <p>Når du møder lejeren skal du huske at gennemgå udstyret for hvordan det bruges og standen
-                                af udstyret. Send lejeren afsted og slap af, mens du hjælper en anden familie og tjener lidt penge samtidigt.</p>
+                                af udstyret. Send lejeren afsted og slap af, mens du hjælper en anden familie og tjener
+                                lidt penge samtidigt.</p>
                         </div>
                     </section>
                     <section class="row">
@@ -72,17 +74,20 @@ $this->title = ucfirst(\Yii::t('title', 'How to rent to other parents')) . ' - '
                             <h2>Skriv en anmeldelse</h2>
 
                             <p>Hjælp andre udlejere med at vælge den rigtige lejer ved at skrive en anmeldelse, når du
-                                får udstyret tilbage. Sammen kan vi med anmeldelser gøre KidUp til en fantastisk oplevelse.</p>
+                                får udstyret tilbage. Sammen kan vi med anmeldelser gøre KidUp til en fantastisk
+                                oplevelse.</p>
                         </div>
                     </section>
-<!--                    <hr>-->
-<!--                    <section class="row">-->
-<!--                        <div class="col-sm-12 text-center">-->
-<!--                            <h2>--><?//= Yii::t("app", "Are you ready to rent out your stuff?") ?><!--</h2>-->
-<!--                            <br>-->
-<!--                            <button type="submit" class="btn btn-main">--><?//= Yii::t("app", "Try it now") ?><!--</button>-->
-<!--                        </div>-->
-<!--                    </section>-->
+                    <!--                    <hr>-->
+                    <!--                    <section class="row">-->
+                    <!--                        <div class="col-sm-12 text-center">-->
+                    <!--                            <h2>-->
+                    <? //= Yii::t("app", "Are you ready to rent out your stuff?") ?><!--</h2>-->
+                    <!--                            <br>-->
+                    <!--                            <button type="submit" class="btn btn-main">-->
+                    <? //= Yii::t("app", "Try it now") ?><!--</button>-->
+                    <!--                        </div>-->
+                    <!--                    </section>-->
                 </div>
             </div>
         </div>

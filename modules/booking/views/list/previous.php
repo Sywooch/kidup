@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 
-$this->title = \Yii::t('title', 'Your Previous Bookings') . ' - '. Yii::$app->name;
+$this->title = \Yii::t('title', 'Your Previous Bookings') . ' - ' . Yii::$app->name;
 ?>
 <section class="section" id="rentals">
     <div class=" site-area-header hidden-xs">

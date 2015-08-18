@@ -24,15 +24,13 @@ if(getenv('CIRCLECI_TEST_PASSWORD') != false){
     server('production-primary', '31.187.70.130', 22)
         ->path('/var/www/')
         ->user('root')
-        ->pubKey();
+        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 
-    server('test', '52.28.97.213', 22)
+    server('test', '178.62.234.114', 22)
         ->path('/var/www/')
-        ->user('ubuntu')
-        ->pubKey('kidup.pub', 'kidup.pem');
-//        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
+        ->user('root')
+        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
-
 
 stage('development', array('test'), ['branch'=>'develop'], true);
 stage('production', array('production-primary'), array('branch'=>'master'), true);

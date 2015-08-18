@@ -272,6 +272,7 @@
                                                     1. Kontakt lejeren via e-mail eller telefon for at bekræfte
                                                     udvekslingstidspunkt.
                                                 </p>
+
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     2. Udstyret er rengjort
                                                 </p>
@@ -284,6 +285,7 @@
                                                     4. Udskriv din udlejnings bekræftelse, så du har lejerens e-mail og
                                                     telefonnummer ved hånden.
                                                 </p>
+
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     <a href="<?= $urls['help'] ?>">
                                                         5. Find nyttige oplysninger i vores hjælpecenter.
@@ -300,7 +302,8 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Du kan kontakt brugeren via telefon på <?= $phoneNumber ?> eller via e-mail.
+                                                    Du kan kontakt brugeren via telefon på <?= $phoneNumber ?> eller via
+                                                    e-mail.
                                                 </p>
                                             </td>
                                         </tr>

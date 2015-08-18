@@ -43,7 +43,7 @@ class Register extends Widget
         }
 
         return $this->render('register_modal', [
-            'model'  => $model,
+            'model' => $model,
         ]);
     }
 

@@ -50,14 +50,17 @@ class Controller extends \yii\web\Controller
             'method' => \Yii::$app->request->getMethod(),
             'ip' => \Yii::$app->request->getUserIP()
         ];
-        \Yii::$app->clog->info('page.view', $data);
+//        \Yii::$app->clog->info('page.view', $data);
+        // todo would be awesome to track this, but it takes about 150 ms, which is waay to long
 
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
         } else {
             if (!\Yii::$app->user->isGuest) {
-                $p = Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
+                $p = \Yii::$app->db->cache(function () {
+                    return Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
+                },60*60);
                 if ($p->language !== null) {
                     Yii::$app->language = $p->language;
                 } else {

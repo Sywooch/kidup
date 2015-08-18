@@ -22,14 +22,14 @@ class ItemBookingCest
 
     public function _after($event)
     {
-        $booking = Booking::find()
-            ->where(['item_id' => 2])
-            ->orderBy('created_at DESC')
-            ->limit(1)
-            ->one();
-        Booking::deleteAll([
-            'id' => $booking->id,
-        ]);
+//        $booking = Booking::find()
+//            ->where(['item_id' => 2])
+//            ->orderBy('created_at DESC')
+//            ->limit(1)
+//            ->one();
+//        Booking::deleteAll([
+//            'id' => $booking->id,
+//        ]);
     }
 
     public function checkBookingItem(FunctionalTester $I)

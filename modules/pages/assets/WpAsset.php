@@ -12,7 +12,7 @@ class WpAsset extends AssetBundle
     ];
 
     public $cssOptions = [
-        'position' =>  \yii\web\View::POS_BEGIN
+        'position' => \yii\web\View::POS_BEGIN
     ];
 
 }

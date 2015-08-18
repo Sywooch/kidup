@@ -49,9 +49,9 @@ class UserSearch extends Model
     public function attributeLabels()
     {
         return [
-            'username'        => \Yii::t('user', 'Username'),
-            'email'           => \Yii::t('user', 'Email'),
-            'created_at'      => \Yii::t('user', 'Registration time'),
+            'username' => \Yii::t('user', 'Username'),
+            'email' => \Yii::t('user', 'Email'),
+            'created_at' => \Yii::t('user', 'Registration time'),
             'registration_ip' => \Yii::t('user', 'Registration ip'),
         ];
     }
@@ -72,7 +72,7 @@ class UserSearch extends Model
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['created_at'=> $this->created_at])
+        $query->andFilterWhere(['created_at' => $this->created_at])
             ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['registration_ip' => $this->registration_ip]);

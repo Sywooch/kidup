@@ -23,12 +23,12 @@ class ChatController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => [ 'index' ],
+                'only' => ['index'],
                 'rules' => [
                     [
                         // allow only authenticated
                         'allow' => true,
-                        'actions' => [ 'index' ],
+                        'actions' => ['index'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -47,8 +47,8 @@ class ChatController extends Controller
             if ($c == null) {
                 \Yii::$app->session->addFlash('info', \Yii::t('message', "You don't have any conversations yet."));
                 return $this->redirect('@web/home');
-            }else{
-                return $this->redirect('@web/messages/'.$c->id);
+            } else {
+                return $this->redirect('@web/messages/' . $c->id);
             }
         } else {
             $c = Conversation::find()->where(['conversation.id' => $id])->one();

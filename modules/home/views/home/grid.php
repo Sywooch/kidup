@@ -138,6 +138,7 @@ use yii\helpers\Url;
                         <div class="content text-center">
                             <br>
                             <br>
+
                             <h2 class="category-name"><?= Yii::t("categories", "Room") ?></h2>
 
                         </div>
@@ -153,7 +154,8 @@ use yii\helpers\Url;
                     <a href="<?= Url::to('@web/item/' . $items[2]->id) ?>">
                         <div class="card  card-background">
                             <div class="image"
-                                 style="<?= ImageHelper::bgImg($items[2]->getImageName(0), ['q' => 90, 'w' => 500]) ?>; width:100%">
+                                 style="<?= ImageHelper::bgImg($items[2]->getImageName(0),
+                                     ['q' => 90, 'w' => 500]) ?>; width:100%">
                             </div>
                             <div class="content">
                                 <h5 class="price">

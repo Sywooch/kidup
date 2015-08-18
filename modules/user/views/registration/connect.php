@@ -15,14 +15,19 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account t
 <section style="padding-top:80px" class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h3><center><?= Html::encode($this->title) ?></center></h3>
+            <h3>
+                <center><?= Html::encode($this->title) ?></center>
+            </h3>
             <div class="panel panel-default">
 
                 <div class="panel-body">
                     <div class="alert alert-info">
                         <p>
-                            <?= Yii::t('user', 'Looks like this is first time you are using your {0} account to sign in to {1}', [$account->provider, Yii::$app->name]) ?>.
-                            <?= Yii::t('user', 'Connect your email address below, you will never have to use this form again.') ?>.
+                            <?= Yii::t('user',
+                                'Looks like this is first time you are using your {0} account to sign in to {1}',
+                                [$account->provider, Yii::$app->name]) ?>.
+                            <?= Yii::t('user',
+                                'Connect your email address below, you will never have to use this form again.') ?>.
                         </p>
                     </div>
                     <?php $form = ActiveForm::begin([
@@ -32,13 +37,16 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account t
 
                     <?= $form->field($model, 'email') ?>
 
-                    <?= Html::submitButton(Yii::t('user', 'Finish'), ['class' => 'btn btn-primary btn-wide btn-fill']) ?>
+                    <?= Html::submitButton(Yii::t('user', 'Finish'),
+                        ['class' => 'btn btn-primary btn-wide btn-fill']) ?>
 
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
             <p class="text-center">
-                <?= Html::a(Yii::t('user', 'Already on kidup? Login and connect this account on your verification page'), ['/user/security/login']) ?>.
+                <?= Html::a(Yii::t('user',
+                    'Already on kidup? Login and connect this account on your verification page'),
+                    ['/user/security/login']) ?>.
             </p>
         </div>
     </div>

@@ -1,12 +1,12 @@
 <?php
 /**
  * 'params' => [
-'otherName' => $otherName,
-'profileName' => $user->profile->first_name,
-],
-'urls' => [
-'profile' => Url::to('@web/user/' . $user->id, true),
-]
+ * 'otherName' => $otherName,
+ * 'profileName' => $user->profile->first_name,
+ * ],
+ * 'urls' => [
+ * 'profile' => Url::to('@web/user/' . $user->id, true),
+ * ]
  */
 ?>
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
@@ -51,7 +51,8 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Du har <?= $daysLeft ?> dage tilbage til at skrive en anmeldelse af <?= $otherName ?>
+                                                    Du har <?= $daysLeft ?> dage tilbage til at skrive en anmeldelse
+                                                    af <?= $otherName ?>
                                                 </p>
                                             </td>
                                         </tr>
@@ -177,9 +178,12 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px;">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Når både du og <?= $otherName ?> skriver en anmeldelse, offentliggøres de.
-                                                    Hvis kun en af jer skriver en anmeldelse for anmeldelsesperioden på 14 dage,
-                                                    offentliggør vi den stadig. Netværkets lejere og udlejere er afhængige af
+                                                    Når både du og <?= $otherName ?> skriver en anmeldelse,
+                                                    offentliggøres de.
+                                                    Hvis kun en af jer skriver en anmeldelse for anmeldelsesperioden på
+                                                    14 dage,
+                                                    offentliggør vi den stadig. Netværkets lejere og udlejere er
+                                                    afhængige af
                                                     ærlige omtaler, når de lejer og udlejer deres udstyr.
                                                 </p>
                                             </td>

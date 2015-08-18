@@ -1,14 +1,14 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
-#settings{
+#settings {
   margin-top: 70px;
 
   .nav-stacked > li {
     float: left;
-    @media(min-width: 768px){
+    @media (min-width: 768px) {
       clear: both;
     }
-    @media(max-width: 767px){
+    @media (max-width: 767px) {
       padding-right: 40px;
 
     }
@@ -20,30 +20,31 @@
   li.active a {
     color: @danger-color;
   }
-  .tab-content{
+  .tab-content {
     padding: 0 10px 30px;
   }
-  .save{
+  .save {
     margin-top: 40px;
   }
-  @media(max-width: 767px){
+  @media (max-width: 767px) {
     .nav-icons > li > a i {
       font-size: 2.4em;
       margin-bottom: 10px;
       width: 50px;
     }
-    .nav-icons > li > a{
+
+    .nav-icons > li > a {
       text-align: center;
     }
   }
-  @media(min-width: 767px){
-    .card{
+  @media (min-width: 767px) {
+    .card {
       margin-top: -70px;
     }
   }
 
-  .card{
-    @media(max-width: 767px){
+  .card {
+    @media (max-width: 767px) {
       //margin-right: 15px;
       //margin-left: 15px;
       border-radius: 0 !important;
@@ -53,7 +54,7 @@
   }
 
   /*Profile*/
-  img{
+  img {
     border-radius: 50%;
     max-height: 250px;
     width: auto;
@@ -64,54 +65,54 @@
     margin-top: 50px;
 
   }
-  .register-kids{
-    .form-group{
+  .register-kids {
+    .form-group {
       position: relative;
     }
-    .fa{
+    .fa {
       position: absolute;
       top: 12px;
       right: 15px;
-      color:@primary-color;
-      &.fa-trash{
+      color: @primary-color;
+      &.fa-trash {
         right: -22px;
         color: @danger-color;
         cursor: pointer;
         opacity: 0.6;
-        &:hover{
+        &:hover {
           opacity: 1;
         }
       }
     }
-    small{
+    small {
       opacity: 0.7;
     }
   }
 
   /*Pickup*/
-  .map{
+  .map {
     margin-top: 30px;
   }
 
   /*Verification*/
-  #stacked-verification{
-    .form-group{
+  #stacked-verification {
+    .form-group {
       padding: 10px 0;
     }
   }
 
-  .file-preview-frame{
+  .file-preview-frame {
     border: none;
     box-shadow: none;
-    height:100%;
+    height: 100%;
     display: block;
     float: none;
-    &:hover{
+    &:hover {
       box-shadow: none;
     }
   }
 
-  .btn-default, .btn-primary{
+  .btn-default, .btn-primary {
     border-color: #e3e3e3;
   }
 }

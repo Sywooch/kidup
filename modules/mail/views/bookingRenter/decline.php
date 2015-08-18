@@ -1,14 +1,14 @@
 <?php
 /**
  * 'params' => [
-'itemName' => $booking->item->name,
-'profileName' => $booking->renter->profile->first_name,
-'startDate' => $startDate,
-'endDate' => $endDate,
-],
-'urls' => [
-'website' => Url::to('@web/home', true),
-]
+ * 'itemName' => $booking->item->name,
+ * 'profileName' => $booking->renter->profile->first_name,
+ * 'startDate' => $startDate,
+ * 'endDate' => $endDate,
+ * ],
+ * 'urls' => [
+ * 'website' => Url::to('@web/home', true),
+ * ]
  */
 ?>
 
@@ -85,7 +85,8 @@
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Vi ved, at denne specifikke reservation ikke lykkedes,
                                                     men der er masser af andre opslog. Og vi opfordrer dig til
-                                                    at blive ved med at lede!. Vi har fjernet den <b>midlertidige autorisation</b>
+                                                    at blive ved med at lede!. Vi har fjernet den <b>midlertidige
+                                                        autorisation</b>
                                                     på din betalingsmetode, så du kan booke nyt udstyr.
                                                 </p>
                                             </td>
@@ -100,7 +101,8 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    De er både tæt på dig, og har fået gode anmeldelse af tidligere lejere,
+                                                    De er både tæt på dig, og har fået gode anmeldelse af tidligere
+                                                    lejere,
                                                     så vi håber på, at det lige er noget for dig.
                                                 </p>
                                             </td>

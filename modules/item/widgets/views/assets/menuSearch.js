@@ -5,8 +5,8 @@ var MenuSearch = function ($location) {
         query: ''
     };
 
-    scope.send = function(){
-        window.location.href = scope.vars.url+'?q=query|'+scope.vars.query;
+    scope.send = function () {
+        window.location.href = scope.vars.url + '?q=query|' + scope.vars.query;
     };
 
     return scope;

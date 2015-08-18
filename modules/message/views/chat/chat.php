@@ -133,41 +133,41 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                     </div>
                 </div>
                 <?php foreach ($messages as $message): ?>
-                <div class="row">
-                    <div class="col-xs-12 message card">
-                        <div class="row">
-                            <div class="col-md-2 col-sm-3">
-                                <?php if ($message->sender_user_id === \Yii::$app->user->id): ?>
-                                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                                        'user_id' => $message->sender_user_id
-                                    ]) ?>
-                                    <h4 style="margin:0" class="">
-                                        <?= \Yii::$app->user->identity->profile->first_name ?>
-                                    </h4>
-                                    <small><i>
-                                            <?= Carbon::createFromTimestamp($message->created_at)->diffForHumans(); ?>
-                                        </i></small>
-                                <?php endif; ?>
-                            </div>
-                            <div class="col-md-8 col-sm-6">
-                                <?= $message->message ?>
-                            </div>
-                            <div class="col-md-2 col-sm-3">
-                                <?php if ($message->sender_user_id !== \Yii::$app->user->id): ?>
-                                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                                        'user_id' => $message->sender_user_id
-                                    ]) ?>
-                                    <h3 style="margin:0" class="">
-                                        <?= $message->senderUser->profile->first_name ?>
-                                    </h3>
-                                    <small><i>
-                                            <?= Carbon::createFromTimestamp($message->created_at)->diffForHumans(); ?>
-                                        </i></small>
-                                <?php endif; ?>
+                    <div class="row">
+                        <div class="col-xs-12 message card">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-3">
+                                    <?php if ($message->sender_user_id === \Yii::$app->user->id): ?>
+                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                            'user_id' => $message->sender_user_id
+                                        ]) ?>
+                                        <h4 style="margin:0" class="">
+                                            <?= \Yii::$app->user->identity->profile->first_name ?>
+                                        </h4>
+                                        <small><i>
+                                                <?= Carbon::createFromTimestamp($message->created_at)->diffForHumans(); ?>
+                                            </i></small>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-md-8 col-sm-6">
+                                    <?= $message->message ?>
+                                </div>
+                                <div class="col-md-2 col-sm-3">
+                                    <?php if ($message->sender_user_id !== \Yii::$app->user->id): ?>
+                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                            'user_id' => $message->sender_user_id
+                                        ]) ?>
+                                        <h3 style="margin:0" class="">
+                                            <?= $message->senderUser->profile->first_name ?>
+                                        </h3>
+                                        <small><i>
+                                                <?= Carbon::createFromTimestamp($message->created_at)->diffForHumans(); ?>
+                                            </i></small>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>

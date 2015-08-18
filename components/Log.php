@@ -1,11 +1,11 @@
 <?php
 namespace app\components;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 class Log extends Component
 {

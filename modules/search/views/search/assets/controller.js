@@ -107,8 +107,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (filter == 'price') {
             scope.filter.priceMin = 0;
             scope.filter.priceMax = 499;
-            $("#price-slider").slider({"values": [0,499]});
-            $("#price-slider-mobile").slider({"values": [0,499]});
+            $("#price-slider").slider({"values": [0, 499]});
+            $("#price-slider-mobile").slider({"values": [0, 499]});
         }
         if (filter == 'location') scope.filter.location = '';
         if (filter == 'category') {
@@ -126,7 +126,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     };
 
     scope.removeAllActiveFilters = function () {
-        $.map(['search', 'price', 'category', 'age', 'location'], function(i){
+        $.map(['search', 'price', 'category', 'age', 'location'], function (i) {
             scope.activeFilterRemove(i);
         });
     };

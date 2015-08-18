@@ -105,8 +105,8 @@ class BookingRenter extends Mailer
 
         $numberOfDays = Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to));
 
-        $address =  $booking->item->location->street_name . ' ' . $booking->item->location->street_number . ','.PHP_EOL .
-            $booking->item->location->zip_code . ' '. $booking->item->location->city . PHP_EOL . ', '. PHP_EOL .
+        $address = $booking->item->location->street_name . ' ' . $booking->item->location->street_number . ',' . PHP_EOL .
+            $booking->item->location->zip_code . ' ' . $booking->item->location->city . PHP_EOL . ', ' . PHP_EOL .
             $booking->item->location->country0->name;
 
         return $this->sendMessage([
@@ -115,7 +115,7 @@ class BookingRenter extends Mailer
             'type' => self::BOOKING_RENTER_RECEIPT,
             'params' => [
                 'bookingId' => $booking->id,
-                'profileName' => $booking->renter->profile->first_name. ' ' . $booking->item->owner->profile->last_name,
+                'profileName' => $booking->renter->profile->first_name . ' ' . $booking->item->owner->profile->last_name,
                 'bookingLocation' => $address,
                 'itemName' => $booking->item->name,
                 'rentingDays' => $numberOfDays,
@@ -145,8 +145,8 @@ class BookingRenter extends Mailer
         $startDate = Carbon::createFromTimestamp($booking->time_from)->toFormattedDateString();
         $endDate = Carbon::createFromTimestamp($booking->time_to)->toFormattedDateString();
 
-        $address =  $booking->item->location->street_name . ' ' . $booking->item->location->street_number . ', ' .
-            $booking->item->location->zip_code . ', '. $booking->item->location->city ;
+        $address = $booking->item->location->street_name . ' ' . $booking->item->location->street_number . ', ' .
+            $booking->item->location->zip_code . ', ' . $booking->item->location->city;
 
         return $this->sendMessage([
             'email' => $booking->renter->email,
@@ -173,7 +173,8 @@ class BookingRenter extends Mailer
      * Payin of the booking has failed
      * @param Booking $booking
      */
-    public function failed($booking){
+    public function failed($booking)
+    {
         return $this->sendMessage([
             'email' => $booking->item->owner->email,
             'subject' => "Betaling mislykket",

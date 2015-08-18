@@ -1,11 +1,9 @@
 <?php
 
 namespace app\tests\codeception\_support;
-use app\modules\user\forms\Login;
+use AcceptanceTester;
 use app\modules\user\models\User;
 use FunctionalTester;
-use AcceptanceTester;
-
 use Yii;
 
 class UserHelper

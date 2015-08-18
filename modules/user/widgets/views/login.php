@@ -42,6 +42,7 @@ use yii\widgets\ActiveForm;
 
 <?php else: ?>
 
-    <?= Html::a(Yii::t('user', 'Logout'), ['/user/security/logout'], ['class' => 'btn btn-danger btn-block', 'data-method' => 'post']) ?>
+    <?= Html::a(Yii::t('user', 'Logout'), ['/user/security/logout'],
+        ['class' => 'btn btn-danger btn-block', 'data-method' => 'post']) ?>
 
 <?php endif ?>

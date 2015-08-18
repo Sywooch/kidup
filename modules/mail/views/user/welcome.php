@@ -127,11 +127,13 @@ use app\modules\images\components\ImageHelper;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= ImageHelper::url('kidup/graphics/find.png') ?>" alt="" border="0" width="150"
-                                                                     height="150"
-                                                                     style="display:block; border:none; outline:none; text-decoration:none;"
-                                                                     class="col2img" st-image="edit"
-                                                                     id="gcxt4sjjt76i529">
+                                                                <img
+                                                                    src="<?= ImageHelper::url('kidup/graphics/find.png') ?>"
+                                                                    alt="" border="0" width="150"
+                                                                    height="150"
+                                                                    style="display:block; border:none; outline:none; text-decoration:none;"
+                                                                    class="col2img" st-image="edit"
+                                                                    id="gcxt4sjjt76i529">
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -199,7 +201,8 @@ use app\modules\images\components\ImageHelper;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="<?= $urls['profile'] ?>">Færdiggør profil</a>
+                                                                        <a href="<?= $urls['profile'] ?>">Færdiggør
+                                                                            profil</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -272,11 +275,13 @@ use app\modules\images\components\ImageHelper;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= ImageHelper::url('kidup/graphics/photograph.png') ?>" alt="" border="0" width="150"
-                                                                     height="150"
-                                                                     style="display:block; border:none; outline:none; text-decoration:none;"
-                                                                     class="col2img" st-image="edit"
-                                                                     id="gcxt4sjjt76i529">
+                                                                <img
+                                                                    src="<?= ImageHelper::url('kidup/graphics/photograph.png') ?>"
+                                                                    alt="" border="0" width="150"
+                                                                    height="150"
+                                                                    style="display:block; border:none; outline:none; text-decoration:none;"
+                                                                    class="col2img" st-image="edit"
+                                                                    id="gcxt4sjjt76i529">
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -340,7 +345,8 @@ use app\modules\images\components\ImageHelper;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="<?= $urls['verify'] ?>">Tilføj verifikationer</a>
+                                                                        <a href="<?= $urls['verify'] ?>">Tilføj
+                                                                            verifikationer</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -413,11 +419,13 @@ use app\modules\images\components\ImageHelper;
                                                     <tr>
                                                         <td width="150" height="150" align="center" class="devicewidth">
                                                             <div class="imgpop">
-                                                                <img src="<?= ImageHelper::url('kidup/graphics/review.png') ?>" alt="" border="0" width="150"
-                                                                     height="150"
-                                                                     style="display:block; border:none; outline:none; text-decoration:none;"
-                                                                     class="col2img" st-image="edit"
-                                                                     id="gcxt4sjjt76i529">
+                                                                <img
+                                                                    src="<?= ImageHelper::url('kidup/graphics/review.png') ?>"
+                                                                    alt="" border="0" width="150"
+                                                                    height="150"
+                                                                    style="display:block; border:none; outline:none; text-decoration:none;"
+                                                                    class="col2img" st-image="edit"
+                                                                    id="gcxt4sjjt76i529">
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -482,7 +490,8 @@ use app\modules\images\components\ImageHelper;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="<?= $urls['search'] ?>">Gå på opdagelse</a>
+                                                                        <a href="<?= $urls['search'] ?>">Gå på
+                                                                            opdagelse</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>

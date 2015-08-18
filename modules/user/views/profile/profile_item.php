@@ -1,4 +1,3 @@
-
 <?php
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
@@ -8,7 +7,7 @@ use yii\helpers\Url;
  *
  */
 ?>
-<a href="<?= Url::to('@web/item/'.$model->id) ?>">
+<a href="<?= Url::to('@web/item/' . $model->id) ?>">
     <div class="card-width" style="width:100%; padding: 0 15px;">
         <div class="card">
             <div class="image" style="<?= ImageHelper::bgImg($model->getImageName(0), ['q' => 90, 'w' => 300]) ?>">

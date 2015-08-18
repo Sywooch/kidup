@@ -29,7 +29,8 @@ class Invoice extends \app\models\base\Invoice
         ];
     }
 
-    public function create($booking){
+    public function create($booking)
+    {
         $i = new Invoice();
 
         $l = $booking->item->location;
@@ -47,7 +48,7 @@ class Invoice extends \app\models\base\Invoice
         $renterAddress = implode(',', $loc);
 
         $i->setAttributes([
-            'invoice_number' => (int) $this->getNewNumber(),
+            'invoice_number' => (int)$this->getNewNumber(),
             'data' => Json::encode([
                 'booking' => $booking,
                 'item' => $booking->item,
@@ -62,17 +63,18 @@ class Invoice extends \app\models\base\Invoice
             ])
         ]);
 
-        if( $i->save() ){
+        if ($i->save()) {
             return $i;
         }
         return false;
     }
 
-    public function getNewNumber(){
+    public function getNewNumber()
+    {
         $i = Invoice::find()->orderBy('invoice_number DESC')->one();
-        if($i === null){
+        if ($i === null) {
             return 1;
         }
-        return $i->invoice_number+1;
+        return $i->invoice_number + 1;
     }
 }

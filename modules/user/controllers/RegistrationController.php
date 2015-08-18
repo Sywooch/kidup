@@ -37,10 +37,10 @@ class RegistrationController extends Controller
     protected $finder;
 
     /**
-     * @param string           $id
+     * @param string $id
      * @param \yii\base\Module $module
-     * @param Finder           $finder
-     * @param array            $config
+     * @param Finder $finder
+     * @param array $config
      */
     public function __construct($id, $module, Finder $finder, $config = [])
     {
@@ -59,10 +59,10 @@ class RegistrationController extends Controller
                     ['allow' => true, 'actions' => ['confirm', 'post-registration'], 'roles' => ['?', '@']],
                 ],
                 'denyCallback' => function ($rule, $action) {
-                    if($action == 'register'){
+                    if ($action == 'register') {
                         return $this->goHome();
                     }
-                    return $this->redirect('@web/user/'.\Yii::$app->user->id);
+                    return $this->redirect('@web/user/' . \Yii::$app->user->id);
                 }
             ],
         ];
@@ -89,7 +89,7 @@ class RegistrationController extends Controller
         }
 
         return $this->render('register', [
-            'model'  => $model,
+            'model' => $model,
             'module' => $this->module,
         ]);
     }
@@ -110,7 +110,7 @@ class RegistrationController extends Controller
 
         /** @var User $user */
         $user = \Yii::createObject([
-            'class'    => User::className(),
+            'class' => User::className(),
             'scenario' => 'connect'
         ]);
 
@@ -122,7 +122,7 @@ class RegistrationController extends Controller
         }
 
         return $this->render('connect', [
-            'model'   => $user,
+            'model' => $user,
             'account' => $account
         ]);
     }
@@ -131,7 +131,7 @@ class RegistrationController extends Controller
      * Confirms user's account. If confirmation was successful logs the user and shows success message. Otherwise
      * shows error message.
      * @param  integer $id
-     * @param  string  $code
+     * @param  string $code
      * @return string
      * @throws \yii\web\HttpException
      */
@@ -152,24 +152,26 @@ class RegistrationController extends Controller
     /**
      * Displays the post-registration fields
      */
-    public function actionPostRegistration(){
-        $user =  User::find()->where(['id' => \Yii::$app->user->id])->one();
+    public function actionPostRegistration()
+    {
+        $user = User::find()->where(['id' => \Yii::$app->user->id])->one();
 
         $model = \Yii::createObject(PostRegistrationProfile::className());
 
         $this->performAjaxValidation($model);
 
-        if($model->load(\Yii::$app->request->post()) && $model->save()){
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->goBack();
         }
-        if($user->profile->description == null || $user->profile->first_name == null || $user->profile->last_name == null){
-            return $this->render('post_registration',[
+        if ($user->profile->description == null || $user->profile->first_name == null || $user->profile->last_name == null) {
+            return $this->render('post_registration', [
                 'model' => $model,
             ]);
-        }else{
-            \Yii::$app->session->addFlash('success', \Yii::t('user', 'Thank you {0} for completing your profile, and welcome to KidUp!', [
-                $user->profile->first_name
-            ]));
+        } else {
+            \Yii::$app->session->addFlash('success',
+                \Yii::t('user', 'Thank you {0} for completing your profile, and welcome to KidUp!', [
+                    $user->profile->first_name
+                ]));
             return $this->redirect('@web/user/settings/profile');
         }
     }

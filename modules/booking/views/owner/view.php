@@ -86,8 +86,10 @@ use yii\helpers\Html;
                         </h4>
                         <?= Html::a(\Yii::t('booking', 'Contact Renter'),
                             '@web/messages/' . $booking->getConversationId()) ?>
-                        <?= Html::a(\Yii::t('booking', 'View Receipt'), '@web/booking/' . $booking->id . '/receipt', ['target' => '_blank']) ?>
-                        <?= Html::a(\Yii::t('booking', 'View Invoice'), '@web/booking/' . $booking->id . '/invoice', ['target' => '_blank']) ?>
+                        <?= Html::a(\Yii::t('booking', 'View Receipt'), '@web/booking/' . $booking->id . '/receipt',
+                            ['target' => '_blank']) ?>
+                        <?= Html::a(\Yii::t('booking', 'View Invoice'), '@web/booking/' . $booking->id . '/invoice',
+                            ['target' => '_blank']) ?>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace app\modules\item\models;
 
+use app\components\Cache;
 use app\models\base\ItemHasCategory;
 use app\modules\user\models\User;
 use Carbon\Carbon;
@@ -107,27 +108,26 @@ class Item extends \app\models\base\Item
 
     public function getImageNames()
     {
-        $ihms = ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->all();
-        usort($ihms, function ($a, $b) {
-            return ($a->order < $b->order) ? -1 : 1;
-        });
+        $function = function () {
+            $ihms = ItemHasMedia::getDb()->cache(function () {
+                return ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->with('media')->all();
+            });
 
-        $this->images = [];
-        foreach ($ihms as $ihm) {
-            $this->images[] = $ihm->media->file_name;
-        }
-        return $this->images;
+            $imgs = [];
+            foreach ($ihms as $ihm) {
+                $imgs[] = $ihm->media->file_name;
+            }
+            return $imgs;
+        };
+        return Cache::data('item_names' . $this->id, $function, 60 * 60);
     }
 
     public function getImageName($order)
     {
-        $ihms = ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->all();
-        usort($ihms, function ($a, $b) {
-            return ($a->order < $b->order) ? -1 : 1;
-        });
+        $ihms = $this->getImageNames();
 
         if (isset($ihms[$order])) {
-            return $ihms[$order]->media->file_name;
+            return $ihms[$order];
         }
         return false;
     }
@@ -234,16 +234,36 @@ class Item extends \app\models\base\Item
             ->viaTable('item_has_category', ['item_id' => 'id']);
     }
 
+
+    /**
+     * Returns the categories of this item of a certain type
+     * @param $type
+     * @return array
+     */
+    public function getCategoriesByType($type)
+    {
+        $cats = Category::find()->innerJoinWith('itemHasCategories')->
+        where([
+            'type' => $type,
+            'item_has_category.item_id' => $this->getAttribute('id')
+        ])->asArray()->all();
+        $res = [];
+        foreach ($cats as $cat) {
+            $res[] = $cat['name'];
+        }
+        return $res;
+    }
+
     /**
      * Get a list of recommended items.
      *
-     * @param $item_id  the item to find recommended items for
-     * @param $numItems the maximum number of items to retrieve
+     * @param $item_id int  the item to find recommended items for
+     * @param $numItems int the maximum number of items to retrieve
      * @return array    a list with the recommended items
      */
     public function getRecommendedItems($item_id, $numItems)
     {
-        $item1 = Item::find(['id' => $item_id])->one();
+        $item1 = Item::find()->where(['id' => $item_id])->one();
 
         // now fetch all other items
         $items = Item::find()
@@ -272,11 +292,12 @@ class Item extends \app\models\base\Item
     /**
      * Calculate a similarity score between two items
      *
-     * @param $item1 first item
+     * @param int $item1 first item
      * @param $item2 second item
      * @return double number in [0, 1] where 0 means maximal dissimilarity and 1 means maximal similarity
      */
-    public static function getSimilarityScore($item1, $item2) {
+    public static function getSimilarityScore($item1, $item2)
+    {
         // calculate the geographical distance
         $loc1 = Location::find(['id' => $item1->location_id])->one();
         $loc2 = Location::find(['id' => $item2->location_id])->one();
@@ -289,8 +310,7 @@ class Item extends \app\models\base\Item
             $cats2 = ItemHasCategory::find()
                 ->where(['item_id' => $item2->id])
                 ->andWhere(['category_id' => $cat1->category_id])
-                ->one()
-            ;
+                ->one();
             $numSameCategories += count($cats2);
         }
 

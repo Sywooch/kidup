@@ -18,7 +18,8 @@ class CreateFormTest extends TestCase
      */
     protected $form;
 
-    public function fixtures(){
+    public function fixtures()
+    {
         $fh = new FixtureHelper();
         return $fh->fixtures();
     }
@@ -35,9 +36,10 @@ class CreateFormTest extends TestCase
                 'dateFrom' => Carbon::now()->format('d-m-Y'),
                 'dateto' => Carbon::now()->addDays(25)->format('d-m-Y')
             ]);
-            \yii\helpers\VarDumper::dump($this->form->getErrors(),10,true); exit();
+            \yii\helpers\VarDumper::dump($this->form->getErrors(), 10, true);
+            exit();
             $this->assertTrue($this->form->validate());
-            
+
         });
     }
 }

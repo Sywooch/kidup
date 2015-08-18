@@ -27,9 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <br/><br/>
 
         <div class="col-md-4 col-md-offset-4 card">
-            <h4><?=  \Yii::t('title', 'Recover your password') ?></h4>
+            <h4><?= \Yii::t('title', 'Recover your password') ?></h4>
             <small>
-                <?= Yii::t("user", "Enter your email address below and click continue, and we'll send you a recovery link.") ?>
+                <?= Yii::t("user",
+                    "Enter your email address below and click continue, and we'll send you a recovery link.") ?>
             </small>
             <br/><br/>
             <?php $form = ActiveForm::begin([
@@ -38,7 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'enableClientValidation' => false
             ]); ?>
 
-            <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'placeholder' => \Yii::t('user', 'Email')])->label(false) ?>
+            <?= $form->field($model, 'email')->textInput([
+                'autofocus' => true,
+                'placeholder' => \Yii::t('user', 'Email')
+            ])->label(false) ?>
 
             <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-danger btn-block']) ?><br>
 

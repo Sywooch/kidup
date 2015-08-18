@@ -32,10 +32,10 @@ class PostRegistrationProfile extends Model
     public function attributeLabels()
     {
         return [
-            'firstName'   => \Yii::t('user', 'First Name'),
-            'lastName'   => \Yii::t('user', 'Last Name'),
-            'language'   => \Yii::t('user', 'Language'),
-            'description'   => \Yii::t('user', 'Description'),
+            'firstName' => \Yii::t('user', 'First Name'),
+            'lastName' => \Yii::t('user', 'Last Name'),
+            'language' => \Yii::t('user', 'Language'),
+            'description' => \Yii::t('user', 'Description'),
         ];
     }
 
@@ -53,7 +53,8 @@ class PostRegistrationProfile extends Model
         return 'post-registration-form';
     }
 
-    public function __construct(){
+    public function __construct()
+    {
         $profile = Profile::find()->where(['user_id' => \Yii::$app->user->id])->one();
         $this->firstName = $profile->first_name;
         $this->lastName = $profile->last_name;
@@ -63,8 +64,9 @@ class PostRegistrationProfile extends Model
         return parent::__construct();
     }
 
-    public function save(){
-        if(!$this->validate()){
+    public function save()
+    {
+        if (!$this->validate()) {
             return false;
         }
         $profile = Profile::find()->where(['user_id' => \Yii::$app->user->id])->one();

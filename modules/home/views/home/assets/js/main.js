@@ -41,7 +41,7 @@ $(document).ready(function () {
     new Typist(typist, {
         letterInterval: 60,
         textInterval: 3000,
-        onSlide: function(text, options) {
+        onSlide: function (text, options) {
             options.typist.getAttribute("data-typist-suffix");
             return false;
         }

@@ -30,6 +30,7 @@ class MailHelper extends Module
         $email = end(static::$mails);
         $this->assertContains($needle, $email['subject']);
     }
+
     /**
      * Asserts that last message recipients contain $needle
      *

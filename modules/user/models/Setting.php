@@ -14,11 +14,13 @@ class Setting extends \app\models\base\Setting
     const BOOKING_STATUS_CHANGE = 'rent_status_change';
     const NEWSLETTER = 'newsletter';
 
-    public static function getEmailSettings(){
+    public static function getEmailSettings()
+    {
         return [
             Setting::MAIL_BOOKING_REMINDER => \Yii::t('app', 'Am about to start a reservation.'),
             Setting::MESSAGE_UPDATE => \Yii::t('app', 'I receive a message from another person on KidUp.'),
-            Setting::BOOKING_STATUS_CHANGE => \Yii::t('app', 'My outstanding reservation request is accepted or declined.'),
+            Setting::BOOKING_STATUS_CHANGE => \Yii::t('app',
+                'My outstanding reservation request is accepted or declined.'),
             Setting::NEWSLETTER => \Yii::t('app', 'Kidup wants to share some exciting news or updates.'),
         ];
     }

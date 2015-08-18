@@ -6,11 +6,11 @@ use yii\db\ActiveRecord;
 /**
  * @property integer $id          Id
  * @property integer $user_id     User id, null if account is not bind to user
- * @property string  $provider    Name of service
- * @property string  $client_id   Account id
- * @property string  $data        Account properties returned by social network (json encoded)
- * @property string  $decodedData Json-decoded properties
- * @property User    $user        User that this account is connected for.
+ * @property string $provider    Name of service
+ * @property string $client_id   Account id
+ * @property string $data        Account properties returned by social network (json encoded)
+ * @property string $decodedData Json-decoded properties
+ * @property User $user        User that this account is connected for.
  *
  * @property \app\modules\user\Module $module
  *

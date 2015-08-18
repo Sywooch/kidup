@@ -19,11 +19,11 @@ use yii\helpers\Url;
 
 class Token extends \app\models\base\Token
 {
-    const TYPE_CONFIRMATION      = 0;
-    const TYPE_RECOVERY          = 1;
+    const TYPE_CONFIRMATION = 0;
+    const TYPE_RECOVERY = 1;
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
-    const TYPE_PHONE_CODE        = 4;
+    const TYPE_PHONE_CODE = 4;
 
     /**
      * @return \yii\db\ActiveQuery
@@ -85,9 +85,9 @@ class Token extends \app\models\base\Token
     {
         if ($this->isNewRecord) {
             $this->setAttribute('created_at', time());
-            if($this->type == self::TYPE_PHONE_CODE){
-                $this->setAttribute('code', ''.rand(10000,99999));
-            }else{
+            if ($this->type == self::TYPE_PHONE_CODE) {
+                $this->setAttribute('code', '' . rand(10000, 99999));
+            } else {
                 $this->setAttribute('code', \Yii::$app->security->generateRandomString());
             }
         }

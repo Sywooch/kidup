@@ -34,8 +34,11 @@ class RenterReview extends Model
         ];
     }
 
-    public function save(){
-        if(!$this->validate()) return false;
+    public function save()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
 
         Review::create(Review::TYPE_USER_PUBLIC, $this->public, $this->booking, false);
         Review::create(Review::TYPE_EXPERIENCE, $this->experience, $this->booking, false);

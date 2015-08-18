@@ -23,6 +23,7 @@ use yii\helpers\Url;
             </div>
 
             <br/><br/>
+
             <div class="card card-product" id="product">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-1">
@@ -36,7 +37,7 @@ use yii\helpers\Url;
                     <div class="col-md-6">
                         <div style="text-align: right">
                             <br/>
-                            <img src="<?=Url::to('@assets/img/logo/horizontal.png', true) ?>" width="100px"/>
+                            <img src="<?= Url::to('@assets/img/logo/horizontal.png', true) ?>" width="100px"/>
                             <br/>
                             <b class="pull-right"><?= Yii::t("booking", "Generated on {0}", [
                                     Carbon::now(\Yii::$app->params['serverTimeZone'])->toFormattedDateString()
@@ -57,7 +58,7 @@ use yii\helpers\Url;
                             <li>
                                 <?= Yii::t("booking", "Address") ?>
                                 <b class="pull-right">
-                                    <?php  $l = \Yii::$app->user->identity->locations[0];
+                                    <?php $l = \Yii::$app->user->identity->locations[0];
                                     $loc = [];
                                     $loc[] = $l->street_name . ' ' . $l->street_number;
                                     $loc[] = $l->zip_code;
@@ -68,7 +69,8 @@ use yii\helpers\Url;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Date of Service Rendered") ?> <b class="pull-right">
-                                    <?= Carbon::createFromTimestamp($booking->time_from, \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
+                                    <?= Carbon::createFromTimestamp($booking->time_from,
+                                        \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?>
                                 </b>
                             </li>
                             <li>
@@ -94,19 +96,19 @@ use yii\helpers\Url;
                             <li>
                                 <?= Yii::t("booking", "KidUp Service Fee") ?>
                                 <b class="pull-right">
-                                    <?= round($booking->amount_payout_fee,2) ?> DKK
+                                    <?= round($booking->amount_payout_fee, 2) ?> DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "TAX") ?>
                                 <b class="pull-right">
-                                    <?= round($booking->amount_payout_fee_tax,2) ?> DKK
+                                    <?= round($booking->amount_payout_fee_tax, 2) ?> DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Total") ?>
                                 <b class="pull-right">
-                                    <?= round($booking->amount_payout_fee + $booking->amount_payout_fee_tax,2) ?> DKK
+                                    <?= round($booking->amount_payout_fee + $booking->amount_payout_fee_tax, 2) ?> DKK
                                 </b>
                             </li>
                         </ul>
@@ -118,12 +120,12 @@ use yii\helpers\Url;
             <span class="pull-left">
                 <?= Yii::t("booking", "No rights can be derived from the contents of this page.") ?>
             </span>
-            <?php if(!isset($_GET['pdf'])): ?>
-            <a href="?pdf=true" target="_blank">
-                <div class="pull-right btn btn-primary">
-                    <?= Yii::t("booking", "Print") ?>
-                </div>
-            </a>
+            <?php if (!isset($_GET['pdf'])): ?>
+                <a href="?pdf=true" target="_blank">
+                    <div class="pull-right btn btn-primary">
+                        <?= Yii::t("booking", "Print") ?>
+                    </div>
+                </a>
             <?php endif; ?>
         </div>
     </div>

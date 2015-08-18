@@ -97,7 +97,7 @@ class MailMessage extends \app\models\base\MailMessage
 
         $mm->mail_account_name = $account->name;
 
-        if(!$mm->save()){
+        if (!$mm->save()) {
             Yii::$app->clog->debug('MailMessage not created', [$mm, $postData]);
             throw new InternalErrorException("Incomming email not parsed");
         }

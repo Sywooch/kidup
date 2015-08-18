@@ -64,7 +64,7 @@ class PayoutPreference extends Model
             [['identifier_1_encrypted', 'identifier_2_encrypted', 'payee_name'], 'required'],
             [['identifier_1_encrypted'], 'integer', 'max' => 9999999999],
             [['identifier_2_encrypted'], 'integer', 'max' => 9999],
-            [['bank_name', 'payee_name', 'identifier_1','identifier_2'], 'string'],
+            [['bank_name', 'payee_name', 'identifier_1', 'identifier_2'], 'string'],
         ];
     }
 
@@ -78,10 +78,11 @@ class PayoutPreference extends Model
         ];
     }
 
-    private function transformToSafe($input, $leaveUntouched = 4){
+    private function transformToSafe($input, $leaveUntouched = 4)
+    {
         $length = strlen($input);
         $input = substr($input, $length - $leaveUntouched);
-        return str_repeat("*",  $length - $leaveUntouched).$input;
+        return str_repeat("*", $length - $leaveUntouched) . $input;
     }
 
     public function save()
@@ -99,13 +100,15 @@ class PayoutPreference extends Model
             $method->payee_name = $this->payee_name;
 
             $method->identifier_1 = $this->transformToSafe($this->identifier_1_encrypted, 4);
-            $method->identifier_1_encrypted = \app\components\Encrypter::encrypt($this->identifier_1_encrypted, Encrypter::SIZE_1024);
+            $method->identifier_1_encrypted = \app\components\Encrypter::encrypt($this->identifier_1_encrypted,
+                Encrypter::SIZE_1024);
             $method->identifier_2 = $this->transformToSafe($this->identifier_2_encrypted, 2);
-            $method->identifier_2_encrypted = \app\components\Encrypter::encrypt($this->identifier_2_encrypted, Encrypter::SIZE_1024);
+            $method->identifier_2_encrypted = \app\components\Encrypter::encrypt($this->identifier_2_encrypted,
+                Encrypter::SIZE_1024);
 
-            if($method->save()){
+            if ($method->save()) {
                 return true;
-            }else{
+            } else {
                 \Yii::error(Json::encode($method->getErrors()));
             }
         }

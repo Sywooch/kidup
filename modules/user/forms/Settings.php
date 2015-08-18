@@ -154,7 +154,7 @@ class Settings extends Model
             $profile->phone_number = $this->phone_number;
 
             $profile->save();
-            
+
             return $this->user->save();
         }
 

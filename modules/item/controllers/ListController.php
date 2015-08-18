@@ -43,8 +43,8 @@ class ListController extends Controller
 
         $requestProvider = new ActiveDataProvider([
             'query' => Booking::find()->where(['item.owner_id' => Yii::$app->user->id])
-                        ->innerJoinWith('item')
-                        ->andWhere(['booking.status' => Booking::PENDING]),
+                ->innerJoinWith('item')
+                ->andWhere(['booking.status' => Booking::PENDING]),
             'pagination' => ['pageSize' => 10,],
         ]);
 

@@ -41,7 +41,7 @@ use yii\helpers\Html;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Owner") ?> <b class="pull-right">
-                                    <?= Html::a($booking->item->owner->profile->first_name . ' '. $booking->item->owner->profile->last_name,
+                                    <?= Html::a($booking->item->owner->profile->first_name . ' ' . $booking->item->owner->profile->last_name,
                                         '@web/user/' . $booking->item->owner_id) ?>
                                 </b>
                             </li>
@@ -62,7 +62,7 @@ use yii\helpers\Html;
                         <h4><?= Yii::t("booking", "Payment Information") ?></h4>
                         <ul class="list-unstyled list-lines">
                             <li>
-                                <?= Yii::t("booking", "Rent for {0} days",[
+                                <?= Yii::t("booking", "Rent for {0} days", [
                                     Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to))
                                 ]) ?>
                                 <b class="pull-right">
@@ -78,20 +78,22 @@ use yii\helpers\Html;
                             <li>
                                 <?= Yii::t("booking", "Total") ?>
                                 <b class="pull-right">
-                                    <?= $booking->amount_payin?> DKK
+                                    <?= $booking->amount_payin ?> DKK
                                 </b>
                             </li>
                             <br/><br/>
                             <li>
                                 <?= Yii::t("booking", "Payment Received") ?>
                                 <b class="pull-right">
-                                    <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? $booking->amount_payin : 0 ?> DKK
+                                    <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? $booking->amount_payin : 0 ?>
+                                    DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Balance") ?>
                                 <b class="pull-right">
-                                    <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? 0 : $booking->amount_payin ?> DKK
+                                    <?= $booking->payin->status == Payin::STATUS_ACCEPTED ? 0 : $booking->amount_payin ?>
+                                    DKK
                                 </b>
                             </li>
                         </ul>
@@ -103,9 +105,11 @@ use yii\helpers\Html;
                         <?= Html::a(\Yii::t('booking', 'Contact Owner'),
                             '@web/messages/' . $booking->conversations[0]->id) ?>
                         <br/>
-                        <?= Html::a(\Yii::t('booking', 'View Receipt'), '@web/booking/' . $booking->id . '/receipt', ['target' => '_blank']) ?>
+                        <?= Html::a(\Yii::t('booking', 'View Receipt'), '@web/booking/' . $booking->id . '/receipt',
+                            ['target' => '_blank']) ?>
                         <br/>
-                        <?= Html::a(\Yii::t('booking', 'View Invoice'), '@web/booking/' . $booking->id . '/invoice', ['target' => '_blank']) ?>
+                        <?= Html::a(\Yii::t('booking', 'View Invoice'), '@web/booking/' . $booking->id . '/invoice',
+                            ['target' => '_blank']) ?>
                     </div>
                 </div>
                 <br/><br/>
@@ -113,7 +117,7 @@ use yii\helpers\Html;
             <span class="pull-left">
                 <?= Yii::t("booking", "No rights can be derived from the contents of this page.") ?>
             </span>
-            <?php if(!isset($_GET['pdf'])): ?>
+            <?php if (!isset($_GET['pdf'])): ?>
                 <a href="?pdf=true" target="_blank">
                     <div class="pull-right btn btn-primary">
                         <?= Yii::t("booking", "Print") ?>

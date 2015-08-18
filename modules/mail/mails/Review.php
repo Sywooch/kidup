@@ -17,16 +17,16 @@ class Review extends Mailer
     {
         $booking = $data['booking'];
         $isOwner = $data['isOwner'];
-        if(!$isOwner){
+        if (!$isOwner) {
             $user = $booking->renter;
             $otherName = $booking->item->owner->profile->first_name . ' ' . $booking->item->owner->profile->last_name;
-        }else{
+        } else {
             $user = $booking->item->owner;
             $otherName = $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name;
         }
         return $this->sendMessage([
             'email' => $user->email,
-            'subject' => "Skriv en omtale ".$otherName,
+            'subject' => "Skriv en omtale " . $otherName,
             'type' => self::REVIEW_REQUEST,
             'params' => [
                 'otherName' => $otherName,
@@ -47,16 +47,16 @@ class Review extends Mailer
     {
         $booking = $data['booking'];
         $isOwner = $data['isOwner'];
-        if(!$isOwner){
+        if (!$isOwner) {
             $user = $booking->renter;
             $otherName = $booking->item->owner->profile->first_name . ' ' . $booking->item->owner->profile->last_name;
-        }else{
+        } else {
             $user = $booking->item->owner;
             $otherName = $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name;
         }
         return $this->sendMessage([
             'email' => $user->email,
-            'subject' => "Skriv en omtale ".$otherName,
+            'subject' => "Skriv en omtale " . $otherName,
             'type' => self::REVIEW_PUBLIC,
             'params' => [
                 'otherName' => $otherName,
@@ -78,16 +78,16 @@ class Review extends Mailer
     {
         $booking = $data['booking'];
         $isOwner = $data['isOwner'];
-        if(!$isOwner){
+        if (!$isOwner) {
             $user = $booking->renter;
             $otherName = $booking->item->owner->profile->first_name . ' ' . $booking->item->owner->profile->last_name;
-        }else{
+        } else {
             $user = $booking->item->owner;
             $otherName = $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name;
         }
         return $this->sendMessage([
             'email' => $user->email,
-            'subject' => "Skriv en omtale ".$otherName,
+            'subject' => "Skriv en omtale " . $otherName,
             'type' => self::REVIEW_REMINDER,
             'params' => [
                 'otherName' => $otherName,

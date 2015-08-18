@@ -14,23 +14,25 @@ class PaymentController extends Controller
         $this->checkAdmin();
 
         $payouts = Payout::findAll(['status' => Payout::STATUS_TO_BE_PROCESSED]);
-        if(count($payouts) == 0){
-            echo 'nothing to pay'; exit();
+        if (count($payouts) == 0) {
+            echo 'nothing to pay';
+            exit();
         }
         $export = [];
-        foreach($payouts as $p){
+        foreach ($payouts as $p) {
             $export[] = $p->exportDankseBank();
         }
         $e = implode(PHP_EOL, $export);
-        file_put_contents(\Yii::$aliases['@runtime'].'/payout-export-'.time(), $e);
+        file_put_contents(\Yii::$aliases['@runtime'] . '/payout-export-' . time(), $e);
         echo $e;
-        foreach($payouts as $p){
+        foreach ($payouts as $p) {
             $p->markAsProcessed();
         }
     }
 
-    private function checkAdmin(){
-        if(\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()){
+    private function checkAdmin()
+    {
+        if (\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()) {
             return $this->redirect('@web/home');
         }
 

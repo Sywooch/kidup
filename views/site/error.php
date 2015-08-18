@@ -1,13 +1,12 @@
 <?php
 
-use yii\helpers\Html;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $name string */
 /* @var $message string */
 /* @var $exception Exception */
-
 $this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
 ?>
 <section class="section container">

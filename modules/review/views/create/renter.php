@@ -41,7 +41,7 @@ use yii\helpers\Html;
                 <?= Carbon::createFromTimestamp($booking->time_to)->toFormattedDateString() ?>
                 <br/>
                 <?= Yii::t("review", "By {0}", [
-                    Html::a($item->owner->profile->first_name, '@web/user/'.$item->owner_id)
+                    Html::a($item->owner->profile->first_name, '@web/user/' . $item->owner_id)
                 ]) ?>
             </div>
             <div class="col-md-6 col-md-offset-1 card">
@@ -137,14 +137,15 @@ use yii\helpers\Html;
                     <?= Yii::t("review", "For KidUp") ?>
                     <br/>
                     <small>
-                        <?= Yii::t("review", "Is there anything you'd like to tell to KidUp regarding this experience?") ?>
+                        <?= Yii::t("review",
+                            "Is there anything you'd like to tell to KidUp regarding this experience?") ?>
                     </small>
                 </h4>
                 <?= $form->field($model, 'kidupPrivate')->textarea(['rows' => 4])->label(false) ?>
 
                 <?= Html::submitButton(\Yii::t('review', 'Submit Review'), [
                     'class' => 'btn btn-danger btn-lg btn-fill'
-                ])?>
+                ]) ?>
                 <br/><br/>
                 <?php ActiveForm::end() ?>
             </div>

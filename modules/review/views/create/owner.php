@@ -39,7 +39,7 @@ use yii\helpers\Html;
                 <b><?= $item->name ?></b>
                 <br/>
                 <?= Yii::t("item", "Rented by {0} between {1} and {2}", [
-                    Html::a($booking->renter->profile->first_name, '@web/user/'.$booking->renter_id),
+                    Html::a($booking->renter->profile->first_name, '@web/user/' . $booking->renter_id),
                     Carbon::createFromTimestamp($booking->time_from)->toFormattedDateString(),
                     Carbon::createFromTimestamp($booking->time_to)->toFormattedDateString()
                 ]) ?>

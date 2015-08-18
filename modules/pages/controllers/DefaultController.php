@@ -28,10 +28,11 @@ class DefaultController extends Controller
         ];
     }
 
-    public function actionWordpress($page){
+    public function actionWordpress($page)
+    {
         $p = \Yii::$app->pages->get($page);
-        if(isset($p['content'])){
-            return $this->render('page_wrapper',[
+        if (isset($p['content'])) {
+            return $this->render('page_wrapper', [
                 'content' => $p['content']
             ]);
         }

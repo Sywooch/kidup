@@ -200,7 +200,7 @@ $this->registerJs("
                                     </small>
                                 </h4>
 
-                                <div class="row" >
+                                <div class="row">
                                     <div class="col-md-7" style="padding-left:0">
                                         <b><?= Yii::t("item", "Price suggestions") ?></b>
                                         <br/>
@@ -254,7 +254,7 @@ $this->registerJs("
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -284,15 +284,16 @@ $this->registerJs("
                             <div class="col-sm-10 col-sm-offset-1 terms">
                                 <h4>
                                     <?= Yii::t("item", "Preview & Publishing"); ?>
-                                        <?php
-                                        if ($model->isPublishable() !== true) {
-                                            ?><br /><small><?php
-                                            echo \Yii::t('item',
-                                                'There are some things left to be fixed before you can preview or publish this item.');
-                                            echo \Yii::t('item', 'Refresh the page if everything is fixed.');
-                                            ?></small><?php
-                                        }
-                                        ?>
+                                    <?php
+                                    if ($model->isPublishable() !== true) {
+                                        ?><br/>
+                                        <small><?php
+                                        echo \Yii::t('item',
+                                            'There are some things left to be fixed before you can preview or publish this item.');
+                                        echo \Yii::t('item', 'Refresh the page if everything is fixed.');
+                                        ?></small><?php
+                                    }
+                                    ?>
                                 </h4>
                                 <?php
                                 if ($model->isPublishable() === true && $model->is_available == 0) {
