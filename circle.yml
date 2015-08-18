@@ -15,7 +15,7 @@ dependencies:
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
     # - bash ./devops/environment/init_test.sh
-#    - mv ./config/keys/keys_test.env ./config/keys/keys.env
+    - mv ./config/keys/keys_test.json ./config/keys/keys.json
     - composer config github-oauth.github.com $CIRCLECI_GIT_OAUTH
     - composer global require "fxp/composer-asset-plugin:1.0.3"
   post:
