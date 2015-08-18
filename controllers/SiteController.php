@@ -51,6 +51,11 @@ class SiteController extends Controller
         }
     }
 
+    public function actionSuperSecretCacheFlush(){
+        \Yii::$app->cache->flush();
+        echo 'dude.. the fu!';
+    }
+
     public function actionError()
     {
         if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
