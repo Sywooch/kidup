@@ -36,7 +36,7 @@ class ImageHelper extends BaseHtml
             }
             return static::tag('img', '', $htmlOptions);
         };
-        return Cache::data('image_' . $filename.Json::encode([$options, $htmlOptions]), $function, 24*60*60);
+        return Cache::data('image_' . $filename . Json::encode([$options, $htmlOptions]), $function, 24 * 60 * 60);
     }
 
     public static function img($filename, $options = [], $htmlOptions = [])
@@ -112,6 +112,6 @@ class ImageHelper extends BaseHtml
 
             return $url;
         };
-        return Cache::data('imageurl' . $filename.Json::encode($options), $function, 24*60*60);
+        return Cache::data('imageurl' . $filename . Json::encode($options), $function, 24 * 60 * 60);
     }
 }

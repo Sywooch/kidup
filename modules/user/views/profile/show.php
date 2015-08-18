@@ -28,15 +28,17 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         </div>
                         <h4><?= Yii::t("user", "Verification") ?></h4>
 
-                        <?php $verified = function($type){ return
-                        '<div class="row verifyEntity">
+                        <?php $verified = function ($type) {
+                            return
+                                '<div class="row verifyEntity">
                             <div class="col-xs-1">
                                 <i class="fa fa-check"></i>
                             </div>
                             <div class="col-xs-8 entity">
-                                '.$type.'
+                                ' . $type . '
                             </div>
-                        </div>'; } ?>
+                        </div>';
+                        } ?>
 
                         <?= $fbVerified ? $verified('Facebook') : '' ?>
                         <?= $twVerified ? $verified('Twitter') : '' ?>

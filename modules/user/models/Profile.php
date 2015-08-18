@@ -126,10 +126,10 @@ class Profile extends \app\models\base\Profile
         if ($this->isAttributeChanged('description')) {
             $this->description = \yii\helpers\HtmlPurifier::process($this->description);
         }
-        if($this->isAttributeChanged('first_name')){
+        if ($this->isAttributeChanged('first_name')) {
             $this->first_name = \yii\helpers\HtmlPurifier::process($this->first_name);
         }
-        if($this->isAttributeChanged('last_name')){
+        if ($this->isAttributeChanged('last_name')) {
             $this->last_name = \yii\helpers\HtmlPurifier::process($this->last_name);
         }
         return parent::beforeValidate();

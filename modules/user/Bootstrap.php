@@ -18,15 +18,15 @@ class Bootstrap implements BootstrapInterface
 {
     /** @var array Model's map */
     private $_modelMap = [
-        'User'             => 'app\modules\user\models\User',
-        'Account'          => 'app\modules\user\models\Account',
-        'Profile'          => 'app\modules\user\models\Profile',
+        'User' => 'app\modules\user\models\User',
+        'Account' => 'app\modules\user\models\Account',
+        'Profile' => 'app\modules\user\models\Profile',
         'RegistrationForm' => 'app\modules\user\models\RegistrationForm',
-        'ResendForm'       => 'app\modules\user\models\ResendForm',
-        'LoginForm'        => 'app\modules\user\models\LoginForm',
-        'SettingsForm'     => 'app\modules\user\models\SettingsForm',
-        'RecoveryForm'     => 'app\modules\user\models\RecoveryForm',
-        'UserSearch'       => 'app\modules\user\models\UserSearch',
+        'ResendForm' => 'app\modules\user\models\ResendForm',
+        'LoginForm' => 'app\modules\user\models\LoginForm',
+        'SettingsForm' => 'app\modules\user\models\SettingsForm',
+        'RecoveryForm' => 'app\modules\user\models\RecoveryForm',
+        'UserSearch' => 'app\modules\user\models\UserSearch',
     ];
 
     /** @inheritdoc */
@@ -47,7 +47,7 @@ class Bootstrap implements BootstrapInterface
                 }
             }
             \Yii::$container->setSingleton(Finder::className(), [
-                'userQuery'    => \Yii::$container->get('UserQuery'),
+                'userQuery' => \Yii::$container->get('UserQuery'),
                 'accountQuery' => \Yii::$container->get('AccountQuery'),
             ]);
 
@@ -56,13 +56,13 @@ class Bootstrap implements BootstrapInterface
             } else {
                 \Yii::$container->set('yii\web\User', [
                     'enableAutoLogin' => true,
-                    'loginUrl'        => ['/user/security/login'],
-                    'identityClass'   => $module->modelMap['User'],
+                    'loginUrl' => ['/user/security/login'],
+                    'identityClass' => $module->modelMap['User'],
                 ]);
 
                 $configUrlRule = [
                     'prefix' => $module->urlPrefix,
-                    'rules'  => $module->urlRules
+                    'rules' => $module->urlRules
                 ];
 
                 if ($module->urlPrefix != 'user') {
@@ -79,23 +79,23 @@ class Bootstrap implements BootstrapInterface
             }
 
             $app->get('i18n')->translations['user*'] = [
-                'class'    => PhpMessageSource::className(),
+                'class' => PhpMessageSource::className(),
                 'basePath' => '@app/messages',
             ];
             $app->get('i18n')->translations['title*'] = [
-                'class'    => PhpMessageSource::className(),
+                'class' => PhpMessageSource::className(),
                 'basePath' => '@app/messages',
             ];
 
             $defaults = [
-                'welcomeSubject'        => \Yii::t('user', 'Welcome to {0}', \Yii::$app->name),
-                'confirmationSubject'   => \Yii::t('user', 'Confirm account on {0}', \Yii::$app->name),
+                'welcomeSubject' => \Yii::t('user', 'Welcome to {0}', \Yii::$app->name),
+                'confirmationSubject' => \Yii::t('user', 'Confirm account on {0}', \Yii::$app->name),
                 'reconfirmationSubject' => \Yii::t('user', 'Confirm email change on {0}', \Yii::$app->name),
-                'recoverySubject'       => \Yii::t('user', 'Complete password reset on {0}', \Yii::$app->name)
+                'recoverySubject' => \Yii::t('user', 'Complete password reset on {0}', \Yii::$app->name)
             ];
 
             \Yii::$container->set('app\modules\user\Mailer', array_merge($defaults, $module->mailer));
         }
-        
+
     }
 }

@@ -14,7 +14,6 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
-
 /**
  * Table of Contents
  *
@@ -50,7 +49,6 @@ Use it to make something cool, have fun, and share what you've learned with othe
  *    16.7 - Desktop X-Large
  * 17.0 - Print
  */
-
 
 /**
  * 1.0 - Reset
@@ -152,7 +150,6 @@ a:active {
 a img {
     border: 0;
 }
-
 
 /**
  * 3.0 Typography
@@ -307,7 +304,6 @@ big {
     font-size: 125%;
 }
 
-
 /**
  * 4.0 Elements
  */
@@ -412,7 +408,6 @@ del {
     opacity: 1; /* Since FF19 lowers the opacity of the placeholder by default */
 }
 
-
 /**
  * 8.0 Alignments
  */
@@ -459,7 +454,6 @@ img.aligncenter {
     margin-bottom: 1.2em;
 }
 
-
 /**
  * 9.0 Clearings
  */
@@ -497,7 +491,6 @@ img.aligncenter {
 .textwidget:after {
     clear: both;
 }
-
 
 /**
  * 10.0 Header
@@ -563,6 +556,7 @@ img.aligncenter {
     display: block;
     margin-bottom: 2.4em;
 }
+
 .post-thumbnail img {
     display: block;
     margin: 0 auto;
@@ -1058,7 +1052,6 @@ a.post-thumbnail:focus {
     margin-bottom: 0;
 }
 
-
 /**
  * 12.2 Post Formats
  */
@@ -1091,7 +1084,6 @@ a.post-thumbnail:focus {
 .archive .format-status .entry-title {
     display: none;
 }
-
 
 /**
  * 12.3 Comments
@@ -1347,8 +1339,6 @@ a.post-thumbnail:focus {
     top: -3px;
 }
 
-
-
 /**
  * 14.0 Media
  */
@@ -1412,7 +1402,6 @@ p > video {
 .wp-playlist-item .wp-playlist-item-length {
     top: 10px;
 }
-
 
 /**
  * 14.1 Captions

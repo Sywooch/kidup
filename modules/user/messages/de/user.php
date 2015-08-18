@@ -16,7 +16,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return array (
+return array(
     '{0, date, MMMM dd, YYYY HH:mm}' => '{0, date, dd MMMM, YYYY HH:mm}',
     'Account has successfully been connected' => 'Zugang wurde erfolgreich verbunden',
     'All user tokens have been deleted' => 'Alle Benutzerschlüssel wurden gelöscht',
@@ -47,7 +47,7 @@ return array (
     'Connect' => 'Verbunden',
     'Connect this account by entering desired username and your email address below' => 'Verbinden Sie diesen Zugang indem Sie Ihren gewünschten Benutzernamen und Ihre EMail unten eintragen',
     'Connect your account to {0}' => 'Verbinden Sie Ihren Zugang mit {0}',
-    'Continue'=> 'Weiter',
+    'Continue' => 'Weiter',
     'Create a user account' => 'Neuen Zugang erstellen',
     'Current email' => 'Aktuelle EMail',
     'Current password' => 'Aktuelles Passwort',

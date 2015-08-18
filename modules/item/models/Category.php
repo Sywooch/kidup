@@ -9,15 +9,16 @@ use Yii;
  */
 class Category extends \app\models\base\Category
 {
-    const TYPE_MAIN =  'main';
-    const TYPE_SPECIAL =  'special';
-    const TYPE_AGE =  'age';
+    const TYPE_MAIN = 'main';
+    const TYPE_SPECIAL = 'special';
+    const TYPE_AGE = 'age';
 
     /**
      * This is going to need a more structured approach in the future
      * @return array
      */
-    public function translations(){
+    public function translations()
+    {
         return [
             \Yii::t('categories', 'name'),
             \Yii::t('categories', '< 6 months'),

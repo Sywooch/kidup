@@ -16,19 +16,22 @@ class Create extends Model
     public $categories;
     public $item;
 
-    public function rules(){
+    public function rules()
+    {
         return [
             [['name'], 'required'],
             [['name'], 'string'],
         ];
     }
 
-    public function formName(){
+    public function formName()
+    {
         return 'create-item';
     }
 
-    public function save(){
-        if(!$this->validate()){
+    public function save()
+    {
+        if (!$this->validate()) {
             return false;
         }
         $item = new Item();
@@ -42,10 +45,10 @@ class Create extends Model
             'min_renting_days' => 1
         ]);
 
-        if($item->save()){
+        if ($item->save()) {
             $this->item = $item;
-            foreach($this->categories as $id => $val){
-                if($val == 1){
+            foreach ($this->categories as $id => $val) {
+                if ($val == 1) {
                     $ihc = new ItemHasCategory();
                     $ihc->item_id = $item->id;
                     $ihc->category_id = $id;

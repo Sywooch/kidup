@@ -1,5 +1,5 @@
 <?php
-$this->title = ucfirst(\Yii::t('title', 'Safety')) . ' - '. Yii::$app->name;
+$this->title = ucfirst(\Yii::t('title', 'Safety')) . ' - ' . Yii::$app->name;
 
 ?>
 <div id="safety">
@@ -29,7 +29,8 @@ $this->title = ucfirst(\Yii::t('title', 'Safety')) . ' - '. Yii::$app->name;
                         <div class="col-sm-12 col-md-7">
                             <h2>Du bestemmer</h2>
 
-                            <p>Hvilket produkt du vil leje, så det kan matche dine ønsker og behov, og hvor i landet du vil leje fra, så du f.eks. kan finde  udlejere tæt på dig.                         
+                            <p>Hvilket produkt du vil leje, så det kan matche dine ønsker og behov, og hvor i landet du
+                                vil leje fra, så du f.eks. kan finde udlejere tæt på dig.
                             </p>
                         </div>
                     </section>
@@ -44,24 +45,26 @@ $this->title = ucfirst(\Yii::t('title', 'Safety')) . ' - '. Yii::$app->name;
                             <ul>
                                 <li>Gratis premium forsikring</li>
                                 <li>24/7 support</li>
-                                <li>Nyd tiden med dine børn uden bekymringer </li>
+                                <li>Nyd tiden med dine børn uden bekymringer</li>
                             </ul>
 
                             </p>
                         </div>
                     </section>
                     <hr>
-                   <section class="row">
+                    <section class="row">
                         <div class="col-sm-12 col-md-5 ">
                             <img class="center-block" src="../../images/why-use/wearehere.png" style="width: 100%">
                         </div>
                         <div class="col-sm-12 col-md-7 ">
                             <h2>Du har fordelen</h2>
 
-                            <p>Ved at bruge vores kontaktløse system, kan du betale sikkert online, når lejen er gennemført. Du kan nemt og bekvemt planlægge og betale lejen gennem KidUp og når det kommer til samtale, foregår al kommunikation forældrene imellem. 
-                          
+                            <p>Ved at bruge vores kontaktløse system, kan du betale sikkert online, når lejen er
+                                gennemført. Du kan nemt og bekvemt planlægge og betale lejen gennem KidUp og når det
+                                kommer til samtale, foregår al kommunikation forældrene imellem.
+
                             </p>
-</div>
+                        </div>
                     </section>
                 </div>
             </div>

@@ -61,14 +61,14 @@ use yii\helpers\Html;
                              */
                             $links = [];
 
-                            if ($model->status !== Booking::DECLINED && $model->status !== Booking::CANCELLED){
+                            if ($model->status !== Booking::DECLINED && $model->status !== Booking::CANCELLED) {
                                 $links [] = Html::a(\Yii::t('booking', 'Receipt'),
                                     '@web/booking/' . $model->id . '/receipt');
                                 $links [] = Html::a(\Yii::t('booking', 'Invoice'),
                                     '@web/booking/' . $model->id . '/invoice');
                             };
 
-                            $links[] = Html::a(\Yii::t('booking', 'View Booking'), '@web/booking/' . $model->id );
+                            $links[] = Html::a(\Yii::t('booking', 'View Booking'), '@web/booking/' . $model->id);
                             $links[] = Html::a(\Yii::t('booking', 'Contact {0}', [
                                 $model->item->owner->profile->first_name
                             ]), ['/messages/' . $model->getConversationId()]);

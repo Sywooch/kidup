@@ -82,7 +82,7 @@ class Finder extends Object
     }
 
     /** @param ActiveQuery $profileQuery */
-    public function setProfileQuery(ActiveQuery$profileQuery)
+    public function setProfileQuery(ActiveQuery $profileQuery)
     {
         $this->profileQuery = $profileQuery;
     }
@@ -90,7 +90,7 @@ class Finder extends Object
     /**
      * Finds a user by the given id.
      *
-     * @param  integer     $id User id to be used on search.
+     * @param  integer $id User id to be used on search.
      * @return models\User
      */
     public function findUserById($id)
@@ -101,7 +101,7 @@ class Finder extends Object
     /**
      * Finds a user by the given email.
      *
-     * @param  string      $email Email to be used on search.
+     * @param  string $email Email to be used on search.
      * @return models\User
      */
     public function findUserByEmail($email)
@@ -113,7 +113,7 @@ class Finder extends Object
     /**
      * Finds a user by the given condition.
      *
-     * @param  mixed               $condition Condition to be used on search.
+     * @param  mixed $condition Condition to be used on search.
      * @return \yii\db\ActiveQuery
      */
     public function findUser($condition)
@@ -142,14 +142,15 @@ class Finder extends Object
     public function findAccountByProviderAndClientId($provider, $clientId)
     {
         return $this->accountQuery->where([
-            'provider'  => $provider,
+            'provider' => $provider,
             'client_id' => $clientId
         ])->one();
     }
+
     /**
      * Finds a token by user id and code.
      *
-     * @param  mixed  $condition
+     * @param  mixed $condition
      * @return ActiveQuery
      */
     public function findToken($condition)

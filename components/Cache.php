@@ -2,7 +2,6 @@
 
 namespace app\components;
 use Yii;
-use yii\caching\ChainedDependency;
 use yii\helpers\Json;
 use yii\web\View;
 

@@ -1,13 +1,13 @@
 <?php /**
  * 'params' => [
-'itemName' => $booking->item->name,
-'profileName' => $booking->renter->profile->first_name,
-'kidUpEmail' => 'mailto:info@kidup.dk'
-],
-'urls' => [
-'help' => Url::to('@web/contact', true),
-'booking' => Url::to('@web/booking/' . $booking->id, true),
-]
+ * 'itemName' => $booking->item->name,
+ * 'profileName' => $booking->renter->profile->first_name,
+ * 'kidUpEmail' => 'mailto:info@kidup.dk'
+ * ],
+ * 'urls' => [
+ * 'help' => Url::to('@web/contact', true),
+ * 'booking' => Url::to('@web/booking/' . $booking->id, true),
+ * ]
  */ ?>
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
     <tbody>
@@ -51,7 +51,8 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Din betaling med kreditkort ved leje af <?= $itemName ?>  er mislykket.
+                                                    Din betaling med kreditkort ved leje af <?= $itemName ?> er
+                                                    mislykket.
                                                 </p>
                                             </td>
                                         </tr>
@@ -64,7 +65,9 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Din booking er grundet denne mislykkede betaling blevet annulleret. Såfremt du stadig ønsker at leje <?= $itemName ?> skal du gennemføre bookingen igen. Du kan komme direkte til din ønskede booking
+                                                    Din booking er grundet denne mislykkede betaling blevet annulleret.
+                                                    Såfremt du stadig ønsker at leje <?= $itemName ?> skal du gennemføre
+                                                    bookingen igen. Du kan komme direkte til din ønskede booking
                                                     <a href="<?= $urls['booking'] ?>">her</a>.
                                                 </p>
                                             </td>
@@ -78,7 +81,8 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Har du spørgsmål angående din betaling kan du læse mere her  eller kontakte os direkte på
+                                                    Har du spørgsmål angående din betaling kan du læse mere her eller
+                                                    kontakte os direkte på
                                                     <a href="<?= $kidUpEmail ?>">mail</a>.
                                                 </p>
                                             </td>

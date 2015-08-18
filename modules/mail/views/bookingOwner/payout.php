@@ -1,16 +1,16 @@
 <?php
 /**
  * 'params' => [
-'profileName' => $booking->item->owner->profile->first_name,
-'itemName' => $booking->item->name,
-'amountServiceFee' => $booking->amount_item - $booking->amount_payout . ' DKK',
-'amountTotal' => $booking->amount_payout . ' DKK',
-'startDate' => $startDate,
-'endDate' => $endDate,
-],
-'urls' => [
-'viewReceipt' => Url::to('@web/booking/' . $booking->id . '/receipt', true),
-]
+ * 'profileName' => $booking->item->owner->profile->first_name,
+ * 'itemName' => $booking->item->name,
+ * 'amountServiceFee' => $booking->amount_item - $booking->amount_payout . ' DKK',
+ * 'amountTotal' => $booking->amount_payout . ' DKK',
+ * 'startDate' => $startDate,
+ * 'endDate' => $endDate,
+ * ],
+ * 'urls' => [
+ * 'viewReceipt' => Url::to('@web/booking/' . $booking->id . '/receipt', true),
+ * ]
  */
 ?>
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">
@@ -46,11 +46,14 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Vi har sendt dig en udbetaling på <?= $amountTotal ?> via bankoverførsel.
-                                                    Denne udbetaling skulle være på din konto inden for 5 dage, når weekender
+                                                    Vi har sendt dig en udbetaling på <?= $amountTotal ?> via
+                                                    bankoverførsel.
+                                                    Denne udbetaling skulle være på din konto inden for 5 dage, når
+                                                    weekender
                                                     og helligdage medregnes.
                                                     <?= Yii::t("mail", "Click {0} to see the details of this booking", [
-                                                        \yii\helpers\Html::a(\Yii::t('booking', 'here', $urls['viewReceipt']))
+                                                        \yii\helpers\Html::a(\Yii::t('booking', 'here',
+                                                            $urls['viewReceipt']))
                                                     ]) ?>
                                                 </p>
                                             </td>

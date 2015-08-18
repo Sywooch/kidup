@@ -3,14 +3,13 @@
 namespace app\modules\item\controllers;
 
 use app\components\Cache;
-use app\components\Error;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Item;
-use app\modules\item\models\ItemRecommender;
 use yii\bootstrap\Html;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -37,12 +36,14 @@ class ViewController extends Controller
 
     public function actionIndex($id, $new_publish = false)
     {
-        $function = function () use ($id, $new_publish) {
-            if ($new_publish !== false) {
-                $new_publish = true;
-            }
-            $this->noContainer = true;
-            Url::remember();
+        $cacheName = 'view_item' . Json::encode([$id, $new_publish]);
+        Url::remember();
+        $this->noContainer = true;
+        if ($new_publish !== false) {
+            $new_publish = true;
+        }
+
+        $function = function () use ($id, $new_publish, $cacheName) {
 
             /**
              * @var $item \app\modules\item\models\Item
@@ -51,22 +52,27 @@ class ViewController extends Controller
                 return Item::find()->where(['id' => $id])->with('location')->one();
             });
             if ($item == null) {
+                \Yii::$app->cache->delete($cacheName);
                 throw new NotFoundHttpException("THis item does not exist");
             }
             if ($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id) {
+                \Yii::$app->cache->delete($cacheName);
                 throw new ForbiddenHttpException("This item is not yet available");
             }
-            $location = $item->location;
 
-            $itemImages = $item->getImageNames();
             // prepare for carousel
-            $images = [];
-            foreach ($itemImages as $img) {
-                $images[] = [
-                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
-                    'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
-                ];
-            }
+            $images = Cache::data('images' . $cacheName, function () use ($item) {
+                $itemImages = $item->getImageNames();
+                $images = [];
+                foreach ($itemImages as $img) {
+                    $images[] = [
+                        'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
+                        'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
+                    ];
+                }
+                return $images;
+            }, 10 * 60);
+
 
             $price = $item->getAdPrice();
 
@@ -77,8 +83,8 @@ class ViewController extends Controller
             } elseif ($item->owner_id == \Yii::$app->user->id) {
                 $bookingForm = \Yii::t('app', 'This item belongs to you.');
             } else {
-                $bookingForm = Cache::html('booking_create_form', function () use ($item) {
-                    WidgetRequest::request(WidgetRequest::BOOKING_CREATE_FORM, [
+                $bookingForm = Cache::data('booking_create_form', function () use ($item) {
+                    return WidgetRequest::request(WidgetRequest::BOOKING_CREATE_FORM, [
                         'item_id' => $item->id,
                         'currency_id' => $item->currency_id,
                         'prices' => [
@@ -87,15 +93,14 @@ class ViewController extends Controller
                             'monthly' => $item->price_month,
                         ]
                     ]);
-                }, [], false);
+                }, []);
             }
 
             // find which items are related
-        $related_items = $item->getRecommendedItems($item->id, 3);
-            $related_items = [];
+            $related_items = $item->getRecommendedItems($item->id, 3);
             $res = [
                 'model' => $item,
-                'location' => $location,
+                'location' => $item->location,
                 'images' => $images,
                 'price' => [
                     'period' => \Yii::t('app', 'per {period}', ['period' => $price['period']]),
@@ -109,6 +114,6 @@ class ViewController extends Controller
 
             return $this->render('view', $res);
         };
-        return Cache::html('view_item', $function, ['variations' => [$id, $new_publish]]);
+        return Cache::data($cacheName, $function, 60);
     }
 }

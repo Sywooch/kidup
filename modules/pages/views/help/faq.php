@@ -1,5 +1,5 @@
 <?php
-$this->title = ucfirst(\Yii::t('title', 'Frequently asked questions')) . ' - '. Yii::$app->name;
+$this->title = ucfirst(\Yii::t('title', 'Frequently asked questions')) . ' - ' . Yii::$app->name;
 ?>
 <div id="faq">
     <div class="intro ">
@@ -97,7 +97,8 @@ $this->title = ucfirst(\Yii::t('title', 'Frequently asked questions')) . ' - '. 
                             <p>
                                 KidUp er en platform hvor vi ønsker høj grad af transparens og mest af alt en sikker
                                 platform. KidUp tager et service gebyr for brug af servicen så vi kan blive ved med at
-                                forbedre vores service. Der er et 10-% ikke-refunderbart gebyr på accepterede bookninger.
+                                forbedre vores service. Der er et 10-% ikke-refunderbart gebyr på accepterede
+                                bookninger.
                                 Der er intet gebyr ved at sende anmodninger om leje, men såfremt lejen bliver accepteret
                                 er i pålagt service-gebyret. Såfremt en anmodning bliver afvist vil der selvfølgelig
                                 heller ikke forekomme nogle gebyrer.

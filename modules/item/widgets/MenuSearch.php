@@ -10,16 +10,17 @@ class MenuSearch extends Widget
 {
     public $data;
 
-    public function init(){
+    public function init()
+    {
 
     }
 
     public function run()
     {
-        if(
+        if (
             \Yii::$app->controller->className() == 'app\\modules\\search\\controllers\\SearchController' ||
             \Yii::$app->controller->className() == 'app\\modules\\home\\controllers\\HomeController'
-        ){
+        ) {
             return '';
         }
         $model = new SearchModel([]);

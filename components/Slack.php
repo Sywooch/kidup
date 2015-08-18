@@ -1,8 +1,9 @@
 <?php
 
 namespace app\components;
-use yii\base\Component;
 use Yii;
+use yii\base\Component;
+
 class Slack extends Component
 {
     private $client;

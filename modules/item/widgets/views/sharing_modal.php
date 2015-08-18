@@ -16,27 +16,27 @@ use yii\helpers\Url;
             </div>
             <div class="modal-body">
                 <div class="social-area">
-                    <p> 
-                        De opslag som bliver delt på Facebook bliver lejet ud 54 % mere, end de opslag der ikke bliver delt. Så spred budskabet, og få gang i udlejningen. 
-                        <br />
+                    <p>
+                        De opslag som bliver delt på Facebook bliver lejet ud 54 % mere, end de opslag der ikke bliver
+                        delt. Så spred budskabet, og få gang i udlejningen.
+                        <br/>
                         <a href="" class="btn btn-fill btn-social btn-facebook">
-                        <i class="fa fa-facebook-square"></i> Del på Facebook</a>
-                    
-                    
-                    <a href="" class="btn btn-fill btn-social btn-twitter">
-                        <i class="fa fa-twitter"></i> Del på Twitter</a>
+                            <i class="fa fa-facebook-square"></i> Del på Facebook</a>
+
+
+                        <a href="" class="btn btn-fill btn-social btn-twitter">
+                            <i class="fa fa-twitter"></i> Del på Twitter</a>
                         </br>
-                        
-                        
-                        
+
+
                     </p>
-                    
+
                 </div>
 
-                
+
             </div>
             <div class="modal-footer">
-               
+
             </div>
         </div>
     </div>

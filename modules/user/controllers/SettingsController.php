@@ -109,15 +109,15 @@ class SettingsController extends Controller
      */
     public function actionProfile()
     {
-        /** @var \app\modules\User\models\Profile $model **/
+        /** @var \app\modules\User\models\Profile $model * */
         $model = Profile::findOne(['user_id' => \Yii::$app->user->identity->getId()]);
 
         $this->performAjaxValidation($model);
         if ($model->load(\Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'img');
             if ($image !== null) {
-                if(!in_array($image->extension, ['png', 'jpg'])) {
-                    \Yii::$app->session->addFlash('warning', \Yii::t('user', "File format not allowed") );
+                if (!in_array($image->extension, ['png', 'jpg'])) {
+                    \Yii::$app->session->addFlash('warning', \Yii::t('user', "File format not allowed"));
                     $model->save();
                     return $this->refresh();
                 }
@@ -136,7 +136,7 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Profile settings')) . ' - '. \Yii::$app->name
+            'title' => ucfirst(\Yii::t('title', 'Profile settings')) . ' - ' . \Yii::$app->name
         ]);
     }
 
@@ -148,7 +148,7 @@ class SettingsController extends Controller
 
         if ($model->load(\Yii::$app->request->post())) {
 
-            if($model->save()){
+            if ($model->save()) {
                 \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
                 return $this->refresh();
             }
@@ -176,7 +176,7 @@ class SettingsController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post())) {
-            if($model->save()){
+            if ($model->save()) {
                 \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
                 \Yii::$app->session->remove('lang'); // language might have changed
                 return $this->refresh();
@@ -208,7 +208,7 @@ class SettingsController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post())) {
-            if($model->save()){
+            if ($model->save()) {
                 \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
                 return $this->refresh();
             }
@@ -232,7 +232,7 @@ class SettingsController extends Controller
      */
     public function actionConfirm($id, $code)
     {
-        /** @var \app\modules\User\models\User $user **/
+        /** @var \app\modules\User\models\User $user * */
 //        $user = $this->finder->findUserById($id);
 //
 //        if ($user === null || $this->module->emailChangeStrategy == Module::STRATEGY_INSECURE) {
@@ -250,7 +250,7 @@ class SettingsController extends Controller
      */
     public function actionVerification($confirm_email = false, $confirm_phone = false)
     {
-        /** @var \app\modules\User\models\Profile $profile **/
+        /** @var \app\modules\User\models\Profile $profile * */
         $profile = Profile::findOne(\Yii::$app->user->id);
 
         if ($confirm_email && !$profile->email_verified) {
@@ -272,7 +272,7 @@ class SettingsController extends Controller
             $token->save();
             if ($profile->sendPhoneVerification($token)) {
                 return $this->redirect('phonecode');
-            }else{
+            } else {
                 \Yii::$app->session->addFlash('info', \Yii::t('user', 'SMS could not be send, please try again.'));
                 return $this->refresh();
             }
@@ -291,11 +291,11 @@ class SettingsController extends Controller
 
     public function actionPhonecode($code = null)
     {
-        /** @var \app\modules\User\models\Profile $p **/
+        /** @var \app\modules\User\models\Profile $p * */
         $p = Profile::findOne(\Yii::$app->user->id);
 
         if ($code !== null) {
-            /** @var \app\modules\Mail\models\Token $token **/
+            /** @var \app\modules\Mail\models\Token $token * */
             $token = Token::findOne([
                 'user_id' => \Yii::$app->user->id,
                 'code' => $code,
@@ -309,13 +309,14 @@ class SettingsController extends Controller
                 $p->save();
 
                 $token->delete();
-                \Yii::$app->session->setFlash('success', \Yii::t('app', "Thank you, your phone number has been verified!"));
+                \Yii::$app->session->setFlash('success',
+                    \Yii::t('app', "Thank you, your phone number has been verified!"));
 
                 return $this->redirect(['/user/settings/verification']);
             }
         }
 
-        return $this->render('phone_code',[
+        return $this->render('phone_code', [
             'profile' => $p
         ]);
     }

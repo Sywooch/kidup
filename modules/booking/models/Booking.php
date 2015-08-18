@@ -39,6 +39,7 @@ class Booking extends \app\models\base\Booking
     const EVENT_REVIEW_REMINDER_OWNER = 'event_review_reminder_owner';
     const EVENT_REVIEW_REMINDER_RENTER = 'event_review_reminder_renter';
     const EVENT_REVIEWS_PUBLIC = 'event_reviews_public';
+
     public function scenarios()
     {
         return array_merge(parent::scenarios(), [
@@ -124,7 +125,7 @@ class Booking extends \app\models\base\Booking
     public function getConversationId()
     {
         $conv = Conversation::find()->where(['booking_id' => $this->id])->one();
-        if($conv == null){
+        if ($conv == null) {
             return false;
         }
         return $conv->id;

@@ -1,9 +1,16 @@
 <?php
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
-$keyFile = __DIR__ . '/../config/keys/keys.env';
 include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
+if(YII_ENV == 'test'){
+    $keyFile = __DIR__ . '/keys/keys.env';
+    if (!file_exists($keyFile)) {
+        echo 'php '.__DIR__.'/load_keyfile.php';
+        exec('php '.__DIR__.'/load_keyfile.php');
+    }
+    $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+}
 $components = [
     'session' => [
         'class' => 'yii\web\DbSession'
@@ -58,12 +65,7 @@ $components = [
         'cookieValidationKey' => $keys['cookie_validation_key'],
     ],
     'cache' => [
-        'class' => 'yii\caching\ApcCache',
-//        'redis' => [
-//                'hostname' => 'localhost',
-//                'port' => 6379,
-//                'database' => 0,
-//            ]
+        'class' => 'yii\caching\FileCache',
     ],
     'errorHandler' => [
         'errorAction' => 'site/error',

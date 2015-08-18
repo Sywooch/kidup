@@ -12,6 +12,7 @@
                     <section class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <h2>Fortrolighedspolitik</h2>
+
                             <p>
                                 Denne fortrolighedspolitik beskriver, hvordan vi [KidUp] håndterer dine personlige
                                 oplysninger. Vi indsamler, bruger og deler personlige oplysninger til at forbedre

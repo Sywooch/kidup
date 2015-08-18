@@ -20,7 +20,8 @@ class Create extends Model
     public $currencyId;
     public $prices;
 
-    public function __construct(){
+    public function __construct()
+    {
 
     }
 
@@ -38,8 +39,9 @@ class Create extends Model
         ];
     }
 
-    public function save(){
-        if(!$this->validate()){
+    public function save()
+    {
+        if (!$this->validate()) {
             return false;
         }
         $from = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->timestamp;
@@ -54,7 +56,8 @@ class Create extends Model
 
         if (\Yii::$app->user->isGuest) {
 
-            \Yii::$app->session->setFlash("error", \Yii::t('booking', "You should be logged in to perform this action"));
+            \Yii::$app->session->setFlash("error",
+                \Yii::t('booking', "You should be logged in to perform this action"));
             \Yii::$app->controller->redirect('@web/user/login');
             return false;
         }
@@ -63,21 +66,24 @@ class Create extends Model
          * @var $user \app\modules\user\models\User
          */
         $user = User::findOne(\Yii::$app->user->id);
-        if($user->canMakeBooking() !== true){
-            \Yii::$app->session->setFlash("error", \Yii::t('booking', "Please finish your {0} and {1} before making a booking.", [
-                Html::a(\Yii::t('booking', 'profile settings'), '@web/user/settings/profile', [
-                    'target' => '_blank'
-                ]),
-                Html::a(\Yii::t('booking', 'location'), '@web/user/settings/location', [
-                    'target' => '_blank'
-                ])
-            ]));
+        if ($user->canMakeBooking() !== true) {
+            \Yii::$app->session->setFlash("error",
+                \Yii::t('booking', "Please finish your {0} and {1} before making a booking.", [
+                    Html::a(\Yii::t('booking', 'profile settings'), '@web/user/settings/profile', [
+                        'target' => '_blank'
+                    ]),
+                    Html::a(\Yii::t('booking', 'location'), '@web/user/settings/location', [
+                        'target' => '_blank'
+                    ])
+                ]));
             return false;
         }
         $item = Item::findOne($this->itemId);
-        $rentingDays = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->diffInDays(Carbon::createFromFormat('d-m-Y', $this->dateTo));
-        if($rentingDays < $item->min_renting_days){
-            \Yii::$app->session->setFlash("error", \Yii::t('booking', "This item requires at least {0} days per booking.", [$item->min_renting_days]));
+        $rentingDays = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->diffInDays(Carbon::createFromFormat('d-m-Y',
+            $this->dateTo));
+        if ($rentingDays < $item->min_renting_days) {
+            \Yii::$app->session->setFlash("error",
+                \Yii::t('booking', "This item requires at least {0} days per booking.", [$item->min_renting_days]));
             return false;
         }
         $booking = new Booking();

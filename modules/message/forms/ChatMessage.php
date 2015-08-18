@@ -21,7 +21,8 @@ class ChatMessage extends Model
         ];
     }
 
-    public function save($c){
+    public function save($c)
+    {
         $m = new Message;
         $m->receiver_user_id = $c->otherUser->user_id;
         $m->read_by_receiver = 0;

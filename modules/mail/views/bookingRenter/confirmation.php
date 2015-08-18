@@ -67,8 +67,9 @@
                                                     <a href="<?= $urls['chat'] ?> ">vært</a> for at koordinere
                                                     udvekslingstidspunkt og udvekslingssted.
                                                 </p>
+
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail", "You can view the details of the booking {0}",[
+                                                    <?= Yii::t("mail", "You can view the details of the booking {0}", [
                                                         \yii\helpers\Html::a(\Yii::t('mail', 'here'), $urls['booking'])
                                                     ]) ?>.
                                                 </p>

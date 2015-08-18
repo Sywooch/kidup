@@ -10,7 +10,8 @@ class BrainTree extends Model
 {
     public $payin;
 
-    public function __construct(Payin $payin){
+    public function __construct(Payin $payin)
+    {
         $this->payin = $payin;
 
         return parent::__construct();
@@ -19,13 +20,14 @@ class BrainTree extends Model
     public function init()
     {
         \Braintree_Configuration::environment(\Yii::$app->keyStore->get('braintree_type'));
-        \Braintree_Configuration::merchantId(   \Yii::$app->keyStore->get('braintree_merchant_id'));
-        \Braintree_Configuration::publicKey(    \Yii::$app->keyStore->get('braintree_public_key'));
-        \Braintree_Configuration::privateKey(   \Yii::$app->keyStore->get('braintree_private_key'));
+        \Braintree_Configuration::merchantId(\Yii::$app->keyStore->get('braintree_merchant_id'));
+        \Braintree_Configuration::publicKey(\Yii::$app->keyStore->get('braintree_public_key'));
+        \Braintree_Configuration::privateKey(\Yii::$app->keyStore->get('braintree_private_key'));
         return parent::init();
     }
 
-    private function getBraintreeId(){
+    private function getBraintreeId()
+    {
         $b = Json::decode($this->payin->braintree_backup);
         return $b['id'];
     }
@@ -36,7 +38,8 @@ class BrainTree extends Model
         return $clientToken;
     }
 
-    public function autorize(Payin $payin){
+    public function autorize(Payin $payin)
+    {
         $transaction = \Braintree_Transaction::sale(array(
             'amount' => $payin->amount,
             'paymentMethodNonce' => $payin->nonce,
@@ -45,20 +48,21 @@ class BrainTree extends Model
             ),
             'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
-        if($transaction->success === false){
-            if($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.'){
+        if ($transaction->success === false) {
+            if ($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.') {
                 \Yii::$app->session->addFlash('error', \Yii::t('booking', 'Double transaction.'));
                 return false;
-            }else{
+            } else {
                 \Yii::$app->session->addFlash('error', $transaction->_attributes['message']);
                 return false;
             }
-        }else{
+        } else {
             return $transaction->transaction->_attributes;
         }
     }
 
-    public function capture(){
+    public function capture()
+    {
         $res = \Braintree_Transaction::submitForSettlement($this->getBraintreeId());
         return $res;
     }
@@ -66,23 +70,27 @@ class BrainTree extends Model
     /*
      * Release the autorized payment
      */
-    public function release(){
+    public function release()
+    {
         $res = \Braintree_Transaction::void($this->getBraintreeId());
         return $res;
     }
 
-    public function updateStatus(){
+    public function updateStatus()
+    {
         $b = \Braintree_Transaction::find($this->getBraintreeId());
         $this->payin->braintree_backup = Json::encode($b->_attributes);
         $this->payin->save();
         return $b->_attributes['status'];
     }
 
-    public function sandboxSettlementAccept(){
+    public function sandboxSettlementAccept()
+    {
         \Braintree_TestHelper::settle($this->getBraintreeId());
     }
 
-    public function sandboxSettlementDecline(){
+    public function sandboxSettlementDecline()
+    {
         \Braintree_TestHelper::settlementDecline($this->getBraintreeId());
     }
 }

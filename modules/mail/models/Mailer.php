@@ -71,11 +71,11 @@ class Mailer
         $params['urls']['mailInBrowser'] = MailUrl::to(Url::to('@web/mail/' . $logId, true), $logId);
         $params['urls']['changeSettings'] = MailUrl::to(Url::to('@web/user/settings/profile', true), $logId);
 
-        if(isset($data['sender'])){
+        if (isset($data['sender'])) {
             $this->sender = $data['sender'];
         }
-        if(isset($data['sender_name'])){
-            $this->senderName = $data['senderName'].' (KidUp)';
+        if (isset($data['sender_name'])) {
+            $this->senderName = $data['senderName'] . ' (KidUp)';
         }
 
         $log = MailLog::create($data['type'], $data['email'], $params, $logId);

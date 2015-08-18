@@ -68,7 +68,7 @@ class ImageManager
 
         $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
         $dir = '';
-        if(YII_ENV == 'dev'){
+        if (YII_ENV == 'dev') {
             $dir = 'runtime/';
         }
         $dir .= 'user-uploads/' . static::createSubFolders($filename);
@@ -90,15 +90,15 @@ class ImageManager
     public function getServer($isStatic = false)
     {
 
-        if(YII_ENV == 'dev'){
-            $cache = new Filesystem(new Adapter(\Yii::$aliases['@runtime'].'/cache/images'));
-        }else{
+        if (YII_ENV == 'dev') {
+            $cache = new Filesystem(new Adapter(\Yii::$aliases['@runtime'] . '/cache/images'));
+        } else {
             $cache = $this->filesystem;
         }
 
-        if($isStatic){
+        if ($isStatic) {
             $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
-        }else{
+        } else {
             $source = $this->filesystem;
         }
 
@@ -130,7 +130,7 @@ class ImageManager
             $api
         );
 
-        if(YII_ENV !== 'dev'){
+        if (YII_ENV !== 'dev') {
             $server->setCachePathPrefix('/cache/');
         }
 

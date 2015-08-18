@@ -10,7 +10,7 @@ use Carbon\Carbon;
 ?>
 <br/><br/>
 <section class="section container" id="checkout">
-    <div class="row" >
+    <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
             <div class="site-area-header">
                 <div class="checkout-header">
@@ -21,6 +21,7 @@ use Carbon\Carbon;
                 </div>
             </div>
             <br/><br/>
+
             <div class="card card-product" id="product">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-1">
@@ -60,12 +61,13 @@ use Carbon\Carbon;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Renter") ?> <b class="pull-right">
-                                    <?=  $booking->renter->profile->first_name . ' ' .$booking->renter->profile->last_name ?>
+                                    <?= $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name ?>
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Pickup Address") ?> <b class="pull-right">
-                                    <?= $item->location->street_name ?> <?= $item->location->street_number ?>, <?= $item->location->city ?>, <?= $item->location->country0->name ?>
+                                    <?= $item->location->street_name ?> <?= $item->location->street_number ?>
+                                    , <?= $item->location->city ?>, <?= $item->location->country0->name ?>
                                 </b>
                             </li>
                         </ul>
@@ -73,7 +75,7 @@ use Carbon\Carbon;
                     <div class="col-md-3 col-md-offset-2">
                         <ul class="list-unstyled list-lines">
                             <li>
-                                <?= Yii::t("booking", "Item rent for {0} days",[
+                                <?= Yii::t("booking", "Item rent for {0} days", [
                                     Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to))
                                 ]) ?>
                                 <b class="pull-right">
@@ -96,13 +98,15 @@ use Carbon\Carbon;
                             <li>
                                 <?= Yii::t("booking", "Total received") ?>
                                 <b class="pull-right">
-                                    <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? $booking->payout->amount : 0 ?> DKK
+                                    <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? $booking->payout->amount : 0 ?>
+                                    DKK
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Balance") ?>
                                 <b class="pull-right">
-                                    <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? 0 : $booking->amount_payout  ?> DKK
+                                    <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? 0 : $booking->amount_payout ?>
+                                    DKK
                                 </b>
                             </li>
                         </ul>
@@ -113,7 +117,7 @@ use Carbon\Carbon;
             <span class="pull-left">
                 <?= Yii::t("booking", "No rights can be derived from the contents of this page.") ?>
             </span>
-            <?php if(!isset($_GET['pdf'])): ?>
+            <?php if (!isset($_GET['pdf'])): ?>
                 <a href="?pdf=true" target="_blank">
                     <div class="pull-right btn btn-primary">
                         <?= Yii::t("booking", "Print") ?>

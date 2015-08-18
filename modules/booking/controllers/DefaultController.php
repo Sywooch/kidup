@@ -95,7 +95,7 @@ class DefaultController extends Controller
         if ($payoutMethod == 0) {
             $link = Url::to('@web/user/settings/payout-preference');
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking', "Please add a {href}payment method{endHref} so we know where we can pay you.",[
+                \Yii::t('booking', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
                     'href' => "<a href='{$link}'>",
                     'endHref' => "</a>",
                 ]));

@@ -42,7 +42,7 @@ class Recovery extends Model
     /**
      * @param Mailer $mailer
      * @param Finder $finder
-     * @param array  $config
+     * @param array $config
      */
     public function __construct(Finder $finder, $config = [])
     {
@@ -55,7 +55,7 @@ class Recovery extends Model
     public function attributeLabels()
     {
         return [
-            'email'    => \Yii::t('user', 'Email'),
+            'email' => \Yii::t('user', 'Email'),
             'password' => \Yii::t('user', 'Password'),
         ];
     }
@@ -65,7 +65,7 @@ class Recovery extends Model
     {
         return [
             'request' => ['email'],
-            'reset'   => ['password']
+            'reset' => ['password']
         ];
     }
 
@@ -76,16 +76,21 @@ class Recovery extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'exist',
+            [
+                'email',
+                'exist',
                 'targetClass' => $this->module->modelMap['User'],
                 'message' => \Yii::t('user', 'There is no user with this email address')
             ],
-            ['email', function ($attribute) {
-                $this->user = $this->finder->findUserByEmail($this->email);
-                if ($this->user !== null && $this->module->enableConfirmation && !$this->user->getIsConfirmed()) {
-                    $this->addError($attribute, \Yii::t('user', 'You need to confirm your email address'));
+            [
+                'email',
+                function ($attribute) {
+                    $this->user = $this->finder->findUserByEmail($this->email);
+                    if ($this->user !== null && $this->module->enableConfirmation && !$this->user->getIsConfirmed()) {
+                        $this->addError($attribute, \Yii::t('user', 'You need to confirm your email address'));
+                    }
                 }
-            }],
+            ],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
@@ -101,7 +106,8 @@ class Recovery extends Model
         if ($this->validate()) {
             $u = User::findOne($this->user->id);
             Event::trigger($u, User::EVENT_USER_REQUEST_RECOVERY);
-            \Yii::$app->session->setFlash('info', \Yii::t('user', 'An email has been sent with instructions for resetting your password'));
+            \Yii::$app->session->setFlash('info',
+                \Yii::t('user', 'An email has been sent with instructions for resetting your password'));
             return true;
         }
 
@@ -124,7 +130,8 @@ class Recovery extends Model
             \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your password has been changed successfully.'));
             $token->delete();
         } else {
-            \Yii::$app->session->setFlash('danger', \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
+            \Yii::$app->session->setFlash('danger',
+                \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
         }
 
         return true;

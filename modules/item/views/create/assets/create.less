@@ -1,61 +1,61 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
-#new-rental{
+#new-rental {
   /*Area for header/intro*/
   margin-top: 120px;
   .header {
     position: relative;
-    .content{
+    .content {
       background-color: @primary-color;
       border-radius: 4px;
       h2 {
         color: @white-color;
       }
     }
-    .header-top-image{
+    .header-top-image {
       position: absolute;
       right: 10px;
       height: 120px;
       bottom: -28px;
-      @media (max-width: 768px){
+      @media (max-width: 768px) {
         display: none;
       }
     }
   }
   /*3 bullets for info and advice*/
-  .rental-advice{
+  .rental-advice {
     text-align: center;
-    img{
+    img {
       max-width: 100%;
     }
-    small{
+    small {
       color: #9a9a9a;
       font-weight: 300;
       //      line-height: 1.5;
     }
   }
   /*Giving space for the differenct parts to fill out*/
-  .content .row{
+  .content .row {
     margin: 30px 0;
     position: relative;
   }
 
-  .feedback{
+  .feedback {
     position: absolute;
     left: 15px;
     top: 34px;
     font-size: 20px;
     color: @primary-color;
-    &.start{
+    &.start {
       color: @danger-color;
     }
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
       display: none;
     }
   }
 
-  h4{
-    span{
+  h4 {
+    span {
       font-size: 16px;
       color: @danger-color;
       line-height: 1px;
@@ -64,7 +64,7 @@
       cursor: pointer;
       border-radius: 50%;
       opacity: 0.3;
-      &:hover{
+      &:hover {
         opacity: 1;
       }
     }
@@ -73,31 +73,31 @@
     padding-left: 0;
   }
   /*categories*/
-  .categories{
-    .btn{
+  .categories {
+    .btn {
       margin-bottom: 10px;
     }
   }
 
   /*upload image*/
-  .upload-image-area{
+  .upload-image-area {
     border: 2px dashed @medium-gray;
     min-height: 200px;
     text-align: center;
     //    &.image-hovering{
-    &:hover{
-      background-color: rgba(227,227,227, 0.4);
+    &:hover {
+      background-color: rgba(227, 227, 227, 0.4);
     }
-    h4{
+    h4 {
       margin-top: 20px;
     }
-    a{
+    a {
       cursor: pointer;
-      &:hover{
+      &:hover {
         color: @danger-color;
       }
     }
-    .description{
+    .description {
       position: absolute;
       left: 0;
       right: 0;
@@ -105,9 +105,9 @@
       width: 80%;
       z-index: 400;
     }
-    .uploaded-images{
+    .uploaded-images {
       margin-top: 100px;
-      img{
+      img {
         display: inline-block;
         height: 80px;
         margin: auto;
@@ -118,29 +118,29 @@
 
   }
   /*row for price*/
-  .price{
-    .average b{
+  .price {
+    .average b {
       color: @primary-color;
     }
   }
   /*row for terms*/
-  .terms{
+  .terms {
     padding-bottom: 20px;
-    .checkbox{
+    .checkbox {
       font-size: 17px;
     }
     .checkbox.checked {
       color: @text-gray;
     }
-    a{
+    a {
       text-decoration: underline;
       color: @text-gray;
-      &:hover{
+      &:hover {
         color: @danger-color;
       }
     }
   }
-  .dz-progress, .dz-details{
+  .dz-progress, .dz-details {
     visibility: hidden;
   }
 }

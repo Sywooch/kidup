@@ -60,7 +60,7 @@ class Payin extends \app\models\base\Payin
     {
         $brainTree = new BrainTree($this);
         $transaction = $brainTree->autorize($this);
-        if($transaction === false){
+        if ($transaction === false) {
             // something went wrong
             $this->nonce = null;
             $this->save();
@@ -71,38 +71,40 @@ class Payin extends \app\models\base\Payin
         return $this->save();
     }
 
-    public function updateStatus(){
+    public function updateStatus()
+    {
         $status = new BrainTree($this);
         $status = $this->brainTreeToPayinStatus($status->updateStatus());
-        if($status !== $this->status){
+        if ($status !== $this->status) {
             $this->status = $status;
             $this->save();
         }
     }
 
-    public function beforeSave($insert){
-        if($this->isAttributeChanged('status')){
-            if($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null){
+    public function beforeSave($insert)
+    {
+        if ($this->isAttributeChanged('status')) {
+            if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null) {
                 $invoice = new Invoice();
                 $invoice = $invoice->create($this->booking);
                 $this->invoice_id = $invoice->id;
-                if($this->save()){
+                if ($this->save()) {
                     Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);
                 }
                 (new Payout())->createFromBooking($this->booking);
             }
-            if($this->status == self::STATUS_AUTHORIZED){
+            if ($this->status == self::STATUS_AUTHORIZED) {
                 /**
                  * @var Booking $b
                  */
                 $b = Booking::findOne($this->bookings[0]->id);
-                if($b->conversation == null){
+                if ($b->conversation == null) {
                     $this->status = self::STATUS_PENDING;
                     return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
                 }
                 Event::trigger($this, self::EVENT_AUTHORIZATION_CONFIRMED);
             }
-            if($this->status == self::STATUS_FAILED){
+            if ($this->status == self::STATUS_FAILED) {
                 Event::trigger($this, self::EVENT_FAILED);
             }
         }
@@ -112,7 +114,8 @@ class Payin extends \app\models\base\Payin
     /**
      * Settle the payin, called when booking is confirmed
      */
-    public function capture(){
+    public function capture()
+    {
         $brainTree = new BrainTree($this);
         $brainTree->capture();
         $this->updateStatus();
@@ -122,30 +125,32 @@ class Payin extends \app\models\base\Payin
     /**
      * Release the payin, called when booking is declined or not responded to
      */
-    public function release(){
+    public function release()
+    {
         $brainTree = new BrainTree($this);
         $brainTree->release();
         $this->updateStatus();
         return true;
     }
 
-    private function brainTreeToPayinStatus($status){
-        if(in_array($status, [self::AUTHORIZING])){
+    private function brainTreeToPayinStatus($status)
+    {
+        if (in_array($status, [self::AUTHORIZING])) {
             return self::STATUS_PENDING;
         }
-        if(in_array($status, [self::AUTHORIZED])){
+        if (in_array($status, [self::AUTHORIZED])) {
             return self::STATUS_AUTHORIZED;
         }
-        if(in_array($status, [self::GATEWAY_REJECTED, self::FAILED, self::SETTLEMENT_DECLINED])){
+        if (in_array($status, [self::GATEWAY_REJECTED, self::FAILED, self::SETTLEMENT_DECLINED])) {
             return self::STATUS_FAILED;
         }
-        if(in_array($status, [self::SETTLING, self::SUBMITTED_FOR_SETTLEMENT])){
+        if (in_array($status, [self::SETTLING, self::SUBMITTED_FOR_SETTLEMENT])) {
             return self::STATUS_SETTLING;
         }
-        if(in_array($status, [self::SETTLED])){
+        if (in_array($status, [self::SETTLED])) {
             return self::STATUS_ACCEPTED;
         }
-        if(in_array($status, [self::VOIDED])){
+        if (in_array($status, [self::VOIDED])) {
             return self::STATUS_VOIDED;
         }
         return false;

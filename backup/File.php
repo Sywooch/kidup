@@ -1,11 +1,12 @@
 <?php
 
 namespace app\backup;
+use Aws\S3\S3Client;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Config;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
-use Aws\S3\S3Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+
 /**
  * Responsible for backing up the database
  * Class Database

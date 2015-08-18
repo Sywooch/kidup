@@ -11,10 +11,13 @@ use yii\helpers\Url;
     <div class="panel-heading">
         <div class="panel-title">
             <div class="author">
-                <a href="<?= Url::to('@web/messages/'.$model->id) ?>">
-                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, ['user_id' => $model->otherUser->user_id])?>
+                <a href="<?= Url::to('@web/messages/' . $model->id) ?>">
+                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
+                        ['user_id' => $model->otherUser->user_id]) ?>
                     <?php
-                        if($model->unreadMessages() > 0) echo ' <div class="badge"></div>';
+                    if ($model->unreadMessages() > 0) {
+                        echo ' <div class="badge"></div>';
+                    }
                     ?>
                     <span>
                         <?= $model->otherUser->first_name ?: $model->title ?>

@@ -11,7 +11,8 @@ use Yii;
 class MailAccount extends \app\models\base\MailAccount
 {
 
-    public function createForConversation(Conversation $conversation){
+    public function createForConversation(Conversation $conversation)
+    {
         $initiater = new MailAccount();
         $initiater->setAttributes([
             'user_id' => $conversation->initiater_user_id,
@@ -31,9 +32,10 @@ class MailAccount extends \app\models\base\MailAccount
         $target->save();
     }
 
-    private function newAddres(){
+    private function newAddres()
+    {
         $add = md5(\Yii::$app->security->generateRandomString());
-        while(MailAccount::find()->where(['name' => $add])->count() > 0){
+        while (MailAccount::find()->where(['name' => $add])->count() > 0) {
             return $this->newAddres();
         }
         return $add;

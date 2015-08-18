@@ -1,11 +1,17 @@
 <?php
 
+use app\components\WidgetRequest;
+use app\modules\images\components\ImageHelper;
+use app\modules\item\models\Category;
+use app\modules\item\models\Item;
 use app\widgets\Map;
+use dosamigos\gallery\Gallery;
 use yii\helpers\Url;
 
 /**
  * @var yii\web\View $this
  * @var array $images
+ * @var string $bookingForm
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
  * @var bool $show_modal
@@ -22,7 +28,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
 <div id="product">
     <div class="parallax filter-black"
-         style="background-image: url('<?= isset($images[0]) ? $images[0]['url'] : '' ?>')">
+         style="<?= ImageHelper::bgImg($model->getImageName(0)) ?>">
     </div>
     <!--book-line-fixed -->
     <div id="booking-navbar" class="book-line booking">
@@ -41,15 +47,9 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <div class="card">
                         <div class="content product-content">
                             <h2 class="title"><?= $model->name ?></h2>
-                            <h4 class="category"><?php
-                                $names = [];
-                                foreach ($model->categories as $cat) {
-                                    if ($cat->type == \app\modules\item\models\Category::TYPE_MAIN) {
-                                        $names[] = $cat->name;
-                                    }
-                                }
-                                echo implode(", ", $names);
-                                ?></h4>
+                            <h4 class="category">
+                                <?= implode(", ", $model->getCategoriesByType(Category::TYPE_MAIN)); ?>
+                            </h4>
 
                             <p class="description">
                                 <?= nl2br($model->description) ?>
@@ -77,7 +77,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
                                         <li>
                                             <i class="fa fa-magic"></i><?= Yii::t("item", "Condition") ?>
-                                            <b><?= \app\modules\item\models\Item::getConditions()[$model->condition] ?></b>
+                                            <b><?= Item::getConditions()[$model->condition] ?></b>
                                         </li>
                                     </ul>
                                 </div>
@@ -89,16 +89,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                         </li>
 
                                         <li>
-                                            <i class="fa fa-map-marker"></i><?= Yii::t("item", "Special") ?> <b>
-                                                <?php
-                                                $names = [];
-                                                foreach ($model->categories as $cat) {
-                                                    if ($cat->type == \app\modules\item\models\Category::TYPE_SPECIAL) {
-                                                        $names[] = $cat->name;
-                                                    }
-                                                }
-                                                echo implode("<br>", $names);
-                                                ?></b>
+                                            <i class="fa fa-map-marker"></i><?= Yii::t("item", "Special") ?>
+                                            <b>
+                                                <?= implode("<br>",
+                                                    $model->getCategoriesByType(Category::TYPE_SPECIAL)); ?>
+                                            </b>
                                         </li>
                                     </ul>
                                 </div>
@@ -137,12 +132,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 </div>
                                 <div class="col-sm-6">
                                     <h4 class="category"><b><?= Yii::t("item", "Ages") ?></b></h4>
+
                                     <?php
                                     $names = [];
-                                    foreach ($model->categories as $cat) {
-                                        if ($cat->type == \app\modules\item\models\Category::TYPE_AGE) {
-                                            $names[] = "<div class='label label-primary'>" . $cat->name . "</div>";
-                                        }
+                                    foreach ($model->getCategoriesByType(Category::TYPE_AGE) as $cat) {
+                                        $names[] = "<div class='label label-primary'>" . $cat . "</div>";
                                     }
                                     echo implode("<br>", $names);
                                     ?>
@@ -151,14 +145,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
                     <div class="row item-images">
-                        <?= \dosamigos\gallery\Gallery::widget([
+                        <?= Gallery::widget([
                             'items' => $images,
                         ]); ?>
                     </div>
 
-                    <?php
-                    if (count($related_items) > 0) {
-                        ?>
+                    <?php if (count($related_items) > 0): ?>
                         <div class="">
                             <div class="content">
                                 <h4 class="category"><b><?= Yii::t('item', 'Related products') ?></b></h4>
@@ -174,13 +166,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 </div>
                             </div>
                         </div>
-                        <?php
-                    }
-                    ?>
+                    <?php endif; ?>
 
                 </div>
                 <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center; margin-top: 20px;">
-                    <?= \app\components\WidgetRequest::request(\app\components\WidgetRequest::USER_PROFILE_IMAGE,
+                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
                         [
                             'user_id' => $model->owner_id,
                             'width' => '200px'

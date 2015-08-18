@@ -2,8 +2,8 @@
 
 namespace app\components;
 
-use yii\base\Component;
 use GuzzleHttp\Client;
+use yii\base\Component;
 use yii\helpers\Url;
 
 class Pages extends Component

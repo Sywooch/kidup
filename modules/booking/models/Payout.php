@@ -37,7 +37,8 @@ class Payout extends \app\models\base\Payout
         ];
     }
 
-    public function createFromBooking(Booking $booking){
+    public function createFromBooking(Booking $booking)
+    {
         $payout = new Payout();
         $payout->setAttributes([
             'status' => self::STATUS_WAITING_FOR_BOOKING_START,
@@ -51,27 +52,31 @@ class Payout extends \app\models\base\Payout
         return $booking->save();
     }
 
-    public function markAsProcessed(){
+    public function markAsProcessed()
+    {
         $this->status = self::STATUS_PROCESSED;
         $this->processed_at = time();
-        if($this->save()){
+        if ($this->save()) {
             Event::trigger($this, self::EVENT_PAYOUT_PROCESSED);
             return true;
-        }else{
+        } else {
             Yii::error("Payout markAsProcessed error");
             return false;
         }
     }
 
-    public function exportDankseBank(){
-        if($this->status !== self::STATUS_TO_BE_PROCESSED) return false;
+    public function exportDankseBank()
+    {
+        if ($this->status !== self::STATUS_TO_BE_PROCESSED) {
+            return false;
+        }
         // http://www.danskebank.com/en-uk/ci/Products-Services/Transaction-Services/Online-Services/Integration-Services/Documents/Formats/FormatDescriptionCSV_DK_LocalBulk/CSV_DK_LocalBulk.pdf
         $field = [];
 
         $field[1] = 'CMBO';
         $field[2] = '11658814'; // kidup account
         $payoutMethod = PayoutMethod::find()->where(['user_id' => $this->user_id])->one();
-        if($payoutMethod === null){
+        if ($payoutMethod === null) {
             // todo: what here?
             return false;
         }
@@ -80,21 +85,21 @@ class Payout extends \app\models\base\Payout
         $field[7] = "N"; // todo check
         $field[13] = "J"; // todo check
 
-        $field[24] = "KidUp Payout ".$this->id;
+        $field[24] = "KidUp Payout " . $this->id;
         $field[83] = "You're awesome!";
         // to account, this needs to be processed by externall process.php (in veracrypt container)
         $field[84] = $payoutMethod->identifier_1_encrypted;
         $field[85] = $payoutMethod->identifier_2_encrypted; // to account
         $str = [];
-        for($i = 1; $i <= 86; $i++){
-            if(!isset($field[$i])){
+        for ($i = 1; $i <= 86; $i++) {
+            if (!isset($field[$i])) {
                 $str[] = '';
-            }else{
+            } else {
                 $str[] = $field[$i];
             }
         }
 
-        echo '"'.implode('","', $str).'",';
+        echo '"' . implode('","', $str) . '",';
         return false;
     }
 

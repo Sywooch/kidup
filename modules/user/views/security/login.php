@@ -29,9 +29,10 @@ $this->title = ucfirst(\Yii::t('title', 'Log In')) . ' - ' . Yii::$app->name;
 
             <div class="social-area">
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
-                    <?php $authAuthChoice->clientLink($client, '<i class="fa fa-'.strtolower($client->getTitle()).'-square"></i> '.
+                    <?php $authAuthChoice->clientLink($client,
+                        '<i class="fa fa-' . strtolower($client->getTitle()) . '-square"></i> ' .
                         \Yii::t('user', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
-                        , ['class' => 'btn btn-fill btn-social btn-'.strtolower($client->getTitle())]) ?>
+                        , ['class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle())]) ?>
                     <br/><br/>
                 <?php endforeach; ?>
             </div>

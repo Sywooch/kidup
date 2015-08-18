@@ -15,29 +15,33 @@ use yii\web\ServerErrorHttpException;
  */
 class Conversation extends \app\models\base\Conversation
 {
-    public function beforeSave($insert){
-        if($insert == true){
+    public function beforeSave($insert)
+    {
+        if ($insert == true) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $ca){
-        if($insert == true){
+    public function afterSave($insert, $ca)
+    {
+        if ($insert == true) {
             (new MailAccount())->createForConversation($this);
         }
         return parent::afterSave($insert, $ca);
     }
 
-    public function getLastMessage(){
+    public function getLastMessage()
+    {
         return $this->hasOne(Message::className(), ['conversation_id' => 'id'])->orderBy('message.created_at DESC');
     }
 
-    public function getOtherUser(){
-        if(Yii::$app->user->id == $this->target_user_id){
+    public function getOtherUser()
+    {
+        if (Yii::$app->user->id == $this->target_user_id) {
             $target = "initiater_user_id";
-        }else{
+        } else {
             $target = "target_user_id";
         }
         return $this->hasOne(Profile::className(), ['user_id' => $target]);
@@ -46,7 +50,7 @@ class Conversation extends \app\models\base\Conversation
 
     public function addMessage($message, $receiverUserId, $senderUserId = null)
     {
-        if($senderUserId == null){
+        if ($senderUserId == null) {
             $senderUserId = \Yii::$app->user->id;
         }
         $m = new Message();
@@ -61,7 +65,8 @@ class Conversation extends \app\models\base\Conversation
         return true;
     }
 
-    public function unreadMessages(){
+    public function unreadMessages()
+    {
         return Message::find()->where([
             'receiver_user_id' => \Yii::$app->user->id,
             'conversation_id' => $this->id,

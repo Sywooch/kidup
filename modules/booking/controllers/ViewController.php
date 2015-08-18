@@ -31,7 +31,8 @@ class ViewController extends Controller
         ];
     }
 
-    private function getPdf(){
+    private function getPdf()
+    {
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -42,6 +43,7 @@ class ViewController extends Controller
         ]);
         return $pdf;
     }
+
     /**
      * View the receipt of a booking
      * @param $id
@@ -50,13 +52,13 @@ class ViewController extends Controller
     public function actionReceipt($id, $pdf = false)
     {
         $booking = $this->load($id);
-        if($booking->renter_id == \Yii::$app->user->id){
+        if ($booking->renter_id == \Yii::$app->user->id) {
             $viewFile = '/renter/receipt';
-        }else{
+        } else {
             $viewFile = '/owner/receipt';
         }
 
-        if($pdf){
+        if ($pdf) {
             $pdf = $this->getPdf();
             $pdf->content = $this->renderPartial($viewFile,
                 [
@@ -80,23 +82,25 @@ class ViewController extends Controller
     {
         $booking = $this->load($id);
 
-        if($booking->renter_id == \Yii::$app->user->id){
+        if ($booking->renter_id == \Yii::$app->user->id) {
             $viewFile = '/renter/invoice';
-            if($booking->payin->invoice_id == null){
-                \Yii::$app->session->addFlash('error', \Yii::t('booking', 'Invoice is available after the owner accepted the booking.'));
-                return $this->redirect('@web/booking/'.$booking->id);
+            if ($booking->payin->invoice_id == null) {
+                \Yii::$app->session->addFlash('error',
+                    \Yii::t('booking', 'Invoice is available after the owner accepted the booking.'));
+                return $this->redirect('@web/booking/' . $booking->id);
             }
-        }else{
+        } else {
             $viewFile = '/owner/invoice';
-            if(is_null($booking->payout) || $booking->payout->invoice_id == null){
-                \Yii::$app->session->addFlash('error', \Yii::t('booking', 'Invoice is available 24h after the booking started.'));
-                return $this->redirect('@web/booking/'.$booking->id);
+            if (is_null($booking->payout) || $booking->payout->invoice_id == null) {
+                \Yii::$app->session->addFlash('error',
+                    \Yii::t('booking', 'Invoice is available 24h after the booking started.'));
+                return $this->redirect('@web/booking/' . $booking->id);
             }
         }
 
         $invoice = $booking->payin->invoice;
         $invoice['data'] = Json::decode($booking->payin->invoice->data);
-        if($pdf){
+        if ($pdf) {
             $pdf = $this->getPdf();
             $pdf->content = $this->renderPartial($viewFile, ['invoice' => $invoice->getAttributes()]);
             return $pdf->render();
@@ -114,14 +118,14 @@ class ViewController extends Controller
     {
         $this->noFooter = false;
         $booking = $this->load($id);
-        if($booking->renter_id == \Yii::$app->user->id){
+        if ($booking->renter_id == \Yii::$app->user->id) {
             $viewFile = '/renter/view';
-        }else{
+        } else {
             $viewFile = '/owner/view';
         }
 
 
-        if($pdf){
+        if ($pdf) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             $pdf = $this->getPdf();
             $pdf->content = $this->renderPartial($viewFile,
@@ -142,16 +146,16 @@ class ViewController extends Controller
     private function load($id)
     {
         $booking = Booking::findOne($id);
-        if($booking == null){
+        if ($booking == null) {
             throw new NotFoundHttpException("Not found");
         }
-        if($booking->renter_id !== \Yii::$app->user->id && $booking->item->owner_id != \Yii::$app->user->id){
+        if ($booking->renter_id !== \Yii::$app->user->id && $booking->item->owner_id != \Yii::$app->user->id) {
             throw new ForbiddenHttpException("Not your booking");
         }
-        if($booking->status == Booking::AWAITING_PAYMENT){
-            if(\Yii::$app->user->id == $booking->renter_id){
-                return $this->redirect('@web/booking/'.$id.'/confirm');
-            }else{
+        if ($booking->status == Booking::AWAITING_PAYMENT) {
+            if (\Yii::$app->user->id == $booking->renter_id) {
+                return $this->redirect('@web/booking/' . $id . '/confirm');
+            } else {
                 \Yii::$app->session->addFlash('info', \Yii::t('booking', 'The renter has yet to confirm the booking'));
                 return $this->redirect('@web/booking/current');
             }

@@ -1,7 +1,5 @@
 <?php
 namespace app\widgets;
-use yii\widgets\InputWidget;
-use yii\helpers\Html;
 
 class Map extends \yii\bootstrap\Widget {
     public $longitude;

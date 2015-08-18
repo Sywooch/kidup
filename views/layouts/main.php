@@ -1,12 +1,12 @@
 <?php
-use app\modules\item\models\Search;
 use app\assets\FontAwesomeAsset;
+use app\components\Cache;
+use app\modules\images\components\ImageHelper;
+use app\modules\item\models\Search;
+use app\modules\message\models\Message;
 use kartik\growl\Growl;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use app\modules\images\components\ImageHelper;
-use \app\components\Cache;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -41,9 +41,12 @@ BootstrapPluginAsset::register($this);
     <?php $this->beginBody() ?>
 
     <?php
-    Cache::html('menu', function () {
+    echo Cache::html('menu', function () {
         return $this->render('menu');
-    }, ['variations' => [\Yii::$app->user->id]]);
+    }, ['variations' => [\Yii::$app->user->id, $this->context->transparentNav, Message::find()->where([
+        'receiver_user_id' => \Yii::$app->user->id,
+        'read_by_receiver' => 0
+    ])->count()]]);
     ?>
 
     <div id="wrapper">
@@ -70,15 +73,15 @@ BootstrapPluginAsset::register($this);
 
     <!-- Load modals -->
     <?php
-    Cache::html('search_modal', function () {
+    echo Cache::html('search_modal', function () {
         return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
     });
 
-    Cache::html('footer', function () {
+    echo Cache::html('footer', function () {
         return $this->render('footer.php');
     }, ['variations' => $this->context->noFooter]);
 
-    Cache::html('cookie_widget', function () {
+    echo Cache::html('cookie_widget', function () {
         return \cinghie\cookieconsent\widgets\CookieWidget::widget([
             'message' => \Yii::t('app',
                 'This website uses cookies to ensure you get the best possible KidUp experience.'),
@@ -89,7 +92,7 @@ BootstrapPluginAsset::register($this);
         ]);
     });
 
-    Cache::html('ga', function () {
+    echo Cache::html('ga', function () {
         return \kartik\social\GoogleAnalytics::widget([]);
     });
     ?>

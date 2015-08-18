@@ -2,6 +2,7 @@
 
 
 namespace app\modules\user\forms;
+
 use app\modules\user\models\User;
 use app\modules\user\Module;
 use yii\base\Model;
@@ -28,7 +29,7 @@ class Registration extends Model
     public function init()
     {
         $this->user = \Yii::createObject([
-            'class'    => User::className(),
+            'class' => User::className(),
             'scenario' => 'register'
         ]);
         $this->module = \Yii::$app->getModule('user');
@@ -42,15 +43,18 @@ class Registration extends Model
             // [['first_name', 'last_name'], 'match', 'pattern' => '/^[a-zA-Z]\w+$/'],
 //            [['first_name', 'last_name'], 'required'],
             // [['first_name', 'last_name'], 'unique', 'targetClass' => $this->module->modelMap['User'],
-                //'message' => \Yii::t('user', 'This first_name has already been taken')],
+            //'message' => \Yii::t('user', 'This first_name has already been taken')],
 //            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 20],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => $this->module->modelMap['User'],
-                'message' => \Yii::t('user', 'This email address has already been taken')],
-
+            [
+                'email',
+                'unique',
+                'targetClass' => $this->module->modelMap['User'],
+                'message' => \Yii::t('user', 'This email address has already been taken')
+            ],
             ['password', 'required', 'skipOnEmpty' => $this->module->enableGeneratingPassword],
             ['password', 'string', 'min' => 6],
         ];
@@ -60,7 +64,7 @@ class Registration extends Model
     public function attributeLabels()
     {
         return [
-            'email'    => \Yii::t('user', 'Email'),
+            'email' => \Yii::t('user', 'Email'),
             'first_name' => \Yii::t('user', 'First Name'),
             'last_name' => \Yii::t('user', 'Last Name'),
             'password' => \Yii::t('user', 'Password'),
@@ -84,16 +88,16 @@ class Registration extends Model
         }
 
         $this->user->setAttributes([
-            'email'    => $this->email,
+            'email' => $this->email,
             // 'first_name' => $this->first_name,
             // 'last_name' => $this->last_name,
             'password' => $this->password
         ]);
 
-        if($reg = $this->user->register()){
+        if ($reg = $this->user->register()) {
             $u = User::find()->where(['email' => $this->email])->one();
             return \Yii::$app->user->login($u);
-        }else{
+        } else {
             return $reg;
         }
     }

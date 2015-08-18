@@ -183,7 +183,10 @@ class CreateController extends Controller
         $i->save();
         if ($i->save()) {
             // try to find order
-            $orderIhm = ItemHasMedia::find()->where(['item_id' => $item->id, 'media_id' => $i->id,])->orderBy('order DESC')->one();
+            $orderIhm = ItemHasMedia::find()->where([
+                'item_id' => $item->id,
+                'media_id' => $i->id,
+            ])->orderBy('order DESC')->one();
             if ($orderIhm == null) {
                 $order = 1;
             } else {

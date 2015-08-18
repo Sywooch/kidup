@@ -18,12 +18,13 @@ class Conversation extends Mailer
         // try and find the correct matching mail_account
         $mailAccount = MailAccount::find()->where([
             'conversation_id' => $message->conversation_id,
-            'user_id' => $message->sender_user_id])->one();
+            'user_id' => $message->sender_user_id
+        ])->one();
         $senderName = '';
-        if($mailAccount !== null){
-            $from = $mailAccount->name."@reply.kidup.dk";
+        if ($mailAccount !== null) {
+            $from = $mailAccount->name . "@reply.kidup.dk";
             $senderName = $message->senderUser->profile->first_name;
-        }else{
+        } else {
             $from = "info@kidup.dk";
         }
 

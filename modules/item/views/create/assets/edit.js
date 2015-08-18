@@ -18,7 +18,7 @@ Dropzone.options.dropzoneForm = {
                 var imageId = $(this).parent().find(".dz-filename > span").text();
                 $.ajax({
                     url: window.deleteUrl,
-                    data: { imageId: imageId},
+                    data: {imageId: imageId},
                     type: 'POST',
                     success: function (data) {
                         if (data.NotificationType === "Error") {
@@ -44,7 +44,7 @@ $(document).ready(function () {
     $(".category-clickable-button").click(function () {
         $(this).toggleClass('btn-primary btn-fill');
         // select the next element, which is the form
-        var hiddenEl =  $(this).next();
+        var hiddenEl = $(this).next();
         var currentVal = hiddenEl.val();
         hiddenEl.val(currentVal == 0 ? 1 : 0);
     });
@@ -59,42 +59,42 @@ $(document).ready(function () {
         }
     });
 
-    $("[id^=submit]").click(function(){
-        var form=$(this).parents("form");
-        var newLink = form.attr('action').replace('?button=submit-save','');
-        newLink.replace('?button=submit-preview','');
-        newLink.replace('?button=submit-publish','');
-        form.attr('action', newLink+"?button="+$(this).attr('id')).submit();
+    $("[id^=submit]").click(function () {
+        var form = $(this).parents("form");
+        var newLink = form.attr('action').replace('?button=submit-save', '');
+        newLink.replace('?button=submit-preview', '');
+        newLink.replace('?button=submit-publish', '');
+        form.attr('action', newLink + "?button=" + $(this).attr('id')).submit();
     });
 
-    $('#new-price').keydown(function(){
-        setTimeout(function(){
+    $('#new-price').keydown(function () {
+        setTimeout(function () {
             var val = $('#new-price').val();
-            $(".suggestion-daily").html('<i>Daily price</i>: '+Math.round(val*0.02));
-            $(".suggestion-weekly").html('<i>Weekly price</i>: '+Math.round(val*0.04));
-            $(".suggestion-monthly").html('<i>Monthly price</i>: '+Math.round(val*0.05));
-        },100);
+            $(".suggestion-daily").html('<i>Daily price</i>: ' + Math.round(val * 0.02));
+            $(".suggestion-weekly").html('<i>Weekly price</i>: ' + Math.round(val * 0.04));
+            $(".suggestion-monthly").html('<i>Monthly price</i>: ' + Math.round(val * 0.05));
+        }, 100);
     })
 });
 
-$(function() {
+$(function () {
     var dr = $(".dropzone");
     dr.sortable({
-        items:'.dz-preview',
+        items: '.dz-preview',
         cursor: 'move',
         opacity: 0.5,
         containment: '.dropzone',
         distance: 20,
-        update: function(event, ui) {
+        update: function (event, ui) {
             var order = [];
-            $('.dropzone').sortable().find('.dz-preview').each(function(o,i){
+            $('.dropzone').sortable().find('.dz-preview').each(function (o, i) {
                 order[o] = $(i).find('img').attr('alt');
             });
             $.ajax({
                 type: 'POST',
                 url: window.sortUrl,
-                data: {order : order},
-                success: function(data){
+                data: {order: order},
+                success: function (data) {
                     console.log(data);
                 }
             });

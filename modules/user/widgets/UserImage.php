@@ -26,6 +26,6 @@ class UserImage extends Widget
             'w' => str_replace('px', '', $this->width),
             'h' => str_replace('px', '', $this->width),
             'fit' => 'crop'
-        ],['class' => "avatar img-circle"]);
+        ], ['class' => "avatar img-circle"]);
     }
 }

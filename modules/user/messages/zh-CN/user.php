@@ -16,7 +16,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return array (
+return array(
     '{0, date, MMMM dd, YYYY HH:mm}' => '{0, date, dd MMMM, YYYY HH:mm}',
     'Account has successfully been connected' => '帐户已成功连接',
     'All user tokens have been deleted' => '所有用户令牌已被删除',
@@ -47,7 +47,7 @@ return array (
     'Connect' => '连接',
     'Connect this account by entering desired username and your email address below' => '通过用户名和电子邮件地址连接用户',
     'Connect your account to {0}' => '连接您的帐户 {0}',
-    'Continue'=> '继续',
+    'Continue' => '继续',
     'Create a user account' => '创建一个用户',
     'Current email' => '当前邮箱',
     'Current password' => '当前密码',
@@ -147,19 +147,19 @@ return array (
     'Your password has been successfully changed. You can try logging in using your new password.' => '您已经成功地更改了密码。您可以尝试使用您的新密码登录。',
     'Your username is {0} and your password is {1}' => '您的用户名是 {0} 密码是 {1}',
     'You will never have to use this form again' => '您将永远不再使用这个表单',
-    'This username has already been taken'=>'该用户名已被注册',
-    'This email address has already been taken' =>'该邮箱已被注册',
-    'Your profile has been updated'=>'属性信息设置已被成功保存',
-    'Account'=>'帐户',
-    'New password'=>'新密码',
-    'Account settings'=>'帐户设置',
+    'This username has already been taken' => '该用户名已被注册',
+    'This email address has already been taken' => '该邮箱已被注册',
+    'Your profile has been updated' => '属性信息设置已被成功保存',
+    'Account' => '帐户',
+    'New password' => '新密码',
+    'Account settings' => '帐户设置',
     'Your account has been confirmed' => '帐户已被确认',
-    'Awesome! You have successfully confirmed your email address. You may sign in using your credentials now'=>'恭喜您，帐户已被确认，您现在可以登录您的帐户',
-    'Invalid token' =>'无效的令牌',
-    'We are sorry but your confirmation token is out of date'=>'抱歉为，您的令牌已过期',
-    'You can try requesting a new one by clicking the link below'=>'您可以点击以下链接获取新的令牌',
-    'The email can take a few minutes to arrive. But if you are having troubles, you can request a new one.'=>'电子邮件可能需要几分钟才能到达。',
-    'Password has been reset'=>'密码已被重置',
-    'Your password has been successfully changed. You can try logging in using your new password'=>'您的密码已被成功修改，您可以尝试用新密码登录帐户。',
+    'Awesome! You have successfully confirmed your email address. You may sign in using your credentials now' => '恭喜您，帐户已被确认，您现在可以登录您的帐户',
+    'Invalid token' => '无效的令牌',
+    'We are sorry but your confirmation token is out of date' => '抱歉为，您的令牌已过期',
+    'You can try requesting a new one by clicking the link below' => '您可以点击以下链接获取新的令牌',
+    'The email can take a few minutes to arrive. But if you are having troubles, you can request a new one.' => '电子邮件可能需要几分钟才能到达。',
+    'Password has been reset' => '密码已被重置',
+    'Your password has been successfully changed. You can try logging in using your new password' => '您的密码已被成功修改，您可以尝试用新密码登录帐户。',
 
 );

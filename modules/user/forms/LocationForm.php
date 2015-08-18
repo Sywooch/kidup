@@ -44,16 +44,16 @@ class LocationForm extends Model
     public function __construct($config = [])
     {
         $this->module = \Yii::$app->getModule('user');
-        $location = Location::find()->where(['user_id'=> \Yii::$app->user->id, 'type' => Location::TYPE_MAIN])->one();
-        if($location === null){
+        $location = Location::find()->where(['user_id' => \Yii::$app->user->id, 'type' => Location::TYPE_MAIN])->one();
+        if ($location === null) {
             $location = new Location();
             $location->type = Location::TYPE_MAIN;
         }
-        foreach($location->getAttributes() as $attr => $val){
+        foreach ($location->getAttributes() as $attr => $val) {
             $this->{$attr} = $val;
         }
         $this->setAttributes([
-            'email'    => $this->user->unconfirmed_email ?: $this->user->email
+            'email' => $this->user->unconfirmed_email ?: $this->user->email
         ], false);
         parent::__construct($config);
     }
@@ -92,8 +92,11 @@ class LocationForm extends Model
     {
         if ($this->validate()) {
             //save lovation properly
-            $location = Location::find()->where(['user_id'=> \Yii::$app->user->id, 'type' => Location::TYPE_MAIN])->one();
-            if($location === null){
+            $location = Location::find()->where([
+                'user_id' => \Yii::$app->user->id,
+                'type' => Location::TYPE_MAIN
+            ])->one();
+            if ($location === null) {
                 $location = new Location();
                 $location->type = Location::TYPE_MAIN;
                 $location->user_id = \Yii::$app->user->id;

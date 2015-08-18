@@ -108,8 +108,8 @@ class Item extends \app\models\base\Item
 
     public function getImageNames()
     {
-        $function = function(){
-            $ihms = ItemHasMedia::getDb()->cache(function(){
+        $function = function () {
+            $ihms = ItemHasMedia::getDb()->cache(function () {
                 return ItemHasMedia::find()->where(['item_id' => $this->id])->orderBy('order')->with('media')->all();
             });
 
@@ -119,7 +119,7 @@ class Item extends \app\models\base\Item
             }
             return $imgs;
         };
-        return Cache::data('item_names'.$this->id, $function, 60*60);
+        return Cache::data('item_names' . $this->id, $function, 60 * 60);
     }
 
     public function getImageName($order)
@@ -234,6 +234,26 @@ class Item extends \app\models\base\Item
             ->viaTable('item_has_category', ['item_id' => 'id']);
     }
 
+
+    /**
+     * Returns the categories of this item of a certain type
+     * @param $type
+     * @return array
+     */
+    public function getCategoriesByType($type)
+    {
+        $cats = Category::find()->innerJoinWith('itemHasCategories')->
+        where([
+            'type' => $type,
+            'item_has_category.item_id' => $this->getAttribute('id')
+        ])->asArray()->all();
+        $res = [];
+        foreach ($cats as $cat) {
+            $res[] = $cat['name'];
+        }
+        return $res;
+    }
+
     /**
      * Get a list of recommended items.
      *
@@ -276,7 +296,8 @@ class Item extends \app\models\base\Item
      * @param $item2 second item
      * @return double number in [0, 1] where 0 means maximal dissimilarity and 1 means maximal similarity
      */
-    public static function getSimilarityScore($item1, $item2) {
+    public static function getSimilarityScore($item1, $item2)
+    {
         // calculate the geographical distance
         $loc1 = Location::find(['id' => $item1->location_id])->one();
         $loc2 = Location::find(['id' => $item2->location_id])->one();
@@ -289,8 +310,7 @@ class Item extends \app\models\base\Item
             $cats2 = ItemHasCategory::find()
                 ->where(['item_id' => $item2->id])
                 ->andWhere(['category_id' => $cat1->category_id])
-                ->one()
-            ;
+                ->one();
             $numSameCategories += count($cats2);
         }
 

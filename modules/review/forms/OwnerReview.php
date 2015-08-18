@@ -32,8 +32,11 @@ class OwnerReview extends Model
         ];
     }
 
-    public function save(){
-        if(!$this->validate()) return false;
+    public function save()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
 
         Review::create(Review::TYPE_USER_PUBLIC, $this->public, $this->booking, true);
 

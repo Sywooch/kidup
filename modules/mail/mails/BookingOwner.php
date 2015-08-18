@@ -174,7 +174,8 @@ class BookingOwner extends Mailer
      * Payin of the booking has failed
      * @param Booking $booking
      */
-    public function failed($booking){
+    public function failed($booking)
+    {
 
         $startDate = Carbon::createFromTimestamp($booking->time_from)->toFormattedDateString();
         $endDate = Carbon::createFromTimestamp($booking->time_to)->toFormattedDateString();

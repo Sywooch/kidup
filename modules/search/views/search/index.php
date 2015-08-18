@@ -129,13 +129,14 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                     </div>
                     <div class="modal-footer">
                         <div class="row">
-<!--                            <div class="col-xs-4">-->
-<!--                                <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 100%">-->
-<!--                                    --><?//= Yii::t("item", "Cancel") ?>
-<!--                                </button>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-xs-4">-->
+                            <!--                                <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 100%">-->
+                            <!--                                    --><? //= Yii::t("item", "Cancel") ?>
+                            <!--                                </button>-->
+                            <!--                            </div>-->
                             <div class="col-xs-12">
-                                <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal" style="width: 100%">
+                                <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal"
+                                        style="width: 100%">
                                     <?= Yii::t("item", "Apply Filters") ?>
                                 </button>
                             </div>

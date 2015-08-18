@@ -1,9 +1,11 @@
 <?php
 namespace app\modules\item\widgets;
+
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
 
-class GoogleAutoComplete extends InputWidget {
+class GoogleAutoComplete extends InputWidget
+{
     const API_URL = 'http://maps.googleapis.com/maps/api/js?';
     public $libraries = 'places';
     public $sensor = true;
@@ -12,7 +14,8 @@ class GoogleAutoComplete extends InputWidget {
     /**
      * Renders the widget.
      */
-    public function run(){
+    public function run()
+    {
         $this->registerClientScript();
         if ($this->hasModel()) {
             echo Html::activeTextInput($this->model, $this->attribute, $this->options);
@@ -24,7 +27,8 @@ class GoogleAutoComplete extends InputWidget {
     /**
      * Registers the needed JavaScript.
      */
-    public function registerClientScript(){
+    public function registerClientScript()
+    {
         $elementId = $this->options['id'];
         $scriptOptions = json_encode($this->autocompleteOptions);
         $view = $this->getView();

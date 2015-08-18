@@ -10,7 +10,12 @@ use yii\helpers\Url;
 <tr>
     <td class="text-center ">
         <div class="product-image"
-             style="<?= ImageHelper::bgImg($model->getImageName(0), ['q' => 90, 'w' => 70, 'h' => 50, 'fit' => 'crop']) ?>; background-size: cover; background-position: 50% 50%;" >
+             style="<?= ImageHelper::bgImg($model->getImageName(0), [
+                 'q' => 90,
+                 'w' => 70,
+                 'h' => 50,
+                 'fit' => 'crop'
+             ]) ?>; background-size: cover; background-position: 50% 50%;">
         </div>
     </td>
     <td><?= $model->name ?></td>
@@ -25,7 +30,7 @@ use yii\helpers\Url;
                 <?= Yii::t("item", "Edit") ?>
             </button>
         </a>
-        <a href="<?= Url::to('@web/booking/by-item/' . $model->id ) ?>">
+        <a href="<?= Url::to('@web/booking/by-item/' . $model->id) ?>">
             <button class="btn btn-primary btn-sm">
                 <?= Yii::t("item", "Bookings") ?>
             </button>

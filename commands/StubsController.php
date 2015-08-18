@@ -2,6 +2,7 @@
 namespace app\commands;
 use yii\console\Controller;
 use yii\console\Exception;
+
 class StubsController extends Controller
 {
     public $outputFile = null;

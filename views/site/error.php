@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use app\modules\images\components\ImageHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $name string */

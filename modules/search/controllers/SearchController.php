@@ -1,7 +1,6 @@
 <?php
 namespace app\modules\search\controllers;
 
-use app\components\Cache;
 use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
@@ -90,15 +89,15 @@ class SearchController extends Controller
         $model = new SearchModel();
 
 //        $results = Cache::data('searchResults' . $p . $q, function () use ($p, $q, $model) {
-            // load the item search model
+        // load the item search model
 
-            // load the parameters
-            $model->loadParameters($model->parseQueryString($q));
+        // load the parameters
+        $model->loadParameters($model->parseQueryString($q));
 
-            $model->setPage($p);
+        $model->setPage($p);
 
-            // load the search results
-            $results = $model->findItems();
+        // load the search results
+        $results = $model->findItems();
 //        });
 
         // render the results

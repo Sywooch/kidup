@@ -1,12 +1,12 @@
 <?php
 /**
  * 'params' => [
-'otherName' => $otherName,
-'profileName' => $user->profile->first_name,
-],
-'urls' => [
-'review' => Url::to('@web/review/create/' . $booking->id, true),
-]
+ * 'otherName' => $otherName,
+ * 'profileName' => $user->profile->first_name,
+ * ],
+ * 'urls' => [
+ * 'review' => Url::to('@web/review/create/' . $booking->id, true),
+ * ]
  */
 ?>
 <table width="100%" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" border="0" st-sortable="1-image+text-column">

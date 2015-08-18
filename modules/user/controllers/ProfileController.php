@@ -102,8 +102,12 @@ class ProfileController extends Controller
 
         $accs = $profile->user->socialAccounts;
         foreach ($accs as $a) {
-            if($a->provider == 'facebook') $fbVerified = true;
-            if($a->provider == 'twitter') $twVerified = true;
+            if ($a->provider == 'facebook') {
+                $fbVerified = true;
+            }
+            if ($a->provider == 'twitter') {
+                $twVerified = true;
+            }
         }
 
         return $this->render('show', [

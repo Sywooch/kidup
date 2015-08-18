@@ -12,7 +12,7 @@ use yii\helpers\Url;
     <div class="card" style="padding:20px">
         <div class="row">
             <div class="col-md-2">
-                <a href="<?= Url::to('@web/user/'.$model->reviewer_id) ?>">
+                <a href="<?= Url::to('@web/user/' . $model->reviewer_id) ?>">
                     <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
                         'user_id' => $model->reviewer_id
                     ]) ?>
@@ -23,7 +23,8 @@ use yii\helpers\Url;
             <div class="col-md-10">
                 <?= $model->value ?>
                 <br/><br/>
-                <small><?= Carbon::createFromTimestamp($model->created_at, \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?></small>
+                <small><?= Carbon::createFromTimestamp($model->created_at,
+                        \Yii::$app->params['serverTimeZone'])->toFormattedDateString() ?></small>
             </div>
         </div>
     </div>

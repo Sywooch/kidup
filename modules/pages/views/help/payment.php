@@ -1,5 +1,5 @@
 <?php
-$this->title = ucfirst(\Yii::t('title', 'How do payments work')) . ' - '. Yii::$app->name;
+$this->title = ucfirst(\Yii::t('title', 'How do payments work')) . ' - ' . Yii::$app->name;
 
 ?>
 <div id="payment">
