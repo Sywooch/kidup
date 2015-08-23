@@ -17,10 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Approved ' => 'Godkendt',
-    'Description' => 'Beskrivelse',
-    'SMS could not be send, please try again.' => 'SMS\'en kunne ikke sendes, prøv venligst igen.',
-    'What is interesting for other users to know? Do you have any kids? How old are they?' => 'Fortæl noget spændende! Hvor mange børn har du? Og hvor gamle er de?',
     '(not set)' => '(ikke defineret)',
     'A confirmation message has been sent to your new email address' => 'En bekræfftigelsesmail er blevet sendt til din nye mailadresse',
     'A message has been sent to your email address. It contains a confirmation link that you must click to complete registration.' => 'En besked er blevet afsendt til din mailadresse. Den indeholder et link som du kan klikke p& aring; for at fulføre din registrering.',
@@ -191,6 +187,7 @@ return [
     'Already registered? Sign in!' => 'Allerede registreret? Log ind!',
     'An email has been sent with instructions for resetting your password' => 'En mail er blevet sendt til dig med instruktioner for at resette dit kodeord',
     'An error occurred and your password has not been changed. Please try again later.' => 'Der skete en fejl, og dit kodeord er ikke blevet ændret. Prøv igen senere.',
+    'Approved ' => 'Godkendt',
     'Bank Name' => 'Banknavn',
     'Bank Number' => 'Banknummer',
     'Complete password reset on {0}' => 'Fuldfør nulstilning af kodeord på {0}',
@@ -203,6 +200,7 @@ return [
     'Connect your email address below, you will never have to use this form again.' => 'Forbind din emailadresse nedenunder, det skal kun gøres en gang.',
     'Continue' => 'Fortsæt',
     'Conversation with {username}' => 'Samtale med {brugernavn}',
+    'Description' => 'Beskrivelse',
     'Email' => 'Email',
     'Email settings' => 'Emailindstillinger',
     'Enter your email address below and click continue, and we\'ll send you a recovery link.' => 'Skriv din email-adresse nedenunder og klik fortsat, og så sender vi et link, så du kan genskabe dit kodeord.',
@@ -256,6 +254,7 @@ return [
     'Rest assured, your number is only shared with another KidUp user once you have a confirmed booking.' => 'Bare roligt, dit nummer er kun delt med andre KidUp-brugere, når du har bekræftet en booking.',
     'Reviews ' => 'Anmeldelser',
     'Reviews from other families' => 'Anmeldelser fra andre familier',
+    'SMS could not be send, please try again.' => 'SMS\'en kunne ikke sendes, prøv venligst igen.',
     'Save' => 'Gem',
     'See profile' => 'Se profilen',
     'Select a country' => 'Vælg et land',
@@ -282,6 +281,7 @@ return [
     'Verify in multiple ways to built trust on KidUp!' => 'Verificer på flere måder for at bygge tillid på KidUp!',
     'We\'d like to get to know you!' => 'Vi vil gerne lære dig at kende!',
     'Welcome to {0}' => 'Velkommen til {0}',
+    'What is interesting for other users to know? Do you have any kids? How old are they?' => 'Fortæl noget spændende! Hvor mange børn har du? Og hvor gamle er de?',
     'You need to confirm your email address' => 'Du skal bekræfte din email-adresse',
     'Your account details have been updated' => 'Dine brugerindstillinger er blevet opdateret',
     'Your account has been blocked' => 'Din konto er blevet blokeret',

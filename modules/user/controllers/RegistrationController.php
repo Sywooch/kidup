@@ -12,9 +12,7 @@
 namespace app\modules\user\controllers;
 
 use app\controllers\Controller;
-use app\modules\images\components\ImageManager;
 use app\modules\user\Finder;
-use app\modules\user\forms\PostRegistration;
 use app\modules\user\forms\PostRegistrationProfile;
 use app\modules\user\forms\Registration;
 use app\modules\user\models\User;
@@ -22,8 +20,8 @@ use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
+use app\modules\user\models\SocialAccount;
 
 /**
  * RegistrationController is responsible for all registration process, which includes registration of a new account,
@@ -106,8 +104,14 @@ class RegistrationController extends Controller
     {
         $account = $this->finder->findAccountById($account_id);
 
-        if ($account === null || $account->getIsConnected()) {
-            throw new NotFoundHttpException;
+        if ($account === null ) {
+            throw new NotFoundHttpException("We couldn't find the social account with that ID, please try again.");
+        }
+
+        if($account->getIsConnected()){
+            if($account->user !== null){
+                // todo
+            }
         }
 
         /** @var User $user */
@@ -116,30 +120,35 @@ class RegistrationController extends Controller
             'scenario' => 'connect'
         ]);
 
+        $data = \yii\helpers\Json::decode($account->data);
+        if(isset($data['email'])){
+            // see if user already exists
+            $u = User::findOne(['email' => $data['email']]);
+            if($u !== null){
+                $account->user_id = $u->id;
+                $account->save(false);
+                \Yii::$app->user->login($u, $this->module->rememberFor);
+                return $this->redirect('@web/home');
+            }else{
+                $user->email = $data['email'];
+                $user->create();
+                $account->user_id = $user->id;
+                $account->save(false);
+                /**
+                 * @var SocialAccount $socialAccount
+                 */
+                $socialAccount = SocialAccount::findOne($account_id);
+                if($socialAccount !== null){
+                    $socialAccount->fillUserDetails($user);
+                }
+                \Yii::$app->user->login($user, $this->module->rememberFor);
+                return $this->redirect('@web/user/registration/post-registration');
+            }
+        }
+
         if ($user->load(\Yii::$app->request->post()) && $user->create()) {
             $account->user_id = $user->id;
             $account->save(false);
-            // try to set properties from social account
-            $data = \yii\helpers\Json::decode($account->data);
-            if(isset($data['name'])){
-                $user->profile->first_name = explode(' ',$data['name'])[0];
-                $user->profile->last_name = str_replace($user->profile->first_name.' ', '', $data['name']);
-                $user->profile->save();
-            }
-            if(isset($data['profile_image_url'])){
-                $fileData = file_get_contents($data['profile_image_url']);
-                $uploadedFile = (new ImageManager())->store($fileData, $data['profile_image_url']);
-                if($uploadedFile !== false){
-                    $user->profile->setAttribute('img', $uploadedFile);
-                    $user->profile->save();
-                }
-            }
-            if(isset($data['email'])){
-                $user->email = $data['email'];
-                $user->save();
-                // todo where to go here?
-                return $this->redirect('@web/home');
-            }
             \Yii::$app->user->login($user, $this->module->rememberFor);
             return $this->redirect('@web/user/registration/post-registration');
         }

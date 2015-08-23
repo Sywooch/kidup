@@ -42,7 +42,13 @@ $components = [
                 'class' => 'yii\authclient\clients\Facebook',
                 'clientId' => '1515825585365803',
                 'clientSecret' => $keys['facebook_oauth_secret'],
-                'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500]
+                'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500],
+                'attributeNames' => [
+                    'email',
+                    'name',
+                    'picture',
+                    'friends'
+                ]
             ],
             'twitter' => [
                 'class' => 'yii\authclient\clients\Twitter',

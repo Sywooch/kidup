@@ -15,7 +15,6 @@ use yii\web\UploadedFile;
  * @property \League\Flysystem\Filesystem $uploadFilesystem
  * @property \League\Flysystem\Filesystem $cacheFilesystem
  */
-
 class ImageManager
 {
     public $uploadFilesystem;
@@ -43,11 +42,10 @@ class ImageManager
         ]);
         $adapter = new AwsS3Adapter($client, 'kidup-cache');
 
-        $fs =  new Filesystem($adapter);
+        $fs = new Filesystem($adapter);
         $fs->createDir('test');
-        exit();
 
-        return false;
+        return $fs;
     }
 
     /**
@@ -100,7 +98,7 @@ class ImageManager
     {
         // generate a unique file name
 
-        $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
+        $filename = strtolower(str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString())));
         $dir = static::createSubFolders($filename);
         $this->uploadFilesystem->createDir($dir);
 
@@ -115,16 +113,18 @@ class ImageManager
      * Function for internally storing images
      * @param string $imgData
      */
-    public function store($imgData, $originalName){
-        $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
+    public function store($imgData, $originalName)
+    {
+        $filename = strtolower(str_replace('-', '0',
+            str_replace("_", '-', \Yii::$app->security->generateRandomString())));
         $dir = static::createSubFolders($filename);
         $this->uploadFilesystem->createDir($dir);
-        if(strpos($originalName, ".") === false){
+        if (strpos($originalName, ".") === false) {
             // no file extension
             $extension = '';
-        }else{
+        } else {
             $extension = strrev(explode('.', strrev($originalName))[0]);
-            if(!in_array($extension, $this->allowedFormats)){
+            if (!in_array($extension, $this->allowedFormats)) {
                 // this format is not allowed
                 return false;
             }
@@ -145,7 +145,7 @@ class ImageManager
         $cache = $this->cacheFilesystem;
 
         if ($isStatic) {
-            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'].'/modules/images/images')); // souce is always local, push to S3 in production environvment
+            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'] . '/modules/images/images/')); // souce is always local, push to S3 in production environvment
         } else {
             $source = $this->uploadFilesystem;
         }
@@ -171,7 +171,6 @@ class ImageManager
         ];
 
         $api = new League\Glide\Api\Api($imageManager, $manipulators);
-
         $server = new League\Glide\Server(
             $source,
             $cache,

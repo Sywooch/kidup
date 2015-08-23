@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\images\controllers;
 
+use app\modules\images\components\ImageHelper;
 use app\modules\images\components\ImageManager;
 use Yii;
 use yii\base\DynamicModel;
@@ -80,6 +81,8 @@ class IndexController extends \app\controllers\Controller
         if (isset($folder1) && $folder1 == 'kidup') {
             $isStatic = true;
             $folder1 = null;
+        }else{
+            $id = ImageManager::createSubFolders($id).'/'.$id;
         }
         $server = (new ImageManager())->getServer($isStatic);
         // settings for image
