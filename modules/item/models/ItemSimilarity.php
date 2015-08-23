@@ -6,25 +6,43 @@ use Yii;
 use yii\db\Query;
 
 /**
- * This is the model class for table "item_similarity".
+ * This is the base-model class for table "item_similarity".
+ *
+ * @property integer $item_id_1
+ * @property integer $item_id_2
+ * @property double $similarity
+ * @property double $similarity_location
+ * @property double $similarity_categories
+ * @property double $similarity_price
+ *
+ * @property \app\models\Item $originatingItem
+ * @property \app\models\Item $similarItem
  */
 class ItemSimilarity extends \app\models\base\ItemSimilarity
 {
-    private $item;
+    public $item;
+
     /**
      * Computes the similarities for an item
      * @param Item $item
      */
-    public function compute($item){
+    public function compute(Item $item)
+    {
         $this->item = $item;
-        $this->removeOld()
-            ->insertNewSimilarities();
+        $this->removeOld();
+        $this->insertNewSimilarities();
+        $this->removeItself();
         return true;
     }
 
-    private function removeOld(){
-        ItemSimilarity::deleteAll(['item_id_1' => $this->item->id]);
-        return $this;
+    private function removeOld()
+    {
+        return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id]);
+    }
+
+    private function removeItself()
+    {
+        return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id, 'item_id_2' => $this->item->id]);
     }
 
     private function insertNewSimilarities()
@@ -77,13 +95,29 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
         ORDER BY similarity DESC
         LIMIT 10;';
 
-        Yii::$app->db->createCommand($distanceQ)
-            ->bindParam(':itemId', $this->item->id)
-            ->bindParam(':lat', $this->item->location->latitude)
-            ->bindParam(':long', $this->item->location->longitude)
-            ->bindParam(':weekPrice', $this->item->price_week)
+        return Yii::$app->db->createCommand($distanceQ)
+            ->bindParam(':itemId', $this->item->getAttribute('id'))
+            ->bindParam(':lat', $this->item->location->getAttribute('latitude'))
+            ->bindParam(':long', $this->item->location->getAttribute('longitude'))
+            ->bindParam(':weekPrice', $this->item->getAttribute('price_week'))
             ->bindParam(':catCount', count($this->item->categories))
             ->execute();
-        return $this;
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOriginatingItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id_2']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSimilarItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id_2']);
     }
 }

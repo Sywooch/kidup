@@ -105,7 +105,7 @@ class ViewController extends Controller
             }
 
             // find which items are related
-            $related_items = $item->getRecommendedItems($item->id, 3);
+            $related_items = $item->getRecommendedItems($item, 3);
             $res = [
                 'model' => $item,
                 'location' => $item->location,
