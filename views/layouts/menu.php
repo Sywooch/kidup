@@ -4,13 +4,15 @@ use app\modules\images\components\ImageHelper;
 use app\modules\message\models\Message;
 use yii\helpers\Url;
 
+/**
+ * @var \yii\web\View $this
+ */
 // create the navbar
 $class = 'navbar navbar-default ';
 $class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-navbar-product';
 
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
 ?>
-
     <nav
         class="navbar navbar-default <?= isset($this->context->transparentNav) ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
         <div class="container-fluid">
@@ -70,7 +72,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
                                     'user_id' => \Yii::$app->user->id,
                                     'width' => '40px'
-                                ]) ?>
+                                ])
+                                ?>
                                 <?= \Yii::$app->user->identity->profile->first_name ?>
                                 <i class="fa fa-angle-down"></i>
                             </a>
@@ -152,10 +155,13 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif;
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
-                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                            'user_id' => \Yii::$app->user->id,
-                            'width' => '40px'
-                        ]) ?>
+                        <?= \app\components\Cache::html('user_widget', function () {
+                            WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                'user_id' => \Yii::$app->user->id,
+                                'width' => '40px'
+                            ]);
+                        }, ['variations' => [\Yii::$app->user->id]])
+                        ?>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>">
@@ -207,8 +213,11 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
-    echo WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
-    echo WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
+    echo \app\components\Cache::html('widget_user_login_modal', function () {
+        return WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
+    });
+    echo \app\components\Cache::html('widget_user_login_modal', function () {
+        return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
+    });
 }
-
 ?>

@@ -53,6 +53,7 @@ class SiteController extends Controller
 
     public function actionSuperSecretCacheFlush(){
         \Yii::$app->cache->flush();
+//        \app\components\Cache::remove('item_controller-view');
         echo 'dude.. the fu!';
     }
 

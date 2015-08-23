@@ -10,46 +10,80 @@ use League\Flysystem\Filesystem;
 use yii;
 use yii\web\UploadedFile;
 
-/*
-* @var League\Flysystem\Filesystem $filesystem
-*/
+/**
+ * Class ImageManager
+ * @property \League\Flysystem\Filesystem $uploadFilesystem
+ * @property \League\Flysystem\Filesystem $cacheFilesystem
+ */
 
 class ImageManager
 {
-    /*
-    * @var League\Flysystem\Filesystem $filesystem
-    */
-    public $filesystem;
-    public $server;
+    public $uploadFilesystem;
+    public $cacheFilesystem;
+    private $allowedFormats = ['jpg', 'png', 'jpeg', 'pjpg', 'gif'];
 
     public function __construct()
     {
-        $this->setFileSystem();
+        $this->setFileSystems();
     }
 
-    private function setFileSystem()
+    /**
+     * Returns the filesystem for S3 caching bucket
+     * @return Filesystem
+     */
+    private function getS3CacheFilesystem()
     {
-        if (!empty($this->filesystem)) {
-            return $this->filesystem;
-        }
+        $client = new S3Client([
+            'credentials' => [
+                'key' => \Yii::$app->keyStore->get('aws_s3_upload_access'),
+                'secret' => \Yii::$app->keyStore->get('aws_s3_upload_secret'),
+            ],
+            'region' => 'eu-central-1',
+            'version' => 'latest',
+        ]);
+        $adapter = new AwsS3Adapter($client, 'kidup-cache');
+
+        $fs =  new Filesystem($adapter);
+        $fs->createDir('test');
+        exit();
+
+        return false;
+    }
+
+    /**
+     * Returns the filesystem for S3 uploading bucket
+     * @return Filesystem
+     */
+    private function getS3UploadFilesystem()
+    {
+        $client = new S3Client([
+            'credentials' => [
+                'key' => \Yii::$app->keyStore->get('aws_s3_upload_access'),
+                'secret' => \Yii::$app->keyStore->get('aws_s3_upload_secret'),
+            ],
+            'region' => 'eu-central-1',
+            'version' => 'latest',
+        ]);
+        $adapter = new AwsS3Adapter($client, 'kidup-user-content');
+
+        return new Filesystem($adapter);
+    }
+
+    private function setFileSystems()
+    {
         if (YII_ENV == 'prod' || YII_ENV == 'stage') {
-            $client = new S3Client([
-                'credentials' => [
-                    'key' => \Yii::$app->keyStore->get('aws_images_access'),
-                    'secret' => \Yii::$app->keyStore->get('aws_images_secret'),
-                ],
-                'region' => \Yii::$app->keyStore->get('aws_images_region'),
-                'version' => 'latest',
-            ]);
-            $adapter = new AwsS3Adapter($client, \Yii::$app->keyStore->get('aws_images_bucket'));
-
+            $this->cacheFilesystem = $this->getS3CacheFilesystem();
+            $this->uploadFilesystem = $this->getS3UploadFilesystem();
         } else {
-            // dev, stage, testing
-            $adapter = new Adapter(\Yii::$aliases['@app']);
+            // dev
+            $files = new Filesystem(new Adapter(\Yii::$aliases['@runtime']));
+            $files->createDir('user-uploads');
+            $files->createDir('cache');
+            $this->cacheFilesystem = new Filesystem(new Adapter(\Yii::$aliases['@runtime'] . '/cache'));
+            $this->uploadFilesystem = new Filesystem(new Adapter(\Yii::$aliases['@runtime'] . '/user-uploads'));
         }
 
-        $this->filesystem = new Filesystem($adapter);
-        return $this->filesystem;
+        return true;
     }
 
     public static function createSubFolders($filename, $depth = 3)
@@ -67,39 +101,53 @@ class ImageManager
         // generate a unique file name
 
         $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
-        $dir = '';
-        if (YII_ENV == 'dev') {
-            $dir = 'runtime/';
-        }
-        $dir .= 'user-uploads/' . static::createSubFolders($filename);
-        $this->filesystem->createDir($dir);
+        $dir = static::createSubFolders($filename);
+        $this->uploadFilesystem->createDir($dir);
 
         $tmpFile = Yii::$aliases['@runtime'] . "/" . $filename;
         $image->saveAs($tmpFile);
-        $this->filesystem->write($dir . '/' . $filename . "." . $image->extension, file_get_contents($tmpFile));
+        $this->uploadFilesystem->write($dir . '/' . $filename . "." . $image->extension, file_get_contents($tmpFile));
         unlink($tmpFile);
         return $filename . "." . $image->extension;
     }
 
+    /**
+     * Function for internally storing images
+     * @param string $imgData
+     */
+    public function store($imgData, $originalName){
+        $filename = str_replace('-', '0', str_replace("_", '-', \Yii::$app->security->generateRandomString()));
+        $dir = static::createSubFolders($filename);
+        $this->uploadFilesystem->createDir($dir);
+        if(strpos($originalName, ".") === false){
+            // no file extension
+            $extension = '';
+        }else{
+            $extension = strrev(explode('.', strrev($originalName))[0]);
+            if(!in_array($extension, $this->allowedFormats)){
+                // this format is not allowed
+                return false;
+            }
+        }
+
+        $this->uploadFilesystem->write($dir . '/' . $filename . "." . $extension, $imgData);
+        return $filename . "." . $extension;
+    }
+
     public function delete($filename)
     {
-        $dir = 'user/' . static::createSubFolders($filename);
-        $this->filesystem->delete($dir);
+        // we don't delete content,nananana
+        return false;
     }
 
     public function getServer($isStatic = false)
     {
-
-        if (YII_ENV == 'dev') {
-            $cache = new Filesystem(new Adapter(\Yii::$aliases['@runtime'] . '/cache/images'));
-        } else {
-            $cache = $this->filesystem;
-        }
+        $cache = $this->cacheFilesystem;
 
         if ($isStatic) {
-            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'])); // souce is always local, push to S3 in production environvment
+            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'].'/modules/images/images')); // souce is always local, push to S3 in production environvment
         } else {
-            $source = $this->filesystem;
+            $source = $this->uploadFilesystem;
         }
 
         $imageManager = new \Intervention\Image\ImageManager([

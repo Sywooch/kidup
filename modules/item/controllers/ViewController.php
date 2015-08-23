@@ -13,6 +13,7 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 class ViewController extends Controller
 {
@@ -31,12 +32,20 @@ class ViewController extends Controller
                     ],
                 ],
             ],
+            'cache' => [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['index'],
+                'cacheControlHeader' => 'public, max-age=60',
+                'etagSeed' => function ($action, $params) {
+                    return Json::encode([Yii::$app->language, \Yii::$app->user->id, \Yii::$app->session->getAllFlashes()]);
+                },
+            ],
         ];
     }
 
     public function actionIndex($id, $new_publish = false)
     {
-        $cacheName = 'view_item' . Json::encode([$id, $new_publish]);
+        $cacheName = 'item_controller-view-'.$id;
         Url::remember();
         $this->noContainer = true;
         if ($new_publish !== false) {
@@ -44,7 +53,6 @@ class ViewController extends Controller
         }
 
         $function = function () use ($id, $new_publish, $cacheName) {
-
             /**
              * @var $item \app\modules\item\models\Item
              */
@@ -93,7 +101,7 @@ class ViewController extends Controller
                             'monthly' => $item->price_month,
                         ]
                     ]);
-                }, []);
+                });
             }
 
             // find which items are related
@@ -114,6 +122,6 @@ class ViewController extends Controller
 
             return $this->render('view', $res);
         };
-        return Cache::data($cacheName, $function, 60);
+        return Cache::html($cacheName, $function);
     }
 }

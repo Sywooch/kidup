@@ -74,6 +74,7 @@ class ImageHelper extends BaseHtml
             if ($folders[0] == 'kidup') {
                 $isStaticFile = true;
             }
+            
 
             $server = (new ImageManager())->getServer($isStaticFile);
 

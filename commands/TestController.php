@@ -3,6 +3,8 @@
 namespace app\commands;
 
 use app\components\Event;
+use app\models\Item;
+use app\modules\item\models\ItemSimilarity;
 use app\modules\mail\models\MailMessage;
 use Yii;
 use yii\console\Controller;
@@ -33,17 +35,7 @@ class TestController extends Controller
     }
 
     public function actionTest(){
-        $k = new \Aws\Kms\KmsClient([
-            'region'            => 'us-east-1',
-            'version'           => '2014-11-01',
-            'credentials' => [
-                'key' => 'AKIAJOPRJWDPXZUWVU4A',
-                'secret' => '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',
-            ]
-        ]);
-        var_dump($k->encrypt([
-            'KeyId' => '1aeaff2a-acff-48c3-add8-0b7ee54407f0',
-            'Plaintext' => 'EncryptMeUp!'
-        ]));
+        $item = Item::find()->one();
+        (new ItemSimilarity())->compute($item);
     }
 }

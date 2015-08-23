@@ -12,6 +12,7 @@
 namespace app\modules\user\controllers;
 
 use app\controllers\Controller;
+use app\modules\images\components\ImageManager;
 use app\modules\user\Finder;
 use app\modules\user\forms\PostRegistration;
 use app\modules\user\forms\PostRegistrationProfile;
@@ -21,6 +22,7 @@ use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
 /**
@@ -117,6 +119,27 @@ class RegistrationController extends Controller
         if ($user->load(\Yii::$app->request->post()) && $user->create()) {
             $account->user_id = $user->id;
             $account->save(false);
+            // try to set properties from social account
+            $data = \yii\helpers\Json::decode($account->data);
+            if(isset($data['name'])){
+                $user->profile->first_name = explode(' ',$data['name'])[0];
+                $user->profile->last_name = str_replace($user->profile->first_name.' ', '', $data['name']);
+                $user->profile->save();
+            }
+            if(isset($data['profile_image_url'])){
+                $fileData = file_get_contents($data['profile_image_url']);
+                $uploadedFile = (new ImageManager())->store($fileData, $data['profile_image_url']);
+                if($uploadedFile !== false){
+                    $user->profile->setAttribute('img', $uploadedFile);
+                    $user->profile->save();
+                }
+            }
+            if(isset($data['email'])){
+                $user->email = $data['email'];
+                $user->save();
+                // todo where to go here?
+                return $this->redirect('@web/home');
+            }
             \Yii::$app->user->login($user, $this->module->rememberFor);
             return $this->redirect('@web/user/registration/post-registration');
         }

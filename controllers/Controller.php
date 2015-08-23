@@ -50,8 +50,10 @@ class Controller extends \yii\web\Controller
             'method' => \Yii::$app->request->getMethod(),
             'ip' => \Yii::$app->request->getUserIP()
         ];
+        Yii::beginProfile('logging');
 //        \Yii::$app->clog->info('page.view', $data);
         // todo would be awesome to track this, but it takes about 150 ms, which is waay to long
+        Yii::endProfile('logging');
 
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {

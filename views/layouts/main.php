@@ -40,14 +40,7 @@ BootstrapPluginAsset::register($this);
     <body>
     <?php $this->beginBody() ?>
 
-    <?php
-    echo Cache::html('menu', function () {
-        return $this->render('menu');
-    }, ['variations' => [\Yii::$app->user->id, $this->context->transparentNav, Message::find()->where([
-        'receiver_user_id' => \Yii::$app->user->id,
-        'read_by_receiver' => 0
-    ])->count()]]);
-    ?>
+    <?= $this->render('menu') ?>
 
     <div id="wrapper">
         <?php
@@ -79,7 +72,7 @@ BootstrapPluginAsset::register($this);
 
     echo Cache::html('footer', function () {
         return $this->render('footer.php');
-    }, ['variations' => $this->context->noFooter]);
+    }, ['variations' => [$this->context->noFooter]]);
 
     echo Cache::html('cookie_widget', function () {
         return \cinghie\cookieconsent\widgets\CookieWidget::widget([
