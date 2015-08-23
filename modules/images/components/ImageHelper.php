@@ -101,7 +101,7 @@ class ImageHelper extends BaseHtml
                 if (!$server->cacheFileExists($filename, $options)) {
                     $server->makeImage($filename, $options);
                 }
-                $url = 'http://cdn.kidup.dk/' . $server->getCachePath($filename,
+                $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
                         $options);
             } else {
                 $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
