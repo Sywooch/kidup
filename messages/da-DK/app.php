@@ -17,8 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Rent Out' => 'Udlej',
-    'Your Products' => 'Dine produkter',
+    'Inbox' => '',
+    'Item Id 1' => '',
+    'Item Id 2' => '',
+    'Similarity' => '',
+    'Similarity Categories' => '',
+    'Similarity Location' => '',
+    'Similarity Price' => '',
     '' => '',
     '1) What is it?' => 'Hvad er det?',
     '2) What does it look like?' => 'Hvad ligner det?',
@@ -380,6 +385,7 @@ return [
     'Refused' => 'Afvist',
     'Register' => 'Registrer',
     'Registration Ip' => 'Registrerings IP',
+    'Rent Out' => 'Udlej',
     'Renter ID' => 'Udlejer ID',
     'Renting guide' => 'Guide til at leje',
     'Reviewed ID' => 'Reviewed ID',
@@ -421,6 +427,7 @@ return [
     'What are you looking for?' => 'Hvad kigger du efter?',
     'Why use kidup?' => 'Hvorfor bruge KidUp',
     'Your Bookings' => 'Dine bookings',
+    'Your Products' => 'Dine produkter',
     'Zip Code' => 'Postnummer',
     'per {period}' => 'Per {period}',
 ];
