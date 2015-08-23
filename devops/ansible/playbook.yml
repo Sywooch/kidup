@@ -1,20 +1,22 @@
 ---
-- hosts: all
+- hosts: dev
   sudo: true
   vars:
     web_server: apachephp
     servername: default 192.168.33.99
     timezone: Europe/Amsterdam
     doc_root: /vagrant
+    ini_template: php-dev.ini
+    is_dev: true
   vars_files:
     - vars/mysql.yml
     - vars/common.yml
     - [ "vars/apachephp.yml", "vars/ws_defaults.yml" ]
   roles:
     - init
-    - php5-cli
     - apache
     - php5
     - mysql
     - phpcommon
+    - nodejs
     - app

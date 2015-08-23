@@ -7,15 +7,16 @@
     timezone: Europe/Amsterdam
     hostname: test.kidup.dk
     doc_root: /var/www/current
+    ini_template: php-dev.ini
   vars_files:
     - vars/mysql.yml
     - vars/common.yml
     - [ "vars/apachephp.yml", "vars/ws_defaults.yml" ]
   roles:
     - init
-    - php5-cli
     - apache
     - php5
     - mysql
     - phpcommon
+    - nodejs
     - app

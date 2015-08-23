@@ -33,3 +33,21 @@
   shell: php5enmod {{ item }}
   with_items: php.pecl_packages
   when: php.pecl_packages is defined
+
+- name: PHP configuration file, php.ini
+  action: template src=php-dev.ini dest=/etc/php5/apache2/php.ini
+  notify:
+    - restart apache
+
+- name: Install php5-cli
+  sudo: yes
+  apt: pkg=php5-cli state=latest
+
+- name: ensure timezone is set in cli php.ini
+  lineinfile: dest=/etc/php5/cli/php.ini
+              regexp='date.timezone ='
+              line='date.timezone = {{ timezone }}'
+
+- include: composer.yml
+- include: dev.yml
+  when: is_dev is defined and is_dev

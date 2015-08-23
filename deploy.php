@@ -41,20 +41,18 @@ set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900
 task('deploy:vendors', function () use ($repo_password) {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
-    run("curl -sS https://getcomposer.org/installer | php");
-    run("php composer.phar config github-oauth.github.com ".$repo_password);
-    run("php composer.phar install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
+    run("composer config github-oauth.github.com ".$repo_password);
+    run("composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
 
 task('deploy:folder_permissions', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
-    run("php init --env=Production --overwrite=All");
     run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
     set('shared_dirs', ['runtime', 'uploads']);
     set('shared_files', ['config/keys/keys.env']);
-    set('writeable_dirs', ['web/assets', 'uploads', 'runtime']);
+    set('writeable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
 })->desc('Setting folder permissions');
 
 task('deploy:update_database', function () {

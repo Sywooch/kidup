@@ -1,6 +1,5 @@
-ssh-keygen -t rsa -b 4096 -C "simonnouwens@gmail.com"
-
-ssh-copy-id root@188.166.122.88
+ssh-agent /bin/sh
+ssh-add /vagrant/devops/.private/ssh/id_rsa
 
 ansible-playbook -i ansible/test-server/hosts  ansible/beta-server.yml
 

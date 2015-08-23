@@ -1,12 +1,3 @@
 ---
 # application tasks to be customized and to run after the main provision
-- name: Install supervisor
-  sudo: yes
-  apt: pkg=supervisor state=latest
-- name: Install nodejs
-  sudo: yes
-  apt: pkg=nodejs state=latest
-- name: Install npm
-  sudo: yes
-  apt: pkg=npm state=latest
 - cron: name="kidup cron" minute="*" job="php /vagrant/yii schedule/run --scheduleFile=@app/config/schedule.php 1>> /dev/null 2>&1"

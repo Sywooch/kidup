@@ -1,0 +1,7 @@
+---
+- name: composer require composer-asset
+  shell: composer -dmemory_limit=600M global require "{{item}}"
+  with_items:
+    - codeception/codeception=2.0.*
+    - codeception/specify=*
+    - codeception/verify=*
