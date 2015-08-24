@@ -17,6 +17,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         location: false
     };
 
+    scope.loading = true;
+
     scope.priceMin = 0;
     scope.priceMax = 499;
 
@@ -73,11 +75,15 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
 
     var update = function () {
         // using $http here fucks up something with the url, use $.ajax!
+        scope.loading = true;
+        if (!$scope.$$phase) $scope.$apply();
         $.ajax({
             'method': 'GET',
             'url': 'search-results?q=' + getUrl() + '&p=0'
         }).done(function (data) {
+            scope.loading = true;
             $('.searchResults').replaceWith(data);
+            if (!$scope.$$phase) $scope.$apply();
         });
         scope.setUrl();
         updateActiveFilters();
