@@ -31,7 +31,7 @@ use Yii;
  * @property int $request_expires_at
  *
  * @property \app\models\base\Currency $currency
- * @property \app\models\base\Item $item
+ * @property \app\modules\item\models\Item $item
  * @property \app\models\base\User $renter
  * @property \app\models\base\Payin $payin
  * @property \app\models\base\Payout $payout
@@ -98,7 +98,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\app\modules\item\models\Item::className(), ['id' => 'item_id']);
     }
 
     /**

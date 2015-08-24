@@ -20,5 +20,6 @@ return [
     'serverTimeZone' => 'Europe/Copenhagen',
     'kidupAddressLine1' => 'Ceres Alle 1',
     'kidupAddressLine2' => '8000 Aarhus C, Denmark',
-    'numberOfDaysForReview' => 14
+    'numberOfDaysForReview' => 14,
+    'icon-framework' => 'fa'
 ];

@@ -8,6 +8,7 @@ use app\modules\images\components\ImageHelper;
 use app\modules\images\components\ImageManager;
 use app\modules\item\forms\Create;
 use app\modules\item\forms\Edit;
+use app\modules\item\forms\LocationForm;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use app\modules\item\models\ItemHasMedia;
@@ -62,11 +63,124 @@ class CreateController extends Controller
         ]);
     }
 
-    public function actionEdit($id, $button = null)
+    public function actionAddLocation()
     {
-        if (isset($_POST['button'])) {
-            $button = $_POST['button'];
+        if (\Yii::$app->request->isPost) {
+            $locationForm = new LocationForm();
+            $locationForm->load(Yii::$app->request->post());
+            $locationForm->loadItem();
+            if ($locationForm->save()) {
+            }
         }
+    }
+
+    public function actionEditBasics($id)
+    {
+        $i = $this->defaultPage($id, 'basics');
+
+        $categories = [
+            Category::TYPE_MAIN => Category::findAll(['type' => Category::TYPE_MAIN]),
+            Category::TYPE_SPECIAL => Category::findAll(['type' => Category::TYPE_SPECIAL]),
+            Category::TYPE_AGE => Category::findAll(['type' => Category::TYPE_AGE])
+        ];
+
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'basics/basics',
+            'pageParams' => [
+                'categories' => $categories
+            ]
+        ]);
+    }
+
+    public function actionEditDescription($id)
+    {
+        $i = $this->defaultPage($id, 'description');
+
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'description/description',
+            'pageParams' => [
+            ]
+        ]);
+    }
+
+    public function actionEditLocation($id)
+    {
+        $i = $this->defaultPage($id, 'location');
+
+        $locationForm = new LocationForm();
+
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'location/location',
+            'pageParams' => [
+                'locationModel' => $locationForm
+            ]
+        ]);
+    }
+
+    public function actionEditPhotos($id)
+    {
+        $i = $this->defaultPage($id, 'photos');
+
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'photos/photos',
+            'pageParams' => [
+                'preload' => $i['item']->preloadMedia(),
+                'fileUrl' => Url::to(['/file/'], true),
+            ]
+        ]);
+    }
+
+    public function actionEditPricing($id)
+    {
+        $i = $this->defaultPage($id, 'pricing');
+
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'pricing/pricing',
+            'pageParams' => [],
+            'rightColumn' => 'pricing/suggestion',
+            'rightColumnParams' => []
+        ]);
+    }
+
+    private function defaultPage($id, $scenario)
+    {
+        $item = $this->getItem($id);
+
+        $model = new Edit($item);
+        $model->setScenario($scenario);
+        if (\Yii::$app->request->isPost) {
+            $model->load(\Yii::$app->request->post());
+            if(isset( \Yii::$app->request->post($model->formName())['categories'])){
+                $model->categories = \Yii::$app->request->post($model->formName())['categories'];
+            }
+            $model->save(); // this does all the validation and redirecting
+            $pageOrder = ['basics', 'description', 'location', 'photos', 'pricing', 'publish'];
+            $nextPage = $pageOrder[min(array_search($scenario, $pageOrder)+1,6)];
+            $prevPage = $pageOrder[max(0,array_search($scenario, $pageOrder)-1)];
+            if(isset(\Yii::$app->request->post()['btn-back'])){
+                return $this->redirect('@web/item/create/edit-'.$prevPage.'?id='.$item->id);
+            }else{
+                return $this->redirect('@web/item/create/edit-'.$nextPage.'?id='.$item->id);
+            }
+        }
+        return ['item' => $item, 'model' => $model];
+    }
+
+    private function getItem($id)
+    {
+        /**
+         * @var Item $item
+         */
         $item = Item::find()->where(['id' => $id])->one();
         if ($item == null) {
             throw new NotFoundHttpException('Item does not exist');
@@ -75,82 +189,7 @@ class CreateController extends Controller
             throw new ForbiddenHttpException();
         }
 
-        $model = new Edit($item);
-
-        if (\Yii::$app->request->isPost) {
-            if ($button == 'submit-save') {
-                $model->scenario = 'save';
-            }
-            if ($button == 'submit-preview') {
-                $model->setScenario('save');
-            }
-            if ($button == 'submit-publish') {
-                $model->setScenario('default');
-            }
-            $model->load(\Yii::$app->request->post());
-            $model->categories = \Yii::$app->request->post($model->formName())['categories'];
-            if ($model->save()) {
-                if ($button == "submit-save") {
-                    return $this->redirect(['/item/' . $model->item->id . '/edit#publishing']);
-                }
-                if ($button == "submit-preview") {
-                    return $this->redirect(['/item/' . $model->item->id]);
-                }
-                if ($button == "submit-publish") {
-                    if ($model->isPublishable() && $model->is_available === 0) {
-                        if (
-                            !array_key_exists('edit-item', \Yii::$app->request->post()) ||
-                            !array_key_exists('rules', \Yii::$app->request->post()['edit-item'])
-                        ) {
-                            \Yii::$app->session->addFlash('warning', \Yii::t('item',
-                                'Something went wrong in the process, please try again.'));
-                            return $this->redirect(['/item/' . $model->item->id . '/edit']);
-                        }
-                        if (\Yii::$app->request->post()['edit-item']['rules'] != 1) {
-                            \Yii::$app->session->addFlash('warning', \Yii::t('item',
-                                'The terms and conditions have to be accepted before an item can be published'));
-                            return $this->redirect(['/item/' . $model->item->id . '/edit']);
-                        }
-                        $item->is_available = 1;
-                        $item->save();
-                        return $this->redirect(['/item/' . $model->item->id, 'new_publish' => true]);
-                    }
-                }
-            }
-        }
-
-        $categories = [
-            Category::TYPE_MAIN => Category::findAll(['type' => Category::TYPE_MAIN]),
-            Category::TYPE_SPECIAL => Category::findAll(['type' => Category::TYPE_SPECIAL]),
-            Category::TYPE_AGE => Category::findAll(['type' => Category::TYPE_AGE])
-        ];
-
-        // preload images to load in dropzone
-        $preload = [];
-        $allMedia = Media::find()->where(['item_has_media.item_id' => $id])
-            ->innerJoinWith('itemHasMedia')
-            ->orderBy('item_has_media.order')
-            ->all();
-        foreach ($allMedia as $media) {
-            $preload[] = [
-                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
-                'size' => 10,
-            ];
-        }
-
-        // price suggestions
-        $suggestions = false;
-        if ($model->newPrice) {
-            $suggestions = [10, 20, 30];
-        }
-
-        return $this->render('edit', [
-            'model' => $model,
-            'preload' => Json::encode($preload),
-            'fileUrl' => Url::to(['/file/'], true),
-            'categories' => $categories,
-            'suggestions' => $suggestions
-        ]);
+        return $item;
     }
 
     public function actionUpload($item_id)
@@ -158,13 +197,7 @@ class CreateController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException();
         }
-        $item = Item::findOne($item_id);
-        if ($item == null) {
-            throw new NotFoundHttpException();
-        }
-        if (!$item->isOwner()) {
-            throw new ForbiddenHttpException();
-        }
+        $item = $this->getItem($item_id);
 
         $image = UploadedFile::getInstanceByName('file');
         if (!in_array($image->extension, ['png', 'jpg'])) {
@@ -213,13 +246,9 @@ class CreateController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException('Only POST accepted');
         }
-        $item = Item::findOne($item_id);
-        if ($item == null) {
-            throw new NotFoundHttpException('Item not found');
-        }
-        if (!$item->isOwner()) {
-            throw new ForbiddenHttpException("Not the owner of this item");
-        }
+
+        $item = $this->getItem($item_id);
+
         $media = Media::find()->where([
             'file_name' => ImageHelper::urlToFilename(\Yii::$app->request->post('imageId'))
         ])->one();
@@ -244,13 +273,8 @@ class CreateController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException();
         }
-        $item = Item::findOne($item_id);
-        if ($item == null) {
-            throw new NotFoundHttpException();
-        }
-        if (!$item->isOwner()) {
-            throw new ForbiddenHttpException();
-        }
+        $item = $this->getItem($item_id);
+
         $input = \Yii::$app->request->post('order');
         if (is_array($input)) {
             foreach ($input as $order => &$image) {
@@ -281,13 +305,7 @@ class CreateController extends Controller
 
     public function actionUnpublish($id)
     {
-        $item = Item::find()->where(['id' => $id])->one();
-        if ($item == null) {
-            throw new NotFoundHttpException('Item does not exist');
-        }
-        if (!$item->isOwner()) {
-            throw new ForbiddenHttpException();
-        }
+        $item = $this->getItem($id);
 
         // check bookings
         $bookingInFuture = false;
@@ -315,6 +333,17 @@ class CreateController extends Controller
             Yii::$app->session->addFlash('info', \Yii::t('item', 'The product has been made unavailable'));
             return $this->redirect('@web/item/' . $id . '/edit#publishing');
         }
+    }
+
+    public function actionPublish($id){
+        $item = $this->getItem($id);
+        $i = $this->defaultPage($id, 'default');
+        $isValid = $i['model']->isScenarioValid('default');
+        if(!$isValid){
+            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
+            return $this->redirect('@web/item/create/edit-basics?id='.$id);
+        }
+        return $this->render('publish',['item' => $item]);
     }
 }
 

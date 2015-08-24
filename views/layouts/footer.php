@@ -63,7 +63,7 @@ use yii\helpers\Url;
         </div>
         <div class="row last">
             <div class="col-sm-12 text-center">
-                <img src="<?= Url::to('@web/img/logo/horizontal-white.png') ?>" width="80px">
+                <img src="<?= \app\modules\images\components\ImageHelper::url('kidup/logo/horizontal-white.png') ?>" width="80px">
                 <h4>&#169;KidUp | 2015</h4>
             </div>
         </div>

@@ -41,7 +41,6 @@ class Create extends Model
             'is_available' => 0,
             'owner_id' => \Yii::$app->user->id,
             'condition' => 0,
-            'location_id' => \Yii::$app->user->identity->locations[0]->id,
             'min_renting_days' => 1
         ]);
 

@@ -22,13 +22,16 @@ use Yii;
  * @property integer $currency_id
  * @property integer $birthday
  * @property integer $nationality
+ * @property integer $location_id
  *
+ * @property \app\models\base\Location $location
  * @property \app\models\base\Country $nationality0
- * @property \app\models\base\User $user
  * @property \app\models\base\Currency $currency
+ * @property \app\models\base\User $user
  */
 class Profile extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -43,14 +46,18 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name'], 'required'],
-            [['user_id', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified', 'currency_id', 'birthday', 'nationality'], 'integer'],
+            [['user_id', 'first_name', 'last_name', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified'], 'required'],
+            [['user_id', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified', 'currency_id', 'birthday', 'nationality', 'location_id'], 'integer'],
             [['description'], 'string'],
             [['first_name'], 'string', 'max' => 128],
             [['last_name', 'img'], 'string', 'max' => 256],
             [['phone_country'], 'string', 'max' => 5],
             [['phone_number'], 'string', 'max' => 50],
-            [['language'], 'string', 'max' => 6]
+            [['language'], 'string', 'max' => 6],
+            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
+            [['nationality'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['nationality' => 'id']],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -75,7 +82,16 @@ class Profile extends \yii\db\ActiveRecord
             'currency_id' => Yii::t('app', 'Currency ID'),
             'birthday' => Yii::t('app', 'Birthday'),
             'nationality' => Yii::t('app', 'Nationality'),
+            'location_id' => Yii::t('app', 'Location ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(\app\models\base\Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -89,16 +105,19 @@ class Profile extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCurrency()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrency()
+    public function getUser()
     {
-        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
+
+
+    
 }

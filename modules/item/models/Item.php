@@ -3,12 +3,14 @@
 namespace app\modules\item\models;
 
 use app\components\Cache;
+use app\modules\images\components\ImageHelper;
 use app\modules\user\models\User;
 use Carbon\Carbon;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "item".
@@ -175,6 +177,25 @@ class Item extends \app\models\base\Item
         }
 
         return count($errors) == 0 ? true : $errors;
+    }
+
+    /**
+     * Prepares media for the image gallery plugin (on item page for example)
+     * @return string json of results
+     */
+    public function preloadMedia(){
+        $preload = [];
+        $allMedia = Media::find()->where(['item_has_media.item_id' => $this->id])
+            ->innerJoinWith('itemHasMedia')
+            ->orderBy('item_has_media.order')
+            ->all();
+        foreach ($allMedia as $media) {
+            $preload[] = [
+                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
+                'size' => 10,
+            ];
+        }
+        return Json::encode($preload);
     }
 
     public function getUserDistance()

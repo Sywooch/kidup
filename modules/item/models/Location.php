@@ -12,6 +12,10 @@ use yii\db\ActiveRecord;
  */
 class Location extends \app\models\base\Location
 {
+
+    const TYPE_MAIN = 1;
+    const TYPE_ITEM = 2;
+
     public function rules()
     {
         return [
@@ -21,7 +25,8 @@ class Location extends \app\models\base\Location
             [['city'], 'string', 'max' => 100],
             [['zip_code'], 'string', 'max' => 50],
             [['street_name'], 'string', 'max' => 256],
-            [['street_number'], 'string', 'max' => 10]
+            [['street_number'], 'string', 'max' => 10],
+            [['street_suffix'], 'string', 'max' => 50]
         ];
     }
 
@@ -40,8 +45,6 @@ class Location extends \app\models\base\Location
             ],
         ];
     }
-
-    const TYPE_MAIN = 1;
 
     public function beforeValidate()
     {
@@ -90,6 +93,10 @@ class Location extends \app\models\base\Location
         if ($this->isAttributeChanged('street_name')) {
             $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
         }
+        $this->updated_at = time();
+        if($this->isNewRecord){
+            $this->created_at = time();
+        }
         return parent::beforeValidate();
     }
 
@@ -109,6 +116,12 @@ class Location extends \app\models\base\Location
         } catch (\Geocoder\Exception\NoResultException $e) {
             return false;
         }
+    }
+
+    public function setStreetNameAndNumber($name){
+        $this->street_name = substr($name, 0, strcspn($name, '1234567890')); // gives foo
+        $this->street_number = str_replace($this->street_name, '', $name);
+        return $this;
     }
 
     public function isValid()

@@ -3,6 +3,7 @@
 namespace app\modules\user\helpers;
 
 use app\models\base\Currency;
+use app\modules\item\models\Location;
 use app\modules\user\models\Country;
 use app\modules\user\models\Language;
 use yii\base\Model;
@@ -46,6 +47,20 @@ class SelectData extends Model
         $r = [];
         foreach ($c as $cur) {
             $r[$cur->id] = $cur->name;
+        }
+        return $r;
+    }
+
+    public static function userLocations(){
+        $l = Location::find()->where(['user_id' => \Yii::$app->user->id])->all();
+        $r = [];
+        foreach($l as $loc){
+            $address = implode(" ,", [
+                $loc->street_name. ' '. $loc->street_number,
+                $loc->street_suffix,
+                $loc->city
+            ]);
+            $r[$loc->id] = $address;
         }
         return $r;
     }

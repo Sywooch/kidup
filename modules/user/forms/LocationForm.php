@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\forms;
+namespace app\modules\item\forms;
 
 use app\modules\user\models\Location;
 use app\modules\user\Module;

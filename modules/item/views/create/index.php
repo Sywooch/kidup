@@ -26,14 +26,7 @@ use yii\widgets\ActiveForm;
                         <?php $form = ActiveForm::begin(); ?>
                         <div class="row">
                             <div class="col-sm-10 col-sm-offset-1">
-                                <h4><?= Yii::t("item", "Title") ?><br>
-                                    <small><?= Yii::t("item",
-                                            "How can you describe your item, in one catchy title?") ?></small>
-                                </h4>
-                                <div class="form-group">
-                                    <?= $form->field($model,
-                                        'name')->textInput(['class' => 'form-control'])->label(false) ?>
-                                </div>
+
                             </div>
                         </div>
                         <div id="select-categories" class="row">

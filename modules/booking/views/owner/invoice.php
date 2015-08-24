@@ -52,13 +52,13 @@ use yii\helpers\Url;
                             <li>
                                 <?= Yii::t("booking", "Name") ?>
                                 <b class="pull-right">
-                                    <?= \Yii::$app->user->identity->profile->first_name . ' ' . \Yii::$app->user->identity->profile->last_name ?>
+                                    <?= \Yii::$app->user->profile->first_name . ' ' . \Yii::$app->user->profile->last_name ?>
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "Address") ?>
                                 <b class="pull-right">
-                                    <?php $l = \Yii::$app->user->identity->locations[0];
+                                    <?php $l = \Yii::$app->user->identity->profile->location;
                                     $loc = [];
                                     $loc[] = $l->street_name . ' ' . $l->street_number;
                                     $loc[] = $l->zip_code;
@@ -80,12 +80,12 @@ use yii\helpers\Url;
                             </li>
                             <li>
                                 <?= Yii::t("booking", "VAT Country") ?> <b class="pull-right">
-                                    <?= \Yii::$app->user->identity->locations[0]->country0->name ?>
+                                    <?= \Yii::$app->user->identity->profile->location->country0->name ?>
                                 </b>
                             </li>
                             <li>
                                 <?= Yii::t("booking", "VAT Rate") ?> <b class="pull-right">
-                                    <?= \Yii::$app->user->identity->locations[0]->country0->vat ?>%
+                                    <?= \Yii::$app->user->identity->profile->location->country0->vat ?>%
                                 </b>
                             </li>
                         </ul>

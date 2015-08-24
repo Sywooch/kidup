@@ -18,6 +18,7 @@ class Edit extends Model
     public $categories;
     public $images;
 
+    public $location_id;
     public $name;
     public $price_week;
     public $price_day;
@@ -27,6 +28,7 @@ class Edit extends Model
     public $min_renting_days;
     public $is_available;
     public $condition;
+    public $photos;
 
     // used for price suggestions
     public $newPrice;
@@ -41,6 +43,7 @@ class Edit extends Model
         $this->description = $item->description;
         $this->min_renting_days = $item->min_renting_days;
         $this->is_available = $item->is_available;
+        $this->location_id = $item->location_id;
         $this->condition = $item->condition;
         $this->categories = [
             Category::TYPE_MAIN => $item->categoriesMain,
@@ -60,24 +63,18 @@ class Edit extends Model
     public function rules()
     {
         return [
-//            [['name', 'price_week', 'min_renting_days'], 'required'],
+            [['name', 'price_week', 'description', 'location_id'], 'required'],
             [['name', 'description'], 'string'],
-            [['price_week', 'min_renting_days', 'price_day', 'price_month'], 'number'],
+            [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
+            ['photos', function($attr, $params){
+                return count($this->item->itemHasMedia) > 0;
+            }]
         ];
     }
 
     public function scenarios()
     {
         return [
-            'save' => [
-                'name',
-                'price_week',
-                'min_renting_days',
-                'price_day',
-                'price_month',
-                'description',
-                'condition'
-            ],
             'default' => [
                 'name',
                 'price_week',
@@ -86,7 +83,12 @@ class Edit extends Model
                 'price_month',
                 'description',
                 'condition'
-            ]
+            ],
+            'location' => ['location_id'],
+            'description' => ['name', 'description'],
+            'basics' => ['condition'],
+            'pricing' => ['price_week', 'price_day', 'price_month'],
+            'photos' => ['photos'],
         ];
     }
 
@@ -115,6 +117,7 @@ class Edit extends Model
         $item->price_day = $this->price_day;
         $item->price_month = $this->price_month;
         $item->condition = $this->condition;
+        $item->location_id = $this->location_id;
         $item->scenario = 'create';
         if ($item->save()) {
             $this->item = $item;
@@ -129,13 +132,26 @@ class Edit extends Model
                     }
                 }
             }
-            return true;
         }
         return $item;
     }
 
-    public function isPublishable()
-    {
-        return $this->item->isPublishable();
+    public function isScenarioValid($s){
+        $copy = (new \DeepCopy\DeepCopy)->copy($this);
+        $copy->setScenario($s);
+        return $copy->validate();
+    }
+
+    /**
+     * Computes how many steps a user still has to make
+     * @return int
+     */
+    public function getStepsToCompleteCount(){
+        $scenarios = ['location','description','basics', 'pricing','photos'];
+        $c = 0;
+        foreach ($scenarios as $s) {
+            if($this->isScenarioValid($s) == false)$c++;
+        }
+        return $c;
     }
 }
