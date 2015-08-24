@@ -3,7 +3,6 @@
 namespace app\modules\item\models;
 
 use app\components\Cache;
-use app\models\base\ItemHasCategory;
 use app\modules\user\models\User;
 use Carbon\Carbon;
 use Location\Coordinate;
@@ -36,7 +35,8 @@ class Item extends \app\models\base\Item
             [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required'],
             [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
             [['condition'], 'in', 'range' => [0, 1, 2]],
-            [['description'], 'string', 'min' => 5]
+            [['description'], 'string', 'min' => 5],
+            [['name'], 'string', 'max' => 50]
         ]);
     }
 
@@ -270,7 +270,7 @@ class Item extends \app\models\base\Item
         $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
         $res = [];
         foreach ($similarities as $s) {
-            $res[] = $s->item2;
+            $res[] = $s->similarItem;
         }
 
         return $res;

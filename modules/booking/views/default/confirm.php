@@ -66,19 +66,18 @@ $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
                                     <div class="col-md-6">
                                         <ul class="list-unstyled list-lines">
                                             <li>
-                                                <i class="fa fa-info-circle"></i><?= Yii::t("booking", "item") ?>
-                                                <b><?= substr($item->name, 0,
-                                                        25) ?><?= strlen($item->name > 25) ? '...' : '' ?></b>
+                                                <i class="fa fa-info-circle"></i>
+                                                <?= substr($item->name, 0,
+                                                    25) ?><?= strlen($item->name > 25) ? '...' : '' ?>
                                             </li>
                                             <li>
-                                                <i class="fa fa-calendar"></i><?= Yii::t("booking", "Dates") ?> <b>
-                                                    <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
-                                                    - <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
-                                                </b>
+                                                <i class="fa fa-calendar"></i>
+                                                <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
+                                                - <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
                                             </li>
                                             <li>
-                                                <i class="fa fa-map-marker"></i><?= Yii::t("booking", "Location") ?>
-                                                <b><?= $item->location->city ?></b>
+                                                <i class="fa fa-map-marker"></i>
+                                                <?= $item->location->city ?>
                                             </li>
                                         </ul>
                                     </div>

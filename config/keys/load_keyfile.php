@@ -51,9 +51,8 @@ $keys = openssl_decrypt($encrypted_keys, 'aes128', $key);
 
 // save them
 $result['trace'][] = 'Save keys to keys.env...';
-$fh = fopen(__DIR__.'/keys.env', 'w');
-fwrite($fh, $keys);
-fclose($fh);
+file_put_contents(__DIR__.'/keys.env', $keys);
+
 
 // give back the result
 echo json_encode($result);

@@ -47,22 +47,24 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                     </div>
 
                 </div>
-                <h3><?= Yii::t("user", "Items") ?></h3>
-                <?php
-                // displaying the search results
-                echo \yii\widgets\ListView::widget([
-                    'dataProvider' => $itemProvider,
-                    'itemView' => 'profile_item',
-                    'layout' => '<div class="row">
+                <div class="hidden-xs">
+                    <h3><?= Yii::t("user", "Items") ?></h3>
+                    <?php
+                    // displaying the search results
+                    echo \yii\widgets\ListView::widget([
+                        'dataProvider' => $itemProvider,
+                        'itemView' => 'profile_item',
+                        'layout' => '<div class="row">
                                     {items}
                                 </div>
                                 <div class="row">
                                     {pager}
                                 </div>',
-                    'itemOptions' => ['tag' => 'span'],
-                    //                    'pager' => ['class' => \kop\y2sp\ScrollPager::className()]
-                ]);
-                ?>
+                        'itemOptions' => ['tag' => 'span'],
+                    ]);
+                    ?>
+                </div>
+
             </div>
 
             <div class="col-sm-8 col-md-8">
@@ -100,7 +102,6 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                                     {pager}
                                 </div>',
                         'itemOptions' => ['tag' => 'span'],
-                        //                    'pager' => ['class' => \kop\y2sp\ScrollPager::className()]
                     ]);
                     ?>
                 </div>
