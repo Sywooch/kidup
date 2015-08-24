@@ -72,7 +72,8 @@ class CreateController extends Controller
             if ($locationForm->save()) {
                 return $this->redirect('@web/item/create/edit-photos?id='.$locationForm->item_id);
             }else{
-                return Json::encode($locationForm->getErrors());
+                Yii::$app->session->addFlash('warning', \Yii::t('item', "That address couldn't be found, is it valid?"));
+                return $this->redirect('@web/item/create/edit-location?id='.$locationForm->item_id);
             }
         }
         return false;
@@ -345,7 +346,7 @@ class CreateController extends Controller
         }
     }
 
-    public function actionPublish($id)
+    public function actionEditPublish($id, $publish = false)
     {
         $item = $this->getItem($id);
         $i = $this->defaultPage($id, 'default');
@@ -354,6 +355,11 @@ class CreateController extends Controller
             Yii::$app->session->addFlash('info',
                 \Yii::t('item', 'Please finish all required steps before publishing!'));
             return $this->redirect('@web/item/create/edit-basics?id=' . $id);
+        }
+        if($publish !== false){
+            $item->is_available = 1;
+            $item->save();
+            return $this->redirect('@web/item/'.$id.'?new_publish=true');
         }
         return $this->render('publish', ['item' => $item]);
     }

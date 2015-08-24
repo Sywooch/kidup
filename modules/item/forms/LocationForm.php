@@ -34,23 +34,6 @@ class LocationForm extends Model
             [['country'], 'string', 'max' => 100],
             [['zip_code'], 'string', 'max' => 10],
             [['street'], 'string', 'max' => 256, 'min' => 5],
-            [
-                'street',
-                function ($attr, $params) {
-                    $country = Country::findOne($this->country);
-                    if ($country == null) {
-                        return false;
-                    }
-                    $address = $this->street . " " .
-                        $this->city . " " .
-                        $this->zip_code . ", " .
-                        $country->name;
-                    $res = Location::getByAddress($address);
-                    if($res == false){
-                        $this->addError($attr, 'Address couldnt be found');
-                    }
-                }
-            ],
             [['street_suffix'], 'string', 'max' => 100],
             [['item_id'], 'integer'],
         ];
@@ -91,13 +74,18 @@ class LocationForm extends Model
      */
     public function save()
     {
+        if(!$this->validateAddress()){
+            return false;
+        }
         if ($this->validate()) {
             $location = new Location();
             $location->type = Location::TYPE_ITEM;
             $location->user_id = \Yii::$app->user->id;
             $location->load(\Yii::$app->request->post(), 'location-form');
             $location->setStreetNameAndNumber($this->street);
+
             if ($location->save()) {
+                $this->loadItem();
                 $item = $this->item;
                 $item->location_id = $location->id;
                 return $item->save();
@@ -106,4 +94,20 @@ class LocationForm extends Model
         return false;
     }
 
+    private function validateAddress()
+    {
+        $country = Country::findOne($this->country);
+        if ($country == null) {
+            return false;
+        }
+        $address = $this->street . " " .
+            $this->city . " " .
+            $this->zip_code . ", ";
+        $res = Location::getByAddress($address);
+        if ($res == false) {
+            $this->addError('city', 'Address couldnt be found.');
+            return false;
+        }
+        return true;
+    }
 }

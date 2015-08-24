@@ -37,7 +37,7 @@ use \yii\helpers\Html;
             <br><br>
             <?= Html::a(Html::button(\Yii::t('item', 'Publish'),
                 ['class' => 'btn btn-danger btn-fill']
-            ), '@web/item/create/publish?id=' . $item->id . '&publish=true') ?>
+            ), '@web/item/create/edit-publish?id=' . $item->id . '&publish=true') ?>
             <br>
             <br>
             <small>
