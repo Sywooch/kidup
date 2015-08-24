@@ -25,7 +25,7 @@ class IndexController extends \app\controllers\Controller
         $fm = null
     ) {
 
-        $model = DynamicModel::validateData(compact('id', 'w', 'h', 'q', 'fit', 'folder1', 'folder2', 'folder3', 'fm'),
+        $model = DynamicModel::validateData(compact('id', 'w', 'h', 'q', 'fit', 'folder1', 'folder2', 'folder3', 'fm', 'bri'),
             [
                 [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 52],
                 [['w', 'h'], 'integer', 'min' => 1, 'max' => 5000],
@@ -56,6 +56,7 @@ class IndexController extends \app\controllers\Controller
         if ($fm !== null) {
             $options['fm'] = $fm;
         }
+
         if ($q !== null) {
             if ($fm === null) {
                 $options['fm'] = 'pjpg';

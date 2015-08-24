@@ -39,9 +39,11 @@ use yii\helpers\Url;
             <?php if (isset($items[0])): ?>
                 <div class="col-md-4">
                     <a href="<?= Url::to('@web/item/' . $items[0]->id) ?>">
-                        <div class="card  card-background">
-                            <div class="image" style="<?= ImageHelper::bgImg($items[0]->getImageName(0),
-                                ['q' => 90, 'w' => 300]) ?>; width: 100%">
+                        <div class="card card-background">
+                            <div class="image" style="background: linear-gradient(rgba(10,10,10,0.3),rgba(10,10,10,0.3)), url(<?= ImageHelper::url($items[0]->getImageName(0), ['q' => 90, 'w' => 300]) ?>); width: 100%">
+                                <div style="background-color: rgba(10,10,10,0.4)">
+
+                                </div>
                             </div>
                             <div class="content">
                                 <h5 class="price">
@@ -105,7 +107,7 @@ use yii\helpers\Url;
                     <a href="<?= Url::to('@web/item/' . $items[1]->id) ?>">
                         <div class="card  card-background">
                             <div class="image"
-                                 style="<?= ImageHelper::bgImg($items[1]->getImageName(0), ['q' => 90, 'w' => 600]) ?>">
+                                 style="background: linear-gradient(rgba(10,10,10,0.3),rgba(10,10,10,0.3)), url(<?= ImageHelper::url($items[1]->getImageName(0), ['q' => 90, 'w' => 600]) ?>); width: 100%">
                             </div>
                             <div class="content">
                                 <h5 class="price">
@@ -154,8 +156,7 @@ use yii\helpers\Url;
                     <a href="<?= Url::to('@web/item/' . $items[2]->id) ?>">
                         <div class="card  card-background">
                             <div class="image"
-                                 style="<?= ImageHelper::bgImg($items[2]->getImageName(0),
-                                     ['q' => 90, 'w' => 500]) ?>; width:100%">
+                                 style="background: linear-gradient(rgba(10,10,10,0.3),rgba(10,10,10,0.3)), url(<?= ImageHelper::url($items[2]->getImageName(0), ['q' => 90, 'w' => 500]) ?>); width: 100%">
                             </div>
                             <div class="content">
                                 <h5 class="price">
