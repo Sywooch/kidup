@@ -28,11 +28,13 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     scope.selectCategory = function (id) {
         $.map(scope.filter.categories, function (el, i) {
             if (el.id == id) {
+                scope.activeFilter['category'] = true;
                 return scope.filter.categories[i].value = (scope.filter.categories[i].value == 1) ? 0 : 1;
             }
         });
         $.map(scope.filter.ages, function (el, i) {
             if (el.id == id) {
+                scope.activeFilter['age'] = true;
                 return scope.filter.ages[i].value = (scope.filter.ages[i].value == 1) ? 0 : 1;
             }
         });
@@ -172,10 +174,16 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         };
         $("#price-slider").slider(sliderConf);
         $("#price-slider-mobile").slider(sliderConf);
-        //$('.location-input').change(function () {
-        //    scope.filter.location = $(this).val();
-        //    scope.filterChange();
-        //});
+        $('.location-input').attr('oldValue', $('.location-input').val());
+        setInterval(function() {
+            var oldValue = $('.location-input').attr('oldValue');
+            var value = $('.location-input').val();
+            if (value != oldValue) {
+                $('.location-input').attr('oldValue', value);
+                scope.filter.location = value;
+                scope.filterChange();
+            }
+        }, 500);
         //updateActiveFilters();
     };
 

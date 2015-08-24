@@ -124,10 +124,12 @@ class SearchModel extends Model
         if ($geodata['success']) {
             $latitude = $geodata['latitude'];
             $longitude = $geodata['longitude'];
-            $distanceQ = '( 6371  * acos( cos( radians( ' . floatval($latitude) . ' ) )
+            $latitude = floatval($latitude);
+            $longitude = floatval($longitude);
+            $distanceQ = '( 6371  * acos( cos( radians( ' . ($latitude) . ' ) )
                         * cos( radians( `location`.`latitude` ) )
-                        * cos( radians( `location`.`longitude` ) - radians(' . floatval($longitude) . ') )
-                        + sin( radians(' . floatval($latitude) . ') )
+                        * cos( radians( `location`.`longitude` ) - radians(' . ($longitude) . ') )
+                        + sin( radians(' . ($latitude) . ') )
                         * sin( radians( `location`.`latitude` ) ) ) )';
 
             $query->select($distanceQ . ' as distance, `item`.*');
@@ -185,18 +187,11 @@ class SearchModel extends Model
      */
     private function _getGeoData($location = null)
     {
-        if ($location == null) {
-            $location = IpLocation::get(\Yii::$app->request->getUserIP());
-            $latitude = $location['latitude'];
-            $longitude = $location['longitude'];
-            $location = $location['city'] . "," . $location['country'];
-        } else {
-            $location = Cache::data('location_' . $location, function () use ($location) {
-                return Location::getByAddress($location);
-            }, 30 * 24 * 60 * 60);
-            $latitude = $location['latitude'];
-            $longitude = $location['longitude'];
-        }
+        $location = Cache::data('location_' . $location, function () use ($location) {
+            return Location::getByAddress($location);
+        }, 30 * 24 * 60 * 60);
+        $latitude = $location['latitude'];
+        $longitude = $location['longitude'];
 
         return [
             'longitude' => $longitude,
@@ -217,6 +212,17 @@ class SearchModel extends Model
         }
         if (isset($params['location'])) {
             $this->location = $params['location'];
+        } else {
+            // use IP based location
+            $location = IpLocation::get('31.151.30.46');
+            if (strlen($location['city']) > 0 && strlen($location['country']) > 0) {
+                $location = $location['city'] . ", " . $location['country'];
+            } else if (strlen($location['country']) > 0) {
+                $location = $location['country'];
+            } else {
+                $location = null;
+            }
+            $this->location = $location;
         }
         if (isset($params['priceMin'])) {
             $this->priceMin = $params['priceMin'];
@@ -272,7 +278,7 @@ class SearchModel extends Model
         return $params;
     }
 
-    public function getCategories($type)
+    public function getCategories($type, $encode = true)
     {
         $categories = Category::find();
         $categories->andWhere('type = :type', [':type' => $type]);
@@ -286,7 +292,21 @@ class SearchModel extends Model
                 $cats[$index]['value'] = false;
             }
         }
+        if (!$encode) return $cats;
         return Json::encode($cats);
+    }
+
+    public function getActiveCategories($type) {
+        $cats = $this->getCategories($type, false);
+        $result = [];
+        foreach ($this->categories as $cat) {
+            foreach ($cats as $masterCategory) {
+                if ($masterCategory['id'] == $cat) {
+                    $result[] = $cat;
+                }
+            }
+        }
+        return $result;
     }
 
 }

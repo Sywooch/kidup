@@ -65,7 +65,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     </strong>
                                     <?= Yii::t("item", "Price") ?>
                                 </div>
-                                <i ng-init='searchCtrl.activeFilter.age = <?= count($model->categories) == 0 ? 'false' : 'true' ?>'></i>
+                                <i ng-init='searchCtrl.activeFilter.age = <?= count($model->getActiveCategories('age')) == 0 ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.age"
@@ -76,7 +76,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     <?= Yii::t("item", "Age") ?>
                                 </div>
 
-                                <i ng-init='searchCtrl.activeFilter.category = <?= count($model->categories) == 0 ? 'false' : 'true' ?>'></i>
+                                <i ng-init='searchCtrl.activeFilter.category = <?= count($model->getActiveCategories('main')) == 0 ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.category"
