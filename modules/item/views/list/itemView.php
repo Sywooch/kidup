@@ -25,7 +25,7 @@ use yii\helpers\Url;
                 <?= Yii::t("item", "View") ?>
             </button>
         </a>
-        <a href="<?= Url::to('@web/item/' . $model->id . '/edit') ?>">
+        <a href="<?= Url::to('@web/item/create/edit-basics?id=' . $model->id ) ?>">
             <button class="btn btn-primary btn-sm">
                 <?= Yii::t("item", "Edit") ?>
             </button>
@@ -44,7 +44,7 @@ use yii\helpers\Url;
         <?php endif; ?>
 
         <?php if ($model->is_available == 0): ?>
-            <a href="<?= Url::to('@web/item/' . $model->id . '/edit#publishing') ?>">
+            <a href="<?= Url::to('@web/item/edit-publish?id=' . $model->id) ?>">
                 <button class="btn btn-danger btn-sm">
                     <?= Yii::t("item", "Publish") ?>
                 </button>

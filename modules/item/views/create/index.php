@@ -10,23 +10,30 @@ use yii\widgets\ActiveForm;
  */
 ?>
 <section class="section" id="new-rental">
+    <div class="card header" style="text-align: center;">
+        <div class="content ">
+            <h2>
+                <?= Yii::t("item", "Upload your product") ?>
+            </h2>
+            <h3 class="title">
+                <?= Yii::t("item", "KidUp lets you make money from renting out children stuff.") ?>
+            </h3>
+
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class=" col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-                <div class="card header">
-                    <div class="content ">
-                        <h2 class="title"><?= Yii::t("item", "Create a new item") ?> <b>(<?= Yii::t("item",
-                                    "step 1 out of 2") ?>)</b></h2>
-                        <?= ImageHelper::img('kidup/graphics/rentout.png', ['w' => 120, 'h' => 120],
-                            ['class' => 'header-top-image']) ?>
-                    </div>
-                </div>
                 <div class="card">
                     <div class="content">
                         <?php $form = ActiveForm::begin(); ?>
                         <div class="row">
                             <div class="col-sm-10 col-sm-offset-1">
-
+                                <?= $form->field($model,
+                                    'name')->textInput([
+                                    'class' => 'form-control',
+                                    'placeholder' => \Yii::t('item', 'Be clear and descriptive')
+                                ])->label(\Yii::t('item', 'Product name')) ?>
                             </div>
                         </div>
                         <div id="select-categories" class="row">
@@ -34,7 +41,7 @@ use yii\widgets\ActiveForm;
                                 <h4>
                                     <?= Yii::t("item", "Categories") ?>
                                     <br>
-                                    <small><?= Yii::t("item", "What categories describe your item best?") ?></small>
+                                    <small><?= Yii::t("item", "What categories describe your product best?") ?></small>
                                 </h4>
                                 <?php foreach ($categories as $category): ?>
                                     <div class="btn btn-default category-clickable-button"

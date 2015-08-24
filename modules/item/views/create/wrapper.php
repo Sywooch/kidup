@@ -20,12 +20,11 @@ use \yii\helpers\Html;
         <div class="content ">
             <h2 class="title">
                 <?= $item->name ?>
-                <a href="<?= \yii\helpers\Url::to('@web/item/'.$item->id) ?>" class="pull-right" style="color:white;" target="_blank">
+                <a href="<?= \yii\helpers\Url::to('@web/item/' . $item->id) ?>" class="pull-right" style="color:white;"
+                   target="_blank">
                     <?= Yii::t("item", "Preview") ?>
                 </a>
             </h2>
-
-
         </div>
     </div>
     <div class="row" style="margin-right:0">
@@ -63,7 +62,12 @@ use \yii\helpers\Html;
                 ],
             ]); ?>
             <div style="text-align: center">
-                <?php if ($model->isScenarioValid('default')) {
+                <?php if ($item->is_available == 1) {
+                    echo \Yii::t('item', 'Product is published. Click {a}here{aout} to unpublish.', [
+                        'a' => "<a href='".\yii\helpers\Url::to('@web/item/create/unpublish?id='.$item->id)."'>",
+                        'aout' => '</a>'
+                    ]);
+                }else if($model->isScenarioValid('default')) {
                     echo Html::a(Html::button(\Yii::t('item', 'Publish'), [
                         'class' => 'btn btn-danger btn-fill'
                     ]), '@web/item/create/publish?id=' . $item->id);
@@ -95,10 +99,11 @@ use \yii\helpers\Html;
             </div>
             <?php \kartik\form\ActiveForm::end(); ?>
         </div>
-        <?php if(isset($rightColumn)): ?>
-        <div class="col-md-3">
-            <?= $this->render($rightColumn, array_merge(['form' => $form, 'model' => $model],$rightColumnParams)) ?>
-        </div>
+        <?php if (isset($rightColumn)): ?>
+            <div class="col-md-3">
+                <?= $this->render($rightColumn,
+                    array_merge(['form' => $form, 'model' => $model], $rightColumnParams)) ?>
+            </div>
         <?php endif; ?>
     </div>
 </section>

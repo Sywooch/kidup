@@ -23,7 +23,7 @@ class Item extends Mailer
                 'profileName' => $item->owner->profile->first_name,
             ],
             'urls' => [
-                'item' => Url::to('@web/item/' . $item->id . '/edit', true),
+                'item' => Url::to('@web/item/create/edit-basics?id=' . $item->id, true),
             ]
         ]);
     }

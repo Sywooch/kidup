@@ -78,7 +78,7 @@ class ViewController extends Controller
 
             if ($item->is_available == 0) {
                 $bookingForm = \Yii::t('item', 'This is a preview. Go here {0} to publish this item.', [
-                    Html::a(\Yii::t('item', 'link'), '@web/item/' . $item->id . '/edit')
+                    Html::a(\Yii::t('item', 'link'), '@web/item/create/edit-basics?id=' . $item->id)
                 ]);
             } elseif ($item->owner_id == \Yii::$app->user->id) {
                 $bookingForm = \Yii::t('app', 'This item belongs to you.');

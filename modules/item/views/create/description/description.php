@@ -1,21 +1,19 @@
-<h4><?= Yii::t("item", "Title") ?><br>
-    <small><?= Yii::t("item",
-            "How can you describe your item, in one catchy title?") ?></small>
+<h4>
+    <?= Yii::t("item", "Tell parents about your product") ?>
 </h4>
+<?= Yii::t("item", "Every product on KidUp is unique: what makes your product stand out?") ?>
+<hr>
 <div class="form-group">
     <?= $form->field($model,
-        'name')->textInput(['class' => 'form-control'])->label(false) ?>
+        'name')->textInput([
+        'class' => 'form-control',
+        'placeholder' => \Yii::t('item', 'Be clear and descriptive')
+    ])->label(\Yii::t('item', 'Product name')) ?>
 </div>
 
-<h4><?= Yii::t("item", "Description") ?>
-    <br>
-    <small>
-        <?= Yii::t("item",
-            "How much is the item used? What do you enjoy so much about it? What parent-child moments did you experience with this item?") ?>
-    </small>
-</h4>
 <?= $form->field($model,
     'description')->textarea([
     'class' => 'form-control',
-    'rows' => 6
-])->label(false) ?>
+    'rows' => 6,
+    'placeholder' => \Yii::t('item', 'Tell parents what you love about the product. You can include any details that makes it use practicle in daily life.')
+])->label(\Yii::t('item', 'Summary')) ?>

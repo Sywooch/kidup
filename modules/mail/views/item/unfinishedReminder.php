@@ -5,7 +5,7 @@
  * 'profileName' => $item->owner->porfile->first_name,
  * ],
  * 'urls' => [
- * 'item' => Url::to('@web/item/' . $item->id . '/edit', true),
+ * 'item' => item edit url
  * ]
  */
 ?>

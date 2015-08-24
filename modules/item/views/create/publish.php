@@ -13,17 +13,6 @@ use \yii\helpers\Html;
 ?>
 
 <section class="section" id="new-rental">
-    <div class="card header">
-        <div class="content ">
-            <h2 class="title">
-                <?= $item->name ?>
-            </h2>
-
-            <div class="pull-right btn btn-link btn-sm" style="margin-top:-35px">
-                Preview
-            </div>
-        </div>
-    </div>
     <div class="row" style="margin-right:0">
         <div class="col-md-4 card col-md-offset-4" style="text-align: center">
             <h2 style="text-align: center">
@@ -46,6 +35,5 @@ use \yii\helpers\Html;
             <br>
             <br>
         </div>
-
     </div>
 </section>

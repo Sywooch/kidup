@@ -342,7 +342,7 @@ class CreateController extends Controller
             $item->is_available = 0;
             $item->save();
             Yii::$app->session->addFlash('info', \Yii::t('item', 'The product has been made unavailable'));
-            return $this->redirect('@web/item/' . $id . '/edit#publishing');
+            return $this->redirect('@web/item/create/edit-basics?id=' . $id);
         }
     }
 
