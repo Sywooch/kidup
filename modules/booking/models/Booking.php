@@ -169,7 +169,7 @@ class Booking extends \app\models\base\Booking
         $c->booking_id = $this->id;
         $c->created_at = time();
         if (!$c->save()) {
-            throw new ServerErrorHttpException('Conversation couldnt be saved' . Json::encode($c->getErrors()));
+            throw new ServerErrorHttpException('Conversation couldn\'t be saved' . Json::encode($c->getErrors()));
         }
 
         if ($message == '' || $message == null) {

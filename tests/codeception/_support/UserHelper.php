@@ -30,6 +30,19 @@ class UserHelper
     }
 
     /**
+     * Logout a user.
+     *
+     * @param $I FunctionalTester|AcceptanceTester the tester
+     */
+    public static function logout($I) {
+        $I->amOnPage('/home');
+        $I->canSee('Log Out');
+        $I->click('Log Out');
+        $I->amOnPage('/home');
+        $I->dontSee('Log Out');
+    }
+
+    /**
      * @param $user
      * @param $password
      * @throws \yii\base\InvalidConfigException
