@@ -65,19 +65,18 @@
     li {
       padding: 10px;
       border-bottom: 1px solid @light-gray;
+      color: @text-gray;
+      font-weight: 300;
+      @media (max-width: 768px) {
+        font-size: 1em;
+      }
     }
     i {
       color: @primary-color;
       padding-right: 10px;
     }
-    b {
-      float: right;
-      color: @text-gray;
-      font-size: 18px;
-      font-weight: 300;
-      @media (max-width: 768px) {
-        font-size: 1em;
-      }
+    b{
+      float:right;
     }
   }
   .img-rounded {

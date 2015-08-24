@@ -67,12 +67,9 @@ class Create extends Model
          */
         $user = User::findOne(\Yii::$app->user->id);
         if ($user->canMakeBooking() !== true) {
-            \Yii::$app->session->setFlash("error",
-                \Yii::t('booking', "Please finish your {0} and {1} before making a booking.", [
+            \Yii::$app->session->setFlash("info",
+                \Yii::t('booking', "Please finish your {0} before making a booking.", [
                     Html::a(\Yii::t('booking', 'profile settings'), '@web/user/settings/profile', [
-                        'target' => '_blank'
-                    ]),
-                    Html::a(\Yii::t('booking', 'location'), '@web/user/settings/location', [
                         'target' => '_blank'
                     ])
                 ]));
