@@ -3,7 +3,7 @@
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
+use \kartik\form\ActiveForm;
 
 /**
  * @var \yii\web\View $this
@@ -12,9 +12,9 @@ use yii\widgets\ActiveForm;
  * @var string $fileUrl
  */
 $this->registerJs("
-    window.uploadUrl = '" . Url::to(['/item/image-upload', 'item_id' => $model->item->id]) . "';
-    window.deleteUrl = '" . Url::to(['/item/image-delete', 'item_id' => $model->item->id]) . "';
-    window.sortUrl = '" . Url::to(['/item/image-sort', 'item_id' => $model->item->id]) . "';
+    window.uploadUrl = '" . Url::to(['/item/create/upload', 'item_id' => $model->item->id]) . "';
+    window.deleteUrl = '" . Url::to(['/item/create/delete-upload', 'item_id' => $model->item->id]) . "';
+    window.sortUrl = '" . Url::to(['/item/create/image-sort', 'item_id' => $model->item->id]) . "';
     window.preloadImages = " . $preload . ";
     window.fileUrl = '" . $fileUrl . "/';
 ", \yii\web\View::POS_HEAD);
@@ -192,73 +192,13 @@ $this->registerJs("
                             </div>
                         </div>
                         <div class="row price">
-                            <div class="col-sm-10 col-sm-offset-1">
-                                <h4><?= Yii::t("item", "Price") ?>
-                                    <br>
-                                    <small>
-                                        <?= Yii::t("item", "Only the weekly price is required.") ?>
-                                    </small>
-                                </h4>
-
-                                <div class="row">
-                                    <div class="col-md-7" style="padding-left:0">
-                                        <b><?= Yii::t("item", "Price suggestions") ?></b>
-                                        <br/>
-                                        <?= Yii::t("item",
-                                            "Having trouble setting the right price for your product? We can suggest one if you know the new price of the item:") ?>
-                                        <br/><br/>
-                                        <input type="text" class="form-control" id="new-price"
-                                               placeholder="<?= Yii::t("item", "New price in DKK") ?>"
-                                               width="100px"/>
-                                        <br/>
-
-                                        <div class="suggestion-daily"></div>
-                                        <div class="suggestion-weekly"></div>
-                                        <div class="suggestion-monthly"></div>
-                                    </div>
-                                    <div class="col-md-5" style="padding-left:0">
-                                        <div class="row" style="margin:0">
-                                            <div class="col-md-6" style="padding-left:0">
-                                                <?= $form->field($model, 'price_day')->input('number', [
-                                                    'class' => 'form-control',
-                                                    'min' => 0
-                                                ])->label(false)
-                                                ?>
-                                            </div>
-                                            <div class="col-md-6" style="padding-top:10px">
-                                                / <?= Yii::t("item", "day") ?>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6" style="padding-left:0">
-                                                <?= $form->field($model, 'price_week')->input('number', [
-                                                    'class' => 'form-control',
-                                                    'min' => 0
-                                                ])->label(false)
-                                                ?>
-                                            </div>
-                                            <div class="col-md-6" style="padding-top:10px">
-                                                / <?= Yii::t("item", "week") ?>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6" style="padding-left:0">
-                                                <?= $form->field($model, 'price_month')->input('number', [
-                                                    'class' => 'form-control',
-                                                    'min' => 0
-                                                ])->label(false)
-                                                ?>
-                                            </div>
-                                            <div class="col-md-6" style="padding-top:10px">
-                                                / <?= Yii::t("item", "month") ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?= $this->render('pricing', [
+                               'form' => $form,
+                                'model' => $model
+                            ]); ?>
                         </div>
 
-                        <div class="row price">
+                        <div class="row">
                             <div class="col-sm-10 col-sm-offset-1">
                                 <h4>
                                     <?= Yii::t("item", "Condition") ?> <br>
@@ -267,6 +207,13 @@ $this->registerJs("
                                     \app\modules\item\models\Item::getConditions()
                                 )->label(false) ?>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <?= $this->render('location', [
+                                'form' => $form,
+                                'model' => $model
+                            ]); ?>
                         </div>
                         <!-- leave id for scrolling -->
                         <div class="row" id="publishing">
@@ -332,8 +279,6 @@ $this->registerJs("
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
-
-
         </div>
     </div>
 </section>

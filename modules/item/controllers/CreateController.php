@@ -225,10 +225,10 @@ class CreateController extends Controller
         ])->one();
 
         if ($media == null) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException("Media not found");
         }
-
-        (new ImageManager)->delete($media->file_name);
+        // dont remove the original, only the reference
+        //        (new ImageManager)->delete($media->file_name);
 
         foreach ($media->itemHasMedia as $m) {
             $m->delete();

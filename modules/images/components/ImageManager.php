@@ -83,8 +83,8 @@ class ImageManager
 
     public function delete($filename)
     {
-        $dir = 'user/' . static::createSubFolders($filename);
-        $this->filesystem->delete($dir);
+//        $dir = 'user/' . static::createSubFolders($filename);
+//        $this->filesystem->delete($dir);
     }
 
     public function getServer($isStatic = false)

@@ -51,7 +51,7 @@ class ImageHelper extends BaseHtml
 
     public static function urlToFilename($url)
     {
-        $expl = explode("/", $url);
+        $expl = explode("---xxx---", str_replace(['?', '/'], '---xxx---', $url ));
         foreach ($expl as $e) {
             if (strpos($e, '.png') !== false || strpos($e, '.jpg') !== false) {
                 return $e;
