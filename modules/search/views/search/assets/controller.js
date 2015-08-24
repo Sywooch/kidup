@@ -17,7 +17,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         location: false
     };
 
-    scope.loading = true;
+    scope.loading = false;
 
     scope.priceMin = 0;
     scope.priceMax = 499;
@@ -81,7 +81,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
             'method': 'GET',
             'url': 'search-results?q=' + getUrl() + '&p=0'
         }).done(function (data) {
-            scope.loading = true;
+            scope.loading = false;
             $('.searchResults').replaceWith(data);
             if (!$scope.$$phase) $scope.$apply();
         });
@@ -201,7 +201,6 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
                 } else {
                     scope.activeFilter['location'] = false;
                 }
-                scope.filterChange();
             }
         }, 500);
     };

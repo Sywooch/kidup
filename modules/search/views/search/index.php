@@ -90,7 +90,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                             </div>
                             <br/><br/>
 
-                            <div ng-show="searchCtrl.loading">
+                            <div class="loader" ng-show="searchCtrl.loading">
                                 <?= \app\modules\images\components\ImageHelper::image('kidup/search/spinner.gif') ?>
                             </div>
 
