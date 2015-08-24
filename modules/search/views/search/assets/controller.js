@@ -17,6 +17,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         location: false
     };
 
+    scope.params = $location.search();
+
     scope.loading = false;
 
     scope.priceMin = 0;
@@ -146,8 +148,13 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
     };
 
     scope.setUrl = function () {
-        window.history.pushState({}, document.title, '?q=' + getUrl());
-        //$location.search('blaaa', '123');
+        $location.path('/');
+        $location.search('query', scope.filter.query);
+        $location.search('location', scope.filter.location);
+        $location.search('price', [scope.filter.priceMin, + scope.filter.priceMax]);
+        if (getActiveCategories().length > 0) {
+            $location.search('categories', getActiveCategories());
+        }
     };
 
     getUrl = function () {
@@ -173,7 +180,43 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         }, 700);
     };
 
+    scope.loadParam = function(key, defaultValue) {
+        if (scope.params[key] !== undefined && scope.params[key].length > 0) {
+            return scope.params[key];
+        } else {
+            return defaultValue;
+        }
+    };
+
+    scope.loadCategories = function() {
+        angular.forEach(scope.filter.categories, function(category) {
+            angular.forEach(scope.params['categories'], function (catID) {
+                if (category.id == catID) {
+                    category.value = true;
+                }
+            })
+        });
+        angular.forEach(scope.filter.ages, function(category) {
+            angular.forEach(scope.params['categories'], function (catID) {
+                if (category.id == catID) {
+                    category.value = true;
+                }
+            })
+        });
+        updateActiveFilters();
+        if (!$scope.$$phase) $scope.$apply();
+    };
+
     scope.init = function () {
+        if (scope.params['price'] == undefined) {
+            scope.params['price'] = [0, 499];
+        }
+        if (scope.params['categories'] == undefined) {
+            scope.params['categories'] = [];
+        }
+        if (scope.params['ages'] == undefined) {
+            scope.params['ages'] = [];
+        }
         var sliderConf = {
             range: true,
             min: 0,
@@ -211,10 +254,5 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
 };
 
 angular.module('kidup.search', []);
-angular.module('kidup.search').config(function($locationProvider) {
-    $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-    });
-});
+
 angular.module('kidup.search').controller('SearchCtrl', SearchController);

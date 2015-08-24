@@ -41,6 +41,7 @@ class SearchModel extends Model
         $query = $this->initQuery();
 
         // apply filters
+        $this->filterLocation($query, 'Federiklaan 175 1/A Eindhoven', null);
         $this->filterLocation($query, $this->location, null);
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);

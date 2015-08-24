@@ -44,7 +44,7 @@ class ItemBookingCest
         $I->amGoingTo('try to fill in the booking form');
         $I->fillField('#create-booking-datefrom', $dateFrom);
         $I->fillField('#create-booking-dateto', $dateTo);
-        //$I->click('Start booking!', '#booking-navbar button[type=submit]');
+        $I->click('Start booking!', '#booking-navbar button[type=submit]');
 
         // @todo follow Yii redirect
     }

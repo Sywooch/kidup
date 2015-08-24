@@ -70,7 +70,7 @@ class DefaultController extends Controller
             'booking' => $booking,
             'model' => $model,
             'item' => $booking->item,
-            'itemImage' => ImageHelper::url($booking->item->media[0]->file_name),
+            'itemImage' => ImageHelper::url($booking->item->getImageName(0)),
             'profile' => $booking->item->owner->profile
         ]);
     }
