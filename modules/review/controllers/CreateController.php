@@ -43,11 +43,9 @@ class CreateController extends Controller
          */
         $booking = Booking::findOne($bookingId);
         if ($booking === null) {
-            echo 'p1'; die();
             throw new NotFoundHttpException("Booking not found");
         }
         if ($booking->status !== Booking::ACCEPTED || $booking->time_to > time()) {
-            echo 'p2'; die();
             throw new ForbiddenHttpException("Review is available after the booking ended");
         }
         if ($booking->item->owner_id == \Yii::$app->user->id) {
@@ -57,14 +55,12 @@ class CreateController extends Controller
             $model = new RenterReview();
             $view = 'renter';
         } else {
-            echo 'p3'; die();
             throw new ForbiddenHttpException("Booking doesn't belong to you");
         }
 
         // see if it is already reviewed
         $review = Review::find()->where(['reviewer_id' => \Yii::$app->user->id, 'booking_id' => $bookingId])->count();
         if ($review > 1) {
-            echo 'p4'; die();
             throw new ForbiddenHttpException("You've already reviewed this booking!");
         }
 
