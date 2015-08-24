@@ -10,21 +10,27 @@ use yii\db\Query;
  */
 class ItemSimilarity extends \app\models\base\ItemSimilarity
 {
-    private $item;
     /**
      * Computes the similarities for an item
      * @param Item $item
      */
+    private $item;
+
+
     public function compute($item){
         $this->item = $item;
-        $this->removeOld()
-            ->insertNewSimilarities();
+        $this->removeOld();
+        $this->insertNewSimilarities();
+        $this->removeSelf();
         return true;
     }
 
     private function removeOld(){
-        ItemSimilarity::deleteAll(['item_id_1' => $this->item->id]);
-        return $this;
+        return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id]);
+    }
+
+    private function removeSelf(){
+        return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id, 'item_id_2' => $this->item->id]);
     }
 
     private function insertNewSimilarities()
@@ -77,13 +83,36 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
         ORDER BY similarity DESC
         LIMIT 10;';
 
-        Yii::$app->db->createCommand($distanceQ)
-            ->bindParam(':itemId', $this->item->id)
-            ->bindParam(':lat', $this->item->location->latitude)
-            ->bindParam(':long', $this->item->location->longitude)
-            ->bindParam(':weekPrice', $this->item->price_week)
-            ->bindParam(':catCount', count($this->item->categories))
+        // this is ugly, but gives some property overloading error if not done like this
+
+        $id = $this->item->id;
+        $lat = $this->item->location->latitude;
+        $long = $this->item->location->longitude;
+        $price = $this->item->price_week;
+        $categories = count($this->item->categories);
+
+        return Yii::$app->db->createCommand($distanceQ)
+            ->bindParam(':itemId', $id)
+            ->bindParam(':lat', $lat)
+            ->bindParam(':long', $long)
+            ->bindParam(':weekPrice', $price)
+            ->bindParam(':catCount', $categories)
             ->execute();
-        return $this;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOriginatingItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id_1']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSimilarItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id_2']);
     }
 }

@@ -91,12 +91,13 @@ class Review extends \app\models\base\Review
         return parent::beforeValidate();
     }
 
-    public function afterSave()
+    public function afterSave($insert, $changedAttrs)
     {
         if ($this->type == self::TYPE_PRIVATE_KIDUP && $this->value != '') {
             \Yii::$app->slack->send("User $this->reviewer_id had kidup feedback on booking $this->booking_id:
     $this->value
             ");
         }
+        return parent::afterSave($insert, $changedAttrs);
     }
 }

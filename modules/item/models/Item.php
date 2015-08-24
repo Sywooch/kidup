@@ -3,7 +3,6 @@
 namespace app\modules\item\models;
 
 use app\components\Cache;
-use app\models\base\ItemHasCategory;
 use app\modules\user\models\User;
 use Carbon\Carbon;
 use Location\Coordinate;
@@ -270,7 +269,7 @@ class Item extends \app\models\base\Item
         $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
         $res = [];
         foreach ($similarities as $s) {
-            $res[] = $s->item2;
+            $res[] = $s->similarItem;
         }
 
         return $res;
