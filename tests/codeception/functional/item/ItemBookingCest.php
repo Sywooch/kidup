@@ -1,6 +1,7 @@
 <?php
 namespace app\tests\codeception\functional\item;
 
+use app\components\Event;
 use app\modules\booking\controllers\CronController;
 use app\modules\booking\forms\Confirm;
 use app\modules\booking\models\Booking;
@@ -9,6 +10,7 @@ use app\modules\message\models\Message;
 use app\modules\review\models\Review;
 use app\modules\user\models\User;
 use app\tests\codeception\_support\UserHelper;
+use app\tests\codeception\_support\YiiHelper;
 use functionalTester;
 use app\modules\item\models\Item;
 use Yii;
@@ -102,6 +104,9 @@ class ItemBookingCest
      * @return app\modules\booking\models\Booking created booking
      */
     private function createBooking($I) {
+        // count the e-mails
+        $emailCountBefore = count(YiiHelper::listEmails());
+
         $dateFrom = date('d-m-Y', 1 * 24 * 60 * 60 + time());
         $dateTo = date('d-m-Y', 3 * 24 * 60 * 60 + time());
 
@@ -188,6 +193,10 @@ class ItemBookingCest
             ->one()
         ;
 
+        // there should be some e-mails in the queue
+        $emailCountAfter = count(YiiHelper::listEmails());
+        $emailDeltaCount = $emailCountAfter - $emailCountBefore;
+        $I->assertTrue($emailDeltaCount == 1);
         return $booking;
     }
 

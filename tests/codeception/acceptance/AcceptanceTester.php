@@ -5,6 +5,9 @@
 // @codingStandardsIgnoreFile
 
 
+use app\tests\codeception\_support\FixtureHelper;
+use Codeception\Module\WebDriver;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
