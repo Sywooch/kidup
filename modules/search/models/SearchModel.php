@@ -138,6 +138,9 @@ class SearchModel extends Model
                 $query->andWhere($distanceQ . ' < :meters', [':meters' => $distance]);
             }
             $query->orderBy('distance');
+        } else {
+            // no matching location could be found, return no results
+            $query->andWhere('true = false');
         }
     }
 

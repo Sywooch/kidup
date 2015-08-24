@@ -91,8 +91,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
             category: false,
             location: false
         };
-        if (scope.filter.query !== '')      scope.activeFilter.search = true;
-        if (scope.filter.location !== '')   scope.activeFilter.location = true;
+        if (scope.filter.query.length > 0)      scope.activeFilter.search = true;
+        if (scope.filter.location.length > 0)   scope.activeFilter.location = true;
         if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499) {
             scope.activeFilter.price = true;
         }
@@ -101,6 +101,9 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         }
         if (getActiveCategories('age').length > 0) {
             scope.activeFilter.age = true;
+        }
+        if(!$scope.$$phase) {
+            $scope.$apply();
         }
     };
 
@@ -123,8 +126,11 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
                 x.value = 0;
             })
         }
-        scope.activeFilter[filter] = false;
+        if(!$scope.$$phase) {
+            $scope.$apply();
+        }
         scope.filterChange();
+        scope.activeFilter[filter] = false;
     };
 
     scope.removeAllActiveFilters = function () {
@@ -135,15 +141,14 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
 
     scope.setUrl = function () {
         window.history.pushState({}, document.title, '?q=' + getUrl());
+        //$location.search('blaaa', '123');
     };
 
     getUrl = function () {
         var q = [];
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
-        if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499) {
-            q.push('price|' + scope.filter.priceMin + ',' + scope.filter.priceMax);
-        }
+        q.push('price|' + scope.filter.priceMin + ',' + scope.filter.priceMax);
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
         return q.join("|");
     };
@@ -153,6 +158,10 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (scope._timer !== null) {
             clearTimeout(scope._timer)
         }
+
+        // activate filter buttons
+        updateActiveFilters();
+
         scope._timer = setTimeout(function () {
             update();
         }, 700);
@@ -181,10 +190,14 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
             if (value != oldValue) {
                 $('.location-input').attr('oldValue', value);
                 scope.filter.location = value;
+                if (value.length > 0) {
+                    scope.activeFilter['location'] = true;
+                } else {
+                    scope.activeFilter['location'] = false;
+                }
                 scope.filterChange();
             }
         }, 500);
-        //updateActiveFilters();
     };
 
     scope.init();
@@ -193,5 +206,10 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
 };
 
 angular.module('kidup.search', []);
-
+angular.module('kidup.search').config(function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+});
 angular.module('kidup.search').controller('SearchCtrl', SearchController);

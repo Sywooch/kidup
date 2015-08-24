@@ -57,6 +57,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     </strong>
                                     <?= Yii::t("item", "Location") ?>
                                 </div>
+
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.price"
                                      ng-click="searchCtrl.activeFilterRemove('price')">
