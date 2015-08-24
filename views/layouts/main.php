@@ -79,7 +79,7 @@ BootstrapPluginAsset::register($this);
 
     echo Cache::html('footer', function () {
         return $this->render('footer.php');
-    }, ['variations' => $this->context->noFooter]);
+    }, ['variations' => [$this->context->noFooter]]);
 
     echo Cache::html('cookie_widget', function () {
         return \cinghie\cookieconsent\widgets\CookieWidget::widget([
