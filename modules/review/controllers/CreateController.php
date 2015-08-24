@@ -48,6 +48,7 @@ class CreateController extends Controller
         if ($booking->status !== Booking::ACCEPTED || $booking->time_to > time()) {
             throw new ForbiddenHttpException("Review is available after the booking ended");
         }
+
         if ($booking->item->owner_id == \Yii::$app->user->id) {
             $model = new OwnerReview();
             $view = 'owner';

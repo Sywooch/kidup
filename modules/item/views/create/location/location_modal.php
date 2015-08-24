@@ -18,7 +18,9 @@ use \app\modules\item\widgets\GoogleAutoComplete;
 
 $form = \yii\bootstrap\ActiveForm::begin([
     'action' => '@web/item/create/add-location',
-    'method' => 'post'
+    'method' => 'post',
+    'enableAjaxValidation' => true,
+    'validationUrl' => '@web/item/create/add-location',
 ]);
 ?>
 <?= $form->field($model, 'item_id')->hiddenInput(['value' => $itemId])->label(false) ?>
@@ -30,15 +32,7 @@ $form = \yii\bootstrap\ActiveForm::begin([
     ],
 ]); ?>
 
-<?= $form->field($model, 'street')->widget(GoogleAutoComplete::className(), [
-    'options' => [
-        'class' => 'form-control location-input',
-    ],
-    'autocompleteOptions' => [
-        'types' => ['geocode']
-    ],
-    'name' => 'autoCompleteLocation'
-])->label(\Yii::t('item', 'Street Address')) ?>
+<?= $form->field($model, 'street')->label(\Yii::t('item', 'Street Address')) ?>
 <?= $form->field($model, 'street_suffix')->label(\Yii::t('item', 'Apt, Suite, Building (optional)')) ?>
 <?= $form->field($model, 'zip_code') ?>
 <?= $form->field($model, 'city') ?>

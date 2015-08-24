@@ -17,9 +17,3 @@
         data-target="#location-modal">
     <?= Yii::t("item", "Add new location") ?>
 </button>
-
-<?= $this->render('location_modal', [
-    'form' => $form,
-    'model' => $locationModel,
-    'itemId' => $model->item->id
-]); ?>

@@ -4,6 +4,7 @@ namespace app\modules\item\forms;
 
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
+use app\modules\user\models\Country;
 use Yii;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
@@ -32,7 +33,24 @@ class LocationForm extends Model
             [['city'], 'string', 'max' => 100],
             [['country'], 'string', 'max' => 100],
             [['zip_code'], 'string', 'max' => 10],
-            [['street'], 'string', 'max' => 256],
+            [['street'], 'string', 'max' => 256, 'min' => 5],
+            [
+                'street',
+                function ($attr, $params) {
+                    $country = Country::findOne($this->country);
+                    if ($country == null) {
+                        return false;
+                    }
+                    $address = $this->street . " " .
+                        $this->city . " " .
+                        $this->zip_code . ", " .
+                        $country->name;
+                    $res = Location::getByAddress($address);
+                    if($res == false){
+                        $this->addError($attr, 'Address couldnt be found');
+                    }
+                }
+            ],
             [['street_suffix'], 'string', 'max' => 100],
             [['item_id'], 'integer'],
         ];
@@ -51,7 +69,8 @@ class LocationForm extends Model
         return 'location-form';
     }
 
-    public function loadItem(){
+    public function loadItem()
+    {
         /**
          * @var Item $item
          */
@@ -78,11 +97,12 @@ class LocationForm extends Model
             $location->user_id = \Yii::$app->user->id;
             $location->load(\Yii::$app->request->post(), 'location-form');
             $location->setStreetNameAndNumber($this->street);
-            if($location->save()){
-                $this->item->location_id = $location->id;
+            if ($location->save()) {
+                $item = $this->item;
+                $item->location_id = $location->id;
+                return $item->save();
             }
         }
-
         return false;
     }
 

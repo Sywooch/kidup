@@ -8,6 +8,7 @@ use \yii\helpers\Html;
 /**
  * @var \yii\web\View $this
  * @var \app\modules\item\forms\Edit $model
+ * @var \app\modules\item\models\Item $item
  * @var array $pageParams
  */
 \app\modules\item\assets\CreateAsset::register($this);
@@ -19,11 +20,12 @@ use \yii\helpers\Html;
         <div class="content ">
             <h2 class="title">
                 <?= $item->name ?>
+                <a href="<?= \yii\helpers\Url::to('@web/item/'.$item->id) ?>" class="pull-right" style="color:white;" target="_blank">
+                    <?= Yii::t("item", "Preview") ?>
+                </a>
             </h2>
 
-            <div class="pull-right btn btn-link btn-sm" style="margin-top:-35px">
-                Preview
-            </div>
+
         </div>
     </div>
     <div class="row" style="margin-right:0">
@@ -95,7 +97,7 @@ use \yii\helpers\Html;
         </div>
         <?php if(isset($rightColumn)): ?>
         <div class="col-md-3">
-            <?= $this->render($rightColumn, array_merge($rightColumnParams, ['form' => $form, 'model' => $model])) ?>
+            <?= $this->render($rightColumn, array_merge(['form' => $form, 'model' => $model],$rightColumnParams)) ?>
         </div>
         <?php endif; ?>
     </div>

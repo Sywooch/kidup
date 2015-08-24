@@ -18,18 +18,14 @@ $this->registerJs("
 
 ?>
 
-<h4><?= Yii::t("item", "Pictures") ?>
+<h4><?= Yii::t("item", "Photos") ?>
     <br>
     <small>
-        <?= Yii::t("item", "Add some quality pictures of your product.") ?>
-        <?= Yii::t("item",
-            "Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as 'billboard' image on the product page.") ?>
+        <?= Yii::t("item", "Photos can help explaining the product functionality.") ?>
+        <?= Yii::t("item",  "Drag and drop images or click the box to start uploading.")?>
+        <br>
+        <b><?= Yii::t("item", "The first photo appears in the search results!") ?></b>
     </small>
     <br>
-    <small>
-        <?= Yii::t("item", "Add some quality pictures of your product.") ?>
-        <?= Yii::t("item",
-            "Drag and drop images or click the box to start uploading. They can be sorted by dragging uploaded pictures, the first picture will be used as 'billboard' image on the product page.") ?>
-    </small>
 </h4>
 <div id="dropzone-form" class="dropzone upload-image-area"></div>
