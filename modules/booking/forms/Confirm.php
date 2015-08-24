@@ -24,7 +24,7 @@ class Confirm extends Model
         if ($payin !== null && $payin->nonce != '') {
             $this->creditCardForm = 'creditcard_nonce';
         } elseif (isset($_POST["payment_method_nonce"]) && $_POST["payment_method_nonce"] != '') {
-            $this->createPayin($_POST["payment_method_nonce"]);
+            self::createPayin($this->booking, $_POST["payment_method_nonce"]);
             $this->creditCardForm = 'creditcard_nonce';
         }
 
@@ -35,21 +35,21 @@ class Confirm extends Model
         return parent::__construct();
     }
 
-    private function createPayin($nonce)
+    public static function createPayin($booking, $nonce)
     {
-        if ($this->booking->payin_id !== null) {
-            $payin = $this->booking->payin;
+        if ($booking->payin_id !== null) {
+            $payin = $booking->payin;
         } else {
             $payin = new Payin();
         }
         $payin->nonce = $nonce;
-        $payin->status = 'init';
+        $payin->status = Payin::STATUS_INIT;
         $payin->currency_id = 1;
         $payin->user_id = \Yii::$app->user->id;
-        $payin->amount = $this->booking->amount_payin;
+        $payin->amount = $booking->amount_payin;
         if ($payin->save()) {
-            $this->booking->payin_id = $payin->id;
-            $this->booking->save();
+            $booking->payin_id = $payin->id;
+            $booking->save();
 
             return true;
         }
