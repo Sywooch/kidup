@@ -257,89 +257,22 @@ class Item extends \app\models\base\Item
     /**
      * Get a list of recommended items.
      *
-     * @param $item_id int  the item to find recommended items for
+     * @param $item Item  the item to find recommended items for
      * @param $numItems int the maximum number of items to retrieve
      * @return array    a list with the recommended items
      */
-    public function getRecommendedItems($item_id, $numItems)
+    public function getRecommendedItems($item, $numItems = 3)
     {
-        $item1 = Item::find()->where(['id' => $item_id])->one();
-
-        // now fetch all other items
-        $items = Item::find()
-            ->where('id != ' . $item_id . ' and is_available = 1')
-            ->all();
-
-        // create a ranking and calculate the scores between the current item and all other items
-        $ranking = [];
-        foreach ($items as $item2) {
-            $ranking[$item2->id] = Item::getSimilarityScore($item1, $item2);
+        $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
+        if(count($similarities) == 0){
+            (new ItemSimilarity())->compute($item);
+        }
+        $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
+        $res = [];
+        foreach ($similarities as $s) {
+            $res[] = $s->item2;
         }
 
-        // sort the ranking and find the results
-        arsort($ranking);
-        $results = [];
-        foreach ($ranking as $other_item_id => $score) {
-            $results[] = Item::find()->where(['id' => $other_item_id])->one();
-            if (count($results) >= $numItems) {
-                break;
-            }
-        }
-
-        return $results;
+        return $res;
     }
-
-    /**
-     * Calculate a similarity score between two items
-     *
-     * @param int $item1 first item
-     * @param $item2 second item
-     * @return double number in [0, 1] where 0 means maximal dissimilarity and 1 means maximal similarity
-     */
-    public static function getSimilarityScore($item1, $item2)
-    {
-        // calculate the geographical distance
-        $loc1 = Location::find(['id' => $item1->location_id])->one();
-        $loc2 = Location::find(['id' => $item2->location_id])->one();
-        $geoDistance = Item::calculateGeoDistance($loc1->latitude, $loc1->longitude, $loc2->latitude, $loc2->longitude);
-
-        // calculate the categorical distance
-        $cats1 = ItemHasCategory::find()->where(['item_id' => $item1->id])->all();
-        $numSameCategories = 0;
-        foreach ($cats1 as $cat1) {
-            $cats2 = ItemHasCategory::find()
-                ->where(['item_id' => $item2->id])
-                ->andWhere(['category_id' => $cat1->category_id])
-                ->one();
-            $numSameCategories += count($cats2);
-        }
-
-        // $geoScore \in [0, 1] where 1 maximal similarity
-        $geoScore = 1 / ($geoDistance + 1);
-
-        // $catScore \in [0, 1] where 1 maximal similarity
-        $catScore = 1 - 1 / ($numSameCategories + 1);
-
-        return 0.7 * $geoScore + 0.3 * $catScore;
-    }
-
-    /**
-     * Calculate the geographical distance between two pairs of longitude and latitude coordinates.
-     *
-     * @param $lat1 first latitude coordinate
-     * @param $lon1 first longitude coordinate
-     * @param $lat2 second latitude coordinate
-     * @param $lon2 second longitude coordinate
-     * @return float the distance (in kilometers)
-     */
-    public static function calculateGeoDistance($lat1, $lon1, $lat2, $lon2)
-    {
-        $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-        $dist = acos($dist);
-        $dist = rad2deg($dist);
-        $miles = $dist * 60 * 1.1515;
-        return $miles * 1.609344;
-    }
-
 }
