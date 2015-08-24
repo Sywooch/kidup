@@ -30,7 +30,7 @@ class IndexController extends \app\controllers\Controller
                 [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 52],
                 [['w', 'h'], 'integer', 'min' => 1, 'max' => 5000],
                 [['q'], 'integer', 'min' => 1, 'max' => 100],
-                ['fm', 'in', 'range' => ['jpg', 'pjpg', 'png']],
+                ['fm', 'in', 'range' => ['jpg', 'pjpg', 'png', 'gif']],
                 ['fit', 'in', 'range' => ['contain', 'max', 'fill', 'stretch', 'crop']]
             ]);
         if ($model->hasErrors()) {
