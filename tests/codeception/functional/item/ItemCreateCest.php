@@ -42,14 +42,17 @@ class ItemCreateCest
         $this->checkBasics($I);
     }
 
-    private function checkBasics(FunctionalTester $I){
+    private function checkBasics(FunctionalTester $I)
+    {
         $I->amOnPage('/item/create/edit-basics?id=3');
         $I->see('Help parents find the right product');
         $I->see('Parents');
         $I->fillField("#edit-item-condition", 1);
         $I->fillField("#edit-item-categories-age-2", 1);
         $I->click("Next");
+    }
 
+    private function checkDescription(FunctionalTester $I){
         $I->amGoingTo('try to create an item without title');
         $I->expectTo('be forced to fill in a title');
         $I->canSee('Next step');
