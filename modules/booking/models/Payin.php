@@ -29,6 +29,7 @@ class Payin extends \app\models\base\Payin
     const SETTLEMENT_DECLINED = 'settlement_declined';
     const SETTLEMENT_PENDING = 'settlement_pending';
 
+    const STATUS_INIT = 'init';
     const STATUS_PENDING = 'status_pending';
     const STATUS_AUTHORIZED = 'status_authorized';
     const STATUS_FAILED = 'status_failed';

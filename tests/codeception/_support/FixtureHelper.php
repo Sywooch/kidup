@@ -11,6 +11,7 @@ use app\tests\codeception\fixtures\LocationFixture;
 use app\tests\codeception\fixtures\MediaFixture;
 use app\tests\codeception\fixtures\MessageFixture;
 use app\tests\codeception\fixtures\PayinFixture;
+use app\tests\codeception\fixtures\PayoutFixture;
 use app\tests\codeception\fixtures\PayoutMethodFixture;
 use app\tests\codeception\fixtures\ProfileFixture;
 use app\tests\codeception\fixtures\SettingFixture;
@@ -119,6 +120,10 @@ class FixtureHelper extends Module
             'payin' => [
                 'class'    => PayinFixture::className(),
                 'dataFile' => '@app/tests/codeception/fixtures/data/payin.php',
+            ],
+            'payout' => [
+                'class'    => PayoutFixture::className(),
+                'dataFile' => '@app/tests/codeception/fixtures/data/payout.php',
             ],
             'booking' => [
                 'class'    => BookingFixture::className(),
