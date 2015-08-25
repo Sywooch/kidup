@@ -14,6 +14,7 @@ use Yii;
  * @property string $zip_code
  * @property string $street_name
  * @property string $street_number
+ * @property string $street_suffix
  * @property double $longitude
  * @property double $latitude
  * @property integer $user_id

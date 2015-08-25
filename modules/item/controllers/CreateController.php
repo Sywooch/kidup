@@ -21,7 +21,9 @@ use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 class CreateController extends Controller
 {
@@ -72,13 +74,8 @@ class CreateController extends Controller
             $locationForm = new LocationForm();
             $locationForm->load(Yii::$app->request->post());
             $locationForm->loadItem();
-            if(!$locationForm->validate()){
-                return Json::encode($locationForm->getErrors());
-            }else if(!$locationForm->validateAddress()){
-                return Json::encode(['street' => ['couldnt find']]);
-            }else{
-                return '[]';
-            }
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($locationForm);
         }
         if (\Yii::$app->request->isPost) {
             $locationForm = new LocationForm();
