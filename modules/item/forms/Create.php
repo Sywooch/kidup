@@ -16,28 +16,20 @@ class Create extends Model
     public $item;
     public $first_name;
     public $last_name;
-    public $profile_image;
 
     public function rules()
     {
         return [
             [
-                'first_name',
+                'first_name', 'required', 'when' =>
                 function () {
-                    if (!\Yii::$app->user->identity->profile->validate('first_name')) {
-                        foreach(\Yii::$app->user->identity->profile->getErrors('first_name') as $e){
-                            $this->addError('first_name', $e);
-                        }
-                    }
-                    return true;
+                    return \Yii::$app->user->identity->profile->hasErrors('first_name');
                 }
             ],
             [
-                'last_name',
+                'last_name','required', 'when' =>
                 function () {
-                    if (!\Yii::$app->user->identity->profile->validate('last_name')) {
-                        $this->addError('last_name', \Yii::$app->user->identity->profile->validate('last_name'));
-                    }
+                    return \Yii::$app->user->identity->profile->hasErrors('last_name');
                 }
             ]
         ];
@@ -50,7 +42,6 @@ class Create extends Model
 
     public function save()
     {
-
         /**
          * @var \app\modules\user\models\Profile $profile
          */
@@ -62,15 +53,14 @@ class Create extends Model
         if (isset($this->last_name)) {
             $profile->last_name = $this->last_name;
         }
-        if (isset($this->profile_image)) {
-            $profile->img = $this->profile_image;
-        }
 
         if (!$this->validate()) {
             return false;
         }
 
-        $profile->save();
+        if($profile->isAttributeChanged('first_name') || $profile->isAttributeChanged('last_name')){
+            $profile->save();
+        }
 
         $item = new Item();
         $item->setScenario('create');

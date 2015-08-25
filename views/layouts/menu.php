@@ -158,12 +158,6 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         ]) ?>
                     </li>
                     <li>
-                        <a href="<?= Url::to('@web/item/create') ?>">
-                            <?= Yii::t("app", "Rent Out") ?>
-                        </a>
-
-                    </li>
-                    <li>
                         <a href="<?= Url::to('@web/user/' . \Yii::$app->user->id) ?>">
                             <?= Yii::t("app", "View Profile") ?>
                         </a>

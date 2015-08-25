@@ -11,8 +11,9 @@ use \yii\helpers\Html;
 \app\modules\item\assets\CreateAsset::register($this);
 
 ?>
-
 <section class="section" id="new-rental">
+    <div style="height: 10vh;"></div>
+
     <div class="row" style="margin-right:0">
         <div class="col-md-4 card col-md-offset-4" style="text-align: center">
             <h2 style="text-align: center">
@@ -36,4 +37,7 @@ use \yii\helpers\Html;
             <br>
         </div>
     </div>
+
+    <div style="height: 10vh;"></div>
+
 </section>

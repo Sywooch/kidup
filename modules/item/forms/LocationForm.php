@@ -94,7 +94,7 @@ class LocationForm extends Model
         return false;
     }
 
-    private function validateAddress()
+    public function validateAddress()
     {
         $country = Country::findOne($this->country);
         if ($country == null) {

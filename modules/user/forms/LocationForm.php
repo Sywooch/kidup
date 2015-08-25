@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace app\modules\user\forms;
 
 use app\modules\user\models\Location;
 use app\modules\user\Module;
@@ -18,6 +18,7 @@ class LocationForm extends Model
     public $user_id;
     public $street_name;
     public $street_number;
+    public $street_suffix;
     public $zip_code;
     public $city;
     public $country;

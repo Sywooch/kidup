@@ -19,7 +19,7 @@ use \yii\helpers\Html;
     <div class="card header">
         <div class="content ">
             <h2 class="title">
-                <?= $item->name ?>
+                <?= $item->name ? $item->name : \Yii::t('item', 'New product') ?>
                 <a href="<?= \yii\helpers\Url::to('@web/item/' . $item->id) ?>" class="pull-right" style="color:white;"
                    target="_blank">
                     <?= Yii::t("item", "Preview") ?>
@@ -35,29 +35,24 @@ use \yii\helpers\Html;
                 'encodeLabels' => false,
                 'items' => [
                     [
-                        'url' => '@web/item/create/edit-basics?id=' . $item->id,
+                        'url' => ['/item/create/edit-basics?id=' . $item->id],
                         'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') . 'Basics',
-                        'active' => $page == 'basics/basics'
                     ],
                     [
-                        'url' => '@web/item/create/edit-description?id=' . $item->id,
+                        'url' => ['/item/create/edit-description?id=' . $item->id],
                         'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') . 'Description',
-                        'active' => $page == 'description/description'
                     ],
                     [
-                        'url' => '@web/item/create/edit-location?id=' . $item->id,
+                        'url' => ['/item/create/edit-location?id=' . $item->id],
                         'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') . 'Location',
-                        'active' => $page == 'location/location'
                     ],
                     [
-                        'url' => '@web/item/create/edit-photos?id=' . $item->id,
+                        'url' => ['/item/create/edit-photos?id=' . $item->id],
                         'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') . 'Photos',
-                        'active' => $page == 'photos/photos'
                     ],
                     [
-                        'url' => '@web/item/create/edit-pricing?id=' . $item->id,
+                        'url' => ['/item/create/edit-pricing?id=' . $item->id],
                         'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') . 'Pricing',
-                        'active' => $page == 'pricing/pricing'
                     ],
                 ],
             ]); ?>
@@ -70,7 +65,7 @@ use \yii\helpers\Html;
                 }else if($model->isScenarioValid('default')) {
                     echo Html::a(Html::button(\Yii::t('item', 'Publish'), [
                         'class' => 'btn btn-danger btn-fill'
-                    ]), '@web/item/create/publish?id=' . $item->id);
+                    ]), '@web/item/create/edit-publish?id=' . $item->id);
                 } else {
                     echo \Yii::t('item', 'Complete {n, plural, =1{1 step} other{# steps}} to publish your product.', [
                         'n' => $model->getStepsToCompleteCount()

@@ -48,9 +48,7 @@ class ViewController extends Controller
             /**
              * @var $item \app\modules\item\models\Item
              */
-            $item = Item::getDb()->cache(function () use ($id) {
-                return Item::find()->where(['id' => $id])->with('location')->one();
-            });
+            $item = Item::find()->where(['id' => $id])->with('location')->one();
             if ($item == null) {
                 \Yii::$app->cache->delete($cacheName);
                 throw new NotFoundHttpException("THis item does not exist");
@@ -75,7 +73,6 @@ class ViewController extends Controller
 
 
             $price = $item->getAdPrice();
-
             if ($item->is_available == 0) {
                 $bookingForm = \Yii::t('item', 'This is a preview. Go here {0} to publish this item.', [
                     Html::a(\Yii::t('item', 'link'), '@web/item/create/edit-basics?id=' . $item->id)

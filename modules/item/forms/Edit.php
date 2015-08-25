@@ -63,14 +63,12 @@ class Edit extends Model
     public function rules()
     {
         return [
-            [['name', 'price_week', 'description', 'location_id', 'photos', 'condition'], 'required'],
-            [['name', 'description'], 'string'],
+            [['name', 'price_week', 'description', 'location_id', 'condition'], 'required'],
+            [['name', 'description'], 'string', 'min' => 5],
             [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
-            ['photos', function($attr, $params){
-                if(count($this->item->itemHasMedia) == 0){
-                    $this->addError('photos', \Yii::t('item', 'Atleast one photo should be set'));
-                }
-            }]
+            ['photos', 'required', 'isEmpty' => function(){
+                return count($this->item->itemHasMedia) == 0;
+            }, 'message' => \Yii::t('item', 'Please provide atleast one photo of your product')]
         ];
     }
 

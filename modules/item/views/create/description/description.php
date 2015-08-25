@@ -15,5 +15,5 @@
     'description')->textarea([
     'class' => 'form-control',
     'rows' => 6,
-    'placeholder' => \Yii::t('item', 'Tell parents what you love about the product. You can include any details that makes it use practicle in daily life.')
+    'placeholder' => \Yii::t('item', 'Tell parents what you love about the product. You can include any details that makes its use practicle in daily life.')
 ])->label(\Yii::t('item', 'Summary')) ?>

@@ -13,7 +13,8 @@ use \app\modules\item\widgets\GoogleAutoComplete;
 
 <?php Modal::begin([
     'header' => '<h2>'.Yii::t('item', 'Enter Address').'</h2>'.Yii::t('item', 'Where can the product be picked up?'),
-    'id' => 'location-modal'
+    'id' => 'location-modal', // important for the opening button caller
+    'class' => 'greyed-modal'
 ]);
 
 $form = \yii\bootstrap\ActiveForm::begin([

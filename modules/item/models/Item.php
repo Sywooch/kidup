@@ -25,6 +25,7 @@ class Item extends \app\models\base\Item
     public static function getConditions()
     {
         return [
+            '' => '',
             '0' => \Yii::t('item', 'As good as new'),
             '1' => \Yii::t('item', 'Minor usage trails'),
             '2' => \Yii::t('item', 'Lightly damaged')

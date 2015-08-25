@@ -33,9 +33,9 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-md-12">
-        <h4><?= Yii::t("user", "Location") ?>
+        <h4><?= Yii::t("user", "Billing address") ?>
             <br>
-            <small><?= Yii::t("user", "This is the address where people can pick up your items") ?></small>
+            <small><?= Yii::t("user", "Address that is used for payment purposes.") ?></small>
         </h4>
 
         <br/>
@@ -61,7 +61,7 @@ use yii\widgets\ActiveForm;
 
     </div>
 </div>
-<div class="row col-md-12" style="height:220px">
+<div class="row col-md-12">
     <?php
     if ($model->latitude == 0 || $model->longitude == 0) {
         if (isset($model->street_name) && isset($model->street_number)) {
@@ -73,10 +73,10 @@ use yii\widgets\ActiveForm;
             ]);
         }
     } else {
-        echo \app\widgets\Map::widget([
-            'longitude' => $model->longitude,
-            'latitude' => $model->latitude,
-        ]);
+//        echo \app\widgets\Map::widget([
+//            'longitude' => $model->longitude,
+//            'latitude' => $model->latitude,
+//        ]);
     }
     ?>
 </div>

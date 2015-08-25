@@ -18,6 +18,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -67,6 +68,18 @@ class CreateController extends Controller
 
     public function actionAddLocation()
     {
+        if(\Yii::$app->request->isAjax){
+            $locationForm = new LocationForm();
+            $locationForm->load(Yii::$app->request->post());
+            $locationForm->loadItem();
+            if(!$locationForm->validate()){
+                return Json::encode($locationForm->getErrors());
+            }else if(!$locationForm->validateAddress()){
+                return Json::encode(['street' => ['couldnt find']]);
+            }else{
+                return '[]';
+            }
+        }
         if (\Yii::$app->request->isPost) {
             $locationForm = new LocationForm();
             $locationForm->load(Yii::$app->request->post());
@@ -213,9 +226,8 @@ class CreateController extends Controller
         $item = $this->getItem($item_id);
 
         $image = UploadedFile::getInstanceByName('file');
-        if (!in_array($image->extension, ['png', 'jpg'])) {
-            Yii::$app->session->addFlash('warning', \Yii::t('item', "File format not allowed"));
-            return false;
+        if (!in_array($image->extension, ['png', 'jpg', 'pjpg'])) {
+            throw new BadRequestHttpException("File format not allowed");
         }
         $i = new Media();
         $i->setAttributes([
@@ -350,17 +362,20 @@ class CreateController extends Controller
 
     public function actionEditPublish($id, $publish = false)
     {
+
         $item = $this->getItem($id);
+        if($item->is_available == 1){
+            return $this->redirect('@web/item/' . $id);
+        }
         $i = $this->defaultPage($id, 'default');
         $isValid = $i['model']->isScenarioValid('default');
         if (!$isValid) {
-            Yii::$app->session->addFlash('info',
-                \Yii::t('item', 'Please finish all required steps before publishing!'));
+            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
             return $this->redirect('@web/item/create/edit-basics?id=' . $id);
         }
         if($publish !== false){
             $item->is_available = 1;
-            $item->save();
+            $item->save(false); // save, but don't check if valid, should be done by this point
             return $this->redirect('@web/item/'.$id.'?new_publish=true');
         }
         return $this->render('publish', ['item' => $item]);

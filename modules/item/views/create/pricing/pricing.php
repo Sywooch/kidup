@@ -5,13 +5,11 @@
  */
 ?>
 
-<h4><?= Yii::t("item", "Price") ?>
-    <br>
-    <small>
-        <?= Yii::t("item", "You can set a price to reflect the product you'll be renting.") ?>
-    </small>
+<h4>
+    <?= Yii::t("item", "Price") ?>
 </h4>
-
+<?= Yii::t("item", "You can set a price to reflect the product you'll be renting.") ?>
+<hr>
 <div class="row">
 
     <div class="col-md-4" style="padding-left:0">

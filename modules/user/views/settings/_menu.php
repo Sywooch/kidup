@@ -9,47 +9,38 @@
  * file that was distributed with this source code.
  */
 
-use yii\widgets\Menu;
-
-/** @var app\modules\user\models\User $user */
-$user = Yii::$app->user->identity;
-$networksVisible = count(Yii::$app->authClientCollection->clients) > 0;
-function buildMenuItem($icon, $text)
-{
-    return '<div class="row">
-    <div class="col-md-1 hidden-xs"><i class="fa fa-' . $icon . '"></i></div>
-    <div class="col-md-8">' . $text . '</div>
-</div>';
-}
-
+use kartik\sidenav\SideNav;
+use kartik\icons\Icon;
 ?>
-<?= Menu::widget([
+
+<?= SideNav::widget([
+    'type' => SideNav::TYPE_PRIMARY,
+    'heading' => false,
+    'encodeLabels' => false,
     'options' => [
         'class' => 'nav nav-stacked nav-icons',
 //        'style' => 'margin-top:35px'
     ],
     'items' => [
         [
-            'label' => buildMenuItem('user', Yii::t('user', 'Profile')),
-            'url' => ['/user/settings/profile']
+            'label' => Icon::show('user') . Yii::t('user', 'Profile'),
+            'url' => ['/user/settings/profile'] // use brackets instead of @web to let the menu automatically add active class
         ],
         [
-            'label' => buildMenuItem('gears', Yii::t('user', 'User Settings')),
+            'label' => Icon::show('lock') . Yii::t('user', 'Trust and Verification'),
+            'url' => ['/user/settings/verification']
+        ],
+        [
+            'label' => Icon::show('gears') . Yii::t('user', 'User Settings'),
             'url' => ['/user/settings/account']
         ],
         [
-            'label' => buildMenuItem('map-marker', Yii::t('user', 'Location')),
-            'url' => ['/user/settings/location']
-        ],
-        [
-            'label' => buildMenuItem('bank', Yii::t('user', 'Payout Preferences')),
+            'label' => Icon::show('bank') . Yii::t('user', 'Payout Preferences'),
             'url' => ['/user/settings/payout-preference']
         ],
         [
-            'label' => buildMenuItem('lock', Yii::t('user', 'Trust and Verification')),
-            'url' => ['/user/settings/verification'],
-            'visible' => $networksVisible
+            'label' => Icon::show('map-marker') . Yii::t('user', 'Billing Address'),
+            'url' => ['/user/settings/location']
         ],
     ],
-    'encodeLabels' => false
-]) ?>
+]); ?>

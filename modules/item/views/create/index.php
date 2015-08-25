@@ -55,12 +55,13 @@ use kartik\file\FileInput;
                                     <?= Html::activeHiddenInput($model, 'categories[' . $category->id . ']',
                                         ['value' => 0]); ?>
                                 <?php endforeach; ?>
-                                <h5>
-                                    <?= Yii::t("item", "Profile") ?>
-                                </h5>
+
 
                                 <div class="row" style="margin: 0">
                                     <?php if (!\Yii::$app->user->identity->profile->validate('first_name')): ?>
+                                        <h5>
+                                            <?= Yii::t("item", "Profile") ?>
+                                        </h5>
                                         <div class="col-md-6" style="padding-left:0">
                                             <?= $form->field($model, 'first_name'); ?>
                                         </div>
@@ -72,37 +73,13 @@ use kartik\file\FileInput;
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <?php if (!\Yii::$app->user->identity->profile->validate('img') == ImageHelper::DEFAULT_USER_FACE):
-                                $settings = [
-                                    'previewFileType' => 'image',
-                                    'overwriteInitial' => true
-                                ];
-                                ?>
-                                <div class="form-group">
-                                    <label class="control-label"><?= Yii::t("item", "Profile image") ?></label>
-                                    <br>
-                                    <?= Yii::t("item", "A profile image is not required but helps in builing trust around your product.") ?>
-                                    <?php
-                                    echo $form->field($model, 'profile_image')->widget(FileInput::classname(), [
-                                        'options' => ['multiple' => false, 'accept' => 'image/*'],
-                                        'pluginOptions' => $settings,
-                                        'language' => \Yii::$app->session->get('lang')
-                                    ])->label(false);
-                                    endif; ?>
-                                </div>
 
-                            </div>
-                        </div>
-
-
-                        <div class="row ">
-                            <div class="col-sm-10 col-sm-offset-1">
                                 <?= Html::submitButton(\Yii::t('item', 'Continue'), [
                                     'class' => "btn btn-danger btn-lg btn-fill",
                                 ]) ?>
+
                             </div>
                         </div>
-
                         <?php ActiveForm::end(); ?>
                     </div>
                 </div>
