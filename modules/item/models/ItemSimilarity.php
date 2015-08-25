@@ -95,12 +95,21 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
         ORDER BY similarity DESC
         LIMIT 10;';
 
+
+        // this is ugly, but gives some property overloading error if not done like this
+
+        $id = $this->item->id;
+        $lat = $this->item->location->latitude;
+        $long = $this->item->location->longitude;
+        $price = $this->item->price_week;
+        $categories = count($this->item->categories);
+
         return Yii::$app->db->createCommand($distanceQ)
-            ->bindParam(':itemId', $this->item->getAttribute('id'))
-            ->bindParam(':lat', $this->item->location->getAttribute('latitude'))
-            ->bindParam(':long', $this->item->location->getAttribute('longitude'))
-            ->bindParam(':weekPrice', $this->item->getAttribute('price_week'))
-            ->bindParam(':catCount', count($this->item->categories))
+            ->bindParam(':itemId', $id)
+            ->bindParam(':lat', $lat)
+            ->bindParam(':long', $long)
+            ->bindParam(':weekPrice', $price)
+            ->bindParam(':catCount', $categories)
             ->execute();
     }
 
