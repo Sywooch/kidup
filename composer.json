@@ -53,8 +53,7 @@
     "omnilight/yii2-scheduling": "*",
     "league/glide": "~1.0",
     "warrence/yii2-kartikgii": "dev-master",
-    "deployer/deployer": "2.0",
-    "myclabs/deep-copy"
+    "deployer/deployer": "2.0"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",
