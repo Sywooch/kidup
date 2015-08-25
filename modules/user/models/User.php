@@ -3,6 +3,7 @@
 namespace app\modules\user\models;
 
 use app\components\Event;
+use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Location;
 use app\modules\mail\models\Token;
 use app\modules\message\models\Conversation;
@@ -398,7 +399,7 @@ class User extends \app\models\base\User implements IdentityInterface
                     'currency_id' => 1,
                     'language' => $lang
                 ]);
-                $profile->setAttribute('img', 'kidup/user/default-face.jpg');
+                $profile->setAttribute('img', ImageHelper::DEFAULT_USER_FACE);
                 $profile->save(false);
                 $location = \Yii::createObject([
                     'class' => Location::className(),

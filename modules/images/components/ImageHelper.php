@@ -9,6 +9,8 @@ use yii\helpers\Url;
 class ImageHelper extends BaseHtml
 {
 
+    const DEFAULT_USER_FACE = 'kidup/user/default-face.jpg';
+
     public static function image($filename, $options = [], $htmlOptions = [])
     {
 

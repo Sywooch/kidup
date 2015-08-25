@@ -64,7 +64,7 @@ class Item extends \app\models\base\Item
     public function scenarios()
     {
         return [
-            'create' => ['owner_id', 'name', 'is_available', 'condition', 'location_id', 'min_renting_days'],
+            'create' => ['owner_id', 'is_available', 'min_renting_days'],
             'default' => [
                 'name',
                 'description',

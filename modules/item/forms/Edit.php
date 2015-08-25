@@ -63,11 +63,13 @@ class Edit extends Model
     public function rules()
     {
         return [
-            [['name', 'price_week', 'description', 'location_id'], 'required'],
+            [['name', 'price_week', 'description', 'location_id', 'photos', 'condition'], 'required'],
             [['name', 'description'], 'string'],
             [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
             ['photos', function($attr, $params){
-                return count($this->item->itemHasMedia) > 0;
+                if(count($this->item->itemHasMedia) == 0){
+                    $this->addError('photos', \Yii::t('item', 'Atleast one photo should be set'));
+                }
             }]
         ];
     }
@@ -82,7 +84,9 @@ class Edit extends Model
                 'price_day',
                 'price_month',
                 'description',
-                'condition'
+                'condition',
+                'photos',
+                'location_id'
             ],
             'location' => ['location_id'],
             'description' => ['name', 'description'],
@@ -90,13 +94,6 @@ class Edit extends Model
             'pricing' => ['price_week', 'price_day', 'price_month'],
             'photos' => ['photos'],
         ];
-    }
-
-    public function attributeLabels()
-    {
-        return ArrayHelper::merge([
-            'rules' => \Yii::t('item', 'By publishing an item, you agree with our terms and conditions.')
-        ], parent::attributeLabels());
     }
 
     public function formName()

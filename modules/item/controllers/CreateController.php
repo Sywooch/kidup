@@ -47,18 +47,20 @@ class CreateController extends Controller
     public function actionIndex()
     {
         $model = new Create();
-        $categories = Category::find()->where(['type' => Category::TYPE_MAIN])->all();
+        $ages = Category::find()->where(['type' => Category::TYPE_AGE])->all();
+        $categories = Category::find()->where(['in', 'id', [13,15,16,17,19,22]])->all();
 
         if (\Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
             $model->categories = \Yii::$app->request->post($model->formName())['categories'];
             if ($model->save()) {
-                $this->redirect(['/item/' . $model->item->id . '/edit']);
+                $this->redirect('@web/item/create/edit-basics?id=' . $model->item->id );
             }
         }
 
         return $this->render('index', [
             'model' => $model,
+            'ages' => $ages,
             'categories' => $categories
         ]);
     }
