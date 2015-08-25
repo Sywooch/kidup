@@ -9,7 +9,6 @@ class Cache extends \yii\base\Event
 {
     public static function data($name, $exec, $time = 30, $dependency = null){
         if(YII_CACHE == false) return $exec();
-        $name = debug_backtrace()[1]['function'].$name.\Yii::$app->language;
         $data = Yii::$app->cache->get($name);
         if ($data != false) {
             return $data;
@@ -21,17 +20,27 @@ class Cache extends \yii\base\Event
 
     public static function html($name, $exec, $dependencies = [], $doEcho = true){
         if(YII_CACHE == false) return $exec();
-        $name = debug_backtrace()[1]['function'].$name;
         $dependencies['variations'][] = \Yii::$app->language;
+        $view = new View();
         if($doEcho) {
-            $view = new View();
             if($view->beginCache($name, $dependencies)){
                 echo $exec();
                 $view->endCache();
             }
             return false;
         }else{
-            return self::data($name.Json::encode($dependencies), $exec);
+            if($view->beginCache($name, $dependencies)){
+                $data = $exec();
+                $view->endCache();
+                return $data;
+            }
+            return $exec();
         }
+    }
+
+    public static function remove($regexp){
+        $toDelete = new \APCIterator('user', '/^'.$regexp.'/', APC_ITER_VALUE);
+
+        var_dump( apc_delete($toDelete) );
     }
 }

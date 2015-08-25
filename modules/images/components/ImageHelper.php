@@ -48,7 +48,7 @@ class ImageHelper extends BaseHtml
 
     public static function bgImg($filename, $options = [])
     {
-        return "background-image: url('" . static::url($filename, $options) . "')";
+        return "background-image: url('" . ImageHelper::url($filename, $options) . "')";
     }
 
     public static function urlToFilename($url)
@@ -65,6 +65,7 @@ class ImageHelper extends BaseHtml
     public static function url($filename, $options = [])
     {
         $function = function () use ($filename, $options) {
+
             if ($filename == false || !is_string($filename)) {
                 return '';
             }
@@ -84,15 +85,13 @@ class ImageHelper extends BaseHtml
             if ($folders[0] == 'kidup') {
                 if (YII_ENV !== 'dev') {
                     // remove the kidup/ from the filename in prod/staging
-
                     $filename = substr($filename, 6);
                 }
-                $server->setSourcePathPrefix('/modules/images/images/');
             } else {
                 if (YII_ENV == 'dev') {
-                    $server->setSourcePathPrefix('/runtime/user-uploads/' . ImageManager::createSubFolders($filename));
+                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
                 } else {
-                    $server->setSourcePathPrefix('/user-uploads/' . ImageManager::createSubFolders($filename));
+                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
                 }
             }
 
@@ -101,11 +100,10 @@ class ImageHelper extends BaseHtml
                 $options['fm'] = 'pjpg';
             }
             if (YII_ENV != 'dev') {
-
                 if (!$server->cacheFileExists($filename, $options)) {
                     $server->makeImage($filename, $options);
                 }
-                $url = 'http://cdn.kidup.dk/' . $server->getCachePath($filename,
+                $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
                         $options);
             } else {
                 $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),

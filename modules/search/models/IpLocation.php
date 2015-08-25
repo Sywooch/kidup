@@ -18,7 +18,13 @@ class IpLocation extends \app\models\base\IpLocation
             $provider = new \Geocoder\Provider\FreeGeoIpProvider($adapter);
             $geocoder = new \Geocoder\Geocoder($provider);
 
-            $address = $geocoder->geocode($ip);
+            try{
+                $address = $geocoder->geocode($ip);
+            }catch(\Geocoder\Exception\NoResultException $e){
+                $provider = new \Geocoder\Provider\HostIpProvider($adapter);
+                $geocoder = new \Geocoder\Geocoder($provider);
+                $address = $geocoder->geocode($ip);
+            }
             $ipLocation = new IpLocation();
             $ipLocation->setAttributes([
                 'ip' => $ip,
