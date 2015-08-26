@@ -8,7 +8,9 @@ machine:
     localhost: 127.0.0.1
     dev.kidup.dk: 127.0.0.1
 
-
+general:
+  artifacts:
+    - "tests/codeception/_output" # relative to the build directory
 ## Customize dependencies
 dependencies:
   pre:
