@@ -45,7 +45,6 @@ task('deploy:vendors', function () use ($repo_password) {
     run("composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
-
 task('deploy:folder_permissions', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);

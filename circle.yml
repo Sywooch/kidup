@@ -19,6 +19,7 @@ dependencies:
     - mv ./config/keys/keys_test.json ./config/keys/keys.json
     - composer config github-oauth.github.com $CIRCLECI_GIT_OAUTH
     - composer global require "fxp/composer-asset-plugin:1.0.3"
+    - sudo service apache2 restart
   post:
     - cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
 
