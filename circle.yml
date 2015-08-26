@@ -14,7 +14,7 @@ dependencies:
   pre:
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
-    - sudo apt-get install php-apc php5enmod
+    - sudo apt-get install php-apc php5-dev
     - sudo php5enmod apcu
     # - bash ./devops/environment/init_test.sh
     - mv ./config/keys/keys_test.json ./config/keys/keys.json
