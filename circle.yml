@@ -17,9 +17,9 @@ dependencies:
     - npm install less clean-css uglify-js -g  # install from a different package manager
     - pecl install Fileinfo
     # - bash ./devops/environment/init_test.sh
-    - mv ./config/keys/keys_test.json ./config/keys/keys.json
     - composer global config github-oauth.github.com $CIRCLECI_GIT_OAUTH
     - composer global require "fxp/composer-asset-plugin:1.0.3"
+  post:
     - cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
 
 test:
