@@ -7,5 +7,10 @@ use yii\console\Controller;
 
 class DeployController extends Controller
 {
-//    public function
+
+    public function afterDeploy($buildNum){
+        // clear all cache
+
+        //
+    }
 }

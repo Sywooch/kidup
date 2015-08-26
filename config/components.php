@@ -74,7 +74,7 @@ $components = [
         'cookieValidationKey' => $keys['cookie_validation_key'],
     ],
     'cache' => [
-        'class' => 'yii\caching\ApcCache',
+        'class' => ( YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
         'errorAction' => 'site/error',
