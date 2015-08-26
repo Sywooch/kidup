@@ -94,6 +94,9 @@ class CreateController extends Controller
     public function actionEditBasics($id)
     {
         $i = $this->defaultPage($id, 'basics');
+        if($i instanceof Response){
+            return $i;
+        }
 
         $categories = [
             Category::TYPE_MAIN => Category::findAll(['type' => Category::TYPE_MAIN]),
@@ -114,6 +117,9 @@ class CreateController extends Controller
     public function actionEditDescription($id)
     {
         $i = $this->defaultPage($id, 'description');
+        if($i instanceof Response){
+            return $i;
+        }
 
         return $this->render('wrapper', [
             'item' => $i['item'],
@@ -127,6 +133,9 @@ class CreateController extends Controller
     public function actionEditLocation($id)
     {
         $i = $this->defaultPage($id, 'location');
+        if($i instanceof Response){
+            return $i;
+        }
 
         $locationForm = new LocationForm();
 
@@ -149,6 +158,9 @@ class CreateController extends Controller
     public function actionEditPhotos($id)
     {
         $i = $this->defaultPage($id, 'photos');
+        if($i instanceof Response){
+            return $i;
+        }
 
         return $this->render('wrapper', [
             'item' => $i['item'],
@@ -164,6 +176,9 @@ class CreateController extends Controller
     public function actionEditPricing($id)
     {
         $i = $this->defaultPage($id, 'pricing');
+        if($i instanceof Response){
+            return $i;
+        }
 
         return $this->render('wrapper', [
             'item' => $i['item'],
@@ -191,9 +206,12 @@ class CreateController extends Controller
             $nextPage = $pageOrder[min(array_search($scenario, $pageOrder) + 1, 6)];
             $prevPage = $pageOrder[max(0, array_search($scenario, $pageOrder) - 1)];
             if (isset(\Yii::$app->request->post()['btn-back'])) {
-                return $this->redirect('@web/item/create/edit-' . $prevPage . '?id=' . $item->id);
+//                return $this->redirect();
+                Yii::$app->response->redirect('@web/item/create/edit-' . $prevPage . '?id=' . $item->id);
             } else {
-                return $this->redirect('@web/item/create/edit-' . $nextPage . '?id=' . $item->id);
+                $url = '@web/item/create/edit-' . $nextPage . '?id=' . $item->id;
+                return Yii::$app->response->redirect($url);
+                return $this->redirect($url);
             }
         }
         return ['item' => $item, 'model' => $model];
@@ -365,6 +383,10 @@ class CreateController extends Controller
             return $this->redirect('@web/item/' . $id);
         }
         $i = $this->defaultPage($id, 'default');
+        if($i instanceof Response){
+            return $i;
+        }
+
         $isValid = $i['model']->isScenarioValid('default');
         if (!$isValid) {
             Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
