@@ -13,20 +13,18 @@ class UserHelper
      * Login a user.
      *
      * @param $I FunctionalTester|AcceptanceTester the tester
-     * @param $user string the username of the user
+     * @param $username string the username of the user
      * @param $password string the password of the user
      */
-    public static function login($I, $user, $password) {
+    public static function login($I, $username, $password) {
         if (Yii::$app->getUser()->getIsGuest()) {
-            $I->amOnPage('/user/login');
-            $I->canSeeElement('#wrapper #login-form-login');
-            $I->canSeeElement('#wrapper #login-form-password');
-            $I->fillField('#wrapper #login-form-login', $user);
-            $I->fillField('#wrapper #login-form-password', $password);
-            $I->click('#wrapper #login-form button[type=submit]');
+            //$identity = new UserIdentity($username, $password);
+            //$I->assertTrue($identity->authenticate(), 'I can not authenticate');
+            $identity = User::find()->where(['email' => $username])->one();
+            Yii::$app->user->login($identity);
+            Yii::$app->session->set('lang', 'en');
         }
-        $I->amOnPage('/home');
-        $I->canSee('Log Out');
+        $I->assertFalse(Yii::$app->getUser()->getIsGuest(), 'I should be logged in now, but I am not');
     }
 
     /**
