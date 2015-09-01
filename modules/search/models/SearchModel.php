@@ -123,7 +123,6 @@ class SearchModel extends Model
     public function filterLocation($query, $location = null, $distance = null)
     {
         $geodata = $this->_getGeoData($location);
-        print_r($geodata);
         if ($geodata['success']) {
             $latitude = $geodata['latitude'];
             $longitude = $geodata['longitude'];

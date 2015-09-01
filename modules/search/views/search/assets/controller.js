@@ -116,6 +116,12 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         }
     };
 
+    scope.setPriceUnit = function(priceUnit) {
+        if (priceUnit !== undefined && priceUnit.length > 0) {
+            scope.filter.priceUnit = priceUnit;
+        }
+    }
+
     scope.activeFilterRemove = function (filter) {
         if (filter == 'search') scope.filter.query = '';
         if (filter == 'price') {

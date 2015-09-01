@@ -50,9 +50,7 @@
              ng-init='
                 searchCtrl.filter.priceMin = searchCtrl.params.price[0];
                 searchCtrl.filter.priceMax = searchCtrl.params.price[1];
-                if (searchCtrl.params.priceUnit.length > 0) {
-                    searchCtrl.filter.priceUnit = searchCtrl.params.priceUnit;
-                }
+                searchCtrl.setPriceUnit(searchCtrl.params.priceUnit);
                 searchCtrl.updateSlider(searchCtrl.params.price[0], searchCtrl.params.price[1]);
             '>
             <select class="form-control" ng-model="searchCtrl.filter.priceUnit" ng-change="searchCtrl.filterChange()">
