@@ -3,6 +3,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
 
     scope.filter = {
         query: '',
+        priceUnit: 'week',
         prices: [],
         location: '',
         categories: [],
@@ -101,7 +102,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         };
         if (scope.filter.query.length > 0)      scope.activeFilter.search = true;
         if (scope.filter.location.length > 0)   scope.activeFilter.location = true;
-        if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499) {
+        if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499 || scope.filter.priceUnit != 'week') {
             scope.activeFilter.price = true;
         }
         if (getActiveCategories('category').length > 0) {
@@ -120,6 +121,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (filter == 'price') {
             scope.filter.priceMin = 0;
             scope.filter.priceMax = 499;
+            scope.filter.priceUnit = 'week';
             $("#price-slider").slider({"values": [0, 499]});
             $("#price-slider-mobile").slider({"values": [0, 499]});
         }
@@ -152,6 +154,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         $location.search('query', scope.filter.query);
         $location.search('location', scope.filter.location);
         $location.search('price', [scope.filter.priceMin, + scope.filter.priceMax]);
+        $location.search('priceUnit', scope.filter.priceUnit);
         if (getActiveCategories().length > 0) {
             $location.search('categories', getActiveCategories());
         }
@@ -162,6 +165,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
         q.push('price|' + scope.filter.priceMin + ',' + scope.filter.priceMax);
+        q.push('priceUnit|' + scope.filter.priceUnit);
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
         return q.join("|");
     };

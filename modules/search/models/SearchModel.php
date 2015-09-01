@@ -27,6 +27,7 @@ class SearchModel extends Model
     public $price = null;
     public $priceMin = 0;
     public $priceMax = 499;
+    public $priceUnit = 'week';
     public $page = 0;
 
     /**
@@ -45,7 +46,7 @@ class SearchModel extends Model
         $this->filterLocation($query, $this->location, null);
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);
-        $this->filterPrice($query, $this->priceMin, $this->priceMax);
+        $this->filterPrice($query, $this->priceMin, $this->priceMax, $this->priceUnit);
         $this->filterIsAvailable($query);
         $this->pageResults($query);
 
@@ -165,16 +166,32 @@ class SearchModel extends Model
      * @param ActiveQuery $query the query object to apply the filter on
      * @param int $priceMin the minimum price to search for
      * @param int $priceMax the maximum price to search for
+     * @param String $priceUnit either "day", "week" or "month"
      */
-    public function filterPrice($query, $priceMin = null, $priceMax = null)
+    public function filterPrice($query, $priceMin = null, $priceMax = null, $priceUnit = null)
     {
+        $field = null;
+        switch ($priceUnit) {
+            case 'day':
+                $field = 'price_day';
+                break;
+            case 'week':
+                $field = 'price_week';
+                break;
+            case 'month':
+                $field = 'price_month';
+                break;
+            default:
+                $field = 'price_week';
+                break;
+        }
         if (isset($priceMin) && $priceMin !== null) {
-            $query->andWhere('price_week >= :low', [
+            $query->andWhere($field . ' >= :low', [
                 ':low' => $priceMin,
             ]);
         }
         if (isset($priceMax) && $priceMax !== null) {
-            $query->andWhere('price_week <= :high', [
+            $query->andWhere($field . ' <= :high', [
                 ':high' => $priceMax,
             ]);
         }
@@ -233,6 +250,9 @@ class SearchModel extends Model
         }
         if (isset($params['priceMax'])) {
             $this->priceMax = $params['priceMax'];
+        }
+        if (isset($params['priceUnit'])) {
+            $this->priceUnit = $params['priceUnit'];
         }
         if (isset($params['categories'])) {
             $this->categories = $params['categories'];

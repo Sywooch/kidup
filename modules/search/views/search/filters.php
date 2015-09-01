@@ -42,7 +42,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h6 class="panel-title">
-            <?= Yii::t("item", "Price (Weekly)") ?>
+            <?= Yii::t("item", "Price") ?>
         </h6>
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
@@ -50,8 +50,15 @@
              ng-init='
                 searchCtrl.filter.priceMin = searchCtrl.params.price[0];
                 searchCtrl.filter.priceMax = searchCtrl.params.price[1];
+                searchCtrl.filter.priceUnit = searchCtrl.params.priceUnit;
                 searchCtrl.updateSlider(searchCtrl.params.price[0], searchCtrl.params.price[1]);
             '>
+            <select class="form-control" ng-model="searchCtrl.filter.priceUnit" ng-change="searchCtrl.filterChange()">
+                <option value="week">Price per week</option>
+                <option value="day">Price per day</option>
+                <option value="month">Price per month</option>
+            </select>
+            <br />
             <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
         </div>
         <div class="minPrice">

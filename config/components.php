@@ -153,4 +153,12 @@ $components = [
     'pages' => ['class' => 'app\components\Pages']
 ];
 
+if($keys['yii_env'] == 'test' || YII_ENV == 'test'){
+    // solving too many mysql connectsions errors bug during testing
+    //https://github.com/Codeception/Codeception/issues/1363
+    $components['db']['attributes'] = [
+        PDO::ATTR_PERSISTENT => true
+    ];
+}
+
 return $components;
