@@ -25,7 +25,7 @@ dependencies:
 
 test:
   override:
-    - cd ~/kidup/tests && php ../vendor/codeception/codeception/codecept run functional --debug
+    - cd ~/kidup/tests && sudo ../vendor/codeception/codeception/codecept run functional --debug
 
 deployment:
   production:
