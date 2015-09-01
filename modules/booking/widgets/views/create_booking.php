@@ -4,11 +4,7 @@ use yii\jui\DatePicker;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
-\yii\jui\JuiAsset::register($this, [
-    'depends' => [
-        \app\assets\AppAsset::className()
-    ]
-]);
+\yii\jui\JuiAsset::register($this);
 ?>
     <!-- this is the date dropbown field-->
 <?php $form = ActiveForm::begin([

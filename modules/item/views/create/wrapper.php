@@ -35,24 +35,29 @@ use \yii\helpers\Html;
                 'encodeLabels' => false,
                 'items' => [
                     [
-                        'url' => ['/item/create/edit-basics?id=' . $item->id],
+                        'url' => '@web/item/create/edit-basics?id=' . $item->id,
                         'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') . 'Basics',
+                        'active' => $page == 'basics/basics'
                     ],
                     [
-                        'url' => ['/item/create/edit-description?id=' . $item->id],
+                        'url' => '@web/item/create/edit-description?id=' . $item->id,
                         'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') . 'Description',
+                        'active' => $page == 'description/description'
                     ],
                     [
-                        'url' => ['/item/create/edit-location?id=' . $item->id],
+                        'url' => '@web/item/create/edit-location?id=' . $item->id,
                         'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') . 'Location',
+                        'active' => $page == 'location/location'
                     ],
                     [
-                        'url' => ['/item/create/edit-photos?id=' . $item->id],
+                        'url' => '@web/item/create/edit-photos?id=' . $item->id,
                         'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') . 'Photos',
+                        'active' => $page == 'photos/photos'
                     ],
                     [
-                        'url' => ['/item/create/edit-pricing?id=' . $item->id],
+                        'url' => '@web/item/create/edit-pricing?id=' . $item->id,
                         'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') . 'Pricing',
+                        'active' => $page == 'pricing/pricing'
                     ],
                 ],
             ]); ?>

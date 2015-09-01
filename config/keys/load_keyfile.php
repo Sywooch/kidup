@@ -31,7 +31,11 @@ if (!isset($config['type'])) {
     echo json_encode($result);
     exit;
 }
+if(getenv('CIRCLECI_KEYFILE_PASSHRASE')){
+    $config['key'] = getenv('CIRCLECI_KEYFILE_PASSHRASE');
+}
 if (!isset($config['key'])) {
+
     $result['error'] = '"key" parameter was not set in keys.json.';
     echo json_encode($result);
     exit;

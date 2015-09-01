@@ -45,13 +45,12 @@ task('deploy:vendors', function () use ($repo_password) {
     run("composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
-
 task('deploy:folder_permissions', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
     run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
     set('shared_dirs', ['runtime', 'uploads']);
-    set('shared_files', ['config/keys/keys.env']);
+    set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
     set('writeable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
 })->desc('Setting folder permissions');
 

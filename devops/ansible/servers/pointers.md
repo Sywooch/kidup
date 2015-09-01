@@ -1,7 +1,7 @@
 ssh-agent /bin/sh
 ssh-add /vagrant/devops/.private/ssh/id_rsa
 
-ansible-playbook -i ansible/test-server/hosts  ansible/beta-server.yml
+ansible-playbook -i ansible/servers/hosts  ansible/servers.yml
 
 # Ubuntu
 Make sure to NOT be a super user (root)!

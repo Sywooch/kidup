@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\images\controllers;
 
+use app\modules\images\components\ImageHelper;
 use app\modules\images\components\ImageManager;
 use Yii;
 use yii\base\DynamicModel;
@@ -13,6 +14,46 @@ use yii\widgets\ActiveForm;
  */
 class IndexController extends \app\controllers\Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            // access control, everybody can view this
+            [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?', '@'],
+                    ],
+                ],
+            ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60,
+                'variations' => [
+                    \Yii::$app->language,
+                ],
+//                'dependency' => [
+//                    'class' => 'yii\caching\DbDependency',
+//                    'sql' => 'SELECT COUNT(*) FROM post',
+//                ],
+            ],
+            [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['index'],
+                'cacheControlHeader' => 'public, max-age=300',
+//                'etagSeed' => function ($action, $params) {
+//                    return md5(1);
+////                    $post = $this->findModel(\Yii::$app->request->get('id'));
+////                    return serialize([$post->title, $post->content]);
+//                },
+            ],
+        ];
+    }
+
     public function actionIndex(
         $id,
         $w = null,
@@ -36,15 +77,14 @@ class IndexController extends \app\controllers\Controller
         if ($model->hasErrors()) {
             throw new BadRequestHttpException((new ActiveForm())->errorSummary($model));
         }
-        $server = (new ImageManager())->getServer();
-
+        $isStatic = false;
         if (isset($folder1) && $folder1 == 'kidup') {
+            $isStatic = true;
             $folder1 = null;
-            $server->setSourcePathPrefix('/modules/images/images/');
-        } else {
-            $server->setSourcePathPrefix('/runtime/user-uploads/' . ImageManager::createSubFolders($id));
+        }else{
+            $id = ImageManager::createSubFolders($id).'/'.$id;
         }
-
+        $server = (new ImageManager())->getServer($isStatic);
         // settings for image
         $options = [];
         if ($w !== null) {

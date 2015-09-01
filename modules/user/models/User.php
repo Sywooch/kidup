@@ -393,55 +393,54 @@ class User extends \app\models\base\User implements IdentityInterface
             }
 
             if ($this->id !== 1) {
-                $profile = \Yii::createObject([
-                    'class' => Profile::className(),
-                    'user_id' => $this->id,
-                    'currency_id' => 1,
-                    'language' => $lang
-                ]);
-                $profile->setAttribute('img', ImageHelper::DEFAULT_USER_FACE);
-                $profile->save(false);
-                $location = \Yii::createObject([
-                    'class' => Location::className(),
-                    'user_id' => $this->id,
-                    'type' => Location::TYPE_MAIN,
-                    'country' => 1
-                ]);
-                $location->save(false);
-
-                $settings = [
-                    Setting::BOOKING_STATUS_CHANGE,
-                    Setting::MAIL_BOOKING_REMINDER,
-                    Setting::NEWSLETTER,
-                    Setting::MESSAGE_UPDATE,
-                ];
-                foreach ($settings as $setting) {
-                    $s = \Yii::createObject([
-                        'class' => Setting::className(),
-                        'type' => $setting,
-                        'value' => 1,
-                        'user_id' => $this->id
-                    ]);
-                    $s->save();
-                }
-
-                // create conversation with kidup admin
-                $c = \Yii::createObject([
-                    'class' => Conversation::className(),
-                    'initiater_user_id' => 1,
-                    'target_user_id' => $this->id,
-                    'title' => 'Welcome to kidup!',
-                    'created_at' => time()
-                ]);
-                $c->save();
-                $c->addMessage(\Yii::t('user',
-                    'Hi there, and welcome to kidup! We hope you have a great time, if you\'ve got any questions, please contact us at info@kidup.dk'),
-                    $this->id, 1);
+                $this->setNewUserDefaults($lang);
             }
         }
 
         parent::afterSave($insert, $changedAttributes);
     }
+
+    /**
+     * Create somedefaults for a new user
+     * @param $lang
+     * @return bool
+     * @throws \yii\base\InvalidConfigException
+     */
+    private function setNewUserDefaults($lang){
+        $profile = \Yii::createObject([
+            'class' => Profile::className(),
+            'user_id' => $this->id,
+            'currency_id' => 1,
+            'language' => $lang
+        ]);
+        $profile->setAttribute('img', ImageHelper::DEFAULT_USER_FACE);
+        $profile->save(false);
+        $location = \Yii::createObject([
+            'class' => Location::className(),
+            'user_id' => $this->id,
+            'type' => Location::TYPE_MAIN,
+            'country' => 1
+        ]);
+        $location->save(false);
+
+        $settings = [
+            Setting::BOOKING_STATUS_CHANGE,
+            Setting::MAIL_BOOKING_REMINDER,
+            Setting::NEWSLETTER,
+            Setting::MESSAGE_UPDATE,
+        ];
+        foreach ($settings as $setting) {
+            $s = \Yii::createObject([
+                'class' => Setting::className(),
+                'type' => $setting,
+                'value' => 1,
+                'user_id' => $this->id
+            ]);
+            $s->save();
+        }
+        return true;
+    }
+
 
 
     public function isAdmin()

@@ -6,30 +6,42 @@ use Yii;
 use yii\db\Query;
 
 /**
- * This is the model class for table "item_similarity".
+ * This is the base-model class for table "item_similarity".
+ *
+ * @property integer $item_id_1
+ * @property integer $item_id_2
+ * @property double $similarity
+ * @property double $similarity_location
+ * @property double $similarity_categories
+ * @property double $similarity_price
+ *
+ * @property \app\models\Item $originatingItem
+ * @property \app\models\Item $similarItem
  */
 class ItemSimilarity extends \app\models\base\ItemSimilarity
 {
+    public $item;
+
     /**
      * Computes the similarities for an item
      * @param Item $item
      */
-    private $item;
-
-
-    public function compute($item){
+    public function compute(Item $item)
+    {
         $this->item = $item;
         $this->removeOld();
         $this->insertNewSimilarities();
-        $this->removeSelf();
+        $this->removeItself();
         return true;
     }
 
-    private function removeOld(){
+    private function removeOld()
+    {
         return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id]);
     }
 
-    private function removeSelf(){
+    private function removeItself()
+    {
         return ItemSimilarity::deleteAll(['item_id_1' => $this->item->id, 'item_id_2' => $this->item->id]);
     }
 
@@ -83,6 +95,7 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
         ORDER BY similarity DESC
         LIMIT 10;';
 
+
         // this is ugly, but gives some property overloading error if not done like this
 
         $id = $this->item->id;
@@ -100,12 +113,13 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
             ->execute();
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getOriginatingItem()
     {
-        return $this->hasOne(Item::className(), ['id' => 'item_id_1']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id_2']);
     }
 
     /**

@@ -87,6 +87,7 @@ return [
     'Please add a {href}payment method{endHref} so we know where we can pay you.' => 'Tilføj venligst en {href}betalingsmetode{endHref} så vi ved hvor din betaling skal gå hen.',
     'Please be aware that the booking lapses if you have not responded within this timeperiod.' => 'Vær venligst opmærksom på at bookingen annulleres, hvis du ikke svarer inden for denne tidsgrænse.',
     'Please finish your {0} and {1} before making a booking.' => 'Vær venlig at færdiggøre {0} og {1} før at du laver en booking',
+    'Please finish your {0} before making a booking.' => '',
     'Please keep all your communication through KidUp\'s secure system. This way KidUp can easily provide support when necessary.' => 'Hold venligst alt din kommunikations gennem KidUps sikre system. På denne måde kan KidUp nemt give dig support, skulle det blive nødvendigt.',
     'Please tell {owner} a little about why your booking this item, why you like the product so much and how you\'d like to arrange a meeting to transfer the item.' => 'Fortæl {owner} lidt omkring din booking, hvorfor du kan lide produktet og hvordan du tænker at afhente det.',
     'Print' => 'Print',

@@ -13,7 +13,7 @@
 <div class="row">
 
     <div class="col-md-4" style="padding-left:0">
-        <?= Yii::t("item", "Weekly price") ?><br>
+        <?= Yii::t("item", "Weekly price (in DKK)") ?><br>
         <?= $form->field($model, 'price_week')->input('number', [
             'class' => 'form-control',
             'options' => [

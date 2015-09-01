@@ -55,12 +55,15 @@ class SelectData extends Model
         $l = Location::find()->where(['user_id' => \Yii::$app->user->id])->all();
         $r = [];
         foreach($l as $loc){
-            $address = implode(" ,", [
-                $loc->street_name. ' '. $loc->street_number,
-                $loc->street_suffix,
-                $loc->city
-            ]);
-            $r[$loc->id] = $address;
+            /**
+             * @var Location $loc
+             */
+            if(!$loc->isValid()) continue;
+            $address = [$loc->street_name. ' '. $loc->street_number,];
+            if(!empty($loc->street_suffix)) $address[] = $loc->street_suffix;
+            $address[] = $loc->city;
+            $address[] = $loc->country0->name;
+            $r[$loc->id] = implode(", ", $address);
         }
         return $r;
     }

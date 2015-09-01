@@ -46,9 +46,11 @@ class CreateBooking extends Widget
         if (\Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
             if ($model->save()) {
-                //return \Yii::$app->controller->redirect('@web/booking/' . $model->bookingId . "/confirm");
-                \Yii::$app->getResponse()->redirect('@web/booking/' . $model->bookingId . "/confirm")->send();
-                return false;
+                if(YII_ENV == 'test'){
+                    \Yii::$app->getResponse()->redirect('@web/booking/' . $model->bookingId . "/confirm")->send();
+                    return false;
+                }
+                return \Yii::$app->getResponse()->redirect('@web/booking/' . $model->bookingId . "/confirm")->send();
             }
         }
 

@@ -64,7 +64,7 @@ class Edit extends Model
     {
         return [
             [['name', 'price_week', 'description', 'location_id', 'condition'], 'required'],
-            [['name', 'description'], 'string', 'min' => 5],
+            [['name', 'description'], 'string'],
             [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
             ['photos', 'required', 'isEmpty' => function(){
                 return count($this->item->itemHasMedia) == 0;
@@ -127,8 +127,9 @@ class Edit extends Model
                     }
                 }
             }
+            return true;
         }
-        return $item;
+        return false;
     }
 
     public function isScenarioValid($s){

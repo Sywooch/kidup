@@ -34,8 +34,25 @@ class LocationForm extends Model
             [['country'], 'string', 'max' => 100],
             [['zip_code'], 'string', 'max' => 10],
             [['street'], 'string', 'max' => 256, 'min' => 5],
+            [
+                'street',
+                function ($attribute, $params) {
+                    if (!preg_match('/ [0-9]+/', $this->street)) {
+                        $this->addError($attribute, \Yii::t('item', "Please add an address number."));
+                    }
+                }
+            ],
+            [
+                'street',
+                function ($attribute, $params) {
+                    if (!$this->validateAddress()) {
+                        $this->addError($attribute, \Yii::t('item', "Address couldnt be found."));
+                    }
+                }
+            ],
             [['street_suffix'], 'string', 'max' => 100],
             [['item_id'], 'integer'],
+
         ];
     }
 
@@ -74,7 +91,7 @@ class LocationForm extends Model
      */
     public function save()
     {
-        if(!$this->validateAddress()){
+        if (!$this->validateAddress()) {
             return false;
         }
         if ($this->validate()) {
