@@ -1,7 +1,7 @@
 <?php
 // displaying the search results
 ?>
-<div class="searchResults">
+<div class="searchResults" id="results">
     <div class="row">
         <?php
         foreach ($results as $result) {
