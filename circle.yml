@@ -21,11 +21,11 @@ dependencies:
     - composer global config github-oauth.github.com $CIRCLECI_GIT_OAUTH
     - composer global require "fxp/composer-asset-plugin:1.0.3"
   post:
-    - cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
+    - chmod 0777 ~/kidup/ && chmod 0777 ~/kidup/ -R && mkdir ~/kidup/runtime/mail && chmod 0777 ~/kidup/runtime/mail && cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
 
 test:
   override:
-    - cd ~/kidup/tests && sudo php ../vendor/codeception/codeception/codecept run functional --report
+    - cd ~/kidup/tests && ../vendor/codeception/codeception/codecept run functional --debug
 
 deployment:
   production:

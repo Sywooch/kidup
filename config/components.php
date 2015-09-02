@@ -168,6 +168,12 @@ if($keys['yii_env'] == 'test' || YII_ENV == 'test'){
     $components['db']['attributes'] = [
         PDO::ATTR_PERSISTENT => true
     ];
+    $components['authClientCollection']['clients']['facebook'] = [
+        'class' => 'yii\authclient\clients\Facebook',
+        'clientId' => '1515825585365803',
+        'clientSecret' => $keys['facebook_oauth_secret']
+    ];
 }
+
 
 return $components;
