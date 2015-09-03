@@ -11,7 +11,8 @@ use Codeception\Module;
  * Class MessageHelper
  * @package app\tests\codeception\_support
  */
-class MessageHelper extends Module {
+class MessageHelper extends Module
+{
 
     // list of currently created conversations
     private $conversations = [];
@@ -24,7 +25,8 @@ class MessageHelper extends Module {
      * @param $text text of the message
      * @return mixed the message
      */
-    public function createMessage($from, $to, $text) {
+    public function createMessage($from, $to, $text)
+    {
         $time = time();
         $conversation = new Conversation([
             'initiater_user_id' => 2,
@@ -43,7 +45,8 @@ class MessageHelper extends Module {
     /**
      * Clear all conversations made by this helper.
      */
-    public function clearConversations() {
+    public function clearConversations()
+    {
         foreach ($this->conversations as $conversationID) {
             Message::deleteAll('conversation_id = :conversation_id', [
                 'conversation_id' => $conversationID
@@ -56,4 +59,5 @@ class MessageHelper extends Module {
     }
 
 }
+
 ?>

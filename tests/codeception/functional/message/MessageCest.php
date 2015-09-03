@@ -1,10 +1,10 @@
 <?php
 namespace app\tests\codeception\functional\message;
 
+use app\tests\codeception\_support\FixtureHelper;
 use app\tests\codeception\_support\MessageHelper;
 use app\tests\codeception\_support\UserHelper;
 use FunctionalTester;
-use app\tests\codeception\_support\FixtureHelper;
 
 /**
  * Functional test for the message module.
@@ -33,7 +33,8 @@ class MessageCest
      *
      * @param FunctionalTester $I
      */
-    public function _after(FunctionalTester $I) {
+    public function _after(FunctionalTester $I)
+    {
         $this->messageHelper->clearConversations();
     }
 
@@ -42,7 +43,8 @@ class MessageCest
      *
      * @param FunctionalTester $I
      */
-    public function testBadgeCount(FunctionalTester $I) {
+    public function testBadgeCount(FunctionalTester $I)
+    {
         $I->wantTo('ensure that the badge count is displayed correctly on the home page.');
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
         $I->amOnPage('/');
