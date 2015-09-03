@@ -159,7 +159,15 @@ $components = [
     'slack' => ['class' => 'app\components\Slack'],
     'clog' => ['class' => 'app\components\Log'],
     'widgetRequest' => ['class' => 'app\components\WidgetRequest'],
-    'pages' => ['class' => 'app\components\Pages']
+    'pages' => ['class' => 'app\components\Pages'],
+    'geolocation' => [
+        'class' => 'rodzadra\geolocation\Geolocation',
+        'config' => [
+            'provider' => '[PLUGIN_NAME]',
+            'format' =>  '[SUPORTED_PLUGIN_FORMAT]',
+            'api_key' => '[YOUR_API_KEY]',
+        ],
+    ]
 ];
 
 if($keys['yii_env'] == 'test' || YII_ENV == 'test'){

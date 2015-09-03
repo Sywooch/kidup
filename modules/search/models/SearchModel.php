@@ -29,6 +29,10 @@ class SearchModel extends Model
     public $priceMax = 499;
     public $priceUnit = 'week';
     public $page = 0;
+    private $_locationData = [
+        'longitude' => null,
+        'latitude' => null
+    ];
 
     /**
      * Find items.
@@ -42,7 +46,6 @@ class SearchModel extends Model
         $query = $this->initQuery();
 
         // apply filters
-        $this->filterLocation($query, 'Federiklaan 175 1/A Eindhoven', null);
         $this->filterLocation($query, $this->location, null);
         $this->filterSearchTerm($query, $this->query);
         $this->filterCategories($query, $this->categories);
@@ -208,11 +211,17 @@ class SearchModel extends Model
      */
     private function _getGeoData($location = null)
     {
-        $location = Cache::data('location_' . $location, function () use ($location) {
-            return Location::getByAddress($location);
-        }, 30 * 24 * 60 * 60);
-        $latitude = $location['latitude'];
-        $longitude = $location['longitude'];
+        if ($this->_locationData['latitude'] !== null && $this->_locationData['longitude'] !== null) {
+            $location = true;
+            $latitude = $this->_locationData['latitude'];
+            $longitude = $this->_locationData['longitude'];
+        } else {
+            $location = Cache::data('location_' . $location, function () use ($location) {
+                return Location::getByAddress($location);
+            }, 30 * 24 * 60 * 60);
+            $latitude = $location['latitude'];
+            $longitude = $location['longitude'];
+        }
 
         return [
             'longitude' => $longitude,
@@ -235,15 +244,42 @@ class SearchModel extends Model
             $this->location = $params['location'];
         } else {
             // use IP based location
-            $location = IpLocation::get('31.151.30.46');
-            if (strlen($location['city']) > 0 && strlen($location['country']) > 0) {
-                $location = $location['city'] . ", " . $location['country'];
-            } else if (strlen($location['country']) > 0) {
-                $location = $location['country'];
+            $ip = null;
+            if (YII_ENV !== 'test') {
+                $ip = Yii::$app->request->getUserIP();
+                $location = IpLocation::get($ip);
             } else {
                 $location = null;
             }
-            $this->location = $location;
+            if ($ip !== null) {
+                if (strlen($location['city']) > 0 && strlen($location['country']) > 0) {
+                    $location = $location['city'] . ", " . $location['country'];
+                } else {
+                    if (strlen($location['country']) > 0) {
+                        $location = $location['country'];
+                    } else {
+                        // use a fallback method
+                        $location = Location::getByIP($ip);
+                        if ($location !== null) {
+                            $this->_locationData['longitude'] = $location['longitude'];
+                            $this->_locationData['latitude'] = $location['latitude'];
+                            if (strlen($location['city']) > 0 && strlen($location['country_name']) > 0) {
+                                $location = $location['city'] . ", " . $location['country_name'];
+                            } else {
+                                if (strlen($location['country_name']) > 0) {
+                                    $location = $location['country_name'];
+                                } else {
+                                    // if it is really not traceable
+                                    $location = null;
+                                }
+                            }
+                        } else {
+                            $location = null;
+                        }
+                    }
+                }
+                $this->location = $location;
+            }
         }
         if (isset($params['priceMin'])) {
             $this->priceMin = $params['priceMin'];

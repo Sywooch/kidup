@@ -118,6 +118,43 @@ class Location extends \app\models\base\Location
         }
     }
 
+    /**
+     * A method which works offline and does not depend on external connection for fetching a location based
+     * on an IP address.
+     *
+     * @param $ip IP address
+     * @return Array|Boolean false if no record could be found and otherwise an array with the following keys:
+     *          country_code        Country code (2 characters) (if detected)
+     *          country_code3       Country code (3 charachters) (if detected)
+     *          country_name        Country name (if detected)
+     *          region              Region (if detected)
+     *          city                City (if detected)
+     *          postal_code         Postal code (if detected)
+     *          latitude            Latitude (if detected)
+     *          longitude           Longitude (if detected)
+     *          area_code           Area code (if detected)
+     *          dma_code            DMA code (if detected)
+     *          metro_code          Metro code (if detected)
+     *          continent_code      Continent code (if detected)
+     */
+    public static function getByIP($ip) {
+        if (strpos($ip, '.') !== false) {
+            // its an v4 address
+            $gi = geoip_open("../data/GeoLiteCity.dat",GEOIP_STANDARD);
+            $record = GeoIP_record_by_addr($gi, $ip);
+            geoip_close($gi);
+        } else {
+            // its an v6 address
+            $gi = geoip_open("../data/GeoLiteCityv6.dat",GEOIP_STANDARD);
+            $record = GeoIP_record_by_addr_v6($gi, $ip);
+            geoip_close($gi);
+        }
+        if ($record === null) {
+            return false;
+        }
+        return $record;
+    }
+
     public function setStreetNameAndNumber($name){
         $this->street_name = substr($name, 0, strcspn($name, '1234567890')); // gives foo
         $this->street_number = str_replace($this->street_name, '', $name);
