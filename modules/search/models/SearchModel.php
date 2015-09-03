@@ -244,13 +244,8 @@ class SearchModel extends Model
             $this->location = $params['location'];
         } else {
             // use IP based location
-            $ip = null;
-            if (YII_ENV !== 'test') {
-                $ip = Yii::$app->request->getUserIP();
-                $location = IpLocation::get($ip);
-            } else {
-                $location = null;
-            }
+            $ip = Yii::$app->request->getUserIP();
+            $location = IpLocation::get($ip);
             if ($ip !== null) {
                 if (strlen($location['city']) > 0 && strlen($location['country']) > 0) {
                     $location = $location['city'] . ", " . $location['country'];

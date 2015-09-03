@@ -2,7 +2,6 @@
 namespace app\tests\codeception\functional\search;
 
 use FunctionalTester;
-use app\modules\item\models\Item;
 use app\tests\codeception\_support\FixtureHelper;
 use tests\codeception\_pages\ItemSearchPage;
 
