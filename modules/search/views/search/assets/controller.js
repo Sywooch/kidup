@@ -59,6 +59,29 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         $("#price-slider-mobile").slider(values);
     };
 
+    scope.loadCurrentLocation = function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){
+                var geocoder = new google.maps.Geocoder;
+                var latlng = {
+                    lat: parseFloat(position['coords']['latitude']),
+                    lng: parseFloat(position['coords']['longitude'])
+                };
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        if (results.length > 0) {
+                            var result = results[0];
+                            var location = result['formatted_address'];
+                            scope.filter.location = location;
+                            if (!$scope.$$phase) $scope.$apply();
+                            update();
+                        }
+                    }
+                });
+            });
+        }
+    }
+
     var getActiveCategories = function (type) {
         var res = [];
         if (typeof type === "undefined" || type == "category") {
@@ -82,7 +105,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (!$scope.$$phase) $scope.$apply();
         $.ajax({
             'method': 'GET',
-            'url': 'search-results?q=' + getUrl() + '&p=0'
+            'url': '/search-results?q=' + getUrl() + '&p=0'
         }).done(function (data) {
             scope.loading = false;
             $('.searchResults').replaceWith(data);
@@ -111,6 +134,18 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         if (getActiveCategories('age').length > 0) {
             scope.activeFilter.age = true;
         }
+
+        // Don't display the label "active filters" when there are no filters active
+        var numActiveFilters = 0;
+        angular.forEach(scope.activeFilter, function(enabled, filter) {
+            if (enabled) numActiveFilters++;
+        });
+        if (numActiveFilters > 0) {
+            $('.filters-label').show();
+        } else {
+            $('.filters-label').hide();
+        }
+
         if(!$scope.$$phase) {
             $scope.$apply();
         }

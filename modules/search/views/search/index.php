@@ -32,7 +32,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
 
                         <div class="row" style="margin:10px 0px;padding:0px;">
                             <div class="col-md-12 hidden-xs hidden-sm">
-                                <div style="display: inline-block">
+                                <div class="filters-label" style="display: inline-block">
                                     <?= Yii::t("item", "Active filters:") ?>
                                 </div>
 
@@ -50,6 +50,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                 <i ng-init='searchCtrl.activeFilter.location = <?= $model->location == null ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
+                                     ng-init="searchCtrl.loadCurrentLocation()"
                                      ng-show="searchCtrl.activeFilter.location"
                                      ng-click="searchCtrl.activeFilterRemove('location')">
                                     <strong>
