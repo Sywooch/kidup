@@ -38,10 +38,10 @@ class GoogleAutoComplete extends InputWidget
             ]));
         $view->registerJs(<<<JS
             (function(){
-                new google.maps.places.Autocomplete(
+                $(window).attr('autocomplete', new google.maps.places.Autocomplete(
                     document.getElementById('{$elementId}'),
                     {$scriptOptions}
-                );
+                ));
             })();
 JS
             , \yii\web\View::POS_READY);

@@ -25,6 +25,11 @@ class LocationForm extends Model
     public $item_id;
     private $item;
 
+    public function __construct() {
+        $this->country = 1;
+        return parent::__construct();
+    }
+
     /** @inheritdoc */
     public function rules()
     {

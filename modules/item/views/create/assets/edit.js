@@ -102,3 +102,39 @@ $(function () {
     });
     dr.disableSelection();
 });
+
+$(function() {
+    var timer = setInterval(function() {
+        if ($(window).attr('autocomplete') !== undefined) {
+            var autocomplete = $(window).attr('autocomplete');
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                var streetAddress = {};
+                $.each(place['address_components'], function() {
+                    var address = this;
+                    var name = address['long_name'];
+                    console.log(address);
+                    $.each(address['types'], function() {
+                        var type = this;
+                        if (type == 'postal_code') {
+                            $('#location-form-zip_code').val(name);
+                        }
+                        if (type == 'locality') {
+                            $('#location-form-city').val(name);
+                        }
+                        if (type == 'route') {
+                            streetAddress['route'] = name;
+                        }
+                        if (type == 'street_number') {
+                            streetAddress['street_number'] = name;
+                        }
+                    });
+                });
+                if (streetAddress['route'] !== undefined && streetAddress['street_number'] !== undefined) {
+                    $('.location-input').val(streetAddress['route'] + ' ' + streetAddress['street_number']);
+                }
+            });
+            clearInterval(timer);
+        }
+    }, 500);
+});

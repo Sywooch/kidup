@@ -1,4 +1,19 @@
 @import (reference) "./../../../views/assets/css/includer.less";
+
+/* Google Autocomplete bugfix */
+.pac-container {
+  background-color: #FFF;
+  z-index: 1060;
+  position: fixed;
+  display: inline-block;
+  float: left;
+}
+
+/* Make sure that modals are below Google Autocomplete */
+.modal, .modal-dialog {
+  z-index: 1050 !important;
+}
+
 #wrapper{
   margin-bottom:0 !important;
 }
