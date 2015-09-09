@@ -15,8 +15,9 @@ class CreateBooking extends Model
 
     public $dateFrom;
     public $dateTo;
-    private $from;
-    private $to;
+    public $from;
+    public $to;
+    public $booking; // holds the final booking, if created
     private $itemBookings;
     public $currency;
     public $item;
@@ -83,18 +84,18 @@ class CreateBooking extends Model
         return false;
     }
 
-    private function validateDates()
+    public function validateDates()
     {
         if ($this->validate('dateFrom') && $this->validate('dateTo')) {
-            $this->from = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->timestamp;
-            $this->to = Carbon::createFromFormat('d-m-Y', $this->dateTo)->timestamp;
+            $this->from = Carbon::createFromFormat('d-m-Y g:i:s', $this->dateFrom . ' 12:00:00')->timestamp;
+            $this->to = Carbon::createFromFormat('d-m-Y g:i:s', $this->dateTo . ' 12:00:00')->timestamp;
             // see if it clashes with another booking
-            foreach ($this->itemBookings as $booking) {
-                // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-                if ($this->from <= $booking->time_to and $this->to >= $booking->time_from) {
-                    $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
-                    return false;
-                }
+            // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+            $overlapping = Booking::find()->where(':from < time_from and :to > time_to and item_id = :item_id',
+                [':from' => $this->from, ':to' => $this->to, ':item_id' => $this->item->id])->count();
+            if ($overlapping > 0) {
+                $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
+                return false;
             }
             if ($this->to <= $this->from) {
                 $this->addError('dateFrom', \Yii::t('item', 'The from date should be larger then the to date'));
@@ -112,54 +113,30 @@ class CreateBooking extends Model
             return false;
         }
 
-        // http://stackoverflow.com/questions/2545947/mysql-range-date-overlap-check
-        $booking = Booking::find()->where(':from < time_from and :to > time_to and item_id = :item_id',
-            [':from' => $from, ':to' => $to, ':item_id' => $this->itemId])->one();
-        if (count($booking) > 0) {
-            \Yii::$app->session->setFlash("error", \Yii::t('booking', "Item is already booked between these dates"));
-            return false;
-        }
-
         if (\Yii::$app->user->isGuest) {
-
-            \Yii::$app->session->setFlash("error",
-                \Yii::t('booking', "You should be logged in to perform this action"));
-            \Yii::$app->controller->redirect('@web/user/login');
+            $this->addError('dateFrom', \Yii::t('item', 'You should be logged in to perform this action.'));
             return false;
         }
 
-        /**
-         * @var $user \app\modules\user\models\User
-         */
-        $user = User::findOne(\Yii::$app->user->id);
-        if ($user->canMakeBooking() !== true) {
-            \Yii::$app->session->setFlash("info",
-                \Yii::t('booking', "Please finish your {0} before making a booking.", [
-                    Html::a(\Yii::t('booking', 'profile settings'), '@web/user/settings/profile', [
-                        'target' => '_blank'
-                    ])
-                ]));
-            return false;
-        }
-        $item = Item::findOne($this->itemId);
-        $rentingDays = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->diffInDays(Carbon::createFromFormat('d-m-Y',
-            $this->dateTo));
-        if ($rentingDays < $item->min_renting_days) {
-            \Yii::$app->session->setFlash("error",
-                \Yii::t('booking', "This item requires at least {0} days per booking.", [$item->min_renting_days]));
-            return false;
-        }
+//        $item = Item::findOne($this->itemId);
+//        $rentingDays = Carbon::createFromFormat('d-m-Y g:i:s', $this->dateFrom . ' 12:00:00')
+//            ->diffInDays(Carbon::createFromFormat('d-m-Y g:i:s', $this->dateTo . ' 12:00:00'));
+//        if ($rentingDays < $item->min_renting_days) {
+//            \Yii::$app->session->setFlash("error",
+//                \Yii::t('booking', "This item requires at least {0} days per booking.", [$item->min_renting_days]));
+//            return false;
+//        }
         $booking = new Booking();
         $booking->setScenario('init');
-        $booking->time_from = $from;
-        $booking->time_to = $to;
-        $booking->item_id = $this->itemId;
+        $booking->time_from = $this->from;
+        $booking->time_to = $this->to;
+        $booking->item_id = $this->item->id;
         $booking->renter_id = \Yii::$app->user->id;
-        $booking->currency_id = $this->currencyId;
+        $booking->currency_id = $this->currency->id;
         $booking->status = Booking::AWAITING_PAYMENT;
-        $booking->setPayinPrices($from, $to, $this->prices);
+        $booking->setPayinPrices();
         if ($booking->save()) {
-            $this->bookingId = $booking->id;
+            $this->booking = $booking;
             return true;
         } else {
         }

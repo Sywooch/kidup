@@ -7,6 +7,7 @@ use yii\widgets\Pjax;
 
 /**
  * @var yii\web\View $this
+ * @var false|string $redirect
  * @var \app\modules\item\forms\CreateBooking $model
  */
 
@@ -14,7 +15,7 @@ use yii\widgets\Pjax;
 \app\assets\LodashAsset::register($this);
 ?>
 <?php Pjax::begin([
-    'enableReplaceState' => true,
+//    'enableReplaceState' => true,
     'id' => 'pjax-create-booking-form'
 ]);
 ?>
@@ -124,7 +125,7 @@ use yii\widgets\Pjax;
                     <?php endif; ?>
                     <?= Html::submitButton(\Yii::t('item', 'Request to Book'),
                         [
-                            'class' => 'btn btn-danger btn-fill x',
+                            'class' => 'btn btn-danger btn-fill',
                             'style' => 'width:100%',
                             'id' => 'request-booking-btn'
                         ]); ?>

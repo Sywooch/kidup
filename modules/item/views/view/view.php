@@ -174,7 +174,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
                 </div>
                 <?php echo $this->render('booking_widget', [
-                    'model' => $bookingForm
+                    'model' => $bookingForm,
                 ]) ?>
             </div>
         </div>

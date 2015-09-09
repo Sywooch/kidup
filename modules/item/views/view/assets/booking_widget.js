@@ -52,29 +52,51 @@ var widgetFactory = function () {
         $('form[data-pjax]').submit();
     };
 
+
     $("form[data-pjax]").on('submit', function (event) {
-        $("#booking-widget .overlay").css("visibility", "visible");
-        $("#booking-widget .overlay").fadeTo(0.3, 0.6);
+        event.preventDefault();
+        var val1 = $('#create-booking-datefrom').val();
+        var val2 = $('#create-booking-datefrom').val();
+        if (val1 == "" || val2 == "") {
+            $("#create-booking-datefrom").datepicker("hide");
+            $("#create-booking-dateto").datepicker("hide");
+            $("#create-booking-datefrom").datepicker("show");
+        } else {
+            $("#booking-widget .overlay").fadeTo(0.3, 0.6);
+            $("#booking-widget .overlay").css("visibility", "visible");
+        }
     });
 
     api.load = function () {
-        var widget = widgetFactory();
-        $("#booking-widget .overlay").css("visibility", "hidden");
-        jQuery('#create-booking-datefrom').datepicker({
-            "beforeShowDay": widget.dateFrom.beforeShowDay,
-            "onSelect": widget.dateFrom.onSelect,
-            "dateFormat": "dd-mm-yy"
-        });
-        jQuery('#create-booking-dateto').datepicker({
-            "beforeShowDay": widget.dateTo.beforeShowDay,
-            "onSelect": widget.dateTo.onSelect,
-            "dateFormat": "dd-mm-yy"
-        });
-        jQuery('#create-booking-form').yiiActiveForm([], []);
-        jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {"push": true, "replace": true, "timeout": 1000, "scrollTo": false});
-        jQuery(document).on('submit', "#pjax-create-booking-form form[data-pjax]", function (event) {
-            jQuery.pjax.submit(event, '#pjax-create-booking-form', {"push": true, "replace": true, "timeout": 1000, "scrollTo": false});
-        });
+        if(typeof redirect === "undefined"){
+            var widget = widgetFactory();
+            $("#booking-widget .overlay").css("visibility", "hidden");
+            //jQuery('#create-booking-datefrom').datepicker({
+            //    "beforeShowDay": widget.dateFrom.beforeShowDay,
+            //    "onSelect": widget.dateFrom.onSelect,
+            //    "dateFormat": "dd-mm-yy"
+            //});
+            //jQuery('#create-booking-dateto').datepicker({
+            //    "beforeShowDay": widget.dateTo.beforeShowDay,
+            //    "onSelect": widget.dateTo.onSelect,
+            //    "dateFormat": "dd-mm-yy"
+            //});
+            //jQuery('#create-booking-form').yiiActiveForm([], []);
+            jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
+                "push": true,
+                "replace": true,
+                "timeout": 1000,
+                "scrollTo": false
+            });
+            jQuery(document).on('submit', "#pjax-create-booking-form form[data-pjax]", function (event) {
+                jQuery.pjax.submit(event, '#pjax-create-booking-form', {
+                    "push": true,
+                    "replace": true,
+                    "timeout": 1000,
+                    "scrollTo": false
+                });
+            });
+        }
     };
 
     return api;
