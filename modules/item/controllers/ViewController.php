@@ -51,6 +51,7 @@ class ViewController extends Controller
         ];
     }
 
+
     public function actionIndex($id, $new_publish = false)
     {
         Url::remember();
@@ -66,8 +67,8 @@ class ViewController extends Controller
         if(Yii::$app->request->isPjax){
             $model = new CreateBooking($item, $currency);
             $model->load(\Yii::$app->request->post());
-            $model->save();
-            return $this->renderPartial('booking_widget', [
+            $model->calculateTableData();
+            return $this->renderAjax('booking_widget', [
                 'model' => $model,
                 'item' => $item,
                 'periods' => []

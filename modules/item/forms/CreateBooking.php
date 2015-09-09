@@ -15,20 +15,25 @@ class CreateBooking extends Model
 
     public $dateFrom;
     public $dateTo;
-    public $bookingId;
+    private $from;
+    private $to;
+    private $itemBookings;
     public $currency;
     public $item;
     public $periods = [];
+    public $tableData = false;
 
     public function __construct(Item $item, Currency $currency)
     {
         $this->currency = $currency;
         $this->item = $item;
-        $bookings = Booking::find()->where(['item_id' => $this->item->id])->all();
-        foreach ($bookings as $booking) {
-            if ($booking->status !== Booking::ACCEPTED) {
-                $this->periods[] = [$booking->time_from, $booking->time_to];
-            }
+        $this->itemBookings = Booking::find()->where('item_id = :itemId and status != :status and time_to > :time')->params([
+            ':itemId' => $this->item->id,
+            ':status' => Booking::ACCEPTED,
+            ':time' => time(),
+        ])->all();
+        foreach ($this->itemBookings as $booking) {
+            $this->periods[] = [$booking->time_from, $booking->time_to];
         }
         return parent::__construct();
     }
@@ -42,9 +47,63 @@ class CreateBooking extends Model
     {
         return [
             [['dateFrom', 'dateTo'], 'string'],
-            [['currencyId'], 'number'],
-            [['prices', 'dateFrom', 'dateTo'], 'required'],
+            [['dateFrom', 'dateTo'], 'required'],
         ];
+    }
+
+    /**
+     * Computes the values for the pricing table in the booking widget
+     * @return bool
+     */
+    public function calculateTableData()
+    {
+        if ($this->validateDates()) {
+            $prices = $this->item->getPriceForPeriod($this->from, $this->to, $this->currency);
+            $days = floor(($this->to - $this->from) / (60 * 60 * 24));
+            if ($days <= 7) {
+                $period = \Yii::t('item', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
+                $periodPrice = $this->item->price_day;
+            } elseif ($days > 7 && $days <= 31) {
+                $period = \Yii::t('item', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
+                $periodPrice = $this->item->price_week;
+            } else {
+                $period = \Yii::t('item', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
+                $periodPrice = $this->item->price_month;
+            }
+            $this->tableData = [
+                'price' => [
+                    $period . ' x ' . $this->currency->forex_name . ' ' . $periodPrice,
+                    $this->currency->abbr . ' ' . $prices['price']
+                ],
+                'fee' => [\Yii::t('item', 'Service fee'), $this->currency->abbr . ' ' . $prices['fee']],
+                'total' => [\Yii::t('item', 'Total'), $this->currency->abbr . ' ' . $prices['total']]
+            ];
+            return true;
+        }
+        return false;
+    }
+
+    private function validateDates()
+    {
+        if ($this->validate('dateFrom') && $this->validate('dateTo')) {
+            $this->from = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->timestamp;
+            $this->to = Carbon::createFromFormat('d-m-Y', $this->dateTo)->timestamp;
+            // see if it clashes with another booking
+            foreach ($this->itemBookings as $booking) {
+                // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+                if ($this->from <= $booking->time_to and $this->to >= $booking->time_from) {
+                    $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
+                    return false;
+                }
+            }
+            if ($this->to <= $this->from) {
+                $this->addError('dateFrom', \Yii::t('item', 'The from date should be larger then the to date'));
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function save()
@@ -52,8 +111,7 @@ class CreateBooking extends Model
         if (!$this->validate()) {
             return false;
         }
-        $from = Carbon::createFromFormat('d-m-Y', $this->dateFrom)->timestamp;
-        $to = Carbon::createFromFormat('d-m-Y', $this->dateTo)->timestamp;
+
         // http://stackoverflow.com/questions/2545947/mysql-range-date-overlap-check
         $booking = Booking::find()->where(':from < time_from and :to > time_to and item_id = :item_id',
             [':from' => $from, ':to' => $to, ':item_id' => $this->itemId])->one();

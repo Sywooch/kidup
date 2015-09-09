@@ -198,33 +198,17 @@ class Booking extends \app\models\base\Booking
     }
 
 
-    public function setPayinPrices($timestampFrom, $timestampTo, $prices)
+    public function setPayinPrices()
     {
-        $days = floor(($timestampTo - $timestampFrom) / (60 * 60 * 24));
+        $prices = $this->item->getPriceForPeriod($this->time_from, $this->time_to, $this->currency);
 
-        $dailyPrices = [
-            'day' => $prices['day'],
-            'week' => $prices['week'] / 7,
-            'month' => $prices['month'] / 30,
-        ];
-        if ($days <= 7) {
-            $price = $dailyPrices['day'] > 0 ? $days * $dailyPrices['day'] : $days * $dailyPrices['week'];
-        } elseif ($days > 7 && $days <= 31) {
-            $price = $dailyPrices['week'] * $days;
-        } else {
-            $price = $dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week'];
-        }
-
-        $payinFee = \Yii::$app->params['payinServiceFeePercentage'] * $price;
-        $payinFeeTax = $payinFee * 0.25; // static tax for now
-
-        $this->amount_item = round($price);
-        $this->amount_payin = round($price + $payinFee + $payinFeeTax);
-        $this->amount_payin_fee = round($payinFee, 4);
-        $this->amount_payin_fee_tax = round($payinFeeTax, 4);
+        $this->amount_item = $prices['price'];
+        $this->amount_payin = $prices['total'];
+        $this->amount_payin_fee = round($prices['_detailed']['fee'], 4);
+        $this->amount_payin_fee_tax = round($prices['_detailed']['feeTax'], 4);
         $this->amount_payin_costs = $this->amount_payin * 0.028 + 1.25; // todo make this dynamic
 
-        $payoutFee = \Yii::$app->params['payoutServiceFeePercentage'] * $price;
+        $payoutFee = \Yii::$app->params['payoutServiceFeePercentage'] * $prices['price'];
         $payoutFeeTax = $payoutFee * 0.25; // static tax for now
         $this->amount_payout = round($this->amount_item - $payoutFee - $payoutFeeTax);
         $this->amount_payout_fee = round($payoutFee, 4);

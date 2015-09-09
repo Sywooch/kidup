@@ -57,6 +57,9 @@ $components = [
             ],
         ],
     ],
+    'view'         => [
+        'class' => 'app\components\extended\View',
+    ],
     'assetManager' => [
         'converter' => [
             'class' => 'yii\web\AssetConverter',
