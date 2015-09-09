@@ -61,15 +61,21 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li class="message hidden-xs">
                             <a href="<?= Url::to('@web/messages') ?>"><i class="fa fa-envelope-o"></i></a>
 
-                            <div class="badge">
+                            <?php
+                            $count = Message::find()->where([
+                                'receiver_user_id' => \Yii::$app->user->id,
+                                'read_by_receiver' => 0
+                            ])->count();
+                            if ($count > 0) {
+                                ?>
+                                <div class="badge">
+                                    <?php
+                                    // this is ugly
+                                    echo($count > 0 ? $count : '');
+                                    ?></div>
                                 <?php
-                                // this is ugly
-                                $count = Message::find()->where([
-                                    'receiver_user_id' => \Yii::$app->user->id,
-                                    'read_by_receiver' => 0
-                                ])->count();
-                                echo($count > 0 ? $count : '');
-                                ?></div>
+                            }
+                            ?>
                         </li>
                         <li class="dropdown profile hidden-xs">
                             <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown"
