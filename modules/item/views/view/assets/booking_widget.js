@@ -47,13 +47,14 @@ var widgetFactory = function () {
         return [true];
     };
 
-    $("#request-booking-btn").click(function(e){
-        var dateFrom = $('#create-booking-datefrom').val();
-        var dateTo = $('#create-booking-dateto').val();
-        //if()
-        e.preventDefault();
-        console.log(e);
-    });
+    //$("#request-booking-btn").click(function(event){
+    //    var dateFrom = $('#create-booking-datefrom').val();
+    //    var dateTo = $('#create-booking-dateto').val();
+    //    //if()
+    //    event.preventDefault();
+    //    $.pjax.submit(event, '#create_booking > form');
+    //    console.log(e);
+    //});
 
     return api;
 };

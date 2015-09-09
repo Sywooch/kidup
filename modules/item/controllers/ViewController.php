@@ -5,7 +5,9 @@ namespace app\modules\item\controllers;
 use app\components\Cache;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
+use app\models\base\Currency;
 use app\modules\images\components\ImageHelper;
+use app\modules\item\forms\Create;
 use app\modules\item\forms\CreateBooking;
 use app\modules\item\models\Item;
 use yii\bootstrap\Html;
@@ -56,11 +58,21 @@ class ViewController extends Controller
         if ($new_publish !== false) {
             $new_publish = true;
         }
-
         /**
          * @var $item \app\modules\item\models\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
+        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+        if(Yii::$app->request->isPjax){
+            $model = new CreateBooking($item, $currency);
+            $model->load(\Yii::$app->request->post());
+            $model->save();
+            return $this->renderPartial('booking_widget', [
+                'model' => $model,
+                'item' => $item,
+                'periods' => []
+            ]);
+        }
 
         // prepare for carousel
         $images = Cache::data('item_view-images-carousel' . $id, function () use ($item) {
@@ -83,13 +95,8 @@ class ViewController extends Controller
             'model' => $item,
             'location' => $item->location,
             'images' => $images,
-            'price' => [
-                'period' => \Yii::t('app', 'per {period}', ['period' => $price['period']]),
-                'price' => $price['price'],
-                'currency' => $item->currency->forex_name
-            ],
             'show_modal' => $new_publish,
-            'bookingForm' => new CreateBooking(),
+            'bookingForm' => new CreateBooking($item, $currency),
             'related_items' => $related_items
         ];
 

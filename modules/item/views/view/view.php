@@ -24,6 +24,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \dosamigos\gallery\GalleryAsset::register($this);
 \app\modules\item\assets\ViewAsset::register($this);
 \app\assets\LodashAsset::register($this);
+\yii\widgets\PjaxAsset::register($this);
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
 
@@ -173,8 +174,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
                 </div>
                 <?php echo $this->render('booking_widget', [
-                    'model' => $bookingForm,
-                    'periods' => [],
+                    'model' => $bookingForm
                 ]) ?>
             </div>
         </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90dc43c6367127b5a181fae4fa245ea7",
+    "hash": "bc3c385d17f7f30b5cadb9bc8f3a6068",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -982,6 +982,42 @@
                 ]
             },
             "description": "JavaScript library for mobile-friendly interactive maps"
+        },
+        {
+            "name": "bower-asset/lodash",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lodash/lodash.git",
+                "reference": "6b09f1f233172eeff0643213f4ad846a5b74edd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lodash/lodash/zipball/6b09f1f233172eeff0643213f4ad846a5b74edd4",
+                "reference": "6b09f1f233172eeff0643213f4ad846a5b74edd4",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "lodash.js",
+                "bower-asset-ignore": [
+                    ".*",
+                    "*.custom.*",
+                    "*.log",
+                    "*.map",
+                    "*.md",
+                    "package.json",
+                    "doc",
+                    "node_modules",
+                    "perf",
+                    "test",
+                    "vendor"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2015-09-09 05:51:46"
         },
         {
             "name": "bower-asset/momentjs",
@@ -7787,6 +7823,7 @@
         "maknz/slack": 20,
         "monolog/monolog": 20,
         "warrence/yii2-kartikgii": 20,
+        "bower-asset/lodash": 20,
         "c006/yii2-migration-utility": 20
     },
     "prefer-stable": false,

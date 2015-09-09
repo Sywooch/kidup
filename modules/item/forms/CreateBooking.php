@@ -2,7 +2,7 @@
 
 namespace app\modules\item\forms;
 
-use app\components\Error;
+use app\models\base\Currency;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use app\modules\user\models\User;
@@ -15,14 +15,22 @@ class CreateBooking extends Model
 
     public $dateFrom;
     public $dateTo;
-    public $itemId;
     public $bookingId;
-    public $currencyId;
-    public $prices;
+    public $currency;
+    public $item;
+    public $periods = [];
 
-    public function __construct()
+    public function __construct(Item $item, Currency $currency)
     {
-
+        $this->currency = $currency;
+        $this->item = $item;
+        $bookings = Booking::find()->where(['item_id' => $this->item->id])->all();
+        foreach ($bookings as $booking) {
+            if ($booking->status !== Booking::ACCEPTED) {
+                $this->periods[] = [$booking->time_from, $booking->time_to];
+            }
+        }
+        return parent::__construct();
     }
 
     public function formName()
@@ -34,7 +42,7 @@ class CreateBooking extends Model
     {
         return [
             [['dateFrom', 'dateTo'], 'string'],
-            [['itemId', 'currencyId'], 'number'],
+            [['currencyId'], 'number'],
             [['prices', 'dateFrom', 'dateTo'], 'required'],
         ];
     }
@@ -97,5 +105,6 @@ class CreateBooking extends Model
             return true;
         } else {
         }
+        return false;
     }
 }
