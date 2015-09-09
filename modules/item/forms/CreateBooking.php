@@ -9,6 +9,8 @@ use app\modules\user\models\User;
 use Carbon\Carbon;
 use yii\base\Model;
 use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 class CreateBooking extends Model
 {
@@ -28,7 +30,7 @@ class CreateBooking extends Model
     {
         $this->currency = $currency;
         $this->item = $item;
-        $this->itemBookings = Booking::find()->where('item_id = :itemId and status != :status and time_to > :time')->params([
+        $this->itemBookings = Booking::find()->where('item_id = :itemId and status = :status and time_to > :time')->params([
             ':itemId' => $this->item->id,
             ':status' => Booking::ACCEPTED,
             ':time' => time(),
@@ -91,14 +93,18 @@ class CreateBooking extends Model
             $this->to = Carbon::createFromFormat('d-m-Y g:i:s', $this->dateTo . ' 12:00:00')->timestamp;
             // see if it clashes with another booking
             // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-            $overlapping = Booking::find()->where(':from < time_from and :to > time_to and item_id = :item_id',
-                [':from' => $this->from, ':to' => $this->to, ':item_id' => $this->item->id])->count();
+            $overlapping = Booking::find()->where(':from < time_to and :to > time_from and item_id = :item_id and status = :status', [
+                ':from' => $this->from,
+                ':to' => $this->to,
+                ':item_id' => $this->item->id,
+                ':status' => Booking::ACCEPTED
+            ])->count();
             if ($overlapping > 0) {
                 $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
                 return false;
             }
             if ($this->to <= $this->from) {
-                $this->addError('dateFrom', \Yii::t('item', 'The from date should be larger then the to date'));
+                $this->addError('dateFrom', \Yii::t('item', 'The start date should be larger then the end date'));
                 return false;
             }
             return true;
@@ -107,7 +113,39 @@ class CreateBooking extends Model
         }
     }
 
-    public function save()
+    /**
+     * Attempt to make a booking based on session data. Returns false or a redirect url
+     * @return bool|string
+     */
+    public function attemptBooking(){
+        if(\Yii::$app->session->has('ready_to_book') && $this->validateDates()){
+            $session = Json::decode(\Yii::$app->session->get('ready_to_book'));
+
+            if($session['time_from'] == $this->from && $session['time_to'] == $this->to && $this->item->id == $session['item_id']){
+                if($this->save()){
+                    $redirect = Url::to('@web/booking/'.$this->booking->id.'/confirm', true);
+                    return "<script>window.location.replace('{$redirect}');</script>";
+                }
+            }
+        }
+        if($this->calculateTableData()){
+            \Yii::$app->session->set('ready_to_book', Json::encode([
+                'item_id' => $this->item->id,
+                'time_from' => $this->from,
+                'time_to' => $this->to,
+                'currency_id' => $this->currency->id
+            ]));
+        }else{
+            \Yii::$app->session->remove('ready_to_book');
+        }
+        return false;
+    }
+
+    /**
+     * Tries to save an actual booking
+     * @return bool
+     */
+    private function save()
     {
         if (!$this->validate()) {
             return false;
@@ -118,14 +156,6 @@ class CreateBooking extends Model
             return false;
         }
 
-//        $item = Item::findOne($this->itemId);
-//        $rentingDays = Carbon::createFromFormat('d-m-Y g:i:s', $this->dateFrom . ' 12:00:00')
-//            ->diffInDays(Carbon::createFromFormat('d-m-Y g:i:s', $this->dateTo . ' 12:00:00'));
-//        if ($rentingDays < $item->min_renting_days) {
-//            \Yii::$app->session->setFlash("error",
-//                \Yii::t('booking', "This item requires at least {0} days per booking.", [$item->min_renting_days]));
-//            return false;
-//        }
         $booking = new Booking();
         $booking->setScenario('init');
         $booking->time_from = $this->from;

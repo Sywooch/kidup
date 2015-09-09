@@ -144,39 +144,13 @@ class Item extends \app\models\base\Item
         return $this->owner_id == $userId;
     }
 
-    public function isPublishable()
-    {
-        $errors = [];
-        if (!$this->validate()) {
-            foreach ($this->getErrors() as $errorC) {
-                foreach ($errorC as $error) {
-                    $errors[] = $error;
-                }
-            }
-        }
-        $location = Location::find()->where(['id' => $this->location_id])->one();
-        if (is_null($location) || !$location->isValid()) {
-            $errors[] = \Yii::t('item', 'Please set your location in your {0}.', [
-                Html::a(\Yii::t('item', 'location settings'), '@web/user/settings/location', ['target' => '_blank'])
-            ]);
-        }
-        if (strlen($this->owner->profile->first_name) <= 1 || strlen($this->owner->profile->last_name) <= 1) {
-            $errors[] = \Yii::t('item', 'Please complete your {0}.', [
-                Html::a(\Yii::t('item', 'profile'), '@web/user/settings/profile', ['target' => '_blank'])
-            ]);
-        }
-        /**
-         * @var \app\modules\user\models\User $u ;
-         */
-        $u = User::findone($this->owner_id);
-
-        if (count($this->media) == 0) {
-            $errors[] = \Yii::t('item', 'An item needs atleast one image.');
-        }
-
-        return count($errors) == 0 ? true : $errors;
-    }
-
+    /**
+     * Returns an array of pricing details for a booking of a certain time range
+     * @param int $timestampFrom
+     * @param int $timestampTo
+     * @param Currency $currency
+     * @return array
+     */
     public function getPriceForPeriod($timestampFrom, $timestampTo, Currency $currency)
     {
         if ($currency !== $this->currency) {
@@ -211,46 +185,18 @@ class Item extends \app\models\base\Item
         ];
     }
 
-    /**
-     * Prepares media for the image gallery plugin (on item page for example)
-     * @return string json of results
-     */
-    public function preloadMedia()
-    {
-        $preload = [];
-        $allMedia = Media::find()->where(['item_has_media.item_id' => $this->id])
-            ->innerJoinWith('itemHasMedia')
-            ->orderBy('item_has_media.order')
-            ->all();
-        foreach ($allMedia as $media) {
-            $preload[] = [
-                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
-                'size' => 10,
-            ];
-        }
-        return Json::encode($preload);
-    }
-
-    public function getUserDistance()
-    {
-        if (!\Yii::$app->session->has('location_cache')) {
-            return false;
-        }
-        $location = \Yii::$app->session->get('location_cache');
-        $coordinate1 = new Coordinate($location['longitude'], $location['latitude']);
-        $coordinate2 = new Coordinate($this->location->longitude, $this->location->latitude);
-
-        $calculator = new Vincenty();
-
-        echo $calculator->getDistance($coordinate1, $coordinate2);
-    }
-
-    public function getAdPrice()
-    {
-        return [
-            'price' => $this->price_week,
-            'period' => 'week'
-        ];
+    public function getCarouselImages(){
+        return Cache::data('item_view-images-carousel' . $this->id, function () {
+            $itemImages = $this->getImageNames();
+            $images = [];
+            foreach ($itemImages as $img) {
+                $images[] = [
+                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
+                    'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
+                ];
+            }
+            return $images;
+        }, 10 * 60);
     }
 
     /**

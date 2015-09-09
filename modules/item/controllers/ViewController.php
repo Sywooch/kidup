@@ -54,44 +54,22 @@ class ViewController extends Controller
 
     public function actionIndex($id, $new_publish = false)
     {
-        Url::remember();
-        $this->noContainer = true;
-        if ($new_publish !== false) {
-            $new_publish = true;
-        }
         /**
          * @var $item \app\modules\item\models\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
-        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
-        if(Yii::$app->request->isPjax){
-            $redirect = false;
 
+        Url::remember();
+        $this->noContainer = true;
+
+        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+        if (Yii::$app->request->isPjax) {
             $model = new CreateBooking($item, $currency);
             $model->load(\Yii::$app->request->post());
-            if(\Yii::$app->session->has('ready_to_book') && $model->validateDates()){
-                $session = Json::decode(\Yii::$app->session->get('ready_to_book'));
-
-                if($session['time_from'] == $model->from && $session['time_to'] == $model->to && $model->item->id == $session['item_id']){
-                    if($model->save()){
-                        $redirect = Url::to('@web/booking/'.$model->booking->id.'/confirm', true);
-                        return "<script>window.location.replace('{$redirect}');</script>";
-                    }else{
-                        \yii\helpers\VarDumper::dump($model->save(),10,true); exit();
-                    }
-                }
+            $attempt = $model->attemptBooking();
+            if ($attempt !== false) {
+                return $attempt;
             }
-            if($model->calculateTableData()){
-                \Yii::$app->session->set('ready_to_book', Json::encode([
-                    'item_id' => $item->id,
-                    'time_from' => $model->from,
-                    'time_to' => $model->to,
-                    'currency_id' => $model->currency->id
-                ]));
-            }else{
-                \Yii::$app->session->remove('ready_to_book');
-            }
-
             return $this->renderAjax('booking_widget', [
                 'model' => $model,
                 'item' => $item,
@@ -101,19 +79,7 @@ class ViewController extends Controller
         \Yii::$app->session->remove('ready_to_book');
 
         // prepare for carousel
-        $images = Cache::data('item_view-images-carousel' . $id, function () use ($item) {
-            $itemImages = $item->getImageNames();
-            $images = [];
-            foreach ($itemImages as $img) {
-                $images[] = [
-                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
-                    'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
-                ];
-            }
-            return $images;
-        }, 10 * 60);
-
-        $price = $item->getAdPrice();
+        $images = $item->getCarouselImages();
 
         // find which items are related
         $related_items = $item->getRecommendedItems($item, 3);
@@ -121,7 +87,7 @@ class ViewController extends Controller
             'model' => $item,
             'location' => $item->location,
             'images' => $images,
-            'show_modal' => $new_publish,
+            'show_modal' => $new_publish !== false, // show modal if new publish
             'bookingForm' => new CreateBooking($item, $currency),
             'related_items' => $related_items
         ];

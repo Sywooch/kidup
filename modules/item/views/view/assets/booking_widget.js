@@ -34,7 +34,7 @@ var widgetFactory = function () {
         if (pickedDate > startdate) {
             startdate = pickedDate;
         }
-        if (date < startdate) {
+        if (date <= startdate) {
             return [false];
         }
         for (var i = 0; i < window.datesRents.length; i++) {
@@ -52,36 +52,49 @@ var widgetFactory = function () {
         $('form[data-pjax]').submit();
     };
 
-
-    $("form[data-pjax]").on('submit', function (event) {
-        event.preventDefault();
+    $("#request-booking-btn").click(function (event) {
+        if (window.userIsGuest) {
+            event.preventDefault();
+            $('#loginModal').modal('show');
+        }
         var val1 = $('#create-booking-datefrom').val();
         var val2 = $('#create-booking-datefrom').val();
         if (val1 == "" || val2 == "") {
+            event.preventDefault();
             $("#create-booking-datefrom").datepicker("hide");
             $("#create-booking-dateto").datepicker("hide");
             $("#create-booking-datefrom").datepicker("show");
-        } else {
-            $("#booking-widget .overlay").fadeTo(0.3, 0.6);
-            $("#booking-widget .overlay").css("visibility", "visible");
         }
     });
 
+    $("form[data-pjax]").on('submit', function (event) {
+
+        $("#booking-widget .overlay").fadeTo(0.3, 0.6);
+        $("#booking-widget .overlay").css("visibility", "visible");
+    });
+
+    var scrollFunc = function () {
+        var docScroll = $(document).scrollTop();
+        if (typeof $('.leaflet-map-pane').offset() === "undefined") {
+            var mapHeight = 1000;
+        } else {
+            var mapHeight = $('.leaflet-map-pane').offset().top;
+        }
+        var widgetHeight = $("#booking-widget").height();
+        if (docScroll > 300 && docScroll < mapHeight - widgetHeight - 105) {
+            $("#booking-widget").css("margin-top", $(document).scrollTop() - 330 + "px");
+        } else if (docScroll <= 300) {
+            $("#booking-widget").css("margin-top", "-30px");
+        }
+    };
+    $(document).scroll(scrollFunc);
+    $(document).ready(scrollFunc);
+
     api.load = function () {
-        if(typeof redirect === "undefined"){
+        if (typeof redirect === "undefined") {
             var widget = widgetFactory();
             $("#booking-widget .overlay").css("visibility", "hidden");
-            //jQuery('#create-booking-datefrom').datepicker({
-            //    "beforeShowDay": widget.dateFrom.beforeShowDay,
-            //    "onSelect": widget.dateFrom.onSelect,
-            //    "dateFormat": "dd-mm-yy"
-            //});
-            //jQuery('#create-booking-dateto').datepicker({
-            //    "beforeShowDay": widget.dateTo.beforeShowDay,
-            //    "onSelect": widget.dateTo.onSelect,
-            //    "dateFormat": "dd-mm-yy"
-            //});
-            //jQuery('#create-booking-form').yiiActiveForm([], []);
+
             jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
                 "push": true,
                 "replace": true,

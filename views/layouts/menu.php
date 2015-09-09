@@ -212,7 +212,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 <?php if ($this->context->transparentNav): ?>
     <!--    this is ugly as well -->
     <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png',
-        ['q' => 70, 'w' => 2000]) ?>; height:550px;margin-top:-100px;position: absolute;
+        ['q' => 70, 'w' => 2000]) ?>; height:530px;margin-top:-100px;position: absolute;
         width: 100%;
         background-position: top;
         background-repeat: no-repeat;
