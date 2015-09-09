@@ -49,8 +49,9 @@ use yii\widgets\Pjax;
         ]); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= Yii::t("item", "Rent starting") ?>
-                <br>
+                <div class="text">
+                    <?= Yii::t("item", "Starting at") ?>
+                </div>
                 <?php
                 // pass available dates to javascript
                 $this->registerJs(new JsExpression('window.datesRents = ' . json_encode($model->periods) . ';'));
@@ -73,8 +74,9 @@ use yii\widgets\Pjax;
                 ?>
             </div>
             <div class="col-md-6">
-                <?= Yii::t("item", "Rent ending") ?>
-                <br>
+                <div class="text">
+                    <?= Yii::t("item", "Ending at") ?>
+                </div>
                 <?php
                 echo $form->field($model, 'dateTo',
                     [

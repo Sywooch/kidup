@@ -27,9 +27,9 @@ class Item extends \app\models\base\Item
     {
         return [
             '' => '',
-            '0' => \Yii::t('item', 'As good as new'),
-            '1' => \Yii::t('item', 'Minor usage trails'),
-            '2' => \Yii::t('item', 'Lightly damaged')
+            '0' => \Yii::t('item', 'As new'),
+            '1' => \Yii::t('item', 'Minor usage'),
+            '2' => \Yii::t('item', 'Light damage')
         ];
     }
 

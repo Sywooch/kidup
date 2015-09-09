@@ -75,15 +75,16 @@ var widgetFactory = function () {
 
     var scrollFunc = function () {
         var docScroll = $(document).scrollTop();
+        var parallax = $('.parallax').height();
         if (typeof $('.leaflet-map-pane').offset() === "undefined") {
             var mapHeight = 1000;
         } else {
             var mapHeight = $('.leaflet-map-pane').offset().top;
         }
         var widgetHeight = $("#booking-widget").height();
-        if (docScroll > 300 && docScroll < mapHeight - widgetHeight - 105) {
+        if (docScroll > parallax && docScroll < mapHeight - widgetHeight - 105) {
             $("#booking-widget").css("margin-top", $(document).scrollTop() - 330 + "px");
-        } else if (docScroll <= 300) {
+        } else if (docScroll <= parallax) {
             $("#booking-widget").css("margin-top", "-30px");
         }
     };

@@ -28,8 +28,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
 
-<div id="product">
-    <div class="parallax filter-black"
+<div id="item">
+    <div class="parallax"
          style="<?= ImageHelper::bgImg($model->getImageName(0)) ?>">
     </div>
 
@@ -37,23 +37,64 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-lg-7 col-md-offset-1">
-                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
-                        [
-                            'user_id' => $model->owner_id,
-                            'width' => '200px'
-                        ])
-                    ?>
+                    <div class="row main-info">
+                        <div class="col-md-2">
+                            <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
+                                <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
+                                    [
+                                        'user_id' => $model->owner_id,
+                                        'width' => '80px'
+                                    ])
+                                ?>
+                            </a>
+                            <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
+                                <div class="owner-name">
+                                    <?= $model->owner->profile->first_name ?>
+                                </div>
+                            </a>
+                        </div>
 
-                    <h4 class="title">
-                        <?= $model->owner->profile->first_name ?>
-                    </h4>
-                    <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>" class="btn btn-primary">
-                        <?= Yii::t("user", "See profile") ?>
-                    </a>
+                        <div class="col-md-10">
+                            <div class="item-title"><?= $model->name ?></div>
+                            <div class="item-location">
+                                <?= $model->location->country0->name . ", " . $model->location->city ?>
+                            </div>
+                            <div class="row icon-row">
+                                <div class="col-md-3">
+                                    <div class="icon-text">
+                                        <i class="fa fa-bolt"> </i>
+                                        <br>
+                                        <?= Item::getConditions()[$model->condition] ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="icon-text">
+                                        <i class="fa fa-bolt"> </i>
+                                        <br>
+                                        <?= Item::getConditions()[$model->condition] ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="icon-text">
+                                        <i class="fa fa-bolt"> </i>
+                                        <br>
+                                        <?= Item::getConditions()[$model->condition] ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="icon-text">
+                                        <i class="fa fa-bolt"> </i>
+                                        <br>
+                                        <?= Item::getConditions()[$model->condition] ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card">
                         <div class="content product-content">
-                            <h2 class="title"><?= $model->name ?></h2>
+
                             <h4 class="category">
                                 <?= implode(", ", $model->getCategoriesByType(Category::TYPE_MAIN)); ?>
                             </h4>
@@ -83,7 +124,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
                                         <li>
                                             <i class="fa fa-magic"></i><?= Yii::t("item", "Condition") ?>
-                                            <b><?= Item::getConditions()[$model->condition] ?></b>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -91,7 +132,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     <ul class="list-unstyled list-lines">
                                         <li>
                                             <i class="fa fa-map-marker"></i><?= Yii::t("item", "Location") ?> <b>
-                                                <?= $model->location->country0->name . ", " . $model->location->city ?></b>
+                                            </b>
                                         </li>
 
                                         <li>
