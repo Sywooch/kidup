@@ -42,7 +42,7 @@ BootstrapPluginAsset::register($this);
 
     <?= $this->render('menu') ?>
 
-    <div id="wrapper">
+    <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="margin-top:-450px"' : '' ?>>
         <?php
         // this is the notification plugin, showing all errors
         foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
@@ -66,15 +66,15 @@ BootstrapPluginAsset::register($this);
 
     <!-- Load modals -->
     <?php
-    echo Cache::html('search_modal', function () {
+    echo Cache::html('layout_mobile-search-modal', function () {
         return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
     });
 
-    echo Cache::html('footer', function () {
+    echo Cache::html('layout_footer', function () {
         return $this->render('footer.php');
     }, ['variations' => [$this->context->noFooter]]);
 
-    echo Cache::html('cookie_widget', function () {
+    echo Cache::html('layout_cookie-widget', function () {
         return \cinghie\cookieconsent\widgets\CookieWidget::widget([
             'message' => \Yii::t('app',
                 'This website uses cookies to ensure you get the best possible KidUp experience.'),
@@ -85,9 +85,11 @@ BootstrapPluginAsset::register($this);
         ]);
     });
 
-    echo Cache::html('ga', function () {
-        return \kartik\social\GoogleAnalytics::widget([]);
-    });
+    if(YII_ENV == 'prod'){
+        echo Cache::html('layout_ga', function () {
+            return \kartik\social\GoogleAnalytics::widget([]);
+        });
+    }
     ?>
 
     <?php $this->endBody() ?>

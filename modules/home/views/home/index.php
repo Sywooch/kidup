@@ -18,8 +18,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 <div id="home">
     <!--Area for background-image, tag-line and sign-up -->
     <header id="header-home">
-        <div class="cover-home"
-             style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>"></div>
         <div class="header-content">
             <div class="row ">
                 <div class=" col-xs-12 col-sm-12 col-md-10 col-md-offset-1 text-center ">

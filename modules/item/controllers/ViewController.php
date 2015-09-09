@@ -6,6 +6,7 @@ use app\components\Cache;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\modules\images\components\ImageHelper;
+use app\modules\item\forms\CreateBooking;
 use app\modules\item\models\Item;
 use yii\bootstrap\Html;
 use yii\filters\AccessControl;
@@ -36,8 +37,13 @@ class ViewController extends Controller
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=60',
+                'enabled' => YII_CACHE,
                 'etagSeed' => function ($action, $params) {
-                    return Json::encode([Yii::$app->language, \Yii::$app->user->id, \Yii::$app->session->getAllFlashes()]);
+                    return Json::encode([
+                        Yii::$app->language,
+                        \Yii::$app->user->id,
+                        \Yii::$app->session->getAllFlashes()
+                    ]);
                 },
             ],
         ];
@@ -45,80 +51,48 @@ class ViewController extends Controller
 
     public function actionIndex($id, $new_publish = false)
     {
-        $cacheName = 'item_controller-view-'.$id;
         Url::remember();
         $this->noContainer = true;
         if ($new_publish !== false) {
             $new_publish = true;
         }
 
-        $function = function () use ($id, $new_publish, $cacheName) {
-            /**
-             * @var $item \app\modules\item\models\Item
-             */
-            $item = Item::find()->where(['id' => $id])->with('location')->one();
-            if ($item == null) {
-                \Yii::$app->cache->delete($cacheName);
-                throw new NotFoundHttpException("THis item does not exist");
+        /**
+         * @var $item \app\modules\item\models\Item
+         */
+        $item = Item::find()->where(['id' => $id])->with('location')->one();
+
+        // prepare for carousel
+        $images = Cache::data('item_view-images-carousel' . $id, function () use ($item) {
+            $itemImages = $item->getImageNames();
+            $images = [];
+            foreach ($itemImages as $img) {
+                $images[] = [
+                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
+                    'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
+                ];
             }
-            if ($item->is_available == 0 && \Yii::$app->user->id !== $item->owner_id) {
-                \Yii::$app->cache->delete($cacheName);
-                throw new ForbiddenHttpException("This item is not yet available");
-            }
+            return $images;
+        }, 10 * 60);
 
-            // prepare for carousel
-            $images = Cache::data('images' . $cacheName, function () use ($item) {
-                $itemImages = $item->getImageNames();
-                $images = [];
-                foreach ($itemImages as $img) {
-                    $images[] = [
-                        'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
-                        'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
-                    ];
-                }
-                return $images;
-            }, 10 * 60);
+        $price = $item->getAdPrice();
 
+        // find which items are related
+        $related_items = $item->getRecommendedItems($item, 3);
+        $res = [
+            'model' => $item,
+            'location' => $item->location,
+            'images' => $images,
+            'price' => [
+                'period' => \Yii::t('app', 'per {period}', ['period' => $price['period']]),
+                'price' => $price['price'],
+                'currency' => $item->currency->forex_name
+            ],
+            'show_modal' => $new_publish,
+            'bookingForm' => new CreateBooking(),
+            'related_items' => $related_items
+        ];
 
-            $price = $item->getAdPrice();
-            if ($item->is_available == 0) {
-                $bookingForm = \Yii::t('item', 'This is a preview. Go here {0} to publish this item.', [
-                    Html::a(\Yii::t('item', 'link'), '@web/item/create/edit-basics?id=' . $item->id)
-                ]);
-            } elseif ($item->owner_id == \Yii::$app->user->id) {
-                $bookingForm = \Yii::t('app', 'This item belongs to you.');
-            } else {
-                $bookingForm = Cache::data('booking_create_form', function () use ($item) {
-                    return WidgetRequest::request(WidgetRequest::BOOKING_CREATE_FORM, [
-                        'item_id' => $item->id,
-                        'currency_id' => $item->currency_id,
-                        'prices' => [
-                            'daily' => $item->price_day,
-                            'weekly' => $item->price_week,
-                            'monthly' => $item->price_month,
-                        ]
-                    ]);
-                });
-            }
-
-            // find which items are related
-            $related_items = $item->getRecommendedItems($item, 3);
-            $res = [
-                'model' => $item,
-                'location' => $item->location,
-                'images' => $images,
-                'price' => [
-                    'period' => \Yii::t('app', 'per {period}', ['period' => $price['period']]),
-                    'price' => $price['price'],
-                    'currency' => $item->currency->forex_name
-                ],
-                'bookingForm' => $bookingForm,
-                'show_modal' => $new_publish,
-                'related_items' => $related_items
-            ];
-
-            return $this->render('view', $res);
-        };
-        return Cache::html($cacheName, $function);
+        return $this->render('view', $res);
     }
 }

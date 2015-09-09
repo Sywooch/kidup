@@ -54,7 +54,8 @@
     "league/glide": "*",
     "warrence/yii2-kartikgii": "dev-master",
     "geoip/geoip": "~1.14",
-    "yii2mod/yii2-c3-chart": "*"
+    "yii2mod/yii2-c3-chart": "*",
+    "bower-asset/lodash": "dev-master"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",

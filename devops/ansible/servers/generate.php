@@ -1,8 +1,8 @@
 <?php
 
 echo json_encode([
-//    'staging' => ['root@test.kidup.dk'],
-    'production' => ['root@kidup.dk']
+   'production' => ['root@31.187.71.215'],
+    // 'production' => ['root@kidup.dk']
 ]);
 
 ?>

@@ -23,6 +23,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \yii\jui\JuiAsset::register($this);
 \dosamigos\gallery\GalleryAsset::register($this);
 \app\modules\item\assets\ViewAsset::register($this);
+\app\assets\LodashAsset::register($this);
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
 
@@ -30,19 +31,24 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
     <div class="parallax filter-black"
          style="<?= ImageHelper::bgImg($model->getImageName(0)) ?>">
     </div>
-    <!--book-line-fixed -->
-    <div id="booking-navbar" class="book-line booking">
-        <div class="container">
-            <div class="row">
-                <?= $bookingForm ?>
-            </div>
-        </div>
-    </div>
+
     <section id="content" class="section">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-lg-7 col-md-offset-1">
-                    <br/><br/><br/><br/>
+                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
+                        [
+                            'user_id' => $model->owner_id,
+                            'width' => '200px'
+                        ])
+                    ?>
+
+                    <h4 class="title">
+                        <?= $model->owner->profile->first_name ?>
+                    </h4>
+                    <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>" class="btn btn-primary">
+                        <?= Yii::t("user", "See profile") ?>
+                    </a>
 
                     <div class="card">
                         <div class="content product-content">
@@ -57,7 +63,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <!--This part is hidden for now. Then it's easier to publish a new product-->
                     <div class="card card-product">
                         <div class="content">
                             <h4 class="category"><b>
@@ -151,39 +156,26 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     </div>
 
                     <?php if (count($related_items) > 0): ?>
-                        <div class="">
-                            <div class="content">
-                                <h4 class="category"><b><?= Yii::t('item', 'Related products') ?></b></h4>
+                        <div class="content">
+                            <h4 class="category"><b><?= Yii::t('item', 'Related products') ?></b></h4>
 
-                                <div class="related">
-                                    <div class="row">
-                                        <?php foreach ($related_items as $item) {
-                                            echo $this->render('item', [
-                                                'model' => $item
-                                            ]);
-                                        } ?>
-                                    </div>
+                            <div class="related">
+                                <div class="row">
+                                    <?php foreach ($related_items as $item) {
+                                        echo $this->render('item', [
+                                            'model' => $item
+                                        ]);
+                                    } ?>
                                 </div>
                             </div>
                         </div>
                     <?php endif; ?>
 
                 </div>
-                <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center; margin-top: 20px;">
-                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
-                        [
-                            'user_id' => $model->owner_id,
-                            'width' => '200px'
-                        ])
-                    ?>
-
-                    <h4 class="title">
-                        <?= $model->owner->profile->first_name ?>
-                    </h4>
-                    <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>" class="btn btn-primary">
-                        <?= Yii::t("user", "See profile") ?>
-                    </a>
-                </div>
+                <?php echo $this->render('booking_widget', [
+                    'model' => $bookingForm,
+                    'periods' => [],
+                ]) ?>
             </div>
         </div>
 

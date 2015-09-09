@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\booking\forms;
+namespace app\modules\item\forms;
 
 use app\components\Error;
 use app\modules\booking\models\Booking;
@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use yii\base\Model;
 use yii\helpers\Html;
 
-class Create extends Model
+class CreateBooking extends Model
 {
 
     public $dateFrom;
