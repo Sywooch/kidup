@@ -53,7 +53,8 @@
     "omnilight/yii2-scheduling": "*",
     "league/glide": "*",
     "warrence/yii2-kartikgii": "dev-master",
-    "geoip/geoip": "~1.14"
+    "geoip/geoip": "~1.14",
+    "yii2mod/yii2-c3-chart": "*"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",

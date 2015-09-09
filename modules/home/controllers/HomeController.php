@@ -30,8 +30,21 @@ class HomeController extends Controller
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=300',
                 'etagSeed' => function ($action, $params) {
-                    return Json::encode([Yii::$app->language, \Yii::$app->user->id, \Yii::$app->session->getAllFlashes()]);
+                    return Json::encode([
+                        Yii::$app->language,
+                        \Yii::$app->user->id,
+                        \Yii::$app->session->getAllFlashes()
+                    ]);
                 },
+            ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60 * 20,
+                'variations' => [
+                    \Yii::$app->language,
+                    \Yii::$app->session->getAllFlashes()
+                ],
             ],
         ];
     }
@@ -44,22 +57,19 @@ class HomeController extends Controller
     {
         $this->transparentNav = true;
         $this->noContainer = true;
-        $res = Cache::html('home_controller-home-render', function () {
 
-            $categories = Yii::$app->db->cache(function () {
-                return Category::find()->all();
-            }, 24*3600);
-            $items = Yii::$app->db->cache(function () {
-                return Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
-            }, 6*3600);
+        $categories = Yii::$app->db->cache(function () {
+            return Category::find()->all();
+        }, 24 * 3600);
+        $items = Yii::$app->db->cache(function () {
+            return Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
+        }, 6 * 3600);
 
-            $res = $this->render('index', [
-                'categories' => $categories,
-                'items' => $items,
-            ]);
+        $res = $this->render('index', [
+            'categories' => $categories,
+            'items' => $items,
+        ]);
 
-            return $res;
-        }, ['duration' => 20*60, 'variations' => \Yii::$app->session->getAllFlashes()]);
         return $res;
     }
 }

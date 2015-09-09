@@ -12,6 +12,8 @@ $class = 'navbar navbar-default ';
 $class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-navbar-product';
 
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
+
+//$menuFunction = function () {
 ?>
     <nav
         class="navbar navbar-default <?= isset($this->context->transparentNav) ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
@@ -59,13 +61,14 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li class="message hidden-xs">
                             <a href="<?= Url::to('@web/messages') ?>"><i class="fa fa-envelope-o"></i></a>
 
-                            <div class="badge"><?php
+                            <div class="badge">
+                                <?php
                                 // this is ugly
                                 $count = Message::find()->where([
                                     'receiver_user_id' => \Yii::$app->user->id,
                                     'read_by_receiver' => 0
                                 ])->count();
-                                echo ($count > 0 ? $count : '');
+                                echo($count > 0 ? $count : '');
                                 ?></div>
                         </li>
                         <li class="dropdown profile hidden-xs">
@@ -206,14 +209,23 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             </div>
         </div>
     </nav>
+<?php if ($this->context->transparentNav): ?>
+    <div class="cover-home"
+         style="background-image: url('http://192.168.33.99/images/kidup/home/header.png?q=70&amp;w=2000&amp;fm=pjpg')"></div>
+<?php endif ?>
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
-    echo \app\components\Cache::html('widget_user_login_modal', function () {
-        return WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
-    });
-    echo \app\components\Cache::html('widget_user_login_modal', function () {
-        return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
-    });
+    if ($this->beginCache('layout.menu.widgets')) {
+        echo \app\components\Cache::html('widget_user_login_modal', function () {
+            return WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
+        });
+        echo \app\components\Cache::html('widget_user_login_modal', function () {
+            return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
+        });
+        echo $this->endCache();
+    }
 }
+//};
+//echo $this->renderDynamic('return $menuFunction;');
 ?>
