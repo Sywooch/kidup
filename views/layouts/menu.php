@@ -14,7 +14,6 @@ $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
 
-//$menuFunction = function () {
 ?>
     <nav
         class="navbar navbar-default <?= $transparent ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
@@ -218,12 +217,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
     </nav>
 <?php if ($transparent): ?>
     <!--    this is ugly as well -->
-    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png',
-        ['q' => 70, 'w' => 2000]) ?>; height:620px;margin-top:-100px;position: absolute;
-        width: 100%;
-        background-position: top;
-        background-repeat: no-repeat;
-        background-size: cover;"></div>
+    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
 <?php endif; ?>
 <?php
 // add the login / register model if user is guest
@@ -235,9 +229,23 @@ if (\Yii::$app->user->isGuest) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
             return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
         });
-        echo $this->endCache();
+        $this->endCache();
     }
 }
-//};
-//echo $this->renderDynamic('return $menuFunction;');
-?>
+
+// this is the notification plugin, showing all errors
+foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+    echo \kartik\growl\Growl::widget([
+        'type' => $key,
+        'body' => $message,
+        'showSeparator' => true,
+        'delay' => 500,
+        'pluginOptions' => [
+            'placement' => [
+                'from' => 'bottom',
+                'align' => 'right',
+            ],
+            'timer' => 10000,
+        ]
+    ]);
+} ?>

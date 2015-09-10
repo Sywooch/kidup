@@ -43,24 +43,6 @@ BootstrapPluginAsset::register($this);
     <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
 
     <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="padding-top:1px"' : '' ?>>
-        <?php
-        // this is the notification plugin, showing all errors
-        foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
-
-            echo Growl::widget([
-                'type' => $key,
-                'body' => $message,
-                'showSeparator' => true,
-                'delay' => 500,
-                'pluginOptions' => [
-                    'placement' => [
-                        'from' => 'bottom',
-                        'align' => 'right',
-                    ],
-                    'timer' => 10000,
-                ]
-            ]);
-        } ?>
         <?= $content ?>
     </div>
 
@@ -84,6 +66,8 @@ BootstrapPluginAsset::register($this);
             'theme' => 'dark-bottom'
         ]);
     });
+
+    \app\widgets\FacebookTracker::widget();
 
     if(YII_ENV == 'prod'){
         echo Cache::html('layout_ga', function () {

@@ -224,7 +224,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 <?php foreach ($related_items as $item) {
                                     echo ItemCard::widget([
                                         'model' => $item,
-                                        'showDistance' => false
+                                        'showDistance' => false,
+                                        'numberOfCards' => 3
                                     ]);
                                 } ?>
                             </div>
