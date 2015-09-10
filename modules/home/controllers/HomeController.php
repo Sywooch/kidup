@@ -29,10 +29,10 @@ class HomeController extends Controller
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=300',
+                'enabled' => YII_CACHE,
                 'etagSeed' => function ($action, $params) {
                     return Json::encode([
                         Yii::$app->language,
-                        \Yii::$app->user->id,
                         \Yii::$app->session->getAllFlashes()
                     ]);
                 },
@@ -41,6 +41,7 @@ class HomeController extends Controller
                 'class' => 'yii\filters\PageCache',
                 'only' => ['index'],
                 'duration' => 60 * 20,
+                'enabled' => YII_CACHE,
                 'variations' => [
                     \Yii::$app->language,
                     \Yii::$app->session->getAllFlashes()

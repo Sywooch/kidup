@@ -11,6 +11,7 @@ use app\modules\user\Finder;
 use app\modules\user\helpers\Password;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Url;
 use yii\web\IdentityInterface;
 
 /**
@@ -286,6 +287,29 @@ class User extends \app\models\base\User implements IdentityInterface
         }
 
         return false;
+    }
+
+    /**
+     * Returns the place a user should go after login/registering/sociallogin
+     * @var string $type (login,connect,connect_new,registration,post_registration)
+     * @return string
+     */
+    public static function afterLoginUrl($type){
+        // always follow the after_login_url if set
+        if(\Yii::$app->session->has('after_login_url')){
+            $loginUrl = \Yii::$app->session->get('after_login_url');
+//            \Yii::$app->session->remove('after_login_url');
+            return $loginUrl;
+        }
+
+        if($type === 'login' || $type === 'connect'){
+            return Url::previous();
+        }
+        if($type === 'registration' || $type === 'connect_new'){
+            return Url::to('@web/user/registration/post-registration');
+        }
+        \yii\helpers\VarDumper::dump(\Yii::$app->session->has('after_login_url'),10,true); exit();
+        return Url::to('@web/home');
     }
 
     /**
