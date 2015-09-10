@@ -29,26 +29,30 @@ class Pages extends Component
 
     public function get($id)
     {
-        if(!is_int($id)){
+        if (!is_int($id)) {
             foreach ($this->pages as $id2 => $p) {
-                if($id == $p){
+                if ($id == $p) {
                     $id = $id2;
                 }
             }
         }
-        $client = new Client( );
-        $res = $client->get( $this->baseUrl.'posts/'. $id);
-        return $res->json();
+        $client = new Client();
+        return Cache::data('pages-wordpress-call-'.$id, function() use ($client, $id){
+            $res = $client->get($this->baseUrl . 'posts/' . $id);
+            return $res->json();
+        });
     }
 
-    public function getPages(){
+    public function getPages()
+    {
         return $this->pages;
     }
 
-    public function url($slug){
-        if(is_int($slug)){
+    public function url($slug)
+    {
+        if (is_int($slug)) {
             $slug = $this->pages[$slug];
         }
-        return Url::to('@web/p/'.$slug);
+        return Url::to('@web/p/' . $slug);
     }
 }

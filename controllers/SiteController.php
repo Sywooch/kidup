@@ -39,7 +39,10 @@ class SiteController extends Controller
         $l = \app\modules\user\models\Language::findOne($lang);
 
         if($l !== null){
+            Yii::$app->session->remove('lang');
             Yii::$app->session->set('lang', $lang);
+        }else{
+            Yii::error('Language undefined: '.$lang);
         }
         if(!\Yii::$app->user->isGuest){
             Yii::$app->session->setFlash('info', \Yii::t('app', "Please change your profile settings to permanently change the language!"));

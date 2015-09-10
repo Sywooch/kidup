@@ -50,19 +50,15 @@ class Controller extends \yii\web\Controller
             'method' => \Yii::$app->request->getMethod(),
             'ip' => \Yii::$app->request->getUserIP()
         ];
-        Yii::beginProfile('logging');
 //        \Yii::$app->clog->info('page.view', $data);
         // todo would be awesome to track this, but it takes about 150 ms, which is waay to long
-        Yii::endProfile('logging');
 
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
         } else {
             if (!\Yii::$app->user->isGuest) {
-                $p = \Yii::$app->db->cache(function () {
-                    return Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
-                },60*60);
+                $p = Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
                 if ($p->language !== null) {
                     Yii::$app->language = $p->language;
                 } else {
@@ -78,7 +74,6 @@ class Controller extends \yii\web\Controller
                 Yii::$app->session->set('lang', Yii::$app->language);
             }
         }
-
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
