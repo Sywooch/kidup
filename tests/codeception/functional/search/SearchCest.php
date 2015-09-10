@@ -97,7 +97,7 @@ class SearchCest
      * @param FunctionalTester $I
      */
     public function checkSearchByLocation(FunctionalTester $I) {
-        // @todo implement and make geo data working
+
     }
 
     /**
