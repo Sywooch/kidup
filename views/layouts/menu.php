@@ -8,7 +8,13 @@ use yii\helpers\Url;
  * @var \yii\web\View $this
  */
 // create the navbar
-$transparent = Url::current() == '/home/home/index';
+
+try{
+    // todo this should be improved drastically
+    $transparent = Url::current() == '/home/home/index';
+}catch (yii\base\Exception $e){
+    $transparent = true;
+}
 $class = 'navbar navbar-default ';
 $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 

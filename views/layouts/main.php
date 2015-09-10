@@ -14,6 +14,13 @@ use yii\helpers\Html;
 \app\assets\AppAsset::register($this);
 FontAwesomeAsset::register($this);
 BootstrapPluginAsset::register($this);
+try{
+    // todo this should be improved drastically
+    $transparent = \yii\helpers\Url::current() == '/home/home/index';
+}catch (yii\base\Exception $e){
+    $transparent = true;
+}
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -42,7 +49,7 @@ BootstrapPluginAsset::register($this);
 
     <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
 
-    <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="padding-top:1px"' : '' ?>>
+    <div id="wrapper <?= $transparent ? 'wrapper-home' : '' ?>" <?= $transparent ? 'style="padding-top:1px"' : '' ?>>
         <?= $content ?>
     </div>
 
