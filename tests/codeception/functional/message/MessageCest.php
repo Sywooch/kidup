@@ -60,8 +60,7 @@ class MessageCest
         $message->read_by_receiver = true;
         $message->save();
         $I->amOnPage('/');
-        $I->canSeeElement('.message .badge');
-        $I->canSee('', '.message .badge');
+        $I->dontSeeElement('.message .badge');
 
         $this->messageHelper->clearConversations();
     }
