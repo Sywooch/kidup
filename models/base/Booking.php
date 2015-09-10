@@ -40,9 +40,6 @@ use Yii;
  */
 class Booking extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -151,8 +148,5 @@ class Booking extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Review::className(), ['booking_id' => 'id']);
     }
-
-
-
 
 }

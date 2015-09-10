@@ -2,7 +2,6 @@
 /**
  * @property \app\modules\item\models\Item[] $items
  */
-use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\widgets\ItemCard;
 use yii\helpers\Url;

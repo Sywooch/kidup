@@ -43,7 +43,7 @@ class Booking extends \app\models\base\Booking
     public function scenarios()
     {
         return array_merge(parent::scenarios(), [
-            'init' => ['time_from', 'time_to', 'renter_id', 'price', 'status', 'time_created', 'item_id', 'status'],
+            'init' => ['time_from', 'time_to', 'renter_id', 'price', 'status', 'time_created', 'item_id', 'status', 'promotion_code_id'],
         ]);
     }
 
@@ -197,7 +197,6 @@ class Booking extends \app\models\base\Booking
         return $this;
     }
 
-
     public function setPayinPrices()
     {
         $prices = $this->item->getPriceForPeriod($this->time_from, $this->time_to, $this->currency);
@@ -216,6 +215,15 @@ class Booking extends \app\models\base\Booking
 
         return $this;
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConversations()
+    {
+        return $this->hasMany(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
+    }
+
 
     public function behaviors()
     {

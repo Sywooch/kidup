@@ -97,7 +97,7 @@ $components = [
         'username' => $keys['mysql_user'],
         'password' => $keys['mysql_password'],
         'charset' => 'utf8',
-        'enableSchemaCache' => true,
+        'enableSchemaCache' => YII_CACHE,
         // Duration of schema cache.
         'schemaCacheDuration' => 3600,
         // Name of the cache component used to store schema information
