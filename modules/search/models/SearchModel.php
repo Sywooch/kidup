@@ -136,7 +136,6 @@ class SearchModel extends Model
                         * cos( radians( `location`.`longitude` ) - radians(' . ($longitude) . ') )
                         + sin( radians(' . ($latitude) . ') )
                         * sin( radians( `location`.`latitude` ) ) ) )';
-
             $query->select($distanceQ . ' as distance, `item`.*');
             $query->innerJoinWith('location');
             if ($distance !== null) {
