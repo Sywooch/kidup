@@ -63,7 +63,7 @@ class HomeController extends Controller
             return Category::find()->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
-            return Item::find()->limit(3)->orderBy('RAND()')->where(['is_available' => 1])->all();
+            return Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->all();
         }, 6 * 3600);
 
         $res = $this->render('index', [
