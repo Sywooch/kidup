@@ -59,26 +59,34 @@ class ViewController extends Controller
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
 
-        Url::remember();
+        Url::remember('', 'after_login_url');
         $this->noContainer = true;
 
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
         // post for testing and non supporting pjax
-        if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
-            $model = new CreateBooking($item, $currency);
-            $model->load(\Yii::$app->request->post());
-            $attempt = $model->attemptBooking();
-            if ($attempt !== false) {
 
-                return $attempt;
+        $model = new CreateBooking($item, $currency);
+
+        if ($model->load(\Yii::$app->request->get())) {
+            $attempt = $model->attemptBooking();
+            if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
+                if ($attempt !== false) {
+                    return $attempt;
+                }
+
+                return $this->renderAjax('booking_widget', [
+                    'model' => $model,
+                    'item' => $item,
+                    'periods' => []
+                ]);
+            }else{
+                if($attempt !== false){
+                    return $this->redirect('@web/booking/'.$model->booking->id.'/confirm');
+                }
             }
-            return $this->renderAjax('booking_widget', [
-                'model' => $model,
-                'item' => $item,
-                'periods' => []
-            ]);
+        }else{
+            \Yii::$app->session->remove('ready_to_book');
         }
-        \Yii::$app->session->remove('ready_to_book');
 
         // prepare for carousel
         $images = $item->getCarouselImages();
@@ -90,7 +98,7 @@ class ViewController extends Controller
             'location' => $item->location,
             'images' => $images,
             'show_modal' => $new_publish !== false, // show modal if new publish
-            'bookingForm' => new CreateBooking($item, $currency),
+            'bookingForm' => $model,
             'related_items' => $related_items
         ];
 

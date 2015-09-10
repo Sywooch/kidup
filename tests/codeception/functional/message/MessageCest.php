@@ -48,8 +48,7 @@ class MessageCest
         $I->wantTo('ensure that the badge count is displayed correctly on the home page.');
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
         $I->amOnPage('/');
-        $I->canSeeElement('.message .badge');
-        $I->canSee('', '.message .badge');
+        $I->dontSeeElement('.message .badge');
 
         // now insert a fake message
         $message = $this->messageHelper->createMessage(2, 1, 'Test message');
@@ -61,8 +60,7 @@ class MessageCest
         $message->read_by_receiver = true;
         $message->save();
         $I->amOnPage('/');
-        $I->canSeeElement('.message .badge');
-        $I->canSee('', '.message .badge');
+        $I->dontSeeElement('.message .badge');
 
         $this->messageHelper->clearConversations();
     }

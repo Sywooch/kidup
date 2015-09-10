@@ -5,13 +5,10 @@ namespace app\modules\item\forms;
 use app\models\base\Currency;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
-use app\modules\user\models\User;
 use Carbon\Carbon;
 use yii\base\Model;
-use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\NotFoundHttpException;
 
 class CreateBooking extends Model
 {

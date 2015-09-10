@@ -1,23 +1,15 @@
 <?php
 
-/*
- * This file is part of the app\modules project.
- *
- * (c) app\modules project <http://github.com/app\modules>
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- */
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var app\modules\user\models\LoginForm $model
+ * @var \app\modules\user\forms\LocationForm $model
  * @var string $action
  */
+
 ?>
 
 <?php if (Yii::$app->user->isGuest): ?>

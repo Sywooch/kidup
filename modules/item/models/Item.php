@@ -76,6 +76,7 @@ class Item extends \app\models\base\Item
                 'currency_id',
                 'min_renting_days'
             ],
+            'location' => ['location_id']
         ];
     }
 
@@ -142,6 +143,27 @@ class Item extends \app\models\base\Item
             $userId = \Yii::$app->user->id;
         }
         return $this->owner_id == $userId;
+    }
+
+    /**
+     * Prepares media for the image gallery plugin (on item page for example)
+     * Used for item creation.
+     *
+     * @return string json of results
+     */
+    public function preloadMedia(){
+        $preload = [];
+        $allMedia = Media::find()->where(['item_has_media.item_id' => $this->id])
+            ->innerJoinWith('itemHasMedia')
+            ->orderBy('item_has_media.order')
+            ->all();
+        foreach ($allMedia as $media) {
+            $preload[] = [
+                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
+                'size' => 10,
+            ];
+        }
+        return Json::encode($preload);
     }
 
     /**
@@ -238,7 +260,6 @@ class Item extends \app\models\base\Item
             ->asArray()
             ->viaTable('item_has_category', ['item_id' => 'id']);
     }
-
 
     /**
      * Returns the categories of this item of a certain type

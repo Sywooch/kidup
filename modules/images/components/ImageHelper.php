@@ -2,6 +2,7 @@
 namespace app\modules\images\components;
 
 use app\components\Cache;
+use League\Glide\Filesystem\FileNotFoundException;
 use yii\helpers\BaseHtml;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -101,10 +102,15 @@ class ImageHelper extends BaseHtml
             }
             if (YII_ENV != 'dev') {
                 if (!$server->cacheFileExists($filename, $options)) {
-                    $server->makeImage($filename, $options);
+                    try{
+                        $server->makeImage($filename, $options);
+                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename, $options);
+                    }catch (FileNotFoundException $e){
+                        $url = 'http://placehold.it/300x300';
+                    }
+                }else{
+                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename, $options);
                 }
-                $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
-                        $options);
             } else {
                 $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
                     true);

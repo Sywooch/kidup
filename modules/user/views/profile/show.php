@@ -1,11 +1,13 @@
 <?php
 
 use app\components\WidgetRequest;
+use app\modules\item\widgets\ItemCard;
 use Carbon\Carbon;
 
 /**
  * @var \yii\web\View $this
  * @var \app\modules\user\models\Profile $profile
+ * @var \yii\data\ActiveDataProvider $itemProvider
  * @var bool $fbVerified
  * @var bool $twVerified
  */
@@ -47,23 +49,6 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                     </div>
 
                 </div>
-                <div class="hidden-xs">
-                    <h3><?= Yii::t("user", "Items") ?></h3>
-                    <?php
-                    // displaying the search results
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $itemProvider,
-                        'itemView' => 'profile_item',
-                        'layout' => '<div class="row">
-                                    {items}
-                                </div>
-                                <div class="row">
-                                    {pager}
-                                </div>',
-                        'itemOptions' => ['tag' => 'span'],
-                    ]);
-                    ?>
-                </div>
 
             </div>
 
@@ -80,7 +65,6 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                             Carbon::createFromTimestamp($profile->user->created_at)->toFormattedDateString()
                         ]) ?>
                     </small>
-
                 </h2>
                 <div class="description">
                     <?= $profile->description ?>
@@ -89,20 +73,35 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                 <h4><?= Yii::t("user", "Reviews ") ?><br>
                     <small><?= Yii::t("user", "Reviews from other families") ?></small>
                 </h4>
+
                 <div class="card-area-width">
                     <?php
                     // displaying the search results
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $reviewProvider,
                         'itemView' => 'profile_review',
-                        'layout' => '<div class="row">
-                                    {items}
-                                </div>
-                                <div class="row">
-                                    {pager}
-                                </div>',
                         'itemOptions' => ['tag' => 'span'],
                     ]);
+                    ?>
+                </div>
+            </div>
+
+        </div>
+        <div class="hidden-xs row">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>
+                    <?= Yii::t("user", "Products from {0}", [
+                        $profile->first_name
+                    ]) ?>
+                </h3>
+                <div class="row">
+                    <?php
+                    foreach ($items as $item) {
+                        echo ItemCard::widget([
+                            'model' => $item,
+                            'showDistance' => false
+                        ]);
+                    }
                     ?>
                 </div>
             </div>
