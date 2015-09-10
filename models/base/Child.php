@@ -13,7 +13,7 @@ use Yii;
  * @property string $gender
  * @property integer $user_id
  *
- * @property \app\models\User $user
+ * @property \app\models\base\User $user
  */
 class Child extends \yii\db\ActiveRecord
 {
@@ -61,7 +61,7 @@ class Child extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
 

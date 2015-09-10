@@ -12,12 +12,12 @@ use Yii;
  * @property string $abbr
  * @property string $forex_name
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\Country[] $countries
- * @property \app\models\Item[] $items
- * @property \app\models\Payin[] $payins
- * @property \app\models\Payout[] $payouts
- * @property \app\models\Profile[] $profiles
+ * @property \app\models\base\Booking[] $bookings
+ * @property \app\models\base\Country[] $countries
+ * @property \app\models\base\Item[] $items
+ * @property \app\models\base\Payin[] $payins
+ * @property \app\models\base\Payout[] $payouts
+ * @property \app\models\base\Profile[] $profiles
  */
 class Currency extends \yii\db\ActiveRecord
 {
@@ -62,7 +62,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\app\models\Booking::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Booking::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -70,7 +70,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getCountries()
     {
-        return $this->hasMany(\app\models\Country::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Country::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -78,7 +78,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\Item::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Item::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -86,7 +86,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\app\models\Payin::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payin::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -94,7 +94,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\app\models\Payout::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payout::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -102,7 +102,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\app\models\Profile::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\app\models\base\Profile::className(), ['currency_id' => 'id']);
     }
 
 

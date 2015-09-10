@@ -18,10 +18,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $is_public
  *
- * @property \app\models\User $reviewed
- * @property \app\models\Booking $booking
- * @property \app\models\Item $item
- * @property \app\models\User $reviewer
+ * @property \app\models\base\User $reviewed
+ * @property \app\models\base\Booking $booking
+ * @property \app\models\base\Item $item
+ * @property \app\models\base\User $reviewer
  */
 class Review extends \yii\db\ActiveRecord
 {
@@ -77,7 +77,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getReviewed()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'reviewed_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'reviewed_id']);
     }
 
     /**
@@ -85,7 +85,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(\app\models\Booking::className(), ['id' => 'booking_id']);
+        return $this->hasOne(\app\models\base\Booking::className(), ['id' => 'booking_id']);
     }
 
     /**
@@ -93,7 +93,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
     }
 
     /**
@@ -101,7 +101,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getReviewer()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'reviewer_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'reviewer_id']);
     }
 
 

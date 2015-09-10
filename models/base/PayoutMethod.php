@@ -21,8 +21,8 @@ use Yii;
  * @property string $identifier_1_encrypted
  * @property string $identifier_2_encrypted
  *
- * @property \app\models\User $user
- * @property \app\models\Country $country
+ * @property \app\models\base\User $user
+ * @property \app\models\base\Country $country
  */
 class PayoutMethod extends \yii\db\ActiveRecord
 {
@@ -80,7 +80,7 @@ class PayoutMethod extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -88,7 +88,7 @@ class PayoutMethod extends \yii\db\ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne(\app\models\Country::className(), ['id' => 'country_id']);
+        return $this->hasOne(\app\models\base\Country::className(), ['id' => 'country_id']);
     }
 
 

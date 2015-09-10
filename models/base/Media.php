@@ -16,9 +16,9 @@ use Yii;
  * @property integer $updated_at
  * @property string $file_name
  *
- * @property \app\models\ItemHasMedia[] $itemHasMedia
- * @property \app\models\Item[] $items
- * @property \app\models\User $user
+ * @property \app\models\base\ItemHasMedia[] $itemHasMedia
+ * @property \app\models\base\Item[] $items
+ * @property \app\models\base\User $user
  */
 class Media extends \yii\db\ActiveRecord
 {
@@ -71,7 +71,7 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getItemHasMedia()
     {
-        return $this->hasMany(\app\models\ItemHasMedia::className(), ['media_id' => 'id']);
+        return $this->hasMany(\app\models\base\ItemHasMedia::className(), ['media_id' => 'id']);
     }
 
     /**
@@ -79,7 +79,7 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media', ['media_id' => 'id']);
+        return $this->hasMany(\app\models\base\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media', ['media_id' => 'id']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
 

@@ -21,10 +21,10 @@ use Yii;
  * @property integer $updated_at
  * @property string $street_suffix
  *
- * @property \app\models\Item[] $items
- * @property \app\models\Country $country0
- * @property \app\models\User $user
- * @property \app\models\Profile[] $profiles
+ * @property \app\models\base\Item[] $items
+ * @property \app\models\base\Country $country0
+ * @property \app\models\base\User $user
+ * @property \app\models\base\Profile[] $profiles
  */
 class Location extends \yii\db\ActiveRecord
 {
@@ -85,7 +85,7 @@ class Location extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\Item::className(), ['location_id' => 'id']);
+        return $this->hasMany(\app\models\base\Item::className(), ['location_id' => 'id']);
     }
 
     /**
@@ -93,7 +93,7 @@ class Location extends \yii\db\ActiveRecord
      */
     public function getCountry0()
     {
-        return $this->hasOne(\app\models\Country::className(), ['id' => 'country']);
+        return $this->hasOne(\app\models\base\Country::className(), ['id' => 'country']);
     }
 
     /**
@@ -101,7 +101,7 @@ class Location extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -109,7 +109,7 @@ class Location extends \yii\db\ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\app\models\Profile::className(), ['location_id' => 'id']);
+        return $this->hasMany(\app\models\base\Profile::className(), ['location_id' => 'id']);
     }
 
 

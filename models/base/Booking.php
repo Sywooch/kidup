@@ -31,12 +31,12 @@ use Yii;
  * @property integer $request_expires_at
  * @property string $promotion_code_id
  *
- * @property \app\models\Currency $currency
- * @property \app\models\Item $item
- * @property \app\models\Payin $payin
- * @property \app\models\Payout $payout
- * @property \app\models\User $renter
- * @property \app\models\Review[] $reviews
+ * @property \app\models\base\Currency $currency
+ * @property \app\models\base\Item $item
+ * @property \app\models\base\Payin $payin
+ * @property \app\models\base\Payout $payout
+ * @property \app\models\base\User $renter
+ * @property \app\models\base\Review[] $reviews
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -109,7 +109,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -117,7 +117,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
     }
 
     /**
@@ -125,7 +125,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getPayin()
     {
-        return $this->hasOne(\app\models\Payin::className(), ['id' => 'payin_id']);
+        return $this->hasOne(\app\models\base\Payin::className(), ['id' => 'payin_id']);
     }
 
     /**
@@ -133,7 +133,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getPayout()
     {
-        return $this->hasOne(\app\models\Payout::className(), ['id' => 'payout_id']);
+        return $this->hasOne(\app\models\base\Payout::className(), ['id' => 'payout_id']);
     }
 
     /**
@@ -141,7 +141,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getRenter()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'renter_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'renter_id']);
     }
 
     /**
@@ -149,7 +149,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(\app\models\Review::className(), ['booking_id' => 'id']);
+        return $this->hasMany(\app\models\base\Review::className(), ['booking_id' => 'id']);
     }
 
 

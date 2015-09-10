@@ -10,8 +10,8 @@ use Yii;
  * @property integer $user_id
  * @property string $promotion_code_id
  *
- * @property \app\models\User $user
- * @property \app\models\PromotionCode $promotionCode
+ * @property \app\models\base\User $user
+ * @property \app\models\base\PromotionCode $promotionCode
  */
 class UserHasPromotionCode extends \yii\db\ActiveRecord
 {
@@ -56,7 +56,7 @@ class UserHasPromotionCode extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserHasPromotionCode extends \yii\db\ActiveRecord
      */
     public function getPromotionCode()
     {
-        return $this->hasOne(\app\models\PromotionCode::className(), ['id' => 'promotion_code_id']);
+        return $this->hasOne(\app\models\base\PromotionCode::className(), ['id' => 'promotion_code_id']);
     }
 
 

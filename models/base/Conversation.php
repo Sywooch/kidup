@@ -15,10 +15,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $booking_id
  *
- * @property \app\models\User $targetUser
- * @property \app\models\User $initiaterUser
- * @property \app\models\MailAccount[] $mailAccounts
- * @property \app\models\Message[] $messages
+ * @property \app\models\base\User $targetUser
+ * @property \app\models\base\User $initiaterUser
+ * @property \app\models\base\MailAccount[] $mailAccounts
+ * @property \app\models\base\Message[] $messages
  */
 class Conversation extends \yii\db\ActiveRecord
 {
@@ -68,7 +68,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getTargetUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'target_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'target_user_id']);
     }
 
     /**
@@ -76,7 +76,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getInitiaterUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'initiater_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'initiater_user_id']);
     }
 
     /**
@@ -84,7 +84,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\app\models\MailAccount::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(\app\models\base\MailAccount::className(), ['conversation_id' => 'id']);
     }
 
     /**
@@ -92,7 +92,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getMessages()
     {
-        return $this->hasMany(\app\models\Message::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(\app\models\base\Message::className(), ['conversation_id' => 'id']);
     }
 
 

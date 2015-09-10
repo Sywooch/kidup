@@ -11,8 +11,8 @@ use Yii;
  * @property integer $media_id
  * @property integer $order
  *
- * @property \app\models\Media $media
- * @property \app\models\Item $item
+ * @property \app\models\base\Media $media
+ * @property \app\models\base\Item $item
  */
 class ItemHasMedia extends \yii\db\ActiveRecord
 {
@@ -57,7 +57,7 @@ class ItemHasMedia extends \yii\db\ActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasOne(\app\models\Media::className(), ['id' => 'media_id']);
+        return $this->hasOne(\app\models\base\Media::className(), ['id' => 'media_id']);
     }
 
     /**
@@ -65,7 +65,7 @@ class ItemHasMedia extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
     }
 
 

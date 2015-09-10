@@ -15,11 +15,11 @@ use Yii;
  * @property integer $phone_prefix
  * @property double $vat
  *
- * @property \app\models\Language $mainLanguage
- * @property \app\models\Currency $currency
- * @property \app\models\Location[] $locations
- * @property \app\models\PayoutMethod[] $payoutMethods
- * @property \app\models\Profile[] $profiles
+ * @property \app\models\base\Language $mainLanguage
+ * @property \app\models\base\Currency $currency
+ * @property \app\models\base\Location[] $locations
+ * @property \app\models\base\PayoutMethod[] $payoutMethods
+ * @property \app\models\base\Profile[] $profiles
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -72,7 +72,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getMainLanguage()
     {
-        return $this->hasOne(\app\models\Language::className(), ['language_id' => 'main_language_id']);
+        return $this->hasOne(\app\models\base\Language::className(), ['language_id' => 'main_language_id']);
     }
 
     /**
@@ -80,7 +80,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -88,7 +88,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\app\models\Location::className(), ['country' => 'id']);
+        return $this->hasMany(\app\models\base\Location::className(), ['country' => 'id']);
     }
 
     /**
@@ -96,7 +96,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getPayoutMethods()
     {
-        return $this->hasMany(\app\models\PayoutMethod::className(), ['country_id' => 'id']);
+        return $this->hasMany(\app\models\base\PayoutMethod::className(), ['country_id' => 'id']);
     }
 
     /**
@@ -104,7 +104,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\app\models\Profile::className(), ['nationality' => 'id']);
+        return $this->hasMany(\app\models\base\Profile::className(), ['nationality' => 'id']);
     }
 
 

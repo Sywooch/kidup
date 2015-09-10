@@ -17,10 +17,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $invoice_id
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\User $user
- * @property \app\models\Currency $currency
- * @property \app\models\Invoice $invoice
+ * @property \app\models\base\Booking[] $bookings
+ * @property \app\models\base\User $user
+ * @property \app\models\base\Currency $currency
+ * @property \app\models\base\Invoice $invoice
  */
 class Payout extends \yii\db\ActiveRecord
 {
@@ -74,7 +74,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\app\models\Booking::className(), ['payout_id' => 'id']);
+        return $this->hasMany(\app\models\base\Booking::className(), ['payout_id' => 'id']);
     }
 
     /**
@@ -82,7 +82,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -90,7 +90,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -98,7 +98,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getInvoice()
     {
-        return $this->hasOne(\app\models\Invoice::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(\app\models\base\Invoice::className(), ['id' => 'invoice_id']);
     }
 
 

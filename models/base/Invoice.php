@@ -14,8 +14,8 @@ use Yii;
  * @property integer $updated_at
  * @property string $status
  *
- * @property \app\models\Payin[] $payins
- * @property \app\models\Payout[] $payouts
+ * @property \app\models\base\Payin[] $payins
+ * @property \app\models\base\Payout[] $payouts
  */
 class Invoice extends \yii\db\ActiveRecord
 {
@@ -62,7 +62,7 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\app\models\Payin::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payin::className(), ['invoice_id' => 'id']);
     }
 
     /**
@@ -70,7 +70,7 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\app\models\Payout::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payout::className(), ['invoice_id' => 'id']);
     }
 
 

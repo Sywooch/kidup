@@ -14,7 +14,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \app\models\User $user
+ * @property \app\models\base\User $user
  */
 class Setting extends \yii\db\ActiveRecord
 {
@@ -63,7 +63,7 @@ class Setting extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
 
 

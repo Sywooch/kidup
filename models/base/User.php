@@ -21,26 +21,26 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\Child[] $children
- * @property \app\models\Conversation[] $conversations
- * @property \app\models\Conversation[] $conversations0
- * @property \app\models\Item[] $items
- * @property \app\models\Location[] $locations
- * @property \app\models\MailAccount[] $mailAccounts
- * @property \app\models\Media[] $media
- * @property \app\models\Message[] $messages
- * @property \app\models\Message[] $messages0
- * @property \app\models\Payin[] $payins
- * @property \app\models\Payout[] $payouts
- * @property \app\models\PayoutMethod[] $payoutMethods
- * @property \app\models\Profile $profile
- * @property \app\models\Review[] $reviews
- * @property \app\models\Review[] $reviews0
- * @property \app\models\Setting[] $settings
- * @property \app\models\Token[] $tokens
- * @property \app\models\UserHasPromotionCode[] $userHasPromotionCodes
- * @property \app\models\PromotionCode[] $promotionCodes
+ * @property \app\models\base\Booking[] $bookings
+ * @property \app\models\base\Child[] $children
+ * @property \app\models\base\Conversation[] $conversations
+ * @property \app\models\base\Conversation[] $conversations0
+ * @property \app\models\base\Item[] $items
+ * @property \app\models\base\Location[] $locations
+ * @property \app\models\base\MailAccount[] $mailAccounts
+ * @property \app\models\base\Media[] $media
+ * @property \app\models\base\Message[] $messages
+ * @property \app\models\base\Message[] $messages0
+ * @property \app\models\base\Payin[] $payins
+ * @property \app\models\base\Payout[] $payouts
+ * @property \app\models\base\PayoutMethod[] $payoutMethods
+ * @property \app\models\base\Profile $profile
+ * @property \app\models\base\Review[] $reviews
+ * @property \app\models\base\Review[] $reviews0
+ * @property \app\models\base\Setting[] $settings
+ * @property \app\models\base\Token[] $tokens
+ * @property \app\models\base\UserHasPromotionCode[] $userHasPromotionCodes
+ * @property \app\models\base\PromotionCode[] $promotionCodes
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -97,7 +97,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\app\models\Booking::className(), ['renter_id' => 'id']);
+        return $this->hasMany(\app\models\base\Booking::className(), ['renter_id' => 'id']);
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getChildren()
     {
-        return $this->hasMany(\app\models\Child::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Child::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -113,7 +113,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations()
     {
-        return $this->hasMany(\app\models\Conversation::className(), ['target_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Conversation::className(), ['target_user_id' => 'id']);
     }
 
     /**
@@ -121,7 +121,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations0()
     {
-        return $this->hasMany(\app\models\Conversation::className(), ['initiater_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Conversation::className(), ['initiater_user_id' => 'id']);
     }
 
     /**
@@ -129,7 +129,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\Item::className(), ['owner_id' => 'id']);
+        return $this->hasMany(\app\models\base\Item::className(), ['owner_id' => 'id']);
     }
 
     /**
@@ -137,7 +137,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\app\models\Location::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Location::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -145,7 +145,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\app\models\MailAccount::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\MailAccount::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -153,7 +153,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasMany(\app\models\Media::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Media::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -161,7 +161,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMessages()
     {
-        return $this->hasMany(\app\models\Message::className(), ['sender_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Message::className(), ['sender_user_id' => 'id']);
     }
 
     /**
@@ -169,7 +169,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMessages0()
     {
-        return $this->hasMany(\app\models\Message::className(), ['receiver_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Message::className(), ['receiver_user_id' => 'id']);
     }
 
     /**
@@ -177,7 +177,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\app\models\Payin::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payin::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -185,7 +185,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\app\models\Payout::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Payout::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -193,7 +193,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPayoutMethods()
     {
-        return $this->hasMany(\app\models\PayoutMethod::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\PayoutMethod::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -201,7 +201,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getProfile()
     {
-        return $this->hasOne(\app\models\Profile::className(), ['user_id' => 'id']);
+        return $this->hasOne(\app\models\base\Profile::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -209,7 +209,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(\app\models\Review::className(), ['reviewed_id' => 'id']);
+        return $this->hasMany(\app\models\base\Review::className(), ['reviewed_id' => 'id']);
     }
 
     /**
@@ -217,7 +217,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getReviews0()
     {
-        return $this->hasMany(\app\models\Review::className(), ['reviewer_id' => 'id']);
+        return $this->hasMany(\app\models\base\Review::className(), ['reviewer_id' => 'id']);
     }
 
     /**
@@ -225,7 +225,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getSettings()
     {
-        return $this->hasMany(\app\models\Setting::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Setting::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -233,7 +233,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getTokens()
     {
-        return $this->hasMany(\app\models\Token::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Token::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -241,7 +241,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getUserHasPromotionCodes()
     {
-        return $this->hasMany(\app\models\UserHasPromotionCode::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\UserHasPromotionCode::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -249,7 +249,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPromotionCodes()
     {
-        return $this->hasMany(\app\models\PromotionCode::className(), ['id' => 'promotion_code_id'])->viaTable('user_has_promotion_code', ['user_id' => 'id']);
+        return $this->hasMany(\app\models\base\PromotionCode::className(), ['id' => 'promotion_code_id'])->viaTable('user_has_promotion_code', ['user_id' => 'id']);
     }
 
 

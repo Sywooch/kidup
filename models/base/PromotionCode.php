@@ -16,8 +16,8 @@ use Yii;
  * @property integer $count_total
  * @property integer $count_left
  *
- * @property \app\models\UserHasPromotionCode[] $userHasPromotionCodes
- * @property \app\models\User[] $users
+ * @property \app\models\base\UserHasPromotionCode[] $userHasPromotionCodes
+ * @property \app\models\base\User[] $users
  */
 class PromotionCode extends \yii\db\ActiveRecord
 {
@@ -66,7 +66,7 @@ class PromotionCode extends \yii\db\ActiveRecord
      */
     public function getUserHasPromotionCodes()
     {
-        return $this->hasMany(\app\models\UserHasPromotionCode::className(), ['promotion_code_id' => 'id']);
+        return $this->hasMany(\app\models\base\UserHasPromotionCode::className(), ['promotion_code_id' => 'id']);
     }
 
     /**
@@ -74,7 +74,7 @@ class PromotionCode extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(\app\models\User::className(), ['id' => 'user_id'])->viaTable('user_has_promotion_code', ['promotion_code_id' => 'id']);
+        return $this->hasMany(\app\models\base\User::className(), ['id' => 'user_id'])->viaTable('user_has_promotion_code', ['promotion_code_id' => 'id']);
     }
 
 

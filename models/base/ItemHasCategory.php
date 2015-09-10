@@ -10,8 +10,8 @@ use Yii;
  * @property integer $item_id
  * @property integer $category_id
  *
- * @property \app\models\Item $item
- * @property \app\models\Category $category
+ * @property \app\models\base\Item $item
+ * @property \app\models\base\Category $category
  */
 class ItemHasCategory extends \yii\db\ActiveRecord
 {
@@ -55,7 +55,7 @@ class ItemHasCategory extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
     }
 
     /**
@@ -63,7 +63,7 @@ class ItemHasCategory extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(\app\models\Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(\app\models\base\Category::className(), ['id' => 'category_id']);
     }
 
 

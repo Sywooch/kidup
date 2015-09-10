@@ -16,10 +16,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $created_at
  *
- * @property \app\models\MailMessage[] $mailMessages
- * @property \app\models\Conversation $conversation
- * @property \app\models\User $senderUser
- * @property \app\models\User $receiverUser
+ * @property \app\models\base\MailMessage[] $mailMessages
+ * @property \app\models\base\Conversation $conversation
+ * @property \app\models\base\User $senderUser
+ * @property \app\models\base\User $receiverUser
  */
 class Message extends \yii\db\ActiveRecord
 {
@@ -71,7 +71,7 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getMailMessages()
     {
-        return $this->hasMany(\app\models\MailMessage::className(), ['message_id' => 'id']);
+        return $this->hasMany(\app\models\base\MailMessage::className(), ['message_id' => 'id']);
     }
 
     /**
@@ -79,7 +79,7 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getConversation()
     {
-        return $this->hasOne(\app\models\Conversation::className(), ['id' => 'conversation_id']);
+        return $this->hasOne(\app\models\base\Conversation::className(), ['id' => 'conversation_id']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getSenderUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'sender_user_id']);
     }
 
     /**
@@ -95,7 +95,7 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getReceiverUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'receiver_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'receiver_user_id']);
     }
 
 

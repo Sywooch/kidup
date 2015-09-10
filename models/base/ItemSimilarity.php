@@ -14,8 +14,8 @@ use Yii;
  * @property double $similarity_categories
  * @property double $similarity_price
  *
- * @property \app\models\Item $itemId2
- * @property \app\models\Item $itemId1
+ * @property \app\models\base\Item $itemId2
+ * @property \app\models\base\Item $itemId1
  */
 class ItemSimilarity extends \yii\db\ActiveRecord
 {
@@ -64,7 +64,7 @@ class ItemSimilarity extends \yii\db\ActiveRecord
      */
     public function getItemId2()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id_2']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id_2']);
     }
 
     /**
@@ -72,7 +72,7 @@ class ItemSimilarity extends \yii\db\ActiveRecord
      */
     public function getItemId1()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id_1']);
+        return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id_1']);
     }
 
 
