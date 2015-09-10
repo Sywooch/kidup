@@ -27,5 +27,3 @@ phpunit.phar
 /phpunit.xml
 
 tests/_output/*
-
-web/assets/*
