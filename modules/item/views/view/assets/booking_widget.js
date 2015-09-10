@@ -74,20 +74,23 @@ var widgetFactory = function () {
     });
 
     var scrollFunc = function () {
+        if($(document).width() < 990) return false;
         var docScroll = $(document).scrollTop();
-        var parallax = $('.parallax').height();
-        if (typeof $('.leaflet-map-pane').offset() === "undefined") {
+        var navHeight = $('.navbar').height();
+        if (typeof $('.footer').offset() === "undefined") {
             var mapHeight = 1000;
         } else {
-            var mapHeight = $('.leaflet-map-pane').offset().top;
+            var mapHeight = $('.footer').offset().top;
         }
         var widgetHeight = $("#booking-widget").height();
-        if (docScroll > parallax && docScroll < mapHeight - widgetHeight - 105) {
-            $("#booking-widget").css("margin-top", $(document).scrollTop() - 330 + "px");
-        } else if (docScroll <= parallax) {
-            $("#booking-widget").css("margin-top", "-30px");
+        if (docScroll > navHeight - 40 && docScroll < mapHeight - widgetHeight - 98) {
+            $("#booking-widget").css("margin-top", $(document).scrollTop() + 10 + "px");
+        } else if (docScroll <= 120) {
+            $("#booking-widget").css("margin-top", "40px");
         }
     };
+
+    $("#wrapper").css("margin-bottom", "0px"); /// visual misalignment with wrapper on item view page
     $(document).scroll(scrollFunc);
     $(document).ready(scrollFunc);
 

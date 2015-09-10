@@ -63,11 +63,13 @@ class ViewController extends Controller
         $this->noContainer = true;
 
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
-        if (Yii::$app->request->isPjax) {
+        // post for testing and non supporting pjax
+        if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
             $model = new CreateBooking($item, $currency);
             $model->load(\Yii::$app->request->post());
             $attempt = $model->attemptBooking();
             if ($attempt !== false) {
+
                 return $attempt;
             }
             return $this->renderAjax('booking_widget', [

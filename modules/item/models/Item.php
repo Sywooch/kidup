@@ -188,11 +188,16 @@ class Item extends \app\models\base\Item
     public function getCarouselImages(){
         return Cache::data('item_view-images-carousel' . $this->id, function () {
             $itemImages = $this->getImageNames();
+
             $images = [];
-            foreach ($itemImages as $img) {
+            $count = count($itemImages);
+            foreach ($itemImages as $i => $img) {
+                $w = 250;
+                $h = 200;
+
                 $images[] = [
-                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => 400]),
-                    'url' => ImageHelper::url($img, ['q' => 90, 'w' => 1600]),
+                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => $w, 'h' => $h, 'fit' => 'crop']),
+                    'url' => ImageHelper::url($img, ['q' => 90]),
                 ];
             }
             return $images;
