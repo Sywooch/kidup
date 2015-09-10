@@ -7,14 +7,16 @@ use FunctionalTester;
 /**
  * Functional test for the Google Maps API.
  *
- * Class MessageCest
- * @package app\tests\codeception\functional\message
+ * Class GoogleMapsAPI
+ * @package app\tests\codeception\functional\vendor
  */
 class GoogleMapsAPI
 {
 
     /**
      * Test whether the Google Maps API gives back the data as expected.
+     *
+     * @param functionalTester $I
      */
     public function testGoogleMapsAPI(FunctionalTester $I) {
         $location = Location::getByAddress('Aarhus Denmark');
