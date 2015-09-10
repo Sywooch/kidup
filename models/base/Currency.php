@@ -21,9 +21,6 @@ use Yii;
  */
 class Currency extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -104,8 +101,4 @@ class Currency extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Profile::className(), ['currency_id' => 'id']);
     }
-
-
-
-
 }

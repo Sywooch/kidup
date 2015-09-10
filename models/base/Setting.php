@@ -18,9 +18,6 @@ use Yii;
  */
 class Setting extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -38,8 +35,7 @@ class Setting extends \yii\db\ActiveRecord
             [['user_id'], 'required'],
             [['user_id', 'created_at', 'updated_at'], 'integer'],
             [['type'], 'string', 'max' => 50],
-            [['value'], 'string', 'max' => 256],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
+            [['value'], 'string', 'max' => 256]
         ];
     }
 
@@ -65,8 +61,4 @@ class Setting extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
-
-
-
-
 }

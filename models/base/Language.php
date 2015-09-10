@@ -18,9 +18,6 @@ use Yii;
  */
 class Language extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -65,8 +62,4 @@ class Language extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Country::className(), ['main_language_id' => 'language_id']);
     }
-
-
-
-
 }

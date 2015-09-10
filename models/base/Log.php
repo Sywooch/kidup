@@ -5,22 +5,23 @@ namespace app\models\base;
 use Yii;
 
 /**
- * This is the base-model class for table "mail_log".
+ * This is the base-model class for table "log".
  *
- * @property string $id
+ * @property integer $id
+ * @property string $message
  * @property string $data
- * @property string $email
- * @property string $type
+ * @property string $category
  * @property integer $created_at
+ * @property string $session_id
  */
-class MailLog extends \yii\db\ActiveRecord
+class Log extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'mail_log';
+        return 'log';
     }
 
     /**
@@ -29,11 +30,12 @@ class MailLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'email', 'type', 'created_at'], 'required'],
+            [['message', 'data', 'category', 'created_at'], 'required'],
             [['data'], 'string'],
             [['created_at'], 'integer'],
-            [['id', 'email'], 'string', 'max' => 256],
-            [['type'], 'string', 'max' => 45]
+            [['message'], 'string', 'max' => 128],
+            [['category'], 'string', 'max' => 45],
+            [['session_id'], 'string', 'max' => 50]
         ];
     }
 
@@ -44,10 +46,13 @@ class MailLog extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'message' => Yii::t('app', 'Message'),
             'data' => Yii::t('app', 'Data'),
-            'email' => Yii::t('app', 'Email'),
-            'type' => Yii::t('app', 'Type'),
+            'category' => Yii::t('app', 'Category'),
             'created_at' => Yii::t('app', 'Created At'),
+            'session_id' => Yii::t('app', 'Session ID'),
         ];
     }
+
+
 }

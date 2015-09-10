@@ -11,14 +11,11 @@ use Yii;
  * @property integer $media_id
  * @property integer $order
  *
- * @property \app\models\base\Media $media
  * @property \app\models\base\Item $item
+ * @property \app\models\base\Media $media
  */
 class ItemHasMedia extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -34,9 +31,7 @@ class ItemHasMedia extends \yii\db\ActiveRecord
     {
         return [
             [['item_id', 'media_id'], 'required'],
-            [['item_id', 'media_id', 'order'], 'integer'],
-            [['media_id'], 'exist', 'skipOnError' => true, 'targetClass' => Media::className(), 'targetAttribute' => ['media_id' => 'id']],
-            [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']]
+            [['item_id', 'media_id', 'order'], 'integer']
         ];
     }
 
@@ -55,20 +50,16 @@ class ItemHasMedia extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMedia()
-    {
-        return $this->hasOne(\app\models\base\Media::className(), ['id' => 'media_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getItem()
     {
         return $this->hasOne(\app\models\base\Item::className(), ['id' => 'item_id']);
     }
 
-
-
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMedia()
+    {
+        return $this->hasOne(\app\models\base\Media::className(), ['id' => 'media_id']);
+    }
 }

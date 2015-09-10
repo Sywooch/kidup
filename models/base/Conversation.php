@@ -15,16 +15,13 @@ use Yii;
  * @property integer $updated_at
  * @property integer $booking_id
  *
- * @property \app\models\base\User $targetUser
- * @property \app\models\base\User $initiaterUser
- * @property \app\models\base\MailAccount[] $mailAccounts
- * @property \app\models\base\Message[] $messages
+ * @property \app\models\User $initiaterUser
+ * @property \app\models\User $targetUser
+ * @property \app\models\MailAccount[] $mailAccounts
+ * @property \app\models\Message[] $messages
  */
 class Conversation extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -39,11 +36,9 @@ class Conversation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['initiater_user_id', 'target_user_id', 'title', 'created_at', 'booking_id'], 'required'],
+            [['initiater_user_id', 'target_user_id', 'title', 'created_at'], 'required'],
             [['initiater_user_id', 'target_user_id', 'created_at', 'updated_at', 'booking_id'], 'integer'],
-            [['title'], 'string', 'max' => 50],
-            [['target_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['target_user_id' => 'id']],
-            [['initiater_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['initiater_user_id' => 'id']]
+            [['title'], 'string', 'max' => 50]
         ];
     }
 
@@ -66,17 +61,17 @@ class Conversation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTargetUser()
+    public function getInitiaterUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'target_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'initiater_user_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInitiaterUser()
+    public function getTargetUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'initiater_user_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'target_user_id']);
     }
 
     /**
@@ -95,7 +90,11 @@ class Conversation extends \yii\db\ActiveRecord
         return $this->hasMany(\app\models\base\Message::className(), ['conversation_id' => 'id']);
     }
 
-
-
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooking()
+    {
+        return $this->hasMany(\app\models\base\Message::className(), ['conversation_id' => 'id']);
+    }
 }

@@ -16,18 +16,14 @@ use Yii;
  * @property integer $item_id
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $is_public
  *
- * @property \app\models\base\User $reviewed
- * @property \app\models\base\Booking $booking
- * @property \app\models\base\Item $item
- * @property \app\models\base\User $reviewer
+ * @property \app\models\Booking $booking
+ * @property \app\models\Item $item
+ * @property \app\models\User $reviewer
+ * @property \app\models\User $reviewed
  */
 class Review extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -44,12 +40,8 @@ class Review extends \yii\db\ActiveRecord
         return [
             [['value'], 'string'],
             [['reviewer_id', 'reviewed_id', 'type', 'booking_id', 'created_at'], 'required'],
-            [['reviewer_id', 'reviewed_id', 'booking_id', 'item_id', 'created_at', 'updated_at', 'is_public'], 'integer'],
-            [['type'], 'string', 'max' => 45],
-            [['reviewed_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['reviewed_id' => 'id']],
-            [['booking_id'], 'exist', 'skipOnError' => true, 'targetClass' => Booking::className(), 'targetAttribute' => ['booking_id' => 'id']],
-            [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']],
-            [['reviewer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['reviewer_id' => 'id']]
+            [['reviewer_id', 'reviewed_id', 'booking_id', 'item_id', 'created_at', 'updated_at'], 'integer'],
+            [['type'], 'string', 'max' => 45]
         ];
     }
 
@@ -68,16 +60,7 @@ class Review extends \yii\db\ActiveRecord
             'item_id' => Yii::t('app', 'Item ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'is_public' => Yii::t('app', 'Is Public'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getReviewed()
-    {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'reviewed_id']);
     }
 
     /**
@@ -104,7 +87,11 @@ class Review extends \yii\db\ActiveRecord
         return $this->hasOne(\app\models\base\User::className(), ['id' => 'reviewer_id']);
     }
 
-
-
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviewed()
+    {
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'reviewed_id']);
+    }
 }

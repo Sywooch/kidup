@@ -17,16 +17,13 @@ use Yii;
  * @property integer $updated_at
  * @property integer $invoice_id
  *
- * @property \app\models\base\Booking[] $bookings
- * @property \app\models\base\User $user
- * @property \app\models\base\Currency $currency
- * @property \app\models\base\Invoice $invoice
+ * @property \app\models\Booking[] $bookings
+ * @property \app\models\Invoice $invoice
+ * @property \app\models\Currency $currency
+ * @property \app\models\User $user
  */
 class Payout extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -44,10 +41,7 @@ class Payout extends \yii\db\ActiveRecord
             [['status', 'amount', 'currency_id', 'user_id', 'created_at'], 'required'],
             [['amount'], 'number'],
             [['currency_id', 'user_id', 'processed_at', 'created_at', 'updated_at', 'invoice_id'], 'integer'],
-            [['status'], 'string', 'max' => 45],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
-            [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'id']]
+            [['status'], 'string', 'max' => 45]
         ];
     }
 
@@ -80,9 +74,9 @@ class Payout extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getInvoice()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\base\Invoice::className(), ['id' => 'invoice_id']);
     }
 
     /**
@@ -96,12 +90,8 @@ class Payout extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInvoice()
+    public function getUser()
     {
-        return $this->hasOne(\app\models\base\Invoice::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
-
-
-
-
 }
