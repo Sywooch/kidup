@@ -49,7 +49,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     ?>
 
     <!-- Steps explanation area-->
-    <div id="content-home-steps" class=" hidden-xs">
+    <div id="content-home-steps" class="hidden-xs">
         <div class="divider">
             <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 40, 'h' => 40]) ?>
         </div>
