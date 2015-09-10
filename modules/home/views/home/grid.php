@@ -37,7 +37,7 @@ use yii\helpers\Url;
                 </a>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-3">
                 <a href="<?= Url::to('@web/search?q=categories|13') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
@@ -53,10 +53,7 @@ use yii\helpers\Url;
                     <!-- end card  card-background -->
                 </a>
             </div>
-        </div>
-        <!--new row with stuff-->
-        <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <a href="<?= Url::to('@web/search?q=categories|12') ?>">
                     <div class="card  card-background">
                         <div class="image"
@@ -72,7 +69,11 @@ use yii\helpers\Url;
                     <!-- end card  card-background -->
                 </a>
             </div>
-            <div class="col-md-4">
+        </div>
+        <!--new row with stuff-->
+        <div class="row">
+
+            <div class="col-md-3">
                 <a href="<?= Url::to('@web/search?q=categories|16,19') ?>">
                     <div class="card  card-background">
                         <div class="image"
@@ -89,10 +90,7 @@ use yii\helpers\Url;
                     <!-- end card  card-background -->
                 </a>
             </div>
-        </div>
-        <!--new row with stuff-->
-        <div class="row">
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-5">
                 <a href="<?= Url::to('@web/search?q=categories|22') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
@@ -108,7 +106,7 @@ use yii\helpers\Url;
                     <!-- end card  card-background -->
                 </a>
             </div>
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-4">
                 <a href="<?= Url::to('@web/search?q=categories|11') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
@@ -127,15 +125,12 @@ use yii\helpers\Url;
         </div>
         <div class="row">
             <?php
-            $numItems = 6;
-            $counter = 0;
-            foreach ($items as $item) {
+            foreach ($items as $i => $item) {
+                if ($i > 6) break;
                 echo ItemCard::widget([
                     'model' => $item,
                     'showDistance' => true
                 ]);
-                $counter++;
-                if ($counter > $numItems) break;
             }
             ?>
         </div>
