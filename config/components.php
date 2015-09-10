@@ -50,11 +50,11 @@ $components = [
                     'friends'
                 ]
             ],
-            'twitter' => [
-                'class' => 'yii\authclient\clients\Twitter',
-                'consumerKey' => $keys['twitter_oauth_key'],
-                'consumerSecret' => $keys['twitter_oauth_secret'],
-            ],
+//            'twitter' => [
+//                'class' => 'yii\authclient\clients\Twitter',
+//                'consumerKey' => $keys['twitter_oauth_key'],
+//                'consumerSecret' => $keys['twitter_oauth_secret'],
+//            ],
         ],
     ],
     'view' => [

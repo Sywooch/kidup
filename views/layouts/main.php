@@ -42,7 +42,7 @@ BootstrapPluginAsset::register($this);
 
     <?= $this->render('menu') ?>
 
-    <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="margin-top:-450px"' : '' ?>>
+    <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="padding-top:1px"' : '' ?>>
         <?php
         // this is the notification plugin, showing all errors
         foreach (Yii::$app->session->getAllFlashes() as $key => $message) {

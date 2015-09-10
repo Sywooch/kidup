@@ -85,7 +85,7 @@ class RegistrationController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post()) && $model->register()) {
-            return $this->redirect('@web/user/registration/post-registration');
+            return $this->redirect(User::afterLoginUrl('registration'));
         }
 
         return $this->render('register', [
@@ -104,13 +104,13 @@ class RegistrationController extends Controller
     {
         $account = $this->finder->findAccountById($account_id);
 
-        if ($account === null ) {
+        if ($account === null) {
             throw new NotFoundHttpException("We couldn't find the social account with that ID, please try again.");
         }
 
-        if($account->getIsConnected()){
-            if($account->user !== null){
-                // todo
+        if ($account->getIsConnected()) {
+            if ($account->user !== null) {
+                return $this->redirect(User::afterLoginUrl('connect'));
             }
         }
 
@@ -121,15 +121,15 @@ class RegistrationController extends Controller
         ]);
 
         $data = \yii\helpers\Json::decode($account->data);
-        if(isset($data['email'])){
+        if (isset($data['email'])) {
             // see if user already exists
             $u = User::findOne(['email' => $data['email']]);
-            if($u !== null){
+            if ($u !== null) {
                 $account->user_id = $u->id;
                 $account->save(false);
                 \Yii::$app->user->login($u, $this->module->rememberFor);
-                return $this->redirect('@web/home');
-            }else{
+                return $this->redirect(User::afterLoginUrl('connect'));
+            } else {
                 $user->email = $data['email'];
                 $user->create();
                 $account->user_id = $user->id;
@@ -138,11 +138,11 @@ class RegistrationController extends Controller
                  * @var SocialAccount $socialAccount
                  */
                 $socialAccount = SocialAccount::findOne($account_id);
-                if($socialAccount !== null){
+                if ($socialAccount !== null) {
                     $socialAccount->fillUserDetails($user);
                 }
                 \Yii::$app->user->login($user, $this->module->rememberFor);
-                return $this->redirect('@web/user/registration/post-registration');
+                return $this->redirect(User::afterLoginUrl('connect_new'));
             }
         }
 
@@ -150,7 +150,7 @@ class RegistrationController extends Controller
             $account->user_id = $user->id;
             $account->save(false);
             \Yii::$app->user->login($user, $this->module->rememberFor);
-            return $this->redirect('@web/user/registration/post-registration');
+            return $this->redirect(User::afterLoginUrl('connect_new'));
         }
 
         return $this->render('connect', [
@@ -193,19 +193,12 @@ class RegistrationController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->goBack();
+            return $this->redirect(User::afterLoginUrl('post_registration'));
         }
-        if ($user->profile->description == null || $user->profile->first_name == null || $user->profile->last_name == null) {
-            return $this->render('post_registration', [
-                'model' => $model,
-            ]);
-        } else {
-            \Yii::$app->session->addFlash('success',
-                \Yii::t('user', 'Thank you {0} for completing your profile, and welcome to KidUp!', [
-                    $user->profile->first_name
-                ]));
-            return $this->redirect('@web/user/settings/profile');
-        }
+
+        return $this->render('post_registration', [
+            'model' => $model,
+        ]);
     }
 
     /**

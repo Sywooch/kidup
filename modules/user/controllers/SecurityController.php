@@ -15,6 +15,7 @@ use app\controllers\Controller;
 use app\modules\user\Finder;
 use app\modules\user\forms\Login;
 use app\modules\user\models\Account;
+use app\modules\user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -88,7 +89,7 @@ class SecurityController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->getRequest()->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(User::afterLoginUrl('login'));
         }
 
         return $this->render('login', [
@@ -134,7 +135,7 @@ class SecurityController extends Controller
             $this->action->successUrl = Url::to(['/user/registration/connect', 'account_id' => $account->id]);
         } else {
             \Yii::$app->user->login($user, $this->module->rememberFor);
-            $this->action->successUrl = Url::to('@web/user/settings');
+            $this->action->successUrl = User::afterLoginUrl('social');
         }
     }
 
