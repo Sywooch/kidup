@@ -105,15 +105,14 @@ $(function () {
 
 $(function() {
     var timer = setInterval(function() {
-        if ($(window).attr('autocomplete') !== undefined) {
-            var autocomplete = $(window).attr('autocomplete');
+        if ($(window).attr('autocomplete-item-create') !== undefined) {
+            var autocomplete = $(window).attr('autocomplete-item-create');
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
                 var streetAddress = {};
                 $.each(place['address_components'], function() {
                     var address = this;
                     var name = address['long_name'];
-                    console.log(address);
                     $.each(address['types'], function() {
                         var type = this;
                         if (type == 'postal_code') {

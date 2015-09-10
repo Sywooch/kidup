@@ -36,9 +36,10 @@ class GoogleAutoComplete extends InputWidget
                 'libraries' => $this->libraries,
                 'sensor' => $this->sensor ? 'true' : 'false'
             ]));
+        $autocompleteName = $this->options['autocompleteName'];
         $view->registerJs(<<<JS
             (function(){
-                $(window).attr('autocomplete', new google.maps.places.Autocomplete(
+                $(window).attr('autocomplete-$autocompleteName', new google.maps.places.Autocomplete(
                     document.getElementById('{$elementId}'),
                     {$scriptOptions}
                 ));
