@@ -11,7 +11,7 @@ use yii\helpers\Url;
             <div class="image"
                  style="<?= ImageHelper::bgImg($model->getImageName(0),
                      ['q' => 90, 'w' => 600]) ?>; background-size: cover; background-position: 50% 50%;">
-                <div class="price-badge"><span>dkk</span> <?= $model->price_week ?></div>
+                <div class="price-badge"><span>kr.</span> <?= $model->price_week ?> <?= Yii::t("item", "/ week") ?></div>
             </div>
             <div class="content">
                 <h4 class="category">

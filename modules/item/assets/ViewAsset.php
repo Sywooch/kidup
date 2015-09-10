@@ -12,7 +12,8 @@ class ViewAsset extends AssetBundle
     ];
 
     public $js = [
-        'ie-fix.js'
+        'ie-fix.js',
+        'booking_widget.js'
     ];
 
     public $depends = [

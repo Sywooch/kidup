@@ -3,6 +3,7 @@
 namespace app\modules\item\models;
 
 use app\components\Cache;
+use app\models\base\Currency;
 use app\modules\images\components\ImageHelper;
 use app\modules\user\models\User;
 use Carbon\Carbon;
@@ -26,9 +27,9 @@ class Item extends \app\models\base\Item
     {
         return [
             '' => '',
-            '0' => \Yii::t('item', 'As good as new'),
-            '1' => \Yii::t('item', 'Minor usage trails'),
-            '2' => \Yii::t('item', 'Lightly damaged')
+            '0' => \Yii::t('item', 'As new'),
+            '1' => \Yii::t('item', 'Minor usage'),
+            '2' => \Yii::t('item', 'Light damage')
         ];
     }
 
@@ -143,82 +144,64 @@ class Item extends \app\models\base\Item
         return $this->owner_id == $userId;
     }
 
-    public function isPublishable()
-    {
-        $errors = [];
-        if (!$this->validate()) {
-            foreach ($this->getErrors() as $errorC) {
-                foreach ($errorC as $error) {
-                    $errors[] = $error;
-                }
-            }
-        }
-        $location = Location::find()->where(['id' => $this->location_id])->one();
-        if (is_null($location) || !$location->isValid()) {
-            $errors[] = \Yii::t('item', 'Please set your location in your {0}.', [
-                Html::a(\Yii::t('item', 'location settings'), '@web/user/settings/location', ['target' => '_blank'])
-            ]);
-        }
-        if (strlen($this->owner->profile->first_name) <= 1 || strlen($this->owner->profile->last_name) <= 1) {
-            $errors[] = \Yii::t('item', 'Please complete your {0}.', [
-                Html::a(\Yii::t('item', 'profile'), '@web/user/settings/profile', ['target' => '_blank'])
-            ]);
-        }
-        /**
-         * @var \app\modules\user\models\User $u ;
-         */
-        $u = User::findone($this->owner_id);
-//        if(!$u->hasValidPayoutMethod()){
-//            $errors[] = \Yii::t('item', 'Please complete your {0}.', [
-//                Html::a(\Yii::t('item', 'preferred payout method'), '@web/user/settings/payout-preference', ['target' => '_blank'])
-//            ]);
-//        }
-        if (count($this->media) == 0) {
-            $errors[] = \Yii::t('item', 'An item needs atleast one image.');
-        }
-
-        return count($errors) == 0 ? true : $errors;
-    }
-
     /**
-     * Prepares media for the image gallery plugin (on item page for example)
-     * @return string json of results
+     * Returns an array of pricing details for a booking of a certain time range
+     * @param int $timestampFrom
+     * @param int $timestampTo
+     * @param Currency $currency
+     * @return array
      */
-    public function preloadMedia(){
-        $preload = [];
-        $allMedia = Media::find()->where(['item_has_media.item_id' => $this->id])
-            ->innerJoinWith('itemHasMedia')
-            ->orderBy('item_has_media.order')
-            ->all();
-        foreach ($allMedia as $media) {
-            $preload[] = [
-                'name' => ImageHelper::url($media->file_name, ['q' => 90, 'w' => 120, 'h' => 120, 'fit' => 'crop']),
-                'size' => 10,
-            ];
-        }
-        return Json::encode($preload);
-    }
-
-    public function getUserDistance()
+    public function getPriceForPeriod($timestampFrom, $timestampTo, Currency $currency)
     {
-        if (!\Yii::$app->session->has('location_cache')) {
-            return false;
+        if ($currency !== $this->currency) {
+            // todo convert the currency
         }
-        $location = \Yii::$app->session->get('location_cache');
-        $coordinate1 = new Coordinate($location['longitude'], $location['latitude']);
-        $coordinate2 = new Coordinate($this->location->longitude, $this->location->latitude);
 
-        $calculator = new Vincenty();
-
-        echo $calculator->getDistance($coordinate1, $coordinate2);
-    }
-
-    public function getAdPrice()
-    {
-        return [
-            'price' => $this->price_week,
-            'period' => 'week'
+        $days = floor(($timestampTo - $timestampFrom) / (60 * 60 * 24));
+        $dailyPrices = [
+            'day' => $this->price_day,
+            'week' => $this->price_week / 7,
+            'month' => $this->price_week / 30,
         ];
+        if ($days <= 7) {
+            $price = $dailyPrices['day'] > 0 ? $days * $dailyPrices['day'] : $days * $dailyPrices['week'];
+        } elseif ($days > 7 && $days <= 31) {
+            $price = $dailyPrices['week'] * $days;
+        } else {
+            $price = $dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week'];
+        }
+
+        $payinFee = \Yii::$app->params['payinServiceFeePercentage'] * $price;
+        $payinFeeTax = $payinFee * 0.25; // static tax for now
+        return [
+            'price' => round($price),
+            'fee' => round($payinFee + $payinFeeTax),
+            'total' => round($price + $payinFee + $payinFeeTax),
+            '_detailed' => [
+                'price' => $price,
+                'fee' => $payinFee,
+                'feeTax' => $payinFeeTax
+            ]
+        ];
+    }
+
+    public function getCarouselImages(){
+        return Cache::data('item_view-images-carousel' . $this->id, function () {
+            $itemImages = $this->getImageNames();
+
+            $images = [];
+            $count = count($itemImages);
+            foreach ($itemImages as $i => $img) {
+                $w = 250;
+                $h = 200;
+
+                $images[] = [
+                    'src' => ImageHelper::url($img, ['q' => 90, 'w' => $w, 'h' => $h, 'fit' => 'crop']),
+                    'url' => ImageHelper::url($img, ['q' => 90]),
+                ];
+            }
+            return $images;
+        }, 10 * 60);
     }
 
     /**
@@ -286,7 +269,7 @@ class Item extends \app\models\base\Item
     public function getRecommendedItems($item, $numItems = 3)
     {
         $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
-        if(count($similarities) == 0){
+        if (count($similarities) == 0) {
             (new ItemSimilarity())->compute($item);
         }
         $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();

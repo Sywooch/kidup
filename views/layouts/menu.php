@@ -216,9 +216,14 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
         </div>
     </nav>
 <?php if ($this->context->transparentNav): ?>
-    <div class="cover-home"
-         style="background-image: url('http://192.168.33.99/images/kidup/home/header.png?q=70&amp;w=2000&amp;fm=pjpg')"></div>
-<?php endif ?>
+    <!--    this is ugly as well -->
+    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png',
+        ['q' => 70, 'w' => 2000]) ?>; height:530px;margin-top:-100px;position: absolute;
+        width: 100%;
+        background-position: top;
+        background-repeat: no-repeat;
+        background-size: cover;"></div>
+<?php endif; ?>
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {

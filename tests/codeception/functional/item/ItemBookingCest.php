@@ -101,7 +101,7 @@ class ItemBookingCest
      * Create a booking.
      *
      * @param FunctionalTester $I
-     * @return app\modules\booking\models\Booking created booking
+     * @return \app\modules\booking\models\Booking created booking
      */
     private function createBooking($I) {
         // count the e-mails
@@ -152,7 +152,7 @@ class ItemBookingCest
         $I->amGoingTo('try to fill in the booking form');
         $I->fillField('#create-booking-datefrom', $dateFrom);
         $I->fillField('#create-booking-dateto', $dateTo);
-        $I->click('Start booking!', '#booking-navbar button[type=submit]');
+        $I->click('Request to Book');
         $I->seeRecord(Booking::class, [
             'item_id' => 2,
             'status' => Booking::AWAITING_PAYMENT,
@@ -204,7 +204,7 @@ class ItemBookingCest
      * Decline a booking.
      *
      * @param $I FunctionalTester
-     * @param app\modules\booking\models\Booking Booking to decline.
+     * @param \app\modules\booking\models\Booking Booking to decline.
      */
     private function declineBooking($I, $booking) {
         $this->loginOwner($I);
@@ -232,7 +232,7 @@ class ItemBookingCest
      * Accept a booking.
      *
      * @param $I FunctionalTester
-     * @param app\modules\booking\models\Booking Booking to accept.
+     * @param \app\modules\booking\models\Booking Booking to accept.
      */
     private function acceptBooking($I, $booking) {
         $this->loginOwner($I);
@@ -268,7 +268,7 @@ class ItemBookingCest
      * Set the renting period of a booking to the past.
      *
      * @param $I FunctionalTester
-     * @param app\modules\booking\models\Booking Booking to modify
+     * @param \app\modules\booking\models\Booking Booking to modify
      */
     private function setRentingPeriodInPast($I, $booking) {
         // now set the date back into the past so it enabled us to write a review
@@ -283,7 +283,7 @@ class ItemBookingCest
      * Write a review.
      *
      * @param $I FunctionalTester
-     * @param app\modules\booking\models\Booking Booking to write the review for
+     * @param \app\modules\booking\models\Booking Booking to write the review for
      */
     private function writeReview($I, $booking) {
         // go back to the renter

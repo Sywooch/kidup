@@ -122,7 +122,11 @@ class IndexController extends \app\controllers\Controller
             $folders[] = '';
         }
         $filename = implode('/', $folders) . $filename;
-        $server->outputImage($filename, $options);
+        try{
+            $server->outputImage($filename, $options);
+        }catch (\League\Glide\Filesystem\FileNotFoundException $e){
+            return '';
+        }
         exit();
     }
 }
