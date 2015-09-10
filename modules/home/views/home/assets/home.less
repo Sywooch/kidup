@@ -41,6 +41,12 @@
   top: 3px !important;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  #wrapper {
+    margin-top: -100px;
+  }
+}
+
 #home {
   /*HEADER FOR HOME PAGE*/
   overflow: hidden;
@@ -51,7 +57,6 @@
     margin: 0px;
   }
   #header-home {
-    position: relative;
     height: 540px;
     border-bottom: 3px solid @green-500;
     overflow: hidden;
@@ -137,8 +142,6 @@
       span.right {
         bottom: 6px !important;
       }
-
-
     }
 
     input, button {
