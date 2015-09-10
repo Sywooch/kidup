@@ -289,14 +289,17 @@ class Item extends \app\models\base\Item
      */
     public function getRecommendedItems($item, $numItems = 3)
     {
-        $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
+        $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->orderBy('similarity DESC')->all();
         if (count($similarities) == 0) {
             (new ItemSimilarity())->compute($item);
+            $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->orderBy('similarity DESC')->all();
         }
-        $similarities = ItemSimilarity::find()->where(['item_id_1' => $item->id])->limit($numItems)->orderBy('similarity DESC')->all();
         $res = [];
         foreach ($similarities as $s) {
-            $res[] = $s->similarItem;
+            if(count($res) >= $numItems) return $res;
+            if($s->similarItem->is_available == 1){
+                $res[] = $s->similarItem;
+            }
         }
 
         return $res;
