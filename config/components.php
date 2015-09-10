@@ -57,7 +57,7 @@ $components = [
             ],
         ],
     ],
-    'view'         => [
+    'view' => [
         'class' => 'app\components\extended\View',
     ],
     'assetManager' => [
@@ -77,7 +77,7 @@ $components = [
         'cookieValidationKey' => $keys['cookie_validation_key'],
     ],
     'cache' => [
-        'class' => ( YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
+        'class' => (YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
         'errorAction' => 'site/error',
@@ -149,8 +149,8 @@ $components = [
     'i18n' => [
         'translations' => [
             '*' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@app/messages',
+                'class' => 'yii\i18n\GettextMessageSource',
+                'useMoFile' => false
             ],
         ],
     ],
@@ -167,13 +167,13 @@ $components = [
         'class' => 'rodzadra\geolocation\Geolocation',
         'config' => [
             'provider' => '[PLUGIN_NAME]',
-            'format' =>  '[SUPORTED_PLUGIN_FORMAT]',
+            'format' => '[SUPORTED_PLUGIN_FORMAT]',
             'api_key' => '[YOUR_API_KEY]',
         ],
     ]
 ];
 
-if($keys['yii_env'] == 'test' || YII_ENV == 'test'){
+if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {
     // solving too many mysql connectsions errors bug during testing
     //https://github.com/Codeception/Codeception/issues/1363
     $components['db']['attributes'] = [
