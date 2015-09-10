@@ -17,19 +17,17 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 ?>
 <div id="home">
     <!--Area for background-image, tag-line and sign-up -->
-    <header id="header-home">
+    <div id="header-home">
         <div class="header-content">
             <div class="row ">
-                <div class=" col-xs-12 col-sm-12 col-md-10 col-md-offset-1 text-center ">
-                </div>
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
                         <?= \Yii::t('home', 'Share'); ?>
                         <!-- VERY important to not put any space/enters in between the strong tags, it will crash the shit out of your browser-->
-                        <strong
-                            id="typist-element"
-                            data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
-                                'a trolley') ?></strong>
+                        <strong id="typist-element"
+                                data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
+                                'a trolley') ?>
+                        </strong>
                         <br/>
                         <?= \Yii::t('home', 'With a family near you') ?>
                     </h1>
@@ -40,7 +38,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
     <?= $this->render('search'); ?>
 
