@@ -14,10 +14,13 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \app\models\base\User $user
+ * @property \app\models\User $user
  */
 class Setting extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -35,7 +38,8 @@ class Setting extends \yii\db\ActiveRecord
             [['user_id'], 'required'],
             [['user_id', 'created_at', 'updated_at'], 'integer'],
             [['type'], 'string', 'max' => 50],
-            [['value'], 'string', 'max' => 256]
+            [['value'], 'string', 'max' => 256],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -59,6 +63,10 @@ class Setting extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
     }
+
+
+
+
 }

@@ -12,10 +12,13 @@ use Yii;
  * @property integer $type
  * @property integer $created_at
  *
- * @property \app\models\base\User $user
+ * @property \app\models\User $user
  */
 class Token extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -32,7 +35,8 @@ class Token extends \yii\db\ActiveRecord
         return [
             [['user_id', 'code', 'type', 'created_at'], 'required'],
             [['user_id', 'type', 'created_at'], 'integer'],
-            [['code'], 'string', 'max' => 32]
+            [['code'], 'string', 'max' => 32],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -54,6 +58,10 @@ class Token extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
     }
+
+
+
+
 }

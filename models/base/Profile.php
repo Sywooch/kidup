@@ -24,13 +24,15 @@ use Yii;
  * @property integer $nationality
  * @property integer $location_id
  *
- * @property \app\models\base\Location $location
- * @property \app\models\base\Country $nationality0
- * @property \app\models\base\Currency $currency
- * @property \app\models\base\User $user
+ * @property \app\models\Location $location
+ * @property \app\models\Country $nationality0
+ * @property \app\models\Currency $currency
+ * @property \app\models\User $user
  */
 class Profile extends \yii\db\ActiveRecord
 {
+
+
 
     /**
      * @inheritdoc
@@ -91,7 +93,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getLocation()
     {
-        return $this->hasOne(\app\models\base\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(\app\models\Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -99,7 +101,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getNationality0()
     {
-        return $this->hasOne(\app\models\base\Country::className(), ['id' => 'nationality']);
+        return $this->hasOne(\app\models\Country::className(), ['id' => 'nationality']);
     }
 
     /**
@@ -107,7 +109,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -115,9 +117,10 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
     }
 
 
-    
+
+
 }

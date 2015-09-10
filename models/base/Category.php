@@ -11,11 +11,14 @@ use Yii;
  * @property string $name
  * @property string $type
  *
- * @property \app\models\base\ItemHasCategory[] $itemHasCategories
- * @property \app\models\base\Item[] $items
+ * @property \app\models\ItemHasCategory[] $itemHasCategories
+ * @property \app\models\Item[] $items
  */
 class Category extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -53,7 +56,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getItemHasCategories()
     {
-        return $this->hasMany(\app\models\base\ItemHasCategory::className(), ['category_id' => 'id']);
+        return $this->hasMany(\app\models\ItemHasCategory::className(), ['category_id' => 'id']);
     }
 
     /**
@@ -61,6 +64,10 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\base\Item::className(), ['id' => 'item_id'])->viaTable('item_has_category', ['category_id' => 'id']);
+        return $this->hasMany(\app\models\Item::className(), ['id' => 'item_id'])->viaTable('item_has_category', ['category_id' => 'id']);
     }
+
+
+
+
 }

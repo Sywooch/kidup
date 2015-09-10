@@ -12,11 +12,15 @@ use Yii;
  * @property integer $conversation_id
  * @property integer $created_at
  *
- * @property \app\models\base\User $user
- * @property \app\models\base\Conversation $conversation
+ * @property \app\models\Conversation $conversation
+ * @property \app\models\User $user
+ * @property \app\models\MailMessage[] $mailMessages
  */
 class MailAccount extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -33,7 +37,9 @@ class MailAccount extends \yii\db\ActiveRecord
         return [
             [['name', 'user_id', 'conversation_id'], 'required'],
             [['user_id', 'conversation_id', 'created_at'], 'integer'],
-            [['name'], 'string', 'max' => 128]
+            [['name'], 'string', 'max' => 128],
+            [['conversation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conversation::className(), 'targetAttribute' => ['conversation_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -53,16 +59,28 @@ class MailAccount extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getConversation()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\Conversation::className(), ['id' => 'conversation_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getConversation()
+    public function getUser()
     {
-        return $this->hasOne(\app\models\base\Conversation::className(), ['id' => 'conversation_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMailMessages()
+    {
+        return $this->hasMany(\app\models\MailMessage::className(), ['mail_account_name' => 'name']);
+    }
+
+
+
+
 }

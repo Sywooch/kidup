@@ -261,7 +261,6 @@ class Item extends \app\models\base\Item
             ->viaTable('item_has_category', ['item_id' => 'id']);
     }
 
-
     /**
      * Returns the categories of this item of a certain type
      * @param $type

@@ -15,11 +15,13 @@ use Yii;
  * @property integer $created_at
  * @property string $mail_account_name
  *
- * @property \app\models\MailAccount $mailAccountName
  * @property \app\models\Message $message0
+ * @property \app\models\MailAccount $mailAccountName
  */
 class MailMessage extends \yii\db\ActiveRecord
 {
+
+
 
     /**
      * @inheritdoc
@@ -39,7 +41,9 @@ class MailMessage extends \yii\db\ActiveRecord
             [['message'], 'string'],
             [['message_id', 'created_at'], 'integer'],
             [['from_email', 'mail_account_name'], 'string', 'max' => 128],
-            [['subject'], 'string', 'max' => 512]
+            [['subject'], 'string', 'max' => 512],
+            [['message_id'], 'exist', 'skipOnError' => true, 'targetClass' => Message::className(), 'targetAttribute' => ['message_id' => 'id']],
+            [['mail_account_name'], 'exist', 'skipOnError' => true, 'targetClass' => MailAccount::className(), 'targetAttribute' => ['mail_account_name' => 'name']]
         ];
     }
 
@@ -62,19 +66,20 @@ class MailMessage extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMailAccountName()
-    {
-        return $this->hasOne(\app\models\MailAccount::className(), ['name' => 'mail_account_name']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getMessage0()
     {
         return $this->hasOne(\app\models\Message::className(), ['id' => 'message_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMailAccountName()
+    {
+        return $this->hasOne(\app\models\MailAccount::className(), ['name' => 'mail_account_name']);
+    }
 
-    
+
+
+
 }

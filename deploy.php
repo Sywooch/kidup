@@ -36,7 +36,7 @@ stage('development', ['test'], ['branch'=>'develop'], true);
 stage('production', ['production-primary'], ['branch'=>'master'], true);
 
 $repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
-set('repository', 'https://simonnouwens:'.$repo_password.'@github.com:esquire900/kidup.git');
+set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900/kidup.git');
 
 task('deploy:vendors', function () use ($repo_password) {
     $releasePath = env()->getReleasePath();
