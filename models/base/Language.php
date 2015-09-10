@@ -14,10 +14,13 @@ use Yii;
  * @property string $status
  * @property string $country
  *
- * @property \app\models\base\Country[] $countries
+ * @property \app\models\Country[] $countries
  */
 class Language extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -60,6 +63,10 @@ class Language extends \yii\db\ActiveRecord
      */
     public function getCountries()
     {
-        return $this->hasMany(\app\models\base\Country::className(), ['main_language_id' => 'language_id']);
+        return $this->hasMany(\app\models\Country::className(), ['main_language_id' => 'language_id']);
     }
+
+
+
+
 }

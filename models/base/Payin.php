@@ -21,12 +21,15 @@ use Yii;
  * @property integer $invoice_id
  *
  * @property \app\models\Booking[] $bookings
+ * @property \app\models\Currency $currency
  * @property \app\models\Invoice $invoice
  * @property \app\models\User $user
- * @property \app\models\Currency $currency
  */
 class Payin extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -47,7 +50,10 @@ class Payin extends \yii\db\ActiveRecord
             [['amount'], 'number'],
             [['type'], 'string', 'max' => 25],
             [['status'], 'string', 'max' => 45],
-            [['nonce'], 'string', 'max' => 1024]
+            [['nonce'], 'string', 'max' => 1024],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
+            [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -77,23 +83,7 @@ class Payin extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\app\models\base\Booking::className(), ['payin_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInvoice()
-    {
-        return $this->hasOne(\app\models\base\Invoice::className(), ['id' => 'invoice_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasMany(\app\models\Booking::className(), ['payin_id' => 'id']);
     }
 
     /**
@@ -101,6 +91,26 @@ class Payin extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\Currency::className(), ['id' => 'currency_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInvoice()
+    {
+        return $this->hasOne(\app\models\Invoice::className(), ['id' => 'invoice_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+    }
+
+
+
+
 }

@@ -12,11 +12,12 @@ use Yii;
  * @property string $client_id
  * @property string $data
  * @property integer $user_id
- *
- * @property \app\models\base\User $user
  */
 class SocialAccount extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -35,7 +36,7 @@ class SocialAccount extends \yii\db\ActiveRecord
             [['data'], 'string'],
             [['user_id'], 'integer'],
             [['provider', 'client_id'], 'string', 'max' => 255],
-            [['provider', 'client_id'], 'unique', 'targetAttribute' => ['provider', 'client_id'], 'message' => 'The combination of Provider and Client ID has already been taken.']
+            [['provider'], 'unique']
         ];
     }
 
@@ -53,11 +54,7 @@ class SocialAccount extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
-    }
+
+
+
 }

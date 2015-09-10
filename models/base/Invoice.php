@@ -19,6 +19,9 @@ use Yii;
  */
 class Invoice extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -59,7 +62,7 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\app\models\base\Payin::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\app\models\Payin::className(), ['invoice_id' => 'id']);
     }
 
     /**
@@ -67,6 +70,10 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\app\models\base\Payout::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\app\models\Payout::className(), ['invoice_id' => 'id']);
     }
+
+
+
+
 }

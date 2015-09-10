@@ -16,13 +16,16 @@ use Yii;
  * @property integer $updated_at
  * @property integer $created_at
  *
- * @property \app\models\base\MailMessage[] $mailMessages
- * @property \app\models\base\User $senderUser
- * @property \app\models\base\User $receiverUser
- * @property \app\models\base\Conversation $conversation
+ * @property \app\models\MailMessage[] $mailMessages
+ * @property \app\models\Conversation $conversation
+ * @property \app\models\User $senderUser
+ * @property \app\models\User $receiverUser
  */
 class Message extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -37,9 +40,12 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conversation_id', 'message', 'sender_user_id', 'updated_at', 'created_at'], 'required'],
+            [['conversation_id', 'message', 'sender_user_id', 'read_by_receiver', 'updated_at', 'created_at'], 'required'],
             [['conversation_id', 'sender_user_id', 'read_by_receiver', 'receiver_user_id', 'updated_at', 'created_at'], 'integer'],
-            [['message'], 'string']
+            [['message'], 'string'],
+            [['conversation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Conversation::className(), 'targetAttribute' => ['conversation_id' => 'id']],
+            [['sender_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sender_user_id' => 'id']],
+            [['receiver_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['receiver_user_id' => 'id']]
         ];
     }
 
@@ -65,23 +71,7 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getMailMessages()
     {
-        return $this->hasMany(\app\models\base\MailMessage::className(), ['message_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSenderUser()
-    {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'sender_user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getReceiverUser()
-    {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'receiver_user_id']);
+        return $this->hasMany(\app\models\MailMessage::className(), ['message_id' => 'id']);
     }
 
     /**
@@ -89,6 +79,26 @@ class Message extends \yii\db\ActiveRecord
      */
     public function getConversation()
     {
-        return $this->hasOne(\app\models\base\Conversation::className(), ['id' => 'conversation_id']);
+        return $this->hasOne(\app\models\Conversation::className(), ['id' => 'conversation_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSenderUser()
+    {
+        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReceiverUser()
+    {
+        return $this->hasOne(\app\models\User::className(), ['id' => 'receiver_user_id']);
+    }
+
+
+
+
 }

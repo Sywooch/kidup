@@ -20,6 +20,8 @@ use Yii;
 class ItemSimilarity extends \yii\db\ActiveRecord
 {
 
+
+
     /**
      * @inheritdoc
      */
@@ -74,5 +76,6 @@ class ItemSimilarity extends \yii\db\ActiveRecord
     }
 
 
-    
+
+
 }

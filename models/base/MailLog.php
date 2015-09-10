@@ -15,6 +15,9 @@ use Yii;
  */
 class MailLog extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */
@@ -32,7 +35,8 @@ class MailLog extends \yii\db\ActiveRecord
             [['id', 'email', 'type', 'created_at'], 'required'],
             [['data'], 'string'],
             [['created_at'], 'integer'],
-            [['id', 'email'], 'string', 'max' => 256],
+            [['id'], 'string', 'max' => 64],
+            [['email'], 'string', 'max' => 256],
             [['type'], 'string', 'max' => 45]
         ];
     }
@@ -50,4 +54,8 @@ class MailLog extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
         ];
     }
+
+
+
+
 }
