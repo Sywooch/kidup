@@ -102,18 +102,22 @@ class Location extends \app\models\base\Location
 
     public static function getByAddress($address)
     {
-        $buzz = new \Buzz\Browser(new \Buzz\Client\Curl());
-        $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
-        $provider = new \Geocoder\Provider\YandexProvider($adapter);
-        $geocoder = new \Geocoder\Geocoder($provider);
-
-        try {
-            $address = $geocoder->geocode($address);
-            return [
-                'longitude' => $address->getLongitude(),
-                'latitude' => $address->getLatitude(),
-            ];
-        } catch (\Geocoder\Exception\NoResultException $e) {
+        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
+        $xml = simplexml_load_file($request_url);
+        if ($xml === false) return false;
+        $status = $xml->status;
+        if ($status == "OK") {
+            $lat = $xml->result->geometry->location->lat;
+            $lon = $xml->result->geometry->location->lng;
+            if (count($lat) > 0 && count($lon) > 0) {
+                return [
+                    'longitude' => reset($lon),
+                    'latitude' => reset($lat),
+                ];
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
     }

@@ -67,6 +67,43 @@ var widgetFactory = function () {
         }
     });
 
+    $("#pjax-create-booking-form").on('pjax:beforeSend', function (xhr, options, settings) {
+
+        var getParams = function (queryString) {
+            var query = (queryString || window.location.search).substring(1); // delete ?
+            if (!query) {
+                return false;
+            }
+            query = query.split('?')[1];
+            return _.map(query.split('&'), function (params) {
+                var p = params.split('=');
+                return [p[0], decodeURIComponent(p[1])];
+            });
+        };
+
+        var params = {};
+        var baseUrl = 'http://' + window.location.hostname + window.location.pathname;
+        _.map(getParams(settings.url), function(param){
+            params[param[0]] = param[1];
+        });
+
+        var i = 0;
+        var added = _.map(params, function(param, name){
+            var url = '';
+            if(i == 0){
+                url += '?';
+            }else{
+                url += '&';
+            }
+            url += name+'='+param;
+            i++;
+            return url;
+        });
+
+        settings.url = baseUrl+added.join('');
+        return settings;
+    });
+
     $("form[data-pjax]").on('submit', function (event) {
 
         $("#booking-widget .overlay").fadeTo(0.3, 0.6);
@@ -74,7 +111,7 @@ var widgetFactory = function () {
     });
 
     var scrollFunc = function () {
-        if($(document).width() < 990) return false;
+        if ($(document).width() < 990) return false;
         var docScroll = $(document).scrollTop();
         var navHeight = $('.navbar').height();
         if (typeof $('.footer').offset() === "undefined") {

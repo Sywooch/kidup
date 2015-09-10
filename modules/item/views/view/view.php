@@ -4,6 +4,7 @@ use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
+use app\modules\item\widgets\ItemCard;
 use app\widgets\Map;
 use dosamigos\gallery\Gallery;
 use yii\helpers\Url;
@@ -221,8 +222,10 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         <div class="related">
                             <div class="row">
                                 <?php foreach ($related_items as $item) {
-                                    echo $this->render('item', [
-                                        'model' => $item
+                                    echo ItemCard::widget([
+                                        'model' => $item,
+                                        'showDistance' => false,
+                                        'numberOfCards' => 3
                                     ]);
                                 } ?>
                             </div>

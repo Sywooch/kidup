@@ -1,12 +1,13 @@
 <?php
-// todo make this a configurable item widget
 use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
 
+// profile page, item page, search, homepage
+\app\modules\item\assets\ItemAsset::register($this);
 ?>
 
-<div class="item card-width col-xs-12 col-sm-6 col-md-4">
+<div class="<?= $rowClass ?>">
     <a href="<?= Url::to('@web/item/' . $model->id) ?>">
         <div class="card">
             <div class="image"
@@ -36,8 +37,22 @@ use yii\helpers\Url;
                 </h3>
 
                 <div class="footer">
+                    <div class="author pul-left">
+                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                            'user_id' => $model->owner_id,
+                            'width' => '30px'
+                        ]) ?>
+                    </div>
                     <div class="stats pull-right">
-                        <i class="fa fa-map-marker"></i><?= (int)$model->distance ?> km
+                        <i class="fa fa-map-marker"></i>
+                        <?php
+                        $distance = (int)$model->distance;
+                        if ($distance == 0 || !$showDistance) {
+                            echo $model->location->city;
+                        } else {
+                            echo $distance . ' km';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

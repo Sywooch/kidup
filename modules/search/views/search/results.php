@@ -1,12 +1,14 @@
 <?php
+use app\modules\item\widgets\ItemCard;
 // displaying the search results
 ?>
 <div class="searchResults" id="results">
     <div class="row">
         <?php
         foreach ($results as $result) {
-            echo $this->render('item', [
-                'model' => $result
+            echo ItemCard::widget([
+                'model' => $result,
+                'showDistance' => true
             ]);
         }
         if (count($results) === 0) {

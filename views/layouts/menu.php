@@ -8,15 +8,21 @@ use yii\helpers\Url;
  * @var \yii\web\View $this
  */
 // create the navbar
+
+try{
+    // todo this should be improved drastically
+    $transparent = Url::current() == '/home/home/index';
+}catch (yii\base\Exception $e){
+    $transparent = true;
+}
 $class = 'navbar navbar-default ';
-$class .= isset($this->context->transparentNav) ? 'navbar-product' : 'navbar-navbar-product';
+$class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
 
-//$menuFunction = function () {
 ?>
     <nav
-        class="navbar navbar-default <?= isset($this->context->transparentNav) ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
+        class="navbar navbar-default <?= $transparent ? 'navbar-transparant' : 'navbar-fixed-top' ?>">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -31,7 +37,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <?= isset($this->context->transparentNav) ? ImageHelper::img('kidup/logo/horizontal-white.png',
+                    <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
                         ['h' => 46], ['style' => 'padding-top:5px;'])
                         : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
                 </a>
@@ -138,7 +144,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <!--Always shown on desktop-md+ -->
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>"
-                           class="btn btn-danger hidden-xs <?= isset($this->context->transparentNav) ? 'btn-fill' : '' ?>">
+                           class="btn btn-danger hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
                             <?= Yii::t("app", "Rent Out") ?>
                         </a>
                     </li>
@@ -215,14 +221,9 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             </div>
         </div>
     </nav>
-<?php if ($this->context->transparentNav): ?>
+<?php if ($transparent): ?>
     <!--    this is ugly as well -->
-    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png',
-        ['q' => 70, 'w' => 2000]) ?>; height:530px;margin-top:-100px;position: absolute;
-        width: 100%;
-        background-position: top;
-        background-repeat: no-repeat;
-        background-size: cover;"></div>
+    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
 <?php endif; ?>
 <?php
 // add the login / register model if user is guest
@@ -234,9 +235,23 @@ if (\Yii::$app->user->isGuest) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
             return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
         });
-        echo $this->endCache();
+        $this->endCache();
     }
 }
-//};
-//echo $this->renderDynamic('return $menuFunction;');
-?>
+
+// this is the notification plugin, showing all errors
+foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+    echo \kartik\growl\Growl::widget([
+        'type' => $key,
+        'body' => $message,
+        'showSeparator' => true,
+        'delay' => 500,
+        'pluginOptions' => [
+            'placement' => [
+                'from' => 'bottom',
+                'align' => 'right',
+            ],
+            'timer' => 10000,
+        ]
+    ]);
+} ?>

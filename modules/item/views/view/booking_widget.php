@@ -15,7 +15,8 @@ use yii\widgets\Pjax;
 \app\assets\LodashAsset::register($this);
 ?>
 <?php Pjax::begin([
-//    'enableReplaceState' => true,
+//    'enableReplaceState' => false,
+    'enableReplaceState' => true,
     'id' => 'pjax-create-booking-form'
 ]);
 ?>
@@ -43,7 +44,7 @@ use yii\widgets\Pjax;
 
         $form = ActiveForm::begin([
             'enableClientValidation' => false,
-            'method' => 'post',
+            'method' => 'get',
             'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'create-booking-form'],
 //            'action' => \yii\helpers\Url::to('@web/item/view/create-booking?id='.$model->item->id)
         ]); ?>

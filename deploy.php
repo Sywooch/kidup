@@ -68,6 +68,7 @@ task('deploy:minify_assets', function () {
 
     // minify the main bulk into a minified bundle
     run('sudo php yii asset config/assets/assets.php config/assets/assets-prod.php');
+//    run('sudo php yii deploy/after-deploy');
 })->desc('Minifying assets');
 
 task('deploy', [

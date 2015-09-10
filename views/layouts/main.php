@@ -14,6 +14,13 @@ use yii\helpers\Html;
 \app\assets\AppAsset::register($this);
 FontAwesomeAsset::register($this);
 BootstrapPluginAsset::register($this);
+try{
+    // todo this should be improved drastically
+    $transparent = \yii\helpers\Url::current() == '/home/home/index';
+}catch (yii\base\Exception $e){
+    $transparent = true;
+}
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -38,29 +45,11 @@ BootstrapPluginAsset::register($this);
         <meta property="og:url" content="http://kidup.dk"/>
     </head>
     <body>
-    <?php $this->beginBody() ?>
+    <?php $this->beginBody(); ?>
 
-    <?= $this->render('menu') ?>
+    <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
 
-    <div id="wrapper" <?= isset($this->context->transparentNav) ? 'style="margin-top:-450px"' : '' ?>>
-        <?php
-        // this is the notification plugin, showing all errors
-        foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
-
-            echo Growl::widget([
-                'type' => $key,
-                'body' => $message,
-                'showSeparator' => true,
-                'delay' => 500,
-                'pluginOptions' => [
-                    'placement' => [
-                        'from' => 'bottom',
-                        'align' => 'right',
-                    ],
-                    'timer' => 10000,
-                ]
-            ]);
-        } ?>
+    <div id="wrapper <?= $transparent ? 'wrapper-home' : '' ?>" <?= $transparent ? 'style="padding-top:1px"' : '' ?>>
         <?= $content ?>
     </div>
 
@@ -84,6 +73,8 @@ BootstrapPluginAsset::register($this);
             'theme' => 'dark-bottom'
         ]);
     });
+
+    \app\widgets\FacebookTracker::widget();
 
     if(YII_ENV == 'prod'){
         echo Cache::html('layout_ga', function () {

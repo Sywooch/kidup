@@ -23,16 +23,14 @@ class SearchModel extends Model
 
     public $query = null;
     public $location = null;
+    public $longitude = null;
+    public $latitude = null;
     public $categories = [];
     public $price = null;
     public $priceMin = 0;
     public $priceMax = 499;
     public $priceUnit = 'week';
     public $page = 0;
-    private $_locationData = [
-        'longitude' => null,
-        'latitude' => null
-    ];
 
     /**
      * Find items.
@@ -136,7 +134,6 @@ class SearchModel extends Model
                         * cos( radians( `location`.`longitude` ) - radians(' . ($longitude) . ') )
                         + sin( radians(' . ($latitude) . ') )
                         * sin( radians( `location`.`latitude` ) ) ) )';
-
             $query->select($distanceQ . ' as distance, `item`.*');
             $query->innerJoinWith('location');
             if ($distance !== null) {
@@ -211,10 +208,10 @@ class SearchModel extends Model
      */
     private function _getGeoData($location = null)
     {
-        if ($this->_locationData['latitude'] !== null && $this->_locationData['longitude'] !== null) {
+        if ($this->latitude !== null && $this->longitude !== null) {
             $location = true;
-            $latitude = $this->_locationData['latitude'];
-            $longitude = $this->_locationData['longitude'];
+            $latitude = $this->latitude;
+            $longitude = $this->longitude;
         } else {
             $location = Cache::data('location_' . $location, function () use ($location) {
                 return Location::getByAddress($location);
@@ -240,6 +237,10 @@ class SearchModel extends Model
         if (isset($params['query'])) {
             $this->query = $params['query'];
         }
+        if (isset($params['longitude']) && isset($params['latitude'])) {
+            $this->longitude = $params['longitude'];
+            $this->latitude = $params['latitude'];
+        }
         if (isset($params['location'])) {
             $this->location = $params['location'];
         } else {
@@ -256,8 +257,8 @@ class SearchModel extends Model
                         // use a fallback method
                         $location = Location::getByIP($ip);
                         if ($location !== null) {
-                            $this->_locationData['longitude'] = $location['longitude'];
-                            $this->_locationData['latitude'] = $location['latitude'];
+                            $this->longitude = $location['longitude'];
+                            $this->latitude = $location['latitude'];
                             if (strlen($location['city']) > 0 && strlen($location['country_name']) > 0) {
                                 $location = $location['city'] . ", " . $location['country_name'];
                             } else {

@@ -13,6 +13,7 @@ namespace app\modules\user\widgets;
 
 use app\interfaces\RequestableWidgetInterface;
 use app\modules\user\models\LoginForm;
+use app\modules\user\models\User;
 use yii\base\Widget;
 
 /**
@@ -32,15 +33,14 @@ class Login extends Widget
     public function run()
     {
         $model = \Yii::createObject(\app\modules\user\forms\Login::className());
-        $action = '@web/user/security/login';
 
         if ($this->validate && $model->load(\Yii::$app->request->post()) && $model->login()) {
-            return \Yii::$app->response->redirect(\Yii::$app->user->returnUrl);
+            return \Yii::$app->response->redirect(User::afterLoginUrl('login'));
         }
 
         return $this->render('login_modal', [
             'model' => $model,
-            'action' => $action
+            'action' => '@web/user/security/login'
         ]);
     }
 }

@@ -17,11 +17,9 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 ?>
 <div id="home">
     <!--Area for background-image, tag-line and sign-up -->
-    <header id="header-home">
+    <div id="header-home">
         <div class="header-content">
             <div class="row ">
-                <div class=" col-xs-12 col-sm-12 col-md-10 col-md-offset-1 text-center ">
-                </div>
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
                         <?= \Yii::t('home', 'Share'); ?>
@@ -40,7 +38,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
     <?= $this->render('search'); ?>
 
@@ -51,7 +49,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     ?>
 
     <!-- Steps explanation area-->
-    <div id="content-home-steps" class=" hidden-xs">
+    <div id="content-home-steps" class="hidden-xs">
         <div class="divider">
             <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 40, 'h' => 40]) ?>
         </div>

@@ -6,6 +6,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         priceUnit: 'week',
         prices: [],
         location: '',
+        longitude: null,
+        latitude: null,
         categories: [],
         ages: []
     };
@@ -17,6 +19,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         category: false,
         location: false
     };
+
+    scope.locationByGoogle = false;
 
     scope.params = $location.search();
 
@@ -67,6 +71,9 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
                     lat: parseFloat(position['coords']['latitude']),
                     lng: parseFloat(position['coords']['longitude'])
                 };
+                scope.filter.longitude = latlng.lng;
+                scope.filter.latitude = latlng.lat;
+                if (!$scope.$$phase) $scope.$apply();
                 geocoder.geocode({'location': latlng}, function(results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         if (results.length > 0) {
@@ -205,6 +212,8 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         var q = [];
         if (scope.filter.query !== '') q.push('query|' + scope.filter.query);
         if (scope.filter.location !== '') q.push('location|' + scope.filter.location);
+        if (scope.filter.longitude !== null) q.push('longitude|' + scope.filter.longitude);
+        if (scope.filter.latitude !== null) q.push('latitude|' + scope.filter.latitude);
         q.push('price|' + scope.filter.priceMin + ',' + scope.filter.priceMax);
         q.push('priceUnit|' + scope.filter.priceUnit);
         if (getActiveCategories().length > 0) q.push('categories|' + getActiveCategories());
@@ -269,7 +278,7 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
             slide: function (val, ui) {
                 scope.filter.priceMin = ui.values[0];
                 scope.filter.priceMax = ui.values[1];
-                $scope.$apply();
+                if (!$scope.$$phase) $scope.$apply();
             },
             change: function (val, ui) {
                 scope.filterChange();
@@ -277,18 +286,50 @@ var SearchController = function ($location, $http, $scope, $rootScope) {
         };
         $("#price-slider").slider(sliderConf);
         $("#price-slider-mobile").slider(sliderConf);
-        $('.location-input').attr('oldValue', $('.location-input').val());
-        setInterval(function() {
-            var oldValue = $('.location-input').attr('oldValue');
-            var value = $('.location-input').val();
-            if (value != oldValue) {
-                $('.location-input').attr('oldValue', value);
-                scope.filter.location = value;
-                if (value.length > 0) {
-                    scope.activeFilter['location'] = true;
-                } else {
-                    scope.activeFilter['location'] = false;
+        $('.location-input').on('keyup', function() {
+            var oldValue = $('.location-input').val();
+            $('.location-input').attr('oldValue', oldValue);
+            scope.locationByGoogle = false;
+            setTimeout(function() {
+                var value = $('.location-input').val()
+                if (value === oldValue) {
+                    if (scope.locationByGoogle === false) {
+                        if (value.length > 0) {
+                            scope.activeFilter['location'] = true;
+                            scope.filter.location = value;
+                            scope.filter.longitude = null;
+                            scope.filter.latitude = null;
+                            update();
+                        } else {
+                            scope.activeFilter['location'] = false;
+                        }
+                    }
                 }
+            }, 2500);
+        })
+        var timer = setInterval(function() {
+            if ($(window).attr('autocomplete-search-default') !== undefined
+                && $(window).attr('autocomplete-search-mobile') !== undefined) {
+                var autocomplete1 = $(window).attr('autocomplete-search-default');
+                var autocomplete2 = $(window).attr('autocomplete-search-mobile');
+                function placeChanged(autocomplete) {
+                    var place = autocomplete.getPlace();
+                    var location = place['geometry']['location'];
+                    scope.activeFilter['location'] = true;
+                    scope.filter.location = place.formatted_address;
+                    scope.filter.latitude = place.geometry.location.lat();
+                    scope.filter.longitude = place.geometry.location.lng();
+                    scope.locationByGoogle = true;
+                    if (!$scope.$$phase) $scope.$apply();
+                    update();
+                }
+                autocomplete1.addListener('place_changed', function() {
+                    placeChanged(autocomplete1);
+                });
+                autocomplete2.addListener('place_changed', function() {
+                    placeChanged(autocomplete2);
+                });
+                clearInterval(timer);
             }
         }, 500);
     };

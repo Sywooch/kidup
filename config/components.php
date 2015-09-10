@@ -50,11 +50,11 @@ $components = [
                     'friends'
                 ]
             ],
-            'twitter' => [
-                'class' => 'yii\authclient\clients\Twitter',
-                'consumerKey' => $keys['twitter_oauth_key'],
-                'consumerSecret' => $keys['twitter_oauth_secret'],
-            ],
+//            'twitter' => [
+//                'class' => 'yii\authclient\clients\Twitter',
+//                'consumerKey' => $keys['twitter_oauth_key'],
+//                'consumerSecret' => $keys['twitter_oauth_secret'],
+//            ],
         ],
     ],
     'view' => [
@@ -97,7 +97,7 @@ $components = [
         'username' => $keys['mysql_user'],
         'password' => $keys['mysql_password'],
         'charset' => 'utf8',
-        'enableSchemaCache' => true,
+        'enableSchemaCache' => YII_CACHE,
         // Duration of schema cache.
         'schemaCacheDuration' => 3600,
         // Name of the cache component used to store schema information
@@ -149,8 +149,8 @@ $components = [
     'i18n' => [
         'translations' => [
             '*' => [
-                'class' => 'yii\i18n\GettextMessageSource',
-                'useMoFile' => false
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@app/messages',
             ],
         ],
     ],
