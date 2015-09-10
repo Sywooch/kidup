@@ -25,7 +25,7 @@ class HomeController extends Controller
                     ],
                 ],
             ],
-            [
+            /*[
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=300',
@@ -45,7 +45,7 @@ class HomeController extends Controller
                     \Yii::$app->language,
                     \Yii::$app->session->getAllFlashes()
                 ],
-            ],
+            ],*/
         ];
     }
 

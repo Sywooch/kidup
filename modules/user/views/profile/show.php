@@ -1,6 +1,7 @@
 <?php
 
 use app\components\WidgetRequest;
+use app\modules\item\widgets\ItemCard;
 use Carbon\Carbon;
 
 /**
@@ -45,26 +46,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         <?= $profile->email_verified == 1 ? $verified(\Yii::t('user', 'Email')) : '' ?>
                         <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user', 'Phone')) : '' ?>
                     </div>
-
                 </div>
-                <div class="hidden-xs">
-                    <h3><?= Yii::t("user", "Items") ?></h3>
-                    <?php
-                    // displaying the search results
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $itemProvider,
-                        'itemView' => 'profile_item',
-                        'layout' => '<div class="row">
-                                    {items}
-                                </div>
-                                <div class="row">
-                                    {pager}
-                                </div>',
-                        'itemOptions' => ['tag' => 'span'],
-                    ]);
-                    ?>
-                </div>
-
             </div>
 
             <div class="col-sm-8 col-md-8">
@@ -106,6 +88,17 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                     ?>
                 </div>
             </div>
+        </div>
+        <div class="hidden-xs row">
+            <h3><?= Yii::t("user", "Items") ?></h3>
+            <?php
+            foreach ($items as $item) {
+                echo ItemCard::widget([
+                    'model' => $item,
+                    'showDistance' => false
+                ]);
+            }
+            ?>
         </div>
     </div>
 </section>

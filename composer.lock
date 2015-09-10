@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc3c385d17f7f30b5cadb9bc8f3a6068",
+    "hash": "c1285beb3a31dfab15c953175f25509a",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -989,12 +989,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lodash/lodash.git",
-                "reference": "6b09f1f233172eeff0643213f4ad846a5b74edd4"
+                "reference": "d8c5f85cd22ec035eb18a4f76afa3d0d23c084dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lodash/lodash/zipball/6b09f1f233172eeff0643213f4ad846a5b74edd4",
-                "reference": "6b09f1f233172eeff0643213f4ad846a5b74edd4",
+                "url": "https://api.github.com/repos/lodash/lodash/zipball/d8c5f85cd22ec035eb18a4f76afa3d0d23c084dd",
+                "reference": "d8c5f85cd22ec035eb18a4f76afa3d0d23c084dd",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -1017,7 +1017,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2015-09-09 05:51:46"
+            "time": "2015-09-10 06:45:37"
         },
         {
             "name": "bower-asset/momentjs",
@@ -4924,12 +4924,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Translation.git",
-                "reference": "2c1da25a39bab9f5fb631f7c534b1026491e44e9"
+                "reference": "85d988ddb56ab2b6df531c9914929df66ee0cc5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/2c1da25a39bab9f5fb631f7c534b1026491e44e9",
-                "reference": "2c1da25a39bab9f5fb631f7c534b1026491e44e9",
+                "url": "https://api.github.com/repos/symfony/Translation/zipball/85d988ddb56ab2b6df531c9914929df66ee0cc5d",
+                "reference": "85d988ddb56ab2b6df531c9914929df66ee0cc5d",
                 "shasum": ""
             },
             "require": {
@@ -4977,7 +4977,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-06 08:47:32"
+            "time": "2015-09-10 08:18:49"
         },
         {
             "name": "warrence/yii2-kartikgii",
@@ -6827,12 +6827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmunk42/yii2-giiant.git",
-                "reference": "35f91f058b629c119dd8524d88d9a78e6e9ac174"
+                "reference": "82f41d46e7c328271d95da85320bcf2800f0e4e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/35f91f058b629c119dd8524d88d9a78e6e9ac174",
-                "reference": "35f91f058b629c119dd8524d88d9a78e6e9ac174",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/82f41d46e7c328271d95da85320bcf2800f0e4e1",
+                "reference": "82f41d46e7c328271d95da85320bcf2800f0e4e1",
                 "shasum": ""
             },
             "require": {
@@ -6869,7 +6869,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2015-09-02 01:44:05"
+            "time": "2015-09-10 05:38:32"
         },
         {
             "name": "sebastian/comparator",
@@ -7304,12 +7304,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "622cdc7c8406faa5adfe6fa45d24434f7bb72fff"
+                "reference": "c11e66c87046a1169442eb7cd55d756da4ad27af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/622cdc7c8406faa5adfe6fa45d24434f7bb72fff",
-                "reference": "622cdc7c8406faa5adfe6fa45d24434f7bb72fff",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/c11e66c87046a1169442eb7cd55d756da4ad27af",
+                "reference": "c11e66c87046a1169442eb7cd55d756da4ad27af",
                 "shasum": ""
             },
             "require": {
@@ -7353,7 +7353,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-03 11:42:45"
+            "time": "2015-09-10 08:08:06"
         },
         {
             "name": "symfony/css-selector",
@@ -7414,12 +7414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DomCrawler.git",
-                "reference": "be577b3a5d4a06d8ce03db57222bd06b5a6509de"
+                "reference": "1b459587235fb74b213269ec5ad8ac2f6e22f5f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/be577b3a5d4a06d8ce03db57222bd06b5a6509de",
-                "reference": "be577b3a5d4a06d8ce03db57222bd06b5a6509de",
+                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/1b459587235fb74b213269ec5ad8ac2f6e22f5f4",
+                "reference": "1b459587235fb74b213269ec5ad8ac2f6e22f5f4",
                 "shasum": ""
             },
             "require": {
@@ -7459,7 +7459,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-27 06:53:13"
+            "time": "2015-09-09 18:05:45"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -7467,12 +7467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15"
+                "reference": "69b6037050614d129fee27e17951ec7968f6567e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
-                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/69b6037050614d129fee27e17951ec7968f6567e",
+                "reference": "69b6037050614d129fee27e17951ec7968f6567e",
                 "shasum": ""
             },
             "require": {
@@ -7517,7 +7517,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:18:02"
+            "time": "2015-09-09 18:05:45"
         },
         {
             "name": "symfony/finder",

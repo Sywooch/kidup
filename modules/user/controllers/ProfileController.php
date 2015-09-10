@@ -83,12 +83,13 @@ class ProfileController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $itemProvider = new \yii\data\ActiveDataProvider([
-            'query' => Item::find()->where(['owner_id' => $profile->user_id, 'is_available' => 1]),
-            'pagination' => [
-                'pageSize' => 5,
-            ],
-        ]);
+        $items = Item::find()
+            ->where([
+                'owner_id' => $profile->user_id,
+                'is_available' => 1
+            ])
+            ->all()
+        ;
 
         $reviewProvider = new \yii\data\ActiveDataProvider([
             'query' => Review::find()->where(['reviewed_id' => $profile->user_id, 'type' => Review::TYPE_USER_PUBLIC]),
@@ -114,7 +115,7 @@ class ProfileController extends Controller
             'fbVerified' => $fbVerified,
             'twVerified' => $twVerified,
             'profile' => $profile,
-            'itemProvider' => $itemProvider,
+            'items' => $items,
             'reviewProvider' => $reviewProvider,
         ]);
     }

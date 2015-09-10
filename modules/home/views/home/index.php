@@ -44,6 +44,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
     <?= $this->render('search'); ?>
 
+    789
     <?= $this->render('grid', [
         'categories' => $categories,
         'items' => $items,
