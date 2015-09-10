@@ -49,7 +49,7 @@ try{
 
     <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
 
-    <div id="wrapper <?= $transparent ? 'wrapper-home' : '' ?>" <?= $transparent ? 'style="padding-top:1px"' : '' ?>>
+    <div id="wrapper" <?= $transparent ? 'class="wrapper-home"' : '' ?>>
         <?= $content ?>
     </div>
 

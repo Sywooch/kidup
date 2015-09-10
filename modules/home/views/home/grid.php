@@ -23,7 +23,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to('@web/search?q=categories|20') ?>">
                     <div class="card card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 300]) ?>">
+                             style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 500]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -40,7 +40,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to('@web/search?q=categories|13') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
-                            ['q' => 90, 'w' => 600]) ?>">
+                            ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -56,7 +56,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to('@web/search?q=categories|12') ?>">
                     <div class="card  card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 600]) ?>">
+                             style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 470]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -93,7 +93,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to('@web/search?q=categories|22') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
-                            ['q' => 90, 'w' => 300]) ?>">
+                            ['q' => 90, 'w' => 600]) ?>; background-position: 50% 20%;">
                         </div>
                         <div class="content text-center">
                             <br>
@@ -109,7 +109,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to('@web/search?q=categories|11') ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
-                            ['q' => 90, 'w' => 600]) ?>">
+                            ['q' => 90, 'w' => 400]) ?>">
                         </div>
                         <div class="content text-center">
                             <br>
