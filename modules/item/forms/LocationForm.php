@@ -109,6 +109,7 @@ class LocationForm extends Model
             if ($location->save()) {
                 $this->loadItem();
                 $item = $this->item;
+                $item->setScenario('location');
                 $item->location_id = $location->id;
                 return $item->save();
             }
