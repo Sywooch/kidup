@@ -43,7 +43,17 @@ class Booking extends \app\models\base\Booking
     public function scenarios()
     {
         return array_merge(parent::scenarios(), [
-            'init' => ['time_from', 'time_to', 'renter_id', 'price', 'status', 'time_created', 'item_id', 'status', 'promotion_code_id'],
+            'init' => [
+                'time_from',
+                'time_to',
+                'renter_id',
+                'price',
+                'status',
+                'time_created',
+                'item_id',
+                'status',
+                'promotion_code_id'
+            ],
         ]);
     }
 
@@ -223,7 +233,6 @@ class Booking extends \app\models\base\Booking
     {
         return $this->hasMany(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
     }
-
 
     public function behaviors()
     {
