@@ -20,7 +20,8 @@ class ItemCard extends Widget
     public function run()
     {
         return $this->render('item_card', [
-            'model' => $this->model
+            'model' => $this->model,
+            'showDistance' => $this->showDistance
         ]);
     }
 

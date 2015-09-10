@@ -97,7 +97,12 @@ class SearchCest
      * @param FunctionalTester $I
      */
     public function checkSearchByLocation(FunctionalTester $I) {
-
+        $I->wantTo('ensure that it is possible to search by location');
+        $I->amOnPage('/search-results?q=query|Test|location|Breda Netherlands');
+        $I->canSee('622 km');
+        $I->dontSee('Aarhus');
+        $I->amOnPage('/search-results?q=query|Test|location|Aarhus Denmark');
+        $I->canSee('1 km');
     }
 
     /**
