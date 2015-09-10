@@ -20,8 +20,6 @@ use Yii;
 class IpLocation extends \yii\db\ActiveRecord
 {
 
-
-
     /**
      * @inheritdoc
      */
@@ -49,19 +47,18 @@ class IpLocation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'ip' => Yii::t('app', 'Ip'),
-            'latitude' => Yii::t('app', 'Latitude'),
-            'longitude' => Yii::t('app', 'Longitude'),
-            'city' => Yii::t('app', 'City'),
-            'country' => Yii::t('app', 'Country'),
-            'street_name' => Yii::t('app', 'Street Name'),
-            'street_number' => Yii::t('app', 'Street Number'),
-            'data' => Yii::t('app', 'Data'),
+            'id' => 'ID',
+            'ip' => 'Ip',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'city' => 'City',
+            'country' => 'Country',
+            'street_name' => 'Street Name',
+            'street_number' => 'Street Number',
+            'data' => 'Data',
         ];
     }
 
 
-
-
+    
 }

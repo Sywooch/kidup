@@ -23,22 +23,17 @@ use Yii;
  * @property integer $min_renting_days
  *
  * @property \app\models\base\Booking[] $bookings
- * @property \app\models\base\User $owner
- * @property \app\models\base\Currency $currency
  * @property \app\models\base\Location $location
+ * @property \app\models\base\Currency $currency
+ * @property \app\models\base\User $owner
  * @property \app\models\base\ItemHasCategory[] $itemHasCategories
  * @property \app\models\base\Category[] $categories
  * @property \app\models\base\ItemHasMedia[] $itemHasMedia
  * @property \app\models\base\Media[] $media
- * @property \app\models\base\ItemSimilarity[] $itemSimilarities
- * @property \app\models\base\ItemSimilarity[] $itemSimilarities0
  * @property \app\models\base\Review[] $reviews
  */
 class Item extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -56,10 +51,7 @@ class Item extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['price_day', 'price_week', 'price_month', 'owner_id', 'condition', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'min_renting_days'], 'integer'],
             [['created_at', 'updated_at'], 'required'],
-            [['name'], 'string', 'max' => 140],
-            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['owner_id' => 'id']],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
-            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']]
+            [['name'], 'string', 'max' => 140]
         ];
     }
 
@@ -97,9 +89,9 @@ class Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOwner()
+    public function getLocation()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'owner_id']);
+        return $this->hasOne(\app\models\base\Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -113,9 +105,9 @@ class Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLocation()
+    public function getOwner()
     {
-        return $this->hasOne(\app\models\base\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(\app\models\base\User::className(), ['id' => 'owner_id']);
     }
 
     /**
@@ -153,28 +145,8 @@ class Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItemSimilarities()
-    {
-        return $this->hasMany(\app\models\base\ItemSimilarity::className(), ['item_id_2' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemSimilarities0()
-    {
-        return $this->hasMany(\app\models\base\ItemSimilarity::className(), ['item_id_1' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getReviews()
     {
         return $this->hasMany(\app\models\base\Review::className(), ['item_id' => 'id']);
     }
-
-
-
-
 }

@@ -32,8 +32,6 @@ use Yii;
 class Profile extends \yii\db\ActiveRecord
 {
 
-
-
     /**
      * @inheritdoc
      */
@@ -121,6 +119,5 @@ class Profile extends \yii\db\ActiveRecord
     }
 
 
-
-
+    
 }

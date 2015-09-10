@@ -22,9 +22,6 @@ use Yii;
  */
 class Media extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -44,8 +41,7 @@ class Media extends \yii\db\ActiveRecord
             [['storage'], 'string', 'max' => 25],
             [['type'], 'string', 'max' => 45],
             [['description'], 'string', 'max' => 256],
-            [['file_name'], 'string', 'max' => 128],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
+            [['file_name'], 'string', 'max' => 128]
         ];
     }
 
@@ -89,8 +85,4 @@ class Media extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
     }
-
-
-
-
 }

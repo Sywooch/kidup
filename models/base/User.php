@@ -27,26 +27,22 @@ use Yii;
  * @property \app\models\base\Conversation[] $conversations0
  * @property \app\models\base\Item[] $items
  * @property \app\models\base\Location[] $locations
+ * @property \app\models\base\Log[] $logs
  * @property \app\models\base\MailAccount[] $mailAccounts
  * @property \app\models\base\Media[] $media
  * @property \app\models\base\Message[] $messages
  * @property \app\models\base\Message[] $messages0
  * @property \app\models\base\Payin[] $payins
  * @property \app\models\base\Payout[] $payouts
- * @property \app\models\base\PayoutMethod[] $payoutMethods
  * @property \app\models\base\Profile $profile
  * @property \app\models\base\Review[] $reviews
  * @property \app\models\base\Review[] $reviews0
  * @property \app\models\base\Setting[] $settings
+ * @property \app\models\base\SocialAccount[] $socialAccounts
  * @property \app\models\base\Token[] $tokens
- * @property \app\models\base\UserHasPromotionCode[] $userHasPromotionCodes
- * @property \app\models\base\PromotionCode[] $promotionCodes
  */
 class User extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -61,7 +57,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'password_hash', 'auth_key', 'flags', 'status', 'role', 'created_at', 'updated_at'], 'required'],
+            [['email', 'password_hash', 'auth_key', 'status', 'role', 'created_at', 'updated_at'], 'required'],
             [['confirmed_at', 'blocked_at', 'flags', 'status', 'role', 'created_at', 'updated_at'], 'integer'],
             [['email', 'unconfirmed_email'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
@@ -113,7 +109,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations()
     {
-        return $this->hasMany(\app\models\base\Conversation::className(), ['target_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Conversation::className(), ['initiater_user_id' => 'id']);
     }
 
     /**
@@ -121,7 +117,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations0()
     {
-        return $this->hasMany(\app\models\base\Conversation::className(), ['initiater_user_id' => 'id']);
+        return $this->hasMany(\app\models\base\Conversation::className(), ['target_user_id' => 'id']);
     }
 
     /**
@@ -138,6 +134,14 @@ class User extends \yii\db\ActiveRecord
     public function getLocations()
     {
         return $this->hasMany(\app\models\base\Location::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLogs()
+    {
+        return $this->hasMany(\app\models\base\Log::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -191,14 +195,6 @@ class User extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPayoutMethods()
-    {
-        return $this->hasMany(\app\models\base\PayoutMethod::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getProfile()
     {
         return $this->hasOne(\app\models\base\Profile::className(), ['user_id' => 'id']);
@@ -209,7 +205,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(\app\models\base\Review::className(), ['reviewed_id' => 'id']);
+        return $this->hasMany(\app\models\base\Review::className(), ['reviewer_id' => 'id']);
     }
 
     /**
@@ -217,7 +213,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getReviews0()
     {
-        return $this->hasMany(\app\models\base\Review::className(), ['reviewer_id' => 'id']);
+        return $this->hasMany(\app\models\base\Review::className(), ['reviewed_id' => 'id']);
     }
 
     /**
@@ -231,28 +227,16 @@ class User extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getSocialAccounts()
+    {
+        return $this->hasMany(\app\models\base\SocialAccount::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getTokens()
     {
         return $this->hasMany(\app\models\base\Token::className(), ['user_id' => 'id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserHasPromotionCodes()
-    {
-        return $this->hasMany(\app\models\base\UserHasPromotionCode::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPromotionCodes()
-    {
-        return $this->hasMany(\app\models\base\PromotionCode::className(), ['id' => 'promotion_code_id'])->viaTable('user_has_promotion_code', ['user_id' => 'id']);
-    }
-
-
-
-
 }

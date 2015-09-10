@@ -16,9 +16,6 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -66,8 +63,4 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Item::className(), ['id' => 'item_id'])->viaTable('item_has_category', ['category_id' => 'id']);
     }
-
-
-
-
 }

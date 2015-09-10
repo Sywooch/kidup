@@ -14,14 +14,11 @@ use Yii;
  * @property integer $updated_at
  * @property string $status
  *
- * @property \app\models\base\Payin[] $payins
- * @property \app\models\base\Payout[] $payouts
+ * @property \app\models\Payin[] $payins
+ * @property \app\models\Payout[] $payouts
  */
 class Invoice extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -72,8 +69,4 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Payout::className(), ['invoice_id' => 'id']);
     }
-
-
-
-
 }

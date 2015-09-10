@@ -15,17 +15,14 @@ use Yii;
  * @property integer $phone_prefix
  * @property double $vat
  *
- * @property \app\models\base\Language $mainLanguage
  * @property \app\models\base\Currency $currency
+ * @property \app\models\base\Language $mainLanguage
  * @property \app\models\base\Location[] $locations
  * @property \app\models\base\PayoutMethod[] $payoutMethods
  * @property \app\models\base\Profile[] $profiles
  */
 class Country extends \yii\db\ActiveRecord
 {
-
-
-
     /**
      * @inheritdoc
      */
@@ -40,14 +37,12 @@ class Country extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code', 'main_language_id', 'currency_id', 'phone_prefix'], 'required'],
+            [['main_language_id', 'currency_id', 'phone_prefix'], 'required'],
             [['currency_id', 'phone_prefix'], 'integer'],
             [['vat'], 'number'],
             [['name'], 'string', 'max' => 100],
             [['code'], 'string', 'max' => 2],
-            [['main_language_id'], 'string', 'max' => 5],
-            [['main_language_id'], 'exist', 'skipOnError' => true, 'targetClass' => Language::className(), 'targetAttribute' => ['main_language_id' => 'language_id']],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']]
+            [['main_language_id'], 'string', 'max' => 5]
         ];
     }
 
@@ -70,17 +65,17 @@ class Country extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMainLanguage()
+    public function getCurrency()
     {
-        return $this->hasOne(\app\models\base\Language::className(), ['language_id' => 'main_language_id']);
+        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrency()
+    public function getMainLanguage()
     {
-        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\app\models\base\Language::className(), ['language_id' => 'main_language_id']);
     }
 
     /**
@@ -106,8 +101,4 @@ class Country extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\app\models\base\Profile::className(), ['nationality' => 'id']);
     }
-
-
-
-
 }
