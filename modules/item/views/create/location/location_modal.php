@@ -38,6 +38,7 @@ $form = \yii\bootstrap\ActiveForm::begin([
     <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
         'options' => [
             'class' => 'form-control location-input',
+            'autocompleteName' => 'item-create'
         ],
         'autocompleteOptions' => [
             'types' => ['geocode']

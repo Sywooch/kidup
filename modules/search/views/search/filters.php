@@ -26,8 +26,8 @@
                 'options' => [
                     'class' => 'form-control location-input',
                     'ng-model' => 'searchCtrl.filter.location',
-                    'ng-change' => "searchCtrl.filterChange()",
-                    'ng-init' => 'searchCtrl.filter.location = searchCtrl.loadParam("location", "' . $model->location . '")'
+                    'ng-init' => 'searchCtrl.filter.location = searchCtrl.loadParam("location", "' . $model->location . '")',
+                    'autocompleteName' => 'search-' . ($mobile ? 'mobile' : 'default')
                 ],
                 'autocompleteOptions' => [
                     'types' => ['geocode']
