@@ -24,10 +24,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     <h1>
                         <?= \Yii::t('home', 'Share'); ?>
                         <!-- VERY important to not put any space/enters in between the strong tags, it will crash the shit out of your browser-->
-                        <strong id="typist-element"
-                                data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
-                                'a trolley') ?>
-                        </strong>
+                        <strong
+                            id="typist-element"
+                            data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
+                                'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t('home', 'With a family near you') ?>
                     </h1>

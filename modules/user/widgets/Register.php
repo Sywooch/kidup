@@ -11,16 +11,14 @@
 
 namespace app\modules\user\widgets;
 
-use app\interfaces\RequestableWidgetInterface;
 use app\modules\user\forms\Registration;
-use app\modules\user\models\LoginForm;
+use app\modules\user\models\User;
 use kartik\form\ActiveForm;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\web\Response;
 
 /**
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class Register extends Widget
 {
@@ -34,12 +32,12 @@ class Register extends Widget
     /** @inheritdoc */
     public function run()
     {
-        $model = \Yii::createObject(Registration::className());
+        $model = new Registration();
 
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post()) && $model->register()) {
-            return \Yii::$app->controller->redirect('@web/user/registration/post-registration');
+            return \Yii::$app->controller->redirect(User::afterLoginUrl('registration'));
         }
 
         return $this->render('register_modal', [

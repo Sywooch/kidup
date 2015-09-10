@@ -298,17 +298,16 @@ class User extends \app\models\base\User implements IdentityInterface
         // always follow the after_login_url if set
         if(\Yii::$app->session->has('after_login_url')){
             $loginUrl = \Yii::$app->session->get('after_login_url');
-//            \Yii::$app->session->remove('after_login_url');
+            \Yii::$app->session->remove('after_login_url');
             return $loginUrl;
         }
 
-        if($type === 'login' || $type === 'connect'){
+        if($type == 'login' || $type == 'connect' || $type == 'post_registration'){
             return Url::previous();
         }
-        if($type === 'registration' || $type === 'connect_new'){
+        if($type == 'registration' || $type == 'connect_new'){
             return Url::to('@web/user/registration/post-registration');
         }
-        \yii\helpers\VarDumper::dump(\Yii::$app->session->has('after_login_url'),10,true); exit();
         return Url::to('@web/home');
     }
 

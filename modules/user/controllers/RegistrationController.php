@@ -80,7 +80,7 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $model = \Yii::createObject(Registration::className());
+        $model = new Registration();
 
         $this->performAjaxValidation($model);
 
