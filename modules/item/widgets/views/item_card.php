@@ -7,7 +7,7 @@ use yii\helpers\Url;
 \app\modules\item\assets\ItemAsset::register($this);
 ?>
 
-<div class="item card-width col-xs-12 col-sm-6 col-md-4 col-lg-3">
+<div class="item-card card-width col-xs-12 col-sm-6 col-md-4 col-lg-3">
     <a href="<?= Url::to('@web/item/' . $model->id) ?>">
         <div class="card">
             <div class="image"
