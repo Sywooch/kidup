@@ -7,6 +7,7 @@ use Carbon\Carbon;
 /**
  * @var \yii\web\View $this
  * @var \app\modules\user\models\Profile $profile
+ * @var \yii\data\ActiveDataProvider $itemProvider
  * @var bool $fbVerified
  * @var bool $twVerified
  */
@@ -46,7 +47,9 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         <?= $profile->email_verified == 1 ? $verified(\Yii::t('user', 'Email')) : '' ?>
                         <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user', 'Phone')) : '' ?>
                     </div>
+
                 </div>
+
             </div>
 
             <div class="col-sm-8 col-md-8">
@@ -62,7 +65,6 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                             Carbon::createFromTimestamp($profile->user->created_at)->toFormattedDateString()
                         ]) ?>
                     </small>
-
                 </h2>
                 <div class="description">
                     <?= $profile->description ?>
@@ -71,34 +73,38 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                 <h4><?= Yii::t("user", "Reviews ") ?><br>
                     <small><?= Yii::t("user", "Reviews from other families") ?></small>
                 </h4>
+
                 <div class="card-area-width">
                     <?php
                     // displaying the search results
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $reviewProvider,
                         'itemView' => 'profile_review',
-                        'layout' => '<div class="row">
-                                    {items}
-                                </div>
-                                <div class="row">
-                                    {pager}
-                                </div>',
                         'itemOptions' => ['tag' => 'span'],
                     ]);
                     ?>
                 </div>
             </div>
+
         </div>
         <div class="hidden-xs row">
-            <h3><?= Yii::t("user", "Items") ?></h3>
-            <?php
-            foreach ($items as $item) {
-                echo ItemCard::widget([
-                    'model' => $item,
-                    'showDistance' => false
-                ]);
-            }
-            ?>
+            <div class="col-md-10 col-md-offset-1">
+                <h3>
+                    <?= Yii::t("user", "Products from {0}", [
+                        $profile->first_name
+                    ]) ?>
+                </h3>
+                <div class="row">
+                    <?php
+                    foreach ($items as $item) {
+                        echo ItemCard::widget([
+                            'model' => $item,
+                            'showDistance' => false
+                        ]);
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </section>
