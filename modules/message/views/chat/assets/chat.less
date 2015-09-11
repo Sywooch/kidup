@@ -1,33 +1,11 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
-/*Mail*/
 #inbox {
-  margin-top: 70px;
-  .card-mail {
-    margin-top: 40px;
-    box-shadow: none;
-    background-color: transparent;
-  }
-  .mail-avatar {
-    display: block;
-    margin: auto;
-    width: 100px;
-    text-align: center;
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin: -50px 0 0 0;
-    }
-  }
-  .mail-content {
-    padding: 15px;
-    @media (max-width: 768px) {
-      margin: 15px;
-    }
-  }
-  .author {
-    position: relative;
-  }
+  padding-top: 40px;
+  background-color: @grey-light;
+  margin-bottom: -90px;
+  padding-bottom: 150px;
+
   .badge {
     position: absolute;
     left: -6px;
@@ -39,42 +17,32 @@
   .badge:empty {
     display: block;
   }
-
-  /*Navigation less*/
-  .nav-tabs {
-    border: 1px solid #ddd;
-  }
-  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    border: none;
-  }
-  .nav-tabs > li > a {
-    border: none !important;
-    border-radius: 0px;
-    margin: 0;
-    &:hover {
-      background: @light-gray;
+  .header {
+    padding: 20px;
+    img {
+      margin-left: 7px;
+      float: left;
+    }
+    h4 {
+      font-size: 30px;
+      margin-top: 12px;
+      margin-left: 70px;
+    }
+    .booking {
+      padding-top: 30px;
+      padding-left:16px;
     }
   }
-  .tab-content {
-    margin-top: 37px;
+  td{
+    padding:20px;
   }
-  .panel-title a {
-    padding: 12px;
+  .avatar {
+    margin-left: 10px;
   }
-  .panel {
-    margin-bottom: 0px;
-
+  .table {
+    margin-bottom: 0;
   }
-  .panel-default > .panel-heading {
-    border-color: transparent;
-  }
-
-  .selected {
-    border: 1px solid @primary-color;
-    border-right: 0px;
-    border-radius: 0px;
-  }
-  .message {
-    padding: 20px;
+  a{
+    color: rgba(70,70,70,1);
   }
 }

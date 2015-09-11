@@ -36,7 +36,25 @@ class ChatController extends Controller
         ];
     }
 
-    public function actionIndex($id = null)
+    public function actionInbox(){
+        $query = Conversation::find()->orWhere(['initiater_user_id' => \Yii::$app->user->id])
+            ->orWhere(['target_user_id' => \Yii::$app->user->id])
+            ->innerJoinWith('lastMessage')
+            ->orderBy('message.created_at');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('inbox', [
+            'conversationDataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionConversation($id = null)
     {
         if ($id == null) {
             $c = Conversation::find()->orWhere(['initiater_user_id' => \Yii::$app->user->id])
@@ -70,17 +88,7 @@ class ChatController extends Controller
         if (Yii::$app->request->isPost && $form->load($_POST) && $form->validate()) {
             $form->save($c);
         }
-        $query = Conversation::find()->orWhere(['initiater_user_id' => \Yii::$app->user->id])
-            ->orWhere(['target_user_id' => \Yii::$app->user->id])
-            ->innerJoinWith('lastMessage')
-            ->orderBy('message.created_at');
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
 
         $m = Message::find()->where(['conversation_id' => $id])->orderBy('created_at DESC')->all();
 

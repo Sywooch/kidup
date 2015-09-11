@@ -4,26 +4,35 @@ use yii\helpers\Url;
 
 /**
  * @var $this \yii\web\View
+ * @var $model \app\modules\message\models\Conversation
  */
 ?>
-
-<div class="panel panel-default <?= (isset($_GET['id']) && $_GET['id'] == $model->id) ? 'selected' : '' ?>">
-    <div class="panel-heading">
-        <div class="panel-title">
-            <div class="author">
-                <a href="<?= Url::to('@web/messages/' . $model->id) ?>">
-                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
-                        ['user_id' => $model->otherUser->user_id]) ?>
+<tr>
+    <td>
+        <div class="row">
+            <div class="col-md-2">
+                <a href="<?= Url::to("@web/user/{$model->id}") ?>">
+                    <?= \app\modules\user\widgets\UserImage::widget(['user_id' => $model->otherUser->user_id]) ?>
+                </a>
+            </div>
+            <div class="col-md-2">
+                <?= $model->otherUser->first_name ?: $model->title ?>
+                <br>
+                <?= \Carbon\Carbon::createFromTimestamp($model->lastMessage->created_at)->format("d-M") ?>
+            </div>
+            <div class="col-md-6">
+                <a href="<?= Url::to("@web/message/conversation?id={$model->id}") ?>">
                     <?php
                     if ($model->unreadMessages() > 0) {
                         echo ' <div class="badge"></div>';
                     }
                     ?>
-                    <span>
-                        <?= $model->otherUser->first_name ?: $model->title ?>
-                    </span>
+                    <?= \yii\helpers\StringHelper::truncate($model->lastMessage->message, 120) ?>
                 </a>
             </div>
+            <div class="col-md-2">
+                <?= $model->booking->getStatusName() ?>
+            </div>
         </div>
-    </div>
-</div>
+    </td>
+</tr>
