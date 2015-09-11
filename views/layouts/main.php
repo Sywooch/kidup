@@ -43,6 +43,8 @@ $transparent = ($url == '/' || $url == '/home');
     </head>
     <body>
     <?php $this->beginBody(); ?>
+    <?= \app\widgets\FacebookTracker::widget() ?>
+    <?= \app\widgets\GoogleTagManager::widget() ?>
 
     <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
 
@@ -70,8 +72,6 @@ $transparent = ($url == '/' || $url == '/home');
             'theme' => 'dark-bottom'
         ]);
     });
-
-    \app\widgets\FacebookTracker::widget();
 
     if(YII_ENV == 'prod'){
         echo Cache::html('layout_ga', function () {
