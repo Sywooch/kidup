@@ -14,12 +14,9 @@ use yii\helpers\Html;
 \app\assets\AppAsset::register($this);
 FontAwesomeAsset::register($this);
 BootstrapPluginAsset::register($this);
-try{
-    // todo this should be improved drastically
-    $transparent = \yii\helpers\Url::current() == '/home/home/index';
-}catch (yii\base\Exception $e){
-    $transparent = true;
-}
+
+$url = @Yii::$app->request->getUrl();
+$transparent = ($url == '/' || $url == '/home');
 
 ?>
 <?php $this->beginPage() ?>

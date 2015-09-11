@@ -48,10 +48,10 @@ task('deploy:vendors', function () use ($repo_password) {
 task('deploy:folder_permissions', function () {
     $releasePath = env()->getReleasePath();
     cd($releasePath);
-    run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
     set('shared_dirs', ['runtime', 'uploads']);
     set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
     set('writeable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
+    run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
 })->desc('Setting folder permissions');
 
 task('deploy:update_database', function () {

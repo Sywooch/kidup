@@ -17,11 +17,10 @@ class MenuSearch extends Widget
 
     public function run()
     {
-        if (
-            \Yii::$app->controller->className() == 'app\\modules\\search\\controllers\\SearchController' ||
-            \Yii::$app->controller->className() == 'app\\modules\\home\\controllers\\HomeController'
-        ) {
-            return '';
+        $url = @\Yii::$app->request->getUrl();
+        $showMenu = ($url == '/' || $url == '/home' || strpos($url, '/search') !== false);
+        if ($showMenu) {
+            return false;
         }
         $model = new SearchModel([]);
         return $this->render('menu_search', [

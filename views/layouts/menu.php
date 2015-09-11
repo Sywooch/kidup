@@ -8,13 +8,8 @@ use yii\helpers\Url;
  * @var \yii\web\View $this
  */
 // create the navbar
-
-try{
-    // todo this should be improved drastically
-    $transparent = Url::current() == '/home/home/index';
-}catch (yii\base\Exception $e){
-    $transparent = true;
-}
+$url = @Yii::$app->request->getUrl();
+$transparent = ($url == '/' || $url == '/home');
 $class = 'navbar navbar-default ';
 $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
@@ -223,7 +218,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
     </nav>
 <?php if ($transparent): ?>
     <!--    this is ugly as well -->
-    <div class="cover-home" style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
+    <div class="cover-home"
+         style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
 <?php endif; ?>
 <?php
 // add the login / register model if user is guest
