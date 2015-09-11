@@ -21,7 +21,7 @@ use yii\helpers\Url;
                 <?= \Carbon\Carbon::createFromTimestamp($model->lastMessage->created_at)->format("d-M") ?>
             </div>
             <div class="col-md-6">
-                <a href="<?= Url::to("@web/message/conversation?id={$model->id}") ?>">
+                <a href="<?= Url::to("@web/inbox/{$model->id}") ?>">
                     <?php
                     if ($model->unreadMessages() > 0) {
                         echo ' <div class="badge"></div>';

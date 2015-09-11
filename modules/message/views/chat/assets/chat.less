@@ -32,6 +32,12 @@
       padding-top: 30px;
       padding-left:16px;
     }
+    @media only screen and (max-width: 768px) {
+      h4{
+        text-align: center;
+        margin: 0;
+      }
+    }
   }
   td{
     padding:20px;
@@ -45,4 +51,27 @@
   a{
     color: rgba(70,70,70,1);
   }
+  .empty-inbox{
+    a{
+      color: @primary-color;
+    }
+    font-size: 16px;
+    padding-bottom: 30px;
+  }
+}
+
+#conversation{
+  padding-top: 40px;
+  background-color: @grey-light;
+  margin-bottom: -90px;
+  padding-bottom: 150px;
+  .other-user{
+    img{
+      padding:10px;
+    }
+  }
+  .card{
+    padding:15px;
+  }
+
 }

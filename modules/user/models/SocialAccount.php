@@ -42,6 +42,7 @@ class SocialAccount extends \app\models\base\SocialAccount
             if ($uploadedFile !== false) {
                 $user->profile->setAttribute('img', $uploadedFile);
                 $user->profile->save();
+
             }
         }
         return true;

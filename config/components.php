@@ -50,11 +50,6 @@ $components = [
                     'friends'
                 ]
             ],
-//            'twitter' => [
-//                'class' => 'yii\authclient\clients\Twitter',
-//                'consumerKey' => $keys['twitter_oauth_key'],
-//                'consumerSecret' => $keys['twitter_oauth_secret'],
-//            ],
         ],
     ],
     'view' => [
@@ -135,8 +130,8 @@ $components = [
             'mail/click' => 'mail/view/link',
             'mail/<id>' => 'mail/view/index',
             'review/create/<bookingId:\d+>' => 'review/create/index',
-            'messages/<id:\d+>' => 'message/chat/index',
-            'messages' => 'message/chat/index',
+            'inbox/<id:\d+>' => 'message/chat/conversation',
+            'inbox' => 'message/chat/inbox',
             'images/<id>' => 'images/index',
             'images/<folder1>/<id>' => 'images/index',
             'images/<folder1>/<folder2>/<id>' => 'images/index',

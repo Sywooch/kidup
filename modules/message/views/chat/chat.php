@@ -6,71 +6,26 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
 /*
- * @var \app\modules\message\models\Conversation $conversation
- * @var dataProvider $conversationDataProvider
- * @var $conversationDataProvider
+ * @var Conversation $conversation
  * @var yii\web\View $this
  */
 \app\modules\message\assets\MessageAsset::register($this);
 $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
 ?>
 
-<section class="section" id="inbox" style="">
-    <div class="site-area-header hidden-xs">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-10 col-md-offset-1">
-                    <h2><?= Yii::t("message", "Inbox") ?><br>
-                        <small><?= Yii::t("message", "All your parent interactions, securely through KidUp") ?></small>
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container site-area-content">
+<section class="section" id="conversation">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-md-offset-1">
-                <div class="card card-refine card-mail">
-                    <div class="header">
-                        <h4 class="title"><?= Yii::t("message", "Inbox") ?>
-                            <button class="btn btn-default btn-xs btn pull-right btn-simple">
-                                <i class="fa fa-envelope-o"></i>
-                            </button>
-                        </h4>
-                    </div>
-                    <div class="content">
-                        <?php
-                        // displaying the inbox items
-                        echo ListView::widget([
-                            'dataProvider' => $conversationDataProvider,
-                            'layout' => '<div class="row">
-                                    {items}
-                                </div>
-                                <div class="row">
-                                    {pager}
-                                </div>',
-                            'itemView' => 'inboxItem',
-                            'itemOptions' => ['tag' => 'span'],
-                            //                    'pager' => ['class' => \kop\y2sp\ScrollPager::className()]
-                        ]); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8 col-md-7 ">
-                <div class="row mail-content card">
-                    <div class="row col-sm-12">
-                        <h3 class="text-center">
-                            <?= Yii::t("user", "Conversation with {username}", [
-                                'username' => $conversation->otherUser->first_name
-                            ]) ?>
-                        </h3>
+            <div class="col-sm-8 col-md-6 col-md-offset-1 ">
+                <h3 class="row">
+                    <?= Yii::t("user", "Conversation with {username}", [
+                        'username' => $conversation->otherUser->first_name
+                    ]) ?>
+                </h3>
 
-                        <div class="text-center">
-                            <?= $conversation->title ?>
-                            <br/>
-                            <?= isset($booking->id) ? Html::a(\Yii::t('Booking', 'Booking'),
-                                '@web/booking/' . $booking->id) : '' ?>
-                        </div>
+                <div class="row mail-content card">
+
+                    <div class="col-sm-12">
                         <?php
                         if (isset($booking) && isset($booking->item)) {
                             if (\Yii::$app->user->id == $booking->item->owner_id
@@ -95,28 +50,16 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                             'enableClientValidation' => true,
                             'method' => 'post',
                         ]); ?>
-                        <div class="media media-post">
-                            <form class="form">
-                                <a class="pull-left author" href="#">
-                                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                                        'user_id' => $conversation->otherUser->user_id
-                                    ]) ?>
-                                </a>
 
-                                <div class="media-body">
-                                    <?= $form1->field($form, 'message')->label(false)->textarea([
-                                        'class' => 'form-control',
-                                        'placeholder' => \Yii::t('message', 'Your personal message to {0}',
-                                            [$conversation->otherUser->first_name]),
-                                        'rows' => 3
-                                    ]); ?>
-                                    <div class="media-footer">
-                                        <?= Html::submitButton(\Yii::t('message', 'Send'),
-                                            ['class' => 'btn btn-danger btn-fill pull-right']); ?>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
+                        <?= $form1->field($form, 'message')->label(false)->textarea([
+                            'class' => 'form-control',
+                            'placeholder' => \Yii::t('message', 'Your personal message to {0}',
+                                [$conversation->otherUser->first_name]),
+                            'rows' => 3
+                        ]); ?>
+                        <?= Html::submitButton(\Yii::t('message', 'Send'),
+                            ['class' => 'btn btn-danger btn-fill pull-right']); ?>
                         <?php ActiveForm::end(); ?>
                     </div>
                 </div>
@@ -169,6 +112,34 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+            <div class="col-md-4">
+                <div class="card other-user">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="author" href="<?= \yii\helpers\Url::to("@web/user/{$conversation->otherUser->user_id}") ?>">
+                                <?=\app\modules\user\widgets\UserImage::widget([
+                                    'user_id' => $conversation->otherUser->user_id,
+                                    'width' => '80px',
+                                ]) ?>
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <h5>
+                                <?= $conversation->otherUser->first_name ?>
+                            </h5>
+                            <div class="location">
+                                <?= $conversation->booking->item->location->city ?>
+                            </div>
+                            <div class="member-since">
+                                <?= Yii::t("message", "Member since {0}", [
+                                    Carbon::createFromTimestamp($conversation->otherUser->user->created_at)->toDateString()
+                                ]) ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

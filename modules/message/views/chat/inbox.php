@@ -1,18 +1,14 @@
 <?php
-use app\components\WidgetRequest;
-use Carbon\Carbon;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 /*
- * @var \app\modules\message\models\Conversation $conversation
- * @var dataProvider $conversationDataProvider
- * @var $conversationDataProvider
+ * @var ActiveDataProvider $conversationDataProvider
  * @var yii\web\View $this
  */
+
 \app\modules\message\assets\MessageAsset::register($this);
-$this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
+$this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
 ?>
 
 <section class="section" id="inbox">
@@ -23,31 +19,47 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                     <div class="header">
                         <div class="row">
                             <div class="col-md-4">
-                                <?= \app\modules\images\components\ImageHelper::image('kidup/graphics/notification.png', ['w' => 55]) ?>
+                                <div class="hidden-xs">
+                                    <?= \app\modules\images\components\ImageHelper::image('kidup/graphics/notification.png',
+                                        ['w' => 55]) ?>
+                                </div>
                                 <h4 class="title">
                                     <?= Yii::t("message", "Inbox") ?>
                                 </h4>
                             </div>
 
-                            <div class="col-md-2 col-md-offset-6 booking">
+                            <div class="col-md-2 col-md-offset-6 booking hidden-xs">
                                 <?= Yii::t("message", "Booking Status") ?>
                             </div>
                         </div>
 
                     </div>
                     <?php
-                    // displaying the inbox items
-                    echo ListView::widget([
-                        'dataProvider' => $conversationDataProvider,
-                        'layout' => '
+                    //                     displaying the inbox items
+                    if ($conversationDataProvider->count > 0) {
+                        echo ListView::widget([
+                            'dataProvider' => $conversationDataProvider,
+                            'layout' => '
                                 <table class="table">
                                     {items}
                                 </table>
                                 <div class="row">
                                     {pager}
                                 </div>',
-                        'itemView' => 'inboxItem',
-                    ]); ?>
+                            'itemView' => 'inboxItem',
+                        ]);
+                    } else { ?>
+                        <div class="text-center empty-inbox">
+                            <h4>
+                                <?= Yii::t("message", "Your inbox is empty at the moment.") ?>
+                            </h4>
+                            <?= Yii::t("message",
+                                "How about searching for a {0} or a {1} and getting some action here?", [
+                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search?q=categories|13'),
+                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search?q=categories|20'),
+                                ]) ?>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
