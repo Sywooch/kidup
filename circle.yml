@@ -31,8 +31,8 @@ deployment:
   production:
     branch: master
     commands:
-      - php ~/kidup/deployer.phar deploy development
+      - php ~/kidup/deployer.phar deploy production
   staging:
     branch: develop
     commands:
-      - php ~/kidup/deployer.phar deploy development
+      - php ~/kidup/deployer.phar deploy staging
