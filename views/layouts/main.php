@@ -2,9 +2,6 @@
 use app\assets\FontAwesomeAsset;
 use app\components\Cache;
 use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Search;
-use app\modules\message\models\Message;
-use kartik\growl\Growl;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 
