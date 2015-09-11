@@ -1,11 +1,11 @@
 <?php
 
 namespace app\components;
+
 use Yii;
-use yii\helpers\Json;
 use yii\web\View;
 
-class Cache extends \yii\base\Event
+class Cache
 {
     public static function data($name, $exec, $time = 30, $dependency = null){
         if(YII_CACHE == false) return $exec();

@@ -6,6 +6,7 @@ use app\components\Event;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
 use app\modules\item\models\Item;
+use app\modules\mail\jobs\EmailJob;
 use app\modules\mail\models\Mailer;
 use app\modules\message\models\Message;
 use app\modules\user\models\User;
@@ -27,6 +28,7 @@ class Bootstrap implements BootstrapInterface
 
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
+
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
         Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {

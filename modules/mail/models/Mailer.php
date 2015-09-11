@@ -54,7 +54,7 @@ class Mailer
         return $mailer->{explode('.', $type)[1]}($data);
     }
 
-    protected function sendMessage($data)
+    public function sendMessage($data)
     {
         $mailer = Yii::$app->mailer;
         $mailer->viewPath = $this->viewPath;
