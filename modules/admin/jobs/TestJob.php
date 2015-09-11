@@ -10,6 +10,8 @@ class TestJob extends Job{
     public $user_id;
     public $code;
 
+    public $maxAttempts = 3;
+
     public function handle(){
         $token = new Token();
         $token->setAttributes([
