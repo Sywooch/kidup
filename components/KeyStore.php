@@ -23,6 +23,6 @@ class KeyStore extends Component
         if(isset($this->keys[$key])){
             return $this->keys[$key];
         }
-        return true;
+        return false;
     }
 }

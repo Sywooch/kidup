@@ -7,26 +7,17 @@ class m150910_195330_queue extends Migration
 {
     public function up()
     {
-        $this->createTable('queue_job',[
+        $this->createTable('job_queue',[
             'id' => Schema::TYPE_BIGPK,
             'queue' => Schema::TYPE_STRING,
-            'attemps' => Schema::TYPE_SMALLINT,
+            'attempts' => Schema::TYPE_SMALLINT,
             'data' => Schema::TYPE_TEXT,
             'status' => Schema::TYPE_SMALLINT,
             'created_at' => Schema::TYPE_INTEGER,
             'execution_time' => Schema::TYPE_INTEGER,
         ]);
 
-        $this->createTable('queue_job_failed',[
-            'id' => Schema::TYPE_BIGPK,
-            'queue' => Schema::TYPE_STRING,
-            'data' => Schema::TYPE_TEXT,
-            'error' => Schema::TYPE_TEXT,
-            'created_at' => Schema::TYPE_INTEGER,
-        ]);
-
-        $this->createIndex('idx_queue_job_1', 'queue_jobs', 'id', 0);
-        $this->createIndex('idx_queue_job_failed_1', 'queue_jobs_failed', 'id', 0);
+        $this->createIndex('idx_queue_job_1', 'job_queue', 'id', 0);
     }
 
     public function down()
