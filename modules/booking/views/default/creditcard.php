@@ -40,7 +40,7 @@ Modal::begin([
         <br><br>
     </form>
 
-    <script src="https://js.braintreegateway.com/v2/braintree.js">
+    <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
         <?php
         $this->registerJs(' braintree.setup("'.  $clientToken .'", "dropin", {
                 container: "payment-form"

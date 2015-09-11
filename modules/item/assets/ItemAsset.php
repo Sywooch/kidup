@@ -5,7 +5,7 @@ use yii\web\AssetBundle;
 
 class ItemAsset extends AssetBundle
 {
-    public $sourcePath = '@app/modules/item/widgets/views/assets/';
+    public $sourcePath = '@app/modules/item/views/assets/';
 
     public $js = [];
 
