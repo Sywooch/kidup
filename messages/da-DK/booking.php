@@ -30,6 +30,7 @@ return [
     'All the items other families shared with you' => 'Alle de ting andre familier har delt med dig',
     'Balance' => 'Balance',
     'Base Fee' => 'Grundbeløb',
+    'Booking' => 'Booking',
     'Booking #{0}' => 'Booking #{0}',
     'Booking Request' => 'Booking anmodning',
     'Booking Status' => 'Booking Status',
@@ -134,6 +135,5 @@ return [
     'profile settings' => 'Profilindstillinger',
     'status' => 'Status',
     'terms and conditions' => 'Terms and Conditions',
-    'Booking' => 'Booking',
     'Requested by {0} between {1} and {2}' => 'Anmodning af {0} mellem {1} og {2}',
 ];

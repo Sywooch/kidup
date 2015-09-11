@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Inbox' => '',
     'Account settings' => 'Brugerindstillinger',
     'Contact us' => 'Kontakt Os',
     'Email settings' => 'Email indstillinger',

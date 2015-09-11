@@ -17,9 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Booking Status' => '',
+    'How about searching for a {0} or a {1} and getting some action here?' => '',
+    'Member since {0}' => '',
+    'Your inbox is empty at the moment.' => '',
+    'bike' => '',
+    'stroller' => '',
     'All your parent interactions, securely through KidUp' => 'Alle dine forældreinteraktioner, sikkert gennem KidUp',
+    'You don\'t have any conversations yet.' => 'Du har ingen samtaler endnu',
     'Inbox' => 'Inboks',
     'Send' => 'Sendt',
-    'You don\'t have any conversations yet.' => 'Du har ingen samtaler endnu',
     'Your personal message to {0}' => 'Dine personlige beskeder',
 ];
