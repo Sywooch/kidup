@@ -27,18 +27,13 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
-set('shared_dirs', ['runtime', 'uploads']);
+set('shared_dirs', ['runtime', 'web/release-assets']);
 set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
-set('writable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
+set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets']);
 
 $repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
 set('repository', 'https://simonnouwens:' . $repo_password . '@github.com/esquire900/kidup.git');
 //set('repository', 'git@github.com:esquire900/kidup.git');
-
-task('deploy:vendors', function () use ($repo_password) {
-    run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
-    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
-})->desc('Installing vendors');
 
 task('deploy:vendors', function () use ($repo_password) {
     run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
