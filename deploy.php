@@ -3,94 +3,78 @@ require(__DIR__ . '/vendor/autoload.php');
 require 'recipe/common.php';
 date_default_timezone_set("Europe/Amsterdam");
 
-
 $keyFile = __DIR__ . '/config/keys/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
-
-// verify if keys are actually set - otherwise deployer will say it works while it doesn't
-
 /////////////////////////////////////////////// DEPLOY API ///////////////////////////////////////////
 
-if(getenv('CIRCLECI_TEST_PASSWORD') != false){
-    server('production-primary', '31.187.70.130', 22)
-        ->path('/var/www/')
-        ->user('root');
+$production = server('production', '31.187.70.130', 22)
+    ->env('deploy_path', '/var/www')
+    ->env('branch', 'master')
+    ->user('root')
+    ->stage('production');
+$test = server('test', '178.62.234.114', 22)
+    ->env('deploy_path', '/var/www')
+    ->env('branch', 'develop')
+    ->user('root')
+    ->stage('staging');
 
-    server('test', '178.62.234.114', 22)
-        ->path('/var/www/')
-        ->user('root', getenv('CIRCLECI_TEST_PASSWORD'));
-}else{
-    server('production-primary', '31.187.70.130', 22)
-        ->path('/var/www/')
-        ->user('root')
-        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
-
-    server('test', '178.62.234.114', 22)
-        ->path('/var/www/')
-        ->user('root')
-        ->pubKey('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
+if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
+    $production->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
+    $test->password(getenv('CIRCLECI_TEST_PASSWORD'));
+} else {
+    $production->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
+    $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
-stage('development', ['test'], ['branch'=>'develop'], true);
-stage('production', ['production-primary'], ['branch'=>'master'], true);
+set('shared_dirs', ['runtime', 'uploads']);
+set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
+set('writable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
 
 $repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
-set('repository', 'https://simonnouwens:'.$repo_password.'@github.com/esquire900/kidup.git');
+set('repository', 'https://simonnouwens:' . $repo_password . '@github.com/esquire900/kidup.git');
+//set('repository', 'git@github.com:esquire900/kidup.git');
 
 task('deploy:vendors', function () use ($repo_password) {
-    $releasePath = env()->getReleasePath();
-    cd($releasePath);
-    run("composer config github-oauth.github.com ".$repo_password);
-    run("composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
+    run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
+    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
-task('deploy:folder_permissions', function () {
-    $releasePath = env()->getReleasePath();
-    cd($releasePath);
-    set('shared_dirs', ['runtime', 'uploads']);
-    set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
-    set('writeable_dirs', ['web/assets', 'uploads', 'runtime', 'web/release-assets']);
-    run("[ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
-})->desc('Setting folder permissions');
+task('deploy:vendors', function () use ($repo_password) {
+    run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
+    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
+})->desc('Installing vendors');
 
-task('deploy:update_database', function () {
-    $releasePath = env()->getReleasePath();
-    cd($releasePath);
-    run("php yii migrate/up --interactive=0");
-})->desc('Update database');
+task('deploy:bower_folder', function () {
+    run("cd {{release_path}} && [ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
+})->desc('Moving bower asset folder');
+
+task('deploy:run_migrations', function () {
+    run('php {{release_path}}/yii migrate up --interactive=0');
+})->desc('Run migrations');
 
 task('deploy:minify_assets', function () {
-    $releasePath = env()->getReleasePath();
-    cd($releasePath);
-    // converts all assets to make sure everything is preparsed into assets
-    run('sudo php yii asset config/assets/assets-all.php config/assets/assets-all-def.php');
-
-    // minify the main bulk into a minified bundle
-    run('sudo php yii asset config/assets/assets.php config/assets/assets-prod.php');
-//    run('sudo php yii deploy/after-deploy');
+    run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets-all.php {{release_path}}/config/assets/assets-all-def.php');
+    run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets.php {{release_path}}/config/assets/assets-prod.php');
 })->desc('Minifying assets');
 
+task('deploy:cache-cleanup', function () {
+    run('php {{release_path}}/yii deploy/after-deploy');
+})->desc("Cleaning cache");
+
 task('deploy', [
-    'deploy:start',
     'deploy:prepare',
+    'deploy:release',
     'deploy:update_code',
-    'deploy:vendors',
-    'deploy:folder_permissions',
     'deploy:shared',
-    'deploy:symlink',
-    'deploy:update_database',
-    'deploy:writeable_dirs',
+    'deploy:writable',
+    'deploy:vendors',
+//    'deploy:bower_folder',
     'deploy:minify_assets',
+    'deploy:run_migrations',
     'deploy:symlink',
+    'deploy:cache-cleanup',
     'cleanup',
-    'deploy:end'
 ])->desc('Deploy your project');
 
-/**
- * Success message
- */
-after('deploy', function () {
-    $host = config()->getHost();
-    writeln("<info>KidUp Deployed @</info> <fg=cyan>$host</fg=cyan>");
-});
+after('deploy', 'success');
