@@ -218,9 +218,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="col-sm-12 col-xs-12 text-center">
                     <h4><?= \Yii::t('home', 'Become a part of the KidUp familiy') ?>
                         <a href="<?= Url::to('@web/user/register') ?>">
+                            <button class="btn btn-danger btn-lg btn-fill">
+                                <?= \Yii::t('home', 'Sign Up Now') ?>
+                            </button>
                         </a>
-                        <button class="btn btn-danger btn-lg btn-fill"><?= \Yii::t('home',
-                                'Sign Up Now') ?></button>
                     </h4>
                 </div>
             </div>
