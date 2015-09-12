@@ -203,10 +203,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
                     <div style="font-size: 17px">
                         <?= \Yii::t('home',
-                            'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.') ?>
+                            'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t raelly using.') ?>
                         <br><br>
                         <?= \Yii::t('home',
-                            'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.') ?>
+                            'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.') ?>
                     </div>
                 </div>
             </div>
