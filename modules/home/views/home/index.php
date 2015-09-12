@@ -35,6 +35,15 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                         <?= \Yii::t('home', 'KidUp is your online parent-to-parent marketplace.') ?>
                     </h4>
 
+                    <div class="btn btn-default" id="how-it-works-btn">
+                        <?= Yii::t("home", "How it Works") ?>
+                    </div>
+                    <?php $this->registerJs("$('#how-it-works-btn').click(function() {
+                        $('html, body').animate({
+                            scrollTop: $('#how-it-works').offset().top - 400
+                        }, 1000);
+                    });") ?>
+
                 </div>
             </div>
         </div>
@@ -105,7 +114,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                         </div>
                     </div>
 
-                    <div class="row step-description">
+                    <div class="row step-description" id="how-it-works">
                         <div class="col-sm-6 col-sm-offset-3 sm">
                             <div class="step-d-1 active">
                                 <h4><?= \Yii::t('home', 'Seek and Find') ?></h4>

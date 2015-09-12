@@ -139,9 +139,10 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <!--Always shown on desktop-md+ -->
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>"
-                           class="btn btn-danger hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
+                           class="btn btn-primary hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
                             <?= Yii::t("app", "Rent Out") ?>
                         </a>
+
                     </li>
                 </ul>
 
