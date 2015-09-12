@@ -49,21 +49,19 @@ class DefaultController extends Controller
         }
 
         if ($booking->status !== Booking::AWAITING_PAYMENT) {
-            \Yii::$app->session->addFlash('info', "Booking is already confirmed.");
             return $this->redirect(['/booking/' . $id]);
         }
 
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
+            $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
             if ($model->save()) {
                 // booking is confirmed
                 if (YII_ENV == 'prod') {
                     \Yii::$app->slack->send("New booking payin has been made (id) " . $id);
                 }
                 return $this->redirect(['/booking/' . $id]);
-            } else {
-                return $this->refresh();
             }
         }
 

@@ -30,7 +30,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
             <div class="col-md-8">
                 <?php $form = ActiveForm::begin([
                     'enableClientValidation' => true,
-                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
+//                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
                 ]); ?>
 
                 <div class="card">
@@ -75,6 +75,8 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                     <?php
                     $this->registerJs('braintree.setup("' . $clientToken . '", "dropin", { container: "payment-form" });');
                     $this->registerJsFile('https://js.braintreegateway.com/v2/braintree.js');
+                    // trick to show custom error message if nonce is empty
+                    echo $form->field($model, 'nonce')->hiddenInput()->label(false);
                     ?>
                 </div>
 
