@@ -50,7 +50,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </div>
 
-    <?= $this->render('search',[
+    <?= $this->render('search', [
         'model' => $searchModel
     ]); ?>
 
@@ -224,16 +224,16 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             </div>
         </div>
     </section>
-<!--    <section id="signup">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-sm-12 col-xs-12 text-center">-->
-<!--                    <h4>-->
-<!--                        --><?//= \Yii::t('home', 'Featured on') ?>
-<!--                    </h4>-->
-<!---->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
+    <!--    <section id="signup">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-sm-12 col-xs-12 text-center">-->
+    <!--                    <h4>-->
+    <!--                        --><? //= \Yii::t('home', 'Featured on') ?>
+    <!--                    </h4>-->
+    <!---->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
 </div>

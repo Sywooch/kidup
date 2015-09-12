@@ -21,7 +21,10 @@ class ImageHelper extends BaseHtml
                 return '';
             }
             $htmlOptions['src'] = $url;
-            $htmlOptions['style'] = '';
+
+            if(!isset($htmlOptions['style'])){
+                $htmlOptions['style'] = '';
+            }
             if (isset($options['w'])) {
                 if (!isset($htmlOptions['width'])) {
                     $htmlOptions['width'] = $options['w'];
