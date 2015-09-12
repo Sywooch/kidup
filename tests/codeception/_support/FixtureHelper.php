@@ -2,7 +2,7 @@
 
 namespace app\tests\codeception\_support;
 
-use app\tests\codeception\fixtures\BookingFixture;
+use \app\tests\codeception\fixtures\BookingFixture;
 use app\tests\codeception\fixtures\ConversationFixture;
 use app\tests\codeception\fixtures\ItemFixture;
 use app\tests\codeception\fixtures\ItemHasCategoryFixture;

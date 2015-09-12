@@ -12,6 +12,7 @@ modules:
       - Filesystem
       - Yii2
       - app\tests\codeception\_support\FixtureHelper
+      - app\tests\codeception\_support\FactoryHelper
       - Asserts
     config:
         Yii2:

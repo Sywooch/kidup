@@ -70,7 +70,9 @@
     "codeception/verify": "0.2.7",
     "yiisoft/yii2-faker": "2.0.3",
     "fproject/yii2-migration-generator": "*",
-    "c006/yii2-migration-utility": "dev-master"
+    "c006/yii2-migration-utility": "dev-master",
+    "league/factory-muffin": "~2.0",
+    "league/factory-muffin-faker": "*"
   },
   "config": {
     "process-timeout": 1800
