@@ -303,6 +303,9 @@ class User extends \app\models\base\User implements IdentityInterface
         }
 
         if($type == 'login' || $type == 'connect' || $type == 'post_registration'){
+            if(strpos(Url::previous(), 'user/login') !== false){
+                return Url::to('@web/home');
+            }
             return Url::previous();
         }
         if($type == 'registration' || $type == 'connect_new'){

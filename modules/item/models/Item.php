@@ -207,6 +207,36 @@ class Item extends \app\models\base\Item
         ];
     }
 
+    /**
+     * Returns array with data for item price table (used in booking widget, booking confirmation page etc)
+     * @param int $from
+     * @param int $to
+     * @param Currency $currency
+     * @return bool
+     */
+    public function getTableData($from, $to, Currency $currency){
+        $prices = $this->getPriceForPeriod($from, $to, $currency);
+        $days = floor(($to - $from) / (60 * 60 * 24));
+        if ($days <= 7) {
+            $period = \Yii::t('item', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
+            $periodPrice = $this->price_day;
+        } elseif ($days > 7 && $days <= 31) {
+            $period = \Yii::t('item', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
+            $periodPrice = $this->price_week;
+        } else {
+            $period = \Yii::t('item', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
+            $periodPrice = $this->price_month;
+        }
+        return [
+            'price' => [
+                $period . ' x ' . $currency->forex_name . ' ' . $periodPrice,
+                $currency->abbr . ' ' . $prices['price']
+            ],
+            'fee' => [\Yii::t('item', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
+            'total' => [\Yii::t('item', 'Total'), $currency->abbr . ' ' . $prices['total']]
+        ];
+    }
+
     public function getCarouselImages(){
         return Cache::data('item_view-images-carousel' . $this->id, function () {
             $itemImages = $this->getImageNames();

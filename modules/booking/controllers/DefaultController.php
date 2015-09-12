@@ -7,6 +7,7 @@ use app\modules\booking\forms\Confirm;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
 use app\modules\images\components\ImageHelper;
+use app\modules\item\models\Item;
 use app\modules\user\models\PayoutMethod;
 use Carbon\Carbon;
 use yii\helpers\Url;
@@ -66,12 +67,15 @@ class DefaultController extends Controller
             }
         }
 
+        $item = Item::findOne($booking->item_id);
+
         return $this->render('confirm', [
             'booking' => $booking,
             'model' => $model,
-            'item' => $booking->item,
-            'itemImage' => ImageHelper::url($booking->item->getImageName(0)),
-            'profile' => $booking->item->owner->profile
+            'item' => $item,
+            'itemImage' => ImageHelper::url($item->getImageName(0)),
+            'profile' => $item->owner->profile,
+            'tableData' => $item->getTableData($booking->time_from, $booking->time_to, $booking->currency)
         ]);
     }
 

@@ -14,6 +14,7 @@ class Confirm extends Model
     public $message;
     public $rules;
     public $nonce;
+    public $payment_method_nonce;
 
     private $creditCardForm;
 

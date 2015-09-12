@@ -12,6 +12,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
  * @var array $images
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
+ * @var \app\modules\home\forms\Search $searchModel
  * @var bool $show_modal
  */
 ?>
@@ -49,7 +50,9 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         </div>
     </div>
 
-    <?= $this->render('search'); ?>
+    <?= $this->render('search',[
+        'model' => $searchModel
+    ]); ?>
 
     <?= $this->render('grid', [
         'categories' => $categories,
@@ -212,7 +215,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
                     <div style="font-size: 17px">
                         <?= \Yii::t('home',
-                            'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t raelly using.') ?>
+                            'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t using at the moment.') ?>
                         <br><br>
                         <?= \Yii::t('home',
                             'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.') ?>
@@ -221,19 +224,16 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             </div>
         </div>
     </section>
-    <section id="signup">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-xs-12 text-center">
-                    <h4><?= \Yii::t('home', 'Become a part of the KidUp familiy') ?>
-                        <a href="<?= Url::to('@web/user/register') ?>">
-                            <button class="btn btn-danger btn-lg btn-fill">
-                                <?= \Yii::t('home', 'Sign Up Now') ?>
-                            </button>
-                        </a>
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </section>
+<!--    <section id="signup">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-12 col-xs-12 text-center">-->
+<!--                    <h4>-->
+<!--                        --><?//= \Yii::t('home', 'Featured on') ?>
+<!--                    </h4>-->
+<!---->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 </div>

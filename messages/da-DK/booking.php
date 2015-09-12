@@ -20,7 +20,7 @@ return [
     '(including VAT)' => '(inklusiv moms)',
     'Accept booking' => 'Accepter bookingen',
     'Actions' => 'Handlinger',
-    'Add Credit Card' => '',
+    'Add Credit Card' => 'Tilføj kreditkort',
     'Add Payment Method' => 'Tilføjet betalingsmetode',
     'Add creditcard' => 'Tilføj kreditkort',
     'Add payment method' => 'Tilføj betalingsmetode',

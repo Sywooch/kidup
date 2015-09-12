@@ -17,10 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Address that is used for payment purposes.' => '',
-    'Billing Address' => '',
-    'Billing address' => '',
-    'Products from {0}' => '',
+    'Address that is used for payment purposes.' => 'Adressen tilknyttet betalingsinformationen.',
+    'Billing Address' => 'Betalingsadresse',
+    'Billing address' => 'Betalingsadresse',
+    'Products from {0}' => 'Produkter fra {0}',
     '(not set)' => '(ikke defineret)',
     'A confirmation message has been sent to your new email address' => 'En bekræfftigelsesmail er blevet sendt til din nye mailadresse',
     'A message has been sent to your email address. It contains a confirmation link that you must click to complete registration.' => 'En besked er blevet afsendt til din mailadresse. Den indeholder et link som du kan klikke p& aring; for at fulføre din registrering.',
