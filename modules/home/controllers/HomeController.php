@@ -33,7 +33,8 @@ class HomeController extends Controller
                 'etagSeed' => function ($action, $params) {
                     return Json::encode([
                         Yii::$app->language,
-                        \Yii::$app->session->getAllFlashes()
+                        \Yii::$app->session->getAllFlashes(),
+                        \Yii::$app->user->isGuest
                     ]);
                 },
             ],
