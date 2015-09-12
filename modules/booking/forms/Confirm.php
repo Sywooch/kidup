@@ -53,6 +53,9 @@ class Confirm extends Model
 
     public function save()
     {
+        if(YII_ENV == 'test'){
+            $this->nonce = 'fake-valid-nonce';
+        }
         if(!$this->validate()){
             return false;
         };

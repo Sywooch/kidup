@@ -55,7 +55,9 @@ class DefaultController extends Controller
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
-            $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
+            if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
+                $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
+            }
             if ($model->save()) {
                 // booking is confirmed
                 if (YII_ENV == 'prod') {

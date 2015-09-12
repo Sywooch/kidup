@@ -5,13 +5,17 @@ namespace app\modules\review\widgets;
 use app\components\Cache;
 use app\modules\review\models\Review;
 use Yii;
-
+use yii\helpers\Html;
 class ReviewScore extends \yii\bootstrap\Widget
 {
     public $user_id;
+    public $onEmpty = false;
 
     public function run()
     {
+        if(!$this->onEmpty){
+            $this->onEmpty = Html::tag('div', \Yii::t('review', 'No reviews yet'));
+        }
         $reviews = Review::find()->where([
             'is_public' => 1,
             'reviewed_id' => $this->user_id
@@ -22,7 +26,7 @@ class ReviewScore extends \yii\bootstrap\Widget
         }
 
         if (count($scores) == 0) {
-            return \Yii::t('review', 'No reviews yet');
+            return $this->onEmpty;
         }
 
         $stars = round(array_sum($scores) / count($scores));
