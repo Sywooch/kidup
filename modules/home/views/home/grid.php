@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 <!--Area for all categories-->
 <Section id="content-home-categories">
-    <div class="row" style="margin-bottom: 30px;">
+    <div class="row" style="margin-bottom: 30px;display:none;">
         <div class="text-center" style="font-size: 22px;margin-top:-30px;margin-bottom:20px;">
             <?= Yii::t("home", "We are honered to be featured on") ?>
         </div>
