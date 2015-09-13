@@ -7,17 +7,17 @@ class m150913_090209_newCategories extends Migration
 {
     public function up()
     {
-//        $this->dropColumn('category', 'type');
-//        $this->dropTable('item_has_category');
-//        $this->addColumn('category', 'parent_id', \yii\db\Schema::TYPE_INTEGER." NULL");
-//        $this->addColumn('item', 'category_id', \yii\db\Schema::TYPE_INTEGER." NOT NULL");
-//
-//        $this->createIndex('idx_category_parent_1', 'category', 'parent_id', 0);
-//
-//        $this->execute('SET foreign_key_checks = 0;');
-//        $this->addForeignKey('fk_category_8421_01', 'category', 'parent_id', 'category', 'id', 'CASCADE', 'NO ACTION');
-//        $this->addForeignKey('fk_item_category_8765_01', 'item', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
-//        $this->execute('SET foreign_key_checks = 1;');
+        $this->dropColumn('category', 'type');
+        $this->dropTable('item_has_category');
+        $this->addColumn('category', 'parent_id', \yii\db\Schema::TYPE_INTEGER." NULL");
+        $this->addColumn('item', 'category_id', \yii\db\Schema::TYPE_INTEGER." NOT NULL");
+
+        $this->createIndex('idx_category_parent_1', 'category', 'parent_id', 0);
+
+        $this->execute('SET foreign_key_checks = 0;');
+        $this->addForeignKey('fk_category_8421_01', 'category', 'parent_id', 'category', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_category_8765_01', 'item', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
+        $this->execute('SET foreign_key_checks = 1;');
 
         Category::deleteAll();
 

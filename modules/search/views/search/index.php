@@ -8,17 +8,18 @@ use yii\widgets\Pjax;
 
 $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
 \app\modules\search\assets\ItemSearchAsset::register($this);
-
+\app\assets\LodashAsset::register($this);
+\app\assets\JQueryTextRangeAsset::register($this);
 ?>
 
 <?php Pjax::begin([
 //    'enableReplaceState' => false,
-    'enableReplaceState' => true,
+//    'enableReplaceState' => true,
     'id' => 'pjax-search',
     'timeout' => 1000000
 ]);
 ?>
-<div ng-app="kidup.search" id="search">
+<div id="search">
     <div ng-controller="SearchCtrl as searchCtrl">
         <section class="section" id="search-cards">
             <div class="container-fluid">
@@ -46,57 +47,57 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                     <div class="col-md-9 col-log-10">
 
                         <div class="row" style="margin:10px 0px;padding:0px;">
-                            <div class="col-md-12 hidden-xs hidden-sm">
-                                <div class="filters-label" style="display: inline-block">
-                                    <?= Yii::t("item", "Active filters:") ?>
-                                </div>
-
-                                <div class="btn btn-default btn-sm smallBottomMargin"
-                                     ng-show="searchCtrl.activeFilter.search"
-                                     ng-click="searchCtrl.activeFilterRemove('search')">
-                                    <strong>
-                                        <i class="fa fa-close" style="font-size: 16px"></i>
-                                    </strong>
-                                    <?= Yii::t("item", "Search") ?>
-                                </div>
-
-                                <div class="btn btn-default btn-sm smallBottomMargin"
-                                     ng-init="searchCtrl.loadCurrentLocation()"
-                                     ng-show="searchCtrl.activeFilter.location"
-                                     ng-click="searchCtrl.activeFilterRemove('location')">
-                                    <strong>
-                                        <i class="fa fa-close" style="font-size: 16px"></i>
-                                    </strong>
-                                    <?= Yii::t("item", "Location") ?>
-                                </div>
-
-                                <div class="btn btn-default btn-sm smallBottomMargin"
-                                     ng-show="searchCtrl.activeFilter.price"
-                                     ng-click="searchCtrl.activeFilterRemove('price')">
-                                    <strong>
-                                        <i class="fa fa-close" style="font-size: 16px"></i>
-                                    </strong>
-                                    <?= Yii::t("item", "Price") ?>
-                                </div>
-
-                                <div class="btn btn-default btn-sm smallBottomMargin"
-                                     ng-show="searchCtrl.activeFilter.age"
-                                     ng-click="searchCtrl.activeFilterRemove('age')">
-                                    <strong>
-                                        <i class="fa fa-close" style="font-size: 16px"></i>
-                                    </strong>
-                                    <?= Yii::t("item", "Age") ?>
-                                </div>
-
-                                <div class="btn btn-default btn-sm smallBottomMargin"
-                                     ng-show="searchCtrl.activeFilter.category"
-                                     ng-click="searchCtrl.activeFilterRemove('category')">
-                                    <strong>
-                                        <i class="fa fa-close" style="font-size: 16px"></i>
-                                    </strong>
-                                    <?= Yii::t("item", "Categories") ?>
-                                </div>
-                            </div>
+<!--                            <div class="col-md-12 hidden-xs hidden-sm">-->
+<!--                                <div class="filters-label" style="display: inline-block">-->
+<!--                                    --><?//= Yii::t("item", "Active filters:") ?>
+<!--                                </div>-->
+<!---->
+<!--                                <div class="btn btn-default btn-sm smallBottomMargin"-->
+<!--                                     ng-show="searchCtrl.activeFilter.search"-->
+<!--                                     ng-click="searchCtrl.activeFilterRemove('search')">-->
+<!--                                    <strong>-->
+<!--                                        <i class="fa fa-close" style="font-size: 16px"></i>-->
+<!--                                    </strong>-->
+<!--                                    --><?//= Yii::t("item", "Search") ?>
+<!--                                </div>-->
+<!---->
+<!--                                <div class="btn btn-default btn-sm smallBottomMargin"-->
+<!--                                     ng-init="searchCtrl.loadCurrentLocation()"-->
+<!--                                     ng-show="searchCtrl.activeFilter.location"-->
+<!--                                     ng-click="searchCtrl.activeFilterRemove('location')">-->
+<!--                                    <strong>-->
+<!--                                        <i class="fa fa-close" style="font-size: 16px"></i>-->
+<!--                                    </strong>-->
+<!--                                    --><?//= Yii::t("item", "Location") ?>
+<!--                                </div>-->
+<!---->
+<!--                                <div class="btn btn-default btn-sm smallBottomMargin"-->
+<!--                                     ng-show="searchCtrl.activeFilter.price"-->
+<!--                                     ng-click="searchCtrl.activeFilterRemove('price')">-->
+<!--                                    <strong>-->
+<!--                                        <i class="fa fa-close" style="font-size: 16px"></i>-->
+<!--                                    </strong>-->
+<!--                                    --><?//= Yii::t("item", "Price") ?>
+<!--                                </div>-->
+<!---->
+<!--                                <div class="btn btn-default btn-sm smallBottomMargin"-->
+<!--                                     ng-show="searchCtrl.activeFilter.age"-->
+<!--                                     ng-click="searchCtrl.activeFilterRemove('age')">-->
+<!--                                    <strong>-->
+<!--                                        <i class="fa fa-close" style="font-size: 16px"></i>-->
+<!--                                    </strong>-->
+<!--                                    --><?//= Yii::t("item", "Age") ?>
+<!--                                </div>-->
+<!---->
+<!--                                <div class="btn btn-default btn-sm smallBottomMargin"-->
+<!--                                     ng-show="searchCtrl.activeFilter.category"-->
+<!--                                     ng-click="searchCtrl.activeFilterRemove('category')">-->
+<!--                                    <strong>-->
+<!--                                        <i class="fa fa-close" style="font-size: 16px"></i>-->
+<!--                                    </strong>-->
+<!--                                    --><?//= Yii::t("item", "Categories") ?>
+<!--                                </div>-->
+<!--                            </div>-->
                             <br/><br/>
 
                             <div class="loader" ng-show="searchCtrl.loading">

@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\search\controllers;
 
+use app\components\Cache;
 use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
@@ -44,15 +45,18 @@ class AutoCompleteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($q='')
+    public function actionIndex($q = '')
     {
-        $categories = Category::find()->select('name as value, id as category_id')->where('name like :q')->params([
-            ':q' => $q."%"
-        ])->asArray()->limit(5)->all();
-        return Json::encode(
-            $categories
-        );
+        return Cache::data('autocomplete_q_' . $q, function () use ($q) {
+            $categories = Category::find()
+                ->select('name as value, id as category_id')
+                ->where('name like :q')
+                ->params([
+                    ':q' => $q . "%"
+                ])->asArray()->limit(5)->all();
+            return Json::encode(
+                $categories
+            );
+        });
     }
-
-
 }

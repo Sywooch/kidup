@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  */
 class Search extends Model{
     public $query;
+    public $location;
 
     public function __construct()
     {
@@ -23,6 +24,7 @@ class Search extends Model{
     public function rules()
     {
         return [
+            ['query', 'required']
         ];
     }
 

@@ -41,7 +41,7 @@ class SearchController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($query = '')
     {
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
@@ -49,9 +49,11 @@ class SearchController extends Controller
 
         $model = new Filter();
 
-        $model->load(\Yii::$app->request->get());
+        $model->load(\Yii::$app->request->get(), $model->formName());
+        $model->query = $query;
 
         $model->setLocation();
+
 
         if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
 

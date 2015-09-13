@@ -15,15 +15,15 @@ class Filter extends Model
 {
     public $query = null;
     private $_query;
-    public $location = null;
-    public $longitude = null;
-    public $latitude = null;
-    public $category_id = null;
-    public $price = null;
+    public $location;
+    public $longitude;
+    public $latitude;
+    public $categoryId = null;
     public $priceMin = 0;
     public $priceMax = 499;
     public $priceUnit = 'week';
     public $page;
+    public $activeFilters;
 
     public function formName()
     {
@@ -32,7 +32,16 @@ class Filter extends Model
 
     public function rules()
     {
-        return [];
+        return [
+            [['query', 'location', 'priceUnit'], 'string'],
+            [['longitude', 'latitude'], 'double'],
+            [['categoryId', 'page'], 'integer'],
+            [['priceMin', 'priceMax'], 'integer']
+        ];
+    }
+
+    public function processActiveFilters(){
+
     }
 
     /**
@@ -42,7 +51,7 @@ class Filter extends Model
      */
     public function findItems()
     {
-
+        $this->processActiveFilters();
         // initialize the query
         $this->_query = Item::find();
 
