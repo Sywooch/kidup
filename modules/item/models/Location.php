@@ -126,7 +126,7 @@ class Location extends \app\models\base\Location
      * A method which works offline and does not depend on external connection for fetching a location based
      * on an IP address.
      *
-     * @param $ip IP address
+     * @param $ip string
      * @return Array|Boolean false if no record could be found and otherwise an array with the following keys:
      *          country_code        Country code (2 characters) (if detected)
      *          country_code3       Country code (3 charachters) (if detected)

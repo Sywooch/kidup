@@ -3,8 +3,14 @@ use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
 
+/**
+ * @var \app\modules\item\models\Item $model
+ */
+
 // profile page, item page, search, homepage
 \app\modules\item\assets\ItemAsset::register($this);
+
+
 ?>
 
 <div class="<?= $rowClass ?>">
@@ -18,17 +24,7 @@ use yii\helpers\Url;
             <div class="content">
                 <h4 class="category">
                     <?php
-                    $categories = [];
-                    foreach ($model->categories as $c) {
-                        if ($c->type !== 'main') {
-                            continue;
-                        }
-                        if (count($categories) >= 2) {
-                            continue;
-                        }
-                        $categories[] = $c->name;
-                    }
-                    echo implode($categories, ' ,');
+                        echo $model->category->name;
                     ?>
                 </h4>
 

@@ -9,16 +9,8 @@ use \yii\bootstrap\ActiveForm;
  */
 
 \app\assets\AngularAsset::register($this);
-//<?= $form->field($model, 'query')->widget(Typeahead::className(), [
-//    'options' => ['placeholder' => 'test'],
-//    'pluginOptions' => ['highlight' => true],
-//    'dataset' => [
-//        [
-//            'local' => ['On the road - Stroller','Toys'],
-//            'limit' => 10
-//        ]
-//    ]
-//])->label(false);
+
+\app\modules\item\widgets\GoogleAutoComplete::widget(['options' => ['style' => 'display:none'], 'name' => 'x', 'autocompleteName' => 'x']);
 ?>
 
 <div id="search-area" class="visible-sm visible-md visible-lg">
@@ -29,12 +21,37 @@ use \yii\bootstrap\ActiveForm;
                     <?php
                     $form = ActiveForm::begin([
                         'action' => Url::to('search'),
-                        'method' => 'get'
+                        'method' => 'get',
+                        'id' => 'main-search'
                     ]);
                     ?>
                     <div class="col-sm-9 col-md-8">
-                        <?= $form->field($model, 'query')->input([
-                            'options' => ['placeholder' => 'E.g. Stroller'],
+                        <?php
+                        $template = '<div><p class="repo-language">{{value}}</p>' .
+                            '<p class="repo-name">{{name}}</p>' .
+                            '<p class="repo-description">{{description}}</p></div>';
+                        echo $form->field($model, 'query')->widget(Typeahead::className(), [
+                            'options' => ['placeholder' => 'test'],
+                            'pluginOptions' => ['highlight' => true, 'hint' => false],
+                            'pluginEvents' => [
+                                "typeahead:render" => "function(a,b) { window.onTypeaheadRender(b); }",
+                            ],
+                            'dataset' => [
+                                [
+                                    'remote' => [
+                                        'url' => Url::to('@web/search/auto-complete/index?q=%q'),
+                                        'wildcard' => '%q'
+                                    ],
+                                    'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
+//                                    'limit' => 10,
+                                    'display' => 'value',
+                                    'templates' => [
+
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                                        'suggestion' => new \yii\web\JsExpression("Handlebars.compile('{$template}')")
+                                    ]
+                                ]
+                            ]
                         ])->label(false); ?>
                         <span class="right"><i class="glyphicon glyphicon-search"></i></span>
                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\helpers;
+namespace app\models\helpers;
 
 use app\models\base\Currency;
 use app\modules\item\models\Location;
@@ -49,6 +49,14 @@ class SelectData extends Model
             $r[$cur->id] = $cur->name;
         }
         return $r;
+    }
+
+    public static function priceUnits(){
+        return [
+            'price_week' => \Yii::t('item', 'Price per week'),
+            'price_day' => \Yii::t('item', 'Price per day'),
+            'price_month' => \Yii::t('item', 'Price per month'),
+        ];
     }
 
     public static function userLocations(){

@@ -1,4 +1,20 @@
+<?php
+use yii\bootstrap\ActiveForm;
+use \app\modules\item\widgets\GoogleAutoComplete;
+/**
+ * @var \app\modules\search\forms\Filter $model
+ * @var bool $mobile
+ */
+
+?>
 <!-- query -->
+
+<?php
+$form = ActiveForm::begin([
+    'enableClientValidation' => false,
+    'method' => 'get',
+    'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'search-form'],
+]); ?>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h6 class="panel-title">
@@ -6,9 +22,8 @@
         </h6>
     </div>
     <div id="refineQuery" class="panel-collapse collapse in">
-        <div class="panel-body" ng-init="searchCtrl.filter.query = searchCtrl.loadParam('query', '<?= $model->query ?>')">
-            <input class="form-control" name="query" type="text" ng-model="searchCtrl.filter.query"
-                   ng-change="searchCtrl.filterChange()"/>
+        <div class="panel-body">
+            <?= $form->field($model, 'query')->textInput() ?>
         </div>
     </div>
 </div>
@@ -22,11 +37,10 @@
     </div>
     <div id="refine-location" class="panel-collapse collapse in">
         <div class="panel-body">
-            <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
+            <?= $form->field($model, 'query')->widget(GoogleAutoComplete::className(), [
                 'options' => [
                     'class' => 'form-control location-input',
                     'ng-model' => 'searchCtrl.filter.location',
-                    'ng-init' => 'searchCtrl.filter.location = searchCtrl.loadParam("location", "' . $model->location . '")',
                     'autocompleteName' => 'search-' . ($mobile ? 'mobile' : 'default')
                 ],
                 'autocompleteOptions' => [
@@ -46,18 +60,8 @@
         </h6>
     </div>
     <div id="refinePrice" class="panel-collapse collapse in">
-        <div class="panel-body"
-             ng-init='
-                searchCtrl.filter.priceMin = searchCtrl.params.price[0];
-                searchCtrl.filter.priceMax = searchCtrl.params.price[1];
-                searchCtrl.setPriceUnit(searchCtrl.params.priceUnit);
-                searchCtrl.updateSlider(searchCtrl.params.price[0], searchCtrl.params.price[1]);
-            '>
-            <select class="form-control" ng-model="searchCtrl.filter.priceUnit" ng-change="searchCtrl.filterChange()">
-                <option value="week">Price per week</option>
-                <option value="day">Price per day</option>
-                <option value="month">Price per month</option>
-            </select>
+        <div class="panel-body">
+            <?= $form->field($model, 'priceUnit')->dropDownList(\app\models\helpers\SelectData::priceUnits()) ?>
             <br />
             <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
         </div>
@@ -69,37 +73,4 @@
         </div>
     </div>
 </div>
-
-<!-- categories -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Categories") ?>
-        </h6>
-    </div>
-    <div class="panel-body" ng-init='searchCtrl.filter.categories = <?= $model->getCategories('main') ?>; searchCtrl.loadCategories()'>
-        <div ng-repeat="category in searchCtrl.filter.categories"
-             class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary btn-fill': category.value == 1}"
-             ng-click="searchCtrl.selectCategory(category.id)">
-            {{category.name}}
-        </div>
-    </div>
-</div>
-
-<!-- ages -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Age") ?>
-        </h6>
-    </div>
-    <div class="panel-body" ng-init='searchCtrl.filter.ages = <?= $model->getCategories('age') ?>; searchCtrl.loadCategories()'>
-        <div ng-repeat="age in searchCtrl.filter.ages"
-             class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary btn-fill': age.value == 1}"
-             ng-click="searchCtrl.selectCategory(age.id)">
-            {{age.name}}
-        </div>
-    </div>
-</div>
+<?php ActiveForm::end() ?>

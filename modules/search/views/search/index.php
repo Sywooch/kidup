@@ -1,7 +1,22 @@
 <?php
+use yii\widgets\Pjax;
+
+/**
+ * @var \app\modules\item\forms\Filter $model
+ * @var \yii\data\ActiveDataProvider $results
+ */
 
 $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
 \app\modules\search\assets\ItemSearchAsset::register($this);
+
+?>
+
+<?php Pjax::begin([
+//    'enableReplaceState' => false,
+    'enableReplaceState' => true,
+    'id' => 'pjax-search',
+    'timeout' => 1000000
+]);
 ?>
 <div ng-app="kidup.search" id="search">
     <div ng-controller="SearchCtrl as searchCtrl">
@@ -36,8 +51,6 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     <?= Yii::t("item", "Active filters:") ?>
                                 </div>
 
-                                <i ng-init='searchCtrl.activeFilter.search = <?= $model->query == null ? 'false' : 'true' ?>'></i>
-
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.search"
                                      ng-click="searchCtrl.activeFilterRemove('search')">
@@ -46,8 +59,6 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     </strong>
                                     <?= Yii::t("item", "Search") ?>
                                 </div>
-
-                                <i ng-init='searchCtrl.activeFilter.location = <?= $model->location == null ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-init="searchCtrl.loadCurrentLocation()"
@@ -67,7 +78,6 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     </strong>
                                     <?= Yii::t("item", "Price") ?>
                                 </div>
-                                <i ng-init='searchCtrl.activeFilter.age = <?= count($model->getActiveCategories('age')) == 0 ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.age"
@@ -77,8 +87,6 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                                     </strong>
                                     <?= Yii::t("item", "Age") ?>
                                 </div>
-
-                                <i ng-init='searchCtrl.activeFilter.category = <?= count($model->getActiveCategories('main')) == 0 ? 'false' : 'true' ?>'></i>
 
                                 <div class="btn btn-default btn-sm smallBottomMargin"
                                      ng-show="searchCtrl.activeFilter.category"
@@ -153,3 +161,4 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
         </div>
     </div>
 </div>
+<?php Pjax::end(); ?>

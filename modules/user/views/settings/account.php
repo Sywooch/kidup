@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use app\modules\user\helpers\SelectData;
+use app\models\helpers\SelectData;
 use app\modules\user\models\Setting;
 use kartik\checkbox\CheckboxX;
 use kartik\widgets\ActiveForm;

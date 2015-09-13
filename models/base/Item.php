@@ -26,8 +26,7 @@ use Yii;
  * @property \app\models\base\Location $location
  * @property \app\models\base\Currency $currency
  * @property \app\models\base\User $owner
- * @property \app\models\base\ItemHasCategory[] $itemHasCategories
- * @property \app\models\base\Category[] $categories
+ * @property \app\models\base\Category[] $category
  * @property \app\models\base\ItemHasMedia[] $itemHasMedia
  * @property \app\models\base\Media[] $media
  * @property \app\models\base\Review[] $reviews
@@ -49,9 +48,13 @@ class Item extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['price_day', 'price_week', 'price_month', 'owner_id', 'condition', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'min_renting_days'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
-            [['name'], 'string', 'max' => 140]
+            [['price_day', 'price_week', 'price_month', 'owner_id', 'condition', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'min_renting_days', 'category_id'], 'integer'],
+            [['created_at', 'updated_at', 'category_id'], 'required'],
+            [['name'], 'string', 'max' => 140],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
+            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['owner_id' => 'id']]
         ];
     }
 
@@ -110,20 +113,13 @@ class Item extends \yii\db\ActiveRecord
         return $this->hasOne(\app\models\base\User::className(), ['id' => 'owner_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemHasCategories()
-    {
-        return $this->hasMany(\app\models\base\ItemHasCategory::className(), ['item_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
+    public function getCategory()
     {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])->viaTable('item_has_category', ['item_id' => 'id']);
+        return $this->hasOne(\app\models\base\Category::className(), ['id' => 'category_id']);
     }
 
     /**

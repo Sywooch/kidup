@@ -9,13 +9,15 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $type
+ * @property integer $parent_id
  *
- * @property \app\models\base\ItemHasCategory[] $itemHasCategories
- * @property \app\models\base\Item[] $items
+ * @property Category $parent
+ * @property Category[] $categories
+ * @property ] $items
  */
 class Category extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -30,9 +32,10 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type'], 'required'],
+            [['name'], 'required'],
+            [['parent_id'], 'integer'],
             [['name'], 'string', 'max' => 50],
-            [['type'], 'string', 'max' => 25]
+            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['parent_id' => 'id']]
         ];
     }
 
@@ -44,16 +47,24 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'type' => Yii::t('app', 'Type'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItemHasCategories()
+    public function getParent()
     {
-        return $this->hasMany(\app\models\base\ItemHasCategory::className(), ['category_id' => 'id']);
+        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories()
+    {
+        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
     }
 
     /**
@@ -61,6 +72,10 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\app\models\base\Item::className(), ['id' => 'item_id'])->viaTable('item_has_category', ['category_id' => 'id']);
+        return $this->hasMany(Item::className(), ['category_id' => 'id']);
     }
+
+
+
+
 }
