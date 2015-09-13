@@ -14,7 +14,20 @@ class m150913_090209_newCategories extends Migration
 
         $this->createIndex('idx_category_parent_1', 'category', 'parent_id', 0);
 
+        $this->createTable('category_tag', [
+            'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
+            'language_id' => 'VARCHAR(5) NOT NULL',
+            'tag' => 'VARCHAR(45) NOT NULL',
+            0 => 'PRIMARY KEY (`id`)',
+            'category_id' => 'INT(11) NOT NULL',
+        ], "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB");
+
+        $this->createIndex('fk_category_tag_language1_idx', 'category_tag', 'language_id', 0);
+        $this->createIndex('fk_category_tag_category1_idx', 'category_tag', 'category_id', 0);
+
         $this->execute('SET foreign_key_checks = 0;');
+        $this->addForeignKey('fk_category_tag_language1', 'category_tag', 'language_id', 'language', 'language_id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_category_tag_category1', 'category_tag', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_category_8421_01', 'category', 'parent_id', 'category', 'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_item_category_8765_01', 'item', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
         $this->execute('SET foreign_key_checks = 1;');
@@ -81,6 +94,16 @@ class m150913_090209_newCategories extends Migration
                 $c2->name = $subCat;
                 $c2->parent_id = $c->id;
                 $c2->save();
+
+                foreach (['da-DK', 'en-US'] as $lang) {
+                    $ct = new \app\models\base\CategoryTag();
+                    $ct->setAttributes([
+                        'category_id' => $c2->id,
+                        'language_id' => $lang,
+                        'tag' => $c2->name
+                    ]);
+                    $ct->save();
+                }
             }
         }
     }
