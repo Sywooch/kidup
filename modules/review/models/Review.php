@@ -34,7 +34,7 @@ class Review extends \app\models\base\Review
     public static function create($type, $value, Booking $booking, $isOwner = false)
     {
         $review = new Review();
-        $review->value = $value;
+        $review->value = (string) $value;
         $review->type = $type;
         $review->booking_id = $booking->id;
         $review->item_id = $booking->item->id;

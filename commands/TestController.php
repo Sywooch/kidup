@@ -4,34 +4,46 @@ namespace app\commands;
 
 use app\components\Event;
 use app\models\Item;
+use app\modules\booking\models\Booking;
 use app\modules\item\models\ItemSimilarity;
 use app\modules\mail\models\MailMessage;
+use app\modules\review\models\Review;
 use Yii;
 use yii\console\Controller;
 
 class TestController extends Controller
 {
-    public function actionEmail(){
-        $user = \app\modules\user\models\User::find()->one();
-        Event::trigger($user, \app\modules\user\models\User::EVENT_USER_REGISTER_DONE);
-    }
 
-    public function actionMail(){
-        $mm = new MailMessage();
-        $mm->setAttributes([
-            'message' => 'test',
-            'from_email' => 'test',
-            'subject' => 'test',
-            'created_at' => time(),
-            'mail_acount_name' => '83c2c3n23c',
-            'message_id' => 2
-        ]);
+    public function actionReview(){
 
-        $mm->mail_account_name = '7bZfplYnflxLxhc7W9iNNrq2EQUHhaEV';
+        $booking = Booking::findOne(17);
 
-        $mm->save();
-        
-        var_dump($mm->getErrors(),10,true); exit();
+        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome", $booking, false);
+        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
+        Review::create(Review::TYPE_USER_COMMUNICATION, 5, $booking, false);
+        Review::create(Review::TYPE_USER_EXCHANGE, 3, $booking, false);
+        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
+
+        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome2", $booking, false);
+        Review::create(Review::TYPE_EXPERIENCE, 5, $booking, false);
+        Review::create(Review::TYPE_USER_COMMUNICATION, 3, $booking, false);
+        Review::create(Review::TYPE_USER_EXCHANGE, 5, $booking, false);
+        Review::create(Review::TYPE_AD_ACCURACY, 4, $booking, false);
+
+        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome3", $booking, false);
+        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
+        Review::create(Review::TYPE_USER_COMMUNICATION, 5, $booking, false);
+        Review::create(Review::TYPE_USER_EXCHANGE, 5, $booking, false);
+        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
+
+        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome4", $booking, false);
+        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
+        Review::create(Review::TYPE_USER_COMMUNICATION, 3, $booking, false);
+        Review::create(Review::TYPE_USER_EXCHANGE, 4, $booking, false);
+        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
+
+        Review::updateAll(['is_public' => 1], ['booking_id' => $booking->id]);
+
     }
 
     public function actionTest(){

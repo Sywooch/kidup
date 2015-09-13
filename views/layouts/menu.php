@@ -60,7 +60,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     if (!\Yii::$app->user->isGuest): ?>
                         <!--Logged in-->
                         <li class="message hidden-xs">
-                            <a href="<?= Url::to('@web/messages') ?>"><i class="fa fa-envelope-o"></i></a>
+                            <a href="<?= Url::to('@web/inbox') ?>"><i class="fa fa-envelope-o"></i></a>
 
                             <?php
                             $count = Message::find()->where([
@@ -139,9 +139,10 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <!--Always shown on desktop-md+ -->
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>"
-                           class="btn btn-danger hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
+                           class="btn btn-primary hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
                             <?= Yii::t("app", "Rent Out") ?>
                         </a>
+
                     </li>
                 </ul>
 
@@ -181,7 +182,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         </a>
                     </li>
                     <li>
-                        <a href="<?= Url::to('@web/messages') ?>">
+                        <a href="<?= Url::to('@web/inbox') ?>">
                             <?= Yii::t("app", "Inbox") ?>
                             <div class="badge"><?=
                                 // todo make this more pretty

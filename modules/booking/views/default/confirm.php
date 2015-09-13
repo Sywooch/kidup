@@ -1,162 +1,167 @@
 <?php
 
-use app\components\WidgetRequest;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use app\modules\booking\models\BrainTree;
+use \app\modules\booking\models\Payin;
+use \app\modules\images\components\ImageHelper;
+use app\modules\review\widgets\ReviewScore;
 
 /*
  * @var yii\web\View $this
- * @var \app\modules\booking\models\Booking $booking
+ * @var app\modules\booking\models\Booking $booking
  * @var \app\modules\booking\forms\Confirm $model
  * @var \app\modules\user\models\Profile $profile
  */
+
 \app\modules\booking\assets\ConfirmAsset::register($this);
 \yii\web\JqueryAsset::register($this);
+
 $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
+$clientToken = (new BrainTree(new Payin()))->getClientToken();
 ?>
 <section class="section" id="checkout">
-    <div class=" site-area-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
-                    <div class="checkout-header">
-                        <h2>
-                            <?= Yii::t("booking", "Booking") ?><br>
-                            <small><?= Yii::t("booking", "Confirm your KidUp booking") ?></small>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container site-area-content">
+    <div class="container">
+        <h2>
+            <?= Yii::t("booking", "Secure Booking - Pay in 1 Minute") ?>
+        </h2>
+
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-md-offset-1">
-                <div class="card card-image">
-                    <div class="image img-rounded">
-                        <img src="<?= $itemImage ?>">
-                    </div>
-                </div>
-                <div class="card card-user card-plain">
-                    <div class="content">
-                        <div class="author">
-                            <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                                'user_id' => $profile->user_id,
-                                'width' => '200px'
-                            ]) ?>
+            <div class="col-md-8">
+                <?php $form = ActiveForm::begin([
+                    'enableClientValidation' => true,
+//                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
+                ]); ?>
 
-                            <h4 class="title">
-                                <?= $profile->first_name ?>
-                            </h4>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8 col-md-7">
                 <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h5>
-                                    <?= Yii::t("booking", "Summary") ?>
-                                </h5>
+                    <h3>
+                        <?= Yii::t("booking", "Message to {0}",[
+                            $profile->first_name
+                        ]) ?>
+                    </h3>
+                    <?= Yii::t('booking',
+                        "Please tell {owner} a little about why your booking this item, why you like the product so much and how you'd like to arrange a meeting to transfer the item.",
+                        [
+                            'owner' => $profile->first_name
+                        ]) ?>
+                    <br><br>
+                    <?= $form->field($model, 'message')->textarea([
+                        'class' => 'form-control',
+                        'placeholder' => \Yii::t('booking', 'Your private message to {0}',
+                            [$profile->first_name])
+                    ])->label(false) ?>
+                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-unstyled list-lines">
-                                            <li>
-                                                <i class="fa fa-info-circle"></i>
-                                                <?= substr($item->name, 0,
-                                                    25) ?><?= strlen($item->name > 25) ? '...' : '' ?>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-calendar"></i>
-                                                <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
-                                                - <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-map-marker"></i>
-                                                <?= $item->location->city ?>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul class="list-unstyled list-lines">
-                                            <li>
-                                                DKK <?= $item->price_day ?>
-                                                x <?= ($booking->time_to - $booking->time_from) / (24 * 60 * 60) ?> <?= Yii::t("booking",
-                                                    "days") ?>
-                                                <b>DKK <?= $booking->amount_item ?></b>
-                                            </li>
-                                            <li>
-                                                <?= Yii::t("booking", "Service Fee (inc. VAT)") ?>
-                                                <b>DKK <?= $booking->amount_payin - $booking->amount_item ?></b>
-                                            </li>
-                                            <li>
-                                                <?= Yii::t("booking", "Total") ?>
-                                                <b>DKK <?= $booking->amount_payin ?></b>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                <div class="card">
+                    <h3>
+                        <?= Yii::t("booking", "Payment information") ?>
+                    </h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <?= ImageHelper::img('kidup/booking/creditcards/dankort.png', ['q' => 90]) ?></div>
+                                <div class="col-md-3">
+                                    <?= ImageHelper::img('kidup/booking/creditcards/visa.png', ['q' => 90]) ?></div>
+                                <div class="col-md-3">
+                                    <?= ImageHelper::img('kidup/booking/creditcards/mastercard.png') ?></div>
+                                <div class="col-md-3">
+                                    <?= ImageHelper::img('kidup/booking/creditcards/amex.png', ['q' => 90]) ?></div>
                             </div>
                         </div>
                     </div>
+                    <div id="payment-form"></div>
+                    <?php
+                    $this->registerJs('braintree.setup("' . $clientToken . '", "dropin", { container: "payment-form" });');
+                    $this->registerJsFile('https://js.braintreegateway.com/v2/braintree.js');
+                    // trick to show custom error message if nonce is empty
+                    echo $form->field($model, 'nonce')->hiddenInput()->label(false);
+                    ?>
+                </div>
 
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h5>
-                                    <?= Yii::t("booking", "Payment") ?>
-                                </h5>
-                                <?php
-                                $ccForm = $model->renderCreditCardForm();
-                                echo $ccForm;
-                                ?>
-                                <?php if ($model->hasErrors('nounce') == true): ?>
-                                    <div class="row">
-                                        <div class="col-md-10 col-md-offset-2">
-                                            <?= \Yii::t('app', 'Please add a payment method') ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <br/>
-                        <?php $form = ActiveForm::begin([
-                            'enableClientValidation' => false,
-                            'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
-                        ]); ?>
-                        <div class="row <?= strlen($ccForm) > 100 ? 'hidden' : '' ?>">
-                            <div class="col-sm-12">
-                                <h5>
-                                    <?= Yii::t("booking", "Message") ?>
-                                </h5>
-                                <?= Yii::t('booking',
-                                    "Please tell {owner} a little about why your booking this item, why you like the product so much and how you'd like to arrange a meeting to transfer the item.",
-                                    [
-                                        'owner' => $profile->first_name
-                                    ]) ?>
-                                <br><br>
-                                <?= $form->field($model, 'message')->textarea([
-                                    'class' => 'form-control',
-                                    'placeholder' => \Yii::t('booking', 'Your private message to {0}',
-                                        [$profile->first_name])
-                                ])->label(false) ?>
-                            </div>
-                        </div>
+                <div class="card">
+                    <h3><?= Yii::t("booking", "Review and book") ?></h3>
 
-                        <div class="row <?= strlen($ccForm) > 100 ? 'hidden' : '' ?>">
-                            <div class="col-md-12">
-                                <?= $form->field($model, 'rules')->checkbox() ?>
+                    <div class="well">
+                        <?= $form->field($model, 'rules')->checkbox() ?>
+                    </div>
+                    <?= Html::submitButton('Book now', ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
+                </div>
 
-                                <?= Html::submitButton('Book now', ['class' => 'btn btn-lg btn-fill btn-danger']) ?>
-                            </div>
-                        </div>
-                        <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
+
+            </div>
+            <div class="col-md-4">
+                <div class="row card card-minimal">
+
+                    <div class="col-md-4">
+                        <?= ImageHelper::image($item->getImageName(0), ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
+                    </div>
+                    <div class="col-md-8">
+                        <b>
+                            <?= $item->name ?>
+                        </b>
+                        <br>
+                        <?= $item->location->city ?>
                     </div>
                 </div>
+
+                <div class="row card card-minimal">
+
+                    <div class="col-md-4">
+                        <?= ImageHelper::image($profile->img, ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?= Yii::t("booking", "You are renting from") ?>
+                        <br>
+                        <b>
+                            <?= $profile->first_name ?>
+                        </b>
+                        <?= ReviewScore::widget(['user_id' => $profile->user_id]) ?>
+                        <?= \Yii::t('booking', 'Member since {0}',[
+                            Carbon\Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized('%b %y')
+                        ])?>
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-md-12">
+                        <?= Yii::t("booking", "Starting day") ?>:
+                        <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
+                        <br>
+                        <?= Yii::t("booking", "Ending day") ?>:
+                        <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
+                    </div>
+                </div>
+
+                <table class="table">
+                    <tr>
+                        <td>
+                            <?= $tableData['price'][0] ?>
+                        </td>
+                        <td style="font-weight: 600;">
+                            <?= $tableData['price'][1] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?= $tableData['fee'][0] ?>
+                        </td>
+                        <td style="font-weight: 600;">
+                            <?= $tableData['fee'][1] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?= $tableData['total'][0] ?>
+                        </td>
+                        <td style="font-weight: 600;">
+                            <?= $tableData['total'][1] ?>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

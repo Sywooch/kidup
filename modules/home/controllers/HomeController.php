@@ -4,6 +4,7 @@ namespace app\modules\home\controllers;
 
 use app\components\Cache;
 use app\controllers\Controller;
+use app\modules\home\forms\Search;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use Yii;
@@ -33,7 +34,8 @@ class HomeController extends Controller
                 'etagSeed' => function ($action, $params) {
                     return Json::encode([
                         Yii::$app->language,
-                        \Yii::$app->session->getAllFlashes()
+                        \Yii::$app->session->getAllFlashes(),
+                        \Yii::$app->user->isGuest
                     ]);
                 },
             ],
@@ -59,6 +61,8 @@ class HomeController extends Controller
         $this->transparentNav = true;
         $this->noContainer = true;
 
+        $searchModel = new Search();
+
         $categories = Yii::$app->db->cache(function () {
             return Category::find()->all();
         }, 24 * 3600);
@@ -69,6 +73,7 @@ class HomeController extends Controller
         $res = $this->render('index', [
             'categories' => $categories,
             'items' => $items,
+            'searchModel' => $searchModel
         ]);
 
         return $res;

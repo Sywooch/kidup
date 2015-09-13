@@ -15,48 +15,6 @@ class Confirm extends Model
     public $rules;
     public $nonce;
 
-    private $creditCardForm;
-
-    public function __construct(Booking $booking)
-    {
-        $this->booking = $booking;
-        $payin = Payin::findOne($this->booking->payin_id);
-        if ($payin !== null && $payin->nonce != '') {
-            $this->creditCardForm = 'creditcard_nonce';
-        } elseif (isset($_POST["payment_method_nonce"]) && $_POST["payment_method_nonce"] != '') {
-            self::createPayin($this->booking, $_POST["payment_method_nonce"]);
-            $this->creditCardForm = 'creditcard_nonce';
-        }
-
-        if (!isset($this->creditCardForm)) {
-            $this->creditCardForm = 'creditcard';
-        }
-
-        return parent::__construct();
-    }
-
-    public static function createPayin($booking, $nonce)
-    {
-        if ($booking->payin_id !== null) {
-            $payin = $booking->payin;
-        } else {
-            $payin = new Payin();
-        }
-        $payin->nonce = $nonce;
-        $payin->status = Payin::STATUS_INIT;
-        $payin->currency_id = 1;
-        $payin->user_id = \Yii::$app->user->id;
-        $payin->amount = $booking->amount_payin;
-        if ($payin->save()) {
-            $booking->payin_id = $payin->id;
-            $booking->save();
-
-            return true;
-        }
-
-        return false;
-    }
-
     public function formName()
     {
         return 'confirm-booking';
@@ -77,7 +35,7 @@ class Confirm extends Model
         return [
             [['message'], 'string'],
             [['rules', 'booking'], 'required'],
-            ['nonce', 'required', 'message' => \Yii::t('booking', 'Please add a creditcard')],
+            ['nonce', 'required', 'message' => \Yii::t('booking', 'Please add a valid payment method.')],
             [
                 'rules',
                 'compare',
@@ -87,28 +45,32 @@ class Confirm extends Model
         ];
     }
 
-    public function renderCreditCardForm()
+    public function __construct(Booking $booking)
     {
-
-        if ($this->creditCardForm == 'creditcard') {
-            $b = new BrainTree(new Payin());
-            $token = $b->getClientToken();
-        } else {
-            $token = '';
-        }
-
-        return \Yii::$app->controller->renderPartial($this->creditCardForm, [
-            'clientToken' => $token
-        ]);
+        $this->booking = $booking;
+        return parent::__construct();
     }
 
     public function save()
     {
-        $payin = Payin::findOne($this->booking->payin_id);
-        if (count($payin) > 0) {
-            $this->nonce = $payin->nonce;
+        if(YII_ENV == 'test'){
+            $this->nonce = 'fake-valid-nonce';
         }
-        if ($this->validate()) {
+        if(!$this->validate()){
+            return false;
+        };
+        $payin = new Payin();
+        $payin->nonce = $this->nonce;
+        $payin->status = Payin::STATUS_INIT;
+        $payin->currency_id = 1;
+        $payin->user_id = \Yii::$app->user->id;
+        $payin->amount = $this->booking->amount_payin;
+
+        if ($payin->save()) {
+            // need to set this beore authorize function
+            $this->booking->payin_id = $payin->id;
+            $this->booking->save();
+
             if ($payin->authorize()) {
                 $this->booking->status = Booking::PENDING;
                 $this->booking->startConversation($this->message);
@@ -118,13 +80,8 @@ class Confirm extends Model
                     \Yii::$app->session->addFlash('success', \Yii::t('booking', "You're booking has been made!"));
                     return true;
                 }
-            } else {
-                return false;
             }
-        } else {
-            \Yii::$app->session->addFlash('error', \Yii::t('booking', 'You must agree to the terms and conditions'));
         }
-
         return false;
     }
 }

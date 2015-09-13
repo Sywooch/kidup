@@ -59,26 +59,7 @@ class CreateBooking extends Model
     public function calculateTableData()
     {
         if ($this->validateDates()) {
-            $prices = $this->item->getPriceForPeriod($this->from, $this->to, $this->currency);
-            $days = floor(($this->to - $this->from) / (60 * 60 * 24));
-            if ($days <= 7) {
-                $period = \Yii::t('item', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
-                $periodPrice = $this->item->price_day;
-            } elseif ($days > 7 && $days <= 31) {
-                $period = \Yii::t('item', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
-                $periodPrice = $this->item->price_week;
-            } else {
-                $period = \Yii::t('item', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
-                $periodPrice = $this->item->price_month;
-            }
-            $this->tableData = [
-                'price' => [
-                    $period . ' x ' . $this->currency->forex_name . ' ' . $periodPrice,
-                    $this->currency->abbr . ' ' . $prices['price']
-                ],
-                'fee' => [\Yii::t('item', 'Service fee'), $this->currency->abbr . ' ' . $prices['fee']],
-                'total' => [\Yii::t('item', 'Total'), $this->currency->abbr . ' ' . $prices['total']]
-            ];
+            $this->tableData = $this->item->getTableData($this->from, $this->to, $this->currency);
             return true;
         }
         return false;

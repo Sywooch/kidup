@@ -1,101 +1,25 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
 #checkout {
-  margin-top: 40px;
-  /*Test idea of top area*/
-
-  .site-area-header {
-    background-color: transparent;
-  }
-  .checkout-header {
-    margin-top: 30px;
-    border-radius: 6px;
-    padding: 5px 0 20px;
-    background-color: @primary-color;
-  }
-
-  /*Style for profile you are booking from*/
-  .avatar {
-    border-color: @primary-color;
-  }
-  .footer {
-    color: @dark-gray;
-    text-align: center;
-  }
-
-  /*Booking form*/
-  // Btn and price area
-  .btn-book-area {
-    text-align: center;
-    margin-top: 0px;
-    .btn {
-      @media (min-width: 768px) {
-        float: right;
-        width: 50%;
-        min-width: 200px;
-      }
-    }
-  }
-  .price {
-    margin-top: 0px;
-    @media (min-width: 768px) {
-      float: left;
-    }
-  }
-  // Summary
-  .card-summary {
-    border-radius: 0;
-    box-shadow: none;
-    background-color: transparent;
-    h4 {
-      margin: 0 0 10px;
-    }
-  }
-  .card .content {
+  padding-top: 20px;
+  background-color: @grey-light;
+  margin-bottom: -90px;
+  padding-bottom: 100px;
+  .card{
     padding: 20px;
   }
-  h5:first-of-type {
-    margin-top: 0;
+  .card-minimal{
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.08);
+    border-radius: 1px;
+    background-color: lighten(@grey-light, 3);
   }
-  .card-summary, .payment, .message {
-    margin-bottom: 40px;
-  }
-  .list-lines {
-    color: #9a9a9a;
-    li {
-      padding: 10px;
-      border-bottom: 1px solid @light-gray;
-      color: @text-gray;
-      font-weight: 300;
-      @media (max-width: 768px) {
-        font-size: 1em;
-      }
-    }
-    i {
-      color: @primary-color;
-      padding-right: 10px;
-    }
-    b{
-      float:right;
+  .well{
+    label{
+      opacity: 1;
+      font-size: 15px;
     }
   }
-  .img-rounded {
-    border-radius: 6px !important;
-  }
-  .dates {
-    color: #9a9a9a;
-  }
-
-  .checkout-header {
-    height: 60px;
-    padding-top: 1px;
-  }
-}
-
-#creditCardModal {
-  .fa {
-    font-size: 60px;
-    color: @primary-color;
-    margin-left: 26px;
+  .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]{
+    margin-left: -20px;
   }
 }

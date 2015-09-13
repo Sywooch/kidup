@@ -54,8 +54,8 @@ class SecurityController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => true, 'actions' => ['login', 'auth'], 'roles' => ['?']],
-                    ['allow' => true, 'actions' => ['logout'], 'roles' => ['@']],
+                    ['allow' => true, 'actions' => ['auth', 'login'], 'roles' => ['?']],
+                    ['allow' => true, 'actions' => ['logout', 'login'], 'roles' => ['@']],
                 ]
             ],
 //            'verbs' => [
@@ -84,6 +84,10 @@ class SecurityController extends Controller
      */
     public function actionLogin()
     {
+        if(!\Yii::$app->user->isGuest){
+            return $this->redirect(User::afterLoginUrl('login'));
+        }
+
         $model = \Yii::createObject(Login::className());
 
         $this->performAjaxValidation($model);

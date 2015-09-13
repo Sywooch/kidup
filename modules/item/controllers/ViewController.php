@@ -35,18 +35,28 @@ class ViewController extends Controller
                     ],
                 ],
             ],
-            'cache' => [
+            [
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
-                'cacheControlHeader' => 'public, max-age=60',
+                'cacheControlHeader' => 'public, max-age=300',
                 'enabled' => YII_CACHE,
                 'etagSeed' => function ($action, $params) {
                     return Json::encode([
                         Yii::$app->language,
-                        \Yii::$app->user->id,
-                        \Yii::$app->session->getAllFlashes()
+                        \Yii::$app->session->getAllFlashes(),
+                        \Yii::$app->user->isGuest
                     ]);
                 },
+            ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60 * 20,
+                'enabled' => YII_CACHE,
+                'variations' => [
+                    \Yii::$app->language,
+                    \Yii::$app->session->getAllFlashes()
+                ],
             ],
         ];
     }

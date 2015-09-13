@@ -7,6 +7,7 @@ use app\modules\booking\forms\Confirm;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
 use app\modules\images\components\ImageHelper;
+use app\modules\item\models\Item;
 use app\modules\user\models\PayoutMethod;
 use Carbon\Carbon;
 use yii\helpers\Url;
@@ -48,30 +49,33 @@ class DefaultController extends Controller
         }
 
         if ($booking->status !== Booking::AWAITING_PAYMENT) {
-            \Yii::$app->session->addFlash('info', "Booking is already confirmed.");
             return $this->redirect(['/booking/' . $id]);
         }
 
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
+            if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
+                $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
+            }
             if ($model->save()) {
                 // booking is confirmed
                 if (YII_ENV == 'prod') {
                     \Yii::$app->slack->send("New booking payin has been made (id) " . $id);
                 }
                 return $this->redirect(['/booking/' . $id]);
-            } else {
-                return $this->refresh();
             }
         }
+
+        $item = Item::findOne($booking->item_id);
 
         return $this->render('confirm', [
             'booking' => $booking,
             'model' => $model,
-            'item' => $booking->item,
-            'itemImage' => ImageHelper::url($booking->item->getImageName(0)),
-            'profile' => $booking->item->owner->profile
+            'item' => $item,
+            'itemImage' => ImageHelper::url($item->getImageName(0)),
+            'profile' => $item->owner->profile,
+            'tableData' => $item->getTableData($booking->time_from, $booking->time_to, $booking->currency)
         ]);
     }
 
