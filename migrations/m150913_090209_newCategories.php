@@ -7,10 +7,13 @@ class m150913_090209_newCategories extends Migration
 {
     public function up()
     {
+        $mysql = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
+        $this->execute('SET foreign_key_checks = 0;');
+//
         $this->dropColumn('category', 'type');
         $this->dropTable('item_has_category');
-        $this->addColumn('category', 'parent_id', \yii\db\Schema::TYPE_INTEGER." NULL");
-        $this->addColumn('item', 'category_id', \yii\db\Schema::TYPE_INTEGER." NOT NULL");
+        $this->addColumn('category', 'parent_id', \yii\db\Schema::TYPE_INTEGER . " NULL");
+        $this->addColumn('item', 'category_id', \yii\db\Schema::TYPE_INTEGER . " NOT NULL");
 
         $this->createIndex('idx_category_parent_1', 'category', 'parent_id', 0);
 
@@ -20,92 +23,93 @@ class m150913_090209_newCategories extends Migration
             'tag' => 'VARCHAR(45) NOT NULL',
             0 => 'PRIMARY KEY (`id`)',
             'category_id' => 'INT(11) NOT NULL',
-        ], "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB");
+        ], $mysql);
 
         $this->createIndex('fk_category_tag_language1_idx', 'category_tag', 'language_id', 0);
         $this->createIndex('fk_category_tag_category1_idx', 'category_tag', 'category_id', 0);
 
-        $this->execute('SET foreign_key_checks = 0;');
-        $this->addForeignKey('fk_category_tag_language1', 'category_tag', 'language_id', 'language', 'language_id', 'CASCADE', 'NO ACTION');
-        $this->addForeignKey('fk_category_tag_category1', 'category_tag', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_category_tag_language1', 'category_tag', 'language_id', 'language', 'language_id',
+            'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_category_tag_category1', 'category_tag', 'category_id', 'category', 'id', 'CASCADE',
+            'NO ACTION');
         $this->addForeignKey('fk_category_8421_01', 'category', 'parent_id', 'category', 'id', 'CASCADE', 'NO ACTION');
-        $this->addForeignKey('fk_item_category_8765_01', 'item', 'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_category_8765_01', 'item', 'category_id', 'category', 'id', 'CASCADE',
+            'NO ACTION');
+
+        $this->createTable('feature', [
+            'id' => 'INT NOT NULL AUTO_INCREMENT',
+            'is_singular' => 'TINYINT NOT NULL',
+            'name' => 'VARCHAR(45) NOT NULL',
+            'description' => 'VARCHAR(256) NULL',
+            'is_required' => 'TINYINT NOT NULL',
+            0 => 'PRIMARY KEY (`id`)',
+        ], $mysql);
+
+        $this->createTable('feature_value', [
+            'id' => 'INT NOT NULL AUTO_INCREMENT',
+            'feature_id' => 'INT NOT NULL',
+            'name' => 'VARCHAR(45) NOT NULL',
+            0 => 'PRIMARY KEY (`id`)',
+        ], $mysql);
+
+        $this->createTable('category_has_feature', [
+            'category_id' => 'INT NOT NULL AUTO_INCREMENT',
+            'feature_id' => 'INT NOT NULL',
+            0 => 'PRIMARY KEY (`category_id`, `feature_id`)',
+        ], $mysql);
+
+        $this->createTable('item_has_feature', [
+            'item_id' => 'INT NOT NULL AUTO_INCREMENT',
+            'feature_id' => 'INT NOT NULL',
+            'feature_values_id' => 'INT NOT NULL',
+            0 => 'PRIMARY KEY (`item_id`, `feature_id`)',
+        ], $mysql);
+
+        $this->createTable('item_has_feature_singular', [
+            'item_id' => 'INT NOT NULL AUTO_INCREMENT',
+            'feature_id' => 'INT NOT NULL',
+            'feature_values_id' => 'INT NOT NULL',
+            0 => 'PRIMARY KEY (`item_id`, `feature_id`)',
+        ], $mysql);
+
+        $this->createIndex('fk_feature_value_feature1_idx', 'feature_value',
+            'feature_id', 0);
+        $this->addForeignKey('fk_feature_values_feature1', 'feature_value',
+            'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
+
+        $this->createIndex('fk_category_has_feature_feature1_idx', 'category_has_feature',
+            'feature_id', 0);
+        $this->createIndex('fk_category_has_feature_category1_idx', 'category_has_feature',
+            'category_id', 0);
+        $this->addForeignKey('fk_category_has_feature_category1', 'category_has_feature',
+            'category_id', 'category', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_category_has_feature_feature1', 'category_has_feature',
+            'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
+
+        $this->createIndex('fk_item_has_feature_feature1_idx', 'item_has_feature',
+            'feature_id', 0);
+        $this->createIndex('fk_item_has_feature_item1_idx', 'item_has_feature', 'item_id', 0);
+        $this->createIndex('fk_item_has_feature_feature_values1_idx', 'item_has_feature',
+            'feature_values_id', 0);
+
+        $this->addForeignKey('fk_item_has_feature_item1', 'item_has_feature', 'item_id', 'item',
+            'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_has_feature_feature1', 'item_has_feature',
+            'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_has_feature_feature_values1', 'item_has_feature',
+            'feature_values_id', 'feature_value', 'id', 'CASCADE', 'NO ACTION');
+
+        $this->createIndex('fk_item_has_feature1_feature1_idx',
+            'item_has_feature_singular', 'feature_id', 0);
+        $this->createIndex('fk_item_has_feature1_item1_idx', 'item_has_feature_singular', 'item_id',
+            0);
+
+        $this->addForeignKey('fk_item_has_feature1_item1', 'item_has_feature_singular', 'item_id',
+            'item', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_has_feature1_feature1', 'item_has_feature_singular',
+            'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
+
         $this->execute('SET foreign_key_checks = 1;');
-
-        Category::deleteAll();
-
-        $categories = [
-            "Baby Clothes" => [
-                "Onesies & Baby Bodysuits",
-                "Trousers & Jeans",
-                "Dresses & Skirts",
-                "T-Shirts & Tops",
-                "Sweaters",
-            ],
-            "Baby Necessities" => [
-                "Baby Monitors",
-                "Cots & Cribs",
-                "Baths & Care",
-                "Blankets & Sleeping Bags",
-            ],
-            "On the Road" => [
-                "Car Seats",
-                "Buggies",
-                "Baby Carriers",
-                "Strollers"
-            ],
-            "Children's Clothes" => [
-                "Accessories",
-                "Trousers & Jeans",
-                "Dresses & Skirts",
-                "Clothing Sets",
-                "Underwear",
-                "T-Shirts & Tops",
-                "Sweaters",
-            ],
-            "Children's Furniture" => [
-                "Beds",
-                "Furnishing & Decoration",
-                "High Chairs",
-                "Bunks & Loft Beds",
-            ],
-            "Toys" => [
-                "Baby Toys",
-                "Duplo & Lego",
-                "Wooden Toys",
-                "Dolls",
-                "Puzzles",
-                "Race Tracks",
-            ],
-            "Toys Outside" => [
-                "Action Toys",
-                "Playhouses",
-                "Trampolines & Bouncy Castles",
-                "Vehicles and Bikes"
-            ]
-        ];
-
-        foreach ($categories as $mainCat => $subCats) {
-            $c = new Category();
-            $c->name = $mainCat;
-            $c->save();
-            foreach ($subCats as $subCat) {
-                $c2 = new Category();
-                $c2->name = $subCat;
-                $c2->parent_id = $c->id;
-                $c2->save();
-
-                foreach (['da-DK', 'en-US'] as $lang) {
-                    $ct = new \app\models\base\CategoryTag();
-                    $ct->setAttributes([
-                        'category_id' => $c2->id,
-                        'language_id' => $lang,
-                        'tag' => $c2->name
-                    ]);
-                    $ct->save();
-                }
-            }
-        }
     }
 
     public function down()
