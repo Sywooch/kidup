@@ -62,7 +62,7 @@ class m150913_090209_newCategories extends Migration
         $this->createTable('item_has_feature', [
             'item_id' => 'INT NOT NULL AUTO_INCREMENT',
             'feature_id' => 'INT NOT NULL',
-            'feature_values_id' => 'INT NOT NULL',
+            'feature_value_id' => 'INT NOT NULL',
             0 => 'PRIMARY KEY (`item_id`, `feature_id`)',
         ], $mysql);
 
@@ -90,14 +90,14 @@ class m150913_090209_newCategories extends Migration
             'feature_id', 0);
         $this->createIndex('fk_item_has_feature_item1_idx', 'item_has_feature', 'item_id', 0);
         $this->createIndex('fk_item_has_feature_feature_values1_idx', 'item_has_feature',
-            'feature_values_id', 0);
+            'feature_value_id', 0);
 
         $this->addForeignKey('fk_item_has_feature_item1', 'item_has_feature', 'item_id', 'item',
             'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_item_has_feature_feature1', 'item_has_feature',
             'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_item_has_feature_feature_values1', 'item_has_feature',
-            'feature_values_id', 'feature_value', 'id', 'CASCADE', 'NO ACTION');
+            'feature_value_id', 'feature_value', 'id', 'CASCADE', 'NO ACTION');
 
         $this->createIndex('fk_item_has_feature1_feature1_idx',
             'item_has_feature_singular', 'feature_id', 0);

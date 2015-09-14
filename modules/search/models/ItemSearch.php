@@ -3,6 +3,7 @@ namespace app\modules\search\models;
 
 use app\models\base\Item;
 use app\models\base\Language;
+use yii\web\BadRequestHttpException;
 
 /**
  * Class ItemSearch
@@ -14,6 +15,36 @@ class ItemSearch extends \app\models\base\ItemSearch
     const COMPONENT_MAIN_CATEGORY = 'main-cat';
     const COMPONENT_SUB_CATEGORY = 'sub-cat';
     const COMPONENT_FEATURE = 'feature';
+
+    /**
+     * Returns suggestions for autocomplete
+     * @param string $input
+     * @throws BadRequestHttpException
+     */
+    public function getSuggestions($input)
+    {
+        if (!is_string($input)) {
+            throw new BadRequestHttpException("Input should be a string");
+        }
+
+        $input = $this->tokenizeInput($input);
+        $query = ItemSearch::find()->select("*, SUM(MATCH(text) AGAINST(:q IN BOOLEAN MODE)) as score");
+        $params[':q'] = '';
+        foreach ($input as $i) {
+            $params[':q'] .= $i . "*"; // adds a *, so there is partial wordmatch (from start only though)
+        }
+        $query->where("MATCH(text) AGAINST(:q IN BOOLEAN MODE)");
+        $query->params($params);
+        $query->andWhere(['language_id' => \Yii::$app->language]);
+
+        return $query->groupBy('component_type')->orderBy('score DESC')->limit(10)->all();
+    }
+
+    private function tokenizeInput($in)
+    {
+        $in = htmlspecialchars_decode($in);
+        return explode(" ", $in);
+    }
 
     /**
      * Updates / creates all search references for an item
@@ -30,7 +61,7 @@ class ItemSearch extends \app\models\base\ItemSearch
             (new self())->make(self::COMPONENT_FEATURE, $singular->id, $singular->name, $item);
         }
         foreach ($item->itemHasFeatures as $ihf) {
-            (new self())->make(self::COMPONENT_FEATURE, $ihf->feature_id, $ihf->feature->name, $item);
+            (new self())->make(self::COMPONENT_FEATURE, $ihf->feature_id, $ihf->featureValue->name, $item);
         }
     }
 

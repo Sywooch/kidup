@@ -5,6 +5,7 @@ use app\components\Cache;
 use app\controllers\Controller;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
+use app\modules\search\models\ItemSearch;
 use app\modules\search\models\SearchModel;
 use Yii;
 use yii\filters\AccessControl;
@@ -47,16 +48,20 @@ class AutoCompleteController extends Controller
      */
     public function actionIndex($q = '')
     {
-        return Cache::data('autocomplete_q_' . $q, function () use ($q) {
-            $categories = Category::find()
-                ->select('name as value, id as category_id')
-                ->where('name like :q')
-                ->params([
-                    ':q' => $q . "%"
-                ])->asArray()->limit(5)->all();
-            return Json::encode(
-                $categories
-            );
-        });
+        return Json::encode(
+            (new ItemSearch())->getSuggestions($q)
+        );
+
+//        return Cache::data('autocomplete_q_' . $q, function () use ($q) {
+//            $categories = Category::find()
+//                ->select('name as value, id as category_id')
+//                ->where('name like :q')
+//                ->params([
+//                    ':q' => $q . "%"
+//                ])->asArray()->limit(5)->all();
+//            return Json::encode(
+//                $categories
+//            );
+//        });
     }
 }

@@ -9,9 +9,9 @@ use Yii;
  *
  * @property integer $item_id
  * @property integer $feature_id
- * @property integer $feature_values_id
+ * @property integer $feature_value_id
  *
- * @property FeatureValue $featureValues
+ * @property FeatureValue $featureValue
  * @property Feature $feature
  * @property Item $item
  */
@@ -34,9 +34,9 @@ class ItemHasFeature extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['feature_id', 'feature_values_id'], 'required'],
-            [['feature_id', 'feature_values_id'], 'integer'],
-            [['feature_values_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeatureValue::className(), 'targetAttribute' => ['feature_values_id' => 'id']],
+            [['feature_id', 'feature_value_id'], 'required'],
+            [['feature_id', 'feature_value_id'], 'integer'],
+            [['feature_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeatureValue::className(), 'targetAttribute' => ['feature_value_id' => 'id']],
             [['feature_id'], 'exist', 'skipOnError' => true, 'targetClass' => Feature::className(), 'targetAttribute' => ['feature_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']]
         ];
@@ -50,16 +50,16 @@ class ItemHasFeature extends \yii\db\ActiveRecord
         return [
             'item_id' => 'Item ID',
             'feature_id' => 'Feature ID',
-            'feature_values_id' => 'Feature Values ID',
+            'feature_value_id' => 'Feature Values ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeatureValues()
+    public function getFeatureValue()
     {
-        return $this->hasOne(FeatureValue::className(), ['id' => 'feature_values_id']);
+        return $this->hasOne(FeatureValue::className(), ['id' => 'feature_value_id']);
     }
 
     /**
