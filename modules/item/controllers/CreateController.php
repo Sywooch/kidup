@@ -50,21 +50,16 @@ class CreateController extends Controller
     public function actionIndex()
     {
         $model = new Create();
-        $ages = Category::find()->where(['type' => Category::TYPE_AGE])->all();
-        $categories = Category::find()->where(['in', 'id', [13,15,16,17,19,22]])->all();
 
         if (\Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
-            $model->categories = \Yii::$app->request->post($model->formName())['categories'];
             if ($model->save()) {
                 $this->redirect('@web/item/create/edit-basics?id=' . $model->item->id );
             }
         }
 
         return $this->render('index', [
-            'model' => $model,
-            'ages' => $ages,
-            'categories' => $categories
+            'model' => $model
         ]);
     }
 
@@ -98,18 +93,11 @@ class CreateController extends Controller
             return $i;
         }
 
-        $categories = [
-            Category::TYPE_MAIN => Category::findAll(['type' => Category::TYPE_MAIN]),
-            Category::TYPE_SPECIAL => Category::findAll(['type' => Category::TYPE_SPECIAL]),
-            Category::TYPE_AGE => Category::findAll(['type' => Category::TYPE_AGE])
-        ];
-
         return $this->render('wrapper', [
             'item' => $i['item'],
             'model' => $i['model'],
             'page' => 'basics/basics',
             'pageParams' => [
-                'categories' => $categories
             ]
         ]);
     }
@@ -197,21 +185,19 @@ class CreateController extends Controller
         $model = new Edit($item);
         $model->setScenario($scenario);
         if (\Yii::$app->request->isPost) {
+
             $model->load(\Yii::$app->request->post());
-            if (isset(\Yii::$app->request->post($model->formName())['categories'])) {
-                $model->categories = \Yii::$app->request->post($model->formName())['categories'];
-            }
             $model->save(); // this does all the validation and redirecting
+
+
             $pageOrder = ['basics', 'description', 'location', 'photos', 'pricing', 'publish'];
             $nextPage = $pageOrder[min(array_search($scenario, $pageOrder) + 1, 6)];
             $prevPage = $pageOrder[max(0, array_search($scenario, $pageOrder) - 1)];
             if (isset(\Yii::$app->request->post()['btn-back'])) {
-//                return $this->redirect();
-                Yii::$app->response->redirect('@web/item/create/edit-' . $prevPage . '?id=' . $item->id);
+                return Yii::$app->response->redirect('@web/item/create/edit-' . $prevPage . '?id=' . $item->id);
             } else {
                 $url = '@web/item/create/edit-' . $nextPage . '?id=' . $item->id;
                 return Yii::$app->response->redirect($url);
-                return $this->redirect($url);
             }
         }
         return ['item' => $item, 'model' => $model];

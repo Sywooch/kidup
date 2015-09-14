@@ -20,6 +20,8 @@ use Yii;
 
 class ViewController extends Controller
 {
+    private $item;
+
     public function behaviors()
     {
         return [
@@ -44,7 +46,10 @@ class ViewController extends Controller
                     return Json::encode([
                         Yii::$app->language,
                         \Yii::$app->session->getAllFlashes(),
-                        \Yii::$app->user->isGuest
+                        \Yii::$app->user->isGuest,
+                        \Yii::$app->request->get(),
+                        $this->item->updated_at,
+                        $this->item->bookingsCount()
                     ]);
                 },
             ],
@@ -55,7 +60,10 @@ class ViewController extends Controller
                 'enabled' => YII_CACHE,
                 'variations' => [
                     \Yii::$app->language,
-                    \Yii::$app->session->getAllFlashes()
+                    \Yii::$app->session->getAllFlashes(),
+                    \Yii::$app->request->get(),
+                    $this->item->updated_at,
+                    $this->item->bookingsCount()
                 ],
             ],
         ];
@@ -68,6 +76,7 @@ class ViewController extends Controller
          * @var $item \app\modules\item\models\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
+        $this->item = $item;
 
         Url::remember('', 'after_login_url');
         $this->noContainer = true;

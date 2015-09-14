@@ -9,8 +9,9 @@ class m150913_090209_newCategories extends Migration
     {
         $mysql = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
         $this->execute('SET foreign_key_checks = 0;');
-//
+
         $this->dropColumn('category', 'type');
+        $this->dropColumn('item', 'condition');
         $this->dropTable('item_has_category');
         $this->addColumn('category', 'parent_id', \yii\db\Schema::TYPE_INTEGER . " NULL");
         $this->addColumn('item', 'category_id', \yii\db\Schema::TYPE_INTEGER . " NOT NULL");
@@ -68,7 +69,6 @@ class m150913_090209_newCategories extends Migration
         $this->createTable('item_has_feature_singular', [
             'item_id' => 'INT NOT NULL AUTO_INCREMENT',
             'feature_id' => 'INT NOT NULL',
-            'feature_values_id' => 'INT NOT NULL',
             0 => 'PRIMARY KEY (`item_id`, `feature_id`)',
         ], $mysql);
 
@@ -109,13 +109,28 @@ class m150913_090209_newCategories extends Migration
         $this->addForeignKey('fk_item_has_feature1_feature1', 'item_has_feature_singular',
             'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
 
+        $this->createTable('item_search', [
+            'component_type' => 'INT NOT NULL',
+            'component_id' => 'INT NOT NULL',
+            'text' => 'VARCHAR(45) NOT NULL',
+            'item_id' => 'INT NOT NULL',
+            'language_id' => 'INT NOT NULL',
+        ], "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=MyISAM");
+
+        $this->createIndex('fk_item_search_item1_idx', 'item_search', 'item_id', 0);
+        $this->createIndex('fk_item_search_language1_idx', 'item_search', 'language_id', 0);
+        $this->execute("ALTER TABLE `item_search` ADD FULLTEXT INDEX `text` (`text`);");
+
+        $this->addForeignKey('fk_item_search_item1', 'item_search', 'item_id', 'item', 'id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('fk_item_search_language1', 'item_search', 'language_id', 'language', 'id', 'CASCADE',
+            'NO ACTION');
+
         $this->execute('SET foreign_key_checks = 1;');
     }
 
     public function down()
     {
         echo "m150913_090209_newCategories cannot be reverted.\n";
-
         return false;
     }
 

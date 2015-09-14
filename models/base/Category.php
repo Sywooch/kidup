@@ -14,7 +14,10 @@ use Yii;
  * @property Category $parent
  * @property Category[] $categories
  * @property CategoryTag[] $categoryTags
-
+ * @property CategoryHasFeature[] $categoryHasFeatures
+ * @property Feature[] $features
+ * @property Feature[] $singularFeatures
+ * @property Feature[] $nonSingularFeatures
  * @property ] $items
  */
 class Category extends \yii\db\ActiveRecord
@@ -37,7 +40,13 @@ class Category extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['parent_id'], 'integer'],
             [['name'], 'string', 'max' => 50],
-            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['parent_id' => 'id']]
+            [
+                ['parent_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::className(),
+                'targetAttribute' => ['parent_id' => 'id']
+            ]
         ];
     }
 
@@ -61,13 +70,6 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasOne(Category::className(), ['id' => 'parent_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategories()
-    {
-        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -85,7 +87,40 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(Item::className(), ['category_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoryHasFeatures()
+    {
+        return $this->hasMany(CategoryHasFeature::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
+            ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNonSingularFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
+            ['category_id' => 'id'])->where(['feature.is_singular' => 0]);
+    }
 
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSingularFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
+            ['category_id' => 'id'])->where(['feature.is_singular' => 1]);
+    }
 
 }

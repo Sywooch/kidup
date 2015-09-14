@@ -19,7 +19,7 @@ use \yii\helpers\Html;
     <div class="card header">
         <div class="content ">
             <h2 class="title">
-                <?= $item->name ? $item->name : \Yii::t('item', 'New product') ?>
+                <?= $item->name ? $item->name : \Yii::t('item', 'New product: '.$item->category->name) ?>
                 <a href="<?= \yii\helpers\Url::to('@web/item/' . $item->id) ?>" class="pull-right" style="color:white;"
                    target="_blank">
                     <?= Yii::t("item", "Preview") ?>
