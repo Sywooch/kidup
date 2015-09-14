@@ -138,7 +138,7 @@ class Item extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
     public function getBookingsCount()
     {
@@ -234,6 +234,15 @@ class Item extends \yii\db\ActiveRecord
     public function getSingularFeatures()
     {
         return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
-            ['item_id' => 'id']);
+            ['item_id' => 'id'])->where(['feature.is_singular' => 1]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNonSingularFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
+            ['item_id' => 'id'])->where(['feature.is_singular' => 0]);
     }
 }

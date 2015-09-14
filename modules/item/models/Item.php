@@ -23,22 +23,11 @@ class Item extends \app\models\base\Item
     public $images;
     public $distance;
 
-    public static function getConditions()
-    {
-        return [
-            '' => '',
-            '0' => \Yii::t('item', 'As new'),
-            '1' => \Yii::t('item', 'Minor usage'),
-            '2' => \Yii::t('item', 'Light damage')
-        ];
-    }
-
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required'],
+            [['name', 'description', 'price_week', 'min_renting_days'], 'required'],
             [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
-            [['condition'], 'in', 'range' => [0, 1, 2]],
             [['description'], 'string', 'min' => 5],
             [['name'], 'string', 'max' => 50]
         ]);
@@ -54,7 +43,6 @@ class Item extends \app\models\base\Item
             'price_week' => Yii::t('app', 'Price Week'),
             'price_month' => Yii::t('app', 'Price Month'),
             'owner_id' => Yii::t('app', 'Owner ID'),
-            'condition' => Yii::t('app', 'Condition'),
             'currency_id' => Yii::t('app', 'Currency ID'),
             'is_available' => Yii::t('app', 'Is Available'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -72,7 +60,6 @@ class Item extends \app\models\base\Item
                 'description',
                 'price_week',
                 'owner_id',
-                'condition',
                 'currency_id',
                 'min_renting_days'
             ],

@@ -20,8 +20,6 @@ use Yii;
 
 class ViewController extends Controller
 {
-    private $item;
-
     public function behaviors()
     {
         return [
@@ -41,16 +39,32 @@ class ViewController extends Controller
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=300',
-                'enabled' => YII_CACHE,
+                'enabled' => true,
                 'etagSeed' => function ($action, $params) {
+                    $bCount = false;
+                    if(@\Yii::$app->request->get()['id']){
+                        $q = Item::find()->where(['id' => \Yii::$app->request->get()['id']])->one();
+                        if($q !== null){
+                            $bCount = Json::encode([$q->getBookingsCount(), $q->updated_at]);
+                        }
+                    }
                     return Json::encode([
                         Yii::$app->language,
                         \Yii::$app->session->getAllFlashes(),
                         \Yii::$app->user->isGuest,
-                        \Yii::$app->request->get(),
-                        $this->item->updated_at,
-                        $this->item->bookingsCount()
+                        \Yii::$app->request->getUrl(),
+                        $params,
+                        $bCount
                     ]);
+                },
+                'lastModified' => function ($action, $params) {
+                    if(@\Yii::$app->request->get()['id']){
+                        $q = Item::find()->select('updated_at')->where(['id' => \Yii::$app->request->get()['id']])->one();
+                        if($q !== null){
+                            return $q->updated_at;
+                        }
+                    }
+                    return time() - 1000; // ??
                 },
             ],
             [
@@ -61,9 +75,6 @@ class ViewController extends Controller
                 'variations' => [
                     \Yii::$app->language,
                     \Yii::$app->session->getAllFlashes(),
-                    \Yii::$app->request->get(),
-                    $this->item->updated_at,
-                    $this->item->bookingsCount()
                 ],
             ],
         ];
@@ -76,7 +87,10 @@ class ViewController extends Controller
          * @var $item \app\modules\item\models\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
-        $this->item = $item;
+
+        if($item === null){
+            throw new NotFoundHttpException("Item not found");
+        }
 
         Url::remember('', 'after_login_url');
         $this->noContainer = true;

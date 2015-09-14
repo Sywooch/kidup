@@ -13,6 +13,7 @@ use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use app\modules\item\models\ItemHasMedia;
 use app\modules\item\models\Media;
+use app\modules\search\models\ItemSearch;
 use Carbon\Carbon;
 use Yii;
 use yii\filters\AccessControl;
@@ -187,8 +188,8 @@ class CreateController extends Controller
         if (\Yii::$app->request->isPost) {
 
             $model->load(\Yii::$app->request->post());
+            $model->loadAndSaveFeatures();
             $model->save(); // this does all the validation and redirecting
-
 
             $pageOrder = ['basics', 'description', 'location', 'photos', 'pricing', 'publish'];
             $nextPage = $pageOrder[min(array_search($scenario, $pageOrder) + 1, 6)];
@@ -363,7 +364,6 @@ class CreateController extends Controller
 
     public function actionEditPublish($id, $publish = false)
     {
-
         $item = $this->getItem($id);
         if($item->is_available == 1){
             return $this->redirect('@web/item/' . $id);
@@ -381,6 +381,7 @@ class CreateController extends Controller
         if($publish !== false){
             $item->is_available = 1;
             $item->save(false); // save, but don't check if valid, should be done by this point
+            ItemSearch::updateSearch($item); // enables the item to be found
             return $this->redirect('@web/item/'.$id.'?new_publish=true');
         }
         return $this->render('publish', ['item' => $item]);

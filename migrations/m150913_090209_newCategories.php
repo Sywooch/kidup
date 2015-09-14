@@ -110,11 +110,11 @@ class m150913_090209_newCategories extends Migration
             'feature_id', 'feature', 'id', 'CASCADE', 'NO ACTION');
 
         $this->createTable('item_search', [
-            'component_type' => 'INT NOT NULL',
+            'component_type' => 'VARCHAR(10) NOT NULL',
             'component_id' => 'INT NOT NULL',
             'text' => 'VARCHAR(45) NOT NULL',
             'item_id' => 'INT NOT NULL',
-            'language_id' => 'INT NOT NULL',
+            'language_id' => 'VARCHAR(5) NOT NULL',
         ], "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=MyISAM");
 
         $this->createIndex('fk_item_search_item1_idx', 'item_search', 'item_id', 0);

@@ -70,9 +70,14 @@ class Edit extends Model
             [['name', 'price_week', 'description', 'location_id'], 'required'],
             [['name', 'description'], 'string'],
             [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
-            ['photos', 'required', 'isEmpty' => function(){
-                return count($this->item->itemHasMedia) == 0;
-            }, 'message' => \Yii::t('item', 'Please provide atleast one photo of your product')]
+            [
+                'photos',
+                'required',
+                'isEmpty' => function () {
+                    return count($this->item->itemHasMedia) == 0;
+                },
+                'message' => \Yii::t('item', 'Please provide atleast one photo of your product')
+            ]
         ];
     }
 
@@ -103,14 +108,36 @@ class Edit extends Model
         return 'edit-item';
     }
 
-    public function load($data, $formName = NULL){
-        if(isset($data[$this->formName()]['singularFeatures'])){
+    /**
+     * Loads and saves the relational features
+     */
+    public function loadAndSaveFeatures()
+    {
+        if (isset($data[$this->formName()]['singularFeatures'])) {
             $this->singularFeatures = $data[$this->formName()]['singularFeatures'];
+            ItemHasFeatureSingular::deleteAll(['item_id' => $this->item->id]);
+            foreach ($this->singularFeatures as $id => $val) {
+                if ($val == 0) {
+                    continue;
+                }
+                $f = new ItemHasFeatureSingular();
+                $f->feature_id = $id;
+                $f->item_id = $this->item->id;
+                $f->save();
+            }
         }
-        if(isset($data[$this->formName()]['features'])){
+        if (isset($data[$this->formName()]['features'])) {
             $this->features = $data[$this->formName()]['features'];
+            ItemHasFeature::deleteAll(['item_id' => $this->item->id]);
+            foreach ($this->features as $id => $val) {
+                $featureVal = FeatureValue::findOne($val);
+                $f = new ItemHasFeature();
+                $f->feature_id = $id;
+                $f->item_id = $this->item->id;
+                $f->feature_values_id = $featureVal->id;
+                $f->save();
+            }
         }
-        return parent::load($data, $formName);
     }
 
     public function save()
@@ -119,28 +146,17 @@ class Edit extends Model
             return false;
         }
 
-        ItemHasFeatureSingular::deleteAll(['item_id' => $this->item->id]);
-        foreach ($this->singularFeatures as $id => $val) {
-            if($val == 0) continue;
-            $f = new ItemHasFeatureSingular();
-            $f->feature_id = $id;
-            $f->item_id = $this->item->id;
-            $f->save();
-        }
-
-        ItemHasFeature::deleteAll(['item_id' => $this->item->id]);
-
-        foreach ($this->features as $id => $val) {
-            $featureVal = FeatureValue::findOne($val);
-            $f = new ItemHasFeature();
-            $f->feature_id = $id;
-            $f->item_id = $this->item->id;
-            $f->feature_values_id = $featureVal->id;
-            $f->save();
-        }
-
         $item = $this->item;
-        $item->load(Json::decode(Json::encode($this)));
+        $item->location_id = $this->location_id;
+        $item->name = $this->name;
+        $item->price_week = $this->price_week;
+        $item->price_day = $this->price_day;
+        $item->price_month = $this->price_month;
+        $item->description = $this->description;
+        $item->min_renting_days = $this->min_renting_days;
+        $item->is_available = $this->is_available;
+        $item->category_id = $this->category_id;
+
         $item->scenario = 'create';
         if ($item->save()) {
             $this->item = $item;
@@ -150,7 +166,8 @@ class Edit extends Model
         return false;
     }
 
-    public function isScenarioValid($s){
+    public function isScenarioValid($s)
+    {
         $copy = (new \DeepCopy\DeepCopy)->copy($this);
         $copy->setScenario($s);
         return $copy->validate();
@@ -160,11 +177,14 @@ class Edit extends Model
      * Computes how many steps a user still has to make
      * @return int
      */
-    public function getStepsToCompleteCount(){
-        $scenarios = ['location','description','basics', 'pricing','photos'];
+    public function getStepsToCompleteCount()
+    {
+        $scenarios = ['location', 'description', 'basics', 'pricing', 'photos'];
         $c = 0;
         foreach ($scenarios as $s) {
-            if($this->isScenarioValid($s) == false)$c++;
+            if ($this->isScenarioValid($s) == false) {
+                $c++;
+            }
         }
         return $c;
     }

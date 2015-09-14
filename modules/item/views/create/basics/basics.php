@@ -1,8 +1,4 @@
 <?php
-use \app\modules\item\models\Item;
-use yii\helpers\Html;
-use kartik\checkbox\CheckboxX;
-
 /**
  * @var \app\modules\item\forms\Edit $model
  * @var \yii\widgets\ActiveForm $form
@@ -16,6 +12,12 @@ use kartik\checkbox\CheckboxX;
     "Help parents by selecting the right categories for your product: this makes it easier for them to find their needs.") ?>
     <hr>
 
+    <div class="form-group">
+        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item", "Category") ?></label>
+        <br>
+        <?= $model->item->category->parent->name; ?> - <?= $model->item->category->name; ?>
+    </div>
+
 <?php
 foreach ($model->item->category->nonSingularFeatures as $feature) {
     /**
@@ -28,7 +30,9 @@ foreach ($model->item->category->nonSingularFeatures as $feature) {
     echo $form->field($model, "features[{$feature->id}]")->dropDownList($dropDownItems)->label($feature->name);
 }
 ?>
-
+    <div class="form-group">
+        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item", "Features") ?></label>
+    </div>
 <?php
 foreach ($model->item->category->singularFeatures as $feature) {
     echo $form->field($model, "singularFeatures[{$feature->id}]")->checkbox([

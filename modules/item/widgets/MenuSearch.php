@@ -3,7 +3,7 @@
 
 namespace app\modules\item\widgets;
 
-use app\modules\search\models\SearchModel;
+use app\modules\search\forms\Filter;
 use yii\bootstrap\Widget;
 
 class MenuSearch extends Widget
@@ -22,7 +22,7 @@ class MenuSearch extends Widget
         if ($showMenu) {
             return false;
         }
-        $model = new SearchModel([]);
+        $model = new Filter([]);
         return $this->render('menu_search', [
             'model' => $model
         ]);
