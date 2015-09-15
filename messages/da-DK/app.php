@@ -40,7 +40,7 @@ return [
     'Similarity Price' => '',
     'Type Amount' => '',
     'Type Target' => '',
-    'Update' => '',
+    'Update' => 'Opdater',
     '' => '',
     '1) What is it?' => 'Hvad er det?',
     '2) What does it look like?' => 'Hvad ligner det?',

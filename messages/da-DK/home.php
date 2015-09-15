@@ -17,13 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'How it Works' => '',
-    'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t using at the moment.' => '',
-    'KidUp Search' => '',
-    'Search' => '',
-    'We are honered to be featured on' => '',
-    'What are you looking for?' => '',
-    'What do you like to get your child?' => '',
+    'How it Works' => 'Sådan virker det',
+    'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t using at the moment.' => 'Jeg er fuldstændig forelsket med deleaspektet og synes det giver god mening at dele de ting vi alligevel ikke bruger hele tiden.',
+    'KidUp Search' => 'KidUp Søg',
+    'Search' => 'Søg',
+    'We are honered to be featured on' => 'Vi er stolte af at være nævnt af',
+    'What are you looking for?' => 'Hvad kigger du efter?',
+    'What do you like to get your child?' => 'Hvad leder du efter til dit barn?',
     'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.' => '',
     'Become a part of the KidUp familiy' => 'Bliv en del af KidUp familien',
     'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.' => 'Jeg er fuldstændig forelsket med deleaspektet og synes det giver god mening at dele de ting vi alligevel ikke bruger heletiden.',
