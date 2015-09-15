@@ -29,7 +29,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
         <div class="row">
             <div class="col-md-8">
                 <?php $form = ActiveForm::begin([
-                    'enableClientValidation' => true,
+                    'enableClientValidation' => false,
 //                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
                 ]); ?>
 

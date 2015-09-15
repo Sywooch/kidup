@@ -15,7 +15,7 @@ use app\modules\item\widgets\GoogleAutoComplete;
 <div id="search-area" class="visible-sm visible-md visible-lg">
     <div class="row search-area">
         <div class="container">
-            <div class="col-sm-12 col-md-9 col-md-offset-2">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
                 <div class="row">
                     <?php
                     $form = ActiveForm::begin([
@@ -44,22 +44,23 @@ use app\modules\item\widgets\GoogleAutoComplete;
                                 ]
                             ]
                         ])->label(false); ?>
-                        <div style="display: none">
-                            <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
-                                'options' => [
-                                    'class' => 'form-control location-input',
-//                                    'ng-model' => 'searchCtrl.filter.location',
-                                    'autocompleteName' => 'search'
-                                ],
-                                'autocompleteOptions' => [
-                                    'types' => ['geocode']
-                                ],
-                                'name' => 'autoCompleteLocation'
-                            ]); ?>
-                        </div>
                     </div>
 
-                    <div class="col-sm-3 col-md-4">
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
+                            'options' => [
+                                'class' => 'form-control location-input',
+//                                    'ng-model' => 'searchCtrl.filter.location',
+                                'autocompleteName' => 'search'
+                            ],
+                            'autocompleteOptions' => [
+                                'types' => ['geocode']
+                            ],
+                            'name' => 'autoCompleteLocation'
+                        ])->label(false); ?>
+                    </div>
+
+                    <div class="col-sm-3 col-md-2">
                         <?= \yii\bootstrap\Html::submitButton(Yii::t("item", "Search"),
                             ['class' => 'btn btn-danger btn-fill btn-wide']) ?>
                     </div>

@@ -6,11 +6,13 @@ use app\components\Cache;
 use app\components\WidgetRequest;
 use app\controllers\Controller;
 use app\models\base\Currency;
+use app\models\base\Review;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\forms\Create;
 use app\modules\item\forms\CreateBooking;
 use app\modules\item\models\Item;
 use yii\bootstrap\Html;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -126,12 +128,21 @@ class ViewController extends Controller
 
         // find which items are related
         $related_items = $item->getRecommendedItems($item, 2);
+
+        $reviewDataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Review::find()->where(['item_id' => $item->id])
+                ->andWhere(['type' => \app\modules\review\models\Review::TYPE_USER_PUBLIC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
         $res = [
             'model' => $item,
             'location' => $item->location,
             'images' => $images,
             'show_modal' => $new_publish !== false, // show modal if new publish
             'bookingForm' => $model,
+            'reviewDataProvider' => $reviewDataProvider,
             'related_items' => $related_items
         ];
 
