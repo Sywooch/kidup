@@ -17,6 +17,7 @@ class HomeAsset extends AssetBundle
     ];
 
     public $depends = [
-        '\yii\web\JqueryAsset'
+        '\yii\web\JqueryAsset',
+        '\app\assets\FullModalAsset'
     ];
 }

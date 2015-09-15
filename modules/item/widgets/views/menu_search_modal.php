@@ -1,38 +1,40 @@
 <?php
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+
+/**
+ * @var \app\modules\search\forms\Filter $model
+ */
+\app\assets\FullModalAsset::register($this);
+
+\yii\bootstrap\Modal::begin([
+    'id' => 'searchModal',
+    'options' => [
+        'class' => 'modal modal-fullscreen force-fullscreen'
+    ]
+]);
 
 ?>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<?php $form = ActiveForm::begin([
+        'id' => 'mobile-search',
+        'fieldConfig' => [
+            'template' => "{input}\n{error}"
+        ],
+        'action' => Url::to('@web/search'),
+        'method' => 'get',
+        'options' => [
+            'style' => 'padding:15px;padding-top:30px;'
+        ]
+    ]) ?>
 
-<!-- Search modal -->
-<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-inline hidden-xs visible-sm visible-md" method="get"
-                  action="<?= Url::base(true) ?>/search">
-                <div class="form-group">
-                    <input type="text"
-                           name="query"
-                           class="form-control mobile-search-query"
-                           placeholder="<?= \Yii::t('item', 'What are you looking for?') ?>">
-                </div>
-                <button type="submit" class="btn btn-fill btn-danger">
-                    <?= Yii::t("item", "Search") ?>
-                </button>
-            </form>
-            <form class="form-inline visible-xs hidden-sm hidden-md" method="get"
-                  action="<?= Url::base(true) ?>/search">
-                <div class="input-group">
-                    <input type="text"
-                           name="query"
-                           class="form-control mobile-search-query"
-                           placeholder="<?= \Yii::t('item', 'What are you looking for?') ?>">
-                      <span class="input-group-btn">
-                        <button type="submit" class="btn btn-fill btn-danger">
-                            <?= Yii::t("item", "Search") ?>
-                        </button>
-                      </span>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    <?= $form->field($model, 'query')->textInput(['placeholder' => 'What are you looking for?']) ?>
+
+    <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
+    <?php ActiveForm::end(); ?>
+
+<?php
+\yii\bootstrap\Modal::end();
+?>

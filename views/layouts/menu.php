@@ -226,10 +226,10 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 if (\Yii::$app->user->isGuest) {
     if ($this->beginCache('layout.menu.widgets')) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
+            return \app\modules\user\widgets\Login::widget();
         });
         echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
+            return \app\modules\user\widgets\Register::widget();
         });
         $this->endCache();
     }

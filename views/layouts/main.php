@@ -52,7 +52,7 @@ $transparent = ($url == '/' || $url == '/home');
     <!-- Load modals -->
     <?php
     echo Cache::html('layout_mobile-search-modal', function () {
-        return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
+        return \app\modules\item\widgets\MenuSearchModal::widget();
     });
 
     echo Cache::html('layout_footer', function () {
