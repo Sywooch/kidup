@@ -3,6 +3,9 @@
 namespace app\modules\search\forms;
 
 use app\components\Cache;
+use app\models\base\CategoryHasFeature;
+use app\models\base\Feature;
+use app\models\base\ItemSearch;
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
 use app\modules\search\models\IpLocation;
@@ -15,15 +18,18 @@ class Filter extends Model
 {
     public $query = null;
     private $_query;
+    public $categories;
     public $location;
     public $longitude;
     public $latitude;
-    public $categoryId = null;
+    public $categoryId;
     public $priceMin = 0;
     public $priceMax = 499;
     public $priceUnit = 'week';
+    public $featureFilters;
+    public $features;
+    public $singularFeatures;
     public $page;
-    public $activeFilters;
 
     public function formName()
     {
@@ -40,10 +46,6 @@ class Filter extends Model
         ];
     }
 
-    public function processActiveFilters(){
-
-    }
-
     /**
      * Find items.
      *
@@ -51,52 +53,111 @@ class Filter extends Model
      */
     public function findItems()
     {
-        $this->processActiveFilters();
+
+        $this->queryExtraction();
+        $this->findFeatureFilters();
         // initialize the query
         $this->_query = Item::find();
 
         // apply filters
         $this->filterLocation();
-        $this->filterCategory();
+        $this->filterCategories();
         $this->filterPrice();
+        $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
-        $this->_query->limit(12)->offset(round($this->page) * 12);
+        $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
 
         // give back the results
-        return $this->getResults($this->_query);
+        return $this->_query->orderBy('rand()')->all();
     }
 
     /**
-     * Get the results.
-     *
-     * @param ActiveQuery $query query object
-     * @return Object results
+     * Finds categories and features in the text query, places them in object
+     * @return mixed
      */
-    public function getResults($query)
+    private function queryExtraction()
     {
-        // randomize real quickly, only temporarily
-        $query->orderBy('rand()');
-        return $query->all();
+        // item id finding query
+
+        $input = explode(" ", $this->query);
+        $query = '(';
+        $query2 = '("';
+        foreach ($input as $i) {
+            $query .= $i . "* ";
+            $query2 .= $i . " ";
+        }
+        $query .= ")";
+        $query2 .= '")';
+
+        $res = ItemSearch::find()
+            ->select("text, component_id, component_type, MATCH(text) AGAINST(:q IN BOOLEAN MODE) as score")
+            ->distinct(true)
+            ->params([':q' => $query . ' ' . $query2])
+            ->orderBy('score DESC')
+            ->having('score > 0')
+            ->where(['IN', 'component_type', ['sub-cat', 'main-cat']])
+            ->limit(5)
+            ->asArray()
+            ->all();
+        if(isset($res[0])){
+            $this->categories = [$res[0]['component_id']];
+        }
+        if (isset($res[0]) && isset($res[1])) {
+            if ($res[1]['score'] < $res[0]['score']) {
+                $this->categories = [$res[0]['component_id']];
+            } else {
+                $this->categories = [];
+                foreach ($res as $r) {
+                    $this->categories[] = $r['component_id'];
+                }
+            }
+        }
     }
 
-    /**
-     * Get a data provider.
-     *
-     * @param ActiveQuery $query query object
-     */
-    public function pageResults($query)
-    {
-        $query->limit(12)->offset(round($this->page) * 12);
+    private function findFeatureFilters(){
+        $features = Feature::find()->where(['IN', 'name', ['Condition', 'Exchange', 'Smoke Free', 'Pet Free']])->indexBy('id')->all();
+        if(is_array($this->categories) && count($this->categories) == 1){
+            $chts = CategoryHasFeature::findAll([
+                'category_id' => $this->categories[0]
+            ]);
+            foreach ($chts as $cht) {
+                $feature[$cht->feature->id] = $cht->feature;
+            }
+        }
+        $this->featureFilters = $features;
     }
 
-    /**
-     * Filter on whether an item is available.
-     *
-     * @param ActiveQuery $query
-     */
-    public function filterIsAvailable($query)
-    {
+    public function loadQueriedFeatures($array){
+        if(isset($array['features'])){
+            $this->features = $array['features'];
+        }
+        if(isset($array['singularFeatures'])){
+            $this->singularFeatures = $array['singularFeatures'];
+        }
+    }
 
+    public function filterFeatures(){
+        $singleFeatureIds = [];
+        foreach($this->singularFeatures as $id => $val){
+            if($val == 0) continue;
+            $singleFeatureIds[]  = $id;
+        }
+        if(count($singleFeatureIds) > 0){
+            $this->_query->innerJoinWith(['itemHasFeatureSingulars' => function($query) use ($singleFeatureIds){
+                $query->where(['IN', 'item_has_feature_singular.feature_id', $singleFeatureIds]);
+            }]);
+        }
+
+        if(count($singleFeatureIds) > 0){
+            $this->_query->innerJoinWith(['itemHasFeatures' => function($query) use ($singleFeatureIds){
+                foreach($this->features as $featureId => $val){
+                    foreach ($val as $valId => $bool) {
+                        if($bool == 0) continue;
+                        $query->orWhere(['item_has_feature.feature_id' => $featureId, 'item_has_feature.feature_value_id' => $valId]);
+                    }
+                }
+            }]);
+        }
     }
 
     /**
@@ -109,7 +170,7 @@ class Filter extends Model
     public function filterLocation()
     {
         if (is_null($this->latitude) || is_null($this->location)) {
-             $this->_getGeoData($this->location);
+            $this->_getGeoData($this->location);
         }
 
         if (!is_null($this->latitude) && !is_null($this->location)) {
@@ -136,10 +197,10 @@ class Filter extends Model
      * @param ActiveQuery $query the query object to apply the filter on
      * @param array $categories the categories (ids) to filter on
      */
-    public function filterCategory()
+    public function filterCategories()
     {
-        if (isset($this->category_id) && $this->category_id !== null) {
-            $this->_query->where(['category_id' => $this->category_id]);
+        if (is_array($this->categories)) {
+            $this->_query->where(['IN', 'category_id', $this->categories]);
         }
     }
 
@@ -159,12 +220,14 @@ class Filter extends Model
         }
 
         if (isset($this->priceMin) && $this->priceMin !== null) {
-            $this->_query->andWhere($field . ' >= :low', [
+            $this->_query->andWhere(':field >= :low', [
+                ':field' => $field,
                 ':low' => $this->priceMin,
             ]);
         }
         if (isset($this->priceMax) && $this->priceMax !== null) {
-            $this->_query->andWhere($field . ' <= :high', [
+            $this->_query->andWhere(':field <= :high', [
+                ':field' => $field,
                 ':high' => $this->priceMax,
             ]);
         }
@@ -185,13 +248,13 @@ class Filter extends Model
         $location = Cache::data('location_' . $this->location, function () use ($location) {
             return Location::getByAddress($location);
         }, 30 * 24 * 60 * 60);
-        if($location == null){
+        if ($location == null) {
             return false;
         }
         $this->latitude = $location['latitude'];
         $this->longitude = $location['longitude'];
 
-        return  (strlen($this->longitude) > 0 && strlen($this->latitude) > 0 && $location !== null);
+        return (strlen($this->longitude) > 0 && strlen($this->latitude) > 0 && $location !== null);
     }
 
     public function setLocation()

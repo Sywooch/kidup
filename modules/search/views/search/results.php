@@ -8,7 +8,8 @@ use app\modules\item\widgets\ItemCard;
         foreach ($results as $result) {
             echo ItemCard::widget([
                 'model' => $result,
-                'showDistance' => true
+                'showDistance' => true,
+                'numberOfCards' => 3
             ]);
         }
         if (count($results) === 0) {

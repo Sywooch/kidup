@@ -29,15 +29,20 @@ class ItemSearch extends \app\models\base\ItemSearch
 
         $input = $this->tokenizeInput($input);
         $query = ItemSearch::find()->select("*, SUM(MATCH(text) AGAINST(:q IN BOOLEAN MODE)) as score");
-        $params[':q'] = '';
-        foreach ($input as $i) {
-            $params[':q'] .= $i . "*"; // adds a *, so there is partial wordmatch (from start only though)
-        }
+        $params[':q'] = $input[count($input) - 1]."*";
         $query->where("MATCH(text) AGAINST(:q IN BOOLEAN MODE)");
+        $query->andWhere(['IN', 'component_type', ['sub-cat', 'main-cat']]);
         $query->params($params);
         $query->andWhere(['language_id' => \Yii::$app->language]);
 
-        return $query->groupBy('component_type')->orderBy('score DESC')->limit(10)->all();
+        $suggestions = $query->groupBy('text')->orderBy('score DESC')->limit(10)->all();
+        $res = [];
+        foreach ($suggestions as $suggestion) {
+            if(strpos(implode(" ", $input), $suggestion->text) !== false) continue;
+            $res[] = ['text' => implode(" ", array_slice($input, 0, count($input) - 1)) . " " . $suggestion->text];
+        }
+        return $res;
+
     }
 
     private function tokenizeInput($in)

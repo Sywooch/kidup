@@ -23,10 +23,12 @@ return [
          'app\modules\item\assets\ListAsset',
          'app\modules\item\assets\MenuSearchAsset',
          'app\modules\item\assets\ViewAsset',
+         'app\modules\item\assets\ItemAsset',
          'app\modules\message\assets\MessageAsset',
          'app\modules\pages\assets\WpAsset',
          'app\modules\search\assets\ItemSearchAsset',
          'app\modules\user\assets\ProfileAsset',
+         'app\modules\user\assets\SettingsAsset',
          'app\modules\user\assets\SettingsAsset',
     ],
     // Asset bundle for compression output:

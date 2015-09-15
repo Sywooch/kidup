@@ -25,11 +25,8 @@ use app\modules\item\widgets\GoogleAutoComplete;
                     ?>
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
-                            'options' => ['placeholder' => 'E.g. Strollers'],
-                            'pluginOptions' => ['highlight' => true, 'hint' => false],
-                            'pluginEvents' => [
-                                "typeahead:render" => "function(a,b) { window.onTypeaheadRender(b); }",
-                            ],
+                            'options' => ['placeholder' => \Yii::t('home', 'What do you like to get your child?')],
+                            'pluginOptions' => ['highlight' => true, 'hint' => true],
                             'dataset' => [
                                 [
                                     'remote' => [
@@ -38,10 +35,10 @@ use app\modules\item\widgets\GoogleAutoComplete;
                                     ],
                                     'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
                                     'limit' => 5,
-                                    'display' => 'value',
+                                    'display' => 'text',
                                     'templates' => [
                                         'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
-                                        'suggestion' => new \yii\web\JsExpression("Handlebars.compile('{<div>{{value}}</div>}')")
+                                        'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                                     ]
                                 ]
                             ]

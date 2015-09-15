@@ -50,6 +50,11 @@ class SearchController extends Controller
         $model = new Filter();
 
         $model->load(\Yii::$app->request->get(), $model->formName());
+        if(isset(\Yii::$app->request->get()[$model->formName()])){
+            if(isset(\Yii::$app->request->get()[$model->formName()]['features']) || isset(\Yii::$app->request->get()[$model->formName()]['singleFeatures'])){
+                $model->loadQueriedFeatures(\Yii::$app->request->get()[$model->formName()]);
+            }
+        }
         $model->query = $query;
 
         $model->setLocation();

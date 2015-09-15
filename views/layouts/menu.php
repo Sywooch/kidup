@@ -41,7 +41,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             <div class="collapse navbar-collapse">
                 <!--menu for larger then mobile-->
                 <ul class="nav navbar-nav navbar-left ">
-                    <?= WidgetRequest::request(WidgetRequest::ITEM_MENU_SEARCH); ?>
+                    <?= \app\modules\item\widgets\MenuSearch::widget() ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right ">
                     <?php if (\Yii::$app->user->isGuest): ?>

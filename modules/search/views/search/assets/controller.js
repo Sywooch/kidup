@@ -6,7 +6,6 @@ window.initAngular = function(){
             query: '',
             priceUnit: 'week',
             prices: [],
-            location: '',
             longitude: null,
             latitude: null,
             categories: [],
@@ -53,28 +52,28 @@ window.initAngular = function(){
         };
 
         var updateActiveFilters = function () {
-            deactivateActiveFilters();
-
-            if (scope.filter.query.length > 0)      scope.activeFilter.search = true;
-            if (scope.filter.location.length > 0)   scope.activeFilter.location = true;
-            if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499 || scope.filter.priceUnit != 'week') {
-                scope.activeFilter.price = true;
-            }
-
-            // Don't display the label "active filters" when there are no filters active
-            var numActiveFilters = 0;
-            angular.forEach(scope.activeFilter, function(enabled, filter) {
-                if (enabled) numActiveFilters++;
-            });
-            if (numActiveFilters > 0) {
-                $('.filters-label').show();
-            } else {
-                $('.filters-label').hide();
-            }
-
-            if(!$scope.$$phase) {
-                $scope.$apply();
-            }
+            //deactivateActiveFilters();
+            //
+            //if (scope.filter.query.length > 0)      scope.activeFilter.search = true;
+            //if (scope.filter.location.length > 0)   scope.activeFilter.location = true;
+            //if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499 || scope.filter.priceUnit != 'week') {
+            //    scope.activeFilter.price = true;
+            //}
+            //
+            //// Don't display the label "active filters" when there are no filters active
+            //var numActiveFilters = 0;
+            //angular.forEach(scope.activeFilter, function(enabled, filter) {
+            //    if (enabled) numActiveFilters++;
+            //});
+            //if (numActiveFilters > 0) {
+            //    $('.filters-label').show();
+            //} else {
+            //    $('.filters-label').hide();
+            //}
+            //
+            //if(!$scope.$$phase) {
+            //    $scope.$apply();
+            //}
         };
 
         scope.activeFilterRemove = function (filter) {
@@ -128,7 +127,6 @@ window.initAngular = function(){
         };
 
         scope.filterChange = function () {
-            console.log(12);
             if (new Date().getTime() - _startTime < 500) return false;
             if (scope._timer !== null) {
                 clearTimeout(scope._timer)
@@ -257,21 +255,12 @@ window.initAngular = function(){
                 });
 
                 settings.url = baseUrl+added.join('');
+                console.log(settings.url);
                 return settings;
             });
         };
 
         window.onTypeaheadRender = function (val) {
-            var selector = $("#search-filter-query");
-            var position = selector.textrange('get', 'position');
-            if (typeof val === "undefined") {
-                return false;
-            }
-            selector.val(val.value);
-            selector.textrange('set', position);
-            selector.textrange('setcursor', position);
-
-            $("#search-filter-query").textrange('set', position);
         };
 
         scope.init();

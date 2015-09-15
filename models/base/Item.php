@@ -2,6 +2,7 @@
 
 namespace app\models\base;
 
+use app\modules\search\models\ItemSearch;
 use Yii;
 
 /**
@@ -29,6 +30,7 @@ use Yii;
  * @property User $owner
  * @property \app\models\base\Category[] $category
  * @property ItemHasMedia[] $itemHasMedia
+ * @property ItemSearch[] $itemSearch
  * @property Media[] $media
  * @property ItemHasFeature[] $itemHasFeatures
  * @property Feature[] $features
@@ -189,6 +191,14 @@ class Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getItemSearch()
+    {
+        return $this->hasMany(ItemSearch::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getMedia()
     {
         return $this->hasMany(Media::className(), ['id' => 'media_id'])->viaTable('item_has_media',
@@ -245,4 +255,6 @@ class Item extends \yii\db\ActiveRecord
         return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
             ['item_id' => 'id'])->where(['feature.is_singular' => 0]);
     }
+
+
 }

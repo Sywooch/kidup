@@ -102,7 +102,7 @@ class ViewController extends Controller
 
         if ($model->load(\Yii::$app->request->get())) {
             $attempt = $model->attemptBooking();
-            if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
+            if (Yii::$app->request->isPjax || (YII_ENV == 'test' && Yii::$app->request->isPost)) {
                 if ($attempt !== false) {
                     return $attempt;
                 }

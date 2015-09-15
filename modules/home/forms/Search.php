@@ -24,7 +24,6 @@ class Search extends Model{
     public function rules()
     {
         return [
-            ['query', 'required']
         ];
     }
 

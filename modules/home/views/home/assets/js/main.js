@@ -58,12 +58,8 @@ $(document).ready(function () {
         event.preventDefault();
 
         var vals = [];
-        if (window.autoSelectedCategory !== false) {
-            vals.push('search-filter[categoryId]=' + window.autoSelectedCategory.category_id);
-        }
-
         var val = $("#search-home-query").val();
-        console.log(navigator.geolocation);
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var geocoder = new google.maps.Geocoder;
@@ -88,16 +84,4 @@ $(document).ready(function () {
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
         }
     });
-
-    window.onTypeaheadRender = function (val) {
-        var selector = $("#search-home-query");
-        var position = selector.textrange('get', 'position');
-        if (typeof val === "undefined") {
-            return false;
-        }
-        window.autoSelectedCategory = val;
-        selector.val(val.value);
-        selector.textrange('set', position);
-        selector.textrange('setcursor', position);
-    }
 });
