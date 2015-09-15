@@ -12,6 +12,7 @@ use Yii;
  * @property integer $parent_id
  *
  * @property Category $parent
+ * @property Category[] $children
  * @property Category[] $categories
  * @property CategoryTag[] $categoryTags
  * @property CategoryHasFeature[] $categoryHasFeatures
@@ -68,6 +69,14 @@ class Category extends \yii\db\ActiveRecord
     public function getParent()
     {
         return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChildren()
+    {
+        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
     }
 
 

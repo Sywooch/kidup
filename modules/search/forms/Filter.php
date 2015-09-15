@@ -6,6 +6,7 @@ use app\components\Cache;
 use app\models\base\CategoryHasFeature;
 use app\models\base\Feature;
 use app\models\base\ItemSearch;
+use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use app\modules\item\models\Location;
 use app\modules\search\models\IpLocation;
@@ -99,7 +100,7 @@ class Filter extends Model
             ->limit(5)
             ->asArray()
             ->all();
-        if(isset($res[0])){
+        if (isset($res[0])) {
             $this->categories = [$res[0]['component_id']];
         }
         if (isset($res[0]) && isset($res[1])) {
@@ -114,9 +115,14 @@ class Filter extends Model
         }
     }
 
-    private function findFeatureFilters(){
-        $features = Feature::find()->where(['IN', 'name', ['Condition', 'Exchange', 'Smoke Free', 'Pet Free']])->indexBy('id')->all();
-        if(is_array($this->categories) && count($this->categories) == 1){
+    private function findFeatureFilters()
+    {
+        $features = Feature::find()->where([
+            'IN',
+            'name',
+            ['Condition', 'Exchange', 'Smoke Free', 'Pet Free']
+        ])->indexBy('id')->all();
+        if (is_array($this->categories) && count($this->categories) == 1) {
             $chts = CategoryHasFeature::findAll([
                 'category_id' => $this->categories[0]
             ]);
@@ -127,36 +133,52 @@ class Filter extends Model
         $this->featureFilters = $features;
     }
 
-    public function loadQueriedFeatures($array){
-        if(isset($array['features'])){
+    public function loadQueriedFeatures($array)
+    {
+        if (isset($array['features'])) {
             $this->features = $array['features'];
         }
-        if(isset($array['singularFeatures'])){
+        if (isset($array['singularFeatures'])) {
             $this->singularFeatures = $array['singularFeatures'];
         }
     }
 
-    public function filterFeatures(){
-        $singleFeatureIds = [];
-        foreach($this->singularFeatures as $id => $val){
-            if($val == 0) continue;
-            $singleFeatureIds[]  = $id;
-        }
-        if(count($singleFeatureIds) > 0){
-            $this->_query->innerJoinWith(['itemHasFeatureSingulars' => function($query) use ($singleFeatureIds){
-                $query->where(['IN', 'item_has_feature_singular.feature_id', $singleFeatureIds]);
-            }]);
+    public function filterFeatures()
+    {
+        if (!is_null($this->singularFeatures)) {
+            $singleFeatureIds = [];
+            foreach ($this->singularFeatures as $id => $val) {
+                if ($val == 0) {
+                    continue;
+                }
+                $singleFeatureIds[] = $id;
+            }
+            if (count($singleFeatureIds) > 0) {
+                $this->_query->innerJoinWith([
+                    'itemHasFeatureSingulars' => function ($query) use ($singleFeatureIds) {
+                        $query->where(['IN', 'item_has_feature_singular.feature_id', $singleFeatureIds]);
+                    }
+                ]);
+            }
         }
 
-        if(count($singleFeatureIds) > 0){
-            $this->_query->innerJoinWith(['itemHasFeatures' => function($query) use ($singleFeatureIds){
-                foreach($this->features as $featureId => $val){
-                    foreach ($val as $valId => $bool) {
-                        if($bool == 0) continue;
-                        $query->orWhere(['item_has_feature.feature_id' => $featureId, 'item_has_feature.feature_value_id' => $valId]);
+
+        if (!is_null($this->features)) {
+            $this->_query->innerJoinWith([
+                'itemHasFeatures' => function ($query) {
+                    foreach ($this->features as $featureId => $val) {
+                        foreach ($val as $valId => $bool) {
+                            if ($bool == 0) {
+                                continue;
+                            }
+                            $query->orWhere([
+                                'item_has_feature.feature_id' => $featureId,
+                                'item_has_feature.feature_value_id' => $valId
+                            ]);
+                        }
                     }
                 }
-            }]);
+            ]);
         }
     }
 
@@ -200,6 +222,14 @@ class Filter extends Model
     public function filterCategories()
     {
         if (is_array($this->categories)) {
+            foreach($this->categories as $cat){
+                $cat = Category::find()->where(['id' => $cat, 'parent_id' => null])->one();
+                if($cat !== null){
+                    foreach ($cat->children as $child) {
+                        $this->categories[] = $child->id;
+                    }
+                }
+            }
             $this->_query->where(['IN', 'category_id', $this->categories]);
         }
     }

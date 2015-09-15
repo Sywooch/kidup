@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use kartik\typeahead\Typeahead;
 use \yii\bootstrap\ActiveForm;
 use app\modules\item\widgets\GoogleAutoComplete;
+
 /**
  * @var \app\modules\home\forms\Search $model
  */
@@ -59,12 +60,8 @@ use app\modules\item\widgets\GoogleAutoComplete;
                     </div>
 
                     <div class="col-sm-3 col-md-4">
-                        <?= \yii\bootstrap\Html::submitButton(Yii::t("item", "Search Nearby"),
+                        <?= \yii\bootstrap\Html::submitButton(Yii::t("item", "Search"),
                             ['class' => 'btn btn-danger btn-fill btn-wide']) ?>
-                        <br>
-                        <a href="">
-                            <?= Yii::t("item", "Or for somewhere else") ?>
-                        </a>
                     </div>
 
                     <?php

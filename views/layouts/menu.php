@@ -219,8 +219,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
     </nav>
 <?php if ($transparent): ?>
     <!--    this is ugly as well -->
-    <div class="cover-home"
-         style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
+
 <?php endif; ?>
 <?php
 // add the login / register model if user is guest

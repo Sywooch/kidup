@@ -28,35 +28,42 @@ use yii\helpers\Url;
                         <?= Yii::t("item", "/ week") ?>
                     </span>
                 </div>
+                <div class="author">
+                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                        'user_id' => $model->owner_id,
+                        'width' => '50px'
+                    ]) ?>
+                </div>
             </div>
             <div class="content">
-                <h4 class="category">
-                    <?php
-                        echo $model->category->name;
-                    ?>
-                </h4>
+
 
                 <h3 class="title" style="height:20px;">
                     <?= $model->name ?>
                 </h3>
 
+                <div class="category">
+                    <?php
+                    echo $model->category->name;
+                    ?>
+                </div>
+
                 <div class="footer">
-                    <div class="author pul-left">
-                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
-                            'user_id' => $model->owner_id,
-                            'width' => '30px'
-                        ]) ?>
-                    </div>
-                    <div class="stats pull-right">
-                        <i class="fa fa-map-marker"></i>
-                        <?php
-                        $distance = (int)$model->distance;
-                        if ($distance == 0 || !$showDistance) {
-                            echo $model->location->city;
-                        } else {
-                            echo $distance . ' km';
-                        }
-                        ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            reviews
+                        </div>
+                        <div class="col-md-6 stats">
+                            <i class="fa fa-map-marker"></i>
+                            <?php
+                            $distance = (int)$model->distance;
+                            if ($distance == 0 || !$showDistance) {
+                                echo $model->location->city;
+                            } else {
+                                echo $distance . ' km';
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>

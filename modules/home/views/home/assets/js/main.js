@@ -59,7 +59,9 @@ $(document).ready(function () {
 
         var vals = [];
         var val = $("#search-home-query").val();
-
+        if(val == ''){
+            val = 'Strollers';
+        }
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var geocoder = new google.maps.Geocoder;
