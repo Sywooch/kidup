@@ -231,8 +231,14 @@ class Item extends \app\models\base\Item
             $images = [];
             $count = count($itemImages);
             foreach ($itemImages as $i => $img) {
-                $w = 250;
-                $h = 200;
+                if(count($itemImages) == 1){
+                    $w = 650;
+                    $h = 300;
+                }else{
+                    $w = 250;
+                    $h = 200;
+                }
+
 
                 $images[] = [
                     'src' => ImageHelper::url($img, ['q' => 90, 'w' => $w, 'h' => $h, 'fit' => 'crop']),

@@ -14,11 +14,11 @@ use yii\helpers\Url;
 ?>
 
 <div class="<?= $rowClass ?>">
-    <a href="<?= Url::to('@web/item/' . $model->id) ?>">
+    <a href="<?= Url::to('@web/item/' . $model->id) ?>" data-pjax="0">
         <div class="card">
             <div class="image"
                  style="<?= ImageHelper::bgImg($model->getImageName(0),
-                     ['q' => 90, 'w' => 600]) ?>; background-size: cover; background-position: 50% 50%;">
+                     ['q' => 90, 'w' => 300]) ?>; background-size: cover; background-position: 50% 50%;">
                 <div class="price-badge">
                     <span class="currency">kr.</span>
                     <span class="price">
@@ -36,8 +36,6 @@ use yii\helpers\Url;
                 </div>
             </div>
             <div class="content">
-
-
                 <h3 class="title" style="height:20px;">
                     <?= $model->name ?>
                 </h3>

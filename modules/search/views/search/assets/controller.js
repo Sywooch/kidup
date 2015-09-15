@@ -222,7 +222,7 @@ window.initAngular = function(){
             //}, 500);
 
             $(document).on('pjax:beforeSend', function (xhr, options, settings) {
-
+                console.log(settings);
                 var getParams = function (queryString) {
                     var query = (queryString || window.location.search).substring(1); // delete ?
                     if (!query) {
@@ -276,5 +276,6 @@ window.initAngular = function(){
 };
 window.initAngular();
 $(document).on('pjax:success', function(){
+    console.log('pjax success');
     window.initAngular();
 });

@@ -37,7 +37,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <div class="row main-info">
                         <div class="col-md-2">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
-                                <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
+                                <?= \app\modules\user\widgets\UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
                                         'width' => '80px'
@@ -61,28 +61,24 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     <div class="icon-text">
                                         <i class="fa fa-child"> </i>
                                         <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_MAIN)[0]) ? $model->getCategoriesByType(Category::TYPE_MAIN)[0] : '' ?>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="icon-text">
                                         <i class="fa fa-bolt"> </i>
                                         <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_MAIN)[1]) ? $model->getCategoriesByType(Category::TYPE_MAIN)[1] : '' ?>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="icon-text">
                                         <i class="fa fa-check"> </i>
                                         <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_SPECIAL)[0]) ? $model->getCategoriesByType(Category::TYPE_SPECIAL)[0] : '' ?>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="icon-text">
                                         <i class="fa fa-check"> </i>
                                         <br>
-                                        <?= Item::getConditions()[$model->condition] ?>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +131,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= Item::getConditions()[$model->condition] ?>
                                                 </b>
                                             </td>
                                         </tr>
@@ -178,8 +173,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= implode("<br>",
-                                                        $model->getCategoriesByType(Category::TYPE_AGE)); ?>
+
                                                 </b>
                                             </td>
                                         </tr>
@@ -189,8 +183,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= implode("<br>",
-                                                        $model->getCategoriesByType(Category::TYPE_SPECIAL)); ?>
                                                 </b>
                                             </td>
                                         </tr>
@@ -225,7 +217,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     echo ItemCard::widget([
                                         'model' => $item,
                                         'showDistance' => false,
-                                        'numberOfCards' => 3
+                                        'numberOfCards' => 2,
+                                        'titleCutoff' => 30
                                     ]);
                                 } ?>
                             </div>

@@ -15,9 +15,9 @@ use yii\widgets\Pjax;
 \app\assets\LodashAsset::register($this);
 ?>
 <?php Pjax::begin([
-//    'enableReplaceState' => false,
     'enableReplaceState' => true,
-    'id' => 'pjax-create-booking-form'
+    'id' => 'pjax-create-booking-form',
+    'timeout' => 2000
 ]);
 ?>
     <script>

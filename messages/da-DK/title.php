@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -17,23 +17,23 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Account settings' => '@@Brugerindstillinger@@',
-    'Contact us' => '@@Kontakt Os@@',
-    'Email settings' => '@@Email indstillinger@@',
-    'Item Availability' => '@@Genstandens tilgænlighed@@',
-    'Item Details' => '@@Detaljer@@',
-    'Item Prices' => '@@Prissætning@@',
-    'Item Rents' => '@@Lejeaftaler@@',
-    'Item images' => '@@Ting@@',
-    'Launching soon' => '@@Er snart i luften@@',
-    'List Your Rents' => '@@List dine lejeaftaler@@',
-    'My items list' => '@@Mine ting@@',
-    'Profile verification' => '@@Profil verifikation@@',
-    'Resend confirmation email' => '@@Gensend bekræftelsesmail@@',
-    'Thank you for signing up' => '@@Tak fordi du oprettede en bruger@@',
-    'View For Item {0}' => '@@Se tingene for {0}@@',
-    'Your kidup wallet' => '@@Din KidUp pung@@',
-    '{0} KidStuff' => '@@{0} Børneting@@',
+    'Account settings' => 'Brugerindstillinger',
+    'Contact us' => 'Kontakt Os',
+    'Email settings' => 'Email indstillinger',
+    'Item Availability' => 'Genstandens tilgænlighed',
+    'Item Details' => 'Detaljer',
+    'Item Prices' => 'Prissætning',
+    'Item Rents' => 'Lejeaftaler',
+    'Item images' => 'Ting',
+    'Launching soon' => 'Er snart i luften',
+    'List Your Rents' => 'List dine lejeaftaler',
+    'My items list' => 'Mine ting',
+    'Profile verification' => 'Profil verifikation',
+    'Resend confirmation email' => 'Gensend bekræftelsesmail',
+    'Thank you for signing up' => 'Tak fordi du oprettede en bruger',
+    'View For Item {0}' => 'Se tingene for {0}',
+    'Your kidup wallet' => 'Din KidUp pung',
+    '{0} KidStuff' => '{0} Børneting',
     'About our company' => 'Omkring Os',
     'Account Settings' => 'Brugerindstillinger',
     'Admin' => 'Admin',

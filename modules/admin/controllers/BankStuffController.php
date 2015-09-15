@@ -2,17 +2,20 @@
 
 namespace app\modules\admin\controllers;
 
-use app\controllers\Controller;
+use app\models\base\User;
 use app\modules\booking\models\Payout;
+use app\modules\item\models\Item;
 use Yii;
 
-class PaymentController extends Controller
+class BankStuffController extends Controller
 {
+    public function actionIndex()
+    {
+        return $this->render('export');
+    }
 
     public function actionGeneratePayout()
     {
-        $this->checkAdmin();
-
         $payouts = Payout::findAll(['status' => Payout::STATUS_TO_BE_PROCESSED]);
         if (count($payouts) == 0) {
             echo 'nothing to pay';
@@ -30,12 +33,4 @@ class PaymentController extends Controller
         }
     }
 
-    private function checkAdmin()
-    {
-        if (\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()) {
-            return $this->redirect('@web/home');
-        }
-
-        return false;
-    }
 }

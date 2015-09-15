@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -19,15 +19,19 @@
 return [
     'How it Works' => '',
     'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t using at the moment.' => '',
+    'KidUp Search' => '',
+    'Search' => '',
     'We are honered to be featured on' => '',
+    'What are you looking for?' => '',
+    'What do you like to get your child?' => '',
     'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.' => '',
-    'Become a part of the KidUp familiy' => '@@Bliv en del af KidUp familien@@',
-    'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.' => '@@Jeg er fuldstændig forelsket med deleaspektet og synes det giver god mening at dele de ting vi alligevel ikke bruger heletiden.@@',
-    'Share a' => '@@Del en@@',
-    'Sign Up Now' => '@@Register dig nu@@',
-    'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.' => '@@De penge vi får ved at leje Vilhelms ting ud kan vi bruge på en sommertur til Legoland med hele familien.@@',
-    'stroller,toy,bike' => '@@barnevogn,legetøj,cykel@@',
-    'trolley' => '@@barnevogn@@',
+    'Become a part of the KidUp familiy' => 'Bliv en del af KidUp familien',
+    'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.' => 'Jeg er fuldstændig forelsket med deleaspektet og synes det giver god mening at dele de ting vi alligevel ikke bruger heletiden.',
+    'Share a' => 'Del en',
+    'Sign Up Now' => 'Register dig nu',
+    'With the money we make on renting Vilhelm\'s equipment out, we can take a summertrip to Legoland with the entire family.' => 'De penge vi får ved at leje Vilhelms ting ud kan vi bruge på en sommertur til Legoland med hele familien.',
+    'stroller,toy,bike' => 'barnevogn,legetøj,cykel',
+    'trolley' => 'barnevogn',
     'Approved by Experts' => 'Godkendt af Eksperter',
     'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.' => 'Men hos KidUp kan du leje det. Og så kan i sammen finde ud af om det virkelig er noget.',
     'By renting products from other parents, you\'re sure to get picture perfect experthelp.<br>So you can focus on being a good parent.' => 'Ved at leje produkter af andre familier er du sikker på at få den helt rette eksperthjælp.',

@@ -10,6 +10,7 @@ class ItemCard extends Widget
     public $model;
 
     public $numberOfCards = 4;
+    public $titleCutoff = 24;
     protected $rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-4 col-lg-3";
 
     // whether or not to display a distance to the item (in km), if not, only
@@ -39,9 +40,8 @@ class ItemCard extends Widget
     }
 
     private function shortenize($str) {
-        $maxLength = 24;
-        if (strlen($str) > $maxLength) {
-            return substr($str, 0, $maxLength) . '...';
+        if (strlen($str) > $this->titleCutoff) {
+            return substr($str, 0, $this->titleCutoff) . '...';
         }
         return $str;
     }

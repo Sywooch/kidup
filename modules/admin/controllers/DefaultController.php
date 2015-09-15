@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\controllers;
 
-use app\controllers\Controller;
 use app\models\base\User;
 use app\modules\item\models\Item;
 use Yii;
@@ -15,8 +14,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $this->checkAdmin();
-
         $userData = ['Users'];
         for($i = 30; $i >= 0; $i--){
             $userData[] = static::userCount($i);
@@ -27,7 +24,7 @@ class DefaultController extends Controller
             $itemData[] = static::itemCount($i);
         }
 
-        return $this->render('index', [
+        return $this->render('dashboard', [
             'userData' => [ $userData],
             'itemData' => [ $itemData],
         ]);
@@ -39,13 +36,5 @@ class DefaultController extends Controller
 
     private static function itemCount($daysAgo){
         return Item::find()->where('created_at <= :date')->params([':date' => time()-$daysAgo*24*60*60])->count();
-    }
-
-    private function checkAdmin()
-    {
-        if (\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()) {
-            return $this->redirect('@web/home');
-        }
-        return false;
     }
 }

@@ -125,7 +125,7 @@ class ViewController extends Controller
         $images = $item->getCarouselImages();
 
         // find which items are related
-        $related_items = $item->getRecommendedItems($item, 3);
+        $related_items = $item->getRecommendedItems($item, 2);
         $res = [
             'model' => $item,
             'location' => $item->location,
