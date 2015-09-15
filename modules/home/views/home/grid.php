@@ -10,38 +10,7 @@ use yii\helpers\Url;
 
 <!--Area for all categories-->
 <Section id="content-home-categories">
-    <div class="row" style="margin-bottom: 30px;">
-        <div class="text-center" style="font-size: 22px;margin-top:-30px;margin-bottom:20px;">
-            <?= Yii::t("home", "We are honered to be featured on") ?>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row">
-                    <div class="col-md-2 col-md-offset-2">
-                        <?= ImageHelper::image('kidup/home/mentions/bad_ass_design1.png', ['h' => 40], [
-                            'style' => 'margin-top:16px; opacity:0.5;'
-                        ]) ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= ImageHelper::image('kidup/home/mentions/bad_ass_design2.png', ['h' => 60],[
-                            'style' => 'opacity:0.5;margin-left:-10px;'
-                        ]) ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= ImageHelper::image('kidup/home/mentions/bad_ass_design3.png', ['h' => 74],[
-                            'style' => 'opacity:0.5;margin-top:2px;margin-left:-35px;'
-                        ]) ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?= ImageHelper::image('kidup/home/mentions/bad_ass_design4.png', ['h' => 60],[
-                            'style' => 'opacity:0.5;margin-top:-4px'
-                        ]) ?>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -157,13 +126,45 @@ use yii\helpers\Url;
         <div class="row">
             <?php
             foreach ($items as $i => $item) {
-                if ($i > 6) break;
+                if ($i > 6) {
+                    break;
+                }
                 echo ItemCard::widget([
                     'model' => $item,
                     'showDistance' => true
                 ]);
             }
             ?>
+        </div>
+        <div class="row hidden-xs" style="margin-bottom: 20px;">
+            <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:20px;">
+                <?= Yii::t("home", "We are honered to be featured on") ?>
+            </div>
+            <div class="col-md-2 col-md-offset-1">
+                <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 200], [
+                    'style' => 'opacity:0.5;'
+                ]) ?>
+            </div>
+            <div class="col-md-2">
+                <?= ImageHelper::image('kidup/home/mentions/dr.png', ['w' => 200], [
+                    'style' => 'opacity:0.5;margin-top: 17px;'
+                ]) ?>
+            </div>
+            <div class="col-md-2">
+                <?= ImageHelper::image('kidup/home/mentions/radio24-7.png', ['w' => 200], [
+                    'style' => 'opacity:0.5;'
+                ]) ?>
+            </div>
+            <div class="col-md-2">
+                <?= ImageHelper::image('kidup/home/mentions/startup-weekend.png', ['w' => 200], [
+                    'style' => 'opacity:0.5; margin-top: 10px;'
+                ]) ?>
+            </div>
+            <div class="col-md-2">
+                <?= ImageHelper::image('kidup/home/mentions/trendsonline.png', ['w' => 200], [
+                    'style' => 'opacity:0.5; margin-top: 15px;'
+                ]) ?>
+            </div>
         </div>
     </div>
 </Section>

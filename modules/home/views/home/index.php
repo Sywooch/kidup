@@ -24,10 +24,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         <div class="header-content">
             <div class="row ">
                 <div class=" col-xs-12 col-sm-12 title text-center">
-                    <h1 class="hidden-xs hidden-sm">
+                    <h1>
                         <?= \Yii::t('home', 'Share'); ?>
                         <strong id="typist-element"
-                            data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
+                                data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
                                 'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t('home', 'With a family near you') ?>
@@ -45,16 +45,18 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                         }, 1000);
                     });") ?>
                     <div class="row mobile-search visible-xs visible-sm">
-                        <form class="">
-                            <div class="col-xs-8 col-xs-offset-1">
-                                <input class="form-control" placeholder="<?= Yii::t("home", "What are you looking for?") ?>" data-toggle="modal" data-target="#searchModal">
-                            </div>
-                            <div class="col-xs-2">
-                                <button type="submit" class="btn btn-danger btn-fill" data-toggle="modal" data-target="#searchModal">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
+                        <div class="col-xs-8 col-xs-offset-1">
+                            <input class="form-control"
+                                   placeholder="<?= Yii::t("home", "What are you looking for?") ?>"
+                                   data-toggle="modal"
+                                   data-target="#searchModal">
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="submit" class="btn btn-danger btn-fill" data-toggle="modal"
+                                    data-target="#searchModal">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,7 +210,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     </div>
 
     <!--Area for story-->
-    <section id="content-stories">
+    <section id="content-stories" class="hidden-xs">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1 hidden-xs text-center">
@@ -231,16 +233,4 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             </div>
         </div>
     </section>
-    <!--    <section id="signup">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-sm-12 col-xs-12 text-center">-->
-    <!--                    <h4>-->
-    <!--                        --><? //= \Yii::t('home', 'Featured on') ?>
-    <!--                    </h4>-->
-    <!---->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </section>-->
 </div>
