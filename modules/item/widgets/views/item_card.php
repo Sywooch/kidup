@@ -49,21 +49,21 @@ use yii\helpers\Url;
                 </div>
 
                 <div class="footer">
-                    <div class="row">
-                        <div class="col-md-6">
-                            reviews
-                        </div>
-                        <div class="col-md-6 stats">
-                            <i class="fa fa-map-marker"></i>
-                            <?php
-                            $distance = (int)$model->distance;
-                            if ($distance == 0 || !$showDistance) {
-                                echo $model->location->city;
-                            } else {
-                                echo $distance . ' km';
-                            }
-                            ?>
-                        </div>
+                    <div class="reviews">
+                        <?= \app\modules\review\widgets\ReviewScore::widget([
+                            'user_id' => $model->owner_id
+                        ]) ?>
+                    </div>
+                    <div class="location">
+                        <i class="fa fa-map-marker"></i>
+                        <?php
+                        $distance = (int)$model->distance;
+                        if ($distance == 0 || !$showDistance) {
+                            echo $model->location->city;
+                        } else {
+                            echo $distance . ' km';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
