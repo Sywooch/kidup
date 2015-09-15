@@ -2,6 +2,7 @@
 use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
+use app\modules\user\widgets\UserImage;
 
 /**
  * @var \app\modules\item\models\Item $model
@@ -29,7 +30,7 @@ use yii\helpers\Url;
                     </span>
                 </div>
                 <div class="author">
-                    <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                    <?= UserImage::widget([
                         'user_id' => $model->owner_id,
                         'width' => '50px'
                     ]) ?>
@@ -49,7 +50,8 @@ use yii\helpers\Url;
                 <div class="footer">
                     <div class="reviews">
                         <?= \app\modules\review\widgets\ReviewScore::widget([
-                            'user_id' => $model->owner_id
+                            'user_id' => $model->owner_id,
+                            'reviewCount' => $widget->reviewCount
                         ]) ?>
                     </div>
                     <div class="location">

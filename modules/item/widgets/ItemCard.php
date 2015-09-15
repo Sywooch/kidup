@@ -11,6 +11,7 @@ class ItemCard extends Widget
 
     public $numberOfCards = 4;
     public $titleCutoff = 24;
+    public $reviewCount = false;
     protected $rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-4 col-lg-3";
 
     // whether or not to display a distance to the item (in km), if not, only
@@ -35,7 +36,8 @@ class ItemCard extends Widget
         return $this->render('item_card', [
             'model' => $this->model,
             'showDistance' => $this->showDistance,
-            'rowClass' => $this->rowClass
+            'rowClass' => $this->rowClass,
+            'widget' => $this
         ]);
     }
 
