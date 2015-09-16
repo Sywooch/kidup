@@ -16,11 +16,12 @@ use Yii;
  * @property integer $item_id
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $is_public
  *
- * @property \app\models\Booking $booking
- * @property \app\models\Item $item
- * @property \app\models\User $reviewer
- * @property \app\models\User $reviewed
+ * @property Booking $booking
+ * @property Item $item
+ * @property User $reviewer
+ * @property User $reviewed
  */
 class Review extends \yii\db\ActiveRecord
 {
@@ -39,8 +40,8 @@ class Review extends \yii\db\ActiveRecord
     {
         return [
             [['value'], 'string'],
-            [['reviewer_id', 'reviewed_id', 'type', 'booking_id', 'created_at'], 'required'],
-            [['reviewer_id', 'reviewed_id', 'booking_id', 'item_id', 'created_at', 'updated_at'], 'integer'],
+            [['reviewer_id', 'reviewed_id', 'type', 'created_at'], 'required'],
+            [['reviewer_id', 'reviewed_id', 'booking_id', 'item_id', 'created_at', 'updated_at', 'is_public'], 'integer'],
             [['type'], 'string', 'max' => 45]
         ];
     }
