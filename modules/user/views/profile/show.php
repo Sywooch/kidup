@@ -54,7 +54,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
 
             </div>
 
-            <div class="col-sm-8 col-md-7">
+            <div class="col-sm-8 col-md-6">
                 <h2>
                     <div class="pull-right">
                         <?php
