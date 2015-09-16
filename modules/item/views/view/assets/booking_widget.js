@@ -55,6 +55,7 @@ var widgetFactory = function () {
     $("#request-booking-btn").click(function (event) {
         if (window.userIsGuest) {
             event.preventDefault();
+            $('#bookingModal').modal('hide');
             $('#loginModal').modal('show');
         }
         var val1 = $('#create-booking-datefrom').val();
