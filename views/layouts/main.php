@@ -11,6 +11,7 @@ use yii\helpers\Html;
 \app\assets\AppAsset::register($this);
 FontAwesomeAsset::register($this);
 BootstrapPluginAsset::register($this);
+\yii\web\JqueryAsset::register($this); // very important, please leave all of them here
 
 $url = @Yii::$app->request->getUrl();
 $transparent = ($url == '/' || $url == '/home');
