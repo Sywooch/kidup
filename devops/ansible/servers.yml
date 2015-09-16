@@ -25,20 +25,20 @@
   sudo: true
   vars:
     web_server: apachephp
-    servername: 31.187.70.130 kidup.dk
+    servername: 54.93.103.33 kidup.dk
     timezone: Europe/Amsterdam
     hostname: kidup.dk
     doc_root: /var/www/current
     ini_template: php-prod.ini
   vars_files:
-    - vars/mysql-prod.yml
+    - vars/mysql.yml
     - vars/common.yml
     - [ "vars/apachephp.yml", "vars/ws_defaults.yml" ]
   roles:
     - init
     - apache
     - php5
-    - mysql
     - phpcommon
+    - mysql
     - nodejs
     - app

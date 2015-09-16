@@ -6,18 +6,18 @@
   sudo: yes
   apt: pkg=npm state=latest
 
-- name: Link nodejs to user env variables
-  sudo: yes
-  command: ln -s /usr/bin/nodejs /usr/bin/node
+#- name: Link nodejs to user env variables
+#  sudo: yes
+#  command: ln -s /usr/bin/nodejs /usr/bin/node
 
-- name: Get npm global temporary directory
-  command: npm -g config get tmp
-  register: nodejs_npm_tempdir
-  changed_when: Falsegrid
+#- name: Get npm global temporary directory
+  #command: npm -g config get tmp
+  #register: nodejs_npm_tempdir
+  #changed_when: Falsegrid
 
-- name: Set npm global temporary directory to /tmp
-  command: npm -g config set tmp /tmp
-  when: nodejs_npm_tempdir.stdout != '/tmp'
+#- name: Set npm global temporary directory to /tmp
+#  command: npm -g config set tmp /tmp
+#  when: nodejs_npm_tempdir.stdout != '/tmp'
 
 - name: install the latest npm global packages
   npm:
