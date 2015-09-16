@@ -290,21 +290,21 @@ class Filter extends Model
     public function filterPrice()
     {
         $field = "price_week";
-        if (in_array($this->priceUnit, ['day', 'week', 'month'])) {
-            $field = 'price_' . $this->priceUnit;
-        }
+        if (in_array($this->priceUnit, ['price_day', 'price_week', 'price_month'])) {
+            $field = $this->priceUnit;
+            if (isset($this->priceMin) && $this->priceMin !== null) {
 
-        if (isset($this->priceMin) && $this->priceMin !== null) {
-            $this->_query->andWhere(':field >= :low', [
-                ':field' => $field,
-                ':low' => $this->priceMin,
-            ]);
-        }
-        if (isset($this->priceMax) && $this->priceMax !== null) {
-            $this->_query->andWhere(':field <= :high', [
-                ':field' => $field,
-                ':high' => $this->priceMax,
-            ]);
+                $this->_query->andWhere(':field >= :low', [
+                    ':field' => $field,
+                    ':low' => $this->priceMin,
+                ]);
+            }
+            if (isset($this->priceMax) && $this->priceMax !== null) {
+                $this->_query->andWhere(':field <= :high', [
+                    ':field' => $field,
+                    ':high' => $this->priceMax,
+                ]);
+            }
         }
     }
 

@@ -55,8 +55,8 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                             </h4>
                             <?= Yii::t("message",
                                 "How about searching for a {0} or a {1} and getting some action here?", [
-                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search?q=categories|13'),
-                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search?q=categories|20'),
+                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search/'.\Yii::t('categories_and_features', 'Stroller')),
+                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search/'.\Yii::t('categories_and_features', 'Bikes')),
                                 ]) ?>
                         </div>
                     <?php } ?>

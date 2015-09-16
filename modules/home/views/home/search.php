@@ -9,7 +9,10 @@ use app\modules\item\widgets\GoogleAutoComplete;
  */
 
 \app\assets\AngularAsset::register($this);
-\app\assets\JQueryTextRangeAsset::register($this)
+\app\assets\JQueryTextRangeAsset::register($this);
+$emptyLocation = \Yii::t('search', 'Location: Near Me');
+$emptySearch = \Yii::t('categories_and_features', 'Baby Toys');
+$this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{$emptySearch}';");
 ?>
 
 <div id="search-area" class="visible-sm visible-md visible-lg">
@@ -26,7 +29,9 @@ use app\modules\item\widgets\GoogleAutoComplete;
                     ?>
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
-                            'options' => ['placeholder' => \Yii::t('home', 'What do you like to get your child?')],
+                            'options' => ['placeholder' => \Yii::t('home', 'e.g. {0}',[
+                                $emptySearch
+                            ])],
                             'pluginOptions' => ['highlight' => true, 'hint' => true],
                             'dataset' => [
                                 [
@@ -38,7 +43,8 @@ use app\modules\item\widgets\GoogleAutoComplete;
                                     'limit' => 5,
                                     'display' => 'text',
                                     'templates' => [
-                                        'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "We couldn't find that, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">'.
+                                            \Yii::t('home', "We couldn't find that, perhaps try Stroller, Trampoline or Toy?").'</div>',
                                         'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                                     ]
                                 ],
@@ -51,13 +57,14 @@ use app\modules\item\widgets\GoogleAutoComplete;
                         <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
                             'options' => [
                                 'class' => 'form-control location-input',
-//                                    'ng-model' => 'searchCtrl.filter.location',
-                                'autocompleteName' => 'search'
+                                'placeholder' => 'In which location?',
+                                'autocompleteName' => 'home-search',
+                                'value' => $emptyLocation
                             ],
                             'autocompleteOptions' => [
                                 'types' => ['geocode']
                             ],
-                            'name' => 'autoCompleteLocation'
+                            'name' => 'autoCompleteLocationHome'
                         ])->label(false); ?>
                     </div>
 

@@ -59,18 +59,19 @@ $(document).ready(function () {
 
         var vals = [];
         var val = $("#search-home-query").val();
-        if(val == ''){
-            val = 'Strollers';
+        var location = $("#search-home-location").val();
+        if (val == '') {
+            val = window.emptySearch;
         }
-        if (navigator.geolocation) {
+        if (window.emptyLocation == location && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var geocoder = new google.maps.Geocoder;
                 var latlng = {
                     lat: parseFloat(position['coords']['latitude']),
                     lng: parseFloat(position['coords']['longitude'])
                 };
-                vals.push("search-filter[latitude]="+latlng.lat);
-                vals.push("search-filter[longitude]="+latlng.lng);
+                vals.push("search-filter[latitude]=" + latlng.lat);
+                vals.push("search-filter[longitude]=" + latlng.lng);
                 geocoder.geocode({'location': latlng}, function (results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         if (results.length > 0) {
@@ -82,6 +83,15 @@ $(document).ready(function () {
                     }
                 });
             });
+        } else if (window.emptyLocation) {
+            var autocomplete = $(window).attr('autocomplete-home-search');
+            var place = autocomplete.getPlace();
+            if(typeof place !== 'undefined'){
+                vals.push("search-filter[latitude]=" + place.geometry.location.lat());
+                vals.push("search-filter[longitude]=" + place.geometry.location.lng());
+                vals.push("search-filter[location]=" + place.formatted_address);
+            }
+            window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
         }else{
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
         }

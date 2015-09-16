@@ -4,7 +4,7 @@ $('#menu-search-form').on('submit', function (event) {
     var vals = [];
     var val = $("#menu-search-autocomplete").val();
     if(val == ''){
-        val = 'Strollers';
+        val = ' ';
     }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -29,4 +29,5 @@ $('#menu-search-form').on('submit', function (event) {
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }
+    window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
 });

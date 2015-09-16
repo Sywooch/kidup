@@ -28,6 +28,7 @@ $form = ActiveForm::begin([
         </div>
         <div id="refine-location" class="panel-collapse collapse in">
             <div class="panel-body">
+                <i ng-init="searchCtrl.filter.location='<?= $model->location ?>';"></i>
                 <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
                     'options' => [
                         'class' => 'form-control location-input',
@@ -113,6 +114,13 @@ $form = ActiveForm::begin([
 
                 <?php endforeach; ?>
             </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default visible-xs">
+        <div class="panel-body">
+            <?= \yii\helpers\Html::submitButton(Yii::t("item", "Apply Filters"), ['class' => 'btn btn-danger btn-fill', 'data-dismiss' => 'modal', 'style' => 'width:100%;', 'onclick' => 'window.submitFromModal()']) ?>
+            <br><br>
         </div>
     </div>
 

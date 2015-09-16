@@ -1,4 +1,4 @@
-window.initAngular = function(){
+window.initAngular = function () {
     var SearchController = function ($location, $http, $scope, $rootScope) {
         var scope = {};
 
@@ -6,7 +6,6 @@ window.initAngular = function(){
             query: '',
             priceUnit: 'week',
             prices: [],
-            longitude: null,
             latitude: null,
             categories: [],
             ages: []
@@ -26,16 +25,6 @@ window.initAngular = function(){
 
         _startTime = new Date().getTime();
 
-        var deactivateActiveFilters = function(){
-            scope.activeFilter = {
-                search: false,
-                price: false,
-                location: false
-            };
-        };
-
-        deactivateActiveFilters();
-
         scope.updateSlider = function (priceMin, priceMax) {
             scope.filter.priceMin = priceMin;
             scope.filter.priceMax = priceMax;
@@ -51,50 +40,7 @@ window.initAngular = function(){
             $("#price-slider-mobile").slider(values);
         };
 
-        var updateActiveFilters = function () {
-            //deactivateActiveFilters();
-            //
-            //if (scope.filter.query.length > 0)      scope.activeFilter.search = true;
-            //if (scope.filter.location.length > 0)   scope.activeFilter.location = true;
-            //if (scope.filter.priceMin != 0 || scope.filter.priceMax != 499 || scope.filter.priceUnit != 'week') {
-            //    scope.activeFilter.price = true;
-            //}
-            //
-            //// Don't display the label "active filters" when there are no filters active
-            //var numActiveFilters = 0;
-            //angular.forEach(scope.activeFilter, function(enabled, filter) {
-            //    if (enabled) numActiveFilters++;
-            //});
-            //if (numActiveFilters > 0) {
-            //    $('.filters-label').show();
-            //} else {
-            //    $('.filters-label').hide();
-            //}
-            //
-            //if(!$scope.$$phase) {
-            //    $scope.$apply();
-            //}
-        };
-
-        scope.activeFilterRemove = function (filter) {
-            if (filter == 'search') scope.filter.query = '';
-            if (filter == 'price') {
-                scope.filter.priceMin = 0;
-                scope.filter.priceMax = 499;
-                scope.filter.priceUnit = 'week';
-                $("#price-slider").slider({"values": [0, 499]});
-                $("#price-slider-mobile").slider({"values": [0, 499]});
-            }
-            if (filter == 'location') scope.filter.location = '';
-
-            if(!$scope.$$phase) {
-                $scope.$apply();
-            }
-            scope.filterChange();
-            scope.activeFilter[filter] = false;
-        };
-
-        scope.loadCurrentLocation = function() {
+        scope.loadCurrentLocation = function () {
             //if (navigator.geolocation) {
             //    navigator.geolocation.getCurrentPosition(function(position){
             //        var geocoder = new google.maps.Geocoder;
@@ -122,8 +68,10 @@ window.initAngular = function(){
 
         var update = function () {
             // using $http here fucks up something with the url, use $.ajax!
-            scope.loading = true;
-            $("#search-form").submit();
+            if (!$("body").hasClass("modal-open")) {
+                scope.loading = true;
+                $("#search-form").submit();
+            }
         };
 
         scope.filterChange = function () {
@@ -131,9 +79,6 @@ window.initAngular = function(){
             if (scope._timer !== null) {
                 clearTimeout(scope._timer)
             }
-
-            // activate filter buttons
-            updateActiveFilters();
 
             scope._timer = setTimeout(function () {
                 update();
@@ -222,7 +167,7 @@ window.initAngular = function(){
             //}, 500);
 
             $(document).on('pjax:beforeSend', function (xhr, options, settings) {
-                console.log(settings);
+                scope.loading = true;
                 var getParams = function (queryString) {
                     var query = (queryString || window.location.search).substring(1); // delete ?
                     if (!query) {
@@ -237,30 +182,35 @@ window.initAngular = function(){
 
                 var params = {};
                 var baseUrl = 'http://' + window.location.hostname + window.location.pathname;
-                _.map(getParams(settings.url), function(param){
+                _.map(getParams(settings.url), function (param) {
                     params[param[0]] = param[1];
                 });
 
                 var i = 0;
-                var added = _.map(params, function(param, name){
+                var added = _.map(params, function (param, name) {
                     var url = '';
-                    if(i == 0){
+                    if (i == 0) {
                         url += '?';
-                    }else{
+                    } else {
                         url += '&';
                     }
-                    url += name+'='+param;
+                    url += name + '=' + param;
                     i++;
                     return url;
                 });
 
-                settings.url = baseUrl+added.join('');
+                settings.url = baseUrl + added.join('');
                 console.log(settings.url);
                 return settings;
             });
-        };
 
-        window.onTypeaheadRender = function (val) {
+            // only auto resubmit if modal is not open
+            if (!$("body").hasClass("modal-open")) {
+                // resubmit the form on any type of change
+                $("#search-form").change(function () {
+                    $("#search-form").submit();
+                });
+            }
         };
 
         scope.init();
@@ -275,7 +225,12 @@ window.initAngular = function(){
     angular.bootstrap($("#search"), ['kidup.search']);
 };
 window.initAngular();
-$(document).on('pjax:success', function(){
+$(document).on('pjax:success', function () {
     console.log('pjax success');
     window.initAngular();
 });
+window.submitFromModal = function(){
+    setTimeout(function(){
+        $("#search-form").submit();
+    },50);
+};

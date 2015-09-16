@@ -27,17 +27,20 @@ use \kartik\typeahead\Typeahead;
 <?php $form = ActiveForm::begin([
     'id' => 'mobile-search',
     'fieldConfig' => [
-        'template' => "{input}\n{error}"
+        'template' => "{input}"
     ],
     'action' => Url::to('@web/search'),
     'method' => 'get',
     'options' => [
-        'style' => 'padding:15px;padding-top:80px;'
-    ]
+        'style' => 'padding:15px;padding-top:80px;',
+        'data-pjax' => 0
+    ],
 ]) ?>
 
 <?= $form->field($model, 'query')->widget(Typeahead::className(), [
-    'options' => ['placeholder' => \Yii::t('home', 'What do you like to get your child?')],
+    'options' => [
+        'placeholder' => \Yii::t('home', 'What do you like to get your child?')
+    ],
     'pluginOptions' => ['highlight' => true, 'hint' => true],
     'dataset' => [
         [
@@ -49,7 +52,7 @@ use \kartik\typeahead\Typeahead;
             'limit' => 5,
             'display' => 'text',
             'templates' => [
-                'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
                 'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
             ]
         ]
@@ -73,4 +76,37 @@ use \kartik\typeahead\Typeahead;
 
 <?php
 \yii\bootstrap\Modal::end();
+$this->registerJS('$("#mobile-search").on("submit", function (event) {
+    event.preventDefault();
+
+    var vals = [];
+    var val = $("#search-filter-query").val();
+    if(val == ""){
+        val = "Strollers";
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var geocoder = new google.maps.Geocoder;
+            var latlng = {
+                lat: parseFloat(position["coords"]["latitude"]),
+                lng: parseFloat(position["coords"]["longitude"])
+            };
+            vals.push("search-filter[latitude]="+latlng.lat);
+            vals.push("search-filter[longitude]="+latlng.lng);
+            geocoder.geocode({"location": latlng}, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results.length > 0) {
+                        var result = results[0];
+                        var location = result["formatted_address"];
+                        vals.push("search-filter[location]=" + location);
+                        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+                    }
+                }
+            });
+        });
+    }else{
+        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+    }
+});');
+
 ?>
