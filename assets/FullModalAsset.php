@@ -21,6 +21,9 @@ class FullModalAsset extends AssetBundle
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+    public $jsOptions = [
+        'position' => \yii\web\View::POS_LOAD
+    ];
 }
 
 

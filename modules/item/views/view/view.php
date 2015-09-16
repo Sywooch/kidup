@@ -29,6 +29,9 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \yii\widgets\PjaxAsset::register($this);
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
+<?= $this->render('booking_modal', [
+    'model' => $bookingForm,
+]); ?>
 
 <div id="item">
     <section id="content" class="section">
@@ -36,12 +39,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
             <div class="row">
                 <div class="col-sm-8 col-lg-7 col-md-offset-1">
                     <div class="row main-info">
-                        <div class="col-md-2">
+                        <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
                                 <?= \app\modules\user\widgets\UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
-                                        'width' => '80px'
+                                        'width' => '80px',
                                     ])
                                 ?>
                             </a>
@@ -87,6 +90,9 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             </p>
                         </div>
                     </div>
+
+                    <button class="btn btn-fill btn-danger" data-toggle="modal" data-target="#bookingModal"><?= \Yii::t('item', 'Request to Book') ?></button>
+                    <br /><br />
 
                     <div class="card card-product">
                         <div class="content">
@@ -187,6 +193,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
+                    <button class="btn btn-fill btn-danger" data-toggle="modal" data-target="#bookingModal"><?= \Yii::t('item', 'Request to Book') ?></button>
+
                     <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
 
                         <?= \yii\widgets\ListView::widget([
@@ -195,27 +203,24 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             'itemOptions' => ['tag' => 'span'],
                         ]) ?>
 
-                    <?php if (count($related_items) > 0): ?>
-                        <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
+                <?php if (count($related_items) > 0): ?>
+                    <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
 
-                        <div class="related">
-                            <div class="row">
-                                <?php foreach ($related_items as $item) {
-                                    echo ItemCard::widget([
-                                        'model' => $item,
-                                        'showDistance' => false,
-                                        'numberOfCards' => 2,
-                                        'titleCutoff' => 30,
-                                        'reviewCount' => true
-                                    ]);
-                                } ?>
-                            </div>
+                    <div class="related">
+                        <div class="row">
+                            <?php foreach ($related_items as $item) {
+                                echo ItemCard::widget([
+                                    'model' => $item,
+                                    'showDistance' => false,
+                                    'numberOfCards' => 2,
+                                    'titleCutoff' => 30,
+                                    'reviewCount' => true
+                                ]);
+                            } ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
+                <?php endif; ?>
                 </div>
-                <?php echo $this->render('booking_widget', [
-                    'model' => $bookingForm,
-                ]) ?>
             </div>
         </div>
     </section>
