@@ -15,6 +15,9 @@ class FullModalAsset extends AssetBundle
     public $js = [
         'js/bootstrap-modal-carousel.min.js'
     ];
+    public $jsOptions = [
+        'position' => \yii\web\View::POS_LOAD
+    ];
 }
 
 

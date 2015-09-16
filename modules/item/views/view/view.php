@@ -39,12 +39,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
             <div class="row">
                 <div class="col-sm-8 col-lg-7 col-md-offset-1">
                     <div class="row main-info">
-                        <div class="col-md-2">
+                        <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
                                 <?= \app\modules\user\widgets\UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
-                                        'width' => '80px'
+                                        'width' => '80px',
                                     ])
                                 ?>
                             </a>

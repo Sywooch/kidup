@@ -26,6 +26,8 @@ use \kartik\typeahead\Typeahead;
     <i class="fa fa-close"></i>
 </button>
 
+<br /><br />
+
 <?= $this->render('booking_widget', [
     'model' => $model
 ]); ?>

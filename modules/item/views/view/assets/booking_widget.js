@@ -112,20 +112,20 @@ var widgetFactory = function () {
     });
 
     var scrollFunc = function () {
-        if ($(document).width() < 990) return false;
-        var docScroll = $(document).scrollTop();
-        var navHeight = $('.navbar').height();
-        if (typeof $('.footer').offset() === "undefined") {
-            var mapHeight = 1000;
-        } else {
-            var mapHeight = $('.footer').offset().top;
-        }
-        var widgetHeight = $("#booking-widget").height();
-        if (docScroll > navHeight - 40 && docScroll < mapHeight - widgetHeight - 98) {
-            $("#booking-widget").css("margin-top", $(document).scrollTop() + 10 + "px");
-        } else if (docScroll <= 120) {
-            $("#booking-widget").css("margin-top", "40px");
-        }
+        //if ($(document).width() < 990) return false;
+        //var docScroll = $(document).scrollTop();
+        //var navHeight = $('.navbar').height();
+        //if (typeof $('.footer').offset() === "undefined") {
+        //    var mapHeight = 1000;
+        //} else {
+        //    var mapHeight = $('.footer').offset().top;
+        //}
+        //var widgetHeight = $("#booking-widget").height();
+        //if (docScroll > navHeight - 40 && docScroll < mapHeight - widgetHeight - 98) {
+        //    $("#booking-widget").css("margin-top", $(document).scrollTop() + 10 + "px");
+        //} else if (docScroll <= 120) {
+        //    $("#booking-widget").css("margin-top", "40px");
+        //}
     };
 
     $("#wrapper").css("margin-bottom", "0px"); /// visual misalignment with wrapper on item view page
