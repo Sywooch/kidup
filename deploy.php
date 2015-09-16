@@ -10,7 +10,7 @@ $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 $production = server('production', '54.93.103.33', 22)
     ->env('deploy_path', '/var/www')
-    ->env('branch', 'master')
+    ->env('branch', 'develop')
     ->user('ubuntu')
     ->stage('production');
 $test = server('test', '178.62.234.114', 22)
@@ -23,7 +23,7 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $production->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
     $test->password(getenv('CIRCLECI_TEST_PASSWORD'));
 } else {
-    $production->pemFile('/vagrant/devops/.private/ssh/kidup.pem');
+    $production->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
     //$production->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
