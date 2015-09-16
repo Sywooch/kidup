@@ -1,6 +1,9 @@
 ssh-agent /bin/sh
 ssh-add /vagrant/devops/.private/ssh/id_rsa
 
+ssh-add *.pem
+ssh ...
+
 ansible-playbook -i ansible/servers/hosts  ansible/servers.yml
 
 # Ubuntu
