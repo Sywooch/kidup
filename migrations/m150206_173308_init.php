@@ -527,7 +527,7 @@ class m150206_173308_init extends Migration
         $this->createIndex('idx_reviewed_id_2996_37', 'review', 'reviewed_id', 0);
         $this->createIndex('idx_booking_id_2996_38', 'review', 'booking_id', 0);
         $this->createIndex('idx_user_id_3019_39', 'setting', 'user_id', 0);
-        $this->createIndex('idx_UNIQUE_provider_3081_40', 'social_account', 'provider', 1);
+        $this->createIndex('idx_UNIQUE_provider_3081_40', 'social_account', 'provider, client_id', 1);
         $this->createIndex('idx_user_id_3081_41', 'social_account', 'user_id', 0);
         $this->createIndex('idx_user_id_3104_42', 'token', 'user_id', 0);
 

@@ -15,7 +15,6 @@ use Yii;
  * @property integer $price_week
  * @property integer $price_month
  * @property integer $owner_id
- * @property integer $condition
  * @property integer $currency_id
  * @property integer $is_available
  * @property integer $location_id
@@ -63,7 +62,6 @@ class Item extends \yii\db\ActiveRecord
                     'price_week',
                     'price_month',
                     'owner_id',
-                    'condition',
                     'currency_id',
                     'is_available',
                     'location_id',
@@ -120,7 +118,6 @@ class Item extends \yii\db\ActiveRecord
             'price_week' => Yii::t('app', 'Price Week'),
             'price_month' => Yii::t('app', 'Price Month'),
             'owner_id' => Yii::t('app', 'Owner ID'),
-            'condition' => Yii::t('app', 'Condition'),
             'currency_id' => Yii::t('app', 'Currency ID'),
             'is_available' => Yii::t('app', 'Is Available'),
             'location_id' => Yii::t('app', 'Location ID'),

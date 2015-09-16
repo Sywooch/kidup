@@ -82,6 +82,7 @@ $(document).ready(function () {
                         }
                     }
                 });
+                window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
             });
         } else if (window.emptyLocation) {
             var autocomplete = $(window).attr('autocomplete-home-search');
@@ -95,5 +96,7 @@ $(document).ready(function () {
         }else{
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
         }
+        //catcher
+        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     });
 });
