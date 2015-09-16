@@ -285,15 +285,7 @@ class CategoryController extends Controller
     }
 
     public function actionGenerate(){
-        $items = Item::find()->all();
-        $categories = Category::find()->where('parent_id IS NOT NULL')->all();
-        foreach ($items as $item) {
-            $item->category_id = $categories[rand(0, count($categories) - 1)]->id;
-            $item->save();
-            ItemSearch::updateSearch($item);
-        }
-
+        ItemSearch::updateSearch();
     }
-
 }
 

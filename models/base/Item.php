@@ -28,12 +28,12 @@ use Yii;
  * @property Location $location
  * @property Currency $currency
  * @property User $owner
- * @property \app\models\base\Category[] $category
+ * @property Category[] $category
  * @property ItemHasMedia[] $itemHasMedia
- * @property ItemSearch[] $itemSearch
  * @property Media[] $media
  * @property ItemHasFeature[] $itemHasFeatures
  * @property Feature[] $features
+ * @property Location[] $locatio
  * @property ItemHasFeatureSingular[] $itemHasFeatureSingulars
  * @property Feature[] $singularFeatures
  * @property ItemSimilarity[] $itemSimilarities
@@ -186,14 +186,6 @@ class Item extends \yii\db\ActiveRecord
     public function getItemHasMedia()
     {
         return $this->hasMany(ItemHasMedia::className(), ['item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemSearch()
-    {
-        return $this->hasMany(ItemSearch::className(), ['item_id' => 'id']);
     }
 
     /**

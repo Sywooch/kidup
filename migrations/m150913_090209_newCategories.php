@@ -113,15 +113,12 @@ class m150913_090209_newCategories extends Migration
             'component_type' => 'VARCHAR(10) NOT NULL',
             'component_id' => 'INT NOT NULL',
             'text' => 'VARCHAR(45) NOT NULL',
-            'item_id' => 'INT NOT NULL',
             'language_id' => 'VARCHAR(5) NOT NULL',
         ], "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=MyISAM");
 
-        $this->createIndex('fk_item_search_item1_idx', 'item_search', 'item_id', 0);
         $this->createIndex('fk_item_search_language1_idx', 'item_search', 'language_id', 0);
         $this->execute("ALTER TABLE `item_search` ADD FULLTEXT INDEX `text` (`text`);");
 
-        $this->addForeignKey('fk_item_search_item1', 'item_search', 'item_id', 'item', 'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_item_search_language1', 'item_search', 'language_id', 'language', 'id', 'CASCADE',
             'NO ACTION');
 

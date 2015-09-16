@@ -249,59 +249,7 @@ class Item extends \app\models\base\Item
         }, 10 * 60);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLocation()
-    {
-        return $this->hasOne(Location::className(), ['id' => 'location_id']);
-    }
 
-    public function getCategoriesMain()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_MAIN])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    public function getCategoriesAge()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_AGE])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    public function getCategoriesSpecial()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_SPECIAL])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    /**
-     * Returns the categories of this item of a certain type
-     * @param $type
-     * @return array
-     */
-    public function getCategoriesByType($type)
-    {
-        $cats = Category::find()->innerJoinWith('itemHasCategories')->
-        where([
-            'type' => $type,
-            'item_has_category.item_id' => $this->getAttribute('id')
-        ])->asArray()->all();
-        $res = [];
-        foreach ($cats as $cat) {
-            $res[] = $cat['name'];
-        }
-        return $res;
-    }
 
     /**
      * Get a list of recommended items.

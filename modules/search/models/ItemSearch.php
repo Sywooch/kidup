@@ -1,6 +1,8 @@
 <?php
 namespace app\modules\search\models;
 
+use app\models\base\Category;
+use app\models\base\Feature;
 use app\models\base\Item;
 use app\models\base\Language;
 use yii\web\BadRequestHttpException;
@@ -29,7 +31,7 @@ class ItemSearch extends \app\models\base\ItemSearch
 
         $input = $this->tokenizeInput($input);
         $query = ItemSearch::find()->select("*, SUM(MATCH(text) AGAINST(:q IN BOOLEAN MODE)) as score");
-        $params[':q'] = $input[count($input) - 1]."*";
+        $params[':q'] = $input[count($input) - 1] . "*";
         $query->where("MATCH(text) AGAINST(:q IN BOOLEAN MODE)");
         $query->andWhere(['IN', 'component_type', ['sub-cat', 'main-cat']]);
         $query->params($params);
@@ -38,7 +40,9 @@ class ItemSearch extends \app\models\base\ItemSearch
         $suggestions = $query->groupBy('text')->orderBy('score DESC')->limit(10)->all();
         $res = [];
         foreach ($suggestions as $suggestion) {
-            if(strpos(implode(" ", $input), $suggestion->text) !== false) continue;
+            if (strpos(implode(" ", $input), $suggestion->text) !== false) {
+                continue;
+            }
             $res[] = ['text' => implode(" ", array_slice($input, 0, count($input) - 1)) . " " . $suggestion->text];
         }
         return $res;
@@ -52,32 +56,24 @@ class ItemSearch extends \app\models\base\ItemSearch
     }
 
     /**
-     * Updates / creates all search references for an item
      * @param Item $item
      */
-    public static function updateSearch(Item $item)
+    public static function updateSearch()
     {
-        self::removeFromSearch($item);
+        ItemSearch::deleteAll();
 
-        (new self())->make(self::COMPONENT_MAIN_CATEGORY, $item->category->parent->id, $item->category->parent->name,
-            $item);
-        (new self())->make(self::COMPONENT_SUB_CATEGORY, $item->category->id, $item->category->name, $item);
-        foreach ($item->singularFeatures as $singular) {
-            (new self())->make(self::COMPONENT_FEATURE, $singular->id, $singular->name, $item);
+        $categories = Category::find()->all();
+        foreach ($categories as $cat) {
+            if ($cat->itemCount > 0 && $cat->parent_id !== null) {
+                (new self())->make(self::COMPONENT_SUB_CATEGORY, $cat->id, $cat->name);
+            } else {
+                if ($cat->parent_id === null) {
+                    (new self())->make(self::COMPONENT_MAIN_CATEGORY, $cat->id, $cat->name);
+                }
+            }
         }
-        foreach ($item->itemHasFeatures as $ihf) {
-            (new self())->make(self::COMPONENT_FEATURE, $ihf->feature_id, $ihf->featureValue->name, $item);
-        }
-    }
 
-    /**
-     * Removes all search references for an item
-     * @param Item $item
-     * @return int
-     */
-    public static function removeFromSearch(Item $item)
-    {
-        return ItemSearch::deleteAll(['item_id' => $item->id]);
+        // still to do here: features
     }
 
     /**
@@ -85,10 +81,9 @@ class ItemSearch extends \app\models\base\ItemSearch
      * @param string $component
      * @param int $componentId
      * @param string $text
-     * @param Item $item
      * @param Language $language
      */
-    private function make($component, $componentId, $text, Item $item)
+    private function make($component, $componentId, $text)
     {
         $langs = Language::find()->all();
         foreach ($langs as $lang) {
@@ -96,7 +91,6 @@ class ItemSearch extends \app\models\base\ItemSearch
             $is->component_type = $component;
             $is->component_id = $componentId;
             $is->text = self::t($text, $lang->language_id);
-            $is->item_id = $item->id;
             $is->language_id = $lang->language_id;
             $is->save();
         }

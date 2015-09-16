@@ -381,7 +381,7 @@ class CreateController extends Controller
         if($publish !== false){
             $item->is_available = 1;
             $item->save(false); // save, but don't check if valid, should be done by this point
-            ItemSearch::updateSearch($item); // enables the item to be found
+            ItemSearch::updateSearch(); // enables the item to be found
             return $this->redirect('@web/item/'.$id.'?new_publish=true');
         }
         return $this->render('publish', ['item' => $item]);

@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $parent_id
+ * @property integer $itemCount
  *
  * @property Category $parent
  * @property Category[] $children
@@ -94,6 +95,14 @@ class Category extends \yii\db\ActiveRecord
     public function getItems()
     {
         return $this->hasMany(Item::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemCount()
+    {
+        return $this->hasMany(Item::className(), ['category_id' => 'id'])->count();
     }
 
     /**

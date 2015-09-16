@@ -19,29 +19,6 @@ $form = ActiveForm::begin([
     'method' => 'get',
     'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'search-form'],
 ]); ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h6 class="panel-title">
-                <?= Yii::t("item", "Category") ?>
-            </h6>
-        </div>
-        <div id="refineQuery" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <?php
-
-                if (count($model->categories) == 1) {
-                    $cat = \app\modules\item\models\Category::findOne(['id' => $model->categories[0]]);
-                    echo $cat->name;
-                }elseif (count($model->categories) > 0){
-                    foreach ($model->categories as $catId) {
-
-                    }
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-
     <!--location-->
     <div class="panel panel-default">
         <div class="panel-heading">

@@ -38,10 +38,11 @@ use app\modules\item\widgets\GoogleAutoComplete;
                                     'limit' => 5,
                                     'display' => 'text',
                                     'templates' => [
-                                        'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "We couldn't find that, perhaps try Stroller, Trampoline or Toy?").'</div>',
                                         'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                                     ]
-                                ]
+                                ],
+
                             ]
                         ])->label(false); ?>
                     </div>

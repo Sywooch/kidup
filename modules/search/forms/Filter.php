@@ -14,6 +14,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\helpers\Html;
 
 class Filter extends Model
 {
@@ -31,6 +32,9 @@ class Filter extends Model
     public $features;
     public $singularFeatures;
     public $page;
+
+    public $resultsAreFake = false; // if the results are not results from the actual query, but just to have something
+    public $resultText = false; // toptext in resultPage
 
     public function formName()
     {
@@ -61,13 +65,30 @@ class Filter extends Model
         $this->_query = Item::find();
 
         // apply filters
-        $this->filterLocation();
         $this->filterCategories();
         $this->filterPrice();
         $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
         $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
 
+        $countQuery = clone $this->_query;
+
+        // show something if there is no result
+        if ($countQuery->count() == 0) {
+
+            $this->resultText = \Yii::t('search', 'No results found for your query.');
+
+            $this->_query = Item::find();
+            $this->resultsAreFake = true;
+
+            // ditch all filters except location and topcategory
+            $this->filterLocation();
+            $this->filterCategories();
+            $this->_query->andWhere(['is_available' => 1]);
+            $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
+        }
+
+        $this->filterLocation();
         // give back the results
         return $this->_query->orderBy('rand()')->all();
     }
@@ -222,15 +243,39 @@ class Filter extends Model
     public function filterCategories()
     {
         if (is_array($this->categories)) {
-            foreach($this->categories as $cat){
-                $cat = Category::find()->where(['id' => $cat, 'parent_id' => null])->one();
-                if($cat !== null){
-                    foreach ($cat->children as $child) {
-                        $this->categories[] = $child->id;
+            if ($this->resultsAreFake) {
+                // if the results are faked, use the parent category of the selected search category
+                foreach ($this->categories as $cat) {
+                    $cat = Category::find()->where(['id' => $cat])->andWhere('parent_id is not null')->one();
+                    if ($cat !== null) {
+                        $this->categories = [$cat->parent_id]; // set parent as top category
+                    }
+                }
+            }
+            foreach ($this->categories as $cat) {
+                $cat = Category::find()->where(['id' => $cat])->one();
+
+                if ($cat !== null) {
+                    if($this->resultText == false){
+                        $this->resultText = \Yii::t('search', 'Results for').' '.\Yii::t("categories_and_features", $cat->name);
+                    }
+                    // add all subcategories if searching on a parent category
+
+                    if($cat->parent_id === null){
+                        foreach ($cat->children as $child) {
+                            $this->categories[] = $child->id;
+                        }
                     }
                 }
             }
             $this->_query->where(['IN', 'category_id', $this->categories]);
+        }else{
+            $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
+            $t = \Yii::t('categories_and_features', $suggestionWord->text);
+            $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?",[
+                '<b>'.$this->query.'</b>',
+                Html::a($t, '@web/search/'.$t, ['data-pjax' => 0])
+            ]);
         }
     }
 

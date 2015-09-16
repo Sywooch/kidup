@@ -10,7 +10,6 @@ use Yii;
  * @property string $component_type
  * @property integer $component_id
  * @property string $text
- * @property integer $item_id
  * @property string $language_id
  */
 class ItemSearch extends \yii\db\ActiveRecord
@@ -32,8 +31,8 @@ class ItemSearch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['component_type', 'component_id', 'text', 'item_id', 'language_id'], 'required'],
-            [['component_id', 'item_id'], 'integer'],
+            [['component_type', 'component_id', 'text', 'language_id'], 'required'],
+            [['component_id'], 'integer'],
             [['component_type'], 'string', 'max' => 10],
             [['text'], 'string', 'max' => 45],
             [['language_id'], 'string', 'max' => 5]
@@ -49,7 +48,6 @@ class ItemSearch extends \yii\db\ActiveRecord
             'component_type' => 'Component Type',
             'component_id' => 'Component ID',
             'text' => 'Text',
-            'item_id' => 'Item ID',
             'language_id' => 'Language ID',
         ];
     }

@@ -15,6 +15,11 @@ class FullModalAsset extends AssetBundle
     public $js = [
         'js/bootstrap-modal-carousel.min.js'
     ];
+    public $depends = [
+        'yii\web\JqueryAsset',
+        'yii\bootstrap\BootstrapAsset',
+    ];
+
 }
 
 

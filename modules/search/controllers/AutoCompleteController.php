@@ -52,16 +52,21 @@ class AutoCompleteController extends Controller
             (new ItemSearch())->getSuggestions($q)
         );
 
-//        return Cache::data('autocomplete_q_' . $q, function () use ($q) {
-//            $categories = Category::find()
-//                ->select('name as value, id as category_id')
-//                ->where('name like :q')
-//                ->params([
-//                    ':q' => $q . "%"
-//                ])->asArray()->limit(5)->all();
-//            return Json::encode(
-//                $categories
-//            );
-//        });
+
+    }
+
+    public function actionPreload()
+    {
+        return Cache::data('autocomplete_preload_' . \Yii::$app->language, function () {
+            $categories = ItemSearch::find()
+                ->select('text,component_id,language_id')
+                ->where(['IN', 'component_type', ['main-cat', 'sub-cat']])
+                ->andWhere(['language_id' => \Yii::$app->language])
+                ->asArray()
+                ->all();
+            return Json::encode(
+                $categories
+            );
+        });
     }
 }
