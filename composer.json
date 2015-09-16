@@ -55,7 +55,8 @@
     "warrence/yii2-kartikgii": "dev-master",
     "geoip/geoip": "~1.14",
     "yii2mod/yii2-c3-chart": "*",
-    "bower-asset/lodash": "dev-master"
+    "bower-asset/lodash": "dev-master",
+    "bower-asset/bootstrap-modal-carousel": "^2.0@dev"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",

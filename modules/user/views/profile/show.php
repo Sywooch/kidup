@@ -3,6 +3,8 @@
 use app\components\WidgetRequest;
 use app\modules\item\widgets\ItemCard;
 use Carbon\Carbon;
+use app\modules\user\widgets\UserImage;
+use app\modules\images\components\ImageHelper;
 
 /**
  * @var \yii\web\View $this
@@ -22,7 +24,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                 <div class="card card-user">
                     <div class="content">
                         <div class="author">
-                            <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                            <?= UserImage::widget([
                                 'user_id' => $profile->user_id,
                                 'width' => '150px'
                             ]) ?>
@@ -30,18 +32,18 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         </div>
                         <h4><?= Yii::t("user", "Verification") ?></h4>
 
-                        <?php $verified = function ($type) {
+                        <?php $verified = function ($type, $icon = '<i class="fa fa-check"></i>') {
                             return
                                 '<div class="row verifyEntity">
-                            <div class="col-xs-1">
-                                <i class="fa fa-check"></i>
+                            <div class="col-xs-2">
+                                ' . $icon . '
                             </div>
                             <div class="col-xs-8 entity">
                                 ' . $type . '
                             </div>
                         </div>';
                         } ?>
-
+                        <?= $profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp ? $verified(\Yii::t('user', 'KidUp Ambassador')):''?>
                         <?= $fbVerified ? $verified('Facebook') : '' ?>
                         <?= $twVerified ? $verified('Twitter') : '' ?>
                         <?= $profile->email_verified == 1 ? $verified(\Yii::t('user', 'Email')) : '' ?>
@@ -52,11 +54,18 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
 
             </div>
 
-            <div class="col-sm-8 col-md-8">
+            <div class="col-sm-8 col-md-7">
                 <h2>
+                    <div class="pull-right">
+                        <?php
+                        if ($profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp) {
+                            echo ImageHelper::image('kidup/user/ambassador.png', ['w' => 150])."<br>";
+                        } ?>
+                    </div>
                     <?= Yii::t("user", "Hi, I'm {0}!", [
                         $profile->first_name
                     ]) ?>
+
                     <br/>
                     <small>
                         <?= isset($profile->user->locations[0]->country0->name) ? $profile->user->locations[0]->country0->name : '' ?>
@@ -66,12 +75,13 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         ]) ?>
                     </small>
                 </h2>
+
                 <div class="description">
                     <?= $profile->description ?>
                 </div>
                 <hr>
-                <h4><?= Yii::t("user", "Reviews ") ?><br>
-                    <small><?= Yii::t("user", "Reviews from other families") ?></small>
+                <h4>
+                    <?= Yii::t("user", "Reviews from other families") ?>
                 </h4>
 
                 <div class="card-area-width">
@@ -94,12 +104,15 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         $profile->first_name
                     ]) ?>
                 </h3>
+
                 <div class="row">
                     <?php
                     foreach ($items as $item) {
                         echo ItemCard::widget([
                             'model' => $item,
-                            'showDistance' => false
+                            'showDistance' => false,
+                            'numberOfCards' => 3,
+                            'reviewCount' => true
                         ]);
                     }
                     ?>

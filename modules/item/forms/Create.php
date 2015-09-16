@@ -2,6 +2,7 @@
 
 namespace app\modules\item\forms;
 
+use app\models\base\Category;
 use app\modules\item\models\Item;
 use app\modules\item\models\ItemHasCategory;
 use Yii;
@@ -12,27 +13,46 @@ use yii\base\Model;
  */
 class Create extends Model
 {
-    public $categories;
+    public $category;
     public $item;
     public $first_name;
     public $last_name;
+    public $categoryData = [];
 
     public function rules()
     {
         return [
             [
-                'first_name', 'required', 'when' =>
-                function () {
-                    return \Yii::$app->user->identity->profile->hasErrors('first_name');
-                }
+                'first_name',
+                'required',
+                'when' =>
+                    function () {
+                        return \Yii::$app->user->identity->profile->hasErrors('first_name');
+                    }
             ],
             [
-                'last_name','required', 'when' =>
-                function () {
-                    return \Yii::$app->user->identity->profile->hasErrors('last_name');
-                }
-            ]
+                'last_name',
+                'required',
+                'when' =>
+                    function () {
+                        return \Yii::$app->user->identity->profile->hasErrors('last_name');
+                    }
+            ],
+            ['category', 'required'],
+            ['category', 'integer'],
+
         ];
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        $cats = Category::find()->where('parent_id IS NOT NULL')->all();
+
+        foreach ($cats as $cat) {
+            $this->categoryData[$cat->id] = $cat->parent->name . ' - '. $cat->name;
+        }
     }
 
     public function formName()
@@ -58,8 +78,14 @@ class Create extends Model
             return false;
         }
 
-        if($profile->isAttributeChanged('first_name') || $profile->isAttributeChanged('last_name')){
+        if ($profile->isAttributeChanged('first_name') || $profile->isAttributeChanged('last_name')) {
             $profile->save();
+        }
+
+        $c = Category::find()->where(['id' => $this->category])->count();
+        if($c == null){
+            $this->addError('category', \Yii::t('item', 'Category is not valid'));
+            return false;
         }
 
         $item = new Item();
@@ -67,19 +93,13 @@ class Create extends Model
         $item->setAttributes([
             'is_available' => 0,
             'owner_id' => \Yii::$app->user->id,
-            'min_renting_days' => 1
+            'min_renting_days' => 1,
+            'category_id' => (int) $this->category
         ]);
-
+        
         if ($item->save()) {
             $this->item = $item;
-            foreach ($this->categories as $id => $val) {
-                if ($val == 1) {
-                    $ihc = new ItemHasCategory();
-                    $ihc->item_id = $item->id;
-                    $ihc->category_id = $id;
-                    $ihc->save();
-                }
-            }
+
             return true;
         }
 

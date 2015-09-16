@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
-use app\modules\user\helpers\SelectData;
+use app\models\helpers\SelectData;
 use \app\modules\item\widgets\GoogleAutoComplete;
 
 /**

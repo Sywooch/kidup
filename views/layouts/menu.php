@@ -41,7 +41,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             <div class="collapse navbar-collapse">
                 <!--menu for larger then mobile-->
                 <ul class="nav navbar-nav navbar-left ">
-                    <?= WidgetRequest::request(WidgetRequest::ITEM_MENU_SEARCH); ?>
+                    <?= \app\modules\item\widgets\MenuSearch::widget() ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right ">
                     <?php if (\Yii::$app->user->isGuest): ?>
@@ -219,18 +219,17 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
     </nav>
 <?php if ($transparent): ?>
     <!--    this is ugly as well -->
-    <div class="cover-home"
-         style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
+
 <?php endif; ?>
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
     if ($this->beginCache('layout.menu.widgets')) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return WidgetRequest::request(WidgetRequest::USER_LOGIN_MODAL);
+            return \app\modules\user\widgets\Login::widget();
         });
-        echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return WidgetRequest::request(WidgetRequest::USER_REGISTER_MODAL);
+        echo \app\components\Cache::html('widget_user_register_modal', function () {
+            return \app\modules\user\widgets\Register::widget();
         });
         $this->endCache();
     }

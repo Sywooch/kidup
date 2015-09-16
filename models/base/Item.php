@@ -2,6 +2,7 @@
 
 namespace app\models\base;
 
+use app\modules\search\models\ItemSearch;
 use Yii;
 
 /**
@@ -14,23 +15,29 @@ use Yii;
  * @property integer $price_week
  * @property integer $price_month
  * @property integer $owner_id
- * @property integer $condition
  * @property integer $currency_id
  * @property integer $is_available
  * @property integer $location_id
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $min_renting_days
+ * @property integer $category_id
  *
- * @property \app\models\base\Booking[] $bookings
- * @property \app\models\base\Location $location
- * @property \app\models\base\Currency $currency
- * @property \app\models\base\User $owner
- * @property \app\models\base\ItemHasCategory[] $itemHasCategories
- * @property \app\models\base\Category[] $categories
- * @property \app\models\base\ItemHasMedia[] $itemHasMedia
- * @property \app\models\base\Media[] $media
- * @property \app\models\base\Review[] $reviews
+ * @property Booking[] $bookings
+ * @property Location $location
+ * @property Currency $currency
+ * @property User $owner
+ * @property Category[] $category
+ * @property ItemHasMedia[] $itemHasMedia
+ * @property Media[] $media
+ * @property ItemHasFeature[] $itemHasFeatures
+ * @property Feature[] $features
+ * @property Location[] $locatio
+ * @property ItemHasFeatureSingular[] $itemHasFeatureSingulars
+ * @property Feature[] $singularFeatures
+ * @property ItemSimilarity[] $itemSimilarities
+ * @property ItemSimilarity[] $itemSimilarities0
+ * @property Review[] $reviews
  */
 class Item extends \yii\db\ActiveRecord
 {
@@ -49,9 +56,52 @@ class Item extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['price_day', 'price_week', 'price_month', 'owner_id', 'condition', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'min_renting_days'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
-            [['name'], 'string', 'max' => 140]
+            [
+                [
+                    'price_day',
+                    'price_week',
+                    'price_month',
+                    'owner_id',
+                    'currency_id',
+                    'is_available',
+                    'location_id',
+                    'created_at',
+                    'updated_at',
+                    'min_renting_days',
+                    'category_id'
+                ],
+                'integer'
+            ],
+            [['created_at', 'updated_at', 'category_id'], 'required'],
+            [['name'], 'string', 'max' => 140],
+            [
+                ['category_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::className(),
+                'targetAttribute' => ['category_id' => 'id']
+            ],
+            [
+                ['currency_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Currency::className(),
+                'targetAttribute' => ['currency_id' => 'id']
+            ],
+            [
+                ['location_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Location::className(),
+                'targetAttribute' => ['location_id' => 'id']
+            ],
+            [
+                ['owner_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['owner_id' => 'id']
+            ]
         ];
     }
 
@@ -68,13 +118,13 @@ class Item extends \yii\db\ActiveRecord
             'price_week' => Yii::t('app', 'Price Week'),
             'price_month' => Yii::t('app', 'Price Month'),
             'owner_id' => Yii::t('app', 'Owner ID'),
-            'condition' => Yii::t('app', 'Condition'),
             'currency_id' => Yii::t('app', 'Currency ID'),
             'is_available' => Yii::t('app', 'Is Available'),
             'location_id' => Yii::t('app', 'Location ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'min_renting_days' => Yii::t('app', 'Min Renting Days'),
+            'category_id' => Yii::t('app', 'Category ID'),
         ];
     }
 
@@ -83,7 +133,15 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\app\models\base\Booking::className(), ['item_id' => 'id']);
+        return $this->hasMany(Booking::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return int
+     */
+    public function getBookingsCount()
+    {
+        return $this->hasMany(Booking::className(), ['item_id' => 'id'])->count();
     }
 
     /**
@@ -91,7 +149,7 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getLocation()
     {
-        return $this->hasOne(\app\models\base\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -99,7 +157,7 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\app\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -107,23 +165,16 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getOwner()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'owner_id']);
+        return $this->hasOne(User::className(), ['id' => 'owner_id']);
     }
+
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItemHasCategories()
+    public function getCategory()
     {
-        return $this->hasMany(\app\models\base\ItemHasCategory::className(), ['item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategories()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])->viaTable('item_has_category', ['item_id' => 'id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -131,7 +182,7 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getItemHasMedia()
     {
-        return $this->hasMany(\app\models\base\ItemHasMedia::className(), ['item_id' => 'id']);
+        return $this->hasMany(ItemHasMedia::className(), ['item_id' => 'id']);
     }
 
     /**
@@ -139,7 +190,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasMany(\app\models\base\Media::className(), ['id' => 'media_id'])->viaTable('item_has_media', ['item_id' => 'id']);
+        return $this->hasMany(Media::className(), ['id' => 'media_id'])->viaTable('item_has_media',
+            ['item_id' => 'id']);
     }
 
     /**
@@ -147,6 +199,51 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(\app\models\base\Review::className(), ['item_id' => 'id']);
+        return $this->hasMany(Review::className(), ['item_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemHasFeatures()
+    {
+        return $this->hasMany(ItemHasFeature::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature',
+            ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemHasFeatureSingulars()
+    {
+        return $this->hasMany(ItemHasFeatureSingular::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSingularFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
+            ['item_id' => 'id'])->where(['feature.is_singular' => 1]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNonSingularFeatures()
+    {
+        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
+            ['item_id' => 'id'])->where(['feature.is_singular' => 0]);
+    }
+
+
 }

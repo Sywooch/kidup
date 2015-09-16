@@ -1,18 +1,72 @@
-@media all and (max-width: 768px) and (min-width: 300px) {
+@import (reference) "./../../../views/assets/css/includer.less";
+
+
+@media all and (max-width: 768px) and (min-width: @itemcard-width) {
   .item-card {
     float: left;
     clear: both;
     left: 50%;
-    margin-left: -150px;
+    margin-left: (@itemcard-width/-2);
   }
 }
 
-@media all and (min-width: 300px) {
+@media all and (min-width: 768px) and (max-width: 992px) {
   .item-card {
-    max-width: 300px;
+    width: (@itemcard-width) !important;
   }
 }
 
-.item-card .author {
-  width: auto !important;
+@media all and (min-width: @itemcard-width) {
+  .item-card {
+    max-width: (@itemcard-width);
+  }
+}
+
+
+/*Gloabl product card*/
+.card-width{
+  //  width: 406px;
+  //  padding: 0 10px;
+  cursor: pointer;
+  text-align:left;
+  .price-badge{
+    position: absolute;
+    left: -2px;
+    bottom: 10px;
+    background-color: rgba(0,0,0,0.5);
+    padding: 10px;
+    color: @white-color;
+    z-index: 999999999;
+    font-size: 14px;
+    font-weight: 600;
+    .price{
+      font-size: 24px;
+    }
+    .time{
+      display:block;
+      margin-top:-5px;
+      font-weight: 300;
+    }
+  }
+  .fa{
+    font-size:14px;
+  }
+  h3{
+    font-size: 16px;
+    margin: 0;
+  }
+  .author{
+    position: absolute;
+    right: 1px;
+    bottom: 10px;
+  }
+  .image{
+    border-bottom: 3px solid @primary-color;
+  }
+  .content{
+    margin:0;
+  }
+  .location{
+    float:right;
+  }
 }

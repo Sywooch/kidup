@@ -15,7 +15,7 @@ $production = server('production', '31.187.70.130', 22)
     ->stage('production');
 $test = server('test', '178.62.234.114', 22)
     ->env('deploy_path', '/var/www')
-    ->env('branch', 'develop')
+    ->env('branch', 'categories')
     ->user('root')
     ->stage('staging');
 

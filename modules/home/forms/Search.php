@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  */
 class Search extends Model{
     public $query;
+    public $location;
 
     public function __construct()
     {

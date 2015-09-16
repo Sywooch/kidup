@@ -3,7 +3,7 @@
 namespace app\commands;
 
 use app\components\Event;
-use app\models\Item;
+use app\models\base\Item;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\ItemSimilarity;
 use app\modules\mail\models\MailMessage;
@@ -13,41 +13,41 @@ use yii\console\Controller;
 
 class TestController extends Controller
 {
+    public function actionReview()
+    {
+        self::createReviews(4,6, "Helt perfekt! Alexander var super god til at vise hvordan klapvognen virkede og standen var helt som ny! Så god service!!");
+        self::createReviews(4,7, "Alexander var super!");
+        self::createReviews(4,8, "");
 
-    public function actionReview(){
+        self::createReviews(7,16, "Perfekt!");
+        self::createReviews(7,17, "Christoffer var super!");
+        self::createReviews(7,18, "");
 
-        $booking = Booking::findOne(17);
+        self::createReviews(160,41, "Nanna var super sød. Vi lejede hendes Klapvogn i en forlænget weekend - og fik alle nødvendige instrukser inden vi tog den i brug i Aarhus' gader! Perfekt");
+        self::createReviews(160,44, "Nøj hvor er det smart! Vi lejede en Nanna's bærerygsæk da vi skulle på ferie! Alt gik som smurt og den levede virkelig op til forventningerne!");
 
-        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome", $booking, false);
-        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
-        Review::create(Review::TYPE_USER_COMMUNICATION, 5, $booking, false);
-        Review::create(Review::TYPE_USER_EXCHANGE, 3, $booking, false);
-        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
-
-        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome2", $booking, false);
-        Review::create(Review::TYPE_EXPERIENCE, 5, $booking, false);
-        Review::create(Review::TYPE_USER_COMMUNICATION, 3, $booking, false);
-        Review::create(Review::TYPE_USER_EXCHANGE, 5, $booking, false);
-        Review::create(Review::TYPE_AD_ACCURACY, 4, $booking, false);
-
-        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome3", $booking, false);
-        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
-        Review::create(Review::TYPE_USER_COMMUNICATION, 5, $booking, false);
-        Review::create(Review::TYPE_USER_EXCHANGE, 5, $booking, false);
-        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
-
-        Review::create(Review::TYPE_USER_PUBLIC, "Alex is awesome4", $booking, false);
-        Review::create(Review::TYPE_EXPERIENCE, 4, $booking, false);
-        Review::create(Review::TYPE_USER_COMMUNICATION, 3, $booking, false);
-        Review::create(Review::TYPE_USER_EXCHANGE, 4, $booking, false);
-        Review::create(Review::TYPE_AD_ACCURACY, 5, $booking, false);
-
-        Review::updateAll(['is_public' => 1], ['booking_id' => $booking->id]);
-
+        self::createReviews(161,43, "Nanna var super sød. Vi lejede hendes Klapvogn i en forlænget weekend - og fik alle nødvendige instrukser inden vi tog den i brug i Aarhus' gader! Perfekt");
+        self::createReviews(161,46, "Nøj hvor er det smart! Vi lejede en Nanna's bærerygsæk da vi skulle på ferie! Alt gik som smurt og den levede virkelig op til forventningerne!");
     }
 
-    public function actionTest(){
-        $item = Item::find()->one();
-        (new ItemSimilarity())->compute($item);
+    private static function createReviews($userId, $itemId, $text){
+        self::create(Review::TYPE_USER_PUBLIC, $text, $itemId, $userId);
+        self::create(Review::TYPE_EXPERIENCE, rand(4,5), $itemId, $userId);
+        self::create(Review::TYPE_USER_COMMUNICATION, rand(4,5), $itemId, $userId);
+        self::create(Review::TYPE_USER_EXCHANGE, rand(4,5), $itemId, $userId);
+        self::create(Review::TYPE_AD_ACCURACY, rand(4,5), $itemId, $userId);
+    }
+
+    private static function create($type, $value, $itemId, $userId)
+    {
+        $review = new Review();
+        $review->value = (string)$value;
+        $review->type = $type;
+        $review->item_id = $itemId;
+        $review->reviewer_id = 1;
+        $review->booking_id = 0;
+        $review->reviewed_id = $userId;
+        $review->is_public = 1;
+        return $review->save();
     }
 }

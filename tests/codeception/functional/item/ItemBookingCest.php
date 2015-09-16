@@ -25,7 +25,7 @@ use Yii;
  */
 class ItemBookingCest
 {
-    
+
     private $renter;
     private $owner;
 
@@ -46,9 +46,10 @@ class ItemBookingCest
     {
         $I->wantTo('ensure that it is not possible to write a review for a booking which is not yours');
         $booking = $this->createBooking($I);
-        $this->acceptBooking($I, $booking);
 
+        $this->acceptBooking($I, $booking);
         $this->loginOwner($I);
+
         $I->amOnPage('/review/create/' . $booking->id);
         $I->dontSeeElement('form #owner-review-public');
         $this->logout($I);
@@ -91,7 +92,8 @@ class ItemBookingCest
      *
      * @param FunctionalTester $I
      */
-    public function checkCreateBookingDeclineBooking(FunctionalTester $I) {
+    public function checkCreateBookingDeclineBooking(FunctionalTester $I)
+    {
         $I->wantTo('ensure that I can make a booking and let the owner decline it');
         $booking = $this->createBooking($I);
         $this->declineBooking($I, $booking);
@@ -103,7 +105,8 @@ class ItemBookingCest
      * @param FunctionalTester $I
      * @return \app\modules\booking\models\Booking created booking
      */
-    private function createBooking($I) {
+    private function createBooking($I)
+    {
         // count the e-mails
         $emailCountBefore = count(YiiHelper::listEmails());
 
@@ -118,14 +121,12 @@ class ItemBookingCest
             ->where([
                 'id' => 2
             ])
-            ->one()
-        ;
+            ->one();
         $this->owner = User::find()
             ->where([
                 'id' => $item->owner_id
             ])
-            ->one()
-        ;
+            ->one();
 
         // check the database
         $I->dontSeeRecord(Booking::class, [
@@ -190,8 +191,7 @@ class ItemBookingCest
                 'item_id' => 2,
                 'renter_id' => $this->renter->id
             ])
-            ->one()
-        ;
+            ->one();
 
         // there should be some e-mails in the queue
         $emailCountAfter = count(YiiHelper::listEmails());
@@ -206,7 +206,8 @@ class ItemBookingCest
      * @param $I FunctionalTester
      * @param \app\modules\booking\models\Booking Booking to decline.
      */
-    private function declineBooking($I, $booking) {
+    private function declineBooking($I, $booking)
+    {
         $this->loginOwner($I);
 
         // execute the crons
@@ -234,7 +235,8 @@ class ItemBookingCest
      * @param $I FunctionalTester
      * @param \app\modules\booking\models\Booking Booking to accept.
      */
-    private function acceptBooking($I, $booking) {
+    private function acceptBooking($I, $booking)
+    {
         $this->loginOwner($I);
 
         $booking = Booking::find()
@@ -242,8 +244,7 @@ class ItemBookingCest
                 'item_id' => 2,
                 'renter_id' => $this->renter->id
             ])
-            ->one()
-        ;
+            ->one();
 
         // execute the crons
         $cron = new CronController();
@@ -270,7 +271,8 @@ class ItemBookingCest
      * @param $I FunctionalTester
      * @param \app\modules\booking\models\Booking Booking to modify
      */
-    private function setRentingPeriodInPast($I, $booking) {
+    private function setRentingPeriodInPast($I, $booking)
+    {
         // now set the date back into the past so it enabled us to write a review
         $dateFrom2 = time() - 3 * 24 * 60 * 60;
         $dateTo2 = time() - 1 * 24 * 60 * 60;
@@ -285,7 +287,8 @@ class ItemBookingCest
      * @param $I FunctionalTester
      * @param \app\modules\booking\models\Booking Booking to write the review for
      */
-    private function writeReview($I, $booking) {
+    private function writeReview($I, $booking)
+    {
         // go back to the renter
         $this->loginRenter($I);
 
@@ -313,7 +316,8 @@ class ItemBookingCest
      *
      * @param $I FunctionalTester
      */
-    private function loginOwner($I) {
+    private function loginOwner($I)
+    {
         UserHelper::login($I, 'owner@kidup.dk', 'testtest');
     }
 
@@ -322,7 +326,8 @@ class ItemBookingCest
      *
      * @param $I FunctionalTester
      */
-    private function loginRenter($I) {
+    private function loginRenter($I)
+    {
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
     }
 
@@ -331,7 +336,8 @@ class ItemBookingCest
      *
      * @param $I FunctionalTester
      */
-    private function loginOutsider($I) {
+    private function loginOutsider($I)
+    {
         UserHelper::login($I, 'ihavenolocation@kidup.dk', 'testtest');
     }
 
@@ -340,7 +346,8 @@ class ItemBookingCest
      *
      * @param $I FunctionalTester
      */
-    private function logout($I) {
+    private function logout($I)
+    {
         UserHelper::logout($I);
     }
 

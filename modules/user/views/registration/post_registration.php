@@ -62,7 +62,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registra
                         ]); ?>
                     </div>
                     <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::classname(), [
-                        'data' => \app\modules\user\helpers\SelectData::languages(),
+                        'data' => \app\models\helpers\SelectData::languages(),
                         'options' => ['placeholder' => \Yii::t('app', 'Select your preferred language')],
                         'pluginOptions' => [
                             'allowClear' => false

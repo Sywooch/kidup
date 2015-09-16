@@ -17,6 +17,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
  */
 ?>
 <div id="home">
+    <div class="cover-home"
+         style="<?= ImageHelper::bgImg('kidup/home/header.png', ['q' => 70, 'w' => 2000]) ?>; "></div>
     <!--Area for background-image, tag-line and sign-up -->
     <div id="header-home">
         <div class="header-content">
@@ -24,19 +26,17 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
                         <?= \Yii::t('home', 'Share'); ?>
-                        <!-- VERY important to not put any space/enters in between the strong tags, it will crash the shit out of your browser-->
-                        <strong
-                            id="typist-element"
-                            data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
+                        <strong id="typist-element"
+                                data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
                                 'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t('home', 'With a family near you') ?>
                     </h1>
-                    <h4 class="hidden-xs hidden-sm">
+                    <h4>
                         <?= \Yii::t('home', 'KidUp is your online parent-to-parent marketplace.') ?>
                     </h4>
 
-                    <div class="btn btn-default" id="how-it-works-btn">
+                    <div class="btn btn-default hidden-xs hidden-sm" id="how-it-works-btn">
                         <?= Yii::t("home", "How it Works") ?>
                     </div>
                     <?php $this->registerJs("$('#how-it-works-btn').click(function() {
@@ -44,7 +44,20 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                             scrollTop: $('#how-it-works').offset().top - 400
                         }, 1000);
                     });") ?>
-
+                    <div class="row mobile-search visible-xs visible-sm">
+                        <div class="col-xs-8 col-xs-offset-1">
+                            <input class="form-control"
+                                   placeholder="<?= Yii::t("home", "What are you looking for?") ?>"
+                                   data-toggle="modal"
+                                   data-target="#searchModal">
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="submit" class="btn btn-danger btn-fill" data-toggle="modal"
+                                    data-target="#searchModal">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,8 +100,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                         <div id="step-item-2" class="col-sm-3 step-item">
                             <?= ImageHelper::img('kidup/graphics/photograph.png', ['q' => 90, 'w' => 130],
                                 ['class' => 'steps']) ?>
-
-
                             <div class="number">2</div>
                             <div class="row step-lines">
                                 <div class="two-v"></div>
@@ -97,8 +108,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                         <div id="step-item-3" class="col-sm-3 step-item">
                             <?= ImageHelper::img('kidup/graphics/pickup.png', ['q' => 90, 'w' => 130],
                                 ['class' => 'steps']) ?>
-
-
                             <div class="number">3</div>
                             <div class="row step-lines">
                                 <div class="three-v"></div>
@@ -201,7 +210,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     </div>
 
     <!--Area for story-->
-    <section id="content-stories">
+    <section id="content-stories" class="hidden-xs">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1 hidden-xs text-center">
@@ -224,16 +233,4 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             </div>
         </div>
     </section>
-    <!--    <section id="signup">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-sm-12 col-xs-12 text-center">-->
-    <!--                    <h4>-->
-    <!--                        --><? //= \Yii::t('home', 'Featured on') ?>
-    <!--                    </h4>-->
-    <!---->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </section>-->
 </div>

@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'No reviews yet' => 'Ingen reviews endnu',
     'Accuracy' => 'Nøjagtighed',
     'By {0}' => 'Med {0}',
     'Communication' => 'Kommunikation',

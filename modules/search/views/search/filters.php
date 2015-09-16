@@ -1,105 +1,128 @@
-<!-- query -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Search") ?>
-        </h6>
-    </div>
-    <div id="refineQuery" class="panel-collapse collapse in">
-        <div class="panel-body" ng-init="searchCtrl.filter.query = searchCtrl.loadParam('query', '<?= $model->query ?>')">
-            <input class="form-control" name="query" type="text" ng-model="searchCtrl.filter.query"
-                   ng-change="searchCtrl.filterChange()"/>
+<?php
+use yii\bootstrap\ActiveForm;
+use \app\modules\item\widgets\GoogleAutoComplete;
+use kartik\typeahead\Typeahead;
+use yii\helpers\Url;
+use yii\web\JsExpression;
+
+/**
+ * @var \app\modules\search\forms\Filter $model
+ * @var bool $mobile
+ */
+
+?>
+    <!-- query -->
+
+<?php
+$form = ActiveForm::begin([
+    'enableClientValidation' => false,
+    'method' => 'get',
+    'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'search-form'],
+]); ?>
+    <!--location-->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <?= Yii::t("item", "Location") ?>
+            </h6>
+        </div>
+        <div id="refine-location" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <i ng-init="searchCtrl.filter.location='<?= $model->location ?>';"></i>
+                <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
+                    'options' => [
+                        'class' => 'form-control location-input',
+                        'ng-model' => 'searchCtrl.filter.location',
+                        'autocompleteName' => 'search-' . ($mobile ? 'mobile' : 'default')
+                    ],
+                    'autocompleteOptions' => [
+                        'types' => ['geocode']
+                    ],
+                    'name' => 'autoCompleteLocation'
+                ])->label(false); ?>
+            </div>
         </div>
     </div>
-</div>
 
-<!--location-->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Location") ?>
-        </h6>
+    <!-- price -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <?= Yii::t("item", "Price") ?>
+            </h6>
+        </div>
+        <div id="refinePrice" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <?= $form->field($model,
+                    'priceUnit')->dropDownList(\app\models\helpers\SelectData::priceUnits())->label(false) ?>
+                <br/>
+
+                <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
+                <?= $form->field($model, 'priceMin')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'priceMax')->hiddenInput()->label(false) ?>
+            </div>
+            <div ng-cloak>
+                <div class="minPrice">
+                    {{searchCtrl.filter.priceMin}} DKK
+                </div>
+                <div class="maxPrice">
+                    {{searchCtrl.filter.priceMax}} DKK
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="refine-location" class="panel-collapse collapse in">
+
+<?php foreach ($model->featureFilters as $feature):
+    if ($feature->is_singular) {
+        continue;
+    }
+    ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <?= Yii::t("item", $feature->name) ?>
+            </h6>
+        </div>
+        <div id="refinePrice" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <?php foreach ($feature->featureValues as $val) {
+                    echo $form->field($model, "features[{$feature->id}][{$val->id}]")
+                        ->checkbox(['label' => $val->name]);
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <?= Yii::t("item", "Features") ?>
+            </h6>
+        </div>
+        <div id="refinePrice" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <?php foreach ($model->featureFilters as $feature):
+                    if (!$feature->is_singular) {
+                        continue;
+                    }
+
+                    echo $form->field($model, "singularFeatures[{$feature->id}]")
+                        ->checkbox(['label' => $feature->name]);
+                    ?>
+
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default visible-xs">
         <div class="panel-body">
-            <?= \app\modules\item\widgets\GoogleAutoComplete::widget([
-                'options' => [
-                    'class' => 'form-control location-input',
-                    'ng-model' => 'searchCtrl.filter.location',
-                    'ng-init' => 'searchCtrl.filter.location = searchCtrl.loadParam("location", "' . $model->location . '")',
-                    'autocompleteName' => 'search-' . ($mobile ? 'mobile' : 'default')
-                ],
-                'autocompleteOptions' => [
-                    'types' => ['geocode']
-                ],
-                'name' => 'autoCompleteLocation'
-            ]); ?>
+            <?= \yii\helpers\Html::submitButton(Yii::t("item", "Apply Filters"), ['class' => 'btn btn-danger btn-fill', 'data-dismiss' => 'modal', 'style' => 'width:100%;', 'onclick' => 'window.submitFromModal()']) ?>
+            <br><br>
         </div>
     </div>
-</div>
 
-<!-- price -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Price") ?>
-        </h6>
-    </div>
-    <div id="refinePrice" class="panel-collapse collapse in">
-        <div class="panel-body"
-             ng-init='
-                searchCtrl.filter.priceMin = searchCtrl.params.price[0];
-                searchCtrl.filter.priceMax = searchCtrl.params.price[1];
-                searchCtrl.setPriceUnit(searchCtrl.params.priceUnit);
-                searchCtrl.updateSlider(searchCtrl.params.price[0], searchCtrl.params.price[1]);
-            '>
-            <select class="form-control" ng-model="searchCtrl.filter.priceUnit" ng-change="searchCtrl.filterChange()">
-                <option value="week">Price per week</option>
-                <option value="day">Price per day</option>
-                <option value="month">Price per month</option>
-            </select>
-            <br />
-            <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>
-        </div>
-        <div class="minPrice">
-            {{searchCtrl.filter.priceMin}} DKK
-        </div>
-        <div class="maxPrice">
-            {{searchCtrl.filter.priceMax}} DKK
-        </div>
-    </div>
-</div>
 
-<!-- categories -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Categories") ?>
-        </h6>
-    </div>
-    <div class="panel-body" ng-init='searchCtrl.filter.categories = <?= $model->getCategories('main') ?>; searchCtrl.loadCategories()'>
-        <div ng-repeat="category in searchCtrl.filter.categories"
-             class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary btn-fill': category.value == 1}"
-             ng-click="searchCtrl.selectCategory(category.id)">
-            {{category.name}}
-        </div>
-    </div>
-</div>
-
-<!-- ages -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <?= Yii::t("item", "Age") ?>
-        </h6>
-    </div>
-    <div class="panel-body" ng-init='searchCtrl.filter.ages = <?= $model->getCategories('age') ?>; searchCtrl.loadCategories()'>
-        <div ng-repeat="age in searchCtrl.filter.ages"
-             class="btn btn-default btn-xs smallBottomMargin"
-             ng-class="{'btn-primary btn-fill': age.value == 1}"
-             ng-click="searchCtrl.selectCategory(age.id)">
-            {{age.name}}
-        </div>
-    </div>
-</div>
+<?php ActiveForm::end() ?>
