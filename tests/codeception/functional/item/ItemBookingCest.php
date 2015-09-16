@@ -46,9 +46,10 @@ class ItemBookingCest
     {
         $I->wantTo('ensure that it is not possible to write a review for a booking which is not yours');
         $booking = $this->createBooking($I);
-        $this->acceptBooking($I, $booking);
 
+        $this->acceptBooking($I, $booking);
         $this->loginOwner($I);
+
         $I->amOnPage('/review/create/' . $booking->id);
         $I->dontSeeElement('form #owner-review-public');
         $this->logout($I);
