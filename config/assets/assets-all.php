@@ -30,7 +30,6 @@ return [
         'app\modules\user\assets\SettingsAsset',
         'app\modules\booking\assets\ConfirmAsset',
         'app\modules\booking\assets\BookingViewsAsset',
-        'app\modules\admin\assets\AdminThemeAsset',
         'app\modules\review\assets\ReviewScoreAsset'
     ],
     // Asset bundle for compression output:
