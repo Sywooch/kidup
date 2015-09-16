@@ -57,7 +57,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         <?= Yii::t("booking", "Payment information") ?>
                     </h3>
 
-                    <div class="row">
+                    <div class="row payment-methods">
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-3">
@@ -71,6 +71,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             </div>
                         </div>
                     </div>
+                    <br />
                     <div id="payment-form"></div>
                     <?php
                     $this->registerJs('braintree.setup("' . $clientToken . '", "dropin", { container: "payment-form" });');
