@@ -12,6 +12,9 @@ use yii\helpers\Html;
 FontAwesomeAsset::register($this);
 BootstrapPluginAsset::register($this);
 \yii\web\JqueryAsset::register($this); // very important, please leave all of them here
+yii\web\YiiAsset::register($this);
+app\assets\FontAwesomeAsset::register($this);
+app\assets\GsdkAsset::register($this);
 
 $url = @Yii::$app->request->getUrl();
 $transparent = ($url == '/' || $url == '/home');
@@ -71,7 +74,7 @@ $transparent = ($url == '/' || $url == '/home');
         ]);
     });
 
-    if(YII_ENV == 'prod'){
+    if (YII_ENV == 'prod') {
         echo Cache::html('layout_ga', function () {
             return \kartik\social\GoogleAnalytics::widget([]);
         });
