@@ -228,7 +228,7 @@ if (\Yii::$app->user->isGuest) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
             return \app\modules\user\widgets\Login::widget();
         });
-        echo \app\components\Cache::html('widget_user_login_modal', function () {
+        echo \app\components\Cache::html('widget_user_register_modal', function () {
             return \app\modules\user\widgets\Register::widget();
         });
         $this->endCache();

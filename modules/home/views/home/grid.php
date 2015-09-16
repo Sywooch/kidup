@@ -6,6 +6,12 @@ use app\modules\images\components\ImageHelper;
 use app\modules\item\widgets\ItemCard;
 use yii\helpers\Url;
 
+$babyClothes = \Yii::t('categories_and_features', 'Baby Clothes');
+$baby = \Yii::t('categories_and_features', 'Baby Necessities');
+$onTheRoad = \Yii::t('categories_and_features', 'On the Road');
+$toys = \Yii::t('categories_and_features', 'Toys');
+$toysOutside = \Yii::t('categories_and_features', 'Toys Outside');
+$furniture = \Yii::t('categories_and_features', "Children's Furniture");
 ?>
 
 <!--Area for all categories-->
@@ -21,7 +27,7 @@ use yii\helpers\Url;
         <!--new row with stuff-->
         <div class="row">
             <div class="col-md-4">
-                <a href="<?= Url::to('@web/search?q=categories|20') ?>">
+                <a href="<?= Url::to('@web/search/'.$toysOutside) ?>">
                     <div class="card card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 500]) ?>">
@@ -30,7 +36,7 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Bikes") ?></h2>
+                            <h2 class="category-name"><?= $toysOutside ?></h2>
                         </div>
                     </div>
                     <!-- end card -->
@@ -38,7 +44,7 @@ use yii\helpers\Url;
             </div>
 
             <div class="col-md-3">
-                <a href="<?= Url::to('@web/search?q=categories|13') ?>">
+                <a href="<?= Url::to('@web/search/'.$onTheRoad) ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
                             ['q' => 90, 'w' => 300]) ?>">
@@ -47,14 +53,14 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Stroller") ?></h2>
+                            <h2 class="category-name"><?= $onTheRoad ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
                 </a>
             </div>
             <div class="col-md-5">
-                <a href="<?= Url::to('@web/search?q=categories|12') ?>">
+                <a href="<?= Url::to('@web/search/'.$toys) ?>">
                     <div class="card  card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 470]) ?>">
@@ -63,7 +69,7 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Toys") ?></h2>
+                            <h2 class="category-name"><?= $toys ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
@@ -74,7 +80,7 @@ use yii\helpers\Url;
         <div class="row">
 
             <div class="col-md-3">
-                <a href="<?= Url::to('@web/search?q=categories|16,19') ?>">
+                <a href="<?= Url::to('@web/search/'.$furniture) ?>">
                     <div class="card  card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 300]) ?>">
@@ -83,7 +89,7 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Room") ?></h2>
+                            <h2 class="category-name"><?= $furniture ?></h2>
 
                         </div>
                     </div>
@@ -91,7 +97,7 @@ use yii\helpers\Url;
                 </a>
             </div>
             <div class="col-md-5">
-                <a href="<?= Url::to('@web/search?q=categories|22') ?>">
+                <a href="<?= Url::to('@web/search/'.$babyClothes) ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
                             ['q' => 90, 'w' => 600]) ?>; background-position: 50% 20%;">
@@ -100,14 +106,14 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Outdoor") ?></h2>
+                            <h2 class="category-name"><?= $babyClothes ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="<?= Url::to('@web/search?q=categories|11') ?>">
+                <a href="<?= Url::to('@web/search/'.$baby) ?>">
                     <div class="card  card-background">
                         <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
                             ['q' => 90, 'w' => 400]) ?>">
@@ -116,7 +122,7 @@ use yii\helpers\Url;
                             <br>
                             <br>
 
-                            <h2 class="category-name"><?= Yii::t("categories", "Carseat") ?></h2>
+                            <h2 class="category-name"><?= $baby ?></h2>
                         </div>
                     </div>
                     <!-- end card  card-background -->

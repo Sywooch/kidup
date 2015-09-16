@@ -30,26 +30,18 @@ class IndexController extends \app\controllers\Controller
                 ],
             ],
             [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
-                'duration' => 60,
-                'variations' => [
-                    \Yii::$app->language,
-                ],
-//                'dependency' => [
-//                    'class' => 'yii\caching\DbDependency',
-//                    'sql' => 'SELECT COUNT(*) FROM post',
-//                ],
-            ],
-            [
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['index'],
                 'cacheControlHeader' => 'public, max-age=300',
-//                'etagSeed' => function ($action, $params) {
-//                    return md5(1);
-////                    $post = $this->findModel(\Yii::$app->request->get('id'));
-////                    return serialize([$post->title, $post->content]);
-//                },
+                'enabled' => YII_CACHE,
+            ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60 * 20,
+                'enabled' => YII_CACHE,
+                'variations' => [
+                ],
             ],
         ];
     }

@@ -3,7 +3,7 @@
 namespace app\commands;
 
 use app\components\Event;
-use app\models\Item;
+use app\models\base\Item;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\ItemSimilarity;
 use app\modules\mail\models\MailMessage;
@@ -47,7 +47,7 @@ class TestController extends Controller
     }
 
     public function actionTest(){
-        $item = Item::find()->one();
+        $item = \app\modules\item\models\Item::find()->one();
         (new ItemSimilarity())->compute($item);
     }
 }
