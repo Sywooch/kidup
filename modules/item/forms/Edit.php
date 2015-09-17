@@ -58,7 +58,7 @@ class Edit extends Model
         }
 
         foreach ($this->item->itemHasFeatures as $ihf) {
-            $this->features[$ihf->feature_id] = $ihf->feature_values_id;
+            $this->features[$ihf->feature_id] = $ihf->feature_value_id;
         }
 
         return parent::__construct();
