@@ -9,6 +9,7 @@ use yii\web\AssetBundle;
 class FullModalAsset extends AssetBundle
 {
     public $sourcePath = '@bower/bootstrap-modal-carousel/dist';
+
     public $css = [
         'css/bootstrap-modal-carousel.min.css'
     ];
@@ -17,13 +18,10 @@ class FullModalAsset extends AssetBundle
         'js/bootstrap-modal-carousel.min.js'
     ];
 
-    public $depends = [
-        'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
     public $jsOptions = [
-        'position' => \yii\web\View::POS_LOAD
+        'position' => \yii\web\View::POS_READY
     ];
+
 }
 
 

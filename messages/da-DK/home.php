@@ -24,7 +24,7 @@ return [
     'We are honered to be featured on' => 'Vi er stolte af at være nævnt af',
     'What are you looking for?' => 'Hvad kigger du efter?',
     'What do you like to get your child?' => 'Hvad leder du efter til dit barn?',
-    'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.' => '',
+    'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.' => 'De penge vi får ved at leje Vilhelms ting ud kan vi bruge på en sommertur til Legoland med hele familien.',
     'Become a part of the KidUp familiy' => 'Bliv en del af KidUp familien',
     'I am completely in love with the sharing-aspect and think it makes perfect sence to share things you aren\'t raelly using.' => 'Jeg er fuldstændig forelsket med deleaspektet og synes det giver god mening at dele de ting vi alligevel ikke bruger heletiden.',
     'Share a' => 'Del en',

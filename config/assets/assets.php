@@ -14,7 +14,9 @@ return [
     'cssCompressor' => 'cleancss -o {to} {from}',
     // The list of asset bundles to compress:
     'bundles' => [
-        'app\assets\GsdkAsset'
+        'app\assets\AppAsset',
+        'yii\web\YiiAsset',
+        'yii\web\JqueryAsset',
     ],
     // Asset bundle for compression output:
     'targets' => [

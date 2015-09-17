@@ -18,14 +18,12 @@ class AppAsset extends AssetBundle
         "css/components/_modals.less",
         "css/footer.less"
     ];
-    public $js = [
-    ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\web\JqueryAsset',
         'app\assets\FontAwesomeAsset',
-        'app\assets\GsdkAsset'
+        'app\assets\GsdkAsset',
     ];
 }
 

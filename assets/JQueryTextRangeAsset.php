@@ -8,7 +8,12 @@ use yii\web\AssetBundle;
 class JQueryTextRangeAsset extends AssetBundle
 {
     public $sourcePath = '@app/views/assets/js/';
+
     public $js = [
         'jquery.textrange.js',
+    ];
+
+    public $depends = [
+        'yii\web\JqueryAsset',
     ];
 }
