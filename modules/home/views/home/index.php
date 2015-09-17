@@ -52,7 +52,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                                    data-target="#searchModal">
                         </div>
                         <div class="col-xs-2">
-                            <button type="submit" class="btn btn-danger btn-fill" data-toggle="modal"
+                            <button type="submit" class="btn btn-danger btn-fill mobile-search-btn" data-toggle="modal"
                                     data-target="#searchModal">
                                 <i class="fa fa-search"></i>
                             </button>

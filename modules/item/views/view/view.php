@@ -91,8 +91,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger" data-toggle="modal" data-target="#bookingModal"><?= \Yii::t('item', 'Request to Book') ?></button>
-                    <br /><br />
+                    <button class="btn btn-fill btn-danger visible-sm visible-xs" data-toggle="modal"
+                            data-target="#bookingModal">
+                        <?= \Yii::t('item', 'Request to Book') ?>
+                    </button>
+                    <br/><br/>
 
                     <div class="card card-product">
                         <div class="content">
@@ -193,33 +196,41 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger" data-toggle="modal" data-target="#bookingModal"><?= \Yii::t('item', 'Request to Book') ?></button>
+                    <button class="btn btn-fill btn-danger visible-sm visible-xs" data-toggle="modal"
+                            data-target="#bookingModal">
+                        <?= \Yii::t('item', 'Request to Book') ?>
+                    </button>
 
                     <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
 
-                        <?= \yii\widgets\ListView::widget([
-                            'dataProvider' => $reviewDataProvider,
-                            'itemView' => 'item_review',
-                            'itemOptions' => ['tag' => 'span'],
-                        ]) ?>
+                    <?= \yii\widgets\ListView::widget([
+                        'dataProvider' => $reviewDataProvider,
+                        'itemView' => 'item_review',
+                        'itemOptions' => ['tag' => 'span'],
+                    ]) ?>
 
-                <?php if (count($related_items) > 0): ?>
-                    <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
+                    <?php if (count($related_items) > 0): ?>
+                        <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
 
-                    <div class="related">
-                        <div class="row">
-                            <?php foreach ($related_items as $item) {
-                                echo ItemCard::widget([
-                                    'model' => $item,
-                                    'showDistance' => false,
-                                    'numberOfCards' => 2,
-                                    'titleCutoff' => 30,
-                                    'reviewCount' => true
-                                ]);
-                            } ?>
+                        <div class="related">
+                            <div class="row">
+                                <?php foreach ($related_items as $item) {
+                                    echo ItemCard::widget([
+                                        'model' => $item,
+                                        'showDistance' => false,
+                                        'numberOfCards' => 2,
+                                        'titleCutoff' => 30,
+                                        'reviewCount' => true
+                                    ]);
+                                } ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="hidden-xs hidden-sm">
+                    <?php echo $this->render('booking_widget', [
+                        'model' => $bookingForm,
+                    ]) ?>
                 </div>
             </div>
         </div>
