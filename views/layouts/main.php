@@ -26,7 +26,7 @@ $transparent = ($url == '/' || $url == '/home');
         <title>
             <?= Html::encode($this->title) ?>
         </title>
-        <?php $this->renderDynamic('$this->head();'); ?>
+        <?php $this->head(); ?>
         <link rel='shortcut icon' type='image/x-icon' href='<?= ImageHelper::url('kidup/logo/favicon.png') ?>'/>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,13 +75,8 @@ $transparent = ($url == '/' || $url == '/home');
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }
-    foreach (array_keys($this->assetBundles) as $bundle) {
-        $this->registerAssetBundle($bundle);
-    }
     $this->endBody();
-    \yii\helpers\VarDumper::dump($this->jsFiles,10,true);
     ?>
-
     </body>
     </html>
 <?php $this->endPage() ?>
