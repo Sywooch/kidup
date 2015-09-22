@@ -57,7 +57,7 @@ $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{
                         <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
                             'options' => [
                                 'class' => 'form-control location-input',
-                                'placeholder' => 'In which location?',
+                                'placeholder' => \Yii::t('search', 'Location e.g. Copenhagen'),
                                 'autocompleteName' => 'home-search',
                                 'value' => $emptyLocation
                             ],

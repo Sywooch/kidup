@@ -286,7 +286,7 @@ class Filter extends Model
             $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
             $t = \Yii::t('categories_and_features', $suggestionWord->text);
             if($this->query == ' ' || $this->query == '%20'){
-                $this->resultText = \Yii::t('search', "Here are some suggestions from other KidUp users!");
+                $this->resultText = \Yii::t('search', "Your search was empty: here are some suggestions from other KidUp users!");
             }else{
                 $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?",[
                     '<b>'.$this->query.'</b>',

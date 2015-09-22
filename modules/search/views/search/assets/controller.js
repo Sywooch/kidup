@@ -167,7 +167,9 @@ window.initAngular = function () {
             //}, 500);
 
             $(document).on('pjax:beforeSend', function (xhr, options, settings) {
-                scope.loading = true;
+                $(".overlay").fadeTo(0.3, 0.8);
+                $(".overlay").css("visibility", "visible");
+                if(!$scope.$digest) $scope.$apply();
                 var getParams = function (queryString) {
                     var query = (queryString || window.location.search).substring(1); // delete ?
                     if (!query) {
@@ -200,7 +202,6 @@ window.initAngular = function () {
                 });
 
                 settings.url = baseUrl + added.join('');
-                console.log(settings.url);
                 return settings;
             });
 
@@ -226,7 +227,8 @@ window.initAngular = function () {
 };
 window.initAngular();
 $(document).on('pjax:success', function () {
-    console.log('pjax success');
+    $(".overlay").fadeTo(0.3, 0);
+    $(".overlay").css("visibility", "none");
     window.initAngular();
 });
 window.submitFromModal = function(){

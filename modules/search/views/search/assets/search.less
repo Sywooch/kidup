@@ -23,7 +23,7 @@
   background-color: @grey-light;
   margin-bottom: -90px;
 
-  section{
+  section {
     background-color: @grey-light;
   }
   .modal-backdrop {
@@ -41,17 +41,17 @@
     margin-right: 10px;
   }
 
-  .panel{
+  .panel {
     margin-bottom: 0;
 
   }
-  .modal-fullscreen{
-    .fa-close{
-      padding:10px;
+  .modal-fullscreen {
+    .fa-close {
+      padding: 10px;
       font-size: 28px;
       margin-right: 24px;
     }
-    .modal-header{
+    .modal-header {
       background-color: lighten(@grey-light, 13);
       border-bottom: 1px solid darken(@grey-light, 5);
     }
@@ -106,5 +106,17 @@
 
   .item-card {
     max-width: 500px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    visibility: hidden;
+    left: 0;
+    opacity: 0;
+    display: none;
   }
 }
