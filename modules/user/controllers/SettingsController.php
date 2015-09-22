@@ -274,7 +274,15 @@ class SettingsController extends Controller
                 return $this->redirect('phonecode');
             } else {
                 \Yii::$app->session->addFlash('info', \Yii::t('user', 'SMS could not be send, please try again.'));
-                return $this->refresh();
+                $page = $this->renderPartial('verification', [
+                    'user' => \Yii::$app->user->identity,
+                    'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id])
+                ]);
+
+                return $this->render('_wrapper', [
+                    'page' => $page,
+                    'title' => ucfirst(\Yii::t('title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+                ]);
             }
         }
 

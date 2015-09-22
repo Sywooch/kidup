@@ -92,8 +92,10 @@ class Profile extends \app\models\base\Profile
         $message = urlencode('KidUp code ' . $token->code);
         $key = Yii::$app->keyStore->get('nexmo_api_key');
         $secret = Yii::$app->keyStore->get('nexmo_api_secret');
+        // Create a client with a base URI
+        $client = new \GuzzleHttp\Client();
         $url = 'https://rest.nexmo.com/sms/json?api_key=' . $key . '&api_secret=' . $secret . '&from=KidUp&to=+' . $this->phone_country . $this->phone_number . '&text=' . $message;
-        $res = json_decode(file_get_contents($url));
+        $res = json_decode($client->post($url));
         if (isset($res->messages[0]->{"error-text"})) {
             \Yii::$app->session->setFlash('error', 'Error while sending text: ' . $res->messages[0]->{"error-text"});
             return false;
