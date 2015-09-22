@@ -66,7 +66,6 @@ class ViewController extends Controller
 
     public function actionIndex($id, $new_publish = false)
     {
-        return Cache::html('item_view-'.$id, function() use ($id, $new_publish){
             /**
              * @var $item \app\modules\item\models\Item
              */
@@ -98,7 +97,7 @@ class ViewController extends Controller
                     ]);
                 } else {
                     if ($attempt !== false) {
-                        return $this->redirect('@web/booking/' . $model->booking->id . '/confirm');
+                        return $attempt;
                     }
                 }
             } else {
@@ -129,7 +128,6 @@ class ViewController extends Controller
             ];
 
             return $this->render('view', $res);
-        });
 
     }
 }

@@ -108,7 +108,7 @@ class CreateBooking extends Model
 
                     if ($this->save()) {
                         $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
-                        return "<script>window.location.replace('{$redirect}');</script>";
+                        return "<script>window.location = '{$redirect}';</script>";
                     }
                 }
             }

@@ -269,7 +269,7 @@ class m150913_090209_newCategories extends Migration
         ]);
         $exchangeFeature->save();
 
-        foreach (["Pickup", "Delivery Possbible"] as $exchange) {
+        foreach (["Pickup", "Delivery Possible"] as $exchange) {
             $f = new FeatureValue();
             $f->setAttributes([
                 'feature_id' => $exchangeFeature->id,

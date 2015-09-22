@@ -100,10 +100,7 @@ $this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search
                 'mobile' => true
             ]) ?>
 
-
-
             <?php \yii\bootstrap\Modal::end() ?>
-
         </div>
     </div>
 <?php Pjax::end(); ?>

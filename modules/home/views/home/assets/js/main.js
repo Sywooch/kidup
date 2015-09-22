@@ -99,4 +99,12 @@ $(document).ready(function () {
         //catcher
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     });
+
+    // on select of filled out location
+    $("#search-home-location").on('focus', function(){
+        var location = $("#search-home-location").val();
+        if(window.emptyLocation == location){
+            $("#search-home-location").val('');
+        }
+    });
 });

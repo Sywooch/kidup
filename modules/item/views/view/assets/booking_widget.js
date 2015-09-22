@@ -136,18 +136,19 @@ var widgetFactory = function () {
         if (typeof redirect === "undefined") {
             var widget = widgetFactory();
             $("#booking-widget .overlay").css("visibility", "hidden");
-
+            console.log('2');
             jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
                 "push": true,
-                "replace": true,
-                "timeout": 1000,
+                "replace": false,
+                "timeout": 2000,
                 "scrollTo": false
             });
             jQuery(document).on('submit', "#pjax-create-booking-form form[data-pjax]", function (event) {
+                console.log('event');
                 jQuery.pjax.submit(event, '#pjax-create-booking-form', {
                     "push": true,
-                    "replace": true,
-                    "timeout": 1000,
+                    "replace": false,
+                    "timeout": 2000,
                     "scrollTo": false
                 });
             });
