@@ -95,6 +95,7 @@ use yii\helpers\Html;
                     <?php
                     if (!$profile->getPhoneNumber()) {
                         echo Yii::t('user', 'Please set a phone number');
+
                     } elseif (!$profile->isValidPhoneNumber()) {
                         echo Yii::t('user', 'Your phone number appears to be invalid');
                     } else {

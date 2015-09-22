@@ -43,7 +43,7 @@ use app\modules\user\widgets\UserImage;
 
                 <div class="category">
                     <?php
-                    echo $model->category->name;
+                    echo \Yii::t('categories_and_features', $model->category->name);
                     ?>
                 </div>
 

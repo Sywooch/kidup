@@ -152,7 +152,6 @@ class SettingsController extends Controller
                 \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
                 return $this->refresh();
             }
-
         }
 
         $page = $this->renderPartial('location', [

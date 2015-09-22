@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use app\modules\user\helpers\SelectData;
+use app\models\helpers\SelectData;
 use kartik\widgets\Select2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
@@ -51,14 +51,16 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'city') ?>
         <?= $form->field($model, 'zip_code') ?>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <?= $form->field($model, 'street_name') ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <?= $form->field($model, 'street_number') ?>
             </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'street_suffix') ?>
+            </div>
         </div>
-
     </div>
 </div>
 <div class="row col-md-12">

@@ -71,7 +71,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                         <?= isset($profile->user->locations[0]->country0->name) ? $profile->user->locations[0]->country0->name : '' ?>
                         -
                         <?= Yii::t("user", "Member since {0}", [
-                            Carbon::createFromTimestamp($profile->user->created_at)->toFormattedDateString()
+                            Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized("%B %Y")
                         ]) ?>
                     </small>
                 </h2>

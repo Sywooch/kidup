@@ -290,7 +290,7 @@ return [
     'week' => 'uge',
     'yes' => 'ja',
     'Abbr' => 'Forkortelse',
-    'About us' => 'Om Os',
+    'About KidUp' => 'Om KidUp',
     'Accept' => 'Accepter',
     'Accepted' => 'Accepteret',
     'Address' => 'Adresse',
