@@ -64,8 +64,8 @@ $transparent = ($url == '/' || $url == '/home');
             'message' => \Yii::t('app',
                 'This website uses cookies to ensure you get the best possible KidUp experience.'),
             'dismiss' => \Yii::t('app', 'Accept'),
-            'learnMore' => null,
-            'link' => 'http://silktide.com/privacy-policy',
+            'learnMore' => \Yii::t('app', 'More info'),
+            'link' => 'http://kidup.dk/p/privacy',
             'theme' => 'dark-bottom'
         ]);
     });
