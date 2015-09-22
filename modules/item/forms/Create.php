@@ -51,9 +51,8 @@ class Create extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[$cat->id] = Yii::t('categories_and_features', $cat->parent->name) . ' - '. Yii::t('categories_and_features',$cat->name);
+            $this->categoryData[$cat->id][Yii::t('categories_and_features', $cat->parent->name)] = Yii::t('categories_and_features',$cat->name);
         }
-
     }
 
     public function formName()

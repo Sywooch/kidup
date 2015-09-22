@@ -11,7 +11,6 @@ use yii\web\JsExpression;
  */
 
 ?>
-    <!-- query -->
 
 <?php
 $form = ActiveForm::begin([
@@ -87,7 +86,7 @@ $form = ActiveForm::begin([
             <div class="panel-body">
                 <?php foreach ($feature->featureValues as $val) {
                     echo $form->field($model, "features[{$feature->id}][{$val->id}]")
-                        ->checkbox(['label' => $val->name]);
+                        ->checkbox(['label' => \Yii::t('categories_and_features', $val->name)]);
                 }
                 ?>
             </div>
@@ -107,11 +106,9 @@ $form = ActiveForm::begin([
                     if (!$feature->is_singular) {
                         continue;
                     }
-
                     echo $form->field($model, "singularFeatures[{$feature->id}]")
-                        ->checkbox(['label' => $feature->name]);
+                        ->checkbox(['label' => \Yii::t('categories_and_features',$feature->name)]);
                     ?>
-
                 <?php endforeach; ?>
             </div>
         </div>

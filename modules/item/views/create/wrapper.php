@@ -36,27 +36,27 @@ use \yii\helpers\Html;
                 'items' => [
                     [
                         'url' => '@web/item/create/edit-basics?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') . 'Basics',
+                        'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') . \Yii::t('item', 'General'),
                         'active' => $page == 'basics/basics'
                     ],
                     [
                         'url' => '@web/item/create/edit-description?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') . 'Description',
+                        'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') . \Yii::t('item', 'Description'),
                         'active' => $page == 'description/description'
                     ],
                     [
                         'url' => '@web/item/create/edit-location?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') . 'Location',
+                        'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') . \Yii::t('item', 'Location'),
                         'active' => $page == 'location/location'
                     ],
                     [
                         'url' => '@web/item/create/edit-photos?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') . 'Photos',
+                        'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') . \Yii::t('item', 'Photos'),
                         'active' => $page == 'photos/photos'
                     ],
                     [
                         'url' => '@web/item/create/edit-pricing?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') . 'Pricing',
+                        'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') . \Yii::t('item', 'Pricing'),
                         'active' => $page == 'pricing/pricing'
                     ],
                 ],
