@@ -23,8 +23,16 @@ class LoginCest
     {
         $I->wantTo('ensure that I can login');
         UserHelper::login($I, 'simon@kidup.dk', 'testtest');
+        $I->assertFalse(\Yii::$app->getUser()->getIsGuest(), 'I should be logged in now, but I am not');
     }
 
+    public function checkLogout(functionalTester $I){
+        $I->amOnPage('/home');
+        $I->canSee('Log Out');
+        $I->click('Log Out');
+        $I->amOnPage('/home');
+        $I->dontSee('Log Out');
+    }
 }
 
 ?>
