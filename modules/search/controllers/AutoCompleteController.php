@@ -48,25 +48,10 @@ class AutoCompleteController extends Controller
      */
     public function actionIndex($q = '')
     {
+        \yii\helpers\VarDumper::dump((new ItemSearch())->getSuggestions($q),10,true); exit();
+
         return Json::encode(
             (new ItemSearch())->getSuggestions($q)
         );
-
-
-    }
-
-    public function actionPreload()
-    {
-        return Cache::data('autocomplete_preload_' . \Yii::$app->language, function () {
-            $categories = ItemSearch::find()
-                ->select('text,component_id,language_id')
-                ->where(['IN', 'component_type', ['main-cat', 'sub-cat']])
-                ->andWhere(['language_id' => \Yii::$app->language])
-                ->asArray()
-                ->all();
-            return Json::encode(
-                $categories
-            );
-        });
     }
 }

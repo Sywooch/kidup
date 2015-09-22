@@ -43,7 +43,11 @@ class ItemSearch extends \app\models\base\ItemSearch
             if (strpos(implode(" ", $input), $suggestion->text) !== false) {
                 continue;
             }
-            $res[] = ['text' => implode(" ", array_slice($input, 0, count($input) - 1)) . " " . $suggestion->text];
+            if(strlen(implode(" ", array_slice($input, 1, count($input) - 1))) > 0){
+                $res[] = ['text' => implode(" ", array_slice($input, 1, count($input) - 1)) . " " . $suggestion->text];
+            }else{
+                $res[] = ['text' => $suggestion->text];
+            }
         }
         return $res;
 
