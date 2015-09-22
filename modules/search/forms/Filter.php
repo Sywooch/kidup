@@ -35,6 +35,7 @@ class Filter extends Model
 
     public $resultsAreFake = false; // if the results are not results from the actual query, but just to have something
     public $resultText = false; // toptext in resultPage
+    public $estimatedResultCount = 0; // number of estimated search results
 
     public function formName()
     {
@@ -89,8 +90,20 @@ class Filter extends Model
         }
 
         $this->filterLocation();
-        // give back the results
-        return $this->_query->orderBy('rand()')->all();
+
+        // search results, order by some semi random but constant order
+        $res = $this->_query->orderBy('(item.id mod 10)*item.created_at')->all();
+
+        // estimate the total number of results
+        $this->_query = Item::find();
+
+        $this->filterCategories();
+        $this->filterPrice();
+        $this->_query->andWhere(['is_available' => 1]);
+
+        $this->estimatedResultCount = $this->_query->count();
+
+        return $res;
     }
 
     /**
@@ -272,10 +285,14 @@ class Filter extends Model
         }else{
             $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
             $t = \Yii::t('categories_and_features', $suggestionWord->text);
-            $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?",[
-                '<b>'.$this->query.'</b>',
-                Html::a($t, '@web/search/'.$t, ['data-pjax' => 0])
-            ]);
+            if($this->query == ' ' || $this->query == '%20'){
+                $this->resultText = \Yii::t('search', "Here are some suggestions from other KidUp users!");
+            }else{
+                $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?",[
+                    '<b>'.$this->query.'</b>',
+                    Html::a($t, '@web/search/'.$t, ['data-pjax' => 0])
+                ]);
+            }
         }
     }
 

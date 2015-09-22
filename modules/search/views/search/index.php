@@ -2,7 +2,7 @@
 use yii\widgets\Pjax;
 
 /**
- * @var \app\modules\item\forms\Filter $model
+ * @var \app\modules\search\forms\Filter $model
  * @var \yii\data\ActiveDataProvider $results
  */
 

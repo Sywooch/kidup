@@ -1,5 +1,6 @@
 <?php
 use app\modules\item\widgets\ItemCard;
+
 // displaying the search results
 
 /**
@@ -18,8 +19,8 @@ use app\modules\item\widgets\ItemCard;
         if ($model->resultsAreFake) {
             ?><p><?php
             $cat = \app\modules\item\models\Category::findOne(['id' => $model->categories[0]]);
-            echo \Yii::t('item', 'Below are some products you might find interesting in {0}.',[
-                '<b>'.\Yii::t('categories_and_features', $cat->name).'</b>'
+            echo \Yii::t('item', 'Below are some products you might find interesting in {0}.', [
+                '<b>' . \Yii::t('categories_and_features', $cat->name) . '</b>'
             ]);
             ?></p><?php
         }
@@ -31,7 +32,15 @@ use app\modules\item\widgets\ItemCard;
                 'titleCutoff' => 32
             ]);
         }
-
+        $pagination = new \yii\data\Pagination([
+            'totalCount' => $model->estimatedResultCount,
+            'pageSize' => 12,
+            'pageParam' => 'search-filter[page]'
+        ]);
+        $pagination->setPage($model->page - 1);
+        echo \yii\widgets\LinkPager::widget([
+            'pagination' => $pagination,
+        ]);
         ?>
     </div>
 </div>
