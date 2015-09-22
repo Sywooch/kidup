@@ -34,6 +34,8 @@ class Edit extends Model
     public $singularFeatures;
     public $features;
 
+    public $categoryData;
+
     // used for price suggestions
     public $newPrice;
 
@@ -61,15 +63,21 @@ class Edit extends Model
             $this->features[$ihf->feature_id] = $ihf->feature_value_id;
         }
 
+        $cats = Category::find()->where('parent_id IS NOT NULL')->all();
+
+        foreach ($cats as $cat) {
+            $this->categoryData[$cat->id] = Yii::t('categories_and_features', $cat->parent->name) . ' - '. Yii::t('categories_and_features',$cat->name);
+        }
+
         return parent::__construct();
     }
 
     public function rules()
     {
         return [
-            [['name', 'price_week', 'description', 'location_id'], 'required'],
+            [['name', 'price_week', 'description', 'location_id', 'category_id'], 'required'],
             [['name', 'description'], 'string'],
-            [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
+            [['price_week', 'price_day', 'price_month', 'location_id', 'category_id'], 'number', 'min' => 1],
             [
                 'photos',
                 'required',
@@ -97,7 +105,7 @@ class Edit extends Model
             ],
             'location' => ['location_id'],
             'description' => ['name', 'description'],
-            'basics' => [],
+            'basics' => ['category_id'],
             'pricing' => ['price_week', 'price_day', 'price_month'],
             'photos' => ['photos'],
         ];
@@ -113,6 +121,7 @@ class Edit extends Model
      */
     public function loadAndSaveFeatures()
     {
+        $data = \Yii::$app->request->post();
         if (isset($data[$this->formName()]['singularFeatures'])) {
             $this->singularFeatures = $data[$this->formName()]['singularFeatures'];
             ItemHasFeatureSingular::deleteAll(['item_id' => $this->item->id]);
@@ -131,11 +140,15 @@ class Edit extends Model
             ItemHasFeature::deleteAll(['item_id' => $this->item->id]);
             foreach ($this->features as $id => $val) {
                 $featureVal = FeatureValue::findOne($val);
-                $f = new ItemHasFeature();
-                $f->feature_id = $id;
-                $f->item_id = $this->item->id;
-                $f->feature_values_id = $featureVal->id;
-                $f->save();
+                if($featureVal !== null){
+                    $f = new ItemHasFeature();
+                    $f->feature_id = $id;
+                    $f->item_id = $this->item->id;
+                    $f->feature_value_id = $featureVal->id;
+                    $f->save();
+                }else{
+                    Yii::warning("Feature ID {$val} not found");
+                }
             }
         }
     }
@@ -145,7 +158,7 @@ class Edit extends Model
         if (!$this->validate()) {
             return false;
         }
-
+        
         $item = $this->item;
         $item->location_id = $this->location_id;
         $item->name = $this->name;

@@ -37,7 +37,7 @@ use kartik\file\FileInput;
                                 <h5>
                                     <?= Yii::t("item", "Product category") ?>
                                 </h5>
-                                <?= Yii::t("item", "Start creating an item by finding the category where it fits best.") ?>
+                                <?= Yii::t("item", "Start uploading an item by selecting the category where it fits best.") ?>
                                 <?= $form->field($model, 'category')->widget(\kartik\select2\Select2::className(), [
                                     'data' => $model->categoryData,
                                     'options' => ['placeholder' => \Yii::t('item', 'Find a category')],

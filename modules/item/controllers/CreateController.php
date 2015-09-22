@@ -214,7 +214,7 @@ class CreateController extends Controller
             throw new NotFoundHttpException('Item does not exist');
         }
         if (!$item->isOwner()) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException('Item does not belong to you.');
         }
 
         return $item;

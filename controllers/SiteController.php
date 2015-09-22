@@ -105,13 +105,6 @@ class SiteController extends Controller
             }
         }
 
-        \Yii::$app->clog->notice('page.error.'.$code, [
-            'code' => $code,
-            'name' => $name,
-            'message' => $message,
-            'url' => \Yii::$app->request->getUrl(),
-        ]);
-
         if (Yii::$app->getRequest()->getIsAjax()) {
             return "$name: $message";
         } else {
