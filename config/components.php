@@ -39,7 +39,7 @@ $components = [
         'class' => 'yii\authclient\Collection',
         'clients' => [
             'facebook' => [
-                'class' => 'yii\authclient\clients\Facebook',
+                'class' => 'app\components\extended\Facebook',
                 'clientId' => '1515825585365803',
                 'clientSecret' => $keys['facebook_oauth_secret'],
                 'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500],
