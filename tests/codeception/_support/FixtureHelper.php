@@ -73,62 +73,62 @@ class FixtureHelper extends Module
                 'class'    => UserFixture::className(),
                 'dataFile' => '@app/tests/codeception/fixtures/data/user.php',
             ],
-            'profile' => [
-                'class'    => ProfileFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/profile.php',
-            ],
-            'token' => [
-                'class'    => TokenFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/token.php',
-            ],
-            'conversation' => [
-                'class'    => ConversationFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/conversation.php',
-            ],
-            'setting' => [
-                'class'    => SettingFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/setting.php',
-            ],
-            'payoutMethod' => [
-                'class'    => PayoutMethodFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/payout_method.php',
-            ],
-            'location' => [
-                'class'    => LocationFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/location.php',
-            ],
-            'item' => [
-                'class'    => ItemFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/item.php',
-            ],
-            'itemHasCategory' => [
-                'class'    => ItemHasCategoryFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/item_has_category.php',
-            ],
-            'media' => [
-                'class'    => MediaFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/media.php',
-            ],
-            'itemHasMedia' => [
-                'class'    => ItemHasMediaFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/item_has_media.php',
-            ],
-            'message' => [
-                'class'    => MessageFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/message.php',
-            ],
-            'payin' => [
-                'class'    => PayinFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/payin.php',
-            ],
-            'payout' => [
-                'class'    => PayoutFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/payout.php',
-            ],
-            'booking' => [
-                'class'    => BookingFixture::className(),
-                'dataFile' => '@app/tests/codeception/fixtures/data/booking.php',
-            ],
+//            'profile' => [
+//                'class'    => ProfileFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/profile.php',
+//            ],
+//            'token' => [
+//                'class'    => TokenFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/token.php',
+//            ],
+//            'conversation' => [
+//                'class'    => ConversationFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/conversation.php',
+//            ],
+//            'setting' => [
+//                'class'    => SettingFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/setting.php',
+//            ],
+//            'payoutMethod' => [
+//                'class'    => PayoutMethodFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/payout_method.php',
+//            ],
+//            'location' => [
+//                'class'    => LocationFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/location.php',
+//            ],
+//            'item' => [
+//                'class'    => ItemFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/item.php',
+//            ],
+//            'itemHasCategory' => [
+//                'class'    => ItemHasCategoryFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/item_has_category.php',
+//            ],
+//            'media' => [
+//                'class'    => MediaFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/media.php',
+//            ],
+//            'itemHasMedia' => [
+//                'class'    => ItemHasMediaFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/item_has_media.php',
+//            ],
+//            'message' => [
+//                'class'    => MessageFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/message.php',
+//            ],
+//            'payin' => [
+//                'class'    => PayinFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/payin.php',
+//            ],
+//            'payout' => [
+//                'class'    => PayoutFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/payout.php',
+//            ],
+//            'booking' => [
+//                'class'    => BookingFixture::className(),
+//                'dataFile' => '@app/tests/codeception/fixtures/data/booking.php',
+//            ],
 
         ];
     }

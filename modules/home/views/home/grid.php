@@ -20,7 +20,6 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2><?= Yii::t("home", "Find Kids stuff") ?></h2>
-                <h4><?= Yii::t("home", "Find the things which fits your family") ?></h4>
             </div>
         </div>
         <!--new row with stuff-->
@@ -32,13 +31,9 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                              style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 500]) ?>">
                         </div>
                         <div class="content text-center">
-                            <br>
-                            <br>
-
                             <h2 class="category-name"><?= $toysOutside ?></h2>
                         </div>
                     </div>
-                    <!-- end card -->
                 </a>
             </div>
 
@@ -49,50 +44,37 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                             ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
-                            <br>
-                            <br>
-
                             <h2 class="category-name"><?= $onTheRoad ?></h2>
                         </div>
                     </div>
-                    <!-- end card  card-background -->
                 </a>
             </div>
             <div class="col-md-5">
+                <a href="<?= Url::to('@web/search/'.$furniture) ?>">
+                    <div class="card  card-background">
+                        <div class="image"
+                             style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 500]) ?>">
+                        </div>
+                        <div class="content text-center">
+                            <h2 class="category-name"><?= $furniture ?></h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--new row with stuff-->
+        <div class="row">
+            <div class="col-md-3">
+
                 <a href="<?= Url::to('@web/search/'.$toys) ?>">
                     <div class="card  card-background">
                         <div class="image"
                              style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 470]) ?>">
                         </div>
                         <div class="content text-center">
-                            <br>
-                            <br>
-
                             <h2 class="category-name"><?= $toys ?></h2>
                         </div>
                     </div>
-                    <!-- end card  card-background -->
-                </a>
-            </div>
-        </div>
-        <!--new row with stuff-->
-        <div class="row">
-
-            <div class="col-md-3">
-                <a href="<?= Url::to('@web/search/'.$furniture) ?>">
-                    <div class="card  card-background">
-                        <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 300]) ?>">
-                        </div>
-                        <div class="content text-center">
-                            <br>
-                            <br>
-
-                            <h2 class="category-name"><?= $furniture ?></h2>
-
-                        </div>
-                    </div>
-                    <!-- end card  card-background -->
                 </a>
             </div>
             <div class="col-md-5">
@@ -102,9 +84,6 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                             ['q' => 90, 'w' => 600]) ?>; background-position: 50% 20%;">
                         </div>
                         <div class="content text-center">
-                            <br>
-                            <br>
-
                             <h2 class="category-name"><?= $babyClothes ?></h2>
                         </div>
                     </div>
@@ -118,9 +97,6 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                             ['q' => 90, 'w' => 400]) ?>">
                         </div>
                         <div class="content text-center">
-                            <br>
-                            <br>
-
                             <h2 class="category-name"><?= $baby ?></h2>
                         </div>
                     </div>

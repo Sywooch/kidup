@@ -1,28 +1,4 @@
 $(document).ready(function () {
-
-    // how it works section
-    $('.step-item').on("mouseover", function () {
-        $('.step-item').removeClass('active');
-        $(this).fadeIn().addClass('active');
-        var selected = $(this).attr("id");
-        var lastChar = selected[selected.length - 1];
-        if (lastChar == 1) {
-            $("div[class*='step-d']").removeClass('active');
-            $('.step-d-1').addClass('active');
-        } else if (lastChar == 2) {
-            $("div[class*='step-d']").removeClass('active');
-            $('.step-d-2').addClass('active');
-        }
-        else if (lastChar == 3) {
-            $("div[class*='step-d']").removeClass('active');
-            $('.step-d-3').addClass('active');
-        }
-        else if (lastChar == 4) {
-            $("div[class*='step-d']").removeClass('active');
-            $('.step-d-4').addClass('active');
-        }
-    });
-
     // slider
     $("#owl-kidup").owlCarousel({
         navigation: true,

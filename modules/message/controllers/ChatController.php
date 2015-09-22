@@ -23,12 +23,11 @@ class ChatController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
                 'rules' => [
                     [
                         // allow only authenticated
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['inbox', 'conversation'],
                         'roles' => ['@'],
                     ],
                 ],
