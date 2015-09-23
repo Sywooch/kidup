@@ -58,10 +58,12 @@ use app\modules\user\widgets\UserImage;
                         <i class="fa fa-map-marker"></i>
                         <?php
                         $distance = (int)$model->distance;
-                        if ($distance == 0 || !$showDistance) {
-                            echo $model->location->city;
-                        } else {
-                            echo $distance . ' km';
+                        if ($model->location !== null) {
+                            if ($distance == 0 || !$showDistance) {
+                                echo $model->location->city;
+                            } else {
+                                echo $distance . ' km';
+                            }
                         }
                         ?>
                     </div>

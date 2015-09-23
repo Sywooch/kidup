@@ -13,16 +13,6 @@ use functionalTester;
  */
 class RegistrationCest
 {
-    public function _after($event)
-    {
-        User::deleteAll([
-            'email' => 'idont@exist.com',
-        ]);
-        Profile::deleteAll([
-            'first_name' => 'first_name_124',
-            'last_name' => 'last_name_345',
-        ]);
-    }
 
     public function checkRegister(functionalTester $I)
     {
