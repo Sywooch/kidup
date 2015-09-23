@@ -28,8 +28,14 @@ class MuffinHelper extends Module
     public function init()
     {
         $factory = new FactoryMuffin();
+        $classes = [
+            User::class,
+            Token::class,
+            Profile::class,
+            Item::class
+        ];
 
-        foreach ([User::class, Token::class, Profile::class, Item::class] as $model) {
+        foreach ($classes as $model) {
             $defs = $model::definitions();
             $factory->define($model)->setDefinitions($defs);
             Debug::debug($model);
