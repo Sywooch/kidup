@@ -48,8 +48,6 @@ class AutoCompleteController extends Controller
      */
     public function actionIndex($q = '')
     {
-        \yii\helpers\VarDumper::dump((new ItemSearch())->getSuggestions($q),10,true); exit();
-
         return Json::encode(
             (new ItemSearch())->getSuggestions($q)
         );

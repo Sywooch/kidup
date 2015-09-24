@@ -19,7 +19,7 @@ class ItemCard extends Widget
     public $showDistance = false;
 
     public function init() {
-        $this->model->name = $this->shortenize($this->model->name);
+        $this->model->name = $this->model->name;
         if($this->numberOfCards == 4){
             $this->rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-3 col-lg-3";
         }
@@ -39,13 +39,6 @@ class ItemCard extends Widget
             'rowClass' => $this->rowClass,
             'widget' => $this
         ]);
-    }
-
-    private function shortenize($str) {
-        if (strlen($str) > $this->titleCutoff) {
-            return substr($str, 0, $this->titleCutoff) . '...';
-        }
-        return $str;
     }
 
 }
