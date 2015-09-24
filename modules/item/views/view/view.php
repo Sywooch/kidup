@@ -223,7 +223,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
         <div class="buttonContainer" style="z-index:10;">
             <button class="btn btn-fill btn-danger mobileBookingRequestButton visible-sm visible-xs">
-                <?= \Yii::t('item', 'Book this item') ?>
+                <?= \Yii::t('item', 'Request to Book') ?>
             </button>
         </div>
     </section>
