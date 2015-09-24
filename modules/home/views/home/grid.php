@@ -117,7 +117,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
             }
             ?>
         </div>
-        <div class="row hidden-xs" style="margin-bottom: 20px;">
+        <div class="row hidden-sm hidden-xs" style="margin-bottom: 20px;">
             <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:20px;">
                 <?= Yii::t("home", "We are honered to be featured on") ?>
             </div>
