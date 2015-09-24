@@ -41,9 +41,9 @@ class BookingCest {
         $faker = Faker::create();
         $format = 'd-m-Y';
 
-        // generate random dates with some additional noise
-        $dateFrom = $faker->dateTimeBetween('+2 days', '+3 days')->getTimestamp() + $faker->numberBetween(10, 3600);
-        $dateTo = $faker->dateTimeBetween('+5 days', '+8 days')->getTimestamp() + $faker->numberBetween(10, 3600);
+        // generate random dates
+        $dateFrom = $faker->dateTimeBetween('+2 days', '+3 days')->getTimestamp();
+        $dateTo = $faker->dateTimeBetween('+5 days', '+8 days')->getTimestamp();
 
         // calculate the number of days between these dates
         $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
