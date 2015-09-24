@@ -1,9 +1,8 @@
 <?php
-use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 /*
- * @var ActiveDataProvider $conversationDataProvider
+ * @var yii\data\ActiveDataProvider $conversationDataProvider
  * @var yii\web\View $this
  */
 
@@ -29,10 +28,9 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                             </div>
 
                             <div class="col-md-2 col-md-offset-6 booking hidden-xs">
-                                <?= Yii::t("message", "Booking Status") ?>
+                                <?= $conversationDataProvider->count > 0 ? Yii::t("message", "Booking Status") : '' ?>
                             </div>
                         </div>
-
                     </div>
                     <?php
                     //                     displaying the inbox items

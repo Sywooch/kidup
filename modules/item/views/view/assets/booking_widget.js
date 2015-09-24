@@ -127,7 +127,6 @@ var widgetFactory = function () {
             window.scrollTo(0, 0);
         });
 
-        $("#bookingWidget").hide();
         $("#mobileCloseBookingRequest").hide();
 
         $("#mobileCloseBookingRequest").click(function () {
@@ -139,7 +138,7 @@ var widgetFactory = function () {
 
 
     var scrollFunc = function () {
-        if ($(document).width() < 768) return false;
+        if ($(document).width() < 990) return false;
         var docScroll = $(document).scrollTop();
         var navHeight = $('.navbar').height();
         if (typeof $('#footer').offset() === "undefined") {
