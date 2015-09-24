@@ -11,7 +11,8 @@ use yii\helpers\Html;
     'action' => Url::to('@web/search'),
     'method' => 'get',
     'options' => [
-        'class' => 'form-inline hidden-xs'
+        'class' => 'form-inline hidden-xs',
+        'data-pjax' => 0
     ],
     'enableClientValidation' => false,
     'enableClientScript' => false,

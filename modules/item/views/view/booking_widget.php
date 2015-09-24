@@ -17,13 +17,13 @@ use yii\widgets\Pjax;
 <?php Pjax::begin([
 //    'enableReplaceState' => true,
     'id' => 'pjax-create-booking-form',
-    'timeout' => 2000
+    'timeout' => 20000
 ]);
 ?>
     <script>
         window.userIsGuest = <?= \Yii::$app->user->isGuest ? 'true' : 'false' ?>;
-        if (typeof widget !== "undefined") {
-            widget.load();
+        if (typeof window.widget !== "undefined") {
+            window.widget.load();
         }
     </script>
     <div class="col-md-3 card" id="booking-widget">

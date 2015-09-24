@@ -1,13 +1,9 @@
 <?php
 
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
 use app\modules\item\widgets\ItemCard;
 use app\widgets\Map;
-use dosamigos\gallery\Gallery;
 use yii\helpers\Url;
+use app\modules\item\widgets\Gallery;
 
 /**
  * @var yii\web\View $this
@@ -15,7 +11,7 @@ use yii\helpers\Url;
  * @var string $bookingForm
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
- * @var bool $show_modal
+ * @var bool $show_modalk
  * @var \yii\data\ActiveDataProvider $reviewDataProvider
  */
 
@@ -29,15 +25,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \yii\widgets\PjaxAsset::register($this);
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
-<?= $this->render('booking_modal', [
-    'model' => $bookingForm,
-]); ?>
 
 <div id="item">
     <section id="content" class="section">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 col-lg-7 col-md-offset-1">
+                <div class="col-sm-8 col-lg-7 col-md-offset-1" id="pageInfo">
                     <div class="row main-info">
                         <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
@@ -91,8 +84,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger visible-sm visible-xs" data-toggle="modal"
-                            data-target="#bookingModal">
+                    <button class="btn btn-fill btn-danger visible-sm visible-xs mobileBookingRequestButton">
                         <?= \Yii::t('item', 'Request to Book') ?>
                     </button>
                     <br/><br/>
@@ -196,8 +188,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger visible-sm visible-xs" data-toggle="modal"
-                            data-target="#bookingModal">
+                    <button class="btn btn-fill btn-danger visible-sm visible-xs mobileBookingRequestButton">
                         <?= \Yii::t('item', 'Request to Book') ?>
                     </button>
 
@@ -227,7 +218,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="hidden-xs hidden-sm">
+                <div id="bookingWidget">
+                    <div class="visible-xs visible-sm" id="mobileCloseBookingRequest"
+                         style="margin-top: 10px;font-size: 26px;margin-bottom: -10px;position: absolute;right: 10px;z-index: 99;top: 2px;">
+                        <i class="fa fa-close"></i>
+                    </div>
                     <?php echo $this->render('booking_widget', [
                         'model' => $bookingForm,
                     ]) ?>

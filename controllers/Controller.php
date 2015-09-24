@@ -44,14 +44,6 @@ class Controller extends \yii\web\Controller
         }
         // this disallows websites to frame kidup
         \Yii::$app->view->registerMetaTag(['http-equiv' => 'X-FRAME-OPTIONS', 'content' => 'DENY']);
-        $data = [
-            'referrer' => \Yii::$app->request->referrer,
-            'url' => \Yii::$app->request->getUrl(),
-            'method' => \Yii::$app->request->getMethod(),
-            'ip' => \Yii::$app->request->getUserIP()
-        ];
-//        \Yii::$app->clog->info('page.view', $data);
-        // todo would be awesome to track this, but it takes about 150 ms, which is waay to long
 
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {

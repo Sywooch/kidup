@@ -100,7 +100,7 @@ class CreateBooking extends Model
     public function attemptBooking()
     {
         if ($this->validateDates()) {
-            if (\Yii::$app->session->has('ready_to_book') || YII_ENV == 'test') {
+            if (isset(\Yii::$app->request->get()['_pjax']) || YII_ENV == 'test') {
                 $session = Json::decode(\Yii::$app->session->get('ready_to_book'));
                 if (($session['time_from'] == $this->from && $session['time_to'] == $this->to && $this->item->id == $session['item_id'])
                     || YII_ENV == 'test'
