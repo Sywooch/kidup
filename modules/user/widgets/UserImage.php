@@ -19,13 +19,15 @@ class UserImage extends Widget
     {
         $this->profile = Profile::find()->where(['user_id' => $this->user_id])->one();
 
-        $img = $this->profile->getAttribute('img');
+        if ($this->profile !== null) {
+            $img = $this->profile->getAttribute('img');
 
-        return ImageHelper::img($img, [
-            'q' => 90,
-            'w' => str_replace('px', '', $this->width),
-            'h' => str_replace('px', '', $this->width),
-            'fit' => 'crop'
-        ], ['class' => "avatar img-circle"]);
+            return ImageHelper::img($img, [
+                'q' => 90,
+                'w' => str_replace('px', '', $this->width),
+                'h' => str_replace('px', '', $this->width),
+                'fit' => 'crop'
+            ], ['class' => "avatar img-circle"]);
+        }
     }
 }

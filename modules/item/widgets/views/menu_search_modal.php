@@ -70,15 +70,17 @@ use \kartik\typeahead\Typeahead;
     'name' => 'autoCompleteLocationMobileWidget'
 ]); ?>
 
-<?= Html::submitButton(Yii::t('home', 'Search'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
+<?= Html::submitButton(Yii::t('home', 'Search'), [
+    'class' => 'btn btn-danger btn-fill btn-block',
+    'onclick' => 'submitMenuSearchModalForm()'
+]) ?>
 
 <?php ActiveForm::end(); ?>
 
 <?php
 \yii\bootstrap\Modal::end();
-$this->registerJS('$("#mobile-search").on("submit", function (event) {
-    event.preventDefault();
-
+$this->registerJS('
+function submitMenuSearchModalForm() {
     var vals = [];
     var val = $("#search-filter-query").val();
     if(val == ""){
@@ -107,6 +109,7 @@ $this->registerJS('$("#mobile-search").on("submit", function (event) {
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }
-});');
+
+}');
 
 ?>

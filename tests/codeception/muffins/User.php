@@ -5,6 +5,7 @@ use League\FactoryMuffin\Faker\Facade as Faker;
 
 class User extends \app\modules\user\models\User
 {
+
     public function definitions()
     {
         $security = \Yii::$app->getSecurity();
@@ -14,4 +15,5 @@ class User extends \app\modules\user\models\User
             'password_hash' => '$2y$13$zSOTbjAPHZ7PloN466qJMO1DkCvLNsFLAdZEuKr/v.SbIh.xwLx4a',
         ];
     }
+
 }

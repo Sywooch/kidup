@@ -3,7 +3,11 @@ namespace app\tests\codeception\functional\message;
 
 use app\tests\codeception\_support\FixtureHelper;
 use app\tests\codeception\_support\MessageHelper;
+use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
+use app\tests\codeception\muffins\Conversation;
+use app\tests\codeception\muffins\Message;
+use app\tests\codeception\muffins\User;
 use FunctionalTester;
 
 /**
@@ -15,27 +19,10 @@ use FunctionalTester;
 class MessageCest
 {
 
-    private $messageHelper = null;
+    protected static $fm = null;
 
-    /**
-     * Initialize the test.
-     *
-     * @param FunctionalTester $I
-     */
-    public function _before(FunctionalTester $I)
-    {
-        (new FixtureHelper)->fixtures();
-        $this->messageHelper = new MessageHelper();
-    }
-
-    /**
-     * Remove all created data.
-     *
-     * @param FunctionalTester $I
-     */
-    public function _after(FunctionalTester $I)
-    {
-        $this->messageHelper->clearConversations();
+    public function _before() {
+        static::$fm = (new MuffinHelper())->init()->getFactory();
     }
 
     /**
@@ -45,13 +32,23 @@ class MessageCest
      */
     public function testBadgeCount(FunctionalTester $I)
     {
+        $initiater = static::$fm->create(User::class);
+        $receiver = static::$fm->create(User::class);
+
         $I->wantTo('ensure that the badge count is displayed correctly on the home page.');
-        UserHelper::login($I, 'simon@kidup.dk', 'testtest');
+        UserHelper::login($receiver);
         $I->amOnPage('/');
         $I->dontSeeElement('.message .badge');
 
         // now insert a fake message
-        $message = $this->messageHelper->createMessage(2, 1, 'Test message');
+        $conversation = static::$fm->create(Conversation::class);
+        $conversation->initiater_user_id = $initiater->id;
+        $conversation->target_user_id = $receiver->id;
+        $message = static::$fm->create(Message::class);
+        $message->conversation_id = $conversation->id;
+        $message->sender_user_id = $initiater->id;
+        $message->receiver_user_id = $receiver->id;
+        $message->save();
         $I->amOnPage('/');
         $I->canSeeElement('.message .badge');
         $I->canSee('1', '.message .badge');
@@ -61,8 +58,6 @@ class MessageCest
         $message->save();
         $I->amOnPage('/');
         $I->dontSeeElement('.message .badge');
-
-        $this->messageHelper->clearConversations();
     }
 
 }

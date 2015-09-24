@@ -14,4 +14,5 @@ class Token extends \app\modules\mail\models\Token
             'type' => self::TYPE_PHONE_CODE
         ];
     }
+
 }
