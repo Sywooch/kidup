@@ -30,7 +30,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
     <section id="content" class="section">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 col-lg-7 col-md-offset-1" id="pageInfo">
+                <div class="col-lg-7 col-md-offset-1" id="pageInfo">
                     <div class="row main-info">
                         <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">

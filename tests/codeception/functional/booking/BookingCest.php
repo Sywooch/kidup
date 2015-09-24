@@ -64,13 +64,13 @@ class BookingCest {
         ];
 
         // check the generated table
-        $I->amOnPage('item/' . $item->id . '?' . http_build_query($params));
+        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params));
         $I->canSee('Service fee');
         $I->canSee($numDays . ' days');
         $I->canSee('Request to Book');
 
         // go to the action page of the form
-        $I->amOnPage('item/' . $item->id . '?' . http_build_query($params) . '&_pjax=1');
+        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_pjax=1');
         $I->canSee('Review and book');
 
         /*CreateBooking::widget([

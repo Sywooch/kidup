@@ -108,6 +108,9 @@ class CreateBooking extends Model
 
                     if ($this->save()) {
                         $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
+                        if(YII_ENV === 'test'){
+                            return \Yii::$app->controller->redirect($redirect);
+                        }
                         return "<script>window.location = '{$redirect}';</script>";
                     }
                 }
