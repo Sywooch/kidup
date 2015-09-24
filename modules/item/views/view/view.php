@@ -211,7 +211,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                 </div>
                 <div id="bookingWidget">
                     <div class="visible-xs visible-sm" id="mobileCloseBookingRequest"
-                         style="margin-top: 10px;font-size: 26px;margin-bottom: -10px;position: absolute;right: 10px;z-index: 99;top: 2px;">
+                         style="">
                         <i class="fa fa-close"></i>
                     </div>
                     <?php echo $this->render('booking_widget', [

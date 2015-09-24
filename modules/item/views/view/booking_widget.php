@@ -49,7 +49,7 @@ use yii\widgets\Pjax;
 //            'action' => \yii\helpers\Url::to('@web/item/view/create-booking?id='.$model->item->id)
         ]); ?>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <div class="text">
                     <?= Yii::t("item", "Starting at") ?>
                 </div>
@@ -74,7 +74,7 @@ use yii\widgets\Pjax;
                     ])
                 ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <div class="text">
                     <?= Yii::t("item", "Ending at") ?>
                 </div>

@@ -169,13 +169,20 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
                         <?= \app\components\Cache::html('user_widget', function () {
-                            WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                            return \app\modules\user\widgets\UserImage::widget([
                                 'user_id' => \Yii::$app->user->id,
                                 'width' => '40px'
                             ]);
                         }, ['variations' => [\Yii::$app->user->id]])
                         ?>
                     </li>
+
+                    <li>
+                        <a href="<?= Url::to("@web/home") ?>">
+                            <?= Yii::t("app", "Home") ?>
+                        </a>
+                    </li>
+
                     <li>
                         <a href="<?= Url::to('@web/user/' . \Yii::$app->user->id) ?>">
                             <?= Yii::t("app", "View Profile") ?>

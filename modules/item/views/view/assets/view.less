@@ -43,7 +43,7 @@
     .icon-row {
       .fa {
         font-size: 33px;
-        color: darken(@grey-light,25);
+        color: darken(@grey-light, 25);
         text-align: center;
       }
       .icon-text {
@@ -90,7 +90,6 @@
     align-items: stretch;
     -webkit-align-content: center;
     align-content: center;
-    padding: 3px;
     a {
       width: 12%;
       -webkit-order: 0;
@@ -104,11 +103,18 @@
       align-self: auto;
       flex-grow: 1;
       padding: 3px;
+      padding-left: 0;
+      &:last-child {
+        padding-right: 0;
+      }
     }
     img {
       width: 100%;
       height: auto;
     }
+  }
+  h4 {
+    margin-top: 5px;
   }
 
   #booking-widget {
@@ -144,6 +150,23 @@
   }
   .owner {
     text-align: center;
+  }
+
+  #mobileCloseBookingRequest {
+    margin-top: 10px;
+    font-size: 32px;
+    margin-bottom: -10px;
+    position: absolute;
+    right: 10px;
+    z-index: 99;
+    top: 2px;
+    padding: 10px;
+  }
+
+  @media only screen and (max-width: 992px) {
+    #pjax-create-booking-form {
+      margin-top: 80px;
+    }
   }
 }
 

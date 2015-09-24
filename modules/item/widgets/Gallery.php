@@ -91,20 +91,17 @@ class Gallery extends Widget
     public function renderItems()
     {
         $items = [];
+        $prepend = '';
         foreach ($this->items as $i => $item) {
-            $prepend = '';
-            $append = '';
-            if($i == 2 && count($this->items) > 2){
-                $prepend = "<div class='row'><div class='col-md-6'>";
-                $append = "</div></div>";
+            if($i == 0 && count($this->items) > 2){
+                $prepend = $this->renderItem($item);
+                $prepend = str_replace('w=250', 'w=650', $prepend);
+                $prepend = str_replace('h=200', 'h=300', $prepend);
             }
-            if($i == 2 && count($this->items) > 2){
-                $prepend = "<div class='row'><div class='col-md-6'>";
-                $append = "</div></div>";
-            }
-            $items[] = $prepend.$this->renderItem($item).$append;
+
+            $items[] = $this->renderItem($item);
         }
-        return Html::tag('div', implode("\n", array_filter($items)), $this->options);
+        return $prepend.Html::tag('div', implode("\n", array_filter($items)), $this->options);
     }
 
     /**
