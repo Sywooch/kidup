@@ -28,7 +28,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                 <a href="<?= Url::to('@web/search/'.$toysOutside) ?>">
                     <div class="card card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 500]) ?>">
+                             style="<?= ImageHelper::bgCoverImg('kidup/categories/bike2.png', ['q' => 90, 'w' => 500]) ?>">
                         </div>
                         <div class="content text-center">
                             <h2 class="category-name"><?= $toysOutside ?></h2>
@@ -40,7 +40,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
             <div class="col-md-3">
                 <a href="<?= Url::to('@web/search/'.$onTheRoad) ?>">
                     <div class="card  card-background">
-                        <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/stroller2.png',
+                        <div class="image" style="<?= ImageHelper::bgCoverImg('kidup/categories/stroller2.png',
                             ['q' => 90, 'w' => 300]) ?>">
                         </div>
                         <div class="content text-center">
@@ -53,7 +53,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                 <a href="<?= Url::to('@web/search/'.$furniture) ?>">
                     <div class="card  card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/room2.png', ['q' => 90, 'w' => 500]) ?>">
+                             style="<?= ImageHelper::bgCoverImg('kidup/categories/room2.png', ['q' => 90, 'w' => 500]) ?>">
                         </div>
                         <div class="content text-center">
                             <h2 class="category-name"><?= $furniture ?></h2>
@@ -69,7 +69,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
                 <a href="<?= Url::to('@web/search/'.$toys) ?>">
                     <div class="card  card-background">
                         <div class="image"
-                             style="<?= ImageHelper::bgImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 470]) ?>">
+                             style="<?= ImageHelper::bgCoverImg('kidup/categories/toy2.png', ['q' => 90, 'w' => 470]) ?>">
                         </div>
                         <div class="content text-center">
                             <h2 class="category-name"><?= $toys ?></h2>
@@ -80,7 +80,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
             <div class="col-md-5">
                 <a href="<?= Url::to('@web/search/'.$babyClothes) ?>">
                     <div class="card  card-background">
-                        <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/playfull2.png',
+                        <div class="image" style="<?= ImageHelper::bgCoverImg('kidup/categories/playfull2.png',
                             ['q' => 90, 'w' => 600]) ?>; background-position: 50% 20%;">
                         </div>
                         <div class="content text-center">
@@ -93,7 +93,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
             <div class="col-md-4">
                 <a href="<?= Url::to('@web/search/'.$baby) ?>">
                     <div class="card  card-background">
-                        <div class="image" style="<?= ImageHelper::bgImg('kidup/categories/carseat2.png',
+                        <div class="image" style="<?= ImageHelper::bgCoverImg('kidup/categories/carseat2.png',
                             ['q' => 90, 'w' => 400]) ?>">
                         </div>
                         <div class="content text-center">

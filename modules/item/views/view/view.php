@@ -29,9 +29,9 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \yii\widgets\PjaxAsset::register($this);
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
-<?//= // $this->render('booking_modal', [
-    // 'model' => $bookingForm,
-//]); ?>
+<?= $this->render('booking_modal', [
+    'model' => $bookingForm,
+]); ?>
 
 <div id="item">
     <section id="content" class="section">
