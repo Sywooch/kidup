@@ -121,28 +121,28 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
             <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:20px;">
                 <?= Yii::t("home", "We are honered to be featured on") ?>
             </div>
-            <div class="col-md-2 col-md-offset-1">
-                <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 200], [
+            <div class="col-md-2 col-md-offset-1 text-center">
+                <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 180], [
                     'style' => 'opacity:0.5;'
                 ]) ?>
             </div>
-            <div class="col-md-2">
-                <?= ImageHelper::image('kidup/home/mentions/dr.png', ['w' => 200], [
+            <div class="col-md-2 text-center">
+                <?= ImageHelper::image('kidup/home/mentions/dr.png', ['w' => 180], [
                     'style' => 'opacity:0.5;margin-top: 17px;'
                 ]) ?>
             </div>
-            <div class="col-md-2">
-                <?= ImageHelper::image('kidup/home/mentions/radio24-7.png', ['w' => 200], [
+            <div class="col-md-2 text-center">
+                <?= ImageHelper::image('kidup/home/mentions/radio24-7.png', ['w' => 180], [
                     'style' => 'opacity:0.5;'
                 ]) ?>
             </div>
-            <div class="col-md-2">
-                <?= ImageHelper::image('kidup/home/mentions/startup-weekend.png', ['w' => 200], [
+            <div class="col-md-2 text-center">
+                <?= ImageHelper::image('kidup/home/mentions/startup-weekend.png', ['w' => 180], [
                     'style' => 'opacity:0.5; margin-top: 10px;'
                 ]) ?>
             </div>
-            <div class="col-md-2">
-                <?= ImageHelper::image('kidup/home/mentions/trendsonline.png', ['w' => 200], [
+            <div class="col-md-2 text-center">
+                <?= ImageHelper::image('kidup/home/mentions/trendsonline.png', ['w' => 180], [
                     'style' => 'opacity:0.5; margin-top: 15px;'
                 ]) ?>
             </div>
