@@ -63,6 +63,14 @@
   margin-bottom: -90px;
   margin-top: -90px;
   width: 100%;
+  /* Mobile optimizations */
+  @media all and (max-width: @max-mobile) {
+    .header-content {
+      h1 {
+        padding-top: 120px !important;
+      }
+    }
+  }
   section {
     margin: 0px;
   }
@@ -310,7 +318,7 @@
     }
     h4 {
       //line-height: 0;
-      margin: 15px 0 40px;
+      margin: 15px 0 8px;
     }
   }
 
@@ -318,11 +326,10 @@
   #content-home-steps {
     padding: 80px 0px;
     background-color: @bg-white;
-    min-height: 660px;
     position: relative;
     h4 {
       //line-height: 0;
-      margin: 15px 0 40px;
+      margin: 15px 0 8px;
     }
     .step-area {
       padding-top: 50px;

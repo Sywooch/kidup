@@ -47,7 +47,7 @@ use app\modules\user\widgets\UserImage;
                     ?>
                 </div>
 
-                <div class="footer">
+                <div class="footer-divs">
                     <div class="reviews">
                         <?= \app\modules\review\widgets\ReviewScore::widget([
                             'user_id' => $model->owner_id,

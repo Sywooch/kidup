@@ -33,17 +33,23 @@ $form = \yii\bootstrap\ActiveForm::begin([
     ],
 ]); ?>
 
-<?= $form->field($model, 'street')->widget(\app\modules\item\widgets\GoogleAutoComplete::className(), [
-    'options' => [
-        'class' => 'form-control location-input',
-        'autocompleteName' => 'item-create'
-    ],
-    'autocompleteOptions' => [
-        'types' => ['geocode']
-    ]
-]); ?>
+<div class="row">
+    <div class="col-xs-7">
+        <?= $form->field($model, 'street')->widget(\app\modules\item\widgets\GoogleAutoComplete::className(), [
+            'options' => [
+                'class' => 'location-input form-control',
+                'autocompleteName' => 'item-create'
+            ],
+            'autocompleteOptions' => [
+                'types' => ['geocode']
+            ]
+        ])->label(\Yii::t('item', 'Street and Streetnumber')); ?>
+    </div>
+    <div class="col-xs-5">
+        <?= $form->field($model, 'street_suffix')->label(\Yii::t('item', 'Apt, Suite, Building (optional)')) ?>
+    </div>
+</div>
 
-<?= $form->field($model, 'street_suffix')->label(\Yii::t('item', 'Apt, Suite, Building (optional)')) ?>
 <?= $form->field($model, 'zip_code') ?>
 <?= $form->field($model, 'city') ?>
 

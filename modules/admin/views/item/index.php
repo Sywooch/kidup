@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'description',
                 'value' => function($model){
-                    return substr($model->description,0,50)."....";
+                    return $model->description;
                 }
             ],
             'price_day',

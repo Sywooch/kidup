@@ -44,6 +44,25 @@
   //  padding: 0 10px;
   cursor: pointer;
   text-align:left;
+  .title, .category {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .reviews, .location {
+    display: inline-block;
+    width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .location {
+    text-align: right;
+  }
+  .footer-divs {
+    margin-top: 8px;
+  }
   .price-badge{
     position: absolute;
     left: -2px;
