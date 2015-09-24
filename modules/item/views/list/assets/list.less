@@ -8,7 +8,7 @@
 
   .nav-stacked > li {
     float: left;
-    @media (min-width: 768px) {
+    @media (min-width: @max-mobile) {
       clear: both;
     }
     @media (max-width: 767px) {
@@ -63,7 +63,7 @@
       position: absolute;
       right: 10px;
       top: 10px;
-      //      @media(max-width: 768px){
+      //      @media(max-width: @max-mobile){
       //        float: left;
       //        width: 100%;
       //        margin-top: 5px;

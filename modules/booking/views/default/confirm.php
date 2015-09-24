@@ -75,12 +75,11 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                                 <div class="col-md-3">
                                     <?= ImageHelper::img('kidup/booking/creditcards/amex.png', ['q' => 90]) ?></div>
                             </div>
-
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-7">
+                            <br />
                             <div id="payment-form"></div>
                             <?php
                             $this->registerJs('braintree.setup("' . $clientToken . '", "dropin", { container: "payment-form" });');

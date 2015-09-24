@@ -169,7 +169,7 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-@media (min-width: 768px) {
+@media (min-width: @max-mobile) {
   .skin-black-light.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
     border-left: 1px solid #d2d6de;
   }

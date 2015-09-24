@@ -1,7 +1,7 @@
 @import (reference) "./../../../views/assets/css/includer.less";
 
 //
-//@media all and (max-width: 768px) and (min-width: @itemcard-width) {
+//@media all and (max-width: @max-mobile) and (min-width: @itemcard-width) {
 //  .item-card {
 //    float: left;
 //    clear: both;
@@ -10,7 +10,7 @@
 //  }
 //}
 //
-//@media all and (min-width: 768px) and (max-width: 992px) {
+//@media all and (min-width: @max-mobile) and (max-width: 992px) {
 //  .item-card {
 //    width: (@itemcard-width) !important;
 //  }
@@ -24,7 +24,7 @@
 
 
 /* For a better mobile experience */
-@media all and (max-width: 768px) {
+@media all and (max-width: @max-mobile) {
   .card-width {
     .price-badge {
       left: 10px !important;

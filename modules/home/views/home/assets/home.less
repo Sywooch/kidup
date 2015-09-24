@@ -132,7 +132,7 @@
         }
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       padding-bottom: 30px;
       min-height: 400px;
       h1 {
@@ -188,7 +188,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       .tt-menu .tt-suggestion {
         padding: 10px 10px;
       }
@@ -204,7 +204,7 @@
       margin-bottom: -7px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       border-radius: 0px;
       width: 100%;
       .form-control, button {
@@ -222,7 +222,7 @@
       height: 45px;
       font-size: 18px;
       font-family: "proxima-nova", Georgia, Cambria, "Times New Roman", Times, serif;
-      @media (max-width: 768px) {
+      @media (max-width: @max-mobile) {
         font-size: 16px;
         height: 45px;
       }
@@ -252,7 +252,7 @@
       padding:7px;
     }
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: @max-mobile) {
     #search-area {
       margin: 0;
       .search-area {
@@ -289,13 +289,13 @@
         line-height: 190px;
       }
     }
-    @media (min-width: 768px) {
+    @media (min-width: @max-mobile) {
       .wide-row {
         margin-left: -30px;
         margin-right: -30px;
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       .container {
         padding: 0 2px !important;
         .col-xs-12 {
@@ -644,7 +644,7 @@
       height: 70px;
       width: auto;
       padding: 10px;
-      @media (max-width: 768px) {
+      @media (max-width: @max-mobile) {
         display: block;
         margin: auto;
       }
