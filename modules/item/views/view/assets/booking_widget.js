@@ -4,6 +4,7 @@ var widgetFactory = function () {
         dateTo: {}
     };
 
+
     api.dateFrom.beforeShowDay = function (date) {
         var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
         if (date < tomorrow) {
@@ -49,67 +50,87 @@ var widgetFactory = function () {
 
     // do a submit, which will trigger the pjax
     api.dateTo.onSelect = function (date) {
-        $('form[data-pjax]').submit();
+        $("#create-booking-form").submit();
     };
 
-    $("#request-booking-btn").click(function (event) {
-        if (window.userIsGuest) {
-            event.preventDefault();
-            $('#bookingModal').modal('hide');
-            $('#loginModal').modal('show');
-        }
-        var val1 = $('#create-booking-datefrom').val();
-        var val2 = $('#create-booking-datefrom').val();
-        if (val1 == "" || val2 == "") {
-            event.preventDefault();
-            $("#create-booking-datefrom").datepicker("hide");
-            $("#create-booking-dateto").datepicker("hide");
-            $("#create-booking-datefrom").datepicker("show");
-        }
-    });
+    api.singleLoad = function () {
 
-    $("#pjax-create-booking-form").on('pjax:beforeSend', function (xhr, options, settings) {
-
-        var getParams = function (queryString) {
-            var query = (queryString || window.location.search).substring(1); // delete ?
-            if (!query) {
-                return false;
+        window.singleIsLoaded = true;
+        $("#request-booking-btn").click(function (event) {
+            if (window.userIsGuest) {
+                event.preventDefault();
+                $('#bookingModal').modal('hide');
+                $('#loginModal').modal('show');
             }
-            query = query.split('?')[1];
-            return _.map(query.split('&'), function (params) {
-                var p = params.split('=');
-                return [p[0], decodeURIComponent(p[1])];
+            var val1 = $('#create-booking-datefrom').val();
+            var val2 = $('#create-booking-datefrom').val();
+            if (val1 == "" || val2 == "") {
+                event.preventDefault();
+                $("#create-booking-datefrom").datepicker("hide");
+                $("#create-booking-dateto").datepicker("hide");
+                $("#create-booking-datefrom").datepicker("show");
+            }
+        });
+
+
+        $(document).on('pjax:beforeSend', function (xhr, options, settings) {
+            var getParams = function (queryString) {
+                var query = (queryString || window.location.search).substring(1); // delete ?
+                if (!query) {
+                    return false;
+                }
+                query = query.split('?')[1];
+                return _.map(query.split('&'), function (params) {
+                    var p = params.split('=');
+                    return [p[0], decodeURIComponent(p[1])];
+                });
+            };
+
+            var params = {};
+            var baseUrl = 'http://' + window.location.hostname + window.location.pathname;
+            _.map(getParams(settings.url), function (param) {
+                params[param[0]] = param[1];
             });
-        };
 
-        var params = {};
-        var baseUrl = 'http://' + window.location.hostname + window.location.pathname;
-        _.map(getParams(settings.url), function(param){
-            params[param[0]] = param[1];
+            var i = 0;
+            var added = _.map(params, function (param, name) {
+                var url = '';
+                if (i == 0) {
+                    url += '?';
+                } else {
+                    url += '&';
+                }
+                url += name + '=' + param;
+                i++;
+                return url;
+            });
+
+            settings.url = baseUrl + added.join('');
+            console.log(settings.url);
+            return settings;
         });
 
-        var i = 0;
-        var added = _.map(params, function(param, name){
-            var url = '';
-            if(i == 0){
-                url += '?';
-            }else{
-                url += '&';
-            }
-            url += name+'='+param;
-            i++;
-            return url;
+        $("#create-booking-form").on('submit', function (event) {
+            $("#booking-widget .overlay").fadeTo(0.3, 0.6);
+            $("#booking-widget .overlay").css("visibility", "visible");
         });
 
-        settings.url = baseUrl+added.join('');
-        return settings;
-    });
+        $("#wrapper").css("margin-bottom", "0px"); /// visual misalignment with wrapper on item view page
+        $(document).scroll(scrollFunc);
+        $(document).ready(scrollFunc);
 
-    $("form[data-pjax]").on('submit', function (event) {
+        $(".mobileBookingRequestButton").click(function () {
+            $("#pageInfo").hide();
+            $("#bookingWidget").show();
+            window.scrollTo(0, 0);
+        });
 
-        $("#booking-widget .overlay").fadeTo(0.3, 0.6);
-        $("#booking-widget .overlay").css("visibility", "visible");
-    });
+        $("#mobileCloseBookingRequest").click(function () {
+            $("#pageInfo").show();
+            $("#bookingWidget").hide();
+        });
+    };
+
 
     var scrollFunc = function () {
         if ($(document).width() < 990) return false;
@@ -128,34 +149,34 @@ var widgetFactory = function () {
         }
     };
 
-    $("#wrapper").css("margin-bottom", "0px"); /// visual misalignment with wrapper on item view page
-    $(document).scroll(scrollFunc);
-    $(document).ready(scrollFunc);
-
     api.load = function () {
         if (typeof redirect === "undefined") {
-            var widget = widgetFactory();
-            $("#booking-widget .overlay").css("visibility", "hidden");
-            console.log('2');
-            jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
-                "push": true,
-                "replace": false,
-                "timeout": 2000,
-                "scrollTo": false
-            });
-            jQuery(document).on('submit', "#pjax-create-booking-form form[data-pjax]", function (event) {
-                console.log('event');
-                jQuery.pjax.submit(event, '#pjax-create-booking-form', {
-                    "push": true,
-                    "replace": false,
-                    "timeout": 2000,
-                    "scrollTo": false
-                });
-            });
+            //if (typeof window.widget === "undefined") {
+            //    window.widget = widgetFactory();
+            //}
+            //$("#booking-widget .overlay").css("visibility", "hidden");
+            //jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
+            //    "push": true,
+            //    "replace": false,
+            //    "timeout": 2000,
+            //    "scrollTo": false
+            //});
+            //jQuery(document).on('submit', "#pjax-create-booking-form form['#create-booking-form']", function (event) {
+            //    console.log('event');
+            //    jQuery.pjax.submit(event, '#pjax-create-booking-form', {
+            //        "push": true,
+            //        "replace": false,
+            //        "timeout": 2000,
+            //        "scrollTo": false
+            //    });
+            //});
+            //$.pjax.defaults.maxCacheLength = 0;
         }
     };
+
+    api.singleLoad();
 
     return api;
 };
 
-var widget = widgetFactory();
+window.widget = widgetFactory();

@@ -66,68 +66,69 @@ class ViewController extends Controller
 
     public function actionIndex($id, $new_publish = false)
     {
-            /**
-             * @var $item \app\modules\item\models\Item
-             */
-            $item = Item::find()->where(['id' => $id])->with('location')->one();
+        /**
+         * @var $item \app\modules\item\models\Item
+         */
+        $item = Item::find()->where(['id' => $id])->with('location')->one();
 
-            if ($item === null) {
-                throw new NotFoundHttpException("Item not found");
-            }
+        if ($item === null) {
+            throw new NotFoundHttpException("Item not found");
+        }
 
-            Url::remember('', 'after_login_url');
-            $this->noContainer = true;
+        Url::remember('', 'after_login_url');
+        $this->noContainer = true;
 
-            $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+
+        $model = new CreateBooking($item, $currency);
+        if ($model->load(\Yii::$app->request->get())) {
+            $attempt = $model->attemptBooking();
+
             // post for testing and non supporting pjax
-
-            $model = new CreateBooking($item, $currency);
-
-            if ($model->load(\Yii::$app->request->get())) {
-                $attempt = $model->attemptBooking();
-                if (Yii::$app->request->isPjax || (YII_ENV == 'test' && Yii::$app->request->isPost)) {
-                    if ($attempt !== false) {
-                        return $attempt;
-                    }
-
-                    return $this->renderAjax('booking_widget', [
-                        'model' => $model,
-                        'item' => $item,
-                        'periods' => []
-                    ]);
-                } else {
-                    if ($attempt !== false) {
-                        return $attempt;
-                    }
+            if (Yii::$app->request->isPjax || (YII_ENV == 'test' && Yii::$app->request->isPost)) {
+                if ($attempt !== false) {
+                    return $attempt;
                 }
+
+                return $this->renderAjax('booking_widget', [
+                    'model' => $model,
+                    'item' => $item,
+                    'periods' => []
+                ]);
             } else {
-                \Yii::$app->session->remove('ready_to_book');
+                if ($attempt !== false){
+                    return $attempt;
+                }
             }
+        } else {
+            \Yii::$app->session->remove('ready_to_book');
+        }
 
-            // prepare for carousel
-            $images = $item->getCarouselImages();
+        // prepare for carousel
+        $images = $item->getCarouselImages();
 
-            // find which items are related
-            $related_items = $item->getRecommendedItems($item, 2);
+        // find which items are related
+        $related_items = $item->getRecommendedItems($item, 2);
 
-            $reviewDataProvider = new \yii\data\ActiveDataProvider([
-                'query' => Review::find()->where(['item_id' => $item->id])
-                    ->andWhere(['type' => \app\modules\review\models\Review::TYPE_USER_PUBLIC]),
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
-            ]);
-            $res = [
-                'model' => $item,
-                'location' => $item->location,
-                'images' => $images,
-                'show_modal' => $new_publish !== false, // show modal if new publish
-                'bookingForm' => $model,
-                'reviewDataProvider' => $reviewDataProvider,
-                'related_items' => $related_items
-            ];
+        $reviewDataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Review::find()->where(['item_id' => $item->id])
+                ->andWhere(['type' => \app\modules\review\models\Review::TYPE_USER_PUBLIC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
 
-            return $this->render('view', $res);
+        $res = [
+            'model' => $item,
+            'location' => $item->location,
+            'images' => $images,
+            'show_modal' => $new_publish !== false, // show modal if new publish
+            'bookingForm' => $model,
+            'reviewDataProvider' => $reviewDataProvider,
+            'related_items' => $related_items
+        ];
+
+        return $this->render('view', $res);
 
     }
 }

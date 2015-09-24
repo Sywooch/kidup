@@ -34,8 +34,8 @@ $transparent = ($url == '/' || $url == '/home');
         <!--Facebook meta tags - Important for sharing links-->
         <meta property="og:image" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
         <meta property="og:image:secure_url" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
-        <meta property="og:title" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
-        <meta property="og:site_name" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
+        <meta property="og:title" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
+        <meta property="og:site_name" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:url" content="http://kidup.dk"/>
     </head>
     <body>
