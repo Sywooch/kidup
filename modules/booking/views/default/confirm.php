@@ -33,6 +33,79 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
 
         <div class="row">
             <div class="col-md-8">
+                <!-- Mobile replacement for right panel -->
+                <div class="card hidden-md hidden-lg">
+                    <h3><?= Yii::t('booking', 'Booking information') ?></h3>
+                    <div class="row card card-minimal">
+                        <div style="float: left;">
+                            <?= ImageHelper::image($item->getImageName(0), ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
+                        </div>
+                        <div style="float: left; margin-left: 15px;">
+                            <b>
+                                <?= $item->name ?>
+                            </b>
+                            <br>
+                            <?= $item->location->city ?>
+                        </div>
+                    </div>
+
+                    <i><?= Yii::t("booking", "You are renting from") ?>:</i>
+                    <div class="row card card-minimal">
+                        <div style="float: left;">
+                            <?= ImageHelper::image($profile->img, ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
+                        </div>
+                        <div style="float: left; margin-left: 15px;">
+                            <b>
+                                <?= $profile->first_name ?>
+                            </b>
+                            <?= ReviewScore::widget(['user_id' => $profile->user_id]) ?>
+                            <?= \Yii::t('booking', 'Member since {0}', [
+                                Carbon\Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized('%b %y')
+                            ]) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-md-12">
+                            <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
+                            -
+                            <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <?= $tableData['price'][0] ?>
+                            </td>
+                            <td style="font-weight: 600;">
+                                <?= $tableData['price'][1] ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?= $tableData['fee'][0] ?>
+                            </td>
+                            <td style="font-weight: 600;">
+                                <?= $tableData['fee'][1] ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?= $tableData['total'][0] ?>
+                            </td>
+                            <td style="font-weight: 600;">
+                                <?= $tableData['total'][1] ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
                 <div class="card">
                     <h3>
                         <?= Yii::t("booking", "Message to {0}", [
@@ -172,74 +245,6 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
             </div>
         </div>
 
-        <!-- Mobile replacement for right panel -->
-        <div class="card hidden-md hidden-lg">
-            <h3>Booking information</h3>
-            <div class="row card card-minimal">
-                <div style="float: left;">
-                    <?= ImageHelper::image($item->getImageName(0), ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
-                </div>
-                <div style="float: left; margin-left: 15px;">
-                    <b>
-                        <?= $item->name ?>
-                    </b>
-                    <br>
-                    <?= $item->location->city ?>
-                </div>
-            </div>
-
-            <i><?= Yii::t("booking", "You are renting from") ?>:</i>
-            <div class="row card card-minimal">
-                <div style="float: left;">
-                    <?= ImageHelper::image($profile->img, ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
-                </div>
-                <div style="float: left; margin-left: 15px;">
-                    <b>
-                        <?= $profile->first_name ?>
-                    </b>
-                    <?= ReviewScore::widget(['user_id' => $profile->user_id]) ?>
-                    <?= \Yii::t('booking', 'Member since {0}', [
-                        Carbon\Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized('%b %y')
-                    ]) ?>
-                </div>
-            </div>
-
-
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-md-12">
-                    <?= Carbon\Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
-                    -
-                    <?= Carbon\Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
-                </div>
-            </div>
-
-            <table class="table">
-                <tr>
-                    <td>
-                        <?= $tableData['price'][0] ?>
-                    </td>
-                    <td style="font-weight: 600;">
-                        <?= $tableData['price'][1] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <?= $tableData['fee'][0] ?>
-                    </td>
-                    <td style="font-weight: 600;">
-                        <?= $tableData['fee'][1] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <?= $tableData['total'][0] ?>
-                    </td>
-                    <td style="font-weight: 600;">
-                        <?= $tableData['total'][1] ?>
-                    </td>
-                </tr>
-            </table>
-        </div>
         <!-- Booking button -->
         <div class="row">
             <div class="col-md-8">

@@ -32,6 +32,7 @@ return [
     'Base Fee' => 'Grundbeløb',
     'Booking' => 'Booking',
     'Booking #{0}' => 'Booking #{0}',
+    'Booking Information' => 'Booking Information',
     'Booking Request' => 'Booking anmodning',
     'Booking Status' => 'Booking Status',
     'Booking already seems to be confirmed' => 'Bookingen synes allerede at være bekræftet',
