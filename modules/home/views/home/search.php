@@ -15,7 +15,7 @@ $emptySearch = \Yii::t('categories_and_features', 'Baby Toys');
 $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{$emptySearch}';");
 ?>
 
-<div id="search-area" class="visible-sm visible-md visible-lg">
+<div id="search-area" class="hidden-sm visible-md visible-lg">
     <div class="row search-area">
         <div class="container">
             <div class="col-sm-12 col-md-10 col-md-offset-1">

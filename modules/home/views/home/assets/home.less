@@ -63,6 +63,14 @@
   margin-bottom: -90px;
   margin-top: -90px;
   width: 100%;
+  /* Mobile optimizations */
+  @media all and (max-width: @max-mobile) {
+    .header-content {
+      h1 {
+        padding-top: 120px !important;
+      }
+    }
+  }
   section {
     margin: 0px;
   }
