@@ -96,6 +96,7 @@ tillid.',
     'Something went wrong in the process, please try again.' => '',
     'Special' => 'Special',
     'Street Address' => 'Gadenavn',
+    'Street and Streetnumber' => 'Street and Streetnumber',
     'The item has been made unavailable' => 'Dette produkt er taget af KidUp',
     'The item is now publicly available. If you like to make it unavailable, please {0}' => 'Dette produkt er publiceret. Hvis du vil tage det af KidUp så tryk her {0}',
     'The terms and conditions have to be accepted before an item can be published' => 'KidUp handler også om tillid. Hvis man ser personlig beskrivelse af de
