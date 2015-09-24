@@ -10,12 +10,12 @@ $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 $production = server('production', '54.93.103.33', 22)
     ->env('deploy_path', '/var/www')
-    ->env('branch', 'develop')
+    ->env('branch', 'master')
     ->user('ubuntu')
     ->stage('production');
 $test = server('test', '178.62.234.114', 22)
     ->env('deploy_path', '/var/www')
-    ->env('branch', 'categories')
+    ->env('branch', 'develop')
     ->user('root')
     ->stage('staging');
 
