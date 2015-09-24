@@ -239,7 +239,6 @@ class Item extends \app\models\base\Item
                     $h = 200;
                 }
 
-
                 $images[] = [
                     'src' => ImageHelper::url($img, ['q' => 90, 'w' => $w, 'h' => $h, 'fit' => 'crop']),
                     'url' => ImageHelper::url($img, ['q' => 90]),

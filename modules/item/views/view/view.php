@@ -211,7 +211,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                 </div>
                 <div id="bookingWidget">
                     <div class="visible-xs visible-sm" id="mobileCloseBookingRequest"
-                         style="margin-top: 10px;font-size: 26px;margin-bottom: -10px;position: absolute;right: 10px;z-index: 99;top: 2px;">
+                         style="">
                         <i class="fa fa-close"></i>
                     </div>
                     <?php echo $this->render('booking_widget', [
@@ -223,7 +223,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
         <div class="buttonContainer" style="z-index:10;">
             <button class="btn btn-fill btn-danger mobileBookingRequestButton visible-sm visible-xs">
-                <?= \Yii::t('item', 'Request to Book') ?>
+                <?= \Yii::t('item', 'Book this item') ?>
             </button>
         </div>
     </section>
