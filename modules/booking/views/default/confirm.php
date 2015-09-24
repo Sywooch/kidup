@@ -22,6 +22,10 @@ $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
 $clientToken = (new BrainTree(new Payin()))->getClientToken();
 ?>
 <section class="section" id="checkout">
+    <?php $form = ActiveForm::begin([
+        'enableClientValidation' => false,
+//                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
+    ]); ?>
     <div class="container">
         <h2>
             <?= Yii::t("booking", "Secure Booking - Pay in 1 Minute") ?>
@@ -29,11 +33,6 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
 
         <div class="row">
             <div class="col-md-8">
-                <?php $form = ActiveForm::begin([
-                    'enableClientValidation' => false,
-//                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
-                ]); ?>
-
                 <div class="card">
                     <h3>
                         <?= Yii::t("booking", "Message to {0}", [
@@ -99,34 +98,6 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <h3><?= Yii::t("booking", "Review and book") ?></h3>
-
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="well">
-                                <?= $form->field($model, 'rules')->checkbox() ?>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <?= Yii::t("booking",
-                                "On creating this booking, the owner will get notified and can accept or reject your request. In the meantime you can use KidUp to communicate, for example on the details of the item exchange.") ?>
-                            <?= Yii::t("booking", "For more information please see {0}",
-                                [
-                                    Html::a(\Yii::t('booking', 'the renting on KidUp guide.'),
-                                        '@web/p/how-to-rent', ['target' => '_blank']
-                                    )
-                                ]) ?>
-                        </div>
-                    </div>
-
-
-                    <?= Html::submitButton('Book now', ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-
             </div>
             <div class="col-md-4">
                 <div class="row card card-minimal">
@@ -201,4 +172,35 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <h3><?= Yii::t("booking", "Review and book") ?></h3>
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="well">
+                                <?= $form->field($model, 'rules')->checkbox() ?>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <?= Yii::t("booking",
+                                "On creating this booking, the owner will get notified and can accept or reject your request. In the meantime you can use KidUp to communicate, for example on the details of the item exchange.") ?>
+                            <?= Yii::t("booking", "For more information please see {0}",
+                                [
+                                    Html::a(\Yii::t('booking', 'the renting on KidUp guide.'),
+                                        '@web/p/how-to-rent', ['target' => '_blank']
+                                    )
+                                ]) ?>
+                        </div>
+                    </div>
+
+
+                    <?= Html::submitButton('Book now', ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </section>
