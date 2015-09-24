@@ -11,7 +11,7 @@
     <div class="col-md-8" style="padding:0">
         <?= $form->field($model,
             'location_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => \app\modules\user\helpers\SelectData::userLocations(),
+            'data' => \app\models\helpers\SelectData::userLocations(),
             'options' => ['placeholder' => 'Select a Location', 'width' => '200px'],
             'pluginOptions' => [
                 'allowClear' => false

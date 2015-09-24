@@ -15,7 +15,7 @@ use yii\helpers\Url;
                         <div class="col-sm-3">
                             <p class="titel"><?= Yii::t("app", "Company") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'About us'), '@web/p/about-kidup')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app', 'About KidUp'), '@web/p/about-kidup')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app', 'Terms and Conditions'), '@web/p/terms-and-conditions')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app', 'Privacy'), '@web/p/privacy')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app', 'Contact'), '@web/p/about-kidup')?></p></li>

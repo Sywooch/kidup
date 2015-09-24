@@ -45,7 +45,7 @@ class Location extends \yii\db\ActiveRecord
             [['longitude', 'latitude', 'user_id', 'created_at', 'updated_at'], 'required'],
             [['longitude', 'latitude'], 'number'],
             [['city'], 'string', 'max' => 100],
-            [['zip_code'], 'string', 'max' => 50],
+            [['zip_code', 'street_suffix'], 'string', 'max' => 50],
             [['street_name'], 'string', 'max' => 256],
             [['street_number'], 'string', 'max' => 10]
         ];
@@ -64,6 +64,7 @@ class Location extends \yii\db\ActiveRecord
             'zip_code' => Yii::t('app', 'Zip Code'),
             'street_name' => Yii::t('app', 'Street Name'),
             'street_number' => Yii::t('app', 'Street Number'),
+            'street_suffix' => Yii::t('app', 'Street Suffix'),
             'longitude' => Yii::t('app', 'Longitude'),
             'latitude' => Yii::t('app', 'Latitude'),
             'user_id' => Yii::t('app', 'User ID'),

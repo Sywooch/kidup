@@ -16,14 +16,11 @@ use \yii\helpers\Html;
 
     <div class="row" style="margin-right:0">
         <div class="col-md-4 card col-md-offset-4" style="text-align: center">
-            <h2 style="text-align: center">
-                <?= \Yii::t('item', 'Publishing') ?>
-            </h2>
             <h4>
-                <?= Yii::t("item", "Congratulations! Your product is ready.") ?>
+                <?= Yii::t("item", "Your product is ready to be published!") ?>
             </h4>
             <?= Yii::t("item",
-                "You can pusblish it now to be found and booked by other users. You can always edit the product afterwards.") ?>
+                "You can pusblish your product now so it can be found and booked by other users. You can always edit the product afterwards.") ?>
             <br><br>
             <?= Html::a(Html::button(\Yii::t('item', 'Publish'),
                 ['class' => 'btn btn-danger btn-fill']

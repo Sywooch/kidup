@@ -7,16 +7,6 @@ use yii\db\Query;
 
 /**
  * This is the base-model class for table "item_similarity".
- *
- * @property integer $item_id_1
- * @property integer $item_id_2
- * @property double $similarity
- * @property double $similarity_location
- * @property double $similarity_categories
- * @property double $similarity_price
- *
- * @property \app\models\Item $originatingItem
- * @property \app\models\Item $similarItem
  */
 class ItemSimilarity extends \app\models\base\ItemSimilarity
 {
@@ -82,16 +72,11 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
             INNER JOIN (
                 -- count how many categories are similar in both items
                 SELECT
-                item_id,
-                count(1) / (:catCount) AS similarity_categories
-                FROM item_has_category
-                WHERE category_id IN (
-                    SELECT DISTINCT category_id
-                    FROM item_has_category
-                    WHERE item_id = :itemId)
-                GROUP BY item_id
-                ) cat_score ON (cat_score.item_id = item.id)
-            ) t
+                id,
+                category_id = :itemCategoryId AS similarity_categories
+                FROM item
+            ) cat_score ON (cat_score.id = item.id)
+        ) t
         ORDER BY similarity DESC
         LIMIT 10;';
 
@@ -102,14 +87,14 @@ class ItemSimilarity extends \app\models\base\ItemSimilarity
         $lat = $this->item->location->latitude;
         $long = $this->item->location->longitude;
         $price = $this->item->price_week;
-        $categories = count($this->item->categories);
+        $catId = $this->item->category_id;
 
         return Yii::$app->db->createCommand($distanceQ)
             ->bindParam(':itemId', $id)
             ->bindParam(':lat', $lat)
             ->bindParam(':long', $long)
             ->bindParam(':weekPrice', $price)
-            ->bindParam(':catCount', $categories)
+            ->bindParam(':itemCategoryId', $catId)
             ->execute();
     }
 

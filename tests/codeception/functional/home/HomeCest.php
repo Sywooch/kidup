@@ -1,6 +1,7 @@
 <?php
 namespace app\tests\codeception\functional\home;
 
+use app\tests\codeception\_support\MuffinHelper;
 use FunctionalTester;
 use app\tests\codeception\_support\FixtureHelper;
 
@@ -13,35 +14,40 @@ use app\tests\codeception\_support\FixtureHelper;
 class HomeCest
 {
 
-    /**
-     * Initialize the test.
-     *
-     * @param FunctionalTester $I
-     */
-    public function _before(FunctionalTester $I)
-    {
-        (new FixtureHelper)->fixtures();
-    }
-
-    public function checkHomePage(functionalTester $I)
+    public function checkHomePage(FunctionalTester $I)
     {
         $I->wantTo('ensure that I can see the homepage');
         $I->amOnPage('/home');
-        $I->canSee('KidUp is your online parent-to-parent marketplace.');
-        $I->canSeeElement('input#query');
-        $I->canSee('Stroller');
-        $I->canSee('Sign Up Now');
+        $I->canSee('KidUp is your online');
+        $I->canSeeElement('input#search-home-query');
+        $I->canSee('Baby Necessities');
+        $I->canSee('Register');
     }
 
-    public function checkTranslations(functionalTester $I)
+    public function checkTranslations(FunctionalTester $I)
     {
         $I->wantTo('make sure translations work');
         $I->amOnPage('/home');
         $I->click('DA');
-        $I->canSee('Hvordan bruger du KidUp?');
-        $I->canSeeElement('input#query');
-        $I->canSee('Barnevogn');
-        $I->canSee('Register dig nu');
+        $I->canSee('KidUp er din online');
+        $I->canSeeElement('input#search-home-query');
+        $I->canSee('Babyting');
+        $I->canSee('Registrer');
     }
+
+    public function checkTranslationChangeLinks(FunctionalTester $I) {
+        $I->amOnPage('/home');
+
+        // check state when clicked on EN
+        $I->click('EN');
+        $I->canSeeLink('EN');
+        $I->canSeeLink('DA');
+
+        // check state when clicked on DA
+        $I->click('DA');
+        $I->canSeeLink('EN');
+        $I->canSeeLink('DA');
+    }
+
 }
 ?>

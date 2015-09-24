@@ -9,7 +9,7 @@ $this->title = $title;
             <div class="row">
                 <div class="col-sm-7 col-md-offset-1">
                     <h2><?= Yii::t("user", "Settings") ?><br>
-                        <small><?= Yii::t("user", "Manage your KidUp settings") ?></small>
+                        <small><?= Yii::t("user", "My settings") ?></small>
                     </h2>
                 </div>
             </div>

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use app\modules\user\helpers\SelectData;
+use app\models\helpers\SelectData;
 use app\modules\user\models\Setting;
 use kartik\checkbox\CheckboxX;
 use kartik\widgets\ActiveForm;
@@ -27,7 +27,7 @@ use kartik\widgets\Select2;
     'type' => ActiveForm::TYPE_VERTICAL,
     'options' => ['enctype' => 'multipart/form-data'],
     'fieldConfig' => [
-        'template' => "{label}<br> {input} \n {error} {hint}",
+        'template' => "{label}{input} \n {error} {hint}",
         // 'labelOptions' => ['class' => 'control-label'],
     ],
     'enableAjaxValidation' => true,
@@ -42,24 +42,23 @@ use kartik\widgets\Select2;
         </h4>
         <?= $form->field($model, 'email')->input(['class' => 'form-control']) ?>
 
-
-
         <?= $form->field($model, 'language')->widget(Select2::classname(), [
             'data' => SelectData::languages(),
             'options' => ['placeholder' => \Yii::t('user', 'Select a language')],
             'pluginOptions' => [
                 'allowClear' => false
             ],
-        ]); ?>
+        ])->label(\Yii::t('user', 'Language')); ?>
+
         <?= $form->field($model, 'currency_id')->widget(Select2::classname(), [
             'data' => SelectData::currencies(),
             'options' => [
                 'placeholder' => \Yii::t('user', 'Select a currency'),
             ],
             'pluginOptions' => [
-                'allowClear' => true
+                'allowClear' => false
             ],
-        ]); ?>
+        ])->label(\Yii::t('user', 'Currency')); ?>
         <div class="form-group field-profile-description">
             <label class="control-label" for="profile-description"><?= Yii::t("user", "Phone number") ?></label>
 
@@ -67,14 +66,16 @@ use kartik\widgets\Select2;
                 <div class="col-md-6">
                     <?= $form->field($model, 'phone_country')->widget(Select2::classname(), [
                         'data' => SelectData::phoneCountries(),
-                        'options' => ['placeholder' => \Yii::t('user', 'Select a country')],
+                        'options' => ['placeholder' => \Yii::t('user', 'Country code')],
                         'pluginOptions' => [
                             'allowClear' => false
                         ],
                     ])->label(false); ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $form->field($model, 'phone_number')->label(false); ?>
+                    <?= $form->field($model, 'phone_number')->label(false)->textInput([
+                        'placeholder' => \Yii::t('user', 'e.g. 01234567')
+                    ]); ?>
                 </div>
             </div>
         </div>

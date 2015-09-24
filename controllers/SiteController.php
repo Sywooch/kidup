@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\Language;
 use Yii;
+use yii\authclient\clients\Facebook;
+use yii\authclient\widgets\AuthChoice;
 use yii\base\Exception;
 use yii\base\UserException;
 use yii\filters\AccessControl;
@@ -33,6 +35,15 @@ class SiteController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionTest(){
+        $fb = new AuthChoice();
+        $fb->setAccessToken(['token' => '1515825585365803',
+            'tokenSecret' => 'e263336315aebd49142e7654f95d34e4']);
+        return $fb->api('me', 'GET', [
+            'fields' => 'name',
+        ]);
     }
 
     public function actionChangeLanguage($lang){
@@ -93,13 +104,6 @@ class SiteController extends Controller
                 exit();
             }
         }
-
-        \Yii::$app->clog->notice('page.error.'.$code, [
-            'code' => $code,
-            'name' => $name,
-            'message' => $message,
-            'url' => \Yii::$app->request->getUrl(),
-        ]);
 
         if (Yii::$app->getRequest()->getIsAjax()) {
             return "$name: $message";

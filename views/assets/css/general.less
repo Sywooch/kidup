@@ -5,6 +5,30 @@ body {
   background-color: @white-bg;
 }
 
+.list-view .empty {
+  padding: 8px 0px;
+  font-style: italic;
+  color: #999999;
+}
+
+/* Start Google Autocomplete bugfix for modals */
+.pac-container {
+  background-color: #FFF;
+  z-index: 9999 !important;
+  position: fixed;
+  display: inline-block;
+  float: left;
+}
+
+.modal {
+  z-index: 9998 !important;
+}
+
+.modal-backdrop {
+  z-index: 9997 !important;
+}
+/* End bugfix */
+
 #wrapper {
   margin-bottom: 90px;
 }
@@ -15,6 +39,19 @@ body {
   }
   #wrapper {
     margin-bottom: 0px;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 850px) {
+  .menubar-search-query {
+    min-width: 200px !important;
+    width: 200px !important;
+  }
+}
+
+@media all and (max-width: 900px) {
+  .navbar li.profile a.profile-image {
+    margin-top: 12px !important;
   }
 }
 
@@ -54,7 +91,6 @@ a {
 .form-group {
   label {
     color: @text-gray;
-    opacity: 0.6;
   }
 }
 
@@ -73,7 +109,6 @@ a {
 .checkbox-inline input[type="checkbox"] {
   position: absolute;
   margin-top: 4px \9;
-  margin-left: 0px;
 }
 
 section, .section {

@@ -20,7 +20,12 @@
       padding: 16px 16px 0;
     }
   }
+  background-color: @grey-light;
+  margin-bottom: -90px;
 
+  section {
+    background-color: @grey-light;
+  }
   .modal-backdrop {
     opacity: 0 !important;
   }
@@ -29,21 +34,30 @@
     display: inline-block;
     margin-left: 10px;
   }
+
   .maxPrice {
     float: right;
     display: inline-block;
     margin-right: 10px;
   }
 
-  .modal {
-    padding-top: 10px;
-    .modal-footer {
-      text-align: left;
-    }
+  .panel {
+    margin-bottom: 0;
 
+  }
+  .modal-fullscreen {
+    .fa-close {
+      padding: 10px;
+      font-size: 28px;
+      margin-right: 24px;
+    }
+    .modal-header {
+      background-color: lighten(@grey-light, 13);
+      border-bottom: 1px solid darken(@grey-light, 5);
+    }
     .modal-body {
       padding: 0 !important;
-      margin-top: -20px;
+      margin-top: 50px;
     }
   }
 
@@ -54,7 +68,7 @@
       font-size: 16px;
     }
     position: fixed;
-    top: 85vh;
+    bottom: 20vh;
     right: 50%;
     left: 50%;
     margin-left: -40vw;
@@ -70,7 +84,7 @@
     padding: 15px 0;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: @max-mobile) {
     .card-width {
       padding: 0;
       margin: 0;
@@ -80,5 +94,29 @@
       border-radius: 0;
       box-shadow: none;
     }
+
+    .item-card {
+      float: left;
+      clear: both;
+      left: 0;
+      margin-left: 0;
+      max-width: none;
+    }
+  }
+
+  .item-card {
+    max-width: 500px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    visibility: hidden;
+    left: 0;
+    opacity: 0;
+    display: none;
   }
 }

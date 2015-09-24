@@ -11,7 +11,9 @@ for ($i = 0; $i < $stars; $i++) {
 for ($i = 5; $i > $stars; $i--) {
     $output .= '<i class="fa fa-star-o"></i>';
 }
-
+if($model->reviewCount){
+    $output .= " - ".\Yii::t("review", "{0} reviews", [$model->reviewCount]);
+}
 $output .= "</div>";
 echo $output;
 ?>

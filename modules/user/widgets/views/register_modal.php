@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
             'placeholder' => "Password"
         ])->label(false) ?>
 
-        <?= Html::submitButton(Yii::t('user', 'Register'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
+        <?= \yii\helpers\Html::submitButton(Yii::t('user', 'Register'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
 
         <?php ActiveForm::end(); ?>
 

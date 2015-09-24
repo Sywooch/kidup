@@ -41,23 +41,20 @@
   top: 3px !important;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .wrapper-home {
-    margin-top: -90px;
-  }
-}
+
 .wrapper-home {
   padding-top:1px;
 }
 
 .cover-home {
-  height: 500px;
+  height: 590px;
   margin-top: -100px;
   position: absolute;
   width: 100%;
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: -1;
 }
 
 #home {
@@ -66,12 +63,53 @@
   margin-bottom: -90px;
   margin-top: -90px;
   width: 100%;
+  /* Mobile optimizations */
+  @media all and (max-width: @max-mobile) {
+    .header-content {
+      h1 {
+        padding-top: 120px !important;
+      }
+    }
+  }
   section {
     margin: 0px;
   }
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    rgba(0,0,0,0.8);
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    rgba(0,0,0,0.8);
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    rgba(0,0,0,0.8);
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    rgba(0,0,0,0.8);
+  }
+  .mobile-search{
+    .form-control{
+      background-color: white;
+      border-radius: 2px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .btn{
+      border-radius: 2px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .col-xs-8{
+      padding-right: 0;
+    }
+    .col-xs-2{
+      padding-left: 0;
+    }
+  }
+  .mobile-search-btn, .search-btn-mobile{
+    height:40px;
+  }
   #header-home {
-    height: 420px;
-    border-bottom: 15px solid @green-500;
+    height: 520px;
     overflow: hidden;
     .cover-home {
       position: absolute;
@@ -102,27 +140,20 @@
         }
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       padding-bottom: 30px;
       min-height: 400px;
       h1 {
         font-size: 2.6em;
         strong {
-          display: block;
           margin-top: -8px;
           margin-bottom: -36px;
         }
       }
 
       .header-content {
-        padding-top: 0;
-        .title {
-          margin-top: -190px;
-        }
-        img {
-          width: 120px !important;
-          margin-top: 80px;
-        }
+        margin-top: -70px;
+        font-size: 12px;
       }
     }
     .btn-default{
@@ -138,17 +169,39 @@
       }
     }
 
+
   }
 
   /*Search*/
   #search-area {
-    margin-top: 0;
-    height: 72px !important;
+    margin-top: -120px;
     border-radius: 0 !important;
     margin-left: -15px;
     margin-right: -15px;
-    text-align: center;
-    background-color: @green-500;
+    background-color: rgba(0,0,0,0.5);
+
+
+    .tt-menu{
+      margin: 0;
+      border: 1px @grey-light;
+      border-radius: 1px;
+
+      .tt-suggestion.tt-cursor,
+      .tt-suggestion.tt-selectable:hover {
+        cursor: default;
+        text-decoration: none;
+        outline: 0;
+        background-color: @primary-color-op-20;
+        color: #262626;
+      }
+    }
+
+    @media (max-width: @max-mobile) {
+      .tt-menu .tt-suggestion {
+        padding: 10px 10px;
+      }
+    }
+
 
     i {
       color: @white-bg;
@@ -159,7 +212,7 @@
       margin-bottom: -7px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       border-radius: 0px;
       width: 100%;
       .form-control, button {
@@ -177,43 +230,23 @@
       height: 45px;
       font-size: 18px;
       font-family: "proxima-nova", Georgia, Cambria, "Times New Roman", Times, serif;
-      color: @text-white;
-      @media (max-width: 768px) {
+      @media (max-width: @max-mobile) {
         font-size: 16px;
         height: 45px;
       }
     }
+
     .btn-danger {
       font-weight: 300;
+      border-radius: 1px;
+      border-bottom: 3px solid @danger-states-color;
     }
+
     .form-control {
-      //	  height: 43px;
       border-radius: 3px;
-      background-color: transparent;
-      color: @text-white;
-      box-shadow: none;
+      background-color: white;
       font-weight: 300;
       padding-right: 30px;
-      border: 2px solid @white-bg;;
-    }
-    ::-webkit-input-placeholder {
-      /* WebKit browsers */
-      color: @text-white;
-      opacity: 0.7;
-    }
-    :-moz-placeholder {
-      /* Mozilla Firefox 4 to 18 */
-      color: @text-white;
-      opacity: 0.7;
-    }
-    ::-moz-placeholder {
-      /* Mozilla Firefox 19+ */
-      color: @text-white;
-      opacity: 0.7;
-    }
-    :-ms-input-placeholder {
-      /* Internet Explorer 10+ */
-      color: @text-white;
     }
 
     span.right {
@@ -221,10 +254,13 @@
       right: 32px;
       bottom: 21px;
       font-size: 24px;
+    }
 
+    .row{
+      padding:7px;
     }
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: @max-mobile) {
     #search-area {
       margin: 0;
       .search-area {
@@ -256,33 +292,33 @@
       .category-name {
         font-size: 1.9em;
         color: @text-white;
+        font-weight: 800;
+        height: 190px;
+        line-height: 190px;
       }
     }
-    @media (min-width: 768px) {
+    @media (min-width: @max-mobile) {
       .wide-row {
         margin-left: -30px;
         margin-right: -30px;
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: @max-mobile) {
       .container {
         padding: 0 2px !important;
         .col-xs-12 {
           padding: 0;
         }
       }
+      margin-top:-30px;
     }
     h2 {
-      margin: 3px;
+      margin-top: -15px;
+      margin-bottom: 35px;
     }
     h4 {
       //line-height: 0;
-      margin: 15px 0 40px;
-    }
-    i {
-      font-size: 30px;
-      color: @green-500;
-      margin-bottom: 10px;
+      margin: 15px 0 8px;
     }
   }
 
@@ -290,11 +326,10 @@
   #content-home-steps {
     padding: 80px 0px;
     background-color: @bg-white;
-    min-height: 660px;
     position: relative;
     h4 {
       //line-height: 0;
-      margin: 15px 0 40px;
+      margin: 15px 0 8px;
     }
     .step-area {
       padding-top: 50px;
@@ -616,7 +651,7 @@
       height: 70px;
       width: auto;
       padding: 10px;
-      @media (max-width: 768px) {
+      @media (max-width: @max-mobile) {
         display: block;
         margin: auto;
       }

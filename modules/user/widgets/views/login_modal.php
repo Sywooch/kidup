@@ -45,7 +45,7 @@ use \yii\helpers\Url;
 
     <?= $form->field($model, 'rememberMe')->checkbox(['style' => 'margin-left:-15px']) ?>
 
-    <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
+    <?= \yii\helpers\Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 <div class="modal-footer">

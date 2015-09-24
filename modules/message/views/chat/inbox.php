@@ -1,9 +1,8 @@
 <?php
-use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 /*
- * @var ActiveDataProvider $conversationDataProvider
+ * @var yii\data\ActiveDataProvider $conversationDataProvider
  * @var yii\web\View $this
  */
 
@@ -29,10 +28,9 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                             </div>
 
                             <div class="col-md-2 col-md-offset-6 booking hidden-xs">
-                                <?= Yii::t("message", "Booking Status") ?>
+                                <?= $conversationDataProvider->count > 0 ? Yii::t("message", "Booking Status") : '' ?>
                             </div>
                         </div>
-
                     </div>
                     <?php
                     //                     displaying the inbox items
@@ -55,8 +53,8 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                             </h4>
                             <?= Yii::t("message",
                                 "How about searching for a {0} or a {1} and getting some action here?", [
-                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search?q=categories|13'),
-                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search?q=categories|20'),
+                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search/'.\Yii::t('categories_and_features', 'Stroller')),
+                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search/'.\Yii::t('categories_and_features', 'Bikes')),
                                 ]) ?>
                         </div>
                     <?php } ?>

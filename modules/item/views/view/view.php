@@ -1,13 +1,9 @@
 <?php
 
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
 use app\modules\item\widgets\ItemCard;
 use app\widgets\Map;
-use dosamigos\gallery\Gallery;
 use yii\helpers\Url;
+use app\modules\item\widgets\Gallery;
 
 /**
  * @var yii\web\View $this
@@ -15,7 +11,8 @@ use yii\helpers\Url;
  * @var string $bookingForm
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
- * @var bool $show_modal
+ * @var bool $show_modalk
+ * @var \yii\data\ActiveDataProvider $reviewDataProvider
  */
 
 $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$app->name;
@@ -33,14 +30,14 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
     <section id="content" class="section">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 col-lg-7 col-md-offset-1">
+                <div class="col-lg-7 col-md-offset-1" id="pageInfo">
                     <div class="row main-info">
-                        <div class="col-md-2">
+                        <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
-                                <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE,
+                                <?= \app\modules\user\widgets\UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
-                                        'width' => '80px'
+                                        'width' => '80px',
                                     ])
                                 ?>
                             </a>
@@ -56,35 +53,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                             <div class="item-location">
                                 <?= $model->location->city . ", " . $model->location->country0->name ?>
                             </div>
-                            <div class="row icon-row">
-                                <div class="col-md-3">
-                                    <div class="icon-text">
-                                        <i class="fa fa-child"> </i>
-                                        <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_MAIN)[0]) ? $model->getCategoriesByType(Category::TYPE_MAIN)[0] : '' ?>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="icon-text">
-                                        <i class="fa fa-bolt"> </i>
-                                        <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_MAIN)[1]) ? $model->getCategoriesByType(Category::TYPE_MAIN)[1] : '' ?>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="icon-text">
-                                        <i class="fa fa-check"> </i>
-                                        <br>
-                                        <?= isset($model->getCategoriesByType(Category::TYPE_SPECIAL)[0]) ? $model->getCategoriesByType(Category::TYPE_SPECIAL)[0] : '' ?>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="icon-text">
-                                        <i class="fa fa-check"> </i>
-                                        <br>
-                                        <?= Item::getConditions()[$model->condition] ?>
-                                    </div>
-                                </div>
+                            <div class="item-reviews">
+                                <?= \app\modules\review\widgets\ReviewScore::widget(['user_id' => $model->owner_id]); ?>
+                            </div>
+                            <div class="item-category">
+                                <?= Yii::t('categories_and_features', $model->category->parent->name) . " - " .
+                                Yii::t('categories_and_features', $model->category->name) ?>
                             </div>
                         </div>
                     </div>
@@ -131,16 +105,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                         </tr>
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Condition") ?>
-                                            </td>
-                                            <td>
-                                                <b>
-                                                    <?= Item::getConditions()[$model->condition] ?>
-                                                </b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <?= Yii::t("item", "Location") ?>
                                             </td>
                                             <td>
@@ -174,26 +138,29 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Ages") ?>
+                                                <?= Yii::t("item", "Features") ?>
                                             </td>
                                             <td>
-                                                <b>
-                                                    <?= implode("<br>",
-                                                        $model->getCategoriesByType(Category::TYPE_AGE)); ?>
-                                                </b>
+                                                <?php
+                                                foreach ($model->singularFeatures as $feature) {
+                                                    echo \Yii::t('categories_and_features', $feature->name);
+                                                }
+                                                ?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <?= Yii::t("item", "Special") ?>
-                                            </td>
-                                            <td>
-                                                <b>
-                                                    <?= implode("<br>",
-                                                        $model->getCategoriesByType(Category::TYPE_SPECIAL)); ?>
-                                                </b>
-                                            </td>
-                                        </tr>
+                                        <?php foreach ($model->itemHasFeatures as $ihf): ?>
+                                            <tr>
+                                                <td>
+                                                    <?= Yii::t("categories_and_features", $ihf->feature->name) ?>
+                                                </td>
+                                                <td>
+                                                    <b>
+                                                        <?= \Yii::t('categories_and_features',
+                                                            $ihf->featureValue->name) ?>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </table>
                                 </div>
                             </div>
@@ -216,6 +183,14 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
+                    <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
+
+                    <?= \yii\widgets\ListView::widget([
+                        'dataProvider' => $reviewDataProvider,
+                        'itemView' => 'item_review',
+                        'itemOptions' => ['tag' => 'span'],
+                    ]) ?>
+
                     <?php if (count($related_items) > 0): ?>
                         <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
 
@@ -225,17 +200,31 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     echo ItemCard::widget([
                                         'model' => $item,
                                         'showDistance' => false,
-                                        'numberOfCards' => 3
+                                        'numberOfCards' => 2,
+                                        'titleCutoff' => 30,
+                                        'reviewCount' => true
                                     ]);
                                 } ?>
                             </div>
                         </div>
                     <?php endif; ?>
                 </div>
-                <?php echo $this->render('booking_widget', [
-                    'model' => $bookingForm,
-                ]) ?>
+                <div id="bookingWidget">
+                    <div class="visible-xs visible-sm" id="mobileCloseBookingRequest"
+                         style="">
+                        <i class="fa fa-close"></i>
+                    </div>
+                    <?php echo $this->render('booking_widget', [
+                        'model' => $bookingForm,
+                    ]) ?>
+                </div>
             </div>
+        </div>
+
+        <div class="buttonContainer" style="z-index:10;">
+            <button class="btn btn-fill btn-danger mobileBookingRequestButton visible-sm visible-xs">
+                <?= \Yii::t('item', 'Request to Book') ?>
+            </button>
         </div>
     </section>
 </div>

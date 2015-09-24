@@ -8,6 +8,7 @@ use kartik\file\FileInput;
 \app\modules\item\assets\CreateAsset::register($this);
 /**
  * @var \yii\web\View $this
+ * @var \app\modules\item\forms\Create $model
  */
 ?>
 <section class="section" id="new-rental">
@@ -32,30 +33,15 @@ use kartik\file\FileInput;
 
                         <div id="select-categories" class="row">
                             <div class="col-sm-10 col-sm-offset-1 categories">
-                                <h5>
-                                    <?= Yii::t("item", "Intended product age") ?>
-                                </h5>
-                                <?php foreach ($ages as $age): ?>
-                                    <div class="btn btn-default category-clickable-button"
-                                         data-id="<?= $age->id ?>">
-                                        <?= $age->name ?>
-                                    </div>
-                                    <?= Html::activeHiddenInput($model, 'categories[' . $age->id . ']',
-                                        ['value' => 0]); ?>
-                                <?php endforeach; ?>
-                                <br>
-                                <h5>
-                                    <?= Yii::t("item", "Product type") ?>
-                                </h5>
-                                <?php foreach ($categories as $category): ?>
-                                    <div class="btn btn-default category-clickable-button"
-                                         data-id="<?= $category->id ?>">
-                                        <?= $category->name ?>
-                                    </div>
-                                    <?= Html::activeHiddenInput($model, 'categories[' . $category->id . ']',
-                                        ['value' => 0]); ?>
-                                <?php endforeach; ?>
 
+                                <h5>
+                                    <?= Yii::t("item", "Product category") ?>
+                                </h5>
+                                <?= Yii::t("item", "Start uploading an item by selecting the category where it fits best.") ?>
+                                <?= $form->field($model, 'category')->widget(\kartik\select2\Select2::className(), [
+                                    'data' => $model->categoryData,
+                                    'options' => ['placeholder' => \Yii::t('item', 'Find a category')],
+                                ])->label(false) ?>
 
                                 <div class="row" style="margin: 0">
                                     <?php if (!\Yii::$app->user->identity->profile->validate('first_name')): ?>

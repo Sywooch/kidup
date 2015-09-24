@@ -73,8 +73,7 @@ class PayoutPreference extends Model
         return [
             'identifier_1_encrypted' => \Yii::t('user', 'Konto Number'),
             'identifier_2_encrypted' => \Yii::t('user', 'Bank Number'),
-            'bank_name' => \Yii::t('user', 'Bank Name'),
-            'payee_name' => \Yii::t('user', 'Payee Name'),
+            'payee_name' => \Yii::t('user', 'Name'),
         ];
     }
 

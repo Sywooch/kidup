@@ -9,13 +9,4 @@ class FontAwesomeAsset extends AssetBundle
     public $css = [
         'css/font-awesome.min.css',
     ];
-
-    public function init()
-    {
-        parent::init();
-//        $this->publishOptions['beforeCopy'] = function ($from, $to) {
-//            $dirname = basename(dirname($from));
-//            return $dirname === 'fonts' || $dirname === 'css';
-//        };
-    }
 }

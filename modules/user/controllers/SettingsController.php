@@ -18,7 +18,7 @@ use app\modules\mail\models\Token;
 use app\modules\user\Finder;
 use app\modules\user\forms\LocationForm;
 use app\modules\user\forms\Settings;
-use app\modules\user\helpers\SelectData;
+use app\models\helpers\SelectData;
 use app\modules\user\models\Account;
 use app\modules\user\models\Profile;
 use app\modules\user\models\User;
@@ -152,7 +152,6 @@ class SettingsController extends Controller
                 \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
                 return $this->refresh();
             }
-
         }
 
         $page = $this->renderPartial('location', [
@@ -274,7 +273,15 @@ class SettingsController extends Controller
                 return $this->redirect('phonecode');
             } else {
                 \Yii::$app->session->addFlash('info', \Yii::t('user', 'SMS could not be send, please try again.'));
-                return $this->refresh();
+                $page = $this->renderPartial('verification', [
+                    'user' => \Yii::$app->user->identity,
+                    'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id])
+                ]);
+
+                return $this->render('_wrapper', [
+                    'page' => $page,
+                    'title' => ucfirst(\Yii::t('title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+                ]);
             }
         }
 

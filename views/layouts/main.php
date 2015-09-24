@@ -4,12 +4,12 @@ use app\components\Cache;
 use app\modules\images\components\ImageHelper;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
+use \app\assets\AppAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-\app\assets\AppAsset::register($this);
-FontAwesomeAsset::register($this);
+AppAsset::register($this);
 BootstrapPluginAsset::register($this);
 
 $url = @Yii::$app->request->getUrl();
@@ -22,11 +22,11 @@ $transparent = ($url == '/' || $url == '/home');
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <?= Html::csrfMetaTags() ?>
+        <?= $this->renderDynamic('echo yii\helpers\Html::csrfMetaTags();'); ?>
         <title>
             <?= Html::encode($this->title) ?>
         </title>
-        <?php $this->head() ?>
+        <?php $this->head(); ?>
         <link rel='shortcut icon' type='image/x-icon' href='<?= ImageHelper::url('kidup/logo/favicon.png') ?>'/>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,8 +34,8 @@ $transparent = ($url == '/' || $url == '/home');
         <!--Facebook meta tags - Important for sharing links-->
         <meta property="og:image" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
         <meta property="og:image:secure_url" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
-        <meta property="og:title" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
-        <meta property="og:site_name" content="Kid Up | <?= Yii::t("title", "Online parent-to-parent marketplace") ?>"/>
+        <meta property="og:title" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
+        <meta property="og:site_name" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:url" content="http://kidup.dk"/>
     </head>
     <body>
@@ -52,7 +52,7 @@ $transparent = ($url == '/' || $url == '/home');
     <!-- Load modals -->
     <?php
     echo Cache::html('layout_mobile-search-modal', function () {
-        return $this->render('../../modules/item/widgets/views/menu_search_modal.php');
+        return \app\modules\item\widgets\MenuSearchModal::widget();
     });
 
     echo Cache::html('layout_footer', function () {
@@ -64,20 +64,19 @@ $transparent = ($url == '/' || $url == '/home');
             'message' => \Yii::t('app',
                 'This website uses cookies to ensure you get the best possible KidUp experience.'),
             'dismiss' => \Yii::t('app', 'Accept'),
-            'learnMore' => null,
-            'link' => 'http://silktide.com/privacy-policy',
+            'learnMore' => \Yii::t('app', 'More info'),
+            'link' => 'http://kidup.dk/p/privacy',
             'theme' => 'dark-bottom'
         ]);
     });
 
-    if(YII_ENV == 'prod'){
+    if (YII_ENV == 'prod') {
         echo Cache::html('layout_ga', function () {
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }
+    $this->endBody();
     ?>
-
-    <?php $this->endBody() ?>
     </body>
     </html>
 <?php $this->endPage() ?>

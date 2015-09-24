@@ -65,7 +65,7 @@ class LocationForm extends Model
         return [
             [['street_name', 'street_number', 'city', 'country'], 'required'],
             [['city'], 'string', 'max' => 100],
-            [['zip_code'], 'string', 'max' => 50],
+            [['zip_code', 'street_suffix'], 'string', 'max' => 50],
             [['street_name'], 'string', 'max' => 256],
             [['street_number'], 'string', 'max' => 10]
         ];
@@ -91,6 +91,7 @@ class LocationForm extends Model
      */
     public function save()
     {
+
         if ($this->validate()) {
             //save lovation properly
             $location = Location::find()->where([
@@ -105,8 +106,6 @@ class LocationForm extends Model
             $location->load(\Yii::$app->request->post(), 'location-form');
             return $location->save();
         }
-
         return false;
     }
-
 }

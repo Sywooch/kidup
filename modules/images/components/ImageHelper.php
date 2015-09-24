@@ -55,6 +55,11 @@ class ImageHelper extends BaseHtml
         return "background-image: url('" . ImageHelper::url($filename, $options) . "')";
     }
 
+    public static function bgCoverImg($filename, $options = [])
+    {
+        return self::bgImg($filename, $options) . '; background-size: cover';
+    }
+
     public static function urlToFilename($url)
     {
         $expl = explode("---xxx---", str_replace(['?', '/'], '---xxx---', $url ));

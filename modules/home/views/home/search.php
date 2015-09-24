@@ -1,47 +1,78 @@
 <?php
 use yii\helpers\Url;
-use kartik\typeahead\TypeaheadBasic;
 use kartik\typeahead\Typeahead;
 use \yii\bootstrap\ActiveForm;
+use app\modules\item\widgets\GoogleAutoComplete;
 
 /**
  * @var \app\modules\home\forms\Search $model
  */
 
 \app\assets\AngularAsset::register($this);
-//<?= $form->field($model, 'query')->widget(Typeahead::className(), [
-//    'options' => ['placeholder' => 'test'],
-//    'pluginOptions' => ['highlight' => true],
-//    'dataset' => [
-//        [
-//            'local' => ['On the road - Stroller','Toys'],
-//            'limit' => 10
-//        ]
-//    ]
-//])->label(false);
+\app\assets\JQueryTextRangeAsset::register($this);
+$emptyLocation = \Yii::t('search', 'Location: Near Me');
+$emptySearch = \Yii::t('categories_and_features', 'Baby Toys');
+$this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{$emptySearch}';");
 ?>
 
-<div id="search-area" class="visible-sm visible-md visible-lg">
+<div id="search-area" class="hidden-sm visible-md visible-lg">
     <div class="row search-area">
         <div class="container">
-            <div class="col-sm-12 col-md-11 col-md-offset-1">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
                 <div class="row">
                     <?php
                     $form = ActiveForm::begin([
                         'action' => Url::to('search'),
-                        'method' => 'get'
+                        'method' => 'get',
+                        'id' => 'main-search'
                     ]);
                     ?>
-                    <div class="col-sm-9 col-md-8">
-                        <?= $form->field($model, 'query')->input([
-                            'options' => ['placeholder' => 'E.g. Stroller'],
+                    <div class="col-sm-9 col-md-6">
+                        <?= $form->field($model, 'query')->widget(Typeahead::className(), [
+                            'options' => ['placeholder' => \Yii::t('home', 'e.g. {0}',[
+                                $emptySearch
+                            ])],
+                            'pluginOptions' => ['highlight' => true, 'hint' => true],
+                            'dataset' => [
+                                [
+                                    'remote' => [
+                                        'url' => Url::to('@web/search/auto-complete/index?q=%q'),
+                                        'wildcard' => '%q'
+                                    ],
+                                    'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
+                                    'limit' => 5,
+                                    'display' => 'text',
+                                    'templates' => [
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">'.
+                                            \Yii::t('home', "We couldn't find that, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                                        'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
+                                    ]
+                                ],
+
+                            ]
                         ])->label(false); ?>
-                        <span class="right"><i class="glyphicon glyphicon-search"></i></span>
                     </div>
-                    <div class="col-sm-3 col-md-3">
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
+                            'options' => [
+                                'class' => 'form-control location-input',
+                                'placeholder' => \Yii::t('search', 'Location e.g. Copenhagen'),
+                                'autocompleteName' => 'home-search',
+                                'value' => $emptyLocation
+                            ],
+                            'autocompleteOptions' => [
+                                'types' => ['geocode']
+                            ],
+                            'name' => 'autoCompleteLocationHome'
+                        ])->label(false); ?>
+                    </div>
+
+                    <div class="col-sm-3 col-md-2">
                         <?= \yii\bootstrap\Html::submitButton(Yii::t("item", "Search"),
                             ['class' => 'btn btn-danger btn-fill btn-wide']) ?>
                     </div>
+
                     <?php
                     ActiveForm::end();
                     ?>

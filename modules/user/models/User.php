@@ -88,6 +88,7 @@ class User extends \app\models\base\User implements IdentityInterface
     public function scenarios()
     {
         return [
+            'default' => ['email', 'password'],
             'register' => ['email', 'password'],
             'connect' => ['email'],
             'create' => ['email', 'password'],
@@ -390,7 +391,6 @@ class User extends \app\models\base\User implements IdentityInterface
         return (bool)$this->updateAttributes(['blocked_at' => null]);
     }
 
-    /** @inheritdoc */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -407,7 +407,6 @@ class User extends \app\models\base\User implements IdentityInterface
         return parent::beforeSave($insert);
     }
 
-    /** @inheritdoc */
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {

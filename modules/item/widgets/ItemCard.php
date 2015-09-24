@@ -10,6 +10,8 @@ class ItemCard extends Widget
     public $model;
 
     public $numberOfCards = 4;
+    public $titleCutoff = 24;
+    public $reviewCount = false;
     protected $rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-4 col-lg-3";
 
     // whether or not to display a distance to the item (in km), if not, only
@@ -17,7 +19,7 @@ class ItemCard extends Widget
     public $showDistance = false;
 
     public function init() {
-        $this->model->name = $this->shortenize($this->model->name);
+        $this->model->name = $this->model->name;
         if($this->numberOfCards == 4){
             $this->rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-3 col-lg-3";
         }
@@ -34,16 +36,9 @@ class ItemCard extends Widget
         return $this->render('item_card', [
             'model' => $this->model,
             'showDistance' => $this->showDistance,
-            'rowClass' => $this->rowClass
+            'rowClass' => $this->rowClass,
+            'widget' => $this
         ]);
-    }
-
-    private function shortenize($str) {
-        $maxLength = 24;
-        if (strlen($str) > $maxLength) {
-            return substr($str, 0, $maxLength) . '...';
-        }
-        return $str;
     }
 
 }

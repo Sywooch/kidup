@@ -2,6 +2,7 @@
 namespace app\modules\user\models;
 
 use app\modules\images\components\ImageManager;
+use yii\authclient\clients\Facebook;
 
 /**
  *
@@ -28,9 +29,10 @@ class SocialAccount extends \app\models\base\SocialAccount
             }
         }
         // facebook profile pic
-        if (isset($data['picture'])) {
-            $url = $data['picture']['data']['url'];
+        if (isset($data['profile_img_url'])) {
+            $url = $data['profile_img_url'];
             $fileData = file_get_contents($url);
+
             // find if jpg or png
             if (strpos($url, '.png') !== false) {
                 $uploadedFile = (new ImageManager())->store($fileData, 't.png');
@@ -42,7 +44,6 @@ class SocialAccount extends \app\models\base\SocialAccount
             if ($uploadedFile !== false) {
                 $user->profile->setAttribute('img', $uploadedFile);
                 $user->profile->save();
-
             }
         }
         return true;

@@ -3,7 +3,7 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
 /*
- * @var app\modules\user\forms\PayoutPreferences $model
+ * @var app\modules\user\forms\PayoutPreference $model
  */
 ?>
 
@@ -28,7 +28,7 @@ use yii\helpers\Html;
             'enableClientValidation' => true,
         ]); ?>
 
-        <?= $form->field($model, 'payee_name') ?>
+        <?= $form->field($model, 'payee_name')->label(\Yii::t('user', 'Name')) ?>
         <?php if ($model->identifier_1 !== null): ?>
             <?= Yii::t("user", "Your current payout method is stored securely in our database.") ?> <br>
             <?= \Yii::t('user', 'Konto Number') . ': ' . $model->identifier_1 ?> <br>

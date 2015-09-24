@@ -8,10 +8,10 @@ $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 /////////////////////////////////////////////// DEPLOY API ///////////////////////////////////////////
 
-$production = server('production', '31.187.70.130', 22)
+$production = server('production', '54.93.103.33', 22)
     ->env('deploy_path', '/var/www')
     ->env('branch', 'master')
-    ->user('root')
+    ->user('ubuntu')
     ->stage('production');
 $test = server('test', '178.62.234.114', 22)
     ->env('deploy_path', '/var/www')
@@ -23,16 +23,18 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $production->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
     $test->password(getenv('CIRCLECI_TEST_PASSWORD'));
 } else {
-    $production->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
+    $production->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
+    //$production->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
 set('shared_dirs', ['runtime', 'web/release-assets/js', 'web/release-assets/css']);
-set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json']);
+set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
 set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets']);
 
-$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
-set('repository', 'https://simonnouwens:' . $repo_password . '@github.com/esquire900/kidup.git');
+//$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
+$repo_password = 'd9c7b5bea7deb271c5d3c00376acbd18891c49cd';
+set('repository', 'https://kevin91nl:' . $repo_password . '@github.com/esquire900/kidup.git');
 
 task('deploy:vendors', function () use ($repo_password) {
     run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);

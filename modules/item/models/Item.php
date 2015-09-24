@@ -23,22 +23,11 @@ class Item extends \app\models\base\Item
     public $images;
     public $distance;
 
-    public static function getConditions()
-    {
-        return [
-            '' => '',
-            '0' => \Yii::t('item', 'As new'),
-            '1' => \Yii::t('item', 'Minor usage'),
-            '2' => \Yii::t('item', 'Light damage')
-        ];
-    }
-
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['name', 'description', 'price_week', 'min_renting_days', 'condition'], 'required'],
+            [['name', 'description', 'price_week', 'min_renting_days'], 'required'],
             [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
-            [['condition'], 'in', 'range' => [0, 1, 2]],
             [['description'], 'string', 'min' => 5],
             [['name'], 'string', 'max' => 50]
         ]);
@@ -54,7 +43,6 @@ class Item extends \app\models\base\Item
             'price_week' => Yii::t('app', 'Price Week'),
             'price_month' => Yii::t('app', 'Price Month'),
             'owner_id' => Yii::t('app', 'Owner ID'),
-            'condition' => Yii::t('app', 'Condition'),
             'currency_id' => Yii::t('app', 'Currency ID'),
             'is_available' => Yii::t('app', 'Is Available'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -66,13 +54,12 @@ class Item extends \app\models\base\Item
     public function scenarios()
     {
         return [
-            'create' => ['owner_id', 'is_available', 'min_renting_days'],
+            'create' => ['owner_id', 'is_available', 'min_renting_days', 'category_id'],
             'default' => [
                 'name',
                 'description',
                 'price_week',
                 'owner_id',
-                'condition',
                 'currency_id',
                 'min_renting_days'
             ],
@@ -244,8 +231,13 @@ class Item extends \app\models\base\Item
             $images = [];
             $count = count($itemImages);
             foreach ($itemImages as $i => $img) {
-                $w = 250;
-                $h = 200;
+                if(count($itemImages) == 1){
+                    $w = 650;
+                    $h = 300;
+                }else{
+                    $w = 250;
+                    $h = 200;
+                }
 
                 $images[] = [
                     'src' => ImageHelper::url($img, ['q' => 90, 'w' => $w, 'h' => $h, 'fit' => 'crop']),
@@ -256,59 +248,7 @@ class Item extends \app\models\base\Item
         }, 10 * 60);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLocation()
-    {
-        return $this->hasOne(Location::className(), ['id' => 'location_id']);
-    }
 
-    public function getCategoriesMain()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_MAIN])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    public function getCategoriesAge()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_AGE])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    public function getCategoriesSpecial()
-    {
-        return $this->hasMany(\app\models\base\Category::className(), ['id' => 'category_id'])
-            ->where(['category.type' => Category::TYPE_SPECIAL])
-            ->indexBy('id')
-            ->asArray()
-            ->viaTable('item_has_category', ['item_id' => 'id']);
-    }
-
-    /**
-     * Returns the categories of this item of a certain type
-     * @param $type
-     * @return array
-     */
-    public function getCategoriesByType($type)
-    {
-        $cats = Category::find()->innerJoinWith('itemHasCategories')->
-        where([
-            'type' => $type,
-            'item_has_category.item_id' => $this->getAttribute('id')
-        ])->asArray()->all();
-        $res = [];
-        foreach ($cats as $cat) {
-            $res[] = $cat['name'];
-        }
-        return $res;
-    }
 
     /**
      * Get a list of recommended items.

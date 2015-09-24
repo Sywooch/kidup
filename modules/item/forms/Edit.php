@@ -2,12 +2,16 @@
 
 namespace app\modules\item\forms;
 
+use app\models\base\FeatureValue;
+use app\models\base\ItemHasFeature;
+use app\models\base\ItemHasFeatureSingular;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
 use app\modules\item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "category".
@@ -15,9 +19,7 @@ use yii\helpers\ArrayHelper;
 class Edit extends Model
 {
     public $item;
-    public $categories;
     public $images;
-
     public $location_id;
     public $name;
     public $price_week;
@@ -27,8 +29,12 @@ class Edit extends Model
     public $rules;
     public $min_renting_days;
     public $is_available;
-    public $condition;
+    public $category_id;
     public $photos;
+    public $singularFeatures;
+    public $features;
+
+    public $categoryData;
 
     // used for price suggestions
     public $newPrice;
@@ -36,6 +42,8 @@ class Edit extends Model
     public function __construct(Item $item)
     {
         $this->item = $item;
+
+        $this->location_id = $item->location_id;
         $this->name = $item->name;
         $this->price_week = $item->price_week;
         $this->price_day = $item->price_day;
@@ -43,32 +51,41 @@ class Edit extends Model
         $this->description = $item->description;
         $this->min_renting_days = $item->min_renting_days;
         $this->is_available = $item->is_available;
-        $this->location_id = $item->location_id;
-        $this->condition = $item->condition;
-        $this->categories = [
-            Category::TYPE_MAIN => $item->categoriesMain,
-            Category::TYPE_AGE => $item->categoriesAge,
-            Category::TYPE_SPECIAL => $item->categoriesSpecial
-        ];
-        foreach ($this->categories as $type => $c) {
-            foreach ($c as $id => $a) {
-                $this->categories[$type][$id] = 1;
-            }
-        }
+        $this->category_id = $item->category_id;
 
         $this->images = $item->media;
+
+        foreach ($this->item->itemHasFeatureSingulars as $id) {
+            $this->singularFeatures[$id->feature_id] = 1;
+        }
+
+        foreach ($this->item->itemHasFeatures as $ihf) {
+            $this->features[$ihf->feature_id] = $ihf->feature_value_id;
+        }
+
+        $cats = Category::find()->where('parent_id IS NOT NULL')->all();
+
+        foreach ($cats as $cat) {
+            $this->categoryData[$cat->id] = Yii::t('categories_and_features', $cat->parent->name) . ' - '. Yii::t('categories_and_features',$cat->name);
+        }
+
         return parent::__construct();
     }
 
     public function rules()
     {
         return [
-            [['name', 'price_week', 'description', 'location_id', 'condition'], 'required'],
+            [['name', 'price_week', 'description', 'location_id', 'category_id'], 'required'],
             [['name', 'description'], 'string'],
-            [['price_week', 'price_day', 'price_month', 'location_id'], 'number', 'min' => 1],
-            ['photos', 'required', 'isEmpty' => function(){
-                return count($this->item->itemHasMedia) == 0;
-            }, 'message' => \Yii::t('item', 'Please provide atleast one photo of your product')]
+            [['price_week', 'price_day', 'price_month', 'location_id', 'category_id'], 'number', 'min' => 1],
+            [
+                'photos',
+                'required',
+                'isEmpty' => function () {
+                    return count($this->item->itemHasMedia) == 0;
+                },
+                'message' => \Yii::t('item', 'Please provide atleast one photo of your product')
+            ]
         ];
     }
 
@@ -82,13 +99,13 @@ class Edit extends Model
                 'price_day',
                 'price_month',
                 'description',
-                'condition',
                 'photos',
-                'location_id'
+                'location_id',
+                'category_id'
             ],
             'location' => ['location_id'],
             'description' => ['name', 'description'],
-            'basics' => ['condition'],
+            'basics' => ['category_id'],
             'pricing' => ['price_week', 'price_day', 'price_month'],
             'photos' => ['photos'],
         ];
@@ -99,40 +116,71 @@ class Edit extends Model
         return 'edit-item';
     }
 
+    /**
+     * Loads and saves the relational features
+     */
+    public function loadAndSaveFeatures()
+    {
+        $data = \Yii::$app->request->post();
+        if (isset($data[$this->formName()]['singularFeatures'])) {
+            $this->singularFeatures = $data[$this->formName()]['singularFeatures'];
+            ItemHasFeatureSingular::deleteAll(['item_id' => $this->item->id]);
+            foreach ($this->singularFeatures as $id => $val) {
+                if ($val == 0) {
+                    continue;
+                }
+                $f = new ItemHasFeatureSingular();
+                $f->feature_id = $id;
+                $f->item_id = $this->item->id;
+                $f->save();
+            }
+        }
+        if (isset($data[$this->formName()]['features'])) {
+            $this->features = $data[$this->formName()]['features'];
+            ItemHasFeature::deleteAll(['item_id' => $this->item->id]);
+            foreach ($this->features as $id => $val) {
+                $featureVal = FeatureValue::findOne($val);
+                if($featureVal !== null){
+                    $f = new ItemHasFeature();
+                    $f->feature_id = $id;
+                    $f->item_id = $this->item->id;
+                    $f->feature_value_id = $featureVal->id;
+                    $f->save();
+                }else{
+                    Yii::warning("Feature ID {$val} not found");
+                }
+            }
+        }
+    }
+
     public function save()
     {
         if (!$this->validate()) {
             return false;
         }
+        
         $item = $this->item;
+        $item->location_id = $this->location_id;
         $item->name = $this->name;
-        $item->description = $this->description;
-        $item->min_renting_days = $this->min_renting_days;
         $item->price_week = $this->price_week;
         $item->price_day = $this->price_day;
         $item->price_month = $this->price_month;
-        $item->condition = $this->condition;
-        $item->location_id = $this->location_id;
+        $item->description = $this->description;
+        $item->min_renting_days = $this->min_renting_days;
+        $item->is_available = $this->is_available;
+        $item->category_id = $this->category_id;
+
         $item->scenario = 'create';
         if ($item->save()) {
             $this->item = $item;
-            ItemHasCategory::deleteAll(['item_id' => $item->id]);
-            foreach ($this->categories as $cat) {
-                foreach ($cat as $id => $val) {
-                    if ($val == 1) {
-                        $ihc = new ItemHasCategory();
-                        $ihc->item_id = $item->id;
-                        $ihc->category_id = $id;
-                        $ihc->save();
-                    }
-                }
-            }
+
             return true;
         }
         return false;
     }
 
-    public function isScenarioValid($s){
+    public function isScenarioValid($s)
+    {
         $copy = (new \DeepCopy\DeepCopy)->copy($this);
         $copy->setScenario($s);
         return $copy->validate();
@@ -142,11 +190,14 @@ class Edit extends Model
      * Computes how many steps a user still has to make
      * @return int
      */
-    public function getStepsToCompleteCount(){
-        $scenarios = ['location','description','basics', 'pricing','photos'];
+    public function getStepsToCompleteCount()
+    {
+        $scenarios = ['location', 'description', 'basics', 'pricing', 'photos'];
         $c = 0;
         foreach ($scenarios as $s) {
-            if($this->isScenarioValid($s) == false)$c++;
+            if ($this->isScenarioValid($s) == false) {
+                $c++;
+            }
         }
         return $c;
     }
