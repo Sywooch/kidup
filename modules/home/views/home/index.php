@@ -41,7 +41,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     </div>
                     <?php $this->registerJs("$('#how-it-works-btn').click(function() {
                         $('html, body').animate({
-                            scrollTop: $('#how-it-works').offset().top - 400
+                            scrollTop: $('#how-it-works').offset().top
                         }, 1000);
                     });") ?>
                     <div class="row mobile-search visible-xs visible-sm">
@@ -79,8 +79,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 40, 'h' => 40]) ?>
         </div>
 
-        <div class="container ">
-            <div class="row ">
+        <div class="container" id="how-it-works">
+            <div class="row">
                 <div class="col-sm-12 text-center">
                     <h2><?= \Yii::t('home', 'How to use KidUp?') ?></h2>
                 </div>
