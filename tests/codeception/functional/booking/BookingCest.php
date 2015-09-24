@@ -39,8 +39,12 @@ class BookingCest {
 
     public function makeBooking(FunctionalTester $I) {
         $faker = Faker::create();
-        $dateFrom = $faker->dateTimeBetween('+1 days', '+3 days')->getTimestamp();
-        $dateTo = $faker->dateTimeBetween('+3 days', '+6 days')->getTimestamp();
+        $dateFrom = $faker->dateTimeBetween('+2 days', '+3 days')->getTimestamp();
+        $dateTo = $faker->dateTimeBetween('+5 days', '+8 days')->getTimestamp();
+        $diffDays = (int)round(($dateTo - $dateFrom) / 3600 / 24);
+        Debug::debug('From: ' . date('Y-m-d', $dateFrom));
+        Debug::debug('To: ' . date('Y-m-d', $dateTo));
+        $format = 'd-m-Y';
 
         $renter = static::$fm->create(User::class);
         $owner = static::$fm->create(User::class);
@@ -48,6 +52,16 @@ class BookingCest {
         $item->owner_id = (int)$owner->id;
         $item->save();
         UserHelper::login($renter);
+
+        $params = [
+            'create-booking' => [
+                'dateFrom' => date($format, $dateFrom),
+                'dateTo' => date($format, $dateTo),
+            ]
+        ];
+        $I->amOnPage('item/' . $item->id . '?' . http_build_query($params));
+        $I->canSee('Service fee');
+        $I->canSee($diffDays . ' days');
 
         /*CreateBooking::widget([
             'dateFrom' => $dateFrom,

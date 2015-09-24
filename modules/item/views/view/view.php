@@ -84,11 +84,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger visible-sm visible-xs mobileBookingRequestButton">
-                        <?= \Yii::t('item', 'Request to Book') ?>
-                    </button>
-                    <br/><br/>
-
                     <div class="card card-product">
                         <div class="content">
                             <h4>
@@ -188,10 +183,6 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <button class="btn btn-fill btn-danger visible-sm visible-xs mobileBookingRequestButton">
-                        <?= \Yii::t('item', 'Request to Book') ?>
-                    </button>
-
                     <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
 
                     <?= \yii\widgets\ListView::widget([
@@ -228,6 +219,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     ]) ?>
                 </div>
             </div>
+        </div>
+
+        <div class="buttonContainer" style="z-index:10;">
+            <button class="btn btn-fill btn-danger mobileBookingRequestButton visible-sm visible-xs">
+                <?= \Yii::t('item', 'Request to Book') ?>
+            </button>
         </div>
     </section>
 </div>
