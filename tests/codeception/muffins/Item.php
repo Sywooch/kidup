@@ -23,7 +23,7 @@ class Item extends \app\modules\item\models\Item
             'currency_id' => 1,
             'location_id' => 'factory|'.Location::class,
             'is_available' => 1,
-            'category_id' => $faker->numberBetween(1, 5),
+            'category_id' => $faker->numberBetween(2, 6),
             'created_at' => $faker->dateTimeBetween('- 20 days', '- 10 days')->getTimestamp(),
             'updated_at' => $faker->dateTimeBetween('- 10 days', 'now')->getTimestamp(),
             'min_renting_days' => 0
