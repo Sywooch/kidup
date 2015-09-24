@@ -16,7 +16,7 @@ class TestCest
 {
 
     public function test($I){
-        $fm = (new MuffinHelper())->init()->factory;
+        $fm = (new MuffinHelper())->init()->getFactory();
         $user = $fm->create(Booking::className());
     }
 

@@ -1,10 +1,10 @@
 <?php
 namespace app\tests\codeception\functional\user;
 
-use app\modules\user\assets\ProfileAsset;
 use app\modules\user\models\User;
 use app\modules\user\models\Profile;
-use functionalTester;
+use FunctionalTester;
+
 /**
  * functional test for the login.
  *
@@ -14,25 +14,26 @@ use functionalTester;
 class RegistrationCest
 {
 
-    public function checkRegister(functionalTester $I)
+    public function checkRegister(FunctionalTester $I)
     {
+        $email = uniqid('registration') . '@email.com';
         $I->wantTo('ensure that I can register');
         $I->amOnPage('/user/register');
         $I->canSeeElement('#register-form-email');
         $I->canSeeElement('#register-form-password');
         $I->see('Sign up');
         // make sure we don't fill in the modal
-        $I->fillField('#wrapper #register-form-email', 'idont@exist.com');
+        $I->fillField('#wrapper #register-form-email', $email);
         $I->fillField('#wrapper #register-form-password', 'testtest');
         $I->click('Sign up', '#wrapper #registration-form > button');
         $I->seeRecord(User::className(), [
-            'email' => 'idont@exist.com'
+            'email' => $email
         ]);
         $I->seeInCurrentUrl('/user/registration/post-registration');
         $this->checkPostRegistration($I);
     }
 
-    private function checkPostRegistration(functionalTester $I){
+    private function checkPostRegistration(FunctionalTester $I){
         $I->see("We'd like to get to know you!");
         $I->seeElement('#post-registration-form-firstname');
         $I->seeElement('#post-registration-form-lastname');

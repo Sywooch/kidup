@@ -31,17 +31,15 @@ class LoginCest
         /**
          * @var FactoryMuffin $fm
          */
-        $fm = (new MuffinHelper())->init()->factory;
+        $fm = (new MuffinHelper())->init()->getFactory();
         $user = $fm->create(User::className());
         $items = $fm->seed(5, Item::className(), ['owner_id' => $user->id]);
         Debug::debug($items[0]->owner_id);
 //        $I->assertTrue($user->id === $items[0]->owner_id);
 
         $I->wantTo('ensure that I can login');
-        UserHelper::login($user->email, 'testtest');
+        UserHelper::login($user);
         $I->assertFalse(\Yii::$app->getUser()->getIsGuest(), 'I should not be a guest now');
-
-        $fm->deleteSaved();
     }
 
 //    public function checkLogout(functionalTester $I){
