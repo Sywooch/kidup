@@ -74,7 +74,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     ?>
 
     <!-- Steps explanation area-->
-    <div id="content-home-steps" class="hidden-xs">
+    <div id="content-home-steps">
         <div class="divider">
             <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 40, 'h' => 40]) ?>
         </div>
@@ -82,49 +82,31 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         <div class="container ">
             <div class="row ">
                 <div class="col-sm-12 text-center">
-                    <h2><?= \Yii::t('home', 'How to use kidup?') ?></h2>
+                    <h2><?= \Yii::t('home', 'How to use KidUp?') ?></h2>
                 </div>
-                <div class="col-sm-12 text-center step-area">
-                    <div class="row">
-                        <div id="step-item-1" class="col-sm-3 step-item active">
-                            <?= ImageHelper::img('kidup/graphics/find.png', ['q' => 90, 'w' => 130],
-                                ['class' => 'steps']) ?>
-                            <div class="number">1</div>
-                        </div>
-                        <div id="step-item-2" class="col-sm-3 step-item">
-                            <?= ImageHelper::img('kidup/graphics/pickup.png', ['q' => 90, 'w' => 130],
-                                ['class' => 'steps']) ?>
-                            <div class="number">2</div>
-                        </div>
-                        <div id="step-item-3" class="col-sm-3 step-item">
-                            <?= ImageHelper::img('kidup/graphics/review.png', ['q' => 90, 'w' => 130],
-                                ['class' => 'steps']) ?>
-                            <div class="number">3</div>
-                        </div>
-                    </div>
+                <div class="col-sm-4 text-center">
+                    <?= ImageHelper::img('kidup/graphics/find.png', ['q' => 90, 'w' => 130],
+                        ['class' => 'steps']) ?>
+                    <h4><?= \Yii::t('home', 'Seek and Find') ?></h4>
 
-                    <div class="row step-description" id="how-it-works">
-                        <div class="col-sm-6 col-sm-offset-3 sm">
-                            <div class="step-d-1">
-                                <h4><?= \Yii::t('home', 'Seek and Find') ?></h4>
+                    <p><?= \Yii::t('home',
+                        'With KidUp you can easily seek and find the products to help your family.') ?></p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <?= ImageHelper::img('kidup/graphics/pickup.png', ['q' => 90, 'w' => 130],
+                        ['class' => 'steps']) ?>
+                    <h4><?= \Yii::t('home', 'Meet and share') ?></h4>
 
-                                <p><?= \Yii::t('home',
-                                        'With KidUp you can easily seek and find the products to help your family.') ?></p>
-                            </div>
-                            <div class="step-d-2">
-                                <h4><?= \Yii::t('home', 'Meet and share') ?></h4>
+                    <p><?= \Yii::t('home',
+                            'Meet other families and share experiences related to the rented product.') ?></p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <?= ImageHelper::img('kidup/graphics/review.png', ['q' => 90, 'w' => 130],
+                        ['class' => 'steps']) ?>
+                    <h4><?= \Yii::t('home', 'Review and Help') ?></h4>
 
-                                <p><?= \Yii::t('home',
-                                        'Meet other families and share experiences related to the rented product.') ?></p>
-                            </div>
-                            <div class="step-d-3">
-                                <h4><?= \Yii::t('home', 'Review and Help') ?></h4>
-
-                                <p><?= \Yii::t('home',
-                                        'Review your experience, so other KidUppers can easily and swithfly find the right item.') ?></p>
-                            </div>
-                        </div>
-                    </div>
+                    <p><?= \Yii::t('home',
+                            'Review your experience, so other KidUppers can easily and swithfly find the right item.') ?></p>
                 </div>
             </div>
         </div>
