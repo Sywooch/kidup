@@ -19,6 +19,9 @@ use yii\helpers\Html;
 class Filter extends Model
 {
     public $query = null;
+    /**
+     * @var ActiveQuery $_query
+     */
     private $_query;
     public $categories;
     public $location;
@@ -73,37 +76,19 @@ class Filter extends Model
         $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
 
         $countQuery = clone $this->_query;
+        $countQuery = (int)$countQuery->count();
+        $this->estimatedResultCount = $countQuery;
 
         // show something if there is no result
-        if ($countQuery->count() == 0) {
-
+        if ($countQuery == 0) {
             $this->resultText = \Yii::t('search', 'No results found for your query.');
-
-            $this->_query = Item::find();
-            $this->resultsAreFake = true;
-
-            // ditch all filters except location and topcategory
-            $this->filterLocation();
-            $this->filterCategories();
-            $this->_query->andWhere(['is_available' => 1]);
-            $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
+            return [];
         }
 
         $this->filterLocation();
 
         // search results, order by some semi random but constant order
-        $res = $this->_query->orderBy('(item.id mod 10)*item.created_at')->all();
-
-        // estimate the total number of results
-        $this->_query = Item::find();
-
-        $this->filterCategories();
-        $this->filterPrice();
-        $this->_query->andWhere(['is_available' => 1]);
-
-        $this->estimatedResultCount = $this->_query->count();
-
-        return $res;
+        return $this->_query->orderBy('(item.id mod 10)*item.created_at')->all();
     }
 
     /**
@@ -190,6 +175,9 @@ class Filter extends Model
             if (count($singleFeatureIds) > 0) {
                 $this->_query->innerJoinWith([
                     'itemHasFeatureSingulars' => function ($query) use ($singleFeatureIds) {
+                        /**
+                         * @var ActiveQuery $query
+                         */
                         $query->where(['IN', 'item_has_feature_singular.feature_id', $singleFeatureIds]);
                     }
                 ]);
@@ -205,6 +193,9 @@ class Filter extends Model
                             if ($bool == 0) {
                                 continue;
                             }
+                            /**
+                             * @var ActiveQuery $query
+                             */
                             $query->orWhere([
                                 'item_has_feature.feature_id' => $featureId,
                                 'item_has_feature.feature_value_id' => $valId
@@ -218,15 +209,11 @@ class Filter extends Model
 
     /**
      * Filter the results by location.
-     *
-     * @param ActiveQuery $query the query object to apply the filter on
-     * @param array $location location: array with longitude and latitude properties
-     * @param int $distance the distance (in meters)
      */
     public function filterLocation()
     {
         if (is_null($this->latitude) || is_null($this->location)) {
-            $this->_getGeoData($this->location);
+            $this->_getGeoData();
         }
 
         if (!is_null($this->latitude) && !is_null($this->location)) {
@@ -249,9 +236,6 @@ class Filter extends Model
 
     /**
      * Filter the results by category.
-     *
-     * @param ActiveQuery $query the query object to apply the filter on
-     * @param array $categories the categories (ids) to filter on
      */
     public function filterCategories()
     {
@@ -269,12 +253,13 @@ class Filter extends Model
                 $cat = Category::find()->where(['id' => $cat])->one();
 
                 if ($cat !== null) {
-                    if($this->resultText == false){
-                        $this->resultText = \Yii::t('search', 'Results for').' '.\Yii::t("categories_and_features", $cat->name);
+                    if ($this->resultText == false) {
+                        $this->resultText = \Yii::t('search', 'Results for') . ' ' . \Yii::t("categories_and_features",
+                                $cat->name);
                     }
                     // add all subcategories if searching on a parent category
 
-                    if($cat->parent_id === null){
+                    if ($cat->parent_id === null) {
                         foreach ($cat->children as $child) {
                             $this->categories[] = $child->id;
                         }
@@ -282,44 +267,37 @@ class Filter extends Model
                 }
             }
             $this->_query->where(['IN', 'category_id', $this->categories]);
-        }else{
+        } else {
+            $this->resultsAreFake = true;
             $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
             $t = \Yii::t('categories_and_features', $suggestionWord->text);
-            if($this->query == ' ' || $this->query == '%20'){
-                $this->resultText = \Yii::t('search', "Your search was empty: here are some suggestions from other KidUp users!");
-            }else{
-                $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?",[
-                    '<b>'.$this->query.'</b>',
-                    Html::a($t, '@web/search/'.$t, ['data-pjax' => 0])
-                ]);
-            }
+            $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?", [
+                '<b>"' . $this->query . '"</b>',
+                Html::a($t, '@web/search/' . $t, ['data-pjax' => 0])
+            ]);
+            $this->categories = [[1,7,12,17,25,30,37][rand(0,6)]];
+            $this->filterCategories();
         }
     }
 
     /**
      * Filter the results by price.
-     *
-     * @param ActiveQuery $query the query object to apply the filter on
-     * @param int $priceMin the minimum price to search for
-     * @param int $priceMax the maximum price to search for
-     * @param String $priceUnit either "day", "week" or "month"
      */
     public function filterPrice()
     {
-        $field = "price_week";
         if (in_array($this->priceUnit, ['price_day', 'price_week', 'price_month'])) {
-            $field = $this->priceUnit;
             if (isset($this->priceMin) && $this->priceMin !== null) {
-
-                $this->_query->andWhere(':field >= :low', [
-                    ':field' => $field,
-                    ':low' => $this->priceMin,
+                $this->_query->andWhere(':fieldlow > :low');
+                $this->_query->addParams([
+                    ':fieldlow' => $this->priceUnit,
+                    ':low' => (double) $this->priceMin,
                 ]);
             }
             if (isset($this->priceMax) && $this->priceMax !== null) {
-                $this->_query->andWhere(':field <= :high', [
-                    ':field' => $field,
-                    ':high' => $this->priceMax,
+                $this->_query->andWhere(':fieldhigh < :high');
+                $this->_query->addParams([
+                    ':fieldhigh' => $this->priceUnit,
+                    ':high' => (double) $this->priceMax,
                 ]);
             }
         }
@@ -327,8 +305,6 @@ class Filter extends Model
 
     /**
      * Get geographical data for a given location.
-     *
-     * @param null $location the location to retrieve the geographical data for
      * @return array with keys:
      *              longitude   the found longitude for location
      *              latitude    the found latitude for location

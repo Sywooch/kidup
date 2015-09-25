@@ -56,17 +56,7 @@ $components = [
         'class' => 'app\components\extended\View',
     ],
     'assetManager' => [
-        'converter' => [
-            'class' => 'yii\web\AssetConverter',
-            'commands' => [
-                // compile less, minify if in production
-                'less' => [
-                    'css',
-                    'lessc {from} {to} --no-color ' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? '-x' : '')
-                ],
-            ],
-        ],
-        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? 'assets-prod.php' : 'assets.php')),
+        'class' => 'app\components\extended\AssetManager',
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],

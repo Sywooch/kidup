@@ -6,15 +6,12 @@ use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 use \app\assets\AppAsset;
 
-/* @var $this \yii\web\View */
+/* @var $this \app\components\extended\View */
 /* @var $content string */
-
-AppAsset::register($this);
-BootstrapPluginAsset::register($this);
 
 $url = @Yii::$app->request->getUrl();
 $transparent = ($url == '/' || $url == '/home');
-
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -27,6 +24,8 @@ $transparent = ($url == '/' || $url == '/home');
             <?= Html::encode($this->title) ?>
         </title>
         <?php $this->head(); ?>
+        <link rel="stylesheet" href="<?= \yii\helpers\Url::to('@web/packages/common.css') ?>">
+
         <link rel='shortcut icon' type='image/x-icon' href='<?= ImageHelper::url('kidup/logo/favicon.png') ?>'/>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,8 +74,13 @@ $transparent = ($url == '/' || $url == '/home');
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }
+    ?>
+    <script type="text/javascript" src="<?= \yii\helpers\Url::to('@web/packages/common.js') ?>" charset="utf-8"></script>
+    <?php
     $this->endBody();
     ?>
+
     </body>
     </html>
+
 <?php $this->endPage() ?>

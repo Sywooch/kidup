@@ -1,20 +1,18 @@
 <?php
 use app\components\ViewHelper;
 use app\modules\images\components\ImageHelper;
-use yii\helpers\Url;
-
-\app\modules\home\assets\HomeAsset::register($this);
-\app\assets\AngularAsset::register($this);
-$this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
 /**
- * @var yii\web\View $this
+ * @var app\components\extended\View $this
  * @var array $images
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
  * @var \app\modules\home\forms\Search $searchModel
  * @var bool $show_modal
  */
+
+$this->assetPackage = 'home';
+$this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 ?>
 <div id="home">
     <div class="cover-home"

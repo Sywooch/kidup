@@ -8,8 +8,6 @@ use app\modules\item\widgets\GoogleAutoComplete;
  * @var \app\modules\home\forms\Search $model
  */
 
-\app\assets\AngularAsset::register($this);
-\app\assets\JQueryTextRangeAsset::register($this);
 $emptyLocation = \Yii::t('search', 'Location: Near Me');
 $emptySearch = \Yii::t('categories_and_features', 'Baby Toys');
 $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{$emptySearch}';");

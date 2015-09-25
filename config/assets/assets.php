@@ -17,6 +17,7 @@ return [
         'app\assets\AppAsset',
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
+        'app\modules\home\assets\HomeAsset',
     ],
     // Asset bundle for compression output:
     'targets' => [
@@ -27,6 +28,16 @@ return [
             'js' => 'js/all-{hash}.js',
             'css' => 'css/all-{hash}.css',
         ],
+        'home' => [
+            'class' => 'yii\web\AssetBundle',
+            'basePath' => '@app/web/release-assets',
+            'baseUrl' => '@web/release-assets',
+            'depends' => [
+                'app\modules\home\assets\HomeAsset',
+            ],
+            'js' => 'js/home-{hash}.js',
+            'css' => 'css/home-{hash}.css',
+        ]
     ],
     // Asset manager configuration:
     'assetManager' => [
