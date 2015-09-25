@@ -42,7 +42,7 @@ class Controller extends \yii\web\Controller
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }
-        // this disallows websites to frame kidup
+
         \Yii::$app->view->registerMetaTag(['http-equiv' => 'X-FRAME-OPTIONS', 'content' => 'DENY']);
 
         Yii::$app->setHomeUrl('@web/home');
@@ -58,10 +58,10 @@ class Controller extends \yii\web\Controller
                 }
             } else {
                 $location = IpLocation::get(\Yii::$app->request->getUserIP());
-                if ($location['country'] == 'Denmark') {
-                    Yii::$app->language = 'da-DK';
-                } else {
+                if ($location->country == 'Netherlands' || $location->country == 'United States') {
                     Yii::$app->language = 'en-US';
+                } else {
+                    Yii::$app->language = 'da-DK';
                 }
                 Yii::$app->session->set('lang', Yii::$app->language);
             }

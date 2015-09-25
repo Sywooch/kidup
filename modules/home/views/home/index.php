@@ -10,7 +10,7 @@ use app\modules\images\components\ImageHelper;
  * @var \app\modules\home\forms\Search $searchModel
  * @var bool $show_modal
  */
-
+\app\modules\home\assets\HomeAsset::register($this);
 $this->assetPackage = 'home';
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 ?>

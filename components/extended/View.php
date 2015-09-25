@@ -16,7 +16,7 @@ use yii\helpers\Json;
 class View extends \yii\web\View
 {
 
-    public $assetPackage;
+    public $assetPackage = false;
 
     private $webpackCssFiles = [];
     private $webpackJsFiles = [];
@@ -61,7 +61,11 @@ class View extends \yii\web\View
             $lines[] = Html::script(implode("\n", $this->js[self::POS_HEAD]), ['type' => 'text/javascript']);
         }
 
-        $this->webpackCssFiles = array_keys($cssFiles);
+        if ($this->assetPackage !== false) {
+            $this->webpackCssFiles = array_keys($cssFiles);
+        } else {
+            $lines[] = implode("\n", $this->webpackCssFiles);
+        }
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
@@ -96,23 +100,27 @@ class View extends \yii\web\View
     {
         $lines = [];
 
-
         if (!empty($this->jsFiles[self::POS_END])) {
             $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->jsFiles[self::POS_END]);
         }
 
         if ($ajaxMode) {
             $scripts = [];
-            $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->js[self::POS_END]);
-            $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->js[self::POS_READY]);
-            $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->js[self::POS_LOAD]);
-
+            if (!empty($this->js[self::POS_END])) {
+                $scripts[] = implode("\n", $this->js[self::POS_END]);
+            }
+            if (!empty($this->js[self::POS_READY])) {
+                $scripts[] = implode("\n", $this->js[self::POS_READY]);
+            }
+            if (!empty($this->js[self::POS_LOAD])) {
+                $scripts[] = implode("\n", $this->js[self::POS_LOAD]);
+            }
             if (!empty($scripts)) {
                 $lines[] = Html::script(implode("\n", $scripts), ['type' => 'text/javascript']);
             }
         } else {
             if (!empty($this->js[self::POS_END])) {
-                $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->js[self::POS_END]);
+                $lines[] = Html::script(implode("\n", $this->js[self::POS_END]), ['type' => 'text/javascript']);
             }
             if (!empty($this->js[self::POS_READY])) {
                 // customization
@@ -127,13 +135,49 @@ class View extends \yii\web\View
                 $lines[] = Html::script($js, ['type' => 'text/javascript']);
             }
         }
-        $files = [
-            'js' => array_keys($this->webpackJsFiles),
-            'css' => ($this->webpackCssFiles),
-        ];
 
-        file_put_contents(Yii::$aliases['@app'] . '/web/packages/home/home.package.json',
-            Json::encode($files));
+        if (YII_ENV == 'dev') {
+            if ($this->assetPackage !== false) {
+                $files = [
+                    'js' => array_keys($this->webpackJsFiles),
+                    'css' => ($this->webpackCssFiles),
+                ];
+
+                $commonAssets = Json::decode(file_get_contents(Yii::$aliases['@app'] . '/web/packages/common/common.json'));
+
+                foreach ($files['js'] as $i => &$js) {
+                    $js = str_replace('/vagrant/', './', $js);
+                    if (strpos($js, 'http') === 0) {
+                        unset($files['js'][$i]);
+                        $lines[] = $this->webpackJsFiles[$js];
+                    }
+                    if (in_array($js, $commonAssets['js'])) {
+                        unset($files['js'][$i]);
+                    }
+                }
+
+                foreach ($files['css'] as $i => &$css) {
+                    $css = str_replace('/vagrant/', './', $css);
+                    if (strpos($css, 'http') === 0) {
+                        unset($files['css'][$i]);
+                        $lines[] = $this->webpackCssFiles[$css];
+                    }
+                    if (in_array($css, $commonAssets['css'])) {
+                        unset($files['css'][$i]);
+                    }
+                }
+
+                $files = [
+                    'js' => array_values($files['js']),
+                    'css' => array_values($files['css']),
+                ];
+
+                file_put_contents(Yii::$aliases['@app'] . '/web/packages/' . $this->assetPackage . '/' . $this->assetPackage . '.json',
+                    Json::encode($files));
+            } else {
+                $lines[] = implode("\n", $this->jsFiles[self::POS_END]);
+            }
+        }
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
