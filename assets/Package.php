@@ -16,5 +16,6 @@ class Package
     const SEARCH = 'search';
     const USER_SETTINGS = 'user-settings';
     const USER = 'user';
+    const ADMIN = 'admin';
     const OTHER = 'other';
 }

@@ -3,14 +3,14 @@ $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
-if (YII_ENV == 'test') {
-    $keyFile = __DIR__ . '/keys/keys.env';
-    if (!file_exists($keyFile)) {
-        echo 'php ' . __DIR__ . '/load_keyfile.php';
-        exec('php ' . __DIR__ . '/load_keyfile.php');
-    }
-    $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+// if (YII_ENV == 'test') {
+$keyFile = __DIR__ . '/keys/keys.env';
+if (!file_exists($keyFile)) {
+    echo 'php ' . __DIR__ . '/load_keyfile.php';
+    exec('php ' . __DIR__ . '/load_keyfile.php');
 }
+$keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+// }
 $components = [
     'session' => [
         'class' => 'yii\web\DbSession'
@@ -54,6 +54,26 @@ $components = [
     ],
     'view' => [
         'class' => 'app\components\extended\View',
+        'renderers' => [
+            'twig' => [
+                'class' => 'yii\twig\ViewRenderer',
+                // set cachePath to false in order to disable template caching
+                'cachePath' => '@runtime/Twig/cache',
+                // Array of twig options:
+                'options' => [
+                    'auto_reload' => true,
+
+                ],
+                'globals' => [
+                    'Image' => 'app/modules/images/widgets/Image'
+                ],
+                'functions' => [
+                    'translate' => function ($string) {
+                        return \Yii::t('app', $string);
+                    },
+                ]
+            ],
+        ],
     ],
     'assetManager' => [
         'class' => 'app\components\extended\AssetManager',
@@ -134,8 +154,9 @@ $components = [
     'i18n' => [
         'translations' => [
             '*' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@app/messages',
+                'class' => 'yii\i18n\DbMessageSource',
+                'sourceMessageTable' => 'i18n_source',
+                'messageTable' => 'i18n_message'
             ],
         ],
     ],

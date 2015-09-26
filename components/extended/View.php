@@ -174,7 +174,7 @@ class View extends \yii\web\View
                 if (strpos($js, 'http') === 0) {
                     unset($this->webpackJsFiles[$i]);
                     $lines[] = Html::jsFile($js);
-                } elseif (in_array($js, $commonAssets['js'])) {
+                } elseif (in_array($js, $commonAssets['js']) && $this->assetPackage !== Package::ADMIN) {
                     unset($this->webpackJsFiles[$i]);
                 } else {
                     $packageChange = true;
@@ -191,7 +191,7 @@ class View extends \yii\web\View
                 if (strpos($css, 'http') === 0) {
                     unset($this->webpackCssFiles[$i]);
                     $lines[] = Html::cssFile($css);
-                } elseif (in_array($css, $commonAssets['css'])) {
+                } elseif (in_array($css, $commonAssets['css']) && $this->assetPackage !== Package::ADMIN) {
                     unset($this->webpackCssFiles[$i]);
                 } else {
                     $packageChange = true;
@@ -206,16 +206,20 @@ class View extends \yii\web\View
             $filesystem->update($packagePath, Json::encode($packageAssets));
         }
 
+        if($this->assetPackage !== Package::ADMIN){
+            $cssLines = [Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.css")];
+        }else{
+            $cssLines = [];
+        }
+        $jsLines = [Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.js")];
+
+        $jsLines[] = Html::jsFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.js");
+        $cssLines[] = Html::cssFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.css");
+
         if ($type == 'js') {
-            return ArrayHelper::merge($lines,[
-                Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.js"),
-                Html::jsFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.js"),
-            ]);
+            return ArrayHelper::merge($lines,$jsLines);
         } else {
-            return ArrayHelper::merge($lines,[
-                Html::cssFile(Yii::$aliases['@web'] . "/packages/common/common.css"),
-                Html::cssFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.css"),
-            ]);
+            return ArrayHelper::merge($lines,$cssLines);
         }
     }
 }

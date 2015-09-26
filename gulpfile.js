@@ -32,6 +32,7 @@ var packageNames = [
     'search',
     'user-settings',
     'user',
+    'admin',
     'other'
 ];
 var packages = {};

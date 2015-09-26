@@ -8,7 +8,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $content string */
 \app\modules\admin\assets\AdminThemeAsset::register($this);
 \yii\web\JqueryAsset::register($this);
-$this->assetPackage = 'admin';
+$this->assetPackage = \app\assets\Package::ADMIN;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
