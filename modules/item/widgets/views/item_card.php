@@ -3,14 +3,14 @@ use app\components\WidgetRequest;
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
 use app\modules\user\widgets\UserImage;
-
+use \app\modules\review\widgets\ReviewScore;
 /**
+ * @var \app\components\extended\View $this
  * @var \app\modules\item\models\Item $model
+ * @var string $rowClass
  */
 
-// profile page, item page, search, homepage
 \app\modules\item\assets\ItemAsset::register($this);
-
 
 ?>
 
@@ -49,7 +49,7 @@ use app\modules\user\widgets\UserImage;
 
                 <div class="footer-divs">
                     <div class="reviews">
-                        <?= \app\modules\review\widgets\ReviewScore::widget([
+                        <?= ReviewScore::widget([
                             'user_id' => $model->owner_id,
                             'reviewCount' => $widget->reviewCount
                         ]) ?>

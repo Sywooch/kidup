@@ -24,8 +24,6 @@ AppAsset::register($this);
             <?= Html::encode($this->title) ?>
         </title>
         <?php $this->head(); ?>
-        <link rel="stylesheet" href="<?= \yii\helpers\Url::to('@web/packages/common/common.css') ?>">
-        <link rel="stylesheet" href="<?= \yii\helpers\Url::to('@web/packages/'.$this->assetPackage.'/'.$this->assetPackage.'.css') ?>">
 
         <link rel='shortcut icon' type='image/x-icon' href='<?= ImageHelper::url('kidup/logo/favicon.png') ?>'/>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
@@ -39,11 +37,13 @@ AppAsset::register($this);
         <meta property="og:url" content="http://kidup.dk"/>
     </head>
     <body>
-    <?php $this->beginBody(); ?>
-    <?= \app\widgets\FacebookTracker::widget() ?>
-    <?= \app\widgets\GoogleTagManager::widget() ?>
+    <?php
+    $this->beginBody();
+    echo \app\widgets\FacebookTracker::widget();
+    echo \app\widgets\GoogleTagManager::widget();
 
-    <?= $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");'); ?>
+    echo $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");');
+    ?>
 
     <div id="wrapper" <?= $transparent ? 'class="wrapper-home"' : '' ?>>
         <?= $content ?>
@@ -75,13 +75,9 @@ AppAsset::register($this);
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }
-    ?>
-    <script type="text/javascript" src="<?= \yii\helpers\Url::to('@web/packages/common/common.js') ?>" charset="utf-8"></script>
-    <script type="text/javascript" src="<?= \yii\helpers\Url::to('@web/packages/'.$this->assetPackage.'/'.$this->assetPackage.'.js') ?>" charset="utf-8"></script>
-    <?php
+
     $this->endBody();
     ?>
-
     </body>
     </html>
 

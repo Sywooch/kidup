@@ -5,6 +5,7 @@ use \yii\bootstrap\ActiveForm;
 use app\modules\item\widgets\GoogleAutoComplete;
 
 /**
+ * @var app\components\extended\View $this
  * @var \app\modules\home\forms\Search $model
  */
 

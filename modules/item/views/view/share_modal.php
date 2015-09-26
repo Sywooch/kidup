@@ -1,5 +1,13 @@
 <?php
 use yii\bootstrap\Modal;
+use \kartik\social\FacebookPlugin;
+
+/**
+ * @var \app\components\extended\View $this
+ * @var $model \app\modules\review\models\Review
+ */
+
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 
 Modal::begin([
     'header' => '<h3>' . \Yii::t('item', 'Yay! Your product is now online and ready to be rented out!') . '</h3>',
@@ -8,15 +16,17 @@ Modal::begin([
 echo \Yii::t('item',
     'Tip: There is a 83% bigger chance to rent out the product within the first 14 days if you share it on Facebook!');
 echo "<div style='text-align:center;margin-top:20px;font-size:30px;'>";
-echo \kartik\social\FacebookPlugin::widget([
-    'type' => \kartik\social\FacebookPlugin::SHARE,
+echo FacebookPlugin::widget([
+    'type' => FacebookPlugin::SHARE,
 ]);
 echo "</div>";
 
 Modal::end();
 
-$this->registerJs("$(window).load(function(){
-        $('#sharingModal').modal('show');
-    });");
-
+$js = <<<JS
+$(window).load(function(){
+    $('#sharingModal').modal('show');
+});
+JS;
+$this->registerJs($js);
 ?>

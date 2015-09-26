@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Complete your registration'));
+$this->assetPackage = \app\assets\Package::USER;
 
 ?>
 <section class="section container">

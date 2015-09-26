@@ -6,13 +6,15 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 /**
- * @var yii\web\View $this
+ * @var \app\components\extended\View $this
  * @var false|string $redirect
  * @var \app\modules\item\forms\CreateBooking $model
  */
 
 \yii\jui\JuiAsset::register($this);
 \app\assets\LodashAsset::register($this);
+
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <?php Pjax::begin([
 //    'enableReplaceState' => true,

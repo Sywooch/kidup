@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use app\modules\user\widgets\UserImage;
 use app\modules\review\widgets\ReviewScore;
 use app\modules\review\models\Review;
-
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <div class="card card-minimal">
     <div class="row" style="margin:15px;padding:15px;background-color: white;">

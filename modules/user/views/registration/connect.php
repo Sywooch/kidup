@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
  * @var app\modules\user\models\Account $account
  */
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account to {0}', $account->provider));
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <section style="padding-top:80px" class="container">
     <div class="row">

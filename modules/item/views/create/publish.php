@@ -5,10 +5,12 @@ use kartik\icons\Icon;
 use \yii\helpers\Html;
 
 /**
- * @var \yii\web\View $this
+ * @var \app\components\extended\View $this
  * @var \app\modules\item\models\Item $item
  */
 \app\modules\item\assets\CreateAsset::register($this);
+
+$this->assetPackage = \app\assets\Package::ITEM_CREATE;
 
 ?>
 <section class="section" id="new-rental">

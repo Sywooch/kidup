@@ -8,6 +8,7 @@ use Carbon\Carbon;
  * @var $item \app\modules\item\models\Item
  */
 app\modules\booking\assets\BookingViewsAsset::register($this);
+$this->assetPackage = \app\assets\Package::BOOKING;
 
 ?>
 <section id="booking">
@@ -96,7 +97,6 @@ app\modules\booking\assets\BookingViewsAsset::register($this);
                                         <?= $booking->amount_payout ?> DKK
                                     </b>
                                 </li>
-                                <br/><br/>
                                 <li>
                                     <?= Yii::t("booking", "Total received") ?>
                                     <b class="pull-right">

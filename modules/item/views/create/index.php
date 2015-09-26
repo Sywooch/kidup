@@ -4,12 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
-\yii\web\JqueryAsset::register($this);
-\app\modules\item\assets\CreateAsset::register($this);
 /**
- * @var \yii\web\View $this
+ * @var \app\components\extended\View $this
  * @var \app\modules\item\forms\Create $model
  */
+
+\yii\web\JqueryAsset::register($this);
+\app\modules\item\assets\CreateAsset::register($this);
+
+$this->assetPackage = \app\assets\Package::ITEM_CREATE;
 ?>
 <section class="section" id="new-rental">
     <div class="card header" style="text-align: center;">

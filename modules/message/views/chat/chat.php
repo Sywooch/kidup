@@ -4,13 +4,14 @@ use Carbon\Carbon;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
-
-/*
- * @var Conversation $conversation
- * @var yii\web\View $this
+/**
+ * @var \app\modules\message\models\Conversation $conversation
+ * @var \app\components\extended\View $this
  */
+
 \app\modules\message\assets\MessageAsset::register($this);
 $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::MESSAGE;
 ?>
 
 <section class="section" id="conversation">

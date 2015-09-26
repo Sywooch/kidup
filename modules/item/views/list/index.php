@@ -1,16 +1,17 @@
 <?php
 use yii\helpers\Url;
 
-$this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name;
-
-\app\modules\item\assets\ListAsset::register($this);
-
 /**
  * @var \yii\data\ActiveDataProvider $unpublishedProvider
  * @var \yii\data\ActiveDataProvider $publishedProvider
  * @var \yii\data\ActiveDataProvider $requestProvider
- * @var \yii\web\View $this
+ * @var \app\components\extended\View $this
  */
+
+\app\modules\item\assets\ListAsset::register($this);
+
+$this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <section class="section" id="rentals">
     <div class=" site-area-header">

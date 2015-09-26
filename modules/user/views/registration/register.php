@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Sign up'));
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 
 <section class="section container">

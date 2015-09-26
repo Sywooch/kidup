@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "28a6b9c4b43cbdbb3ff66b859bf97ff1",
+    "hash": "07bcb3928cb0dbd4a0ddb2d2c6fbefc9",
+    "content-hash": "d2291a66fad26c56587e8e93d6ce340b",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -197,6 +198,54 @@
                 "yii2"
             ],
             "time": "2015-08-04 17:29:59"
+        },
+        {
+            "name": "alexandernst/yii2-device-detect",
+            "version": "0.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexandernst/yii2-device-detect.git",
+                "reference": "efb05131d0303c8d4ee19d6476d06d031ef88ad9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexandernst/yii2-device-detect/zipball/efb05131d0303c8d4ee19d6476d06d031ef88ad9",
+                "reference": "efb05131d0303c8d4ee19d6476d06d031ef88ad9",
+                "shasum": ""
+            },
+            "require": {
+                "mobiledetect/mobiledetectlib": "~2.8",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "alexandernst\\devicedetect\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU General Public License v3"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Nestorov",
+                    "email": "alexandernst@gmail.com"
+                }
+            ],
+            "description": "Yii2 extension for Mobile-Detect library",
+            "keywords": [
+                "desktop",
+                "detect",
+                "device",
+                "extension",
+                "mobile",
+                "phone",
+                "tablet",
+                "widget",
+                "yii2"
+            ],
+            "time": "2015-04-22 23:30:31"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -1357,12 +1406,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "63b89f891914b589d12c6e71989a0eb54d35a7a3"
+                "reference": "4a1fd8d311e74f9d5fa7dbe5d31c14af82a3bee9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/63b89f891914b589d12c6e71989a0eb54d35a7a3",
-                "reference": "63b89f891914b589d12c6e71989a0eb54d35a7a3",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/4a1fd8d311e74f9d5fa7dbe5d31c14af82a3bee9",
+                "reference": "4a1fd8d311e74f9d5fa7dbe5d31c14af82a3bee9",
                 "shasum": ""
             },
             "type": "component",
@@ -1387,7 +1436,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2015-09-05 08:34:56"
+            "time": "2015-09-25 16:37:23"
         },
         {
             "name": "dmstr/yii2-db",
@@ -4157,12 +4206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "b201d0020eaa90e64a302abaca34695d1e08864f"
+                "reference": "705de3002de2e9a03c35e23bd0e048a101ca434c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/b201d0020eaa90e64a302abaca34695d1e08864f",
-                "reference": "b201d0020eaa90e64a302abaca34695d1e08864f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/705de3002de2e9a03c35e23bd0e048a101ca434c",
+                "reference": "705de3002de2e9a03c35e23bd0e048a101ca434c",
                 "shasum": ""
             },
             "require": {
@@ -4196,7 +4245,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2015-09-22 18:57:17"
+            "time": "2015-09-25 11:38:08"
         },
         {
             "name": "league/glide",
@@ -4354,6 +4403,60 @@
                 "gis"
             ],
             "time": "2014-12-17 18:11:00"
+        },
+        {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "2.8.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "b87da5f63a76e9615a0c74fcf168657b1ea7e41d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b87da5f63a76e9615a0c74fcf168657b1ea7e41d",
+                "reference": "b87da5f63a76e9615a0c74fcf168657b1ea7e41d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "johnkary/phpunit-speedtrap": "~1.0@dev",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://mobiledetect.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2015-09-17 14:45:21"
         },
         {
             "name": "monolog/monolog",
@@ -4964,13 +5067,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Translation.git",
-                "reference": "557fef620c58622aa39710bd9765db11e61583b9"
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "352bdcb721bdc261c346acd14841594f77434dcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/557fef620c58622aa39710bd9765db11e61583b9",
-                "reference": "557fef620c58622aa39710bd9765db11e61583b9",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/352bdcb721bdc261c346acd14841594f77434dcd",
+                "reference": "352bdcb721bdc261c346acd14841594f77434dcd",
                 "shasum": ""
             },
             "require": {
@@ -5018,7 +5121,68 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-22 15:04:40"
+            "time": "2015-09-25 10:59:21"
+        },
+        {
+            "name": "twig/twig",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "604e94883bc1691071d9a30ff522808dc476394c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/604e94883bc1691071d9a30ff522808dc476394c",
+                "reference": "604e94883bc1691071d9a30ff522808dc476394c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.7"
+            },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.22-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2015-09-24 14:39:22"
         },
         {
             "name": "warrence/yii2-kartikgii",
@@ -5397,12 +5561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "6b2a2b3bb83d4b3dd791f76e64c48973ce01bac6"
+                "reference": "87cd1f2e0dd454a837607de612b1057840effe8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/6b2a2b3bb83d4b3dd791f76e64c48973ce01bac6",
-                "reference": "6b2a2b3bb83d4b3dd791f76e64c48973ce01bac6",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/87cd1f2e0dd454a837607de612b1057840effe8b",
+                "reference": "87cd1f2e0dd454a837607de612b1057840effe8b",
                 "shasum": ""
             },
             "require": {
@@ -5436,7 +5600,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2015-06-11 19:55:58"
+            "time": "2015-09-25 10:48:24"
         },
         {
             "name": "yiisoft/yii2-imagine",
@@ -5585,6 +5749,57 @@
                 "yii2"
             ],
             "time": "2015-06-18 08:31:25"
+        },
+        {
+            "name": "yiisoft/yii2-twig",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-twig.git",
+                "reference": "a47c57c2b3b7514f8387e2588299e55f4adfb3bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-twig/zipball/a47c57c2b3b7514f8387e2588299e55f4adfb3bc",
+                "reference": "a47c57c2b3b7514f8387e2588299e55f4adfb3bc",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "~1.0",
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\twig\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru"
+                }
+            ],
+            "description": "The Twig integration for the Yii framework",
+            "keywords": [
+                "renderer",
+                "twig",
+                "yii2"
+            ],
+            "time": "2015-07-28 06:23:25"
         },
         {
             "name": "zetacomponents/base",
@@ -6986,12 +7201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmunk42/yii2-giiant.git",
-                "reference": "cdc442afc6c16016fba850c74e1128f825ba5f1d"
+                "reference": "8d37488706bfd8733eed94135f537ced1df0f38f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/cdc442afc6c16016fba850c74e1128f825ba5f1d",
-                "reference": "cdc442afc6c16016fba850c74e1128f825ba5f1d",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/8d37488706bfd8733eed94135f537ced1df0f38f",
+                "reference": "8d37488706bfd8733eed94135f537ced1df0f38f",
                 "shasum": ""
             },
             "require": {
@@ -7028,7 +7243,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2015-09-24 00:00:42"
+            "time": "2015-09-25 15:48:56"
         },
         {
             "name": "sebastian/comparator",
@@ -7407,13 +7622,13 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/BrowserKit.git",
-                "reference": "4dbd336331f5e7ba7a6f9e4f9f608b89093f49b3"
+                "url": "https://github.com/symfony/browser-kit.git",
+                "reference": "cf5a852f10cf998485b804f8ae88552f254d6434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/BrowserKit/zipball/4dbd336331f5e7ba7a6f9e4f9f608b89093f49b3",
-                "reference": "4dbd336331f5e7ba7a6f9e4f9f608b89093f49b3",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/cf5a852f10cf998485b804f8ae88552f254d6434",
+                "reference": "cf5a852f10cf998485b804f8ae88552f254d6434",
                 "shasum": ""
             },
             "require": {
@@ -7455,20 +7670,20 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-06 08:37:06"
+            "time": "2015-09-26 08:21:42"
         },
         {
             "name": "symfony/console",
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
-                "reference": "2ad5776cd18a443984c243a9bd8bd05470983da9"
+                "url": "https://github.com/symfony/console.git",
+                "reference": "cb8e09a15e17c87d9253531b219a8dad3f689e0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/2ad5776cd18a443984c243a9bd8bd05470983da9",
-                "reference": "2ad5776cd18a443984c243a9bd8bd05470983da9",
+                "url": "https://api.github.com/repos/symfony/console/zipball/cb8e09a15e17c87d9253531b219a8dad3f689e0b",
+                "reference": "cb8e09a15e17c87d9253531b219a8dad3f689e0b",
                 "shasum": ""
             },
             "require": {
@@ -7512,20 +7727,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-22 13:49:41"
+            "time": "2015-09-26 07:26:13"
         },
         {
             "name": "symfony/css-selector",
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/CssSelector.git",
-                "reference": "6470dad1d5c3a926906b5660a7046bbd61bd7806"
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "523ce2f70bb06e0d6054d3a35b4579213b1fc878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/6470dad1d5c3a926906b5660a7046bbd61bd7806",
-                "reference": "6470dad1d5c3a926906b5660a7046bbd61bd7806",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/523ce2f70bb06e0d6054d3a35b4579213b1fc878",
+                "reference": "523ce2f70bb06e0d6054d3a35b4579213b1fc878",
                 "shasum": ""
             },
             "require": {
@@ -7565,19 +7780,19 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:18:02"
+            "time": "2015-09-22 13:49:41"
         },
         {
             "name": "symfony/dom-crawler",
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/DomCrawler.git",
+                "url": "https://github.com/symfony/dom-crawler.git",
                 "reference": "0b2cca30f50ef55c33b31cf3389218db0b2977c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DomCrawler/zipball/0b2cca30f50ef55c33b31cf3389218db0b2977c9",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/0b2cca30f50ef55c33b31cf3389218db0b2977c9",
                 "reference": "0b2cca30f50ef55c33b31cf3389218db0b2977c9",
                 "shasum": ""
             },
@@ -7625,12 +7840,12 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
                 "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
                 "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
                 "shasum": ""
             },
@@ -7984,6 +8199,7 @@
         "warrence/yii2-kartikgii": 20,
         "bower-asset/lodash": 20,
         "bower-asset/bootstrap-modal-carousel": 20,
+        "yiisoft/yii2-twig": 20,
         "c006/yii2-migration-utility": 20
     },
     "prefer-stable": false,

@@ -20,7 +20,6 @@ use Yii;
  * @property Feature[] $features
  * @property Feature[] $singularFeatures
  * @property Feature[] $nonSingularFeatures
- * @property ] $items
  */
 class Category extends \yii\db\ActiveRecord
 {

@@ -7,6 +7,7 @@ use yii\helpers\Url;
  * @var $item \app\modules\item\models\Item
  */
 app\modules\booking\assets\BookingViewsAsset::register($this);
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <section id="booking">
     <div class="container">

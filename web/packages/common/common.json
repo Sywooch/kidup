@@ -1,22 +1,7 @@
 {
-  "js": [
-    "./vendor/bower/jquery/dist/jquery.js",
-    "./vendor/yiisoft/yii2/assets/yii.js",
-    "./views/assets/js/basic.js",
-    "./vendor/bower/bootstrap/dist/js/bootstrap.js",
-    "./modules/item/widgets/views/assets/menuSearch.js",
-    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/typeahead.bundle.js",
-    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/typeahead-kv.js",
-    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/handlebars.js",
-    "./vendor/yiisoft/yii2-authclient/assets/authchoice.js",
-    "./vendor/yiisoft/yii2/assets/yii.validation.js",
-    "./vendor/yiisoft/yii2/assets/yii.activeForm.js",
-    "./vendor/cinghie/yii2-cookie-consent/assets/js/cookieconsent.js"
-  ],
   "css": [
     "./vendor/bower/bootstrap/dist/css/bootstrap.css",
     "./vendor/bower/font-awesome/css/font-awesome.min.css",
-    "./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css",
     "./views/assets/fonts/proxima/proxima.less",
     "./views/assets/fonts/adelle/adelle.less",
     "./views/assets/css/base/typography.less",
@@ -46,9 +31,21 @@
     "./views/assets/css/components/_cards.less",
     "./views/assets/css/components/_navbar.less",
     "./views/assets/css/components/_modals.less",
+    "./modules/home/views/home/assets/home.less",
     "./vendor/kartik-v/yii2-krajee-base/assets/css/kv-widgets.css",
     "./vendor/kartik-v/yii2-widget-typeahead/assets/css/typeahead.css",
-    "./vendor/kartik-v/yii2-widget-typeahead/assets/css/typeahead-kv.css",
-    "./vendor/yiisoft/yii2-authclient/assets/authchoice.css"
+    "./vendor/kartik-v/yii2-widget-typeahead/assets/css/typeahead-kv.css"
+  ],
+  "js": [
+    "./vendor/bower/jquery/dist/jquery.js",
+    "./vendor/yiisoft/yii2/assets/yii.js",
+    "./views/assets/js/basic.js",
+    "./vendor/bower/bootstrap/dist/js/bootstrap.js",
+    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/typeahead.bundle.js",
+    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/typeahead-kv.js",
+    "./vendor/kartik-v/yii2-widget-typeahead/assets/js/handlebars.js",
+    "./vendor/yiisoft/yii2/assets/yii.activeForm.js",
+    "./vendor/yiisoft/yii2/assets/yii.validation.js",
+    "./vendor/cinghie/yii2-cookie-consent/assets/js/cookieconsent.js"
   ]
 }

@@ -2,6 +2,11 @@
 use yii\helpers\Html;
 
 $this->title = \Yii::t('title', 'Your Previous Bookings') . ' - ' . Yii::$app->name;
+/**
+ * @var app\components\extended\View $this
+ * @var \yii\data\ActiveDataProvider $provider
+ */
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <section class="section" id="rentals">
     <div class=" site-area-header hidden-xs">

@@ -1,8 +1,11 @@
 <?php
-$this->title = $title;
+/**
+ * @var \app\components\extended\View $this
+ */
 \app\modules\user\assets\SettingsAsset::register($this);
+$this->title = $title;
+$this->assetPackage = \app\assets\Package::USER_SETTINGS;
 ?>
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 <section class="section" id="settings">
     <div class=" site-area-header hidden-xs">
         <div class="container">

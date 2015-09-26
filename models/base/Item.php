@@ -27,7 +27,7 @@ use Yii;
  * @property Location $location
  * @property Currency $currency
  * @property User $owner
- * @property Category[] $category
+ * @property Category $category
  * @property ItemHasMedia[] $itemHasMedia
  * @property Media[] $media
  * @property ItemHasFeature[] $itemHasFeatures

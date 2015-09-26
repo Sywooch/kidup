@@ -4,11 +4,11 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
-/* @var $this \yii\web\View */
+/* @var $this \app\components\extended\View */
 /* @var $content string */
 \app\modules\admin\assets\AdminThemeAsset::register($this);
 \yii\web\JqueryAsset::register($this);
-
+$this->assetPackage = 'admin';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

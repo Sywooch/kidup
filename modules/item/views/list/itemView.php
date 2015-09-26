@@ -2,9 +2,13 @@
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
 
+/**
+ * @var \app\components\extended\View $this
+ * @var \app\modules\item\models\Item $model
+ */
 
 \app\modules\item\assets\ListAsset::register($this);
-
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 
 <tr>

@@ -41,7 +41,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
             'translator' => 'Yii::t',
             'overwrite' => false,
             'removeUnused' => false,
-            'markUnused' => true,
+            'markUnused' => false,
             'sort' => false,
             'format' => 'php',
             'ignoreCategories' => [],

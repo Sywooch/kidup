@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @var app\components\extended\View $this
+ * @var \app\modules\item\models\Item $item
+ * @var \yii\data\ActiveDataProvider $provider
+ */
+
+
 $this->title = \Yii::t('title', 'Your Current Bookings') . ' - ' . Yii::$app->name;
 ?>
 <section class="section" id="rentals">

@@ -3,9 +3,13 @@ use app\modules\images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$item = \app\modules\item\models\Item::findOne($model->item_id);
+/**
+ * @var \app\components\extended\View $this
+ */
 \app\modules\item\assets\ListAsset::register($this);
 
+$item = \app\modules\item\models\Item::findOne($model->item_id);
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 
 <tr>

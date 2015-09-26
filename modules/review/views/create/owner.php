@@ -7,11 +7,12 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var $this \yii\web\View
+ * @var $this \app\components\extended\View
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item
  */
-\app\assets\AppAsset::register($this);
+$this->assetPackage = \app\assets\Package::REVIEW;
+
 ?>
 <section class="section" id="create-review">
     <div class=" site-area-header">

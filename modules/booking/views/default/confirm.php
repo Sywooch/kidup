@@ -7,18 +7,20 @@ use \app\modules\booking\models\Payin;
 use \app\modules\images\components\ImageHelper;
 use app\modules\review\widgets\ReviewScore;
 
-/*
- * @var yii\web\View $this
+/**
+ * @var app\components\extended\View $this
  * @var app\modules\booking\models\Booking $booking
  * @var \app\modules\booking\forms\Confirm $model
  * @var \app\modules\item\models\Item $item
  * @var \app\modules\user\models\Profile $profile
+ * @var array $tableData
  */
 
 \app\modules\booking\assets\ConfirmAsset::register($this);
 \yii\web\JqueryAsset::register($this);
 
 $this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::BOOKING;
 $clientToken = (new BrainTree(new Payin()))->getClientToken();
 ?>
 <section class="section" id="checkout">
@@ -36,6 +38,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                 <!-- Mobile replacement for right panel -->
                 <div class="card hidden-md hidden-lg">
                     <h3><?= Yii::t('booking', 'Booking information') ?></h3>
+
                     <div class="row card card-minimal">
                         <div style="float: left;">
                             <?= ImageHelper::image($item->getImageName(0), ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
@@ -50,6 +53,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                     </div>
 
                     <i><?= Yii::t("booking", "You are renting from") ?>:</i>
+
                     <div class="row card card-minimal">
                         <div style="float: left;">
                             <?= ImageHelper::image($profile->img, ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
@@ -112,6 +116,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             $profile->first_name
                         ]) ?>
                     </h3>
+
                     <div class="row">
                         <div class="col-md-7">
                             <?= $form->field($model, 'message')->textarea([
@@ -151,7 +156,8 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                     </div>
                     <div class="row">
                         <div class="col-md-7">
-                            <br />
+                            <br/>
+
                             <div id="payment-form"></div>
                             <?php
                             $this->registerJs('braintree.setup("' . $clientToken . '", "dropin", { container: "payment-form" });');

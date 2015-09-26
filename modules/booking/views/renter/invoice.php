@@ -3,9 +3,11 @@ use app\modules\images\components\ImageHelper;
 use Carbon\Carbon;
 
 /**
+ * @var \app\components\extended\View $this
  * @var array $invoice
  */
 app\modules\booking\assets\BookingViewsAsset::register($this);
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <section id="booking">
     <div class="container">

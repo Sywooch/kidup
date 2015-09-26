@@ -16,6 +16,7 @@ use app\modules\images\components\ImageHelper;
 $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name])) . ' - ' . Yii::$app->name;
 
 \app\modules\user\assets\ProfileAsset::register($this);
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <section class="section" id="public-profile">
     <div class="container site-area-content">

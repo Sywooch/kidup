@@ -4,12 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
- * @var yii\web\View $this
+ * @var \app\components\extended\View $this
  * @var app\modules\user\models\LoginForm $model
  * @var app\modules\user\Module $module
  */
 
 $this->title = ucfirst(\Yii::t('title', 'Log In')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>

@@ -4,10 +4,12 @@ use Carbon\Carbon;
 use yii\helpers\Html;
 
 /**
+ * @var \app\components\extended\View $this
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item
  */
 app\modules\booking\assets\BookingViewsAsset::register($this);
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <br/><br/>
 <section id="booking">
@@ -61,7 +63,8 @@ app\modules\booking\assets\BookingViewsAsset::register($this);
                             <ul class="list-unstyled list-lines">
                                 <li>
                                     <?= Yii::t("booking", "Rent for {0} days", [
-                                        Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to))
+                                        Carbon::createFromTimestamp($booking->time_from)
+                                            ->diffInDays(Carbon::createFromTimestamp($booking->time_to))
                                     ]) ?>
                                     <b class="pull-right">
                                         <?= $booking->amount_item ?> DKK

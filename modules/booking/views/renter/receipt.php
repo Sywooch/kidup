@@ -4,10 +4,12 @@ use app\modules\images\components\ImageHelper;
 use Carbon\Carbon;
 
 /**
+ * @var \app\components\extended\View $this
  * @var $booking \app\modules\booking\models\Booking
  * @var $item \app\modules\item\models\Item
  */
 app\modules\booking\assets\BookingViewsAsset::register($this);
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <br/><br/>
 <section id="booking">

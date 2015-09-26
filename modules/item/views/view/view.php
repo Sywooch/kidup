@@ -4,18 +4,21 @@ use app\modules\item\widgets\ItemCard;
 use app\widgets\Map;
 use yii\helpers\Url;
 use app\modules\item\widgets\Gallery;
-
+use app\modules\review\widgets\ReviewScore;
+use app\modules\user\widgets\UserImage;
+use \yii\widgets\ListView;
+use Carbon\Carbon;
 /**
  * @var yii\web\View $this
  * @var array $images
  * @var string $bookingForm
  * @var app\modules\item\models\Item $model
  * @var app\modules\item\models\Location $location
- * @var bool $show_modalk
+ * @var bool $show_modal
  * @var \yii\data\ActiveDataProvider $reviewDataProvider
+ * @var \app\modules\item\models\Item[] $related_items
  */
 
-$this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$app->name;
 
 \app\assets\FontAwesomeAsset::register($this);
 \yii\jui\JuiAsset::register($this);
@@ -23,6 +26,9 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 \app\modules\item\assets\ViewAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \yii\widgets\PjaxAsset::register($this);
+
+$this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
 
@@ -34,7 +40,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <div class="row main-info">
                         <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
-                                <?= \app\modules\user\widgets\UserImage::widget(
+                                <?= UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
                                         'width' => '80px',
@@ -54,7 +60,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 <?= $model->location->city . ", " . $model->location->country0->name ?>
                             </div>
                             <div class="item-reviews">
-                                <?= \app\modules\review\widgets\ReviewScore::widget(['user_id' => $model->owner_id]); ?>
+                                <?= ReviewScore::widget(['user_id' => $model->owner_id]); ?>
                             </div>
                             <div class="item-category">
                                 <?= Yii::t('categories_and_features', $model->category->parent->name) . " - " .
@@ -99,7 +105,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= \Carbon\Carbon::createFromTimestamp($model->created_at)->formatLocalized('%d %B %Y'); ?>
+                                                    <?= Carbon::createFromTimestamp($model->created_at)->formatLocalized('%d %B %Y'); ?>
                                                 </b>
                                             </td>
                                         </tr>
@@ -185,7 +191,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
                     <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
 
-                    <?= \yii\widgets\ListView::widget([
+                    <?= ListView::widget([
                         'dataProvider' => $reviewDataProvider,
                         'itemView' => 'item_review',
                         'itemOptions' => ['tag' => 'span'],

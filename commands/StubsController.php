@@ -58,7 +58,9 @@ TPL;
         }
         $stubs = '';
         foreach ($components as $name => $classes) {
-            $classes = implode('|', array_unique($classes));
+            if(!isset($classes['class'])) continue;
+
+            $classes =  $classes['class'];
             $stubs .= "\n * @property {$classes} \$$name";
         }
         $content = str_replace('{stubs}', $stubs, $this->getTemplate());

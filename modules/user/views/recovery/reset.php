@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = ucfirst(\Yii::t('title', 'reset your password')) . ' - ' . Yii::$app->name;
-$this->params['breadcrumbs'][] = $this->title;
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <section class="section container">
 

@@ -2,13 +2,17 @@
 use Carbon\Carbon;
 use yii\helpers\Html;
 
-/*
- * @var yii\web\View $this
+/**
+ * @var app\components\extended\View $this
  * @var app\modules\booking\models\Booking $booking
  * @var app\modules\item\models\Item $item
  * @var app\modules\user\models\Profile $profile
+ * @var string $declineLink
+ * @var string $acceptLink
+ * @var string $timeLeft
  */
 $this->title = \Yii::t('title', 'Respond to booking request') . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 
 <section class="section" id="checkout">

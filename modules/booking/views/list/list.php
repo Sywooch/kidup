@@ -3,6 +3,12 @@ use app\modules\booking\models\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
+/**
+ * @var app\components\extended\View $this
+ * @var \yii\data\ActiveDataProvider $provider
+ */
+$this->assetPackage = \app\assets\Package::BOOKING;
+
 ?>
 
 <div class="row">

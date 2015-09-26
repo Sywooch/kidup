@@ -1,6 +1,9 @@
 <?php
 namespace app\components\extended;
 
+use app\assets\Package;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -20,6 +23,14 @@ class View extends \yii\web\View
 
     private $webpackCssFiles = [];
     private $webpackJsFiles = [];
+
+    public function init()
+    {
+        if ($this->assetPackage === false) {
+            $this->assetPackage = Package::OTHER;
+        }
+        return parent::init();
+    }
 
     public function endPage($ajaxMode = false)
     {
@@ -41,7 +52,6 @@ class View extends \yii\web\View
     {
         $lines = [];
         $cssFiles = [];
-        $jsFiles = [];
         if (!empty($this->metaTags)) {
             $lines[] = implode("\n", $this->metaTags);
         }
@@ -61,11 +71,8 @@ class View extends \yii\web\View
             $lines[] = Html::script(implode("\n", $this->js[self::POS_HEAD]), ['type' => 'text/javascript']);
         }
 
-        if ($this->assetPackage !== false) {
-            $this->webpackCssFiles = array_keys($cssFiles);
-        } else {
-            $lines[] = implode("\n", $this->webpackCssFiles);
-        }
+        $this->webpackCssFiles = array_keys($cssFiles);
+        $lines = ArrayHelper::merge($this->processPackageFiles('css'), $lines);
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
@@ -136,49 +143,79 @@ class View extends \yii\web\View
             }
         }
 
-        if (YII_ENV == 'dev') {
-            if ($this->assetPackage !== false) {
-                $files = [
-                    'js' => array_keys($this->webpackJsFiles),
-                    'css' => ($this->webpackCssFiles),
-                ];
+        $this->webpackJsFiles = array_keys($this->webpackJsFiles);
 
-                $commonAssets = Json::decode(file_get_contents(Yii::$aliases['@app'] . '/web/packages/common/common.json'));
+        $lines = ArrayHelper::merge($this->processPackageFiles('js'), $lines);
 
-                foreach ($files['js'] as $i => &$js) {
-                    $js = str_replace('/vagrant/', './', $js);
-                    if (strpos($js, 'http') === 0) {
-                        unset($files['js'][$i]);
-                        $lines[] = $this->webpackJsFiles[$js];
-                    }
-                    if (in_array($js, $commonAssets['js'])) {
-                        unset($files['js'][$i]);
+        return empty($lines) ? '' : implode("\n", $lines);
+    }
+
+    protected function processPackageFiles($type)
+    {
+        $lines = [];
+        $commonPath = 'common/common.json';
+        $packagePath = $this->assetPackage . '/' . $this->assetPackage . '.json';
+
+        $adapter = new \League\Flysystem\Adapter\Local(Yii::$aliases['@app'] . '/web/packages/');
+        $filesystem = new Filesystem($adapter);
+        if (!$filesystem->has($packagePath)) {
+            $filesystem->write($packagePath, Json::encode(['css' => [], 'js' => []]));
+        }
+        if (!$filesystem->has($commonPath)) {
+            $filesystem->write($commonPath, Json::encode(['css' => [], 'js' => []]));
+        }
+        $commonAssets = Json::decode($filesystem->read($commonPath));
+        $packageAssets = Json::decode($filesystem->read($packagePath));
+        $packageChange = false;
+
+        if($type == 'js'){
+            foreach ($this->webpackJsFiles as $i => &$js) {
+                $js = str_replace('/vagrant/', './', $js);
+                if (strpos($js, 'http') === 0) {
+                    unset($this->webpackJsFiles[$i]);
+                    $lines[] = Html::jsFile($js);
+                } elseif (in_array($js, $commonAssets['js'])) {
+                    unset($this->webpackJsFiles[$i]);
+                } else {
+                    $packageChange = true;
+                    if(!in_array($js, $packageAssets['js'])){
+                        $packageAssets['js'][] = $js;
                     }
                 }
-
-                foreach ($files['css'] as $i => &$css) {
-                    $css = str_replace('/vagrant/', './', $css);
-                    if (strpos($css, 'http') === 0) {
-                        unset($files['css'][$i]);
-                        $lines[] = $this->webpackCssFiles[$css];
-                    }
-                    if (in_array($css, $commonAssets['css'])) {
-                        unset($files['css'][$i]);
-                    }
-                }
-
-                $files = [
-                    'js' => array_values($files['js']),
-                    'css' => array_values($files['css']),
-                ];
-
-                file_put_contents(Yii::$aliases['@app'] . '/web/packages/' . $this->assetPackage . '/' . $this->assetPackage . '.json',
-                    Json::encode($files));
-            } else {
-                $lines[] = implode("\n", $this->jsFiles[self::POS_END]);
             }
         }
 
-        return empty($lines) ? '' : implode("\n", $lines);
+        if($type == 'css'){
+            foreach ($this->webpackCssFiles as $i => &$css) {
+                $css = str_replace('/vagrant/', './', $css);
+                if (strpos($css, 'http') === 0) {
+                    unset($this->webpackCssFiles[$i]);
+                    $lines[] = Html::cssFile($css);
+                } elseif (in_array($css, $commonAssets['css'])) {
+                    unset($this->webpackCssFiles[$i]);
+                } else {
+                    $packageChange = true;
+                    if(!in_array($css,$packageAssets['css'])){
+                        $packageAssets['css'][] = $css;
+                    }
+                }
+            }
+        }
+
+        if ($packageChange) {
+            $filesystem->update($packagePath, Json::encode($packageAssets));
+        }
+
+        if ($type == 'js') {
+            return ArrayHelper::merge($lines,[
+                Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.js"),
+                Html::jsFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.js"),
+            ]);
+        } else {
+            return ArrayHelper::merge($lines,[
+                Html::cssFile(Yii::$aliases['@web'] . "/packages/common/common.css"),
+                Html::cssFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.css"),
+            ]);
+        }
     }
 }

@@ -2,15 +2,19 @@
 use yii\widgets\Pjax;
 
 /**
+ * @var \app\components\extended\View $this
  * @var \app\modules\search\forms\Filter $model
  * @var \yii\data\ActiveDataProvider $results
  */
 
-$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
 \app\modules\search\assets\ItemSearchAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \app\assets\JQueryTextRangeAsset::register($this);
 \app\assets\FullModalAsset::register($this);
+
+$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
+
+$this->assetPackage = \app\assets\Package::SEARCH;
 ?>
 
 <?php Pjax::begin([

@@ -1,13 +1,15 @@
 <?php
 use yii\widgets\ListView;
 
-/*
+/**
  * @var yii\data\ActiveDataProvider $conversationDataProvider
- * @var yii\web\View $this
+ * @var app\components\extended\View $this
  */
 
 \app\modules\message\assets\MessageAsset::register($this);
+
 $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::MESSAGE;
 ?>
 
 <section class="section" id="inbox">
@@ -19,8 +21,9 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="hidden-xs">
-                                    <?= \app\modules\images\components\ImageHelper::image('kidup/graphics/notification.png',
-                                        ['w' => 55]) ?>
+                                    <?= app\modules\images\widgets\Image::widget([
+                                        'name' => 'kidup/graphics/notification.png',
+                                        'imageOptions' =>  ['w' => 55]]) ?>
                                 </div>
                                 <h4 class="title">
                                     <?= Yii::t("message", "Inbox") ?>

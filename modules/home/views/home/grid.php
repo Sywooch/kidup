@@ -1,10 +1,13 @@
 <?php
-/**
- * @property \app\modules\item\models\Item[] $items
- */
+
 use app\modules\images\components\ImageHelper;
 use app\modules\item\widgets\ItemCard;
 use yii\helpers\Url;
+
+/**
+ * @var app\components\extended\View $this
+ * @property \app\modules\item\models\Item[] $items
+ */
 
 $babyClothes = \Yii::t('categories_and_features', 'Baby Clothes');
 $baby = \Yii::t('categories_and_features', 'Baby Necessities');

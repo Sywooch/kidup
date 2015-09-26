@@ -62,6 +62,7 @@ $config = [
     ],
     'components' => $components,
     'params' => $params,
+
 ];
 
 if (YII_ENV == 'dev') {

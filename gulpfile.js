@@ -13,41 +13,76 @@ var filter = require('gulp-filter');
 var merge = require('gulp-merge');
 var remember = require('gulp-remember');
 var minifyCss = require('gulp-minify-css');
+var gulpif = require('gulp-if');
+var _ = require('lodash');
+var argv = require('yargs').argv;
 
 var DEST = './web/packages/';
 
-var packageNames = ['home', 'common'];
+var packageNames = [
+    'common',
+    'home',
+    'booking',
+    'item-view',
+    'item-create',
+    'email',
+    'message',
+    'pages',
+    'review',
+    'search',
+    'user-settings',
+    'user',
+    'other'
+];
 var packages = {};
 var pack;
 
 for (var i = 0; i < packageNames.length; i++) {
     pack = packageNames[i];
-    packages[pack] = require('./web/packages/' + pack + '/' + pack + '.json');
+    if (argv.packages) {
+        // packages param is given, only do required packages
+        var requiredPackages = argv.packages.split(",");
+        var found = false;
+        _.map(requiredPackages, function (rPack) {
+            if (pack == rPack) found = true;
+        });
+        if (!found) continue;
+    }
+    try {
+        packages[pack] = require('./web/packages/' + pack + '/' + pack + '.json');
+    } catch (error) {
+
+    }
 }
 
 var jsFiles = [];
 var cssFiles = [];
 
-for (var p in packages) {
-    pack = packages[p];
-    for (i = 0; i < pack.css.length; i++) {
-        cssFiles.push(pack.css[i]);
+_.map(packages, function (pack, p) {
+    if (_.isArray(pack.css)) {
+        _.map(pack.css, function (cssPack) {
+            cssFiles.push(cssPack);
+        });
     }
-    for (i = 0; i < pack.js.length; i++) {
-        jsFiles.push(pack.js[i]);
+    if (_.isArray(pack.js)) {
+        _.map(pack.js, function (jsPack) {
+            jsFiles.push(jsPack);
+        });
     }
-}
+});
 
 gulp.task('js', function () {
     var streams = [];
-    for (var p in packages) {
+    for (var p in packages) { // dont use map for this
         pack = packages[p];
+        if (pack.js.length == 0) return false;
         streams.push(gulp.src(pack.js)
             .pipe(cache('js' + p))
             .pipe(plumber())
             .pipe(remember('js' + p))
             // This will output the non-minified version
             .pipe(concat(p + '.js'))
+            .pipe(gulpif(argv.production, uglify()))
             .pipe(gulp.dest(DEST + p + "/")));
     }
     return merge.apply(this, streams);
@@ -55,8 +90,9 @@ gulp.task('js', function () {
 
 gulp.task('css', function () {
     var streams = [];
-    for (var p in packages) {
+    for (var p in packages) { // dont use map for this
         pack = packages[p];
+        if (pack.css.length == 0) continue;
         var lessFilter = filter('**/*.less', {restore: true});
         streams.push(gulp.src(pack.css)
             .pipe(cache('css' + p))
@@ -69,8 +105,10 @@ gulp.task('css', function () {
             .pipe(remember('css' + p))
             // This will output the non-minified version
             .pipe(concat(p + '.css'))
+            .pipe(gulpif(argv.production, minifyCss()))
             .pipe(gulp.dest(DEST + p + "/")));
     }
+
     return merge.apply(this, streams);
 });
 
@@ -98,41 +136,5 @@ gulp.task('browser-sync', function () {
     //});
 });
 
-
-gulp.task('build-js', function () {
-    var streams = [];
-    for (var p in packages) {
-        pack = packages[p];
-        streams.push(gulp.src(pack.js)
-            .pipe(plumber())
-            // This will output the non-minified version
-            .pipe(concat(p + '.js'))
-            .pipe(uglify())
-            .pipe(gulp.dest(DEST + p + "/")));
-    }
-    return merge.apply(this, streams);
-});
-
-gulp.task('build-css', function () {
-    var streams = [];
-    for (var p in packages) {
-        pack = packages[p];
-        var lessFilter = filter('**/*.less', {restore: true});
-        streams.push(gulp.src(pack.css)
-            .pipe(plumber())
-            .pipe(lessFilter)
-            .pipe(less({
-                paths: [path.join('.')]
-            }))
-            .pipe(lessFilter.restore)
-            // This will output the non-minified version
-            .pipe(concat(p + '.css'))
-            .pipe(minifyCss())
-            .pipe(gulp.dest(DEST + p + "/")));
-    }
-    return merge.apply(this, streams);
-});
-
 gulp.task('default', ['js', 'css', 'watch-js', 'browser-sync', 'watch-css', 'fonts']);
-
-gulp.task('build', ['build-js', 'build-css', 'fonts']);
+gulp.task('build', ['js', 'css', 'fonts']);
