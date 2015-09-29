@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
 use Yii;
 use yii\base\Model;

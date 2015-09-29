@@ -1,18 +1,18 @@
 <?php
 
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use \kartik\sidenav\SideNav;
 use kartik\icons\Icon;
 use \yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\forms\Edit $model
- * @var \app\modules\item\models\Item $item
+ * @var \item\forms\Edit $model
+ * @var \item\models\Item $item
  * @var array $pageParams
  * @var array $rightColumnParams
  */
-\app\modules\item\assets\CreateAsset::register($this);
+\item\assets\CreateAsset::register($this);
 $this->assetPackage = \app\assets\Package::ITEM_CREATE;
 ?>
 

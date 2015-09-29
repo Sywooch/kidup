@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */

@@ -1,13 +1,13 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\models\Item $model
+ * @var \item\models\Item $model
  */
 
-\app\modules\item\assets\ListAsset::register($this);
+\item\assets\ListAsset::register($this);
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 

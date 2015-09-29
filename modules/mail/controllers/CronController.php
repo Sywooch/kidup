@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\mail\controllers;
+namespace mail\controllers;
 
 use Yii;
 use yii\base\Model;

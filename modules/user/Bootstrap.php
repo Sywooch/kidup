@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user;
+namespace user;
 
 use yii\authclient\Collection;
 use yii\base\BootstrapInterface;
@@ -18,15 +18,15 @@ class Bootstrap implements BootstrapInterface
 {
     /** @var array Model's map */
     private $_modelMap = [
-        'User' => 'app\modules\user\models\User',
-        'Account' => 'app\modules\user\models\Account',
-        'Profile' => 'app\modules\user\models\Profile',
-        'RegistrationForm' => 'app\modules\user\models\RegistrationForm',
-        'ResendForm' => 'app\modules\user\models\ResendForm',
-        'LoginForm' => 'app\modules\user\models\LoginForm',
-        'SettingsForm' => 'app\modules\user\models\SettingsForm',
-        'RecoveryForm' => 'app\modules\user\models\RecoveryForm',
-        'UserSearch' => 'app\modules\user\models\UserSearch',
+        'User' => '\user\models\User',
+        'Account' => '\user\models\Account',
+        'Profile' => '\user\models\Profile',
+        'RegistrationForm' => '\user\models\RegistrationForm',
+        'ResendForm' => '\user\models\ResendForm',
+        'LoginForm' => '\user\models\LoginForm',
+        'SettingsForm' => '\user\models\SettingsForm',
+        'RecoveryForm' => '\user\models\RecoveryForm',
+        'UserSearch' => '\user\models\UserSearch',
     ];
 
     /** @inheritdoc */
@@ -36,7 +36,7 @@ class Bootstrap implements BootstrapInterface
         if ($app->hasModule('user') && ($module = $app->getModule('user')) instanceof Module) {
             $this->_modelMap = array_merge($this->_modelMap, $module->modelMap);
             foreach ($this->_modelMap as $name => $definition) {
-                $class = "app\\modules\\user\\models\\" . $name;
+                $class = "app\\modules\user\\models\\" . $name;
                 \Yii::$container->set($class, $definition);
                 $modelName = is_array($definition) ? $definition['class'] : $definition;
                 $module->modelMap[$name] = $modelName;
@@ -52,7 +52,7 @@ class Bootstrap implements BootstrapInterface
             ]);
 
             if ($app instanceof ConsoleApplication) {
-                $module->controllerNamespace = 'app\modules\user\commands';
+                $module->controllerNamespace = '\user\commands';
             } else {
                 \Yii::$container->set('yii\web\User', [
                     'enableAutoLogin' => true,
@@ -90,7 +90,7 @@ class Bootstrap implements BootstrapInterface
             $defaults = [
             ];
 
-            \Yii::$container->set('app\modules\user\Mailer', array_merge($defaults, $module->mailer));
+            \Yii::$container->set('\user\Mailer', array_merge($defaults, $module->mailer));
         }
 
     }

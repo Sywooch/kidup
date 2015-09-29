@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\message\assets;
+namespace message\assets;
 
 use yii\web\AssetBundle;
 

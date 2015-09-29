@@ -1,16 +1,15 @@
 <?php
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Url;
-use app\modules\user\widgets\UserImage;
-use \app\modules\review\widgets\ReviewScore;
+use \user\widgets\UserImage;
+use \review\widgets\ReviewScore;
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\models\Item $model
+ * @var \item\models\Item $model
  * @var string $rowClass
  */
 
-\app\modules\item\assets\ItemAsset::register($this);
+\item\assets\ItemAsset::register($this);
 
 ?>
 

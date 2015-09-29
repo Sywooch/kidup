@@ -1,19 +1,19 @@
 <?php
 use app\helpers\ViewHelper;
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 
 /**
  * @var \app\extended\web\View $this
  * @var array $images
- * @var app\modules\item\models\Item $model
- * @var \app\modules\item\models\Category $categories
- * @var app\modules\item\models\Location $location
- * @var \app\modules\home\forms\Search $searchModel
+ * @var \item\models\Item $model
+ * @var \item\models\Category $categories
+ * @var \item\models\Location $location
+ * @var \home\forms\Search $searchModel
  * @var bool $show_modal
  */
 $this->assetPackage = \app\assets\Package::HOME;
 $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff'));
-\app\modules\home\assets\HomeAsset::register($this);
+\home\assets\HomeAsset::register($this);
 ?>
 <div id="home">
     <div class="cover-home"

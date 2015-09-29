@@ -2,12 +2,7 @@
 
 namespace app\commands;
 
-use app\helpers\Event;
-use app\models\base\Item;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\ItemSimilarity;
-use app\modules\mail\models\MailMessage;
-use app\modules\review\models\Review;
+use review\models\Review;
 use Yii;
 use yii\console\Controller;
 

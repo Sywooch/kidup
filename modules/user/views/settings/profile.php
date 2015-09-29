@@ -1,13 +1,13 @@
 <?php
 
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use kartik\form\ActiveForm;
 use kartik\widgets\FileInput;
 
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var app\modules\user\models\Profile $profile
+ * @var \user\models\Profile $profile
  */
 
 ?>
@@ -23,9 +23,9 @@ use kartik\widgets\FileInput;
     'enableClientValidation' => false,
     'validateOnBlur' => false,
 ]); ?>
-<h4><?= Yii::t("user", "Profile") ?>
+<h4><?= Yii::t("user.settings.profile.header", "Profile") ?>
     <br>
-    <small><?= Yii::t("user", "How other people see you") ?></small>
+    <small><?= Yii::t("user.settings.profile.sub_header", "How other people see you") ?></small>
 </h4>
 <?= $form->field($model, 'first_name') ?>
 <?= $form->field($model, 'last_name') ?>
@@ -52,7 +52,7 @@ echo $form->field($model, 'img')->widget(FileInput::classname(), [
     'language' => \Yii::$app->session->get('lang')
 ]); ?>
 
-<?= \yii\helpers\Html::submitButton(Yii::t('user', 'Save'),
+<?= \yii\helpers\Html::submitButton(Yii::t('user.settings.profile.save_button', 'Save'),
     ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
 <br/><br/>
 

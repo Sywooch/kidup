@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\controllers;
+namespace user\controllers;
 
 use app\extended\web\Controller;
-use app\modules\item\models\Item;
-use app\modules\review\models\Review;
-use app\modules\user\Finder;
-use app\modules\user\models\Profile;
+use \item\models\Item;
+use \review\models\Review;
+use \user\Finder;
+use \user\models\Profile;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -23,7 +23,7 @@ use yii\web\NotFoundHttpException;
 /**
  * ProfileController shows users profiles.
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
@@ -76,7 +76,7 @@ class ProfileController extends Controller
     public function actionShow($id)
     {
         /**
-         * @var $profile \app\modules\user\models\Profile
+         * @var $profile \user\models\Profile
          */
         $profile = Profile::find()->where(['user_id' => $id])->one();
         if ($profile === null) {

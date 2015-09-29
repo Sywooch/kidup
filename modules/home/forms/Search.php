@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\home\forms;
+namespace home\forms;
 
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasCategory;
+use \item\models\Category;
+use \item\models\Item;
+use \item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;

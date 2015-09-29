@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace admin\controllers;
 
 use app\models\base\User;
-use app\modules\item\models\Item;
+use \item\models\Item;
 use Yii;
 
 class DefaultController extends Controller

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\item\models;
+namespace item\models;
 
 use app\components\Cache;
 use app\models\base\Currency;
-use app\modules\images\components\ImageHelper;
-use app\modules\user\models\User;
+use \images\components\ImageHelper;
+use \user\models\User;
 use Carbon\Carbon;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
@@ -204,13 +204,13 @@ class Item extends \app\models\base\Item
         $prices = $this->getPriceForPeriod($from, $to, $currency);
         $days = floor(($to - $from) / (60 * 60 * 24));
         if ($days <= 7) {
-            $period = \Yii::t('item', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
+            $period = \Yii::t('item.pricing_table.day_period', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
             $periodPrice = $this->price_day;
         } elseif ($days > 7 && $days <= 31) {
-            $period = \Yii::t('item', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
+            $period = \Yii::t('item.pricing_table.week_period', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
             $periodPrice = $this->price_week;
         } else {
-            $period = \Yii::t('item', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
+            $period = \Yii::t('item.pricing_table.month_period', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
             $periodPrice = $this->price_month;
         }
         return [
@@ -218,8 +218,8 @@ class Item extends \app\models\base\Item
                 $period . ' x ' . $currency->forex_name . ' ' . $periodPrice,
                 $currency->abbr . ' ' . $prices['price']
             ],
-            'fee' => [\Yii::t('item', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
-            'total' => [\Yii::t('item', 'Total'), $currency->abbr . ' ' . $prices['total']]
+            'fee' => [\Yii::t('item.pricing_table.service_fee', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
+            'total' => [\Yii::t('item.pricing_table.total', 'Total'), $currency->abbr . ' ' . $prices['total']]
         ];
     }
 

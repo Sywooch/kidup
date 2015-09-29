@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\review\models;
+namespace review\models;
 
 use app\helpers\Event;
-use app\modules\booking\models\Booking;
+use \booking\models\Booking;
 use Carbon\Carbon;
 use Yii;
 

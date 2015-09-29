@@ -1,7 +1,7 @@
 <?php
 use app\assets\FontAwesomeAsset;
 use app\components\Cache;
-use app\modules\images\components\ImageHelper;
+use images\components\ImageHelper;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 use \app\assets\AppAsset;
@@ -52,7 +52,7 @@ AppAsset::register($this);
     <!-- Load modals -->
     <?php
     echo Cache::html('layout_mobile-search-modal', function () {
-        return \app\modules\item\widgets\MenuSearchModal::widget();
+        return item\widgets\MenuSearchModal::widget();
     });
 
     echo Cache::html('layout_footer', function () {

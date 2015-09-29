@@ -6,7 +6,7 @@ use yii\widgets\Breadcrumbs;
 
 /* @var $this \app\extended\web\View */
 /* @var $content string */
-\app\modules\admin\assets\AdminThemeAsset::register($this);
+\admin\assets\AdminThemeAsset::register($this);
 \yii\web\JqueryAsset::register($this);
 $this->assetPackage = \app\assets\Package::ADMIN;
 ?>
@@ -81,7 +81,7 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <?= \app\modules\user\widgets\UserImage::widget([
+                    <?= \user\widgets\UserImage::widget([
                         'user_id' => \Yii::$app->user->id,
                         'width' => '40px'
                     ]) ?>

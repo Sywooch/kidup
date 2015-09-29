@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
 use app\models\base\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasCategory;
+use \item\models\Item;
+use \item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 
@@ -63,7 +63,7 @@ class Create extends Model
     public function save()
     {
         /**
-         * @var \app\modules\user\models\Profile $profile
+         * @var \user\models\Profile $profile
          */
         $profile = \Yii::$app->user->identity->profile;
 

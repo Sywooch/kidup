@@ -1,10 +1,7 @@
 <?php
 
-namespace app\modules\item;
+namespace item;
 
-use app\models\Booking;
-use app\modules\item\models\Rent;
-use app\modules\payment\models\Payin;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;

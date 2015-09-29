@@ -1,14 +1,14 @@
 <?php
-namespace app\modules\search\models;
+namespace search\models;
 
-use app\modules\item\models\Category;
+use \item\models\Category;
 use app\models\base\Item;
 use app\models\base\Language;
 use yii\web\BadRequestHttpException;
 
 /**
  * Class ItemSearch
- * @package app\modules\search\models
+ * @package \search\models
  * @author kevin91nl
  */
 class ItemSearch extends \app\models\base\ItemSearch

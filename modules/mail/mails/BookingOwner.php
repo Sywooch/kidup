@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\mail\mails;
+namespace mail\mails;
 
-use app\modules\booking\models\Booking;
-use app\modules\mail\models\Mailer;
+use \booking\models\Booking;
+use \mail\models\Mailer;
 use Carbon\Carbon;
 use Yii;
 use yii\helpers\Url;
@@ -11,7 +11,7 @@ class BookingOwner extends Mailer
 {
     /**
      * Owner booking request
-     * @param \app\modules\booking\models\Booking $data
+     * @param \booking\models\Booking $data
      * @return bool
      */
     public function request($booking)
@@ -44,7 +44,7 @@ class BookingOwner extends Mailer
 
     /**
      * Owner booking has been accepted by owner
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function confirmation($booking)
@@ -84,7 +84,7 @@ class BookingOwner extends Mailer
 
     /**
      * Owner booking has been cancelled by renter
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function cancel($booking)
@@ -113,7 +113,7 @@ class BookingOwner extends Mailer
 
     /**
      * Owner booking receipt
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function payout($booking)
@@ -141,7 +141,7 @@ class BookingOwner extends Mailer
 
     /**
      * Owner booking is about to start
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function start($booking)

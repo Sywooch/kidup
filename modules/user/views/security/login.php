@@ -5,11 +5,11 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var \app\extended\web\View $this
- * @var app\modules\user\models\LoginForm $model
- * @var app\modules\user\Module $module
+ * @var \user\forms\Login $model
+ * @var \user\Module $module
  */
 
-$this->title = ucfirst(\Yii::t('title', 'Log In')) . ' - ' . Yii::$app->name;
+$this->title = ucfirst(\Yii::t('user.login.title', 'Log In')) . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::USER;
 ?>
 
@@ -21,7 +21,7 @@ $this->assetPackage = \app\assets\Package::USER;
 
         <div class="col-md-4 col-md-offset-4 card col-sm-8 col-sm-offset-2">
             <h3>
-                <center><?= Yii::t('user', "Login to KidUp") ?></center>
+                <center><?= Yii::t('user.login.header', "Login to KidUp") ?></center>
             </h3>
             <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
                 'baseAuthUrl' => ['/user/security/auth'],
@@ -32,7 +32,8 @@ $this->assetPackage = \app\assets\Package::USER;
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
                     <?php $authAuthChoice->clientLink($client,
                         '<i class="fa fa-' . strtolower($client->getTitle()) . '-square"></i> ' .
-                        \Yii::t('user', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
+                        \Yii::t('user.login.login_with_social_account', 'Login with {socialNetwork}',
+                            ['socialNetwork' => $client->getTitle()])
                         , ['class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle())]) ?>
                     <br/><br/>
                 <?php endforeach; ?>
@@ -56,18 +57,19 @@ $this->assetPackage = \app\assets\Package::USER;
                     'class' => 'form-control',
                     'tabindex' => '2'
                 ]
-            ])->passwordInput()->label(Yii::t('user', 'Password') . ' (' . Html::a(Yii::t('user',
+            ])->passwordInput()->label(Yii::t('user.login.password',
+                    'Password') . ' (' . Html::a(Yii::t('user.login.forgot_password_link',
                     'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')') ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '4']) ?>
 
-            <?= Html::submitButton(Yii::t('user', 'Sign in'),
+            <?= Html::submitButton(Yii::t('user.login.sign_in_button', 'Sign in'),
                 ['class' => 'btn btn-danger btn-fill', 'tabindex' => '3']) ?>
 
             <?php ActiveForm::end(); ?>
             <hr/>
             <div class="text-center">
-                <?= Html::a(Yii::t('user', 'New to KidUp?'), ['/user/registration/register']) ?>
+                <?= Html::a(Yii::t('user.login.new_to_kidup_link', 'New to KidUp?'), ['/user/registration/register']) ?>
             </div>
             <br/>
         </div>

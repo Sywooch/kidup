@@ -1,12 +1,12 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use Carbon\Carbon;
 
 /**
  * @var \app\extended\web\View $this
  * @var array $invoice
  */
-app\modules\booking\assets\BookingViewsAsset::register($this);
+\booking\assets\BookingViewsAsset::register($this);
 $this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <section id="booking">

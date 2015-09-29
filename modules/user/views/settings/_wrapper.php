@@ -2,7 +2,7 @@
 /**
  * @var \app\extended\web\View $this
  */
-\app\modules\user\assets\SettingsAsset::register($this);
+\user\assets\SettingsAsset::register($this);
 $this->title = $title;
 $this->assetPackage = \app\assets\Package::USER_SETTINGS;
 ?>

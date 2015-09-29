@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\message\models;
+namespace message\models;
 
 use app\helpers\Event;
 use Carbon\Carbon;

@@ -1,7 +1,6 @@
 <?php
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
-use app\modules\message\models\Message;
+use \images\components\ImageHelper;
+use \message\models\Message;
 use yii\helpers\Url;
 
 /**
@@ -41,7 +40,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             <div class="collapse navbar-collapse">
                 <!--menu for larger then mobile-->
                 <ul class="nav navbar-nav navbar-left ">
-                    <?= \app\modules\item\widgets\MenuSearch::widget() ?>
+                    <?= \item\widgets\MenuSearch::widget() ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right ">
                     <?php if (\Yii::$app->user->isGuest): ?>
@@ -81,7 +80,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li class="dropdown profile hidden-xs">
                             <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown"
                                aria-expanded="true">
-                                <?= \app\modules\user\widgets\UserImage::widget([
+                                <?= \user\widgets\UserImage::widget([
                                     'user_id' => \Yii::$app->user->id,
                                     'width' => '40px'
                                 ])
@@ -169,7 +168,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
                         <?= \app\components\Cache::html('user_widget', function () {
-                            return \app\modules\user\widgets\UserImage::widget([
+                            return \user\widgets\UserImage::widget([
                                 'user_id' => \Yii::$app->user->id,
                                 'width' => '40px'
                             ]);
@@ -233,10 +232,10 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 if (\Yii::$app->user->isGuest) {
     if ($this->beginCache('layout.menu.widgets')) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return \app\modules\user\widgets\Login::widget();
+            return \user\widgets\Login::widget();
         });
         echo \app\components\Cache::html('widget_user_register_modal', function () {
-            return \app\modules\user\widgets\Register::widget();
+            return \user\widgets\Register::widget();
         });
         $this->endCache();
     }

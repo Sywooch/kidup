@@ -1,14 +1,14 @@
 <?php
-use app\modules\booking\models\Payin;
+use \booking\models\Payin;
 use Carbon\Carbon;
 use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var $booking \app\modules\booking\models\Booking
- * @var $item \app\modules\item\models\Item
+ * @var $booking \booking\models\Booking
+ * @var $item \item\models\Item
  */
-app\modules\booking\assets\BookingViewsAsset::register($this);
+\booking\assets\BookingViewsAsset::register($this);
 $this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 <br/><br/>

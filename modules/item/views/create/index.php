@@ -1,16 +1,16 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\forms\Create $model
+ * @var \item\forms\Create $model
  */
 
 \yii\web\JqueryAsset::register($this);
-\app\modules\item\assets\CreateAsset::register($this);
+\item\assets\CreateAsset::register($this);
 
 $this->assetPackage = \app\assets\Package::ITEM_CREATE;
 ?>

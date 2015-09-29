@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\mail\models;
+namespace mail\models;
 
 use Yii;
 use yii\helpers\Json;

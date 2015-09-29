@@ -1,26 +1,27 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
 use app\helpers\Event;
-use app\modules\mail\models\Token;
-use app\modules\user\Finder;
-use app\modules\user\models\User;
+use mail\models\Mailer;
+use \mail\models\Token;
+use \user\Finder;
+use \user\models\User;
 use yii\base\Model;
 
 /**
  * Model for collecting data on password recovery.
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  */
 class Recovery extends Model
 {
@@ -33,7 +34,7 @@ class Recovery extends Model
     /** @var User */
     protected $user;
 
-    /** @var \app\modules\user\Module */
+    /** @var \user\Module */
     protected $module;
 
     /** @var Finder */
@@ -55,8 +56,8 @@ class Recovery extends Model
     public function attributeLabels()
     {
         return [
-            'email' => \Yii::t('user', 'Email'),
-            'password' => \Yii::t('user', 'Password'),
+            'email' => \Yii::t('user.recovery.email', 'Email'),
+            'password' => \Yii::t('user.recovery.password', 'Password'),
         ];
     }
 
@@ -80,15 +81,12 @@ class Recovery extends Model
                 'email',
                 'exist',
                 'targetClass' => $this->module->modelMap['User'],
-                'message' => \Yii::t('user', 'There is no user with this email address')
+                'message' => \Yii::t('user.recovery.error_not_found', 'There is no user with this email address')
             ],
             [
                 'email',
                 function ($attribute) {
                     $this->user = $this->finder->findUserByEmail($this->email);
-                    if ($this->user !== null && $this->module->enableConfirmation && !$this->user->getIsConfirmed()) {
-                        $this->addError($attribute, \Yii::t('user', 'You need to confirm your email address'));
-                    }
                 }
             ],
             ['password', 'required'],
@@ -107,7 +105,8 @@ class Recovery extends Model
             $u = User::findOne($this->user->id);
             Event::trigger($u, User::EVENT_USER_REQUEST_RECOVERY);
             \Yii::$app->session->setFlash('info',
-                \Yii::t('user', 'An email has been sent with instructions for resetting your password'));
+                \Yii::t('user.recovery.email_has_been_sent_flash',
+                    'An email has been sent with instructions for resetting your password'));
             return true;
         }
 
@@ -127,11 +126,13 @@ class Recovery extends Model
         }
 
         if ($token->user->resetPassword($this->password)) {
-            \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your password has been changed successfully.'));
+            \Yii::$app->session->setFlash('success', \Yii::t('user.recovery.password_changed_successfully',
+                'Your password has been changed successfully.'));
             $token->delete();
         } else {
             \Yii::$app->session->setFlash('danger',
-                \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
+                \Yii::t('user.recovery.password_not_changed_error',
+                    'An error occurred and your password has not been changed. Please try again later.'));
         }
 
         return true;

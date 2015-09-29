@@ -5,15 +5,11 @@ namespace app\commands;
 use app\models\base\Category;
 use app\models\base\Feature;
 use app\models\base\FeatureValue;
-use app\modules\admin\models\I18nMessage;
-use app\modules\admin\models\I18nSource;
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 use Yii;
-use yii\console\Controller;
 use yii\console\Exception;
-use yii\helpers\Console;
 use yii\helpers\FileHelper;
-use yii\helpers\VarDumper;
-use yii\i18n\GettextPoFile;
 
 /**
  *

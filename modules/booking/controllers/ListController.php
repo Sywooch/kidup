@@ -1,11 +1,10 @@
 <?php
 
-namespace app\modules\booking\controllers;
+namespace booking\controllers;
 
-use app\components\Error;
 use app\extended\web\Controller;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\Item;
+use \booking\models\Booking;
+use \item\models\Item;
 use Carbon\Carbon;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;

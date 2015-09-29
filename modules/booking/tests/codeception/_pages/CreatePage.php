@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\booking\tests\codeception\_pages;
+namespace booking\tests\codeception\_pages;
 
 use yii\codeception\BasePage;
 

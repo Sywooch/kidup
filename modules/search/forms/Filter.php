@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\search\forms;
+namespace search\forms;
 
 use app\components\Cache;
 use app\models\base\CategoryHasFeature;
 use app\models\base\Feature;
 use app\models\base\ItemSearch;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\Location;
-use app\modules\search\models\IpLocation;
+use \item\models\Category;
+use \item\models\Item;
+use \item\models\Location;
+use \search\models\IpLocation;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\home\controllers;
+namespace home\controllers;
 
 use app\components\Cache;
 use app\extended\web\Controller;
-use app\modules\home\forms\Search;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
+use \home\forms\Search;
+use \item\models\Category;
+use \item\models\Item;
 use Yii;
 use yii\helpers\Json;
 
@@ -80,7 +80,7 @@ class HomeController extends Controller
     }
 
     public function actionChangeLanguage($lang){
-        $l = \app\modules\user\models\Language::findOne($lang);
+        $l = \user\models\Language::findOne($lang);
 
         if($l !== null){
             Yii::$app->session->remove('lang');

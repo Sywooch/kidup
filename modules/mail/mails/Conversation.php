@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\mail\mails;
+namespace mail\mails;
 
-use app\modules\mail\models\MailAccount;
-use app\modules\mail\models\Mailer;
+use \mail\models\MailAccount;
+use \mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 
@@ -10,10 +10,10 @@ class Conversation extends Mailer
 {
     /**
      * Reminder for unfinished item
-     * @param \app\modules\message\models\Message $message
+     * @param \message\models\Message $message
      * @return bool
      */
-    public function newMessage(\app\modules\message\models\Message $message)
+    public function newMessage(\message\models\Message $message)
     {
         // try and find the correct matching mail_account
         $mailAccount = MailAccount::find()->where([
@@ -27,7 +27,6 @@ class Conversation extends Mailer
         } else {
             $from = "info@kidup.dk";
         }
-
 
         return $this->sendMessage([
             'email' => $message->receiverUser->email,

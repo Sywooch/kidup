@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\mail\controllers;
+namespace mail\controllers;
 
 use app\helpers\Event;
 use app\extended\web\Controller;
-use app\modules\booking\models\Payin;
-use app\modules\mail\models\Mailer;
-use app\modules\mail\models\MailLog;
+use \booking\models\Payin;
+use \mail\models\Mailer;
+use \mail\models\MailLog;
 use Yii;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
@@ -59,16 +59,16 @@ class ViewController extends Controller
 //        Event::trigger($u, Message::EVENT_NEW_MESSAGE);
 //
 //        // about to start
-//        $u = \app\modules\booking\models\Booking::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, \app\modules\booking\models\Booking::EVENT_BOOKING_ALMOST_START);
+//        $u = \booking\models\Booking::find()->orderBy('id DESC')->one();
+//        Event::trigger($u, \booking\models\Booking::EVENT_BOOKING_ALMOST_START);
 //
 //        // confirmations, renter receipt
 //        $u = Payin::find()->orderBy('id DESC')->one();
 //        Event::trigger($u, Payin::EVENT_PAYIN_CONFIRMED);
 //        $m = (new MailMessage())->parseInbox();
 //
-//        $u = \app\modules\booking\models\Booking::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, \app\modules\booking\models\Booking::EVENT_REVIEWS_PUBLIC);
+//        $u = \booking\models\Booking::find()->orderBy('id DESC')->one();
+//        Event::trigger($u, \booking\models\Booking::EVENT_REVIEWS_PUBLIC);
         $u = Payin::find()->orderBy('id DESC')->one();
         Event::trigger($u, Payin::EVENT_FAILED);
     }

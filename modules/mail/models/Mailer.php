@@ -1,9 +1,9 @@
 <?php
-namespace app\modules\mail\models;
+namespace mail\models;
 
-use app\modules\mail\components\MailUrl;
-use app\modules\user\models\Profile;
-use app\modules\user\models\User;
+use \mail\components\MailUrl;
+use \user\models\Profile;
+use \user\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -48,7 +48,7 @@ class Mailer
 
     public static function send($type, $data)
     {
-        $mailerClassName = "app\\modules\\mail\\mails\\" . explode('.', $type)[0];
+        $mailerClassName = "app\\modules\mail\mails\\" . explode('.', $type)[0];
         $mailer = new $mailerClassName();
 
         return $mailer->{explode('.', $type)[1]}($data);

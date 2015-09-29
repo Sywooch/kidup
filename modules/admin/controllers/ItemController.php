@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace admin\controllers;
 
 use Yii;
 use app\models\base\Item;
-use app\modules\admin\models\search\Item as ItemSearch;
+use \admin\models\search\Item as ItemSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

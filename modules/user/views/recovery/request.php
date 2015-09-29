@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -15,10 +15,10 @@ use yii\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var app\modules\user\models\RecoveryForm $model
+ * @var \user\forms\Recovery $model
  */
 
-$this->title = ucfirst(\Yii::t('title', 'Recover your password')) . ' - ' . Yii::$app->name;
+$this->title = ucfirst(\Yii::t('user.recovery.title', 'Recover your password')) . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::USER;
 ?>
 <section class="section container">
@@ -27,9 +27,9 @@ $this->assetPackage = \app\assets\Package::USER;
         <br/><br/>
 
         <div class="col-md-4 col-md-offset-4 card">
-            <h4><?= \Yii::t('title', 'Recover your password') ?></h4>
+            <h4><?= \Yii::t('user.recovery.header', 'Recover your password') ?></h4>
             <small>
-                <?= Yii::t("user",
+                <?= Yii::t("user.recovery.help_text",
                     "Enter your email address below and click continue, and we'll send you a recovery link.") ?>
             </small>
             <br/><br/>
@@ -41,10 +41,11 @@ $this->assetPackage = \app\assets\Package::USER;
 
             <?= $form->field($model, 'email')->textInput([
                 'autofocus' => true,
-                'placeholder' => \Yii::t('user', 'Email')
+                'placeholder' => \Yii::t('user.attributes.email', 'Email')
             ])->label(false) ?>
 
-            <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-danger btn-block']) ?><br>
+            <?= Html::submitButton(Yii::t('user.recovery.continue_button', 'Continue'),
+                ['class' => 'btn btn-danger btn-block']) ?><br>
 
             <?php ActiveForm::end(); ?>
         </div>

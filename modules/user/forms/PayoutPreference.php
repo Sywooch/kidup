@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
 use app\helpers\Encrypter;
-use app\modules\user\models\Country;
-use app\modules\user\models\PayoutMethod;
+use \user\models\Country;
+use \user\models\PayoutMethod;
 use yii\base\Model;
 use yii\helpers\Json;
 
@@ -71,9 +71,9 @@ class PayoutPreference extends Model
     public function attributeLabels()
     {
         return [
-            'identifier_1_encrypted' => \Yii::t('user', 'Konto Number'),
-            'identifier_2_encrypted' => \Yii::t('user', 'Bank Number'),
-            'payee_name' => \Yii::t('user', 'Name'),
+            'identifier_1_encrypted' => \Yii::t('user.settings.payout_preferences.konto_number', 'Konto Number'),
+            'identifier_2_encrypted' => \Yii::t('user.settings.payout_preferences.bank_number', 'Bank Number'),
+            'payee_name' => \Yii::t('user.settings.settings.payout_method.bank_holder_name', 'Bank Holder Name'),
         ];
     }
 

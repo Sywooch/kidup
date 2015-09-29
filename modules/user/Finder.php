@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user;
+namespace user;
 
 use yii\base\Object;
 use yii\db\ActiveQuery;

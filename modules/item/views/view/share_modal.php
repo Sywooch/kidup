@@ -4,7 +4,7 @@ use \kartik\social\FacebookPlugin;
 
 /**
  * @var \app\extended\web\View $this
- * @var $model \app\modules\review\models\Review
+ * @var $model \review\models\Review
  */
 
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;

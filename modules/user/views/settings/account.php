@@ -1,16 +1,16 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
 use app\models\helpers\SelectData;
-use app\modules\user\models\Setting;
+use \user\models\Setting;
 use kartik\checkbox\CheckboxX;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
@@ -18,7 +18,7 @@ use kartik\widgets\Select2;
 /**
  * @var $this  yii\web\View
  * @var $form  yii\widgets\ActiveForm
- * @var $model app\modules\user\models\SettingsForm
+ * @var $model \user\forms\Settings
  */
 ?>
 
@@ -36,37 +36,39 @@ use kartik\widgets\Select2;
 ]); ?>
 <div class="row">
     <div class="col-md-12">
-        <h4><?= Yii::t("user", "User") ?>
+        <h4><?= Yii::t("user.settings.account.header", "User") ?>
             <br>
-            <small><?= Yii::t("user", "Your user settings") ?></small>
+            <small><?= Yii::t("user.settings.account.sub_header", "Your user settings") ?></small>
         </h4>
         <?= $form->field($model, 'email')->input(['class' => 'form-control']) ?>
 
         <?= $form->field($model, 'language')->widget(Select2::classname(), [
             'data' => SelectData::languages(),
-            'options' => ['placeholder' => \Yii::t('user', 'Select a language')],
+            'options' => ['placeholder' => \Yii::t('user.settings.account.select_language_placeholder', 'Select a language')],
             'pluginOptions' => [
                 'allowClear' => false
             ],
-        ])->label(\Yii::t('user', 'Language')); ?>
+        ])->label(\Yii::t('user.settings.account.language_label', 'Language')); ?>
 
         <?= $form->field($model, 'currency_id')->widget(Select2::classname(), [
             'data' => SelectData::currencies(),
             'options' => [
-                'placeholder' => \Yii::t('user', 'Select a currency'),
+                'placeholder' => \Yii::t('user.settings.account.select_country_placeholder', 'Select a currency'),
             ],
             'pluginOptions' => [
                 'allowClear' => false
             ],
-        ])->label(\Yii::t('user', 'Currency')); ?>
+        ])->label(\Yii::t('user.settings.account.currency', 'Currency')); ?>
         <div class="form-group field-profile-description">
-            <label class="control-label" for="profile-description"><?= Yii::t("user", "Phone number") ?></label>
+            <label class="control-label" for="profile-description">
+                <?= Yii::t("user.settings.account.phone_number", "Phone number") ?>
+            </label>
 
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'phone_country')->widget(Select2::classname(), [
                         'data' => SelectData::phoneCountries(),
-                        'options' => ['placeholder' => \Yii::t('user', 'Country code')],
+                        'options' => ['placeholder' => \Yii::t('user.settings.account.country_code_phone', 'Country code')],
                         'pluginOptions' => [
                             'allowClear' => false
                         ],
@@ -74,15 +76,15 @@ use kartik\widgets\Select2;
                 </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'phone_number')->label(false)->textInput([
-                        'placeholder' => \Yii::t('user', 'e.g. 01234567')
+                        'placeholder' => \Yii::t('user.settings.account.phone_number_placeholder', 'e.g. 26415315')
                     ]); ?>
                 </div>
             </div>
         </div>
         <h4>
-            <?= Yii::t("user", "Email settings") ?>
+            <?= Yii::t("user.settings.account.email_settings", "Email settings") ?>
             <br>
-            <small><?= \Yii::t('app', 'Notify me of the following:') ?></small>
+            <small><?= \Yii::t('user.settings.account.notify_me_of', 'Notify me of the following:') ?></small>
         </h4>
     </div>
     <div class="col-md-12">
@@ -105,7 +107,7 @@ use kartik\widgets\Select2;
                 </div>
             <?php } ?>
         </div>
-        <?= \yii\helpers\Html::submitButton(Yii::t('user', 'Save'),
+        <?= \yii\helpers\Html::submitButton(Yii::t('user.settings.account.save', 'Save'),
             ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
         <br/><br/>
 

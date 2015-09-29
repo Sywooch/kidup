@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\images\widgets;
+namespace images\widgets;
 
-use app\modules\images\components\ImageHelper;
-use app\modules\user\models\Profile;
+use \images\components\ImageHelper;
+use \user\models\Profile;
 use kartik\widgets\Widget;
 
 class Image extends Widget

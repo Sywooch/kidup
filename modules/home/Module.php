@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\home;
+namespace home;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\home\controllers';
+    public $controllerNamespace = '\home\controllers';
 
     public function init()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\message;
+namespace message;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\message\controllers';
+    public $controllerNamespace = '\message\controllers';
 
     public function init()
     {

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -23,23 +23,23 @@ use kartik\icons\Icon;
     ],
     'items' => [
         [
-            'label' => Icon::show('user') . Yii::t('user', 'Profile'),
+            'label' => Icon::show('user') . Yii::t('user.settings.menu.profile', 'Profile'),
             'url' => ['/user/settings/profile'] // use brackets instead of @web to let the menu automatically add active class
         ],
         [
-            'label' => Icon::show('lock') . Yii::t('user', 'Trust and Verification'),
+            'label' => Icon::show('lock') . Yii::t('user.settings.menu.verification', 'Trust and Verification'),
             'url' => ['/user/settings/verification']
         ],
         [
-            'label' => Icon::show('gears') . Yii::t('user', 'User Settings'),
+            'label' => Icon::show('gears') . Yii::t('user.settings.menu.settings', 'User Settings'),
             'url' => ['/user/settings/account']
         ],
         [
-            'label' => Icon::show('bank') . Yii::t('user', 'Payout Preferences'),
+            'label' => Icon::show('bank') . Yii::t('user.settings.menu.payout_preferences', 'Payout Preferences'),
             'url' => ['/user/settings/payout-preference']
         ],
         [
-            'label' => Icon::show('map-marker') . Yii::t('user', 'Billing Address'),
+            'label' => Icon::show('map-marker') . Yii::t('user.settings.menu.billing_address', 'Billing Address'),
             'url' => ['/user/settings/location']
         ],
     ],

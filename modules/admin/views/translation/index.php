@@ -1,7 +1,7 @@
 <?php
 /**
  * @var View $this
- * @var SourceMessageSearch $searchModel
+ * @var  $searchModel
  * @var ActiveDataProvider $dataProvider
  * @var array $tabContent
  */

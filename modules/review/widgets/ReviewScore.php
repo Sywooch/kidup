@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\review\widgets;
+namespace review\widgets;
 
 use app\components\Cache;
-use app\modules\review\models\Review;
+use \review\models\Review;
 use Yii;
 use yii\helpers\Html;
 class ReviewScore extends \yii\bootstrap\Widget

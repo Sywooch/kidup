@@ -6,9 +6,9 @@ use \yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\forms\Create $model
+ * @var \item\forms\Create $model
  */
-\app\modules\item\assets\CreateAsset::register($this);
+\item\assets\CreateAsset::register($this);
 
 $this->assetPackage = \app\assets\Package::ITEM_CREATE;
 

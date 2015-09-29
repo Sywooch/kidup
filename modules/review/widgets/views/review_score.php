@@ -1,6 +1,6 @@
 <?php
 
-\app\modules\review\assets\ReviewScoreAsset::register($this);
+\review\assets\ReviewScoreAsset::register($this);
 
 $output = "<div class='user-review-stars'>";
 

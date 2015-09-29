@@ -1,13 +1,13 @@
 <?php
-use app\modules\booking\models\Payout;
-use app\modules\images\components\ImageHelper;
+use \booking\models\Payout;
+use \images\components\ImageHelper;
 use Carbon\Carbon;
 
 /**
- * @var $booking \app\modules\booking\models\Booking
- * @var $item \app\modules\item\models\Item
+ * @var $booking \booking\models\Booking
+ * @var $item \item\models\Item
  */
-app\modules\booking\assets\BookingViewsAsset::register($this);
+\booking\assets\BookingViewsAsset::register($this);
 $this->assetPackage = \app\assets\Package::BOOKING;
 
 ?>

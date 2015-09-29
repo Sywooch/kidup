@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\booking\forms;
+namespace booking\forms;
 
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\BrainTree;
-use app\modules\booking\models\Payin;
+use \booking\models\Booking;
+use \booking\models\BrainTree;
+use \booking\models\Payin;
 use yii\base\Model;
 
 class Confirm extends Model

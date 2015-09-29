@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\review;
+namespace review;
 
 use Yii;
 use yii\base\BootstrapInterface;

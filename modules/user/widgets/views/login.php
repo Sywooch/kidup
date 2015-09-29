@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var \app\modules\user\forms\LocationForm $model
+ * @var \user\forms\LocationForm $model
  * @var string $action
  */
 
@@ -28,13 +28,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-    <?= Html::submitButton(Yii::t('user', 'Sign in'), ['class' => 'btn btn-primary btn-block']) ?>
+    <?= Html::submitButton(Yii::t('user.login.sign_in_button', 'Sign in'), ['class' => 'btn btn-primary btn-block']) ?>
 
     <?php ActiveForm::end(); ?>
 
 <?php else: ?>
 
-    <?= Html::a(Yii::t('user', 'Logout'), ['/user/security/logout'],
+    <?= Html::a(Yii::t('user.login.logout_link', 'Logout'), ['/user/security/logout'],
         ['class' => 'btn btn-danger btn-block', 'data-method' => 'post']) ?>
 
 <?php endif ?>

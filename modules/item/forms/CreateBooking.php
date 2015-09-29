@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
 use app\models\base\Currency;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\Item;
+use \booking\models\Booking;
+use \item\models\Item;
 use Carbon\Carbon;
 use yii\base\Model;
 use yii\helpers\Json;

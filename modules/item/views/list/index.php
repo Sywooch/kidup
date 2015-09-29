@@ -8,7 +8,7 @@ use yii\helpers\Url;
  * @var \app\extended\web\View $this
  */
 
-\app\modules\item\assets\ListAsset::register($this);
+\item\assets\ListAsset::register($this);
 
 $this->title = ucfirst(\Yii::t('item.list.title', 'Your Items')) . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;

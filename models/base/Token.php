@@ -2,6 +2,7 @@
 
 namespace app\models\base;
 
+use user\models\User;
 use Yii;
 
 /**
@@ -12,7 +13,7 @@ use Yii;
  * @property integer $type
  * @property integer $created_at
  *
- * @property \app\models\base\User $user
+ * @property User $user
  */
 class Token extends \yii\db\ActiveRecord
 {
@@ -54,6 +55,6 @@ class Token extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

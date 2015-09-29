@@ -1,7 +1,7 @@
 <?php
-namespace app\modules\mail\mails;
+namespace mail\mails;
 
-use app\modules\mail\models\Mailer;
+use \mail\models\Mailer;
 use Carbon\Carbon;
 use Yii;
 use yii\helpers\Url;
@@ -10,7 +10,7 @@ class Review extends Mailer
 {
     /**
      * Requested to make a review
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function request($data)
@@ -40,7 +40,7 @@ class Review extends Mailer
 
     /**
      * Reviews aare published
-     * @param \app\modules\booking\models\Booking $booking
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function published($data)
@@ -70,8 +70,8 @@ class Review extends Mailer
 
     /**
      * Reminder
-     * @param \app\modules\booking\models\Booking $booking
-     * @param \app\modules\user\models\User $user
+     * @param \booking\models\Booking $booking
+     * @param \user\models\User $user
      * @return bool
      */
     public function reminder($data)

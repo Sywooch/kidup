@@ -3,7 +3,6 @@
 namespace app\commands;
 
 use app\jobs\SlackJob;
-use app\modules\admin\jobs\TestJob;
 use Yii;
 use yii\console\Controller;
 

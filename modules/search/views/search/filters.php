@@ -1,12 +1,12 @@
 <?php
 use yii\bootstrap\ActiveForm;
-use \app\modules\item\widgets\GoogleAutoComplete;
+use \item\widgets\GoogleAutoComplete;
 use kartik\typeahead\Typeahead;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
 /**
- * @var \app\modules\search\forms\Filter $model
+ * @var \search\forms\Filter $model
  * @var bool $mobile
  */
 

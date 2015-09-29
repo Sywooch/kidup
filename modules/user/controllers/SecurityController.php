@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\models/>
+ * (c)  project <http://github.com/app\models/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\controllers;
+namespace user\controllers;
 
 use app\extended\web\Controller;
-use app\modules\user\Finder;
-use app\modules\user\forms\Login;
-use app\modules\user\models\Account;
-use app\modules\user\models\User;
+use \user\Finder;
+use \user\forms\Login;
+use \user\models\Account;
+use \user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 /**
  * Controller that manages user authentication process.
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */

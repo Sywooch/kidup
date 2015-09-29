@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\user\tests;
+namespace user\tests;
 
-use app\modules\user\forms\Login;
-use app\modules\user\tests\codeception\_support\FixtureHelper;
+use \user\forms\Login;
+use \user\tests\codeception\_support\FixtureHelper;
 use Codeception\Specify;
 use yii\codeception\TestCase;
 
@@ -18,10 +18,6 @@ class LoginFormTest extends TestCase
      */
     protected $form;
 
-    public function fixtures()
-    {
-        return FixtureHelper::fixtures();
-    }
 
     public function testLogin()
     {

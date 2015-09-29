@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\item\controllers;
+namespace item\controllers;
 
 use app\extended\web\Controller;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\Item;
+use \booking\models\Booking;
+use \item\models\Item;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

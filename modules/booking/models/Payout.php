@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
 use app\helpers\Event;
-use app\modules\user\models\PayoutMethod;
+use \user\models\PayoutMethod;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;

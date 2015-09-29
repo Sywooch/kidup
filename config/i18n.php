@@ -43,7 +43,6 @@ return [
         '/tests',
         '/_old',
     ],
-
     // 'php' output format is for saving messages to php files.
 //    'format' => 'php',
 //    // Root directory containing message translations.
@@ -63,9 +62,9 @@ return [
     // Connection component to use. Optional.
     'db' => 'db',
     // Custom source message table. Optional.
-     'sourceMessageTable' => 'i18n_source',
+    'sourceMessageTable' => 'i18n_source',
     // Custom name for translation message table. Optional.
-     'messageTable' => 'i18n_message',
+    'messageTable' => 'i18n_message',
 
     /*
     // 'po' output format is for saving messages to gettext po files.

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \app\modules\item\forms\Edit $model
+ * @var \item\forms\Edit $model
  * @var \yii\widgets\ActiveForm $form
  */
 ?>
@@ -13,7 +13,7 @@
     <hr>
 
     <div class="form-group">
-        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item", "Category") ?></label>
+        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item.create.basics.category", "Category") ?></label>
         <br>
         <?= $model->item->category->parent->name; ?> - <?= $model->item->category->name; ?>
         <?= \yii\helpers\Html::a(\Yii::t('item.create.basics.change_category_link', '(change)'), '#', ['id' => 'showCategoryChange']) ?>

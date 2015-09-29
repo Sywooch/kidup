@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\admin\forms;
+namespace admin\forms;
 
-use app\modules\admin\models\I18nMessage;
-use app\modules\admin\models\I18nSource;
+use \admin\models\I18nMessage;
+use \admin\models\I18nSource;
 use DeepCopy\DeepCopy;
 use Yii;
 use yii\base\Model;

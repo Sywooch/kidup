@@ -1,7 +1,7 @@
 <?php
-namespace app\modules\mail\mails;
+namespace mail\mails;
 
-use app\modules\mail\models\Mailer;
+use \mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 
@@ -9,7 +9,7 @@ class Item extends Mailer
 {
     /**
      * Reminder for unfinished item
-     * @param \app\modules\item\models\Item $item
+     * @param \item\models\Item $item
      * @return bool
      */
     public function unfinishedReminder($item)

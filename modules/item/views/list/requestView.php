@@ -1,14 +1,14 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
  */
-\app\modules\item\assets\ListAsset::register($this);
+\item\assets\ListAsset::register($this);
 
-$item = \app\modules\item\models\Item::findOne($model->item_id);
+$item = \item\models\Item::findOne($model->item_id);
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 

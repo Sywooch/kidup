@@ -1,6 +1,5 @@
 <?php
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use Carbon\Carbon;
 use kartik\rating\StarRating;
 use yii\bootstrap\ActiveForm;
@@ -8,8 +7,8 @@ use yii\helpers\Html;
 
 /**
  * @var $this \app\extended\web\View
- * @var $booking \app\modules\booking\models\Booking
- * @var $item \app\modules\item\models\Item
+ * @var $booking \booking\models\Booking
+ * @var $item \item\models\Item
  */
 $this->assetPackage = \app\assets\Package::REVIEW;
 ?>
@@ -30,7 +29,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
             <div class="col-md-3 col-md-offset-1">
                 <?= ImageHelper::img($item->getImageName(0), ['q' => 90, 'w' => 600]) ?>
                 <div style="margin-top:-25px">
-                    <?= \app\modules\user\widgets\UserImage::widget([
+                    <?= \user\widgets\UserImage::widget([
                         'user_id' => $item->owner_id,
                         'width' => '50px',
                     ]) ?>

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\images;
+namespace images;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\images\controllers';
+    public $controllerNamespace = '\images\controllers';
 
     public function init()
     {

@@ -1,13 +1,12 @@
 <?php
-namespace app\modules\review\controllers;
+namespace review\controllers;
 
 use app\extended\web\Controller;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\Item;
-use app\modules\review\forms\Create;
-use app\modules\review\forms\OwnerReview;
-use app\modules\review\forms\RenterReview;
-use app\modules\review\models\Review;
+use \booking\models\Booking;
+use \item\models\Item;
+use \review\forms\OwnerReview;
+use \review\forms\RenterReview;
+use \review\models\Review;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;

@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
 
-\app\modules\item\assets\MenuSearchAsset::register($this);
+\item\assets\MenuSearchAsset::register($this);
 ?>
 
 <?php $form = ActiveForm::begin([

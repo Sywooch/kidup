@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\mail\models;
+namespace mail\models;
 
-use app\modules\user\models\User;
+use \user\models\User;
 use Carbon\Carbon;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

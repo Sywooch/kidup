@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\booking\controllers;
+namespace booking\controllers;
 
 use app\extended\web\Controller;
-use app\modules\booking\models\Booking;
+use \booking\models\Booking;
 use kartik\mpdf\Pdf;
 use yii\helpers\Json;
 use yii\web\ForbiddenHttpException;

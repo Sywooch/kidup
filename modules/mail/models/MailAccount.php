@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\mail\models;
+namespace mail\models;
 
-use app\modules\message\models\Conversation;
+use \message\models\Conversation;
 use Yii;
 
 /**

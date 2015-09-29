@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\booking\controllers;
+namespace booking\controllers;
 
 use app\extended\web\Controller;
-use app\modules\booking\forms\Confirm;
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\Payin;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Item;
-use app\modules\user\models\PayoutMethod;
+use \booking\forms\Confirm;
+use \booking\models\Booking;
+use \booking\models\Payin;
+use \images\components\ImageHelper;
+use \item\models\Item;
+use \user\models\PayoutMethod;
 use Carbon\Carbon;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
@@ -40,7 +40,7 @@ class DefaultController extends Controller
     public function actionConfirm($id)
     {
         /**
-         * @var \app\modules\booking\models\Booking $booking
+         * @var \booking\models\Booking $booking
          */
         $booking = $this->find($id);
 
@@ -120,7 +120,7 @@ class DefaultController extends Controller
 
         if ($booking->request_expires_at < time()) {
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking', 'This booking had no response for more then 48 hours, so is removed.'));
+                \Yii::t('booking.request_no_respondse_removed_flash', 'This booking had no response for more then 48 hours, so is removed.'));
             return $this->goHome();
         }
 

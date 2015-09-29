@@ -3,11 +3,11 @@ use yii\widgets\Pjax;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\search\forms\Filter $model
+ * @var \search\forms\Filter $model
  * @var \yii\data\ActiveDataProvider $results
  */
 
-\app\modules\search\assets\ItemSearchAsset::register($this);
+\search\assets\ItemSearchAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \app\assets\JQueryTextRangeAsset::register($this);
 \app\assets\FullModalAsset::register($this);

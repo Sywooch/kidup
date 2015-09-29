@@ -3,11 +3,11 @@ use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use \app\modules\item\widgets\GoogleAutoComplete;
+use item\widgets\GoogleAutoComplete;
 use \kartik\typeahead\Typeahead;
 
 /**
- * @var \app\modules\search\forms\Filter $model
+ * @var \search\forms\Filter $model
  */
 \app\assets\FullModalAsset::register($this);
 

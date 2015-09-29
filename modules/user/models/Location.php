@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
 use Carbon\Carbon;
 

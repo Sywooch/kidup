@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\home\assets;
+namespace home\assets;
 
 use app\assets\AngularAsset;
 use app\assets\AppAsset;

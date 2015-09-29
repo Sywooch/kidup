@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\message\models;
+namespace message\models;
 
 use app\models\base\Profile;
-use app\modules\booking\models\Booking;
-use app\modules\mail\models\MailAccount;
+use \booking\models\Booking;
+use \mail\models\MailAccount;
 use Carbon\Carbon;
 use Yii;
 use yii\helpers\Json;

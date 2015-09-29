@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\mail\jobs\user;
+namespace mail\jobs\user;
 
 use app\extended\job\Job;
 use app\models\base\MailAccount;
-use app\modules\mail\models\Mailer;
-use app\modules\mail\models\Token;
-use app\modules\user\models\User;
+use \mail\models\Mailer;
+use \mail\models\Token;
+use \user\models\User;
 use yii\helpers\Url;
 
 class RecoveryEmailJob extends Job{

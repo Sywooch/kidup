@@ -2,11 +2,11 @@
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
 use app\models\helpers\SelectData;
-use \app\modules\item\widgets\GoogleAutoComplete;
+use \item\widgets\GoogleAutoComplete;
 
 /**
  * @var \yii\web\View $this
- * @var \app\modules\item\forms\LocationForm $model
+ * @var \item\forms\LocationForm $model
  * @var integer $itemId
  */
 ?>
@@ -36,7 +36,7 @@ $form = \yii\bootstrap\ActiveForm::begin([
 
 <div class="row">
     <div class="col-xs-7">
-        <?= $form->field($model, 'street')->widget(\app\modules\item\widgets\GoogleAutoComplete::className(), [
+        <?= $form->field($model, 'street')->widget(\item\widgets\GoogleAutoComplete::className(), [
             'options' => [
                 'class' => 'location-input form-control',
                 'autocompleteName' => 'item-create'

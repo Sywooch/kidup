@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
 use app\helpers\Event;
-use app\modules\message\models\Conversation;
+use \message\models\Conversation;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -183,7 +183,7 @@ class Booking extends \app\models\base\Booking
         }
 
         if ($message == '' || $message == null) {
-            $message = \Yii::t('booking', 'This is an automated message from KidUp.');
+            $message = \Yii::t('booking.create.automated_new_message', 'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
         }
 
         return $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);

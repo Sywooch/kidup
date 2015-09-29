@@ -1,12 +1,12 @@
 <?php
-namespace app\modules\user\models;
+namespace user\models;
 
-use app\modules\images\components\ImageManager;
+use \images\components\ImageManager;
 use yii\authclient\clients\Facebook;
 
 /**
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  *
  */
 class SocialAccount extends \app\models\base\SocialAccount

@@ -1,8 +1,8 @@
 <?php
 namespace app\extended\web;
 
-use app\modules\search\models\IpLocation;
-use app\modules\user\models\Profile;
+use search\models\IpLocation;
+use user\models\Profile;
 use Yii;
 
 class Controller extends \yii\web\Controller

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace admin\controllers;
 
 use app\models\base\Language;
-use app\modules\admin\forms\Translate;
-use app\modules\admin\models\I18nMessage;
-use app\modules\admin\models\I18nSource;
-use app\modules\admin\models\search\I18nMessageSearch;
+use \admin\forms\Translate;
+use \admin\models\I18nMessage;
+use \admin\models\I18nSource;
+use \admin\models\search\I18nMessageSearch;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Html;

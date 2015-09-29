@@ -1,19 +1,19 @@
 <?php
 
-namespace app\modules\item\controllers;
+namespace item\controllers;
 
 use app\extended\web\Controller;
-use app\modules\booking\models\Booking;
-use app\modules\images\components\ImageHelper;
-use app\modules\images\components\ImageManager;
-use app\modules\item\forms\Create;
-use app\modules\item\forms\Edit;
-use app\modules\item\forms\LocationForm;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasMedia;
-use app\modules\item\models\Media;
-use app\modules\search\models\ItemSearch;
+use \booking\models\Booking;
+use \images\components\ImageHelper;
+use \images\components\ImageManager;
+use \item\forms\Create;
+use \item\forms\Edit;
+use \item\forms\LocationForm;
+use \item\models\Category;
+use \item\models\Item;
+use \item\models\ItemHasMedia;
+use \item\models\Media;
+use \search\models\ItemSearch;
 use Carbon\Carbon;
 use Yii;
 use yii\filters\AccessControl;

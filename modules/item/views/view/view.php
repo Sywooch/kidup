@@ -1,11 +1,11 @@
 <?php
 
-use app\modules\item\widgets\ItemCard;
+use \item\widgets\ItemCard;
 use app\widgets\Map;
 use yii\helpers\Url;
-use app\modules\item\widgets\Gallery;
-use app\modules\review\widgets\ReviewScore;
-use app\modules\user\widgets\UserImage;
+use \item\widgets\Gallery;
+use \review\widgets\ReviewScore;
+use \user\widgets\UserImage;
 use \yii\widgets\ListView;
 use Carbon\Carbon;
 
@@ -13,18 +13,18 @@ use Carbon\Carbon;
  * @var yii\web\View $this
  * @var array $images
  * @var string $bookingForm
- * @var app\modules\item\models\Item $model
- * @var app\modules\item\models\Location $location
+ * @var \item\models\Item $model
+ * @var \item\models\Location $location
  * @var bool $show_modal
  * @var \yii\data\ActiveDataProvider $reviewDataProvider
- * @var \app\modules\item\models\Item[] $related_items
+ * @var \item\models\Item[] $related_items
  */
 
 
 \app\assets\FontAwesomeAsset::register($this);
 \yii\jui\JuiAsset::register($this);
 \dosamigos\gallery\GalleryAsset::register($this);
-\app\modules\item\assets\ViewAsset::register($this);
+\item\assets\ViewAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \yii\widgets\PjaxAsset::register($this);
 

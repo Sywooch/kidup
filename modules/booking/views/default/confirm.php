@@ -2,21 +2,21 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use app\modules\booking\models\BrainTree;
-use \app\modules\booking\models\Payin;
-use \app\modules\images\components\ImageHelper;
-use app\modules\review\widgets\ReviewScore;
+use \booking\models\BrainTree;
+use \booking\models\Payin;
+use \images\components\ImageHelper;
+use \review\widgets\ReviewScore;
 
 /**
  * @var \app\extended\web\View $this
- * @var app\modules\booking\models\Booking $booking
- * @var \app\modules\booking\forms\Confirm $model
- * @var \app\modules\item\models\Item $item
- * @var \app\modules\user\models\Profile $profile
+ * @var \booking\models\Booking $booking
+ * @var \booking\forms\Confirm $model
+ * @var \item\models\Item $item
+ * @var \user\models\Profile $profile
  * @var array $tableData
  */
 
-\app\modules\booking\assets\ConfirmAsset::register($this);
+\booking\assets\ConfirmAsset::register($this);
 \yii\web\JqueryAsset::register($this);
 
 $this->title = \Yii::t('booking.confirm.page_title', 'Confirm Your Booking') . ' - ' . Yii::$app->name;
@@ -206,7 +206,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             <?= $profile->first_name ?>
                         </b>
                         <?= ReviewScore::widget(['user_id' => $profile->user_id]) ?>
-                        <?= \Yii::t('booking', 'Member since {0}', [
+                        <?= \Yii::t('booking.confirm.member_since', 'Member since {0}', [
                             Carbon\Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized('%b %y')
                         ]) ?>
                     </div>
@@ -254,7 +254,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <h3><?= Yii::t("booking", "Review and book") ?></h3>
+                    <h3><?= Yii::t("booking.confirm.review_and_book_header", "Review and book") ?></h3>
 
                     <div class="row">
                         <div class="col-md-7">

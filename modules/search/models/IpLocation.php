@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\search\models;
+namespace search\models;
 
 use Yii;
 use yii\helpers\Json;

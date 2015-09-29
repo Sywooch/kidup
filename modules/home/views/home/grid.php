@@ -1,13 +1,13 @@
 <?php
 
-use app\modules\images\components\ImageHelper;
-use app\modules\item\widgets\ItemCard;
+use \images\components\ImageHelper;
+use \item\widgets\ItemCard;
 use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
- * @var \app\modules\item\models\Category[] $categories
- * @property \app\modules\item\models\Item[] $items
+ * @var \item\models\Category[] $categories
+ * @property \item\models\Item[] $items
  */
 
 $babyClothes = $categories['Baby Clothes']->getTranslatedName();

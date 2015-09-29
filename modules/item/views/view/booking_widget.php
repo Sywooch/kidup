@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /**
  * @var \app\extended\web\View $this
  * @var false|string $redirect
- * @var \app\modules\item\forms\CreateBooking $model
+ * @var \item\forms\CreateBooking $model
  */
 
 \yii\jui\JuiAsset::register($this);

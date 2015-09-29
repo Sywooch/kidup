@@ -7,7 +7,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var \app\modules\admin\forms\Translate $model
+ * @var \admin\forms\Translate $model
  */
 ?>
 

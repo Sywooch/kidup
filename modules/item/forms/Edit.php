@@ -1,17 +1,14 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
 use app\models\base\FeatureValue;
 use app\models\base\ItemHasFeature;
 use app\models\base\ItemHasFeatureSingular;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasCategory;
+use \item\models\Category;
+use \item\models\Item;
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "category".

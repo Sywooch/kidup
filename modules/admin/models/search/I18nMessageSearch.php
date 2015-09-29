@@ -1,9 +1,9 @@
 <?php
-namespace app\modules\admin\models\search;
+namespace admin\models\search;
 use Yii;
 use yii\data\ActiveDataProvider;
-use \app\modules\admin\models\I18nMessage;
-use \app\modules\admin\models\I18nSource;
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 
 class I18nMessageSearch extends I18nMessage
 {

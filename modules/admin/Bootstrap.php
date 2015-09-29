@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin;
+namespace admin;
 
 use Yii;
 use yii\base\BootstrapInterface;

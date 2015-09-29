@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
-use app\modules\user\models\Profile;
-use app\modules\user\models\Setting;
-use app\modules\user\models\User;
-use app\modules\user\Module;
+use \user\models\Profile;
+use \user\models\Setting;
+use \user\models\User;
+use \user\Module;
 use yii\base\Model;
 
 /**
@@ -109,7 +109,7 @@ class Settings extends Model
     public function attributeLabels()
     {
         return [
-            'email' => \Yii::t('user', 'Email'),
+            'email' => \Yii::t('user.attributes.email', 'Email'),
         ];
     }
 

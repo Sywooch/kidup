@@ -1,5 +1,5 @@
 <?php
-use app\modules\booking\models\Booking;
+use \booking\models\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
@@ -56,14 +56,14 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                 [
                     'label' => \Yii::t('booking.list.label_options', 'Options'),
                     'value' => function ($model, $key, $index, $widget) {
-                        if ($model->status == \app\modules\booking\models\Booking::AWAITING_PAYMENT) {
+                        if ($model->status == \booking\models\Booking::AWAITING_PAYMENT) {
                             $links = [
                                 Html::a(\Yii::t('booking.list.label_complete_payment_link', 'Complete payment'),
                                     ['/booking/' . $model->id . '/confirm']),
                             ];
                         } else {
                             /**
-                             * @var \app\modules\booking\models\Booking $model
+                             * @var \booking\models\Booking $model
                              */
                             $links = [];
 

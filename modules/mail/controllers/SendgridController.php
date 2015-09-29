@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\mail\controllers;
+namespace mail\controllers;
 
-use app\modules\mail\models\MailMessage;
+use \mail\models\MailMessage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

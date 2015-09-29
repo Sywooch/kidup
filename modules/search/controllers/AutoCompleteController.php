@@ -1,12 +1,8 @@
 <?php
-namespace app\modules\search\controllers;
+namespace search\controllers;
 
-use app\components\Cache;
 use app\extended\web\Controller;
-use app\modules\item\models\Category;
-use app\modules\search\models\ItemModel;
-use app\modules\search\models\ItemSearch;
-use app\modules\search\models\SearchModel;
+use \search\models\ItemSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;

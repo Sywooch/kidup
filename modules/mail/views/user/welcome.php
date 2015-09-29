@@ -1,5 +1,5 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 
 ?>
 
