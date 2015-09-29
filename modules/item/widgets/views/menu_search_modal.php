@@ -17,7 +17,7 @@ use \kartik\typeahead\Typeahead;
         'class' => 'modal modal-fullscreen force-fullscreen'
     ],
     'closeButton' => false,
-    'header' => "<b>".\Yii::t('home', 'KidUp Search')."</b>"
+    'header' => "<b>".\Yii::t("item.mobile_search.", 'KidUp Search')."</b>"
 ]);
 
 ?>
@@ -39,7 +39,7 @@ use \kartik\typeahead\Typeahead;
 
 <?= $form->field($model, 'query')->widget(Typeahead::className(), [
     'options' => [
-        'placeholder' => \Yii::t('home', 'What do you like to get your child?')
+        'placeholder' => \Yii::t("item.mobile_search.placeholder", 'What do you like to get your child?')
     ],
     'pluginOptions' => ['highlight' => true, 'hint' => true],
     'dataset' => [
@@ -52,7 +52,8 @@ use \kartik\typeahead\Typeahead;
             'limit' => 5,
             'display' => 'text',
             'templates' => [
-                'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t("item.mobile_search.no_results",
+                        "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
                 'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
             ]
         ]
@@ -70,7 +71,7 @@ use \kartik\typeahead\Typeahead;
     'name' => 'autoCompleteLocationMobileWidget'
 ]); ?>
 
-<?= Html::submitButton(Yii::t('home', 'Search'), [
+<?= Html::submitButton(Yii::t("item.mobile_search.search_button", 'Search'), [
     'class' => 'btn btn-danger btn-fill btn-block',
     'onclick' => 'submitMenuSearchModalForm()'
 ]) ?>

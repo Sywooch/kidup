@@ -80,11 +80,13 @@ class CreateBooking extends Model
                     ':status' => Booking::ACCEPTED
                 ])->count();
             if ($overlapping > 0) {
-                $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
+                $this->addError('dateFrom', \Yii::t('item.create_booking.error.already_booked',
+                    'A booking already exists in this period'));
                 return false;
             }
             if ($this->to <= $this->from) {
-                $this->addError('dateFrom', \Yii::t('item', 'The start date should be larger then the end date'));
+                $this->addError('dateFrom', \Yii::t('item.create_booking.error.start_date_larger_then_end_date',
+                    'The start date should be larger then the end date'));
                 return false;
             }
             return true;
@@ -140,7 +142,8 @@ class CreateBooking extends Model
         }
 
         if (\Yii::$app->user->isGuest) {
-            $this->addError('dateFrom', \Yii::t('item', 'You should be logged in to perform this action.'));
+            $this->addError('dateFrom', \Yii::t('item.create_booking.error.should_be_logged_in',
+                'You should be logged in to perform this action.'));
             return false;
         }
 

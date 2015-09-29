@@ -80,7 +80,8 @@ class CreateController extends Controller
             if ($locationForm->save()) {
                 return $this->redirect('@web/item/create/edit-photos?id='.$locationForm->item_id);
             }else{
-                Yii::$app->session->addFlash('warning', \Yii::t('item', "That address couldn't be found, is it valid?"));
+                Yii::$app->session->addFlash('item', \Yii::t('item.create.flash_address_not_found',
+                    "That address couldn't be found, is it valid?"));
                 return $this->redirect('@web/item/create/edit-location?id='.$locationForm->item_id);
             }
         }
@@ -192,7 +193,8 @@ class CreateController extends Controller
 
         $isValid = $i['model']->isScenarioValid('default');
         if (!$isValid) {
-            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
+            Yii::$app->session->addFlash('info', \Yii::t('item.create.flash_please_finish_steps',
+                'Please finish all required steps before publishing!'));
             return $this->redirect('@web/item/create/edit-basics?id=' . $id);
         }
         if($publish !== false){
@@ -382,13 +384,13 @@ class CreateController extends Controller
         }
 
         if ($bookingInFuture) {
-            \Yii::$app->session->addFlash('warning', \Yii::t('item',
+            \Yii::$app->session->addFlash('warning', \Yii::t('item.create.flash_active_booking_cannot_unpublish',
                 'A booking was made for this product. The product could not be unpublished.'));
             return $this->redirect(['/item/list']);
         } else {
             $item->is_available = 0;
             $item->save();
-            Yii::$app->session->addFlash('info', \Yii::t('item', 'The product has been made unavailable'));
+            Yii::$app->session->addFlash('info', \Yii::t('item.create.item_unavailable', 'The product has been made unavailable'));
             return $this->redirect('@web/item/create/edit-basics?id=' . $id);
         }
     }

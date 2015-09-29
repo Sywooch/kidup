@@ -18,8 +18,6 @@ use Yii;
 class ItemHasFeature extends \yii\db\ActiveRecord
 {
 
-
-
     /**
      * @inheritdoc
      */
@@ -36,9 +34,27 @@ class ItemHasFeature extends \yii\db\ActiveRecord
         return [
             [['feature_id', 'feature_value_id'], 'required'],
             [['feature_id', 'feature_value_id'], 'integer'],
-            [['feature_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeatureValue::className(), 'targetAttribute' => ['feature_value_id' => 'id']],
-            [['feature_id'], 'exist', 'skipOnError' => true, 'targetClass' => Feature::className(), 'targetAttribute' => ['feature_id' => 'id']],
-            [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']]
+            [
+                ['feature_value_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => FeatureValue::className(),
+                'targetAttribute' => ['feature_value_id' => 'id']
+            ],
+            [
+                ['feature_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Feature::className(),
+                'targetAttribute' => ['feature_id' => 'id']
+            ],
+            [
+                ['item_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Item::className(),
+                'targetAttribute' => ['item_id' => 'id']
+            ]
         ];
     }
 
@@ -77,8 +93,6 @@ class ItemHasFeature extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
-
-
 
 
 }

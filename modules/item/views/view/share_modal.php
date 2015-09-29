@@ -10,10 +10,11 @@ use \kartik\social\FacebookPlugin;
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 
 Modal::begin([
-    'header' => '<h3>' . \Yii::t('item', 'Yay! Your product is now online and ready to be rented out!') . '</h3>',
+    'header' => '<h3>' . \Yii::t('item.view.share_modal.text',
+            'Yay! Your product is now online and ready to be rented out!') . '</h3>',
     'id' => 'sharingModal'
 ]);
-echo \Yii::t('item',
+echo \Yii::t('item.view.share_modal.tip',
     'Tip: There is a 83% bigger chance to rent out the product within the first 14 days if you share it on Facebook!');
 echo "<div style='text-align:center;margin-top:20px;font-size:30px;'>";
 echo FacebookPlugin::widget([

@@ -2,6 +2,7 @@
 
 namespace app\models\base;
 
+use app\modules\item\models\Category;
 use app\modules\search\models\ItemSearch;
 use Yii;
 

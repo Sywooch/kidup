@@ -66,7 +66,7 @@ class Edit extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[$cat->id] = Yii::t('categories_and_features', $cat->parent->name) . ' - '. Yii::t('categories_and_features',$cat->name);
+            $this->categoryData[$cat->id] = $cat->parent->getTranslatedName() . ' - '. $cat->getTranslatedName();
         }
 
         return parent::__construct();
@@ -84,7 +84,7 @@ class Edit extends Model
                 'isEmpty' => function () {
                     return count($this->item->itemHasMedia) == 0;
                 },
-                'message' => \Yii::t('item', 'Please provide atleast one photo of your product')
+                'message' => \Yii::t('item.edit.should_have_one_photo', 'Please provide atleast one photo of your product')
             ]
         ];
     }

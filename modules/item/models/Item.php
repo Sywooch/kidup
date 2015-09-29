@@ -36,18 +36,17 @@ class Item extends \app\models\base\Item
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'price_day' => Yii::t('app', 'Price Day'),
-            'price_week' => Yii::t('app', 'Price Week'),
-            'price_month' => Yii::t('app', 'Price Month'),
-            'owner_id' => Yii::t('app', 'Owner ID'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'is_available' => Yii::t('app', 'Is Available'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'age_min' => Yii::t('app', 'Minimal age of use'),
-            'age_max' => Yii::t('app', 'Maximal age of use'),
+            'id' => Yii::t('item.attribute.id', 'ID'),
+            'name' => Yii::t('item.attribute.name', 'Name'),
+            'description' => Yii::t('item.attribute.description', 'Description'),
+            'price_day' => Yii::t('item.attribute.price_day', 'Price Day'),
+            'price_week' => Yii::t('item.attribute.price_week', 'Price Week'),
+            'price_month' => Yii::t('item.attribute.price_month', 'Price Month'),
+            'owner_id' => Yii::t('item.attribute.owner_id', 'Owner'),
+            'currency_id' => Yii::t('item.attribute.currency_id', 'Currency'),
+            'is_available' => Yii::t('item.attribute.is_available', 'Available to book'),
+            'created_at' => Yii::t('item.attribute.created_at', 'Created At'),
+            'category_id' => Yii::t('item.attribute.category_id', 'Category')
         ];
     }
 

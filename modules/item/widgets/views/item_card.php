@@ -26,7 +26,7 @@ use \app\modules\review\widgets\ReviewScore;
                         <?= $model->price_week ?>
                     </span>
                     <span class="time">
-                        <?= Yii::t("item", "/ week") ?>
+                        <?= Yii::t("item.card.per_week", "/ week") ?>
                     </span>
                 </div>
                 <div class="author">
@@ -42,9 +42,7 @@ use \app\modules\review\widgets\ReviewScore;
                 </h3>
 
                 <div class="category">
-                    <?php
-                    echo \Yii::t('categories_and_features', $model->category->name);
-                    ?>
+                    <?= $model->category->getTranslatedName() ?>
                 </div>
 
                 <div class="footer-divs">

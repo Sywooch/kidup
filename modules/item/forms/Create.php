@@ -51,7 +51,7 @@ class Create extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[Yii::t('categories_and_features', $cat->parent->name)][$cat->id] = Yii::t('categories_and_features',$cat->name);
+            $this->categoryData[$cat->parent->getTranslatedName()][$cat->id] = $cat->getTranslatedName();
         }
     }
 
@@ -84,7 +84,7 @@ class Create extends Model
 
         $c = Category::find()->where(['id' => $this->category])->count();
         if($c == null){
-            $this->addError('category', \Yii::t('item', 'Category is not valid'));
+            $this->addError('category', \Yii::t("item.create.error_category_invalid", 'Category is not valid'));
             return false;
         }
 

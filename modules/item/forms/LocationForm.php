@@ -43,7 +43,7 @@ class LocationForm extends Model
                 'street',
                 function ($attribute, $params) {
                     if (!preg_match('/ [0-9]+/', $this->street)) {
-                        $this->addError($attribute, \Yii::t('item', "Please add an address number."));
+                        $this->addError($attribute, \Yii::t('item.create.location.add_address_number', "Please add an address number."));
                     }
                 }
             ],
@@ -51,7 +51,7 @@ class LocationForm extends Model
                 'street',
                 function ($attribute, $params) {
                     if (!$this->validateAddress()) {
-                        $this->addError($attribute, \Yii::t('item', "Address couldnt be found."));
+                        $this->addError($attribute, \Yii::t('item.create.location.address_not_found', "Address couldnt be found."));
                     }
                 }
             ],
@@ -81,7 +81,7 @@ class LocationForm extends Model
          */
         $this->item = Item::find()->where(['id' => $this->item_id])->one();
         if ($this->item == null) {
-            throw new NotFoundHttpException('Item does not exist');
+            throw new NotFoundHttpException(\Yii::t('item.create.error.does_not_exist', 'Item does not exist'));
         }
         if (!$this->item->isOwner()) {
             throw new ForbiddenHttpException();

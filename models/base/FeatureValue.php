@@ -18,7 +18,6 @@ class FeatureValue extends \yii\db\ActiveRecord
 {
 
 
-
     /**
      * @inheritdoc
      */
@@ -36,7 +35,13 @@ class FeatureValue extends \yii\db\ActiveRecord
             [['feature_id', 'name'], 'required'],
             [['feature_id'], 'integer'],
             [['name'], 'string', 'max' => 45],
-            [['feature_id'], 'exist', 'skipOnError' => true, 'targetClass' => Feature::className(), 'targetAttribute' => ['feature_id' => 'id']]
+            [
+                ['feature_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Feature::className(),
+                'targetAttribute' => ['feature_id' => 'id']
+            ]
         ];
     }
 
@@ -68,7 +73,11 @@ class FeatureValue extends \yii\db\ActiveRecord
         return $this->hasMany(ItemHasFeature::className(), ['feature_values_id' => 'id']);
     }
 
-
-
-
+    public function getTranslatedName()
+    {
+        $lower = str_replace(" ", '_', strtolower($this->feature->name));
+        $val = str_replace(" ", '_', strtolower($this->name));
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_value_' . $val, $lower, [],
+            \Yii::$app->language);
+    }
 }

@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 \app\modules\item\assets\ListAsset::register($this);
 
-$this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name;
+$this->title = ucfirst(\Yii::t('item.list.title', 'Your Items')) . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <section class="section" id="rentals">
@@ -24,8 +24,8 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                 <div class="row">
                     <div class="col-sm-8">
                         <h3>
-                            <?= Yii::t("item", "Products") ?><br>
-                            <small><?= Yii::t("item",
+                            <?= Yii::t("item.list.header", "Products") ?><br>
+                            <small><?= Yii::t("item.list.sub_header",
                                     "Manage the products you'd like to share with other families") ?></small>
                         </h3>
                     </div>
@@ -33,7 +33,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         <a href="<?= Url::to('@web/item/create') ?>">
                             <button id="create-new-add" class="btn btn-danger btn-fill pull-right hidden-xs"
                                     style="margin-top:20px">
-                                <?= Yii::t("item", "Create New") ?>
+                                <?= Yii::t("item.list.button_create_new", "Create New") ?>
                             </button>
                         </a>
                     </div>
@@ -89,20 +89,20 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                             'encodeLabels' => false,
                             'items' => [
                                 [
-                                    'label' => Yii::t("item", "Pending Requests") .
+                                    'label' => Yii::t("item.list.pending_request", "Pending Requests") .
                                         ' <span class="badge badge-default">' . $requestProvider->count . '</span>',
                                     'content' => $this->blocks['pending'],
                                     'active' => true,
                                 ],
                                 [
                                     'content' => $this->blocks['published'],
-                                    'label' => Yii::t("item", "Published") .
+                                    'label' => Yii::t("item.list.published", "Published") .
                                         ' <span class="badge badge-default">' . $publishedProvider->count . '</span>',
                                     'active' => false,
                                 ],
                                 [
                                     'content' => $this->blocks['unpublished'],
-                                    'label' => Yii::t("item", "Unpublished") .
+                                    'label' => Yii::t("item.list.unpublished", "Unpublished") .
                                         ' <span class="badge badge-default">' . $unpublishedProvider->count . '</span>',
                                     'active' => false,
                                 ],

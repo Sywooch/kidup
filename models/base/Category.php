@@ -12,9 +12,8 @@ use Yii;
  * @property integer $parent_id
  * @property integer $itemCount
  *
- * @property Category $parent
- * @property Category[] $children
- * @property Category[] $categories
+ * @property \app\modules\item\models\Category $parent
+ * @property \app\modules\item\models\Category[] $children
  * @property CategoryTag[] $categoryTags
  * @property CategoryHasFeature[] $categoryHasFeatures
  * @property Feature[] $features
@@ -68,7 +67,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getParent()
     {
-        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+        return $this->hasOne(\app\modules\item\models\Category::className(), ['id' => 'parent_id']);
     }
 
     /**
@@ -76,7 +75,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getChildren()
     {
-        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
+        return $this->hasMany(\app\modules\item\models\Category::className(), ['parent_id' => 'id']);
     }
 
 

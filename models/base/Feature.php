@@ -117,7 +117,13 @@ class Feature extends \yii\db\ActiveRecord
         return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_feature_singular', ['feature_id' => 'id']);
     }
 
+    public function getTranslatedName(){
+        $lower = str_replace(" ", "", strtolower($this->name));
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_name', $lower, [], \Yii::$app->language);
+    }
 
-
-
+    public function getTranslatedDescription(){
+        $lower = str_replace(" ", "", strtolower($this->name));
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_description', $lower, [], \Yii::$app->language);
+    }
 }

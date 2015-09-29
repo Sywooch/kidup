@@ -36,7 +36,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         <?= $model->currency->forex_name ?> <?= $model->item->price_week ?>
                     </span>
                     <span class="pull-right period">
-                        <?= Yii::t("item", "per week") ?>
+                        <?= Yii::t("item.view.booking_widget.per_week", "per week") ?>
                     </span>
                 </h4>
             </div>
@@ -53,7 +53,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
         <div class="row">
             <div class="col-sm-6">
                 <div class="text">
-                    <?= Yii::t("item", "Starting at") ?>
+                    <?= Yii::t("item.view.booking_widget.starting_at", "Starting at") ?>
                 </div>
                 <?php
                 // pass available dates to javascript
@@ -68,7 +68,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         ],
                         'options' => [
                             'class' => 'form-control',
-                            'placeholder' => \Yii::t('item', 'dd-mm-yyyy')
+                            'placeholder' => 'dd-mm-yyyy'
                         ],
                         'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
                         'dateFormat' => 'dd-MM-yyyy',
@@ -78,7 +78,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
             </div>
             <div class="col-sm-6">
                 <div class="text">
-                    <?= Yii::t("item", "Ending at") ?>
+                    <?= Yii::t("item.view.booking_widget.ending_at", "Ending at") ?>
                 </div>
                 <?php
                 echo $form->field($model, 'dateTo',
@@ -92,7 +92,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         ],
                         'options' => [
                             'class' => 'form-control',
-                            'placeholder' => \Yii::t('item', 'dd-mm-yyyy')
+                            'placeholder' => 'dd-mm-yyyy'
                         ],
                         'dateFormat' => 'dd-MM-yyyy',
                         'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
@@ -133,7 +133,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                             </tr>
                         </table>
                     <?php endif; ?>
-                    <?= Html::submitButton(\Yii::t('item', 'Request to Book'),
+                    <?= Html::submitButton(\Yii::t("item.view.booking_widget.request_to_book_button", 'Request to Book'),
                         [
                             'class' => 'btn btn-danger btn-fill',
                             'style' => 'width:100%',

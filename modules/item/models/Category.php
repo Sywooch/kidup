@@ -10,8 +10,9 @@ use Yii;
  */
 class Category extends \app\models\base\Category
 {
-    public function getTranslatedName(){
+    public function getTranslatedName()
+    {
         $lower = str_replace(" ", "", strtolower($this->name));
-        return \Yii::t('item.category.main_.$lower',$lower);
+        return \Yii::$app->getI18n()->translate('item.category.main_' . $lower, $lower, [], \Yii::$app->language);
     }
 }

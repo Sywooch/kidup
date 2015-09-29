@@ -23,7 +23,7 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'query')->widget(Typeahead::className(), [
         'options' => [
-            'placeholder' => \Yii::t('home', 'What do you like to get your child?'),
+            'placeholder' => \Yii::t("item.menu_search.placeholder", 'What do you like to get your child?'),
             'class' => 'form-control',
             'disabled' => false,
             'id' => 'menu-search-autocomplete' // need to be unique
@@ -42,7 +42,8 @@ use yii\helpers\Html;
                 'limit' => 5,
                 'display' => 'text',
                 'templates' => [
-                    'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                    'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t("item.menu_search.no_results",
+                            "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
                     'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                 ]
             ]
@@ -51,7 +52,7 @@ use yii\helpers\Html;
 
 </div>
 
-<?= Html::submitButton(Yii::t("item", "Search"), ['class' => "btn btn-fill btn-danger"]) ?>
+<?= Html::submitButton(Yii::t("item.menu_search.search_button", "Search"), ['class' => "btn btn-fill btn-danger"]) ?>
 
 <?php ActiveForm::end() ?>
 
