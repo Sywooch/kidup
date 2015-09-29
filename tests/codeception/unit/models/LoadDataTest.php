@@ -2,7 +2,7 @@
 
 namespace tests\codeception\unit\models;
 
-use app\models\base\User;
+use user\models\base\User;
 use app\tests\codeception\_support\FixtureHelper;
 use app\tests\codeception\fixtures\UserFixture;
 use app\tests\codeception\fixtures\ProfileFixture;

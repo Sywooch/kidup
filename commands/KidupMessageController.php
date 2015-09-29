@@ -2,9 +2,9 @@
 
 namespace app\commands;
 
-use app\models\base\Category;
-use app\models\base\Feature;
-use app\models\base\FeatureValue;
+use item\models\base\Category;
+use item\models\base\Feature;
+use item\models\base\FeatureValue;
 use admin\models\I18nMessage;
 use admin\models\I18nSource;
 use Yii;

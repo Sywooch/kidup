@@ -3,7 +3,7 @@
 namespace item\models;
 
 use app\components\Cache;
-use app\models\base\Currency;
+use user\models\base\Currency;
 use \images\components\ImageHelper;
 use \user\models\User;
 use Carbon\Carbon;
@@ -16,7 +16,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "item".
  */
-class Item extends \app\models\base\Item
+class Item extends \item\models\base\Item
 {
     const EVENT_UNFINISHED_REMINDER = 'unfinished_reminder';
 

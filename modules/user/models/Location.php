@@ -4,7 +4,7 @@ namespace user\models;
 
 use Carbon\Carbon;
 
-class Location extends \app\models\base\Location
+class Location extends \item\models\base\Location
 {
     const TYPE_MAIN = 1;
 

@@ -63,7 +63,7 @@ $this->assetPackage = \app\assets\Package::USER;
                         ]); ?>
                     </div>
                     <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::classname(), [
-                        'data' => \app\models\helpers\SelectData::languages(),
+                        'data' => \app\helpers\SelectData::languages(),
                         'options' => ['placeholder' => \Yii::t('user.post_registration.select_language_propdown_plceholder',
                             'Select your preferred language')],
                         'pluginOptions' => [

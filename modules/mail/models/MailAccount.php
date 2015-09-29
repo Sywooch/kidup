@@ -8,7 +8,7 @@ use Yii;
 /**
  * This is the model class for table "mail_account".
  */
-class MailAccount extends \app\models\base\MailAccount
+class MailAccount extends base\MailAccount
 {
 
     public function createForConversation(Conversation $conversation)

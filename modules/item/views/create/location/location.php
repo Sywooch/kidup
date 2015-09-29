@@ -11,7 +11,7 @@
     <div class="col-md-8" style="padding:0">
         <?= $form->field($model,
             'location_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => \app\models\helpers\SelectData::userLocations(),
+            'data' => \app\helpers\SelectData::userLocations(),
             'options' => [
                 'placeholder' => \Yii::t('item.create.location.dropdown_placeholder', 'Select a location'),
                 'width' => '200px'

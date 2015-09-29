@@ -2,7 +2,7 @@
 
 namespace message\models;
 
-use app\models\base\Profile;
+use user\models\base\Profile;
 use \booking\models\Booking;
 use \mail\models\MailAccount;
 use Carbon\Carbon;
@@ -13,7 +13,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "conversation".
  */
-class Conversation extends \app\models\base\Conversation
+class Conversation extends base\Conversation
 {
     public function beforeSave($insert)
     {

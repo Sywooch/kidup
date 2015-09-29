@@ -5,7 +5,7 @@ namespace user\models;
 use Carbon\Carbon;
 use Yii;
 
-class PayoutMethod extends \app\models\base\PayoutMethod
+class PayoutMethod extends \booking\models\base\PayoutMethod
 {
     const TYPE_DK_KONTO = 'dk-konto';
 

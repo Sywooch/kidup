@@ -2,8 +2,8 @@
 namespace search\models;
 
 use \item\models\Category;
-use app\models\base\Item;
-use app\models\base\Language;
+use item\models\base\Item;
+use user\models\base\Language;
 use yii\web\BadRequestHttpException;
 
 /**
@@ -11,7 +11,7 @@ use yii\web\BadRequestHttpException;
  * @package \search\models
  * @author kevin91nl
  */
-class ItemSearch extends \app\models\base\ItemSearch
+class ItemSearch extends base\ItemSearch
 {
     const COMPONENT_MAIN_CATEGORY = 'main-cat';
     const COMPONENT_SUB_CATEGORY = 'sub-cat';
@@ -84,7 +84,7 @@ class ItemSearch extends \app\models\base\ItemSearch
      * @param string $component
      * @param int $componentId
      * @param string $text
-     * @param Language $language
+     * @param \user\models\base\Language $language
      */
     private function make($component, Category $category)
     {

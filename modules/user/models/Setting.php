@@ -7,7 +7,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
-class Setting extends \app\models\base\Setting
+class Setting extends base\Setting
 {
     const MAIL_BOOKING_REMINDER = 'rent_reminder';
     const MESSAGE_UPDATE = 'message_update';

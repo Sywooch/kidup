@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "location".
  */
-class Location extends \app\models\base\Location
+class Location extends base\Location
 {
 
     const TYPE_MAIN = 1;

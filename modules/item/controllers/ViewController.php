@@ -3,8 +3,8 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use app\models\base\Currency;
-use app\models\base\Review;
+use user\models\base\Currency;
+use review\models\base\Review;
 use \item\forms\CreateBooking;
 use \item\models\Item;
 use yii\filters\AccessControl;

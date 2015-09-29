@@ -2,7 +2,7 @@
 
 namespace admin\controllers;
 
-use app\models\base\Language;
+use user\models\base\Language;
 use \admin\forms\Translate;
 use \admin\models\I18nMessage;
 use \admin\models\I18nSource;

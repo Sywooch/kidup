@@ -18,7 +18,7 @@ use \mail\models\Token;
 use \user\Finder;
 use \user\forms\LocationForm;
 use \user\forms\Settings;
-use app\models\helpers\SelectData;
+use app\helpers\SelectData;
 use \user\models\Account;
 use \user\models\Profile;
 use \user\models\User;

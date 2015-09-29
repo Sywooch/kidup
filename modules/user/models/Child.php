@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "child".
  */
-class Child extends \app\models\base\Child
+class Child extends base\Child
 {
     public function behaviors()
     {

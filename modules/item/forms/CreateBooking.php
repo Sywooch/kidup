@@ -2,7 +2,7 @@
 
 namespace item\forms;
 
-use app\models\base\Currency;
+use user\models\base\Currency;
 use \booking\models\Booking;
 use \item\models\Item;
 use Carbon\Carbon;

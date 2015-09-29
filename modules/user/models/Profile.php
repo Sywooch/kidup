@@ -6,7 +6,7 @@ use \images\components\ImageHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class Profile extends \app\models\base\Profile
+class Profile extends base\Profile
 {
     public $img;
 

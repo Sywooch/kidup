@@ -7,7 +7,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "location".
  */
-class IpLocation extends \app\models\base\IpLocation
+class IpLocation extends \user\models\base\IpLocation
 {
     public static function get($ip)
     {

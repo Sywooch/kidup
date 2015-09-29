@@ -4,7 +4,7 @@ namespace app\tests\codeception\muffins;
 use app\modules\images\components\ImageHelper;
 use Faker\Factory as Faker;
 
-class Message extends \app\models\base\Message
+class Message extends \message\models\base\Message
 {
 
     public function definitions()

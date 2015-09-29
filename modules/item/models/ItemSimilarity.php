@@ -8,7 +8,7 @@ use yii\db\Query;
 /**
  * This is the base-model class for table "item_similarity".
  */
-class ItemSimilarity extends \app\models\base\ItemSimilarity
+class ItemSimilarity extends \item\models\base\ItemSimilarity
 {
     public $item;
 

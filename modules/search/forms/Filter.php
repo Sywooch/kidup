@@ -3,9 +3,9 @@
 namespace search\forms;
 
 use app\components\Cache;
-use app\models\base\CategoryHasFeature;
-use app\models\base\Feature;
-use app\models\base\ItemSearch;
+use item\models\base\CategoryHasFeature;
+use item\models\base\Feature;
+use search\models\base\ItemSearch;
 use \item\models\Category;
 use \item\models\Item;
 use \item\models\Location;

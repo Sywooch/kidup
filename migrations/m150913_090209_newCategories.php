@@ -1,11 +1,11 @@
 <?php
 
 use yii\db\Migration;
-use app\models\base\Category;
-use \app\models\base\FeatureValue;
-use \app\models\base\Feature;
+use item\models\base\Category;
+use item\models\base\FeatureValue;
+use item\models\base\Feature;
 use yii\helpers\ArrayHelper;
-use app\models\base\CategoryHasFeature;
+use item\models\base\CategoryHasFeature;
 
 class m150913_090209_newCategories extends Migration
 {
@@ -120,28 +120,28 @@ class m150913_090209_newCategories extends Migration
 
 
     private function transportExistingItems(){
-        $items = \app\models\base\Item::find()->all();
+        $items = \item\models\base\Item::find()->all();
         foreach ($items as $item) {
             $item->category_id = 1;
             $item->save();
 
-            $ihfs = new \app\models\base\ItemHasFeatureSingular();
+            $ihfs = new \item\models\base\ItemHasFeatureSingular();
             $ihfs->item_id = $item->id;
             $ihfs->feature_id = 8;
             $ihfs->save();
 
-            $ihfs = new \app\models\base\ItemHasFeatureSingular();
+            $ihfs = new \item\models\base\ItemHasFeatureSingular();
             $ihfs->item_id = $item->id;
             $ihfs->feature_id = 9;
             $ihfs->save();
 
-            $ihfs = new \app\models\base\ItemHasFeature();
+            $ihfs = new \item\models\base\ItemHasFeature();
             $ihfs->item_id = $item->id;
             $ihfs->feature_id = 4;
             $ihfs->feature_value_id = rand(31,32);
             $ihfs->save();
 
-            $ihfs = new \app\models\base\ItemHasFeature();
+            $ihfs = new \item\models\base\ItemHasFeature();
             $ihfs->item_id = $item->id;
             $ihfs->feature_id = 7;
             $ihfs->feature_value_id = 41;
@@ -150,7 +150,7 @@ class m150913_090209_newCategories extends Migration
     }
 
     private function newCategories(){
-        \app\models\base\FeatureValue::deleteAll();
+        \item\models\base\FeatureValue::deleteAll();
         Feature::deleteAll();
 
         $babySizes = new Feature();

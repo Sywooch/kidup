@@ -53,7 +53,7 @@ $form = ActiveForm::begin([
         <div id="refinePrice" class="panel-collapse collapse in">
             <div class="panel-body">
                 <?= $form->field($model,
-                    'priceUnit')->dropDownList(\app\models\helpers\SelectData::priceUnits())->label(false) ?>
+                    'priceUnit')->dropDownList(\app\helpers\SelectData::priceUnits())->label(false) ?>
                 <br/>
 
                 <div id="price-slider<?php echo $mobile == true ? '-mobile' : '' ?>"></div>

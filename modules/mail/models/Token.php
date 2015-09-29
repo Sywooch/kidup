@@ -17,7 +17,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
-class Token extends \app\models\base\Token
+class Token extends \user\models\base\Token
 {
     const TYPE_CONFIRMATION = 0;
     const TYPE_RECOVERY = 1;

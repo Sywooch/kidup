@@ -12,7 +12,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
-class Payin extends \app\models\base\Payin
+class Payin extends base\Payin
 {
     // Transaction Status
     const AUTHORIZATION_EXPIRED = 'authorization_expired';

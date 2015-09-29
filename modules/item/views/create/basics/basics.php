@@ -30,7 +30,7 @@
 <?php
 foreach ($model->item->category->nonSingularFeatures as $feature) {
     /**
-     * @var \app\models\base\Feature $feature
+     * @var \item\models\base\Feature $feature
      */
     $dropDownItems = [];
     foreach ($feature->featureValues as $f) {

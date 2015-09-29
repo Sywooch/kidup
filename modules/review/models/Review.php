@@ -10,7 +10,7 @@ use Yii;
 /**
  * This is the model class for table "review".
  */
-class Review extends \app\models\base\Review
+class Review extends base\Review
 {
     // the written reviews
     const TYPE_USER_PUBLIC = 'public_user';

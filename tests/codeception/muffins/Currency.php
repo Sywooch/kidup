@@ -4,7 +4,7 @@ namespace app\tests\codeception\muffins;
 use app\tests\codeception\_support\MuffinHelper;
 use Faker\Factory as Faker;
 
-class Currency extends \app\models\base\Currency
+class Currency extends \user\models\base\Currency
 {
 
     public function definitions()

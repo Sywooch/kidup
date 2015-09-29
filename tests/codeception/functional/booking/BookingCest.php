@@ -79,7 +79,7 @@ class BookingCest {
             'currency_id' => 1,
             'item_id' => $item->id
         ])->run();
-        $I->seeRecord(\app\models\base\Booking::class, [
+        $I->seeRecord(\booking\models\base\Booking::class, [
             'renter_id' => $renter->id,
             'item_id' => $item->id,
         ]);*/

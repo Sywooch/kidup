@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "mail_message".
  */
-class MailMessage extends \app\models\base\MailMessage
+class MailMessage extends base\MailMessage
 {
     public function behaviors()
     {

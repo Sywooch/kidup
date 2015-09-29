@@ -8,7 +8,7 @@ use Yii;
 /**
  * This is the model class for table "media".
  */
-class Media extends \app\models\base\Media
+class Media extends \item\models\base\Media
 {
     const TYPE_IMG = 'image';
     const LOC_LOCAL = 'local';

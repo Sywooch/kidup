@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "category".
  * @property string $translatedName
  */
-class Category extends \app\models\base\Category
+class Category extends \item\models\base\Category
 {
     public function getTranslatedName()
     {

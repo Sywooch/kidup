@@ -3,7 +3,7 @@
 namespace mail\jobs\user;
 
 use app\extended\job\Job;
-use app\models\base\MailAccount;
+use mail\models\base\MailAccount;
 use \mail\models\Mailer;
 use \mail\models\Token;
 use \user\models\User;

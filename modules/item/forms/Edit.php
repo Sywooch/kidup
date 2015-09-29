@@ -2,9 +2,9 @@
 
 namespace item\forms;
 
-use app\models\base\FeatureValue;
-use app\models\base\ItemHasFeature;
-use app\models\base\ItemHasFeatureSingular;
+use item\models\base\FeatureValue;
+use item\models\base\ItemHasFeature;
+use item\models\base\ItemHasFeatureSingular;
 use \item\models\Category;
 use \item\models\Item;
 use Yii;

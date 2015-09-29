@@ -37,7 +37,7 @@ use yii\web\IdentityInterface;
  *
  * @property \user\models\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
  */
-class User extends \app\models\base\User implements IdentityInterface
+class User extends base\User implements IdentityInterface
 {
     // events
     const EVENT_USER_CREATE_INIT = 'user_create_init';

@@ -9,7 +9,7 @@ use yii\authclient\clients\Facebook;
  * @property \user\Module $module
  *
  */
-class SocialAccount extends \app\models\base\SocialAccount
+class SocialAccount extends base\SocialAccount
 {
     public function fillUserDetails(User $user)
     {

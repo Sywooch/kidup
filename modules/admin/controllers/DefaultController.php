@@ -2,7 +2,7 @@
 
 namespace admin\controllers;
 
-use app\models\base\User;
+use user\models\base\User;
 use \item\models\Item;
 use Yii;
 

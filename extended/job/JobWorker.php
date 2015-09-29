@@ -2,7 +2,7 @@
 
 namespace app\extended\job;
 
-use app\models\base\JobQueue;
+use item\models\base\JobQueue;
 use yii\base\ErrorException;
 use yii\helpers\Json;
 

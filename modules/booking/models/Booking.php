@@ -16,7 +16,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "Booking".
  */
-class Booking extends \app\models\base\Booking
+class Booking extends base\Booking
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
     const PENDING = 'pending_owner';
@@ -129,7 +129,7 @@ class Booking extends \app\models\base\Booking
 
     public function getConversation()
     {
-        return $this->hasOne(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
+        return $this->hasOne(\message\models\base\Conversation::className(), ['booking_id' => 'id']);
     }
 
     public function getConversationId()
@@ -231,7 +231,7 @@ class Booking extends \app\models\base\Booking
      */
     public function getConversations()
     {
-        return $this->hasMany(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
+        return $this->hasMany(\message\models\base\Conversation::className(), ['booking_id' => 'id']);
     }
 
     public function behaviors()

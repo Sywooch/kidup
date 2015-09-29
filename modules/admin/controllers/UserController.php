@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use Yii;
-use app\models\base\User;
+use user\models\base\User;
 use \admin\models\search\User as UserSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -110,7 +110,7 @@ class UserController extends Controller
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return \user\models\base\User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
