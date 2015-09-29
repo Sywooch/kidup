@@ -6,12 +6,13 @@ use app\modules\images\components\ImageHelper;
  * @var \app\extended\web\View $this
  * @var array $images
  * @var app\modules\item\models\Item $model
+ * @var \app\modules\item\models\Category $categories
  * @var app\modules\item\models\Location $location
  * @var \app\modules\home\forms\Search $searchModel
  * @var bool $show_modal
  */
 $this->assetPackage = \app\assets\Package::HOME;
-$this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
+$this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff'));
 \app\modules\home\assets\HomeAsset::register($this);
 ?>
 <div id="home">
@@ -23,19 +24,19 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
             <div class="row ">
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
-                        <?= \Yii::t('home', 'Share'); ?>
+                        <?= \Yii::t("home.share", 'Share'); ?>
                         <strong id="typist-element"
-                                data-typist="<?= Yii::t("home", "a stroller,a toy,a bike") ?>"><?= \Yii::t('home',
+                                data-typist="<?= Yii::t("home.scrolling_header_share_items", "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item",
                                 'a trolley') ?></strong>
                         <br/>
-                        <?= \Yii::t('home', 'With a family near you') ?>
+                        <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
                     </h1>
                     <h4>
-                        <?= \Yii::t('home', 'KidUp is your online parent-to-parent marketplace.') ?>
+                        <?= \Yii::t("home.kidup_is_marketplace", 'KidUp is your online parent-to-parent marketplace.') ?>
                     </h4>
 
                     <div class="btn btn-default hidden-xs hidden-sm" id="how-it-works-btn">
-                        <?= Yii::t("home", "How it Works") ?>
+                        <?= Yii::t("home.subheader_how_it_works", "How it Works") ?>
                     </div>
                     <?php $this->registerJs("$('#how-it-works-btn').click(function() {
                         $('html, body').animate({
@@ -45,7 +46,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     <div class="row mobile-search visible-xs visible-sm">
                         <div class="col-xs-8 col-xs-offset-1">
                             <input class="form-control"
-                                   placeholder="<?= Yii::t("home", "What are you looking for?") ?>"
+                                   placeholder="<?= Yii::t("home.mobile_what_looking_for", "What are you looking for?") ?>"
                                    data-toggle="modal"
                                    data-target="#searchModal">
                         </div>
@@ -62,7 +63,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
     </div>
 
     <?= $this->render('search', [
-        'model' => $searchModel
+        'model' => $searchModel,
+        'defaultCategory' => $categories['Baby Toys']
     ]); ?>
 
     <?= $this->render('grid', [
@@ -80,30 +82,31 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
         <div class="container" id="how-it-works">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h2><?= \Yii::t('home', 'How to use KidUp?') ?></h2>
+                    <h2><?= \Yii::t("home.how_use_kidup", 'How to use KidUp?') ?></h2>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <?= ImageHelper::img('kidup/graphics/find.png', ['q' => 90, 'w' => 130],
+                    <?= ImageHelper::img('kidup/graphics/find.png',
+                        ['q' => 90, 'w' => 130],
                         ['class' => 'steps']) ?>
-                    <h4><?= \Yii::t('home', 'Seek and Find') ?></h4>
+                    <h4><?= \Yii::t("home.seek_and_find", 'Seek and Find') ?></h4>
 
-                    <p><?= \Yii::t('home',
+                    <p><?= \Yii::t("home.seek_and_find_text",
                         'With KidUp you can easily seek and find the products to help your family.') ?></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <?= ImageHelper::img('kidup/graphics/pickup.png', ['q' => 90, 'w' => 130],
                         ['class' => 'steps']) ?>
-                    <h4><?= \Yii::t('home', 'Meet and share') ?></h4>
+                    <h4><?= \Yii::t("home.meet_and_share", 'Meet and share') ?></h4>
 
-                    <p><?= \Yii::t('home',
+                    <p><?= \Yii::t("home.meet_and_share_text",
                             'Meet other families and share experiences related to the rented product.') ?></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <?= ImageHelper::img('kidup/graphics/review.png', ['q' => 90, 'w' => 130],
                         ['class' => 'steps']) ?>
-                    <h4><?= \Yii::t('home', 'Review and Help') ?></h4>
+                    <h4><?= \Yii::t("home.review_and_help", 'Review and Help') ?></h4>
 
-                    <p><?= \Yii::t('home',
+                    <p><?= \Yii::t("home.review_and_help_text",
                             'Review your experience, so other KidUppers can easily and swithfly find the right item.') ?></p>
                 </div>
             </div>
@@ -119,7 +122,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
-                            <h1><?= \Yii::t('home', 'Approved by Experts') ?></h1>
+                            <h1><?= \Yii::t("home.slider.approved_experts", 'Approved by Experts') ?></h1>
                         </div>
                     </div>
                 </div>
@@ -131,8 +134,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="container ">
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
-                            <h1><?= \Yii::t('home', 'You cannot have everything') ?></h1>
-                            <h4><?= \Yii::t('home',
+                            <h1><?= \Yii::t("home.slider.cannot_have_everything", 'You cannot have everything') ?></h1>
+                            <h4><?= \Yii::t("home.slider.rent_it_at_kidup",
                                     'But at KidUp you can rent it. Then together you can find out, if it\'s really truly something.') ?>
                             </h4>
                         </div>
@@ -146,8 +149,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                 <div class="container ">
                     <div class="row values">
                         <div class="col-xs-8 col-xs-offset-2 text-center">
-                            <h1><?= Yii::t("home", "Share the world") ?></h1>
-                            <h4><?= \Yii::t('home', 'Together we can teach our children to share and reuse.') ?>
+                            <h1><?= Yii::t("home.slider.share_the_world", "Share the world") ?></h1>
+                            <h4><?= \Yii::t("home.slider.share_the_world_text", 'Together we can teach our children to share and reuse.') ?>
                             </h4>
                         </div>
                     </div>
@@ -167,7 +170,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
 
                     <h3>
                         <b>
-                            <?= \Yii::t('home', 'We can help other families') ?>
+                            <?= \Yii::t("home.stories.header", 'We can help other families') ?>
                         </b>
                     </h3>
                     <h4>Sabine Clasen</h4>
@@ -175,10 +178,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Share Kid Stuff'));
                     <br>
 
                     <div style="font-size: 17px">
-                        <?= \Yii::t('home',
+                        <?= \Yii::t("home.stories.first_alinea",
                             'I am completely in love with the sharing-aspect and think it makes perfect sense to share things you aren\'t using at the moment.') ?>
                         <br><br>
-                        <?= \Yii::t('home',
+                        <?= \Yii::t("home.stories.second_alinea",
                             'With the money we made on Kidup with Vilhelm\'s unused equipment, we can take a summertrip to Legoland with the entire family.') ?>
                     </div>
                 </div>

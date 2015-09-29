@@ -101,9 +101,9 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         foreach ($cats as $cat) {
             $lower = str_replace(" ", '_', strtolower($cat['name']));
             if($cat['parent_id'] !== null){
-                $res['item.category.main_'.$lower][] = $cat['name'];
-            }else{
                 $res['item.category.sub_category_'.$lower][] = $cat['name'];
+            }else{
+                $res['item.category.main_'.$lower][] = $cat['name'];
             }
         }
 

@@ -220,4 +220,24 @@ class View extends \yii\web\View
             return ArrayHelper::merge($lines,$cssLines);
         }
     }
+
+    /**
+     * Reigsters js variables into the scope
+     * @param $array
+     */
+    public function registerJsVariables($array, $scope = 'window'){
+        $js = '';
+        foreach ($array as $varName => $value) {
+            $varName = $scope.".".$varName;
+            if(is_object($value) || is_array($value)){
+                $value = Json::encode($value);
+            }else{
+                $value = "'".$value."'";
+            }
+            $js .= <<<JS
+$varName = $value;
+JS;
+        }
+        $this->registerJs($js);
+    }
 }

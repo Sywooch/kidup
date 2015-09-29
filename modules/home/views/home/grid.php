@@ -6,15 +6,16 @@ use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
+ * @var \app\modules\item\models\Category[] $categories
  * @property \app\modules\item\models\Item[] $items
  */
 
-$babyClothes = \Yii::t('categories_and_features', 'Baby Clothes');
-$baby = \Yii::t('categories_and_features', 'Baby Necessities');
-$onTheRoad = \Yii::t('categories_and_features', 'On the Road');
-$toys = \Yii::t('categories_and_features', 'Toys');
-$toysOutside = \Yii::t('categories_and_features', 'Toys Outside');
-$furniture = \Yii::t('categories_and_features', "Children's Furniture");
+$babyClothes = $categories['Baby Clothes']->getTranslatedName();
+$baby = $categories['Baby Necessities']->getTranslatedName();
+$onTheRoad = $categories['On the Road']->getTranslatedName();
+$toys = $categories['Toys']->getTranslatedName();
+$toysOutside = $categories['Toys Outside']->getTranslatedName();
+$furniture = $categories["Children's Furniture"]->getTranslatedName();
 ?>
 
 <!--Area for all categories-->
@@ -22,7 +23,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2><?= Yii::t("home", "Find Kids stuff") ?></h2>
+                <h2><?= Yii::t("home.grid.header", "Find Kids stuff") ?></h2>
             </div>
         </div>
         <!--new row with stuff-->
@@ -122,7 +123,7 @@ $furniture = \Yii::t('categories_and_features', "Children's Furniture");
         </div>
         <div class="row hidden-sm hidden-xs" style="margin-bottom: 20px;">
             <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:20px;">
-                <?= Yii::t("home", "We are honered to be featured on") ?>
+                <?= Yii::t("home.grid.featured_on_header", "We are honered to be featured on") ?>
             </div>
             <div class="col-md-2 col-md-offset-1 text-center">
                 <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 180], [

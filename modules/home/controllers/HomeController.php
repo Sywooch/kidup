@@ -64,7 +64,7 @@ class HomeController extends Controller
         $searchModel = new Search();
 
         $categories = Yii::$app->db->cache(function () {
-            return Category::find()->all();
+            return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
             return Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->all();
