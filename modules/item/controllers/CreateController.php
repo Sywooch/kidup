@@ -179,6 +179,37 @@ class CreateController extends Controller
         ]);
     }
 
+    public function actionEditPublish($id, $publish = false)
+    {
+        $item = $this->getItem($id);
+        if($item->is_available == 1){
+            return $this->redirect('@web/item/' . $id);
+        }
+        $i = $this->defaultPage($id, 'default');
+        if($i instanceof Response){
+            return $i;
+        }
+
+        $isValid = $i['model']->isScenarioValid('default');
+        if (!$isValid) {
+            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
+            return $this->redirect('@web/item/create/edit-basics?id=' . $id);
+        }
+        if($publish !== false){
+            $item->is_available = 1;
+            $item->save(false); // save, but don't check if valid, should be done by this point
+            ItemSearch::updateSearch(); // enables the item to be found
+            return $this->redirect('@web/item/'.$id.'?new_publish=true');
+        }
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'publish',
+            'pageParams' => [],
+            'rightColumnParams' => []
+        ]);
+    }
+
     private function defaultPage($id, $scenario)
     {
         $item = $this->getItem($id);
@@ -362,29 +393,6 @@ class CreateController extends Controller
         }
     }
 
-    public function actionEditPublish($id, $publish = false)
-    {
-        $item = $this->getItem($id);
-        if($item->is_available == 1){
-            return $this->redirect('@web/item/' . $id);
-        }
-        $i = $this->defaultPage($id, 'default');
-        if($i instanceof Response){
-            return $i;
-        }
 
-        $isValid = $i['model']->isScenarioValid('default');
-        if (!$isValid) {
-            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
-            return $this->redirect('@web/item/create/edit-basics?id=' . $id);
-        }
-        if($publish !== false){
-            $item->is_available = 1;
-            $item->save(false); // save, but don't check if valid, should be done by this point
-            ItemSearch::updateSearch(); // enables the item to be found
-            return $this->redirect('@web/item/'.$id.'?new_publish=true');
-        }
-        return $this->render('publish', ['item' => $item]);
-    }
 }
 

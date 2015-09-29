@@ -40,6 +40,7 @@ return [
         '.hgkeep',
         '/messages',
         '/vendor',
+        '/tests',
         '/_old',
     ],
 

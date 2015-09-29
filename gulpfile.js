@@ -125,6 +125,12 @@ gulp.task('fonts', function () {
     return merge(adelle, proxima, fa, bootstrap);
 });
 
+gulp.task('images', function () {
+    var jqueryUi = gulp.src('vendor/bower/jquery-ui/themes/base/images/*.*')
+        .pipe(gulp.dest('web/packages/images/jquery-ui'));
+    return merge(jqueryUi);
+});
+
 gulp.task('watch-js', function () {
     return gulp.watch(jsFiles, ['js']);
 });

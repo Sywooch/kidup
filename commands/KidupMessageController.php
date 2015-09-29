@@ -71,44 +71,30 @@ class KidupMessageController extends \yii\console\controllers\MessageController
 
         $messages = [];
         foreach ($files as $file) {
-            $messages = array_merge_recursive($messages, $this->getDbCategories(), $this->extractMessages($file, $config['translator'], $config['ignoreCategories']));
+            $messages = array_merge_recursive($messages, $this->getDbCategories(),
+                $this->extractMessages($file, $config['translator'], $config['ignoreCategories']));
         }
-        if (in_array($config['format'], ['php', 'po'])) {
-            foreach ($config['languages'] as $language) {
-                $dir = $config['messagePath'] . DIRECTORY_SEPARATOR . $language;
-                if (!is_dir($dir)) {
-                    @mkdir($dir);
-                }
-                if ($config['format'] === 'po') {
-                    $catalog = isset($config['catalog']) ? $config['catalog'] : 'messages';
-                    $this->saveMessagesToPO($messages, $dir, $config['overwrite'], $config['removeUnused'], $config['sort'], $catalog, $config['markUnused']);
-                } else {
-                    $this->saveMessagesToPHP($messages, $dir, $config['overwrite'], $config['removeUnused'], $config['sort'], $config['markUnused']);
-                }
-            }
-        } elseif ($config['format'] === 'db') {
-            $db = \Yii::$app->get(isset($config['db']) ? $config['db'] : 'db');
-            if (!$db instanceof \yii\db\Connection) {
-                throw new Exception('The "db" option must refer to a valid database application component.');
-            }
-            $sourceMessageTable = isset($config['sourceMessageTable']) ? $config['sourceMessageTable'] : '{{%source_message}}';
-            $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
-            $this->saveMessagesToDb(
-                $messages,
-                $db,
-                $sourceMessageTable,
-                $messageTable,
-                $config['removeUnused'],
-                $config['languages'],
-                $config['markUnused']
-            );
-        } elseif ($config['format'] === 'pot') {
-            $catalog = isset($config['catalog']) ? $config['catalog'] : 'messages';
-            $this->saveMessagesToPOT($messages, $config['messagePath'], $catalog);
+
+        $db = \Yii::$app->get(isset($config['db']) ? $config['db'] : 'db');
+        if (!$db instanceof \yii\db\Connection) {
+            throw new Exception('The "db" option must refer to a valid database application component.');
         }
+        $sourceMessageTable = isset($config['sourceMessageTable']) ? $config['sourceMessageTable'] : '{{%source_message}}';
+        $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
+        $this->saveMessagesToDb(
+            $messages,
+            $db,
+            $sourceMessageTable,
+            $messageTable,
+            $config['removeUnused'],
+            $config['languages'],
+            $config['markUnused']
+        );
+
     }
 
-    public function getDbCategories(){
+    public function getDbCategories()
+    {
         $res = [];
 
         $cats = Category::find()->asArray()->all();
