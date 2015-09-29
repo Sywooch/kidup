@@ -81,7 +81,7 @@ class Filter extends Model
 
         // show something if there is no result
         if ($countQuery == 0) {
-            $this->resultText = \Yii::t('search', 'No results found for your query.');
+            $this->resultText = \Yii::t('search.no_results', 'No results found for your query.');
             return [];
         }
 
@@ -254,8 +254,9 @@ class Filter extends Model
 
                 if ($cat !== null) {
                     if ($this->resultText == false) {
-                        $this->resultText = \Yii::t('search', 'Results for') . ' ' . \Yii::t("categories_and_features",
-                                $cat->name);
+                        $this->resultText = \Yii::t('search.results_for_category', 'Results for {category}', [
+                            'category' => $cat->getTranslatedName()
+                        ]);
                     }
                     // add all subcategories if searching on a parent category
 
@@ -270,12 +271,16 @@ class Filter extends Model
         } else {
             $this->resultsAreFake = true;
             $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
-            $t = \Yii::t('categories_and_features', $suggestionWord->text);
-            $this->resultText = \Yii::t('search', "We couldn't find {0}. Perhaps try {1}?", [
+            if($suggestionWord !== null){
+                $t = $suggestionWord->text;
+            }else{
+                $t = '';
+            }
+            $this->resultText = \Yii::t('search.nothing_found_suggestions', "We couldn't find {0}. Perhaps try {1}?", [
                 '<b>"' . $this->query . '"</b>',
                 Html::a($t, '@web/search/' . $t, ['data-pjax' => 0])
             ]);
-            $this->categories = [[1,7,12,17,25,30,37][rand(0,6)]];
+            $this->categories = [[1, 7, 12, 17, 25, 30, 37][rand(0, 6)]];
             $this->filterCategories();
         }
     }
@@ -290,14 +295,14 @@ class Filter extends Model
                 $this->_query->andWhere(':fieldlow > :low');
                 $this->_query->addParams([
                     ':fieldlow' => $this->priceUnit,
-                    ':low' => (double) $this->priceMin,
+                    ':low' => (double)$this->priceMin,
                 ]);
             }
             if (isset($this->priceMax) && $this->priceMax !== null) {
                 $this->_query->andWhere(':fieldhigh < :high');
                 $this->_query->addParams([
                     ':fieldhigh' => $this->priceUnit,
-                    ':high' => (double) $this->priceMax,
+                    ':high' => (double)$this->priceMax,
                 ]);
             }
         }

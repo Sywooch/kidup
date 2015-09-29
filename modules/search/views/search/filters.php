@@ -22,7 +22,7 @@ $form = ActiveForm::begin([
     <div class="panel panel-default">
         <div class="panel-heading">
             <h6 class="panel-title">
-                <?= Yii::t("item", "Location") ?>
+                <?= Yii::t("search.filters.location", "Location") ?>
             </h6>
         </div>
         <div id="refine-location" class="panel-collapse collapse in">
@@ -47,7 +47,7 @@ $form = ActiveForm::begin([
     <div class="panel panel-default">
         <div class="panel-heading">
             <h6 class="panel-title">
-                <?= Yii::t("item", "Price") ?>
+                <?= Yii::t("search.filters.price", "Price") ?>
             </h6>
         </div>
         <div id="refinePrice" class="panel-collapse collapse in">
@@ -79,14 +79,14 @@ $form = ActiveForm::begin([
     <div class="panel panel-default">
         <div class="panel-heading">
             <h6 class="panel-title">
-                <?= Yii::t("item", $feature->name) ?>
+                <?= $feature->getTranslatedName() ?>
             </h6>
         </div>
         <div id="refinePrice" class="panel-collapse collapse in">
             <div class="panel-body">
                 <?php foreach ($feature->featureValues as $val) {
                     echo $form->field($model, "features[{$feature->id}][{$val->id}]")
-                        ->checkbox(['label' => \Yii::t('categories_and_features', $val->name)]);
+                        ->checkbox(['label' => $val->getTranslatedName()]);
                 }
                 ?>
             </div>
@@ -97,7 +97,7 @@ $form = ActiveForm::begin([
     <div class="panel panel-default">
         <div class="panel-heading">
             <h6 class="panel-title">
-                <?= Yii::t("item", "Features") ?>
+                <?= Yii::t("search.filters.features.header", "Features") ?>
             </h6>
         </div>
         <div id="refinePrice" class="panel-collapse collapse in">
@@ -107,7 +107,7 @@ $form = ActiveForm::begin([
                         continue;
                     }
                     echo $form->field($model, "singularFeatures[{$feature->id}]")
-                        ->checkbox(['label' => \Yii::t('categories_and_features',$feature->name)]);
+                        ->checkbox(['label' => $feature->getTranslatedName()]);
                     ?>
                 <?php endforeach; ?>
             </div>
@@ -116,7 +116,12 @@ $form = ActiveForm::begin([
 
     <div class="panel panel-default visible-xs">
         <div class="panel-body">
-            <?= \yii\helpers\Html::submitButton(Yii::t("item", "Apply Filters"), ['class' => 'btn btn-danger btn-fill', 'data-dismiss' => 'modal', 'style' => 'width:100%;', 'onclick' => 'window.submitFromModal()']) ?>
+            <?= \yii\helpers\Html::submitButton(Yii::t("search.filters.apply", "Apply Filters"), [
+                'class' => 'btn btn-danger btn-fill',
+                'data-dismiss' => 'modal',
+                'style' => 'width:100%;',
+                'onclick' => 'window.submitFromModal()'
+            ]) ?>
             <br><br>
         </div>
     </div>

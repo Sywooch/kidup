@@ -57,7 +57,7 @@ class User extends Mailer
 
         return $this->sendMessage([
             'email' => $user->email,
-            'subject' => \Yii::t('mail', 'KidUp recovery request'),
+            'subject' => \Yii::t('mail.recovery.subject', 'KidUp recovery request'),
             'type' => self::USER_RECOVERY,
             'params' => [
                 'profileName' => $user->profile->first_name,

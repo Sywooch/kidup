@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 \app\assets\JQueryTextRangeAsset::register($this);
 \app\assets\FullModalAsset::register($this);
 
-$this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
+$this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Search KidStuff'));
 
 $this->assetPackage = \app\assets\Package::SEARCH;
 ?>
@@ -33,10 +33,10 @@ $this->assetPackage = \app\assets\Package::SEARCH;
                             <div class="card card-refine hidden-sm hidden-xs">
                                 <div class="header">
                                     <h4 class="title">
-                                        <?= Yii::t("item", "Filter") ?>
+                                        <?= Yii::t("search.header_filter", "Filter") ?>
                                         <button class="btn btn-danger btn-xs pull-right"
                                                 ng-click="searchCtrl.removeAllActiveFilters()">
-                                            <i class="fa fa-close"></i><?= Yii::t("item", "Clear") ?>
+                                            <i class="fa fa-close"></i><?= Yii::t("search.filter_clear", "Clear") ?>
                                         </button>
                                     </h4>
                                 </div>
@@ -81,7 +81,7 @@ $this->assetPackage = \app\assets\Package::SEARCH;
             <div class="buttonContainer" style="z-index:10;">
                 <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
                         data-target="#mobileFiltersModal" id="filter-button" style="z-index:10;">
-                    <?= Yii::t("item", "Filters") ?>
+                    <?= Yii::t("saerch.filters_header", "Filters") ?>
                 </button>
             </div>
 
@@ -92,7 +92,7 @@ $this->assetPackage = \app\assets\Package::SEARCH;
                     'id' => 'mobileFiltersModal'
                 ],
                 'closeButton' => false,
-                'header' => "<b>".\Yii::t('search', 'Search Filters')."</b>"
+                'header' => "<b>".\Yii::t('search.mobile_search_filters', 'Search Filters')."</b>"
             ])
             ?>
 

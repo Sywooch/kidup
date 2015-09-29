@@ -20,8 +20,8 @@ use app\modules\item\widgets\ItemCard;
             ?><p><?php
             $cat = \app\modules\item\models\Category::findOne(['id' => $model->categories[0]]);
             if($cat !== null){
-                echo \Yii::t('item', 'Below are some products you might find interesting in {0}.', [
-                    '<b>' . \Yii::t('categories_and_features', $cat->name) . '</b>'
+                echo \Yii::t('search.results_interesting_products_text', 'Below are some products you might find interesting in {0}.', [
+                    '<b>' . $cat->getTranslatedName() . '</b>'
                 ]);
             }
             ?></p><?php

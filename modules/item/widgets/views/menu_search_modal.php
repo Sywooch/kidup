@@ -17,7 +17,7 @@ use \kartik\typeahead\Typeahead;
         'class' => 'modal modal-fullscreen force-fullscreen'
     ],
     'closeButton' => false,
-    'header' => "<b>".\Yii::t("item.mobile_search.", 'KidUp Search')."</b>"
+    'header' => "<b>".\Yii::t("item.mobile_search.header_name", 'KidUp Search')."</b>"
 ]);
 
 ?>
@@ -52,7 +52,8 @@ use \kartik\typeahead\Typeahead;
             'limit' => 5,
             'display' => 'text',
             'templates' => [
-                'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t("item.mobile_search.no_results",
+                'notFound' => '<div class="text-danger" style="padding:0 8px">'.
+                    \Yii::t("item.mobile_search.no_results",
                         "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
                 'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
             ]
@@ -80,7 +81,8 @@ use \kartik\typeahead\Typeahead;
 
 <?php
 \yii\bootstrap\Modal::end();
-$this->registerJS('
+$this->registerJS(
+<<<JS
 function submitMenuSearchModalForm() {
     var vals = [];
     var val = $("#search-filter-query").val();
@@ -110,7 +112,7 @@ function submitMenuSearchModalForm() {
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }
-
-}');
-
+}
+JS
+);
 ?>

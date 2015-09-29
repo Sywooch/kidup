@@ -71,7 +71,7 @@ class CreateController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
-                \Yii::$app->session->addFlash('success', \Yii::t('review', 'Thank you for reviewing!'));
+                \Yii::$app->session->addFlash('success', \Yii::t('review.create.flash.thank_you', 'Thank you for reviewing!'));
                 return $this->redirect('@web/home');
             }
         }

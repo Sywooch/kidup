@@ -30,9 +30,9 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail",
+                                                    <?= Yii::t("mail.recovery.requested_password",
                                                         "You've requested a password recovery on KidUp, and here it is!") ?>
-                                                    <?= Yii::t("mail",
+                                                    <?= Yii::t("mail.recovery.click_button",
                                                         "Please click the following button to set a new password:") ?>
                                                 </p>
                                             </td>
@@ -53,8 +53,9 @@
                                                 <table class="button">
                                                     <tr>
                                                         <td>
-                                                            <a href="<?= $urls['recovery'] ?>"><?= Yii::t("mail",
-                                                                    "Password recovery") ?></a>
+                                                            <a href="<?= $urls['recovery'] ?>">
+                                                                <?= Yii::t("mail.recovery.link", "Password recovery") ?>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </table>

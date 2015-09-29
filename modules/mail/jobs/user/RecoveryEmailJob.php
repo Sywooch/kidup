@@ -15,7 +15,7 @@ class RecoveryEmailJob extends Job{
     public $email;
 
     public function handle(){
-        $user = User::findOne($this->user_id);
+        $user = User::find()->where(['id' => $this->user_id])->one();
         $token = new Token();
         $token->setAttributes([
             'user_id' => $user->id,
@@ -26,7 +26,7 @@ class RecoveryEmailJob extends Job{
 
         return (new Mailer())->sendMessage([
             'email' => $user->email,
-            'subject' => \Yii::t('mail', 'KidUp recovery request'),
+            'subject' => \Yii::t('mail.recovery.subject', 'KidUp recovery request'),
             'type' => Mailer::USER_RECOVERY,
             'params' => [
                 'profileName' => $user->profile->first_name,
@@ -36,12 +36,4 @@ class RecoveryEmailJob extends Job{
             ]
         ]);
     }
-
-    private function test(){
-        new RecoveryEmailJob([
-            'user_id' => 1,
-            'email' => 'simpi_123@hotmail.com'
-        ]);
-    }
-
 }

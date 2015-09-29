@@ -1,8 +1,7 @@
 <?php
 namespace app\modules\search\models;
 
-use app\models\base\Category;
-use app\models\base\Feature;
+use app\modules\item\models\Category;
 use app\models\base\Item;
 use app\models\base\Language;
 use yii\web\BadRequestHttpException;
@@ -69,10 +68,10 @@ class ItemSearch extends \app\models\base\ItemSearch
         $categories = Category::find()->all();
         foreach ($categories as $cat) {
             if ($cat->itemCount > 0 && $cat->parent_id !== null) {
-                (new self())->make(self::COMPONENT_SUB_CATEGORY, $cat->id, $cat->name);
+                (new self())->make(self::COMPONENT_SUB_CATEGORY, $cat);
             } else {
                 if ($cat->parent_id === null) {
-                    (new self())->make(self::COMPONENT_MAIN_CATEGORY, $cat->id, $cat->name);
+                    (new self())->make(self::COMPONENT_MAIN_CATEGORY, $cat);
                 }
             }
         }
@@ -87,29 +86,16 @@ class ItemSearch extends \app\models\base\ItemSearch
      * @param string $text
      * @param Language $language
      */
-    private function make($component, $componentId, $text)
+    private function make($component, Category $category)
     {
         $langs = Language::find()->all();
         foreach ($langs as $lang) {
             $is = new ItemSearch();
             $is->component_type = $component;
-            $is->component_id = $componentId;
-            $is->text = self::t($text, $lang->language_id);
+            $is->component_id = $category->id;
+            $is->text = $category->getTranslationName;
             $is->language_id = $lang->language_id;
             $is->save();
         }
-    }
-
-    public static function t($name, $lang = null)
-    {
-        if ($lang == null) {
-            $lang = \Yii::$app->language;
-        }
-
-        $curLang = \Yii::$app->language;
-        \Yii::$app->language = $lang;
-        $translation = \Yii::t("categories_and_features", $name);
-        \Yii::$app->language = $curLang;
-        return $translation;
     }
 }

@@ -418,7 +418,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                     st-content="viewonline">
                                     <p>
                                         <a href="<?= $urls['mailInBrowser'] ?>">
-                                            <?= Yii::t("mail", "Click here to read this mail in your browser") ?>
+                                            <?= Yii::t("mail.wrapper.open_in_browser_ink", "Click here to read this mail in your browser") ?>
                                         </a>
                                     </p>
                                 </td>
@@ -562,7 +562,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                                 <!-- ======= main header ======= -->
 
                                                 <div style="line-height: 24px;">
-                                                    <?= Yii::t("mail", "KidUp Social") ?>
+                                                    <?= Yii::t("mail.wrapper.kidup_social", "KidUp Social") ?>
                                                 </div>
                                             </td>
                                         </tr>
@@ -614,7 +614,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
 
                                                 <div style="line-height: 25px;">
                                                     <a href="<?= $urls['changeSettings'] ?>">
-                                                        <?= Yii::t("mail", "Change email preferences") ?>
+                                                        <?= Yii::t("mail.wrapper.change_preferences", "Change email preferences") ?>
                                                     </a>
                                                 </div>
                                             </td>

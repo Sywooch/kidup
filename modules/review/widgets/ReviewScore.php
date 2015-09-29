@@ -16,7 +16,7 @@ class ReviewScore extends \yii\bootstrap\Widget
     public function run()
     {
         if(!$this->onEmpty){
-            $this->onEmpty = Html::tag('div', \Yii::t('review', 'No reviews yet'));
+            $this->onEmpty = Html::tag('div', \Yii::t('review.widget.no_reviews_yet', 'No reviews yet'));
         }
         if(!is_null($this->user_id)){
             $reviews = Review::find()->where([
