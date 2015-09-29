@@ -74,6 +74,7 @@ class Filter extends Model
         $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
         $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
+        
 
         $countQuery = clone $this->_query;
         $countQuery = (int)$countQuery->count();
@@ -170,7 +171,7 @@ class Filter extends Model
                 if ($val == 0) {
                     continue;
                 }
-                $singleFeatureIds[] = $id;
+                $singleFeatureIds[] = (int)$id;
             }
             if (count($singleFeatureIds) > 0) {
                 $this->_query->innerJoinWith([
@@ -292,18 +293,10 @@ class Filter extends Model
     {
         if (in_array($this->priceUnit, ['price_day', 'price_week', 'price_month'])) {
             if (isset($this->priceMin) && $this->priceMin !== null) {
-                $this->_query->andWhere(':fieldlow > :low');
-                $this->_query->addParams([
-                    ':fieldlow' => $this->priceUnit,
-                    ':low' => (double)$this->priceMin,
-                ]);
+                $this->_query->andWhere(['>', $this->priceUnit, $this->priceMin]);
             }
             if (isset($this->priceMax) && $this->priceMax !== null) {
-                $this->_query->andWhere(':fieldhigh < :high');
-                $this->_query->addParams([
-                    ':fieldhigh' => $this->priceUnit,
-                    ':high' => (double)$this->priceMax,
-                ]);
+                $this->_query->andWhere(['<', $this->priceUnit, $this->priceMax]);
             }
         }
     }

@@ -119,11 +119,11 @@ class Feature extends \yii\db\ActiveRecord
 
     public function getTranslatedName(){
         $lower = str_replace(" ", "", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_name', $lower, [], \Yii::$app->language);
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_name', $this->name, [], \Yii::$app->language);
     }
 
     public function getTranslatedDescription(){
         $lower = str_replace(" ", "", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_description', $lower, [], \Yii::$app->language);
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_description', $this->name, [], \Yii::$app->language);
     }
 }

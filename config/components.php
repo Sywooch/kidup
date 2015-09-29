@@ -154,7 +154,8 @@ $components = [
             '*' => [
                 'class' => 'yii\i18n\DbMessageSource',
                 'sourceMessageTable' => 'i18n_source',
-                'messageTable' => 'i18n_message'
+                'messageTable' => 'i18n_message',
+                'enableCaching' => YII_CACHE
             ],
         ],
     ],
@@ -189,6 +190,5 @@ if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {
         'clientSecret' => $keys['facebook_oauth_secret']
     ];
 }
-
 
 return $components;

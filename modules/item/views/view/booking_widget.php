@@ -15,6 +15,9 @@ use yii\widgets\Pjax;
 \app\assets\LodashAsset::register($this);
 
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
+$this->registerJsVariables([
+    'userIsGuest' => \Yii::$app->user->isGuest
+]);
 ?>
 <?php Pjax::begin([
 //    'enableReplaceState' => true,
@@ -23,7 +26,6 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ]);
 ?>
     <script>
-        window.userIsGuest = <?= \Yii::$app->user->isGuest ? 'true' : 'false' ?>;
         if (typeof window.widget !== "undefined") {
             window.widget.load();
         }
@@ -48,7 +50,6 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
             'enableClientValidation' => false,
             'method' => 'get',
             'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'create-booking-form'],
-//            'action' => \yii\helpers\Url::to('@web/item/view/create-booking?id='.$model->item->id)
         ]); ?>
         <div class="row">
             <div class="col-sm-6">
@@ -133,7 +134,8 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                             </tr>
                         </table>
                     <?php endif; ?>
-                    <?= Html::submitButton(\Yii::t("item.view.booking_widget.request_to_book_button", 'Request to Book'),
+                    <?= Html::submitButton(\Yii::t("item.view.booking_widget.request_to_book_button",
+                        'Request to Book'),
                         [
                             'class' => 'btn btn-danger btn-fill',
                             'style' => 'width:100%',

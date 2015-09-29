@@ -31,7 +31,6 @@
     "./views/assets/css/components/_cards.less",
     "./views/assets/css/components/_navbar.less",
     "./views/assets/css/components/_modals.less",
-    "./modules/home/views/home/assets/home.less",
     "./vendor/kartik-v/yii2-krajee-base/assets/css/kv-widgets.css",
     "./vendor/kartik-v/yii2-widget-typeahead/assets/css/typeahead.css",
     "./vendor/kartik-v/yii2-widget-typeahead/assets/css/typeahead-kv.css"

@@ -186,6 +186,36 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     </div>
                 </div>
             </div>
+            <div class="row hidden-sm hidden-xs" style="margin-bottom: 20px;">
+                <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:80px;">
+                    <?= Yii::t("home.grid.featured_on_header", "We are honered to be featured on") ?>
+                </div>
+                <div class="col-md-2 col-md-offset-1 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 180], [
+                        'style' => 'opacity:0.5;'
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/dr.png', ['w' => 180], [
+                        'style' => 'opacity:0.5;margin-top: 17px;'
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/radio24-7.png', ['w' => 180], [
+                        'style' => 'opacity:0.5;'
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/startup-weekend.png', ['w' => 180], [
+                        'style' => 'opacity:0.5; margin-top: 10px;'
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/trendsonline.png', ['w' => 180], [
+                        'style' => 'opacity:0.5; margin-top: 15px;'
+                    ]) ?>
+                </div>
+            </div>
         </div>
     </section>
 </div>

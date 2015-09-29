@@ -5,6 +5,8 @@ namespace app\commands;
 use app\models\base\Category;
 use app\models\base\Feature;
 use app\models\base\FeatureValue;
+use app\modules\admin\models\I18nMessage;
+use app\modules\admin\models\I18nSource;
 use Yii;
 use yii\console\Controller;
 use yii\console\Exception;
@@ -100,29 +102,46 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $cats = Category::find()->asArray()->all();
         foreach ($cats as $cat) {
             $lower = str_replace(" ", '_', strtolower($cat['name']));
-            if($cat['parent_id'] !== null){
-                $res['item.category.sub_category_'.$lower][] = $cat['name'];
-            }else{
-                $res['item.category.main_'.$lower][] = $cat['name'];
+            if ($cat['parent_id'] !== null) {
+                $res['item.category.sub_category_' . $lower][] = $cat['name'];
+            } else {
+                $res['item.category.main_' . $lower][] = $cat['name'];
             }
         }
 
         $features = Feature::find()->all();
         foreach ($features as $feature) {
             $lower = str_replace(" ", '_', strtolower($feature->name));
-            $res['item.feature.'.$lower.'_name'][] = $feature->name;
-            $res['item.feature.'.$lower.'_description'][] = $feature->description;
+            $res['item.feature.' . $lower . '_name'][] = $feature->name;
+            $res['item.feature.' . $lower . '_description'][] = $feature->description;
         }
 
         $featureValue = FeatureValue::find()->all();
         foreach ($featureValue as $featureVal) {
             $lower = str_replace(" ", '_', strtolower($featureVal->feature->name));
             $val = str_replace(" ", '_', strtolower($featureVal->name));
-            $res['item.feature.'.$lower.'_value_'.$val][] = $featureVal->name;
+            $res['item.feature.' . $lower . '_value_' . $val][] = $featureVal->name;
         }
 
         return $res;
     }
 
-
+    public function actionFilesToDb()
+    {
+        $dir = scandir(Yii::$aliases['@app'] . '/messages/da-DK/');
+        foreach ($dir as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            $messages = include Yii::$aliases['@app'] . '/messages/da-DK/' . $file;
+            foreach ($messages as $orig => $danish) {
+                $source = I18nSource::find()->where(['message' => $orig])->all();
+                foreach ($source as $s) {
+                    $m = I18nMessage::find()->where(['id' => $s->id])->one();
+                    $m->translation = $danish;
+                    $m->save();
+                }
+            }
+        }
+    }
 }

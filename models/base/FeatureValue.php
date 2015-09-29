@@ -77,7 +77,7 @@ class FeatureValue extends \yii\db\ActiveRecord
     {
         $lower = str_replace(" ", '_', strtolower($this->feature->name));
         $val = str_replace(" ", '_', strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_value_' . $val, $lower, [],
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_value_' . $val, $this->name, [],
             \Yii::$app->language);
     }
 }

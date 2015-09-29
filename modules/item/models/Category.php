@@ -12,7 +12,11 @@ class Category extends \app\models\base\Category
 {
     public function getTranslatedName()
     {
-        $lower = str_replace(" ", "", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.category.main_' . $lower, $lower, [], \Yii::$app->language);
+        $lower = str_replace(" ", "_", strtolower($this->name));
+        if($this->parent_id === null){
+            return \Yii::$app->getI18n()->translate('item.category.main_' . $lower, $this->name, [], \Yii::$app->language);
+        }else{
+            return \Yii::$app->getI18n()->translate('item.category.sub_category_' . $lower, $this->name, [], \Yii::$app->language);
+        }
     }
 }

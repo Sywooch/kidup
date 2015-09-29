@@ -20,11 +20,6 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                     <div class="header">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="hidden-xs">
-                                    <?= app\modules\images\widgets\Image::widget([
-                                        'name' => 'kidup/graphics/notification.png',
-                                        'imageOptions' =>  ['w' => 55]]) ?>
-                                </div>
                                 <h4 class="title">
                                     <?= Yii::t("message", "Inbox") ?>
                                 </h4>
