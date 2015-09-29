@@ -29,7 +29,5 @@ phpunit.phar
 tests/_output
 
 web/assets
-web/packages/**/*
-!web/packages/**/*.json
 !web/assets/_empty
 node_modules
