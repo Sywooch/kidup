@@ -19,7 +19,7 @@ use app\modules\review\widgets\ReviewScore;
 \app\modules\booking\assets\ConfirmAsset::register($this);
 \yii\web\JqueryAsset::register($this);
 
-$this->title = \Yii::t('title', 'Confirm Your Rent') . ' - ' . Yii::$app->name;
+$this->title = \Yii::t('booking.confirm.page_title', 'Confirm Your Booking') . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::BOOKING;
 $clientToken = (new BrainTree(new Payin()))->getClientToken();
 ?>
@@ -30,14 +30,14 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
     ]); ?>
     <div class="container">
         <h2>
-            <?= Yii::t("booking", "Secure Booking - Pay in 1 Minute") ?>
+            <?= Yii::t("booking.confirm.header", "Secure Booking - Pay in 1 Minute") ?>
         </h2>
 
         <div class="row">
             <div class="col-md-8">
                 <!-- Mobile replacement for right panel -->
                 <div class="card hidden-md hidden-lg">
-                    <h3><?= Yii::t('booking', 'Booking information') ?></h3>
+                    <h3><?= Yii::t('booking.confirm.header_booking_info', 'Booking information') ?></h3>
 
                     <div class="row card card-minimal">
                         <div style="float: left;">
@@ -52,7 +52,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         </div>
                     </div>
 
-                    <i><?= Yii::t("booking", "You are renting from") ?>:</i>
+                    <i><?= Yii::t("booking.confirm.renting_from_label", "You are renting from") ?>:</i>
 
                     <div class="row card card-minimal">
                         <div style="float: left;">
@@ -63,7 +63,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                                 <?= $profile->first_name ?>
                             </b>
                             <?= ReviewScore::widget(['user_id' => $profile->user_id]) ?>
-                            <?= \Yii::t('booking', 'Member since {0}', [
+                            <?= \Yii::t('booking.confirm.owner_member_since', 'Member since {0}', [
                                 Carbon\Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized('%b %y')
                             ]) ?>
                         </div>
@@ -112,7 +112,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
             <div class="col-md-8">
                 <div class="card">
                     <h3>
-                        <?= Yii::t("booking", "Message to {0}", [
+                        <?= Yii::t("booking.confirm.message_to_header", "Message to {0}", [
                             $profile->first_name
                         ]) ?>
                     </h3>
@@ -121,12 +121,12 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         <div class="col-md-7">
                             <?= $form->field($model, 'message')->textarea([
                                 'class' => 'form-control',
-                                'placeholder' => \Yii::t('booking', 'Your private message to {0}',
+                                'placeholder' => \Yii::t('booking.confirm.message_to_placeholder', 'Your private message to {0}',
                                     [$profile->first_name])
                             ])->label(false) ?>
                         </div>
                         <div class="col-md-5">
-                            <?= Yii::t('booking',
+                            <?= Yii::t('booking.confirm.message_information_text',
                                 "Here you can introduce yourself to {owner} and ask for details on the product, or make suggestions for the exchange of the product. You can continue the conversation with {owner} through KidUp once you finish creating this booking.",
                                 [
                                     'owner' => $profile->first_name
@@ -137,7 +137,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
 
                 <div class="card">
                     <h3>
-                        <?= Yii::t("booking", "Payment information") ?>
+                        <?= Yii::t("booking.confirm.header_payment_info", "Payment information") ?>
                     </h3>
 
                     <div class="row payment-methods">
@@ -166,13 +166,12 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             echo $form->field($model, 'nonce')->hiddenInput()->label(false); ?>
                         </div>
                         <div class="col-md-5">
-                            <?= Yii::t("booking",
+                            <?= Yii::t("booking.confirm.payment_info_help",
                                 "The total amount will be reserved on your creditcard when this booking is made. The card is only charged if the owner accepts your booking.") ?>
-                            <?= Yii::t("booking", "For more information please see {0}",
+                            <?= Yii::t("booking.confirm.more_info_see_faq", "For more information please see {link} our FAQ.{linkClose}",
                                 [
-                                    Html::a(\Yii::t('booking', 'our FAQ.'),
-                                        '@web/p/faq', ['target' => '_blank']
-                                    )
+                                    'link' => Html::beginTag('a', ['href' => \yii\helpers\Url::to('@web/p/faq'),'target' => '_blank']),
+                                    'linkClose' => Html::endTag('a')
                                 ]) ?>
                         </div>
                     </div>
@@ -201,7 +200,7 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         <?= ImageHelper::image($profile->img, ['w' => 70, 'h' => 70, 'fit' => 'crop']) ?>
                     </div>
                     <div class="col-md-8">
-                        <i><?= Yii::t("booking", "You are renting from") ?>:</i>
+                        <i><?= Yii::t("booking.confirm.renting_from_label", "You are renting from") ?>:</i>
                         <br>
                         <b>
                             <?= $profile->first_name ?>
@@ -264,19 +263,17 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <?= Yii::t("booking",
+                            <?= Yii::t("booking.create.after_creation_help",
                                 "On creating this booking, the owner will get notified and can accept or reject your request. In the meantime you can use KidUp to communicate, for example on the details of the item exchange.") ?>
-                            <?= Yii::t("booking", "For more information please see {0}",
+                            <?= Yii::t("booking.confirm.more_info_see_renting_guide",
+                                "For more information please see {link} the renting on KidUp guide.{linkClose}",
                                 [
-                                    Html::a(\Yii::t('booking', 'the renting on KidUp guide.'),
-                                        '@web/p/how-to-rent', ['target' => '_blank']
-                                    )
+                                    'link' => Html::beginTag('a', ['href' => \yii\helpers\Url::to('@web/p/how-to-rent'),'target' => '_blank']),
+                                    'linkClose' => Html::endTag('a')
                                 ]) ?>
                         </div>
                     </div>
-
-
-                    <?= Html::submitButton('Book now', ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
+                    <?= Html::submitButton(\Yii::t('booking.create.book_now_button', 'Book now'), ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
                 </div>
             </div>
         </div>

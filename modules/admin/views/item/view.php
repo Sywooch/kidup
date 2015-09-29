@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'deleteOptions'=>[
         'url'=>['delete', 'id' => $model->id],
         'data'=>[
-        'confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'),
+        'confirm'=> 'Are you sure you want to delete this item?',
         'method'=>'post',
         ],
         ],

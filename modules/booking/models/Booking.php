@@ -106,22 +106,22 @@ class Booking extends \app\models\base\Booking
     public function getStatusName()
     {
         if ($this->status == self::AWAITING_PAYMENT) {
-            return \Yii::t('app', 'Awaiting payment');
+            return \Yii::t('booking.status.awaiting_payment', 'Awaiting payment');
         }
         if ($this->status == self::PENDING) {
-            return \Yii::t('app', 'Pending');
+            return \Yii::t('booking.status.pending', 'Pending');
         }
         if ($this->status == self::NO_RESPONSE) {
-            return \Yii::t('app', 'Refused');
+            return \Yii::t('booking.status.no_response', 'No responds by Owner');
         }
         if ($this->status == self::DECLINED) {
-            return \Yii::t('app', 'Refused');
+            return \Yii::t('booking.status.refused', 'Refused');
         }
         if ($this->status == self::ACCEPTED) {
-            return \Yii::t('app', 'Accepted');
+            return \Yii::t('booking.status.accepted', 'Accepted');
         }
         if ($this->status == self::CANCELLED) {
-            return \Yii::t('app', 'Cancelled');
+            return \Yii::t('booking.status.cancelled', 'Cancelled');
         }
 
         return false;

@@ -64,19 +64,15 @@ echo Breadcrumbs::widget(['links' => [
             [
                 'attribute' => 'translationStatus',
                 'value' => function($data) {
-                    return empty($data->translation) ? \Yii::t('app', 'no') : '';
+                    return empty($data->translation) ? 'no' : 'yes';
                 },
                 'filter' => [
-                    'yes' => \Yii::t('app', 'yes'),
-                    'no' => \Yii::t('app', 'no'),
+                    'yes' =>  'yes',
+                    'no' =>  'no',
                 ],
                 'contentOptions' => [
                     'class' => 'text-center'
                 ]
-            ],
-            [
-                'class' => 'kartik\grid\ActionColumn',
-                'template' => '{delete}',
             ],
         ]
     ]);

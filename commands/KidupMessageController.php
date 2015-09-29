@@ -99,20 +99,28 @@ class KidupMessageController extends \yii\console\controllers\MessageController
 
         $cats = Category::find()->asArray()->all();
         foreach ($cats as $cat) {
-            $res[] = $cat['name'];
+            $lower = str_replace(" ", '_', strtolower($cat['name']));
+            if($cat['parent_id'] !== null){
+                $res['item.category.main_'.$lower][] = $cat['name'];
+            }else{
+                $res['item.category.sub_category_'.$lower][] = $cat['name'];
+            }
         }
 
-        $features = Feature::find()->asArray()->all();
+        $features = Feature::find()->all();
         foreach ($features as $feature) {
-            $res[] = $feature['name'];
-            $res[] = $feature['description'];
+            $lower = str_replace(" ", '_', strtolower($feature->name));
+            $res['item.feature.'.$lower.'_name'][] = $feature->name;
+            $res['item.feature.'.$lower.'_description'][] = $feature->description;
         }
 
-        $featureValue = FeatureValue::find()->asArray()->all();
+        $featureValue = FeatureValue::find()->all();
         foreach ($featureValue as $featureVal) {
-            $res[] = $featureVal['name'];
+            $lower = str_replace(" ", '_', strtolower($featureVal->feature->name));
+            $val = str_replace(" ", '_', strtolower($featureVal->name));
+            $res['item.feature.'.$lower.'_value_'.$val][] = $featureVal->name;
         }
 
-        return ['categories_and_features' => $res];
+        return $res;
     }
 }

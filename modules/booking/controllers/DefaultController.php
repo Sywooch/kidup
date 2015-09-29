@@ -94,7 +94,7 @@ class DefaultController extends Controller
         }
 
         if ($booking->status !== Booking::PENDING) {
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', "Booking already seems to be confirmed"));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_already_confirmed', "Booking already seems to be confirmed"));
             return $this->redirect('@web/booking/' . $id);
         }
 
@@ -102,7 +102,7 @@ class DefaultController extends Controller
         if ($payoutMethod == 0) {
             $link = Url::to('@web/user/settings/payout-preference');
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
+                \Yii::t('booking.flash.add_payment_method', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
                     'href' => "<a href='{$link}'>",
                     'endHref' => "</a>",
                 ]));
@@ -111,7 +111,7 @@ class DefaultController extends Controller
 
         if ($booking->payin->status !== Payin::STATUS_AUTHORIZED) {
             if ($booking->payin->status == Payin::STATUS_PENDING) {
-                \Yii::$app->session->addFlash('info', \Yii::t('booking',
+                \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_still_unconfirmed',
                     'The payment has to be confirmed before the booking can be accepted. Please try again in a couple of minutes'));
                 return $this->redirect('@web/item/list');
             }
@@ -127,13 +127,13 @@ class DefaultController extends Controller
         // todo make this POST (safer)
         if ($response == 'accept') {
             $res = $booking->ownerAccepts();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', 'Booking has been successfully accepted'));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_accepted', 'Booking has been successfully accepted'));
             return $this->redirect('@web/booking/' . $id);
         }
 
         if ($response == 'decline') {
             $res = $booking->ownerDeclines();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', 'Booking has been successfully declined'));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_declined', 'Booking has been successfully declined'));
             return $this->redirect('@web/booking/by-item/' . $booking->item_id);
         }
 

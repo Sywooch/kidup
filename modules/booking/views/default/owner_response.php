@@ -11,7 +11,7 @@ use yii\helpers\Html;
  * @var string $acceptLink
  * @var string $timeLeft
  */
-$this->title = \Yii::t('title', 'Respond to booking request') . ' - ' . Yii::$app->name;
+$this->title = \Yii::t('booking.owner_response.title', 'Respond to booking request') . ' - ' . Yii::$app->name;
 $this->assetPackage = \app\assets\Package::BOOKING;
 ?>
 
@@ -22,8 +22,8 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                 <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
                     <div class="checkout-header">
                         <h2>
-                            <?= Yii::t("booking", "Booking Request") ?><br>
-                            <small><?= Yii::t("booking", "Respond to {0}'s booking request",
+                            <?= Yii::t("booking.owner_response.header", "Booking Request") ?><br>
+                            <small><?= Yii::t("booking.owner_response.sub_header", "Respond to {0}'s booking request",
                                     [$profile->first_name]) ?></small>
                         </h2>
                     </div>
@@ -35,7 +35,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
         <div class="row">
             <div class="col-md-6 col-md-offset-3 card">
                 <h4>
-                    <?= \Yii::t('booking', 'User {0} would like to rent your item {1}', [
+                    <?= \Yii::t('booking.owner_response.user_wants_to_book_item', 'User {0} would like to book your item {1}', [
                         Html::a($profile->first_name, '@web/user/' . $profile->user_id, ['target' => '_blank']),
                         Html::a($item->name, '@web/item/' . $item->id, ['target' => '_blank']),
                     ]) ?>
@@ -45,11 +45,12 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                     <div class="col-md-6">
                         <ul class="list-unstyled list-lines">
                             <li>
-                                <i class="fa fa-info-circle"></i><?= Yii::t("booking", "item") ?>
+                                <i class="fa fa-info-circle"></i>
+                                <?= Yii::t("booking.owner_response.item", "item") ?>
                                 <b><?= $item->name ?></b>
                             </li>
                             <li>
-                                <i class="fa fa-calendar"></i><?= Yii::t("booking", "Dates") ?> <b>
+                                <i class="fa fa-calendar"></i><?= Yii::t("booking.owner_response.dates", "Dates") ?> <b>
                                     <?= Carbon::createFromTimestamp($booking->time_from)->formatLocalized('%d %B'); ?>
                                     - <?= Carbon::createFromTimestamp($booking->time_to)->formatLocalized('%d %B'); ?>
                                 </b>
@@ -60,8 +61,8 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                         <ul class="list-unstyled list-lines">
                             <li>
                                 DKK <?= $item->price_day ?>
-                                x <?= ($booking->time_to - $booking->time_from) / (24 * 60 * 60) ?> <?= Yii::t("booking",
-                                    "days") ?>
+                                x <?= ($booking->time_to - $booking->time_from) / (24 * 60 * 60) ?>
+                                <?= Yii::t("booking", "days") ?>
                                 <b>DKK <?= $booking->amount_item ?></b>
                             </li>
                             <li>

@@ -67,11 +67,6 @@ $components = [
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image'
                 ],
-                'functions' => [
-                    'translate' => function ($string) {
-                        return \Yii::t('app', $string);
-                    },
-                ]
             ],
         ],
     ],

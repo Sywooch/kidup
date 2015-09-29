@@ -86,14 +86,14 @@ class ViewController extends Controller
             $viewFile = '/renter/invoice';
             if ($booking->payin->invoice_id == null) {
                 \Yii::$app->session->addFlash('error',
-                    \Yii::t('booking', 'Invoice is available after the owner accepted the booking.'));
+                    \Yii::t('booking.flash.invoice_available_after_accept', 'Invoice is available after the owner accepted the booking.'));
                 return $this->redirect('@web/booking/' . $booking->id);
             }
         } else {
             $viewFile = '/owner/invoice';
             if (is_null($booking->payout) || $booking->payout->invoice_id == null) {
                 \Yii::$app->session->addFlash('error',
-                    \Yii::t('booking', 'Invoice is available 24h after the booking started.'));
+                    \Yii::t('booking.flash.invoice_available_24h_after_booking_start', 'Invoice is available 24h after the booking started.'));
                 return $this->redirect('@web/booking/' . $booking->id);
             }
         }
@@ -156,7 +156,7 @@ class ViewController extends Controller
             if (\Yii::$app->user->id == $booking->renter_id) {
                 return $this->redirect('@web/booking/' . $id . '/confirm');
             } else {
-                \Yii::$app->session->addFlash('info', \Yii::t('booking', 'The renter has yet to confirm the booking'));
+                \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.renter_is_unconfirmed', 'The renter has yet to confirm the booking'));
                 return $this->redirect('@web/booking/current');
             }
         }

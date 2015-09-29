@@ -50,7 +50,7 @@ class BrainTree extends Model
         ));
         if ($transaction->success === false) {
             if ($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.') {
-                \Yii::$app->session->addFlash('error', \Yii::t('booking', 'A double transaction occurred.'));
+                \Yii::$app->session->addFlash('error', \Yii::t('booking.flash.double_transaction_error', 'A double transaction occurred.'));
                 return false;
             } else {
                 \Yii::$app->session->addFlash('error', $transaction->_attributes['message']);

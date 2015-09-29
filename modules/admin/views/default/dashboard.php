@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 
-$this->title = \Yii::t('title', 'Admin') . ' - ' . Yii::$app->name;
+$this->title = "Admin";
 ?>
 
 <?php

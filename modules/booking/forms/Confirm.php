@@ -23,7 +23,7 @@ class Confirm extends Model
     public function attributeLabels()
     {
         return [
-            'rules' => \Yii::t('booking',
+            'rules' => \Yii::t('booking.create.nonce_required',
                 "I agree to the terms and conditions, and verify that my card is charged with {0} DKK", [
                     $this->booking->amount_payin
                 ])
@@ -35,12 +35,12 @@ class Confirm extends Model
         return [
             [['message'], 'string'],
             [['rules', 'booking'], 'required'],
-            ['nonce', 'required', 'message' => \Yii::t('booking', 'Please add a valid payment method.')],
+            ['nonce', 'required', 'message' => \Yii::t('booking.create.invalid_payment_method', 'Please add a valid payment method.')],
             [
                 'rules',
                 'compare',
                 'compareValue' => true,
-                'message' => \Yii::t('booking', 'You must agree to the terms and conditions')
+                'message' => \Yii::t('booking.create.agree_to_terms', 'You must agree to the terms and conditions')
             ],
         ];
     }
@@ -77,7 +77,7 @@ class Confirm extends Model
                 $this->booking->request_expires_at = time() + 48 * 60 * 60;
 
                 if ($this->booking->save()) {
-                    \Yii::$app->session->addFlash('success', \Yii::t('booking', "You're booking has been made!"));
+                    \Yii::$app->session->addFlash('success', \Yii::t('booking.flash.successfully_created', "You're booking has been made!"));
                     return true;
                 }
             }
