@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use \app\modules\images\components\ImageHelper;
 
 \app\assets\FontAwesomeAsset::register($this);
 ?>
@@ -13,34 +14,34 @@ use yii\helpers\Url;
                 <div class="row">
                     <div class="info">
                         <div class="col-sm-3">
-                            <p class="titel"><?= Yii::t("app", "Company") ?></p>
+                            <p class="titel"><?= Yii::t("app.footer.company_header", "Company") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'About KidUp'), '@web/p/about-kidup')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Terms and Conditions'), '@web/p/terms-and-conditions')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Privacy'), '@web/p/privacy')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Contact'), '@web/p/about-kidup')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.about_us', 'About Us'), '@web/p/about-kidup')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.terms_and_conditions', 'Terms and Conditions'), '@web/p/terms-and-conditions')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.privacy', 'Privacy'), '@web/p/privacy')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.contact', 'Contact'), '@web/p/about-kidup')?></p></li>
                             </ul>
                         </div>
                         <div class="col-sm-3">
-                            <p class="titel"><?= Yii::t("app", "Understand") ?></p>
+                            <p class="titel"><?= Yii::t("app.footer.understand_header", "Understand") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'Why use kidup?'), '@web/p/why-rent')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'How to rent?'), '@web/p/how-to-rent')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'How to rent out?'), '@web/p/how-to-rentout')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.why_use_kidup', 'Why use kidup?'), '@web/p/why-rent')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.how_rent', 'How to rent?'), '@web/p/how-to-rent')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.how_rent_out', 'How to rent out?'), '@web/p/how-to-rentout')?></p></li>
                             </ul>
                         </div>
                         <div class="col-sm-3">
-                            <p class="titel"><?= Yii::t("app", "Help") ?></p>
+                            <p class="titel"><?= Yii::t("app.footer.help", "Help") ?></p>
                             <ul class="nav">
-                                <li><p><?= Html::a(Yii::t('app', 'Renting guide'), '@web/p/guide')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'Safety & Insurance'), '@web/p/safety')?></p></li>
-                                <li><p><?= Html::a(Yii::t('app', 'FAQ'), '@web/p/faq')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.renting_guide', 'Renting guide'), '@web/p/guide')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.safety_insurance', 'Safety & Insurance'), '@web/p/safety')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.faq', 'FAQ'), '@web/p/faq')?></p></li>
                             </ul>
                         </div>
                     </div>
                     <div class="social">
                         <div class="col-sm-3 text-center">
-                            <p class="titel"><?= Yii::t("app", "Follow us") ?></p>
+                            <p class="titel"><?= Yii::t("app.footer.follow_us", "Follow us") ?></p>
                             <a href="https://www.facebook.com/kidup.social" target="_blank" title="Facebook">
                                 <i id="facebook" class="fa fa-facebook fa-2x"></i>
                             </a>
@@ -63,7 +64,7 @@ use yii\helpers\Url;
         </div>
         <div class="row last">
             <div class="col-sm-12 text-center">
-                <img src="<?= \app\modules\images\components\ImageHelper::url('kidup/logo/horizontal-white.png') ?>" width="80px">
+                <img src="<?= ImageHelper::url('kidup/logo/horizontal-white.png') ?>" width="80px">
                 <h4>&#169;KidUp | 2015</h4>
             </div>
         </div>
