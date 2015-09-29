@@ -6,7 +6,7 @@ var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
 var changed = require('gulp-changed');
 var less = require('gulp-less');
-var browserSync = require('browser-sync').create();
+//var browserSync = require('browser-sync').create();
 var path = require('path');
 var cache = require('gulp-cached');
 var filter = require('gulp-filter');
@@ -120,7 +120,9 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest('web/packages/fonts/proxima/'));
     var fa = gulp.src('vendor/bower/font-awesome/fonts/*.*')
         .pipe(gulp.dest('web/packages/fonts'));
-    return merge(adelle, proxima, fa);
+    var bootstrap = gulp.src('vendor/bower/bootstrap/fonts/*.*')
+        .pipe(gulp.dest('web/packages/fonts'));
+    return merge(adelle, proxima, fa, bootstrap);
 });
 
 gulp.task('watch-js', function () {
@@ -131,11 +133,15 @@ gulp.task('watch-css', function () {
     return gulp.watch(cssFiles, ['css'])
 });
 
+gulp.task('watch-json', function () {
+    return gulp.watch('web/packages/**/*.json', ['css',  'js'])
+});
+
 gulp.task('browser-sync', function () {
     //browserSync.init({
     //    proxy: "http://192.168.33.99"
     //});
 });
 
-gulp.task('default', ['js', 'css', 'watch-js', 'browser-sync', 'watch-css', 'fonts']);
+gulp.task('default', ['js', 'css', 'watch-js', 'browser-sync', 'watch-css', 'fonts', 'watch-json']);
 gulp.task('build', ['js', 'css', 'fonts']);

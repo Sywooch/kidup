@@ -2,7 +2,7 @@
 
 namespace app\modules\booking\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\booking\forms\Confirm;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
@@ -58,6 +58,9 @@ class DefaultController extends Controller
             if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
                 $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
             }
+            if(\Yii::$app->request->isAjax){
+                return \yii\helpers\Json::encode($model->validate());
+            }
             if ($model->save()) {
                 // booking is confirmed
                 if (YII_ENV == 'prod') {
@@ -67,7 +70,7 @@ class DefaultController extends Controller
             }
         }
 
-        $item = Item::findOne($booking->item_id);
+        $item = Item::find()->where(['id' => $booking->item_id])->one();
 
         return $this->render('confirm', [
             'booking' => $booking,

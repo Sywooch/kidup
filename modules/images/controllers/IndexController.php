@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 /**
  * Site controller
  */
-class IndexController extends \app\controllers\Controller
+class IndexController extends \app\extended\web\Controller
 {
 
     public function behaviors()

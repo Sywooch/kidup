@@ -2,8 +2,8 @@
 
 namespace app\modules\mail\controllers;
 
-use app\components\Event;
-use app\controllers\Controller;
+use app\helpers\Event;
+use app\extended\web\Controller;
 use app\modules\booking\models\Payin;
 use app\modules\mail\models\Mailer;
 use app\modules\mail\models\MailLog;

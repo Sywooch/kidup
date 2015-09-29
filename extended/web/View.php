@@ -1,13 +1,11 @@
 <?php
-namespace app\components\extended;
+namespace app\extended\web;
 
 use app\assets\Package;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 
 /**
@@ -29,19 +27,19 @@ class View extends \yii\web\View
         if ($this->assetPackage === false) {
             $this->assetPackage = Package::OTHER;
         }
-        return parent::init();
+        return \yii\web\View::init();
     }
 
     public function endPage($ajaxMode = false)
     {
-        $this->trigger(self::EVENT_END_PAGE);
+        $this->trigger(\yii\web\View::EVENT_END_PAGE);
 
         $content = ob_get_clean();
 
         echo strtr($content, [
-            self::PH_HEAD => $this->renderHeadHtml(),
-            self::PH_BODY_BEGIN => $this->renderBodyBeginHtml(),
-            self::PH_BODY_END => $this->renderBodyEndHtml($ajaxMode),
+            \yii\web\View::PH_HEAD => $this->renderHeadHtml(),
+            \yii\web\View::PH_BODY_BEGIN => $this->renderBodyBeginHtml(),
+            \yii\web\View::PH_BODY_END => $this->renderBodyEndHtml($ajaxMode),
         ]);
 
         $this->clear();
@@ -64,11 +62,11 @@ class View extends \yii\web\View
         if (!empty($this->css)) {
             $lines[] = implode("\n", $this->css);
         }
-        if (!empty($this->jsFiles[self::POS_HEAD])) {
-            $jsFiles = $this->jsFiles[self::POS_HEAD];
+        if (!empty($this->jsFiles[\yii\web\View::POS_HEAD])) {
+            $jsFiles = $this->jsFiles[\yii\web\View::POS_HEAD];
         }
-        if (!empty($this->js[self::POS_HEAD])) {
-            $lines[] = Html::script(implode("\n", $this->js[self::POS_HEAD]), ['type' => 'text/javascript']);
+        if (!empty($this->js[\yii\web\View::POS_HEAD])) {
+            $lines[] = Html::script(implode("\n", $this->js[\yii\web\View::POS_HEAD]), ['type' => 'text/javascript']);
         }
 
         $this->webpackCssFiles = array_keys($cssFiles);
@@ -85,11 +83,11 @@ class View extends \yii\web\View
     protected function renderBodyBeginHtml()
     {
         $lines = [];
-        if (!empty($this->jsFiles[self::POS_BEGIN])) {
-            $lines[] = implode("\n", $this->jsFiles[self::POS_BEGIN]);
+        if (!empty($this->jsFiles[\yii\web\View::POS_BEGIN])) {
+            $lines[] = implode("\n", $this->jsFiles[\yii\web\View::POS_BEGIN]);
         }
-        if (!empty($this->js[self::POS_BEGIN])) {
-            $lines[] = Html::script(implode("\n", $this->js[self::POS_BEGIN]), ['type' => 'text/javascript']);
+        if (!empty($this->js[\yii\web\View::POS_BEGIN])) {
+            $lines[] = Html::script(implode("\n", $this->js[\yii\web\View::POS_BEGIN]), ['type' => 'text/javascript']);
         }
 
         return empty($lines) ? '' : implode("\n", $lines);
@@ -107,38 +105,38 @@ class View extends \yii\web\View
     {
         $lines = [];
 
-        if (!empty($this->jsFiles[self::POS_END])) {
-            $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->jsFiles[self::POS_END]);
+        if (!empty($this->jsFiles[\yii\web\View::POS_END])) {
+            $this->webpackJsFiles = ArrayHelper::merge($this->webpackJsFiles, $this->jsFiles[\yii\web\View::POS_END]);
         }
 
         if ($ajaxMode) {
             $scripts = [];
-            if (!empty($this->js[self::POS_END])) {
-                $scripts[] = implode("\n", $this->js[self::POS_END]);
+            if (!empty($this->js[\yii\web\View::POS_END])) {
+                $scripts[] = implode("\n", $this->js[\yii\web\View::POS_END]);
             }
-            if (!empty($this->js[self::POS_READY])) {
-                $scripts[] = implode("\n", $this->js[self::POS_READY]);
+            if (!empty($this->js[\yii\web\View::POS_READY])) {
+                $scripts[] = implode("\n", $this->js[\yii\web\View::POS_READY]);
             }
-            if (!empty($this->js[self::POS_LOAD])) {
-                $scripts[] = implode("\n", $this->js[self::POS_LOAD]);
+            if (!empty($this->js[\yii\web\View::POS_LOAD])) {
+                $scripts[] = implode("\n", $this->js[\yii\web\View::POS_LOAD]);
             }
             if (!empty($scripts)) {
                 $lines[] = Html::script(implode("\n", $scripts), ['type' => 'text/javascript']);
             }
         } else {
-            if (!empty($this->js[self::POS_END])) {
-                $lines[] = Html::script(implode("\n", $this->js[self::POS_END]), ['type' => 'text/javascript']);
+            if (!empty($this->js[\yii\web\View::POS_END])) {
+                $lines[] = Html::script(implode("\n", $this->js[\yii\web\View::POS_END]), ['type' => 'text/javascript']);
             }
-            if (!empty($this->js[self::POS_READY])) {
+            if (!empty($this->js[\yii\web\View::POS_READY])) {
                 // customization
-                $js = "var yiiOnReadyFunction = function(){\n" . implode("\n", $this->js[self::POS_READY]) . "\n};";
+                $js = "var yiiOnReadyFunction = function(){\n" . implode("\n", $this->js[\yii\web\View::POS_READY]) . "\n};";
                 $js .= "jQuery(document).ready(yiiOnReadyFunction);";
 
                 // customization out
                 $lines[] = Html::script($js, ['type' => 'text/javascript']);
             }
-            if (!empty($this->js[self::POS_LOAD])) {
-                $js = "jQuery(window).load(function () {\n" . implode("\n", $this->js[self::POS_LOAD]) . "\n});";
+            if (!empty($this->js[\yii\web\View::POS_LOAD])) {
+                $js = "jQuery(window).load(function () {\n" . implode("\n", $this->js[\yii\web\View::POS_LOAD]) . "\n});";
                 $lines[] = Html::script($js, ['type' => 'text/javascript']);
             }
         }
@@ -207,7 +205,7 @@ class View extends \yii\web\View
         }
 
         if($this->assetPackage !== Package::ADMIN){
-            $cssLines = [Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.css")];
+            $cssLines = [Html::cssFile(Yii::$aliases['@web'] . "/packages/common/common.css")];
         }else{
             $cssLines = [];
         }

@@ -81,7 +81,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li class="dropdown profile hidden-xs">
                             <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown"
                                aria-expanded="true">
-                                <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                <?= \app\modules\user\widgets\UserImage::widget([
                                     'user_id' => \Yii::$app->user->id,
                                     'width' => '40px'
                                 ])

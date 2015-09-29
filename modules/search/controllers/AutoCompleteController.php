@@ -2,7 +2,7 @@
 namespace app\modules\search\controllers;
 
 use app\components\Cache;
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\item\models\Category;
 use app\modules\search\models\ItemModel;
 use app\modules\search\models\ItemSearch;

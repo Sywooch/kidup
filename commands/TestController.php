@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\models\base\Item;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\ItemSimilarity;

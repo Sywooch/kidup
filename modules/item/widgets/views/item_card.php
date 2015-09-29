@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use app\modules\user\widgets\UserImage;
 use \app\modules\review\widgets\ReviewScore;
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\item\models\Item $model
  * @var string $rowClass
  */

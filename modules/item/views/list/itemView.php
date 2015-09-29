@@ -3,7 +3,7 @@ use app\modules\images\components\ImageHelper;
 use yii\helpers\Url;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\item\models\Item $model
  */
 

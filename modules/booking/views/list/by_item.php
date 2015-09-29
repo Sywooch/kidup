@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\item\models\Item $item
  * @var \yii\data\ActiveDataProvider $provider
  */

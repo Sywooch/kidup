@@ -1,3 +1,6 @@
 ---
 # application tasks to be customized and to run after the main provision
 - cron: name="kidup cron" minute="*" job="php /vagrant/yii schedule/run --scheduleFile=@app/config/schedule.php 1>> /dev/null 2>&1"
+- name: Install supervisor
+  sudo: yes
+  apt: pkg=supervisor state=latest

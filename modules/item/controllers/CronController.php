@@ -2,7 +2,7 @@
 
 namespace app\modules\item\controllers;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\item\models\Item;
 use Yii;
 use yii\base\Model;

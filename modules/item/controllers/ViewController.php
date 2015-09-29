@@ -4,7 +4,7 @@ namespace app\modules\item\controllers;
 
 use app\components\Cache;
 use app\components\WidgetRequest;
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\models\base\Currency;
 use app\models\base\Review;
 use app\modules\images\components\ImageHelper;

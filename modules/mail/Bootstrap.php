@@ -2,7 +2,7 @@
 
 namespace app\modules\mail;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\Payin;
 use app\modules\item\models\Item;

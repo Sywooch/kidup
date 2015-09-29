@@ -2,7 +2,7 @@
 
 namespace app\modules\mail\jobs\user;
 
-use app\components\Job;
+use app\extended\job\Job;
 use app\models\base\MailAccount;
 use app\modules\mail\models\Mailer;
 use app\modules\mail\models\Token;

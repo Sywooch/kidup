@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\jobs;
 
-use app\components\Job;
+use app\extended\job\Job;
 use app\modules\mail\models\Token;
 
 class TestJob extends Job{

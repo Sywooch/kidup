@@ -6,7 +6,7 @@ use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 use \app\assets\AppAsset;
 
-/* @var $this \app\components\extended\View */
+/* @var $this \app\extended\web\View */
 /* @var $content string */
 
 $url = @Yii::$app->request->getUrl();

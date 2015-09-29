@@ -7,7 +7,7 @@ use app\modules\review\widgets\ReviewScore;
 use app\modules\review\models\Review;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var $model \app\modules\review\models\Review
  */
 

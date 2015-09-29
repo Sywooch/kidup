@@ -1,5 +1,5 @@
 <?php
-namespace app\controllers;
+namespace app\extended\web;
 
 use app\modules\search\models\IpLocation;
 use app\modules\user\models\Profile;
@@ -70,7 +70,7 @@ class Controller extends \yii\web\Controller
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
-        return parent::__construct($id, $controller);
+        return \yii\web\Controller::__construct($id, $controller);
     }
 
 }

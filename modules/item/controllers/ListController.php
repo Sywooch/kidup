@@ -2,7 +2,7 @@
 
 namespace app\modules\item\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use Yii;

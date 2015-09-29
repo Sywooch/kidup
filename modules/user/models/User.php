@@ -2,7 +2,7 @@
 
 namespace app\modules\user\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\images\components\ImageHelper;
 use app\modules\item\models\Location;
 use app\modules\mail\models\Token;

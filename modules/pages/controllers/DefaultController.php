@@ -3,7 +3,7 @@
 namespace app\modules\pages\controllers;
 
 use app\components\Error;
-use app\controllers\Controller;
+use app\extended\web\Controller;
 
 class DefaultController extends Controller
 {

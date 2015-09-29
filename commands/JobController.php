@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\jobs\SlackJob;
 use app\modules\admin\jobs\TestJob;
 use Yii;
 use yii\console\Controller;
@@ -10,13 +11,18 @@ class JobController extends Controller
 {
 
     public function actionDoJob(){
-        (new \app\components\JobWorker())->doJob();
+        while(true){
+            $performedJob = @(new \app\extended\job\JobWorker())->doJob();
+            if($performedJob == null){
+                sleep(2);
+            }
+            echo 1;
+        }
     }
 
     public function actionTest(){
-        new TestJob([
-            'user_id' => 1,
-            'code' => rand(0,1111111)
+        new SlackJob([
+            'message' => 'test from terminal',
         ]);
     }
 }

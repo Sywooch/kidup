@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  */
 \app\modules\item\assets\ListAsset::register($this);
 

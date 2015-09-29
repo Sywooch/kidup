@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 /**
  * @var \app\modules\message\models\Conversation $conversation
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  */
 
 \app\modules\message\assets\MessageAsset::register($this);
@@ -82,7 +82,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                             <div class="row">
                                 <div class="col-md-2 col-sm-3">
                                     <?php if ($message->sender_user_id === \Yii::$app->user->id): ?>
-                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                        <?= \app\modules\user\widgets\UserImage::widget([
                                             'user_id' => $message->sender_user_id
                                         ]) ?>
                                         <h4 style="margin:0" class="">
@@ -98,7 +98,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                                 </div>
                                 <div class="col-md-2 col-sm-3">
                                     <?php if ($message->sender_user_id !== \Yii::$app->user->id): ?>
-                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                        <?= \app\modules\user\widgets\UserImage::widget([
                                             'user_id' => $message->sender_user_id
                                         ]) ?>
                                         <h3 style="margin:0" class="">

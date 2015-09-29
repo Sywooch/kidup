@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  */
 \app\modules\pages\assets\WpAsset::register($this);
 $this->assetPackage = \app\assets\Package::PAGES;

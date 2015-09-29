@@ -8,7 +8,7 @@ use \app\modules\images\components\ImageHelper;
 use app\modules\review\widgets\ReviewScore;
 
 /**
- * @var app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var app\modules\booking\models\Booking $booking
  * @var \app\modules\booking\forms\Confirm $model
  * @var \app\modules\item\models\Item $item

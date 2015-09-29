@@ -1,7 +1,7 @@
 <?php
 namespace app\tests\codeception\functional\booking;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\booking\controllers\CronController;
 use app\modules\booking\controllers\DefaultController;
 use app\modules\booking\forms\Confirm;

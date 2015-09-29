@@ -1,6 +1,6 @@
 <?php
 
-use app\components\ViewHelper;
+use app\helpers\ViewHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

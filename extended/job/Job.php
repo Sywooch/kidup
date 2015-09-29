@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\extended\job;
 
 use app\models\base\JobQueue;
 use Aws;
@@ -20,7 +20,7 @@ abstract class Job extends Model
     private $isWorker = false;
 
     private $jobData = false;
-    public $maxAttempts = 10;
+    public $maxAttempts = 5;
     public $retryPeriod = 10;
 
     abstract public function handle();
@@ -44,7 +44,7 @@ abstract class Job extends Model
         if($this->isWorker){
             return $this;
         }
-//        parent::__construct();
+        parent::__construct();
 
         return $this->queue();
     }

@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\components\Encrypter;
+use app\helpers\Encrypter;
 use Yii;
 use yii\console\Controller;
 

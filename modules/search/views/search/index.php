@@ -2,7 +2,7 @@
 use yii\widgets\Pjax;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\search\forms\Filter $model
  * @var \yii\data\ActiveDataProvider $results
  */
@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 \app\assets\JQueryTextRangeAsset::register($this);
 \app\assets\FullModalAsset::register($this);
 
-$this->title = \app\components\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
+$this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('title', 'Search KidStuff'));
 
 $this->assetPackage = \app\assets\Package::SEARCH;
 ?>

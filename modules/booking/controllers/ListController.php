@@ -3,7 +3,7 @@
 namespace app\modules\booking\controllers;
 
 use app\components\Error;
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use Carbon\Carbon;

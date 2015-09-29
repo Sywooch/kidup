@@ -11,8 +11,8 @@
 
 namespace app\modules\user\controllers;
 
-use app\components\Event;
-use app\controllers\Controller;
+use app\helpers\Event;
+use app\extended\web\Controller;
 use app\modules\images\components\ImageManager;
 use app\modules\mail\models\Token;
 use app\modules\user\Finder;

@@ -6,7 +6,7 @@ use kartik\icons\Icon;
 use \yii\helpers\Html;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\item\forms\Edit $model
  * @var \app\modules\item\models\Item $item
  * @var array $pageParams

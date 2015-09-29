@@ -3,7 +3,7 @@ use yii\bootstrap\Modal;
 use \kartik\social\FacebookPlugin;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var $model \app\modules\review\models\Review
  */
 

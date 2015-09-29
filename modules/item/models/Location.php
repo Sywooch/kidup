@@ -144,12 +144,12 @@ class Location extends \app\models\base\Location
     public static function getByIP($ip) {
         if (strpos($ip, '.') !== false) {
             // its an v4 address
-            $gi = geoip_open("../data/GeoLiteCity.dat",GEOIP_STANDARD);
+            $gi = geoip_open(Yii::$aliases['@item']."/data/GeoLiteCity.dat",GEOIP_STANDARD);
             $record = GeoIP_record_by_addr($gi, $ip);
             geoip_close($gi);
         } else {
             // its an v6 address
-            $gi = geoip_open("../data/GeoLiteCityv6.dat",GEOIP_STANDARD);
+            $gi = geoip_open(Yii::$aliases['@item']."/data/GeoLiteCityv6.dat",GEOIP_STANDARD);
             $record = GeoIP_record_by_addr_v6($gi, $ip);
             geoip_close($gi);
         }

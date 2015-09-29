@@ -50,6 +50,8 @@ class Map extends \yii\bootstrap\Widget {
 //            $leaflet->addLayer($circle);
 //        }
 
+
+        $this->getView()->registerJs("L.Icon.Default.imagePath = 'test';");
         // finally render the widget
         echo \dosamigos\leaflet\widgets\Map::widget(['leafLet' => $leaflet]);
     }

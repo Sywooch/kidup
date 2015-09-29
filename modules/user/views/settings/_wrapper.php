@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  */
 \app\modules\user\assets\SettingsAsset::register($this);
 $this->title = $title;

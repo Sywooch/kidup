@@ -2,7 +2,7 @@
 
 namespace app\modules\booking\controllers;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\booking\models\Booking;
 use app\modules\booking\models\BrainTree;
 use app\modules\booking\models\Invoice;

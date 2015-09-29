@@ -32,7 +32,7 @@ use Yii;
  * @property string $promotion_code_id
  *
  * @property \app\models\base\Currency $currency
- * @property \app\models\base\Item $item
+ * @property \app\modules\item\models\Item $item
  * @property \app\models\base\Payin $payin
  * @property \app\models\base\Payout $payout
  * @property \app\models\base\User $renter

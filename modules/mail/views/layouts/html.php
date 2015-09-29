@@ -2,7 +2,7 @@
 use app\modules\images\components\ImageHelper;
 use yii\helpers\Html;
 
-/* @var $this \app\components\extended\View */
+/* @var $this \app\extended\web\View */
 /* @var $message \yii\mail\MessageInterface the message being composed */
 /* @var $content string main view render result */
 
@@ -10,8 +10,6 @@ use yii\helpers\Html;
 if (isset(\Yii::$app->params['tmp_email_params'])) {
     $urls = \Yii::$app->params['tmp_email_params']['urls'];
 }
-
-$this->assetPackage = \app\assets\Package::EMAIL;
 ?>
 
 <?php $this->beginPage() ?>

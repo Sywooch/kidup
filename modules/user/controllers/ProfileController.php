@@ -11,7 +11,7 @@
 
 namespace app\modules\user\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\item\models\Item;
 use app\modules\review\models\Review;
 use app\modules\user\Finder;

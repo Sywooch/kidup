@@ -2,7 +2,7 @@
 
 namespace app\modules\booking\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\message\models\Conversation;
 use Carbon\Carbon;
 use Yii;

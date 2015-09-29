@@ -3,7 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\components\Cache;
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\home\forms\Search;
 use app\modules\item\models\Category;
 use app\modules\item\models\Item;
@@ -77,5 +77,30 @@ class HomeController extends Controller
         ]);
 
         return $res;
+    }
+
+    public function actionChangeLanguage($lang){
+        $l = \app\modules\user\models\Language::findOne($lang);
+
+        if($l !== null){
+            Yii::$app->session->remove('lang');
+            Yii::$app->session->set('lang', $lang);
+        }else{
+            Yii::error('Language undefined: '.$lang);
+        }
+        if(!\Yii::$app->user->isGuest){
+            Yii::$app->session->setFlash('info', \Yii::t('app', "Please change your profile settings to permanently change the language!"));
+        }
+        if(isset($_SERVER["HTTP_REFERER"])){
+            return $this->redirect($_SERVER["HTTP_REFERER"]);
+        }else{
+            return $this->goHome();
+        }
+    }
+
+    public function actionSuperSecretCacheFlush(){
+        \Yii::$app->cache->flush();
+//        \app\components\Cache::remove('item_controller-view');
+        echo 'dude.. the fu!';
     }
 }

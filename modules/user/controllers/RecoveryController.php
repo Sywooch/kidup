@@ -11,7 +11,7 @@
 
 namespace app\modules\user\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\mail\models\Token;
 use app\modules\user\Finder;
 use app\modules\user\forms\Recovery;

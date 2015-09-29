@@ -69,14 +69,20 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         </div>
                     </div>
 
-                    <?= Gallery::widget([
-                        'items' => $images,
-                        'id' => 'gallery',
-                        'clientOptions' => [
-                            'gallery' => true,
-                            'stretchImages' => true,
-                        ]
-                    ]) ?>
+                    <div id="galleryPhotoViewer">
+                        <?= Gallery::widget([
+                            'items' => $images,
+                            'id' => 'galleryPhotoViewer',
+                            'clientOptions' => [
+                                'gallery' => true,
+                                'stretchImages' => true,
+                            ],
+                            'options' => [
+                                'class' => 'smallImages'
+                            ]
+                        ]) ?>
+                    </div>
+
 
                     <div class="card">
                         <div class="content product-content">
@@ -235,3 +241,8 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
     </section>
 </div>
 
+<?= $this->registerJs(
+<<<JS
+
+JS
+); ?>

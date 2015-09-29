@@ -20,10 +20,10 @@ use Yii;
  * @property double $amount
  * @property integer $invoice_id
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\Invoice $invoice
- * @property \app\models\User $user
- * @property \app\models\Currency $currency
+ * @property Booking[] $bookings
+ * @property Invoice $invoice
+ * @property User $user
+ * @property Currency $currency
  */
 class Payin extends \yii\db\ActiveRecord
 {

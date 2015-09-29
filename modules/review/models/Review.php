@@ -2,7 +2,7 @@
 
 namespace app\modules\review\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use app\modules\booking\models\Booking;
 use Carbon\Carbon;
 use Yii;

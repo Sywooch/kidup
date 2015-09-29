@@ -1,7 +1,7 @@
 <?php
 namespace app\modules\review\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\booking\models\Booking;
 use app\modules\item\models\Item;
 use app\modules\review\forms\Create;

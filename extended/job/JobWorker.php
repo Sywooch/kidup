@@ -1,8 +1,9 @@
 <?php
 
-namespace app\components;
+namespace app\extended\job;
 
 use app\models\base\JobQueue;
+use yii\base\ErrorException;
 use yii\helpers\Json;
 
 class JobWorker
@@ -10,6 +11,7 @@ class JobWorker
 
     public function doJob()
     {
+        throw new ErrorException();
         $job = JobQueue::find()->where([
             'status' => Job::STATUS_IN_QUEUE,
         ])->andWhere('execution_time < :time')->params([':time' => time()])->one();
@@ -36,7 +38,7 @@ class JobWorker
                 $jobQueue->delete();
             }
         }
-        return true;
+        return null;
     }
 
     private function getServerCpu(){

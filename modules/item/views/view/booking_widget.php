@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var false|string $redirect
  * @var \app\modules\item\forms\CreateBooking $model
  */

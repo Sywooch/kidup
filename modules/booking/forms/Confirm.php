@@ -35,7 +35,7 @@ class Confirm extends Model
         return [
             [['message'], 'string'],
             [['rules', 'booking'], 'required'],
-//            ['nonce', 'required', 'message' => \Yii::t('booking', 'Please add a valid payment method.')],
+            ['nonce', 'required', 'message' => \Yii::t('booking', 'Please add a valid payment method.')],
             [
                 'rules',
                 'compare',

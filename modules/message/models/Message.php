@@ -2,7 +2,7 @@
 
 namespace app\modules\message\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use Carbon\Carbon;
 use Yii;
 

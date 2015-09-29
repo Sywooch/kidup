@@ -1,10 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\mail\controllers;
 
 use app\modules\mail\models\MailMessage;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
 
 class SendgridController extends Controller
 {

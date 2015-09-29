@@ -37,7 +37,6 @@
     "kartik-v/yii2-widget-growl": "*",
     "braintree/braintree_php" : "3.2.0",
     "mjaschen/phpgeo": "*",
-    "insolita/yii2-migration-generator": "dev-master",
     "josegonzalez/dotenv": "dev-master",
     "nesbot/carbon": "dev-master",
     "maknz/slack": "dev-master",
@@ -46,19 +45,18 @@
     "kartik-v/yii2-widget-rating": "*",
     "cinghie/yii2-cookie-consent": "*",
     "monolog/monolog": "~1.13@dev",
-    "zetacomponents/mail": "*",
-    "backup-manager/backup-manager": "*",
     "aws/aws-sdk-php": "3.2.2",
     "league/flysystem-aws-s3-v3": "*",
     "omnilight/yii2-scheduling": "*",
     "league/glide": "*",
-    "warrence/yii2-kartikgii": "dev-master",
     "geoip/geoip": "~1.14",
     "yii2mod/yii2-c3-chart": "*",
     "bower-asset/lodash": "dev-master",
     "bower-asset/bootstrap-modal-carousel": "^2.0@dev",
     "alexandernst/yii2-device-detect": "0.0.9",
-    "yiisoft/yii2-twig": "^2.0@dev"
+    "yiisoft/yii2-twig": "^2.0@dev",
+    "kartik-v/yii2-editable": "@dev",
+    "kartik-v/yii2-popover-x": "@dev"
   },
   "require-dev": {
     "schmunk42/yii2-giiant": "*",
@@ -72,17 +70,16 @@
     "codeception/specify": "0.4.1",
     "codeception/verify": "0.2.7",
     "yiisoft/yii2-faker": "2.0.3",
-    "fproject/yii2-migration-generator": "*",
-    "c006/yii2-migration-utility": "dev-master",
     "league/factory-muffin": "~3.0",
-    "league/factory-muffin-faker": "*"
+    "league/factory-muffin-faker": "*",
+    "warrence/yii2-kartikgii": "dev-master"
   },
   "config": {
     "process-timeout": 1800
   },
   "extra": {
     "asset-installer-paths": {
-      "npm-asset-library": "vendor/npm",
+      "npm-asset-library": "node_modules",
       "bower-asset-library": "vendor/bower"
     }
   }

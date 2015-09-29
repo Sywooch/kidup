@@ -4,7 +4,7 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
-/* @var $this \app\components\extended\View */
+/* @var $this \app\extended\web\View */
 /* @var $content string */
 \app\modules\admin\assets\AdminThemeAsset::register($this);
 \yii\web\JqueryAsset::register($this);

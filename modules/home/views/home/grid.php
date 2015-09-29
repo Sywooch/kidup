@@ -5,7 +5,7 @@ use app\modules\item\widgets\ItemCard;
 use yii\helpers\Url;
 
 /**
- * @var app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @property \app\modules\item\models\Item[] $items
  */
 

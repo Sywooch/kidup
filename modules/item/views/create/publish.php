@@ -5,7 +5,7 @@ use kartik\icons\Icon;
 use \yii\helpers\Html;
 
 /**
- * @var \app\components\extended\View $this
+ * @var \app\extended\web\View $this
  * @var \app\modules\item\models\Item $item
  */
 \app\modules\item\assets\CreateAsset::register($this);

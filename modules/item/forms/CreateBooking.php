@@ -105,7 +105,6 @@ class CreateBooking extends Model
                 if (($session['time_from'] == $this->from && $session['time_to'] == $this->to && $this->item->id == $session['item_id'])
                     || YII_ENV == 'test'
                 ) {
-
                     if ($this->save()) {
                         $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
                         if(YII_ENV === 'test'){

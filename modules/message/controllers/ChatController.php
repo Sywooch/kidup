@@ -1,7 +1,7 @@
 <?php
 namespace app\modules\message\controllers;
 
-use app\controllers\Controller;
+use app\extended\web\Controller;
 use app\modules\message\forms\ChatMessage;
 use app\modules\message\models\Conversation;
 use app\modules\message\models\Message;
