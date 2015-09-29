@@ -89,7 +89,8 @@ class HomeController extends Controller
             Yii::error('Language undefined: '.$lang);
         }
         if(!\Yii::$app->user->isGuest){
-            Yii::$app->session->setFlash('info', \Yii::t('app', "Please change your profile settings to permanently change the language!"));
+            Yii::$app->session->setFlash('info', \Yii::t('home.flash.use_settings_for_permanent_change',
+                "Please change your profile settings to permanently change the language!"));
         }
         if(isset($_SERVER["HTTP_REFERER"])){
             return $this->redirect($_SERVER["HTTP_REFERER"]);

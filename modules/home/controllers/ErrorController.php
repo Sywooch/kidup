@@ -24,7 +24,7 @@ class ErrorController extends Controller
         if ($exception instanceof Exception) {
             $name = $exception->getName();
         } else {
-            $name = $this->defaultName ?: Yii::t('yii', 'Error');
+            $name = $this->defaultName ?: Yii::t('kidup.error', 'Error');
         }
         if ($code) {
             $name .= " (#$code)";
@@ -38,10 +38,9 @@ class ErrorController extends Controller
                 debug_backtrace();
                 exit();
             }
-            $message = $this->defaultMessage ?: Yii::t('yii', 'An internal server error occurred.');
+            $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error', 'An internal server error occurred.');
             if (YII_DEBUG) {
                 get_call_stack();
-                exit();
             }
         }
 

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $name string */
 /* @var $message string */
 /* @var $exception Exception */
-$this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
+$this->title = Yii::$app->name . ' - ' . \Yii::t('kidup.error.title', 'Error');
 ?>
 <section class="section container">
 
@@ -17,25 +17,23 @@ $this->title = Yii::$app->name . ' - ' . \Yii::t('title', 'Error');
         </div>
         <div class="col-md-8">
             <h1 style="color:black">
-                <?= Yii::t("app", "Oh no! An error happened") ?>
+                <?= Yii::t("kidup.error.title", "Oh no! An error happened") ?>
             </h1>
 
             <span style="font-size: 16px">
-                 <?= Yii::t("app", "We'd like to describe it like '{0}'",
+                 <?= Yii::t("kidup.error.error_message", "We'd like to describe it like '{0}'",
                      ["<b>" . nl2br(Html::encode($message)) . "</b>"]) ?>
                 <br><br>
-                <?= Yii::t("app",
+                <?= Yii::t("kidup.error.explanation",
                     "We're sorry you're experiencing this issue. We're aware of the error and try to get it fixed for you!") ?>
-                <?= Yii::t("app", "In the meantime, perhaps you can:") ?>
+                <?= Yii::t("kidup.error.", "In the meantime, perhaps you can:") ?>
                 <br><br>
                 <ul>
-                    <li><?= Html::a(\Yii::t("app", 'Search for interesting products'), '@web/search?q=') ?></li>
-                    <li><?= Html::a(\Yii::t("app", 'Upload one of your own'), '@web/item/create') ?></li>
-                    <li><?= Html::a(\Yii::t("app", 'Visit the homepage'), '@web/home') ?></li>
+                    <li><?= Html::a(\Yii::t("kidup.error.search_for_products_link", 'Search for interesting products'), '@web/search?q=') ?></li>
+                    <li><?= Html::a(\Yii::t("kidup.error.upload_product_link", 'Upload one of your own'), '@web/item/create') ?></li>
+                    <li><?= Html::a(\Yii::t("kidup.error.visit_home_page_link", 'Visit the homepage'), '@web/home') ?></li>
                 </ul>
             </span>
-
         </div>
     </div>
-
 </section>
