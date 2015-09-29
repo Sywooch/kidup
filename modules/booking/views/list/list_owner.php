@@ -19,7 +19,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
             'summary' => false,
             'columns' => [
                 [
-                    'attribute' => \Yii::t('booking', 'status'),
+                    'attribute' => \Yii::t('booking.list.label_status', 'status'),
                     'value' => function ($model, $key, $index, $widget) {
                         /**
                          * @var \app\modules\booking\models\Booking $model
@@ -34,12 +34,12 @@ $this->assetPackage = \app\assets\Package::BOOKING;
 
                         return Html::a($name, '@web/user/' . $model->renter_id);
                     },
-                    'label' => \Yii::t('booking', 'Renter'),
+                    'label' => \Yii::t('booking.list.renter_link', 'Renter'),
                     'format' => 'raw'
                 ],
                 [
                     'attribute' => 'time_from',
-                    'label' => \Yii::t('booking', 'Dates'),
+                    'label' => \Yii::t('booking.list.label_dates', 'Dates'),
                     'value' => function ($model, $key, $index, $widget) {
                         $date1 = \Carbon\Carbon::createFromTimestamp($model->time_from,
                             \Yii::$app->params['serverTimeZone'])->toFormattedDateString();
@@ -51,7 +51,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                     'format' => 'raw'
                 ],
                 [
-                    'label' => \Yii::t('booking', 'Options'),
+                    'label' => \Yii::t('booking.list.label_options', 'Options'),
                     'value' => function ($model, $key, $index, $widget) {
                         /**
                          * @var \app\modules\booking\models\Booking $model
@@ -59,14 +59,14 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                         $links = [];
 
                         if ($model->status !== Booking::DECLINED && $model->status !== Booking::CANCELLED) {
-                            $links [] = Html::a(\Yii::t('booking', 'Receipt'),
+                            $links [] = Html::a(\Yii::t('booking.list.link_receipt', 'Receipt'),
                                 '@web/booking/' . $model->id . '/receipt');
-                            $links [] = Html::a(\Yii::t('booking', 'Invoice'),
+                            $links [] = Html::a(\Yii::t('booking.list.link_invoice', 'Invoice'),
                                 '@web/booking/' . $model->id . '/invoice');
                         };
 
-                        $links[] = Html::a(\Yii::t('booking', 'View Booking'), '@web/booking/' . $model->id);
-                        $links[] = Html::a(\Yii::t('booking', 'Contact {0}', [
+                        $links[] = Html::a(\Yii::t('booking.list.link_view_booking', 'View Booking'), '@web/booking/' . $model->id);
+                        $links[] = Html::a(\Yii::t('booking.list.link_contact_owner', 'Contact {0}', [
                             $model->renter->profile->first_name
                         ]), ['/messages/' . $model->getConversationId()]);
 
