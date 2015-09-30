@@ -2,7 +2,6 @@
 
 namespace item\models\base;
 
-use item\models\Item;
 use Yii;
 
 /**
@@ -84,7 +83,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(Item::className(), ['category_id' => 'id']);
+        return $this->hasMany(\item\models\Item::className(), ['category_id' => 'id']);
     }
 
     /**
@@ -92,7 +91,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getItemCount()
     {
-        return $this->hasMany(Item::className(), ['category_id' => 'id'])->count();
+        return $this->hasMany(\item\models\Item::className(), ['category_id' => 'id'])->count();
     }
 
     /**

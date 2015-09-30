@@ -41,9 +41,9 @@ class ItemHasMedia extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'item_id' => Yii::t('app', 'Item ID'),
-            'media_id' => Yii::t('app', 'Media ID'),
-            'order' => Yii::t('app', 'Order'),
+            'item_id' => 'Item ID',
+            'media_id' => 'Media ID',
+            'order' => 'Order',
         ];
     }
 

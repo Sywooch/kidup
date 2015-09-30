@@ -47,12 +47,12 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <!--Not logged in-->
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login">
-                                <?= Yii::t("app", "Login") ?>
+                                <?= Yii::t("app.menu.login", "Login") ?>
                             </button>
                         </li>
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal">
-                                <?= Yii::t("app", "Register") ?>
+                                <?= Yii::t("app.menu.register", "Register") ?>
                             </button>
                         </li>
                     <?php endif;
