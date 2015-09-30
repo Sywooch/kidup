@@ -160,7 +160,7 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('user.settings.location.title', 'Location Settings')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.location.title', 'Billing Address')) . ' - ' . \Yii::$app->name
         ]);
     }
 
