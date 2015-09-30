@@ -3,7 +3,8 @@
 namespace message\models\base;
 
 use mail\models\MailAccount;
-use message\models\Message;
+use user\models\User;
+use booking\models\Booking;
 use Yii;
 
 /**
@@ -20,7 +21,7 @@ use Yii;
  * @property \user\models\User $initiaterUser
  * @property \user\models\User $targetUser
  * @property MailAccount[] $mailAccounts
- * @property Message[] $messages
+ * @property \message\models\Message[] $messages
  */
 class Conversation extends \yii\db\ActiveRecord
 {
@@ -65,7 +66,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getInitiaterUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'initiater_user_id']);
+        return $this->hasOne(User::className(), ['id' => 'initiater_user_id']);
     }
 
     /**
@@ -73,7 +74,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getTargetUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'target_user_id']);
+        return $this->hasOne(User::className(), ['id' => 'target_user_id']);
     }
 
     /**
@@ -81,7 +82,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\mail\models\MailAccount::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(MailAccount::className(), ['conversation_id' => 'id']);
     }
 
     /**
@@ -97,6 +98,6 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasMany(\message\models\Message::className(), ['conversation_id' => 'id']);
+        return $this->hasOne(Booking::className(), ['id' => 'booking_id']);
     }
 }
