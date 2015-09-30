@@ -13,7 +13,7 @@ use Yii;
  * @property string $data
  * @property integer $user_id
  *
- * @property \user\models\base\User $user
+ * @property \user\models\User $user
  */
 class SocialAccount extends \yii\db\ActiveRecord
 {
@@ -35,7 +35,12 @@ class SocialAccount extends \yii\db\ActiveRecord
             [['data'], 'string'],
             [['user_id'], 'integer'],
             [['provider', 'client_id'], 'string', 'max' => 255],
-            [['provider', 'client_id'], 'unique', 'targetAttribute' => ['provider', 'client_id'], 'message' => 'The combination of Provider and Client ID has already been taken.']
+            [
+                ['provider', 'client_id'],
+                'unique',
+                'targetAttribute' => ['provider', 'client_id'],
+                'message' => \Yii::t('social_account.error_already_used_combination', 'The combination of Provider and Client ID has already been taken.')
+            ]
         ];
     }
 
@@ -45,11 +50,11 @@ class SocialAccount extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'provider' => Yii::t('app', 'Provider'),
-            'client_id' => Yii::t('app', 'Client ID'),
-            'data' => Yii::t('app', 'Data'),
-            'user_id' => Yii::t('app', 'User ID'),
+            'id' => 'ID',
+            'provider' => 'Provider',
+            'client_id' => 'Client ID',
+            'data' => 'Data',
+            'user_id' => 'User ID',
         ];
     }
 
@@ -58,6 +63,6 @@ class SocialAccount extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
     }
 }

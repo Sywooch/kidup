@@ -2,6 +2,7 @@
 
 namespace item\models\base;
 
+use item\models\Item;
 use Yii;
 
 /**
@@ -55,9 +56,9 @@ class Category extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'parent_id' => Yii::t('app', 'Parent ID'),
+            'id' =>'ID',
+            'name' =>'Name',
+            'parent_id' =>'Parent ID',
         ];
     }
 
@@ -77,14 +78,6 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(\item\models\Category::className(), ['parent_id' => 'id']);
     }
 
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategoryTags()
-    {
-        return $this->hasMany(CategoryTag::className(), ['category_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

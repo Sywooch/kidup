@@ -10,8 +10,8 @@ use Yii;
  * @property integer $item_id
  * @property integer $feature_id
  *
- * @property \app\models\Feature $feature
- * @property \app\models\Item $item
+ * @property Feature $feature
+ * @property Item $item
  */
 class ItemHasFeatureSingular extends \yii\db\ActiveRecord
 {
@@ -55,7 +55,7 @@ class ItemHasFeatureSingular extends \yii\db\ActiveRecord
      */
     public function getFeature()
     {
-        return $this->hasOne(\app\models\Feature::className(), ['id' => 'feature_id']);
+        return $this->hasOne(Feature::className(), ['id' => 'feature_id']);
     }
 
     /**
@@ -63,7 +63,7 @@ class ItemHasFeatureSingular extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
 
 

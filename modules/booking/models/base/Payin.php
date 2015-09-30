@@ -61,18 +61,18 @@ class Payin extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'data' => Yii::t('app', 'Data'),
-            'type' => Yii::t('app', 'Type'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'status' => Yii::t('app', 'Status'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'nonce' => Yii::t('app', 'Nonce'),
-            'braintree_backup' => Yii::t('app', 'Braintree Backup'),
-            'amount' => Yii::t('app', 'Amount'),
-            'invoice_id' => Yii::t('app', 'Invoice ID'),
+            'id' => Yii::t('payin.attributes.id', 'ID'),
+            'data' => Yii::t('payin.attributes.data', 'Data'),
+            'type' => Yii::t('payin.attributes.type', 'Type'),
+            'user_id' => Yii::t('payin.attributes.user_id', 'User'),
+            'status' => Yii::t('payin.attributes.status', 'Status'),
+            'currency_id' => Yii::t('payin.attributes.currency', 'Currency'),
+            'created_at' => Yii::t('payin.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('payin.attributes.updated_at', 'Updated At'),
+            'nonce' => Yii::t('payin.attributes.security_nonce_braintree', 'Nonce'),
+            'braintree_backup' => Yii::t('payin.attributes.braintree_backup', 'Braintree Backup'),
+            'amount' => Yii::t('payin.attributes.total_amount', 'Amount'),
+            'invoice_id' => Yii::t('payin.attributes.invoice_id', 'Invoice'),
         ];
     }
 

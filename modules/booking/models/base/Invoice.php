@@ -47,12 +47,12 @@ class Invoice extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'invoice_number' => Yii::t('app', 'Invoice Number'),
-            'data' => Yii::t('app', 'Data'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'status' => Yii::t('app', 'Status'),
+            'id' => Yii::t('invoice.attributes.id', 'ID'),
+            'invoice_number' => Yii::t('invoice.attributes.invoice_number', 'Invoice Number'),
+            'data' => Yii::t('invoice.attributes.data', 'Data'),
+            'created_at' => Yii::t('invoice.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('invoice.attributes.updated_at', 'Updated At'),
+            'status' => Yii::t('invoice.attributes.status', 'Status'),
         ];
     }
 

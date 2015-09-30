@@ -13,7 +13,7 @@ use Yii;
  * @property string $gender
  * @property integer $user_id
  *
- * @property \user\models\base\User $user
+ * @property \user\models\User $user
  */
 class Child extends \yii\db\ActiveRecord
 {
@@ -44,11 +44,11 @@ class Child extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'birthday' => Yii::t('app', 'Birthday'),
-            'gender' => Yii::t('app', 'Gender'),
-            'user_id' => Yii::t('app', 'User ID'),
+            'id' =>'ID',
+            'name' =>'Name',
+            'birthday' =>'Birthday',
+            'gender' =>'Gender',
+            'user_id' =>'User ID',
         ];
     }
 
@@ -57,6 +57,6 @@ class Child extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
     }
 }

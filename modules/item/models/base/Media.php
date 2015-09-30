@@ -16,9 +16,9 @@ use Yii;
  * @property integer $updated_at
  * @property string $file_name
  *
- * @property \item\models\base\ItemHasMedia[] $itemHasMedia
- * @property \item\models\base\Item[] $items
- * @property \user\models\base\User $user
+ * @property \item\models\ItemHasMedia[] $itemHasMedia
+ * @property \item\models\Item[] $items
+ * @property \user\models\User $user
  */
 class Media extends \yii\db\ActiveRecord
 {
@@ -51,14 +51,14 @@ class Media extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'storage' => Yii::t('app', 'Storage'),
-            'type' => Yii::t('app', 'Type'),
-            'description' => Yii::t('app', 'Description'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'file_name' => Yii::t('app', 'File Name'),
+            'id' => 'ID',
+            'user_id' => 'User ID',
+            'storage' => 'Storage',
+            'type' => 'Type',
+            'description' => 'Description',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'file_name' => 'File Name',
         ];
     }
 
@@ -67,7 +67,7 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getItemHasMedia()
     {
-        return $this->hasMany(\item\models\base\ItemHasMedia::className(), ['media_id' => 'id']);
+        return $this->hasMany(\item\models\ItemHasMedia::className(), ['media_id' => 'id']);
     }
 
     /**
@@ -75,7 +75,7 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\item\models\base\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media', ['media_id' => 'id']);
+        return $this->hasMany(\item\models\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media', ['media_id' => 'id']);
     }
 
     /**
@@ -83,6 +83,6 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
     }
 }

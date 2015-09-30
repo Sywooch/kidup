@@ -51,17 +51,17 @@ class PayoutMethod extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'address' => Yii::t('app', 'Address'),
-            'bank_name' => Yii::t('app', 'Bank Name'),
-            'payee_name' => Yii::t('app', 'Payee Name'),
-            'country_id' => Yii::t('app', 'Country ID'),
-            'type' => Yii::t('app', 'Type'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'identifier_1' => Yii::t('app', 'Identifier 1'),
-            'identifier_2' => Yii::t('app', 'Identifier 2'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('payout_method.attributes.id', 'ID'),
+            'address' => Yii::t('payout_method.attributes.address', 'Address'),
+            'bank_name' => Yii::t('payout_method.attributes.bank_name', 'Bank Name'),
+            'payee_name' => Yii::t('payout_method.attributes.payee_name', 'Payee Name'),
+            'country_id' => Yii::t('payout_method.attributes.country', 'Country'),
+            'type' => Yii::t('payout_method.attributes.type', 'Type'),
+            'user_id' => Yii::t('payout_method.attributes.user_id', 'User'),
+            'identifier_1' => Yii::t('payout_method.attributes.identifier_1_konto', 'Identifier 1'),
+            'identifier_2' => Yii::t('payout_method.attributes.identifier_2_bank', 'Identifier 2'),
+            'created_at' => Yii::t('payout_method.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('payout_method.attributes.updated_at', 'Updated At'),
         ];
     }
 

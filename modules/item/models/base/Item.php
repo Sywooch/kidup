@@ -115,20 +115,20 @@ class Item extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'price_day' => Yii::t('app', 'Price Day'),
-            'price_week' => Yii::t('app', 'Price Week'),
-            'price_month' => Yii::t('app', 'Price Month'),
-            'owner_id' => Yii::t('app', 'Owner ID'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'is_available' => Yii::t('app', 'Is Available'),
-            'location_id' => Yii::t('app', 'Location ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'min_renting_days' => Yii::t('app', 'Min Renting Days'),
-            'category_id' => Yii::t('app', 'Category ID'),
+            'id' => Yii::t('item.attributes.id', 'ID'),
+            'name' => Yii::t('item.attributes.name', 'Name'),
+            'description' => Yii::t('item.attributes.description', 'Description'),
+            'price_day' => Yii::t('item.attributes.price_day', 'Price Day'),
+            'price_week' => Yii::t('item.attributes.price_week', 'Price Week'),
+            'price_month' => Yii::t('item.attributes.price_month', 'Price Month'),
+            'owner_id' => Yii::t('item.attributes.owner_id', 'Owner'),
+            'currency_id' => Yii::t('item.attributes.currency_id', 'Currency'),
+            'is_available' => Yii::t('item.attributes.is_available', 'Is Available'),
+            'location_id' => Yii::t('item.attributes.location_id', 'Location'),
+            'created_at' => Yii::t('item.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('item.attributes.updated_at', 'Updated At'),
+            'min_renting_days' => Yii::t('item.attributes.min_renting_days', 'Min Renting Days'),
+            'category_id' => Yii::t('item.attributes.category_id', 'Category'),
         ];
     }
 

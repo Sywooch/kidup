@@ -28,10 +28,10 @@ use Yii;
  * @property integer $nationality
  * @property integer $location_id
  *
- * @property \item\models\base\Location $location
- * @property \user\models\base\Country $nationality0
- * @property \user\models\base\Currency $currency
- * @property \user\models\base\User $user
+ * @property \item\models\Location $location
+ * @property \user\models\Country $nationality0
+ * @property \user\models\Currency $currency
+ * @property \user\models\User $user
  */
 class Profile extends \yii\db\ActiveRecord
 {
@@ -71,22 +71,22 @@ class Profile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'User ID'),
-            'description' => Yii::t('app', 'Description'),
-            'first_name' => Yii::t('app', 'First Name'),
-            'last_name' => Yii::t('app', 'Last Name'),
-            'img' => Yii::t('app', 'Img'),
-            'phone_country' => Yii::t('app', 'Phone Country'),
-            'phone_number' => Yii::t('app', 'Phone Number'),
-            'email_verified' => Yii::t('app', 'Email Verified'),
-            'phone_verified' => Yii::t('app', 'Phone Verified'),
-            'identity_verified' => Yii::t('app', 'Identity Verified'),
-            'location_verified' => Yii::t('app', 'Location Verified'),
-            'language' => Yii::t('app', 'Language'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'birthday' => Yii::t('app', 'Birthday'),
-            'nationality' => Yii::t('app', 'Nationality'),
-            'location_id' => Yii::t('app', 'Location ID'),
+            'user_id' => Yii::t('profile.attributes.user_id', 'User'),
+            'description' => Yii::t('profile.attributes.description', 'Description'),
+            'first_name' => Yii::t('profile.attributes.first_name', 'First Name'),
+            'last_name' => Yii::t('profile.attributes.last_name', 'Last Name'),
+            'img' => Yii::t('profile.attributes.profile_image', 'Profile Image'),
+            'phone_country' => Yii::t('profile.attributes.phone_country', 'Phone Country'),
+            'phone_number' => Yii::t('profile.attributes.phone_number', 'Phone Number'),
+            'email_verified' => Yii::t('profile.attributes.email_is_verified', 'Email Verified'),
+            'phone_verified' => Yii::t('profile.attributes.phone_is_verfified', 'Phone Verified'),
+            'identity_verified' => Yii::t('profile.attributes.identifiy_is_verified', 'Identity Verified'),
+            'location_verified' => Yii::t('profile.attributes.location_is_verified', 'Location Verified'),
+            'language' => Yii::t('profile.attributes.language', 'Language'),
+            'currency_id' => Yii::t('profile.attributes.currency_id', 'Currency'),
+            'birthday' => Yii::t('profile.attributes.birthday', 'Birthday'),
+            'nationality' => Yii::t('profile.attributes.nationality', 'Nationality'),
+            'location_id' => Yii::t('profile.attributes.location_id', 'Location'),
         ];
     }
 
@@ -95,7 +95,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getLocation()
     {
-        return $this->hasOne(\item\models\base\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(\item\models\Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -103,7 +103,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getNationality0()
     {
-        return $this->hasOne(\user\models\base\Country::className(), ['id' => 'nationality']);
+        return $this->hasOne(\user\models\Country::className(), ['id' => 'nationality']);
     }
 
     /**
@@ -119,7 +119,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
     }
 
 

@@ -14,7 +14,7 @@ use Yii;
  * @property string $status
  * @property string $country
  *
- * @property \user\models\base\Country[] $countries
+ * @property \user\models\Country[] $countries
  */
 class Language extends \yii\db\ActiveRecord
 {
@@ -60,6 +60,6 @@ class Language extends \yii\db\ActiveRecord
      */
     public function getCountries()
     {
-        return $this->hasMany(\user\models\base\Country::className(), ['main_language_id' => 'language_id']);
+        return $this->hasMany(\user\models\Country::className(), ['main_language_id' => 'language_id']);
     }
 }

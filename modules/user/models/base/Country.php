@@ -16,10 +16,10 @@ use Yii;
  * @property double $vat
  *
  * @property \user\models\base\Currency $currency
- * @property \user\models\base\Language $mainLanguage
- * @property \item\models\base\Location[] $locations
+ * @property \user\models\Language $mainLanguage
+ * @property \item\models\Location[] $locations
  * @property \booking\models\base\PayoutMethod[] $payoutMethods
- * @property \user\models\base\Profile[] $profiles
+ * @property \user\models\Profile[] $profiles
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -52,13 +52,13 @@ class Country extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'code' => Yii::t('app', 'Code'),
-            'main_language_id' => Yii::t('app', 'Main Language ID'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'phone_prefix' => Yii::t('app', 'Phone Prefix'),
-            'vat' => Yii::t('app', 'Vat'),
+            'id' => 'ID',
+            'name' => 'Name',
+            'code' => 'Code',
+            'main_language_id' => 'Main Language ID',
+            'currency_id' => 'Currency ID',
+            'phone_prefix' => 'Phone Prefix',
+            'vat' => 'Vat',
         ];
     }
 
@@ -75,7 +75,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getMainLanguage()
     {
-        return $this->hasOne(\user\models\base\Language::className(), ['language_id' => 'main_language_id']);
+        return $this->hasOne(\user\models\Language::className(), ['language_id' => 'main_language_id']);
     }
 
     /**
@@ -83,7 +83,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\item\models\base\Location::className(), ['country' => 'id']);
+        return $this->hasMany(\item\models\Location::className(), ['country' => 'id']);
     }
 
     /**
@@ -99,6 +99,6 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\user\models\base\Profile::className(), ['nationality' => 'id']);
+        return $this->hasMany(\user\models\Profile::className(), ['nationality' => 'id']);
     }
 }

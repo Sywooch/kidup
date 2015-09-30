@@ -2,9 +2,9 @@
 
 namespace review\models\base;
 
-use booking\models\base\Booking;
-use item\models\base\Item;
-use user\models\base\User;
+use booking\models\Booking;
+use item\models\Item;
+use user\models\User;
 use Yii;
 
 /**
@@ -55,15 +55,15 @@ class Review extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'value' => Yii::t('app', 'Value'),
-            'reviewer_id' => Yii::t('app', 'Reviewer ID'),
-            'reviewed_id' => Yii::t('app', 'Reviewed ID'),
-            'type' => Yii::t('app', 'Type'),
-            'booking_id' => Yii::t('app', 'Booking ID'),
-            'item_id' => Yii::t('app', 'Item ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => 'ID',
+            'value' => 'Value',
+            'reviewer_id' => 'Reviewer ID',
+            'reviewed_id' => 'Reviewed ID',
+            'type' => 'Type',
+            'booking_id' => 'Booking ID',
+            'item_id' => 'Item ID',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
@@ -72,7 +72,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(\booking\models\base\Booking::className(), ['id' => 'booking_id']);
+        return $this->hasOne(\booking\models\Booking::className(), ['id' => 'booking_id']);
     }
 
     /**
@@ -80,7 +80,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\item\models\base\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\item\models\Item::className(), ['id' => 'item_id']);
     }
 
     /**
@@ -88,7 +88,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getReviewer()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'reviewer_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'reviewer_id']);
     }
 
     /**
@@ -96,6 +96,6 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getReviewed()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'reviewed_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'reviewed_id']);
     }
 }

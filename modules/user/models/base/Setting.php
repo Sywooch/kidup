@@ -14,7 +14,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \user\models\base\User $user
+ * @property \user\models\User $user
  */
 class Setting extends \yii\db\ActiveRecord
 {
@@ -45,12 +45,12 @@ class Setting extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'type' => Yii::t('app', 'Type'),
-            'value' => Yii::t('app', 'Value'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => 'ID',
+            'type' => 'Type',
+            'value' => 'Value',
+            'user_id' => 'User ID',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
@@ -59,6 +59,6 @@ class Setting extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
     }
 }

@@ -15,8 +15,8 @@ use Yii;
  * @property integer $created_at
  * @property string $mail_account_name
  *
- * @property \app\models\MailAccount $mailAccountName
- * @property \app\models\Message $message0
+ * @property \mail\models\MailAccount $mailAccountName
+ * @property \message\models\Message $message0
  */
 class MailMessage extends \yii\db\ActiveRecord
 {
@@ -49,13 +49,13 @@ class MailMessage extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'message' => Yii::t('app', 'Message'),
-            'from_email' => Yii::t('app', 'From Email'),
-            'message_id' => Yii::t('app', 'Message ID'),
-            'subject' => Yii::t('app', 'Subject'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'mail_account_name' => Yii::t('app', 'Mail Account Name'),
+            'id' => 'ID',
+            'message' => 'Message',
+            'from_email' => 'From Email',
+            'message_id' => 'Message ID',
+            'subject' => 'Subject',
+            'created_at' => 'Created At',
+            'mail_account_name' => 'Mail Account Name',
         ];
     }
 
@@ -64,7 +64,7 @@ class MailMessage extends \yii\db\ActiveRecord
      */
     public function getMailAccountName()
     {
-        return $this->hasOne(\app\models\MailAccount::className(), ['name' => 'mail_account_name']);
+        return $this->hasOne(\mail\models\MailAccount::className(), ['name' => 'mail_account_name']);
     }
 
     /**
@@ -72,9 +72,8 @@ class MailMessage extends \yii\db\ActiveRecord
      */
     public function getMessage0()
     {
-        return $this->hasOne(\app\models\Message::className(), ['id' => 'message_id']);
+        return $this->hasOne(\message\models\Message::className(), ['id' => 'message_id']);
     }
 
 
-    
 }

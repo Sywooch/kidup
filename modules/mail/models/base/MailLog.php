@@ -43,11 +43,11 @@ class MailLog extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'data' => Yii::t('app', 'Data'),
-            'email' => Yii::t('app', 'Email'),
-            'type' => Yii::t('app', 'Type'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'id' => 'ID',
+            'data' => 'Data',
+            'email' => 'Email',
+            'type' => 'Type',
+            'created_at' => 'Created At',
         ];
     }
 }

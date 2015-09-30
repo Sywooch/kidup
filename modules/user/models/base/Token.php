@@ -43,10 +43,10 @@ class Token extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'User ID'),
-            'code' => Yii::t('app', 'Code'),
-            'type' => Yii::t('app', 'Type'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'user_id' =>  'User ID',
+            'code' =>  'Code',
+            'type' =>  'Type',
+            'created_at' =>  'Created At',
         ];
     }
 

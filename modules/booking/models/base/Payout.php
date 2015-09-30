@@ -51,15 +51,15 @@ class Payout extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'status' => Yii::t('app', 'Status'),
-            'amount' => Yii::t('app', 'Amount'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'processed_at' => Yii::t('app', 'Processed At'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'invoice_id' => Yii::t('app', 'Invoice ID'),
+            'id' => Yii::t('payout.attributes.id', 'ID'),
+            'status' => Yii::t('payout.attributes.status', 'Status'),
+            'amount' => Yii::t('payout.attributes.amount', 'Amount'),
+            'currency_id' => Yii::t('payout.attributes.currency_id', 'Currency'),
+            'user_id' => Yii::t('payout.attributes.user_id', 'User'),
+            'processed_at' => Yii::t('payout.attributes.processed_at', 'Processed At'),
+            'created_at' => Yii::t('payout.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('payout.attributes.updated_at', 'Updated At'),
+            'invoice_id' => Yii::t('payout.attributes.invoice_id', 'Invoice'),
         ];
     }
 

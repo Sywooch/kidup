@@ -3,6 +3,7 @@
 namespace item\models\base;
 
 use Yii;
+use item\models\Item;
 
 /**
  * This is the base-model class for table "item_similarity".
@@ -14,8 +15,8 @@ use Yii;
  * @property double $similarity_categories
  * @property double $similarity_price
  *
- * @property \app\models\Item $itemId2
- * @property \app\models\Item $itemId1
+ * @property Item $itemId2
+ * @property Item $itemId1
  */
 class ItemSimilarity extends \yii\db\ActiveRecord
 {
@@ -37,8 +38,20 @@ class ItemSimilarity extends \yii\db\ActiveRecord
             [['item_id_1', 'item_id_2'], 'required'],
             [['item_id_1', 'item_id_2'], 'integer'],
             [['similarity', 'similarity_location', 'similarity_categories', 'similarity_price'], 'number'],
-            [['item_id_2'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id_2' => 'id']],
-            [['item_id_1'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id_1' => 'id']]
+            [
+                ['item_id_2'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Item::className(),
+                'targetAttribute' => ['item_id_2' => 'id']
+            ],
+            [
+                ['item_id_1'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Item::className(),
+                'targetAttribute' => ['item_id_1' => 'id']
+            ]
         ];
     }
 
@@ -48,12 +61,12 @@ class ItemSimilarity extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'item_id_1' => Yii::t('app', 'Item Id 1'),
-            'item_id_2' => Yii::t('app', 'Item Id 2'),
-            'similarity' => Yii::t('app', 'Similarity'),
-            'similarity_location' => Yii::t('app', 'Similarity Location'),
-            'similarity_categories' => Yii::t('app', 'Similarity Categories'),
-            'similarity_price' => Yii::t('app', 'Similarity Price'),
+            'item_id_1' => 'Item Id 1',
+            'item_id_2' => 'Item Id 2',
+            'similarity' => 'Similarity',
+            'similarity_location' => 'Similarity Location',
+            'similarity_categories' => 'Similarity Categories',
+            'similarity_price' => 'Similarity Price',
         ];
     }
 
@@ -62,7 +75,7 @@ class ItemSimilarity extends \yii\db\ActiveRecord
      */
     public function getItemId2()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id_2']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id_2']);
     }
 
     /**
@@ -70,9 +83,8 @@ class ItemSimilarity extends \yii\db\ActiveRecord
      */
     public function getItemId1()
     {
-        return $this->hasOne(\app\models\Item::className(), ['id' => 'item_id_1']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id_1']);
     }
 
 
-    
 }

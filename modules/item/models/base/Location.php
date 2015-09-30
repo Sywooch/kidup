@@ -57,19 +57,19 @@ class Location extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'type' => Yii::t('app', 'Type'),
-            'country' => Yii::t('app', 'Country'),
-            'city' => Yii::t('app', 'City'),
-            'zip_code' => Yii::t('app', 'Zip Code'),
-            'street_name' => Yii::t('app', 'Street Name'),
-            'street_number' => Yii::t('app', 'Street Number'),
-            'street_suffix' => Yii::t('app', 'Street Suffix'),
-            'longitude' => Yii::t('app', 'Longitude'),
-            'latitude' => Yii::t('app', 'Latitude'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('location.attributes.id', 'ID'),
+            'type' => Yii::t('location.attributes.type', 'Type'),
+            'country' => Yii::t('location.attributes.country', 'Country'),
+            'city' => Yii::t('location.attributes.city', 'City'),
+            'zip_code' => Yii::t('location.attributes.zip_code', 'Zip Code'),
+            'street_name' => Yii::t('location.attributes.street_name', 'Street Name'),
+            'street_number' => Yii::t('location.attributes.street_number', 'Street Number'),
+            'street_suffix' => Yii::t('location.attributes.street_suffix', 'Street Suffix'),
+            'longitude' => Yii::t('location.attributes.longitude', 'Longitude'),
+            'latitude' => Yii::t('location.attributes.latitude', 'Latitude'),
+            'user_id' => Yii::t('location.attributes.user_id', 'User'),
+            'created_at' => Yii::t('location.attributes.created_at', 'Created At'),
+            'updated_at' => Yii::t('location.attributes.updaetd_at', 'Updated At'),
         ];
     }
 

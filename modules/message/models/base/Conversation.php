@@ -2,9 +2,8 @@
 
 namespace message\models\base;
 
-use mail\models\base\MailAccount;
-use message\models\base\Message;
-use user\models\base\User;
+use mail\models\MailAccount;
+use message\models\Message;
 use Yii;
 
 /**
@@ -18,8 +17,8 @@ use Yii;
  * @property integer $updated_at
  * @property integer $booking_id
  *
- * @property \user\models\base\User $initiaterUser
- * @property \user\models\base\User $targetUser
+ * @property \user\models\User $initiaterUser
+ * @property \user\models\User $targetUser
  * @property MailAccount[] $mailAccounts
  * @property Message[] $messages
  */
@@ -51,13 +50,13 @@ class Conversation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'initiater_user_id' => Yii::t('app', 'Initiater User ID'),
-            'target_user_id' => Yii::t('app', 'Target User ID'),
-            'title' => Yii::t('app', 'Title'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'booking_id' => Yii::t('app', 'Booking ID'),
+            'id' => 'ID',
+            'initiater_user_id' => 'Initiater User ID',
+            'target_user_id' => 'Target User ID',
+            'title' => 'Title',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'booking_id' => 'Booking ID',
         ];
     }
 
@@ -66,7 +65,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getInitiaterUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'initiater_user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'initiater_user_id']);
     }
 
     /**
@@ -74,7 +73,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getTargetUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'target_user_id']);
+        return $this->hasOne(\user\models\User::className(), ['id' => 'target_user_id']);
     }
 
     /**
@@ -82,7 +81,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\mail\models\base\MailAccount::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(\mail\models\MailAccount::className(), ['conversation_id' => 'id']);
     }
 
     /**
@@ -90,7 +89,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getMessages()
     {
-        return $this->hasMany(\message\models\base\Message::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(\message\models\Message::className(), ['conversation_id' => 'id']);
     }
 
     /**
@@ -98,6 +97,6 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasMany(\message\models\base\Message::className(), ['conversation_id' => 'id']);
+        return $this->hasMany(\message\models\Message::className(), ['conversation_id' => 'id']);
     }
 }
