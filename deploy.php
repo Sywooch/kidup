@@ -50,6 +50,7 @@ task('deploy:run_migrations', function () {
 })->desc('Run migrations');
 
 task('deploy:minify_assets', function () {
+    // todo change this to gulp
     run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets-all.php {{release_path}}/config/assets/assets-all-def.php');
     run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets.php {{release_path}}/config/assets/assets-prod.php');
 })->desc('Minifying assets');
@@ -66,7 +67,7 @@ task('deploy', [
     'deploy:writable',
     'deploy:vendors',
 //    'deploy:bower_folder',
-    'deploy:minify_assets',
+//    'deploy:minify_assets',
     'deploy:run_migrations',
     'deploy:symlink',
     'deploy:cache-cleanup',
