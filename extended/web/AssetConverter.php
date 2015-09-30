@@ -13,7 +13,7 @@ use yii\base\Exception;
 use yii\web\AssetConverterInterface;
 
 
-class AssetConverter extends Component implements AssetConverterInterface
+class AssetConverter extends \yii\web\AssetConverter implements AssetConverterInterface
 {
 
     /**
@@ -24,7 +24,6 @@ class AssetConverter extends Component implements AssetConverterInterface
      */
     public function convert($asset, $basePath)
     {
-
         return $asset;
     }
 
