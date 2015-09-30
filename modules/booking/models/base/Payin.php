@@ -2,7 +2,6 @@
 
 namespace booking\models\base;
 
-use booking\models\Booking;
 use booking\models\Invoice;
 use user\models\base\Currency;
 use user\models\User;
@@ -24,7 +23,7 @@ use Yii;
  * @property double $amount
  * @property integer $invoice_id
  *
- * @property Booking $booking
+ * @property \booking\models\Booking $booking
  * @property Invoice $invoice
  * @property User $user
  * @property Currency $currency
@@ -81,7 +80,7 @@ class Payin extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
+        return $this->hasOne(\booking\models\Booking::className(), ['payin_id' => 'id']);
     }
 
     /**
