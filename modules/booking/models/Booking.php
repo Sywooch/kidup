@@ -172,6 +172,12 @@ class Booking extends base\Booking
 
     public function startConversation($message)
     {
+        if($this->conversation !== null){
+            if(count($this->conversation->messages) == 0){
+                return $this->conversation->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+            }
+            return true;
+        }
         $c = new Conversation();
         $c->initiater_user_id = Yii::$app->user->id;
         $c->target_user_id = $this->item->owner_id;
