@@ -12,7 +12,7 @@ class CronController extends Controller
     ];
 
     private function findModuleController($module){
-        $className =  "app\\modules\\".$module."\\controllers\\CronController";
+        $className =  $module."\\controllers\\CronController";
         if(Yii::$app->hasModule($module) && class_exists($className)){
             $controller = new $className();
             return $controller;
