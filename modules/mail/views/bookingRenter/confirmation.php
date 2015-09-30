@@ -69,9 +69,13 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail", "You can view the details of the booking {0}", [
-                                                        \yii\helpers\Html::a(\Yii::t('mail', 'here'), $urls['booking'])
-                                                    ]) ?>.
+                                                    <?= Yii::t("mail.booking_details",
+                                                        "You can view the details of the booking {link} here {linkOut}.",
+                                                        [
+                                                            'link' => \yii\helpers\Html::beginTag('a',
+                                                                ['href' => $urls['booking']]),
+                                                            'linkOut' => \yii\helpers\Html::endTag('a')
+                                                        ]) ?>.
                                                 </p>
                                             </td>
                                         </tr>

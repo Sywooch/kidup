@@ -1,27 +1,27 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\models/>
+ * (c)  project <http://github.com/app\models/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\controllers;
+namespace user\controllers;
 
-use app\components\Event;
-use app\controllers\Controller;
-use app\modules\images\components\ImageManager;
-use app\modules\mail\models\Token;
-use app\modules\user\Finder;
-use app\modules\user\forms\LocationForm;
-use app\modules\user\forms\Settings;
-use app\models\helpers\SelectData;
-use app\modules\user\models\Account;
-use app\modules\user\models\Profile;
-use app\modules\user\models\User;
+use app\helpers\Event;
+use app\extended\web\Controller;
+use \images\components\ImageManager;
+use \mail\models\Token;
+use \user\Finder;
+use \user\forms\LocationForm;
+use \user\forms\Settings;
+use app\helpers\SelectData;
+use \user\models\Account;
+use \user\models\Profile;
+use \user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 /**
  * SettingsController manages updating user settings (e.g. profile, email and password).
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  */
 class SettingsController extends Controller
 {
@@ -109,7 +109,7 @@ class SettingsController extends Controller
      */
     public function actionProfile()
     {
-        /** @var \app\modules\User\models\Profile $model * */
+        /** @var \user\models\Profile $model * */
         $model = Profile::findOne(['user_id' => \Yii::$app->user->identity->getId()]);
 
         $this->performAjaxValidation($model);
@@ -117,7 +117,7 @@ class SettingsController extends Controller
             $image = UploadedFile::getInstance($model, 'img');
             if ($image !== null) {
                 if (!in_array($image->extension, ['png', 'jpg'])) {
-                    \Yii::$app->session->addFlash('warning', \Yii::t('user', "File format not allowed"));
+                    \Yii::$app->session->addFlash('warning', \Yii::t('user.settings.profile.file_format_not_allowed', "File format not allowed"));
                     $model->save();
                     return $this->refresh();
                 }
@@ -126,7 +126,7 @@ class SettingsController extends Controller
                 $model->setAttribute('img', $model->oldAttributes['img']);
             }
             if ($model->save()) {
-                \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Your profile has been updated'));
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('user.settings.profile.profile_updates', 'Your profile has been updated'));
                 return $this->refresh();
             }
         }
@@ -136,7 +136,7 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Profile settings')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.profile.title', 'Profile settings')) . ' - ' . \Yii::$app->name
         ]);
     }
 
@@ -149,7 +149,8 @@ class SettingsController extends Controller
         if ($model->load(\Yii::$app->request->post())) {
 
             if ($model->save()) {
-                \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
+                \Yii::$app->session->setFlash('success', \Yii::t('user.settings.location.flash_success',
+                    'Your accouns billing location has been updated'));
                 return $this->refresh();
             }
         }
@@ -159,7 +160,7 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Location Settings')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.location.title', 'Location Settings')) . ' - ' . \Yii::$app->name
         ]);
     }
 
@@ -176,7 +177,8 @@ class SettingsController extends Controller
 
         if ($model->load(\Yii::$app->request->post())) {
             if ($model->save()) {
-                \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
+                \Yii::$app->session->setFlash('success', \Yii::t('user.settings.account.success_flash',
+                    'Your account details have been updated'));
                 \Yii::$app->session->remove('lang'); // language might have changed
                 return $this->refresh();
             }
@@ -196,19 +198,20 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Account Settings')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.account.title', 'Account Settings')) . ' - ' . \Yii::$app->name
         ]);
     }
 
     public function actionPayoutPreference()
     {
-        $model = new \app\modules\user\forms\PayoutPreference();
+        $model = new \user\forms\PayoutPreference();
 
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post())) {
             if ($model->save()) {
-                \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account details have been updated'));
+                \Yii::$app->session->setFlash('success', \Yii::t('user.settings.payout_preference.success_flash',
+                    'Your payout preferences have been updated'));
                 return $this->refresh();
             }
         }
@@ -218,7 +221,7 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Payout Preference')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.payout_preference.title', 'Payout Preference')) . ' - ' . \Yii::$app->name
         ]);
     }
 
@@ -231,7 +234,7 @@ class SettingsController extends Controller
      */
     public function actionConfirm($id, $code)
     {
-        /** @var \app\modules\User\models\User $user * */
+        /** @var \user\models\User $user * */
 //        $user = $this->finder->findUserById($id);
 //
 //        if ($user === null || $this->module->emailChangeStrategy == Module::STRATEGY_INSECURE) {
@@ -249,7 +252,7 @@ class SettingsController extends Controller
      */
     public function actionVerification($confirm_email = false, $confirm_phone = false)
     {
-        /** @var \app\modules\User\models\Profile $profile * */
+        /** @var \user\models\Profile $profile * */
         $profile = Profile::findOne(\Yii::$app->user->id);
 
         if ($confirm_email && !$profile->email_verified) {
@@ -272,7 +275,8 @@ class SettingsController extends Controller
             if ($profile->sendPhoneVerification($token)) {
                 return $this->redirect('phonecode');
             } else {
-                \Yii::$app->session->addFlash('info', \Yii::t('user', 'SMS could not be send, please try again.'));
+                \Yii::$app->session->addFlash('info', \Yii::t('user.settings.validation.text_not_send',
+                    'SMS could not be send, please try again.'));
                 $page = $this->renderPartial('verification', [
                     'user' => \Yii::$app->user->identity,
                     'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id])
@@ -280,7 +284,7 @@ class SettingsController extends Controller
 
                 return $this->render('_wrapper', [
                     'page' => $page,
-                    'title' => ucfirst(\Yii::t('title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+                    'title' => ucfirst(\Yii::t('user.settings.validation.title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
                 ]);
             }
         }
@@ -292,24 +296,25 @@ class SettingsController extends Controller
 
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.validation.title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
         ]);
     }
 
     public function actionPhonecode($code = null)
     {
-        /** @var \app\modules\User\models\Profile $p * */
+        /** @var \user\models\Profile $p * */
         $p = Profile::findOne(\Yii::$app->user->id);
 
         if ($code !== null) {
-            /** @var \app\modules\Mail\models\Token $token * */
+            /** @var \mail\models\Token $token * */
             $token = Token::findOne([
                 'user_id' => \Yii::$app->user->id,
                 'code' => $code,
                 'type' => Token::TYPE_PHONE_CODE
             ]);
             if ($token == null) {
-                \Yii::$app->session->setFlash('error', \Yii::t('app', "Confirmation code not found, please try again"));
+                \Yii::$app->session->setFlash('error', \Yii::t('user.settings.validation.phone_code_not_found_flash',
+                    "Confirmation code not found, please try again"));
             } else {
                 $p->setScenario('phonecode');
                 $p->phone_verified = 1;
@@ -317,7 +322,7 @@ class SettingsController extends Controller
 
                 $token->delete();
                 \Yii::$app->session->setFlash('success',
-                    \Yii::t('app', "Thank you, your phone number has been verified!"));
+                    \Yii::t('user.settings.validation.phone_validated_flash', "Thank you, your phone number has been verified!"));
 
                 return $this->redirect(['/user/settings/verification']);
             }
@@ -371,10 +376,12 @@ class SettingsController extends Controller
                 'user_id' => \Yii::$app->user->id,
             ]);
             $account->save(false);
-            \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account has been connected'));
+            \Yii::$app->session->setFlash('success', \Yii::t('user.settings.validation.social_account_connected',
+                'Your account has been connected'));
         } else {
             \Yii::$app->session->setFlash('error',
-                \Yii::t('user', 'This account has already been connected to another user'));
+                \Yii::t('user.settings.validation.social_account_already_connected_error',
+                    'This account has already been connected to another user'));
         }
 
         $this->action->successUrl = Url::to(['/user/settings/verification']);

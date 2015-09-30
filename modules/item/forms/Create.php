@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
-use app\models\base\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasCategory;
+use item\models\base\Category;
+use \item\models\Item;
+use \item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 
@@ -51,7 +51,7 @@ class Create extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[Yii::t('categories_and_features', $cat->parent->name)][$cat->id] = Yii::t('categories_and_features',$cat->name);
+            $this->categoryData[$cat->parent->getTranslatedName()][$cat->id] = $cat->getTranslatedName();
         }
     }
 
@@ -63,7 +63,7 @@ class Create extends Model
     public function save()
     {
         /**
-         * @var \app\modules\user\models\Profile $profile
+         * @var \user\models\Profile $profile
          */
         $profile = \Yii::$app->user->identity->profile;
 
@@ -84,7 +84,7 @@ class Create extends Model
 
         $c = Category::find()->where(['id' => $this->category])->count();
         if($c == null){
-            $this->addError('category', \Yii::t('item', 'Category is not valid'));
+            $this->addError('category', \Yii::t("item.create.error_category_invalid", 'Category is not valid'));
             return false;
         }
 

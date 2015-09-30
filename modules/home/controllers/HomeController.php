@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\home\controllers;
+namespace home\controllers;
 
 use app\components\Cache;
-use app\controllers\Controller;
-use app\modules\home\forms\Search;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
+use app\extended\web\Controller;
+use \home\forms\Search;
+use \item\models\Category;
+use \item\models\Item;
 use Yii;
 use yii\helpers\Json;
 
@@ -64,7 +64,7 @@ class HomeController extends Controller
         $searchModel = new Search();
 
         $categories = Yii::$app->db->cache(function () {
-            return Category::find()->all();
+            return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
             return Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->all();
@@ -77,5 +77,31 @@ class HomeController extends Controller
         ]);
 
         return $res;
+    }
+
+    public function actionChangeLanguage($lang){
+        $l = \user\models\Language::findOne($lang);
+
+        if($l !== null){
+            Yii::$app->session->remove('lang');
+            Yii::$app->session->set('lang', $lang);
+        }else{
+            Yii::error('Language undefined: '.$lang);
+        }
+        if(!\Yii::$app->user->isGuest){
+            Yii::$app->session->setFlash('info', \Yii::t('home.flash.use_settings_for_permanent_change',
+                "Please change your profile settings to permanently change the language!"));
+        }
+        if(isset($_SERVER["HTTP_REFERER"])){
+            return $this->redirect($_SERVER["HTTP_REFERER"]);
+        }else{
+            return $this->goHome();
+        }
+    }
+
+    public function actionSuperSecretCacheFlush(){
+        \Yii::$app->cache->flush();
+//        \app\components\Cache::remove('item_controller-view');
+        echo 'dude.. the fu!';
     }
 }

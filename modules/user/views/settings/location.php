@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-use app\models\helpers\SelectData;
+use app\helpers\SelectData;
 use kartik\widgets\Select2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 /**
  * @var $this  yii\web\View
  * @var $form  yii\widgets\ActiveForm
- * @var $model app\modules\user\forms\Settings
+ * @var $model \user\forms\Settings
  */
 ?>
 <?php $form = ActiveForm::begin([
@@ -33,9 +33,9 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-md-12">
-        <h4><?= Yii::t("user", "Billing address") ?>
+        <h4><?= Yii::t("user.settings.address.header", "Billing address") ?>
             <br>
-            <small><?= Yii::t("user", "Address that is used for payment purposes.") ?></small>
+            <small><?= Yii::t("user.settings.address.sub_header", "Address that is used for payment purposes.") ?></small>
         </h4>
 
         <br/>
@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'country')->widget(Select2::classname(), [
             'data' => SelectData::nationality(),
-            'options' => ['placeholder' => 'Select a country'],
+            'options' => ['placeholder' => \Yii::t('user.settings.address.select_country_placeholder', 'Select a Country')],
             'pluginOptions' => [
                 'allowClear' => false
             ],
@@ -71,7 +71,7 @@ use yii\widgets\ActiveForm;
                 'options' => [
                     'class' => 'alert-info',
                 ],
-                'body' => 'We couldn\'t find that adress, are you sure it\'s correct?'
+                'body' => \Yii::t('user.settings.address.not_found', "We couldn't find that adress, are you sure it's correct?")
             ]);
         }
     } else {
@@ -85,8 +85,7 @@ use yii\widgets\ActiveForm;
 <br/><br/>
 <div class="row save">
     <div class="col-md-12">
-        <?= Html::submitButton(Yii::t('user', 'Save'),
+        <?= Html::submitButton(Yii::t('user.settings.address.save_button', 'Save'),
             ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
     </div>
 </div>
-<br/><br/>

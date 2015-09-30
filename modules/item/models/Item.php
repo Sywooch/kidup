@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\item\models;
+namespace item\models;
 
 use app\components\Cache;
-use app\models\base\Currency;
-use app\modules\images\components\ImageHelper;
-use app\modules\user\models\User;
+use user\models\base\Currency;
+use \images\components\ImageHelper;
+use \user\models\User;
 use Carbon\Carbon;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
@@ -16,7 +16,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "item".
  */
-class Item extends \app\models\base\Item
+class Item extends \item\models\base\Item
 {
     const EVENT_UNFINISHED_REMINDER = 'unfinished_reminder';
 
@@ -36,18 +36,17 @@ class Item extends \app\models\base\Item
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'price_day' => Yii::t('app', 'Price Day'),
-            'price_week' => Yii::t('app', 'Price Week'),
-            'price_month' => Yii::t('app', 'Price Month'),
-            'owner_id' => Yii::t('app', 'Owner ID'),
-            'currency_id' => Yii::t('app', 'Currency ID'),
-            'is_available' => Yii::t('app', 'Is Available'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'age_min' => Yii::t('app', 'Minimal age of use'),
-            'age_max' => Yii::t('app', 'Maximal age of use'),
+            'id' => Yii::t('item.attribute.id', 'ID'),
+            'name' => Yii::t('item.attribute.name', 'Name'),
+            'description' => Yii::t('item.attribute.description', 'Description'),
+            'price_day' => Yii::t('item.attribute.price_day', 'Price Day'),
+            'price_week' => Yii::t('item.attribute.price_week', 'Price Week'),
+            'price_month' => Yii::t('item.attribute.price_month', 'Price Month'),
+            'owner_id' => Yii::t('item.attribute.owner_id', 'Owner'),
+            'currency_id' => Yii::t('item.attribute.currency_id', 'Currency'),
+            'is_available' => Yii::t('item.attribute.is_available', 'Available to book'),
+            'created_at' => Yii::t('item.attribute.created_at', 'Created At'),
+            'category_id' => Yii::t('item.attribute.category_id', 'Category')
         ];
     }
 
@@ -205,13 +204,13 @@ class Item extends \app\models\base\Item
         $prices = $this->getPriceForPeriod($from, $to, $currency);
         $days = floor(($to - $from) / (60 * 60 * 24));
         if ($days <= 7) {
-            $period = \Yii::t('item', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
+            $period = \Yii::t('item.pricing_table.day_period', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
             $periodPrice = $this->price_day;
         } elseif ($days > 7 && $days <= 31) {
-            $period = \Yii::t('item', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
+            $period = \Yii::t('item.pricing_table.week_period', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
             $periodPrice = $this->price_week;
         } else {
-            $period = \Yii::t('item', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
+            $period = \Yii::t('item.pricing_table.month_period', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
             $periodPrice = $this->price_month;
         }
         return [
@@ -219,8 +218,8 @@ class Item extends \app\models\base\Item
                 $period . ' x ' . $currency->forex_name . ' ' . $periodPrice,
                 $currency->abbr . ' ' . $prices['price']
             ],
-            'fee' => [\Yii::t('item', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
-            'total' => [\Yii::t('item', 'Total'), $currency->abbr . ' ' . $prices['total']]
+            'fee' => [\Yii::t('item.pricing_table.service_fee', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
+            'total' => [\Yii::t('item.pricing_table.total', 'Total'), $currency->abbr . ' ' . $prices['total']]
         ];
     }
 

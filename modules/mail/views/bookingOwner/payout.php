@@ -51,10 +51,9 @@
                                                     Denne udbetaling skulle være på din konto inden for 5 dage, når
                                                     weekender
                                                     og helligdage medregnes.
-                                                    <?= Yii::t("mail", "Click {0} to see the details of this booking", [
-                                                        \yii\helpers\Html::a(\Yii::t('booking', 'here',
-                                                            $urls['viewReceipt']))
-                                                    ]) ?>
+                                                    <a href="<?= $urls['viewReceipt'] ?>">
+                                                        receipt
+                                                    </a>
                                                 </p>
                                             </td>
                                         </tr>

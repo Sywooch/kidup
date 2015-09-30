@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\images\components;
+namespace images\components;
 
-use Aws\S3\S3Client;
+use \Aws\S3\S3Client;
 use League;
 use League\Flysystem\Adapter\Local as Adapter;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;

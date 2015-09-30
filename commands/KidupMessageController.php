@@ -2,16 +2,14 @@
 
 namespace app\commands;
 
-use app\models\base\Category;
-use app\models\base\Feature;
-use app\models\base\FeatureValue;
+use item\models\base\Category;
+use item\models\base\Feature;
+use item\models\base\FeatureValue;
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 use Yii;
-use yii\console\Controller;
 use yii\console\Exception;
-use yii\helpers\Console;
 use yii\helpers\FileHelper;
-use yii\helpers\VarDumper;
-use yii\i18n\GettextPoFile;
 
 /**
  *
@@ -41,7 +39,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
             'translator' => 'Yii::t',
             'overwrite' => false,
             'removeUnused' => false,
-            'markUnused' => true,
+            'markUnused' => false,
             'sort' => false,
             'format' => 'php',
             'ignoreCategories' => [],
@@ -71,62 +69,75 @@ class KidupMessageController extends \yii\console\controllers\MessageController
 
         $messages = [];
         foreach ($files as $file) {
-            $messages = array_merge_recursive($messages, $this->getDbCategories(), $this->extractMessages($file, $config['translator'], $config['ignoreCategories']));
+            $messages = array_merge_recursive($messages, $this->getDbCategories(),
+                $this->extractMessages($file, $config['translator'], $config['ignoreCategories']));
         }
-        if (in_array($config['format'], ['php', 'po'])) {
-            foreach ($config['languages'] as $language) {
-                $dir = $config['messagePath'] . DIRECTORY_SEPARATOR . $language;
-                if (!is_dir($dir)) {
-                    @mkdir($dir);
-                }
-                if ($config['format'] === 'po') {
-                    $catalog = isset($config['catalog']) ? $config['catalog'] : 'messages';
-                    $this->saveMessagesToPO($messages, $dir, $config['overwrite'], $config['removeUnused'], $config['sort'], $catalog, $config['markUnused']);
-                } else {
-                    $this->saveMessagesToPHP($messages, $dir, $config['overwrite'], $config['removeUnused'], $config['sort'], $config['markUnused']);
-                }
-            }
-        } elseif ($config['format'] === 'db') {
-            $db = \Yii::$app->get(isset($config['db']) ? $config['db'] : 'db');
-            if (!$db instanceof \yii\db\Connection) {
-                throw new Exception('The "db" option must refer to a valid database application component.');
-            }
-            $sourceMessageTable = isset($config['sourceMessageTable']) ? $config['sourceMessageTable'] : '{{%source_message}}';
-            $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
-            $this->saveMessagesToDb(
-                $messages,
-                $db,
-                $sourceMessageTable,
-                $messageTable,
-                $config['removeUnused'],
-                $config['languages'],
-                $config['markUnused']
-            );
-        } elseif ($config['format'] === 'pot') {
-            $catalog = isset($config['catalog']) ? $config['catalog'] : 'messages';
-            $this->saveMessagesToPOT($messages, $config['messagePath'], $catalog);
+
+        $db = \Yii::$app->get(isset($config['db']) ? $config['db'] : 'db');
+        if (!$db instanceof \yii\db\Connection) {
+            throw new Exception('The "db" option must refer to a valid database application component.');
         }
+        $sourceMessageTable = isset($config['sourceMessageTable']) ? $config['sourceMessageTable'] : '{{%source_message}}';
+        $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
+        $this->saveMessagesToDb(
+            $messages,
+            $db,
+            $sourceMessageTable,
+            $messageTable,
+            $config['removeUnused'],
+            $config['languages'],
+            $config['markUnused']
+        );
+
     }
 
-    public function getDbCategories(){
+    public function getDbCategories()
+    {
         $res = [];
 
         $cats = Category::find()->asArray()->all();
         foreach ($cats as $cat) {
-            $res[] = $cat['name'];
+            $lower = str_replace(" ", '_', strtolower($cat['name']));
+            if ($cat['parent_id'] !== null) {
+                $res['item.category.sub_category_' . $lower][] = $cat['name'];
+            } else {
+                $res['item.category.main_' . $lower][] = $cat['name'];
+            }
         }
 
-        $features = Feature::find()->asArray()->all();
+        $features = Feature::find()->all();
         foreach ($features as $feature) {
-            $res[] = $feature['name'];
-            $res[] = $feature['description'];
+            $lower = str_replace(" ", '_', strtolower($feature->name));
+            $res['item.feature.' . $lower . '_name'][] = $feature->name;
+            $res['item.feature.' . $lower . '_description'][] = $feature->description;
         }
 
-        $featureValue = FeatureValue::find()->asArray()->all();
+        $featureValue = FeatureValue::find()->all();
         foreach ($featureValue as $featureVal) {
-            $res[] = $featureVal['name'];
+            $lower = str_replace(" ", '_', strtolower($featureVal->feature->name));
+            $val = str_replace(" ", '_', strtolower($featureVal->name));
+            $res['item.feature.' . $lower . '_value_' . $val][] = $featureVal->name;
         }
 
-        return ['categories_and_features' => $res];
+        return $res;
+    }
+
+    public function actionFilesToDb()
+    {
+        $dir = scandir(Yii::$aliases['@app'] . '/messages/da-DK/');
+        foreach ($dir as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            $messages = include Yii::$aliases['@app'] . '/messages/da-DK/' . $file;
+            foreach ($messages as $orig => $danish) {
+                $source = I18nSource::find()->where(['message' => $orig])->all();
+                foreach ($source as $s) {
+                    $m = I18nMessage::find()->where(['id' => $s->id])->one();
+                    $m->translation = $danish;
+                    $m->save();
+                }
+            }
+        }
     }
 }

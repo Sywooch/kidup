@@ -1,8 +1,8 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View view component instance */
+/* @var $this \app\extended\web\View */
 /* @var $message \yii\mail\MessageInterface the message being composed */
 /* @var $content string main view render result */
 
@@ -10,7 +10,6 @@ use yii\helpers\Html;
 if (isset(\Yii::$app->params['tmp_email_params'])) {
     $urls = \Yii::$app->params['tmp_email_params']['urls'];
 }
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -419,7 +418,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                     st-content="viewonline">
                                     <p>
                                         <a href="<?= $urls['mailInBrowser'] ?>">
-                                            <?= Yii::t("mail", "Click here to read this mail in your browser") ?>
+                                            <?= Yii::t("mail.wrapper.open_in_browser_ink", "Click here to read this mail in your browser") ?>
                                         </a>
                                     </p>
                                 </td>
@@ -563,7 +562,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                                 <!-- ======= main header ======= -->
 
                                                 <div style="line-height: 24px;">
-                                                    <?= Yii::t("mail", "KidUp Social") ?>
+                                                    <?= Yii::t("mail.wrapper.kidup_social", "KidUp Social") ?>
                                                 </div>
                                             </td>
                                         </tr>
@@ -615,7 +614,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
 
                                                 <div style="line-height: 25px;">
                                                     <a href="<?= $urls['changeSettings'] ?>">
-                                                        <?= Yii::t("mail", "Change email preferences") ?>
+                                                        <?= Yii::t("mail.wrapper.change_preferences", "Change email preferences") ?>
                                                     </a>
                                                 </div>
                                             </td>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
 use Carbon\Carbon;
 use Yii;
@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "child".
  */
-class Child extends \app\models\base\Child
+class Child extends base\Child
 {
     public function behaviors()
     {

@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\widgets;
+namespace user\widgets;
 
-use app\modules\user\forms\Registration;
-use app\modules\user\models\User;
+use \user\forms\Registration;
+use \user\models\User;
 use kartik\form\ActiveForm;
 use yii\base\Model;
 use yii\base\Widget;

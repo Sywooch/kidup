@@ -1,9 +1,9 @@
 <?php
 
 
-namespace app\modules\item\widgets;
+namespace item\widgets;
 
-use app\modules\search\forms\Filter;
+use \search\forms\Filter;
 use yii\bootstrap\Widget;
 
 class MenuSearch extends Widget

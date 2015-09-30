@@ -1,16 +1,17 @@
 <?php
 use yii\helpers\Url;
 
-$this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name;
-
-\app\modules\item\assets\ListAsset::register($this);
-
 /**
  * @var \yii\data\ActiveDataProvider $unpublishedProvider
  * @var \yii\data\ActiveDataProvider $publishedProvider
  * @var \yii\data\ActiveDataProvider $requestProvider
- * @var \yii\web\View $this
+ * @var \app\extended\web\View $this
  */
+
+\item\assets\ListAsset::register($this);
+
+$this->title = ucfirst(\Yii::t('item.list.title', 'Your Items')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <section class="section" id="rentals">
     <div class=" site-area-header">
@@ -23,8 +24,8 @@ $this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name
                 <div class="row">
                     <div class="col-sm-8">
                         <h3>
-                            <?= Yii::t("item", "Products") ?><br>
-                            <small><?= Yii::t("item",
+                            <?= Yii::t("item.list.header", "Products") ?><br>
+                            <small><?= Yii::t("item.list.sub_header",
                                     "Manage the products you'd like to share with other families") ?></small>
                         </h3>
                     </div>
@@ -32,7 +33,7 @@ $this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name
                         <a href="<?= Url::to('@web/item/create') ?>">
                             <button id="create-new-add" class="btn btn-danger btn-fill pull-right hidden-xs"
                                     style="margin-top:20px">
-                                <?= Yii::t("item", "Create New") ?>
+                                <?= Yii::t("item.list.button_create_new", "Create New") ?>
                             </button>
                         </a>
                     </div>
@@ -88,20 +89,20 @@ $this->title = ucfirst(\Yii::t('title', 'Your Items')) . ' - ' . Yii::$app->name
                             'encodeLabels' => false,
                             'items' => [
                                 [
-                                    'label' => Yii::t("item", "Pending Requests") .
+                                    'label' => Yii::t("item.list.pending_request", "Pending Requests") .
                                         ' <span class="badge badge-default">' . $requestProvider->count . '</span>',
                                     'content' => $this->blocks['pending'],
                                     'active' => true,
                                 ],
                                 [
                                     'content' => $this->blocks['published'],
-                                    'label' => Yii::t("item", "Published") .
+                                    'label' => Yii::t("item.list.published", "Published") .
                                         ' <span class="badge badge-default">' . $publishedProvider->count . '</span>',
                                     'active' => false,
                                 ],
                                 [
                                     'content' => $this->blocks['unpublished'],
-                                    'label' => Yii::t("item", "Unpublished") .
+                                    'label' => Yii::t("item.list.unpublished", "Unpublished") .
                                         ' <span class="badge badge-default">' . $unpublishedProvider->count . '</span>',
                                     'active' => false,
                                 ],

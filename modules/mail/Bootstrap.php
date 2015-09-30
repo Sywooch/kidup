@@ -1,15 +1,14 @@
 <?php
 
-namespace app\modules\mail;
+namespace mail;
 
-use app\components\Event;
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\Payin;
-use app\modules\item\models\Item;
-use app\modules\mail\jobs\EmailJob;
-use app\modules\mail\models\Mailer;
-use app\modules\message\models\Message;
-use app\modules\user\models\User;
+use app\helpers\Event;
+use \booking\models\Booking;
+use \booking\models\Payin;
+use \item\models\Item;
+use \mail\models\Mailer;
+use \message\models\Message;
+use \user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;

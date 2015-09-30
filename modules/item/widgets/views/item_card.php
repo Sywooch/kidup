@@ -1,16 +1,15 @@
 <?php
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Url;
-use app\modules\user\widgets\UserImage;
-
+use \user\widgets\UserImage;
+use \review\widgets\ReviewScore;
 /**
- * @var \app\modules\item\models\Item $model
+ * @var \app\extended\web\View $this
+ * @var \item\models\Item $model
+ * @var string $rowClass
  */
 
-// profile page, item page, search, homepage
-\app\modules\item\assets\ItemAsset::register($this);
-
+\item\assets\ItemAsset::register($this);
 
 ?>
 
@@ -26,7 +25,7 @@ use app\modules\user\widgets\UserImage;
                         <?= $model->price_week ?>
                     </span>
                     <span class="time">
-                        <?= Yii::t("item", "/ week") ?>
+                        <?= Yii::t("item.card.per_week", "/ week") ?>
                     </span>
                 </div>
                 <div class="author">
@@ -42,14 +41,12 @@ use app\modules\user\widgets\UserImage;
                 </h3>
 
                 <div class="category">
-                    <?php
-                    echo \Yii::t('categories_and_features', $model->category->name);
-                    ?>
+                    <?= $model->category->getTranslatedName() ?>
                 </div>
 
                 <div class="footer-divs">
                     <div class="reviews">
-                        <?= \app\modules\review\widgets\ReviewScore::widget([
+                        <?= ReviewScore::widget([
                             'user_id' => $model->owner_id,
                             'reviewCount' => $widget->reviewCount
                         ]) ?>

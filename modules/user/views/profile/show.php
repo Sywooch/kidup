@@ -1,21 +1,21 @@
 <?php
 
-use app\components\WidgetRequest;
-use app\modules\item\widgets\ItemCard;
+use \item\widgets\ItemCard;
 use Carbon\Carbon;
-use app\modules\user\widgets\UserImage;
-use app\modules\images\components\ImageHelper;
+use \user\widgets\UserImage;
+use \images\components\ImageHelper;
 
 /**
  * @var \yii\web\View $this
- * @var \app\modules\user\models\Profile $profile
+ * @var \user\models\Profile $profile
  * @var \yii\data\ActiveDataProvider $itemProvider
  * @var bool $fbVerified
  * @var bool $twVerified
  */
-$this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name])) . ' - ' . Yii::$app->name;
+$this->title = ucfirst(\Yii::t('user.view.title', 'Kidup user {0}', [$profile->first_name])) . ' - ' . Yii::$app->name;
 
-\app\modules\user\assets\ProfileAsset::register($this);
+\user\assets\ProfileAsset::register($this);
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <section class="section" id="public-profile">
     <div class="container site-area-content">
@@ -30,7 +30,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                             ]) ?>
 
                         </div>
-                        <h4><?= Yii::t("user", "Verification") ?></h4>
+                        <h4><?= Yii::t("user.view.verification_header", "Verification") ?></h4>
 
                         <?php $verified = function ($type, $icon = '<i class="fa fa-check"></i>') {
                             return
@@ -43,11 +43,12 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                             </div>
                         </div>';
                         } ?>
-                        <?= $profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp ? $verified(\Yii::t('user', 'KidUp Ambassador')):''?>
+                        <?= $profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp ? $verified(
+                            \Yii::t('user.view.kidup_ambassador', 'KidUp Ambassador')):''?>
                         <?= $fbVerified ? $verified('Facebook') : '' ?>
                         <?= $twVerified ? $verified('Twitter') : '' ?>
-                        <?= $profile->email_verified == 1 ? $verified(\Yii::t('user', 'Email')) : '' ?>
-                        <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user', 'Phone')) : '' ?>
+                        <?= $profile->email_verified == 1 ? $verified(\Yii::t('user.view.email', 'Email')) : '' ?>
+                        <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user.view.phone', 'Phone')) : '' ?>
                     </div>
 
                 </div>
@@ -62,7 +63,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                             echo ImageHelper::image('kidup/user/ambassador.png', ['w' => 150])."<br>";
                         } ?>
                     </div>
-                    <?= Yii::t("user", "Hi, I'm {0}!", [
+                    <?= Yii::t("user.view.header_hi_i_am", "Hi, I'm {0}!", [
                         $profile->first_name
                     ]) ?>
 
@@ -70,7 +71,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                     <small>
                         <?= isset($profile->user->locations[0]->country0->name) ? $profile->user->locations[0]->country0->name : '' ?>
                         -
-                        <?= Yii::t("user", "Member since {0}", [
+                        <?= Yii::t("user.view.member_since", "Member since {0}", [
                             Carbon::createFromTimestamp($profile->user->created_at)->formatLocalized("%B %Y")
                         ]) ?>
                     </small>
@@ -81,7 +82,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
                 </div>
                 <hr>
                 <h4>
-                    <?= Yii::t("user", "Reviews from other families") ?>
+                    <?= Yii::t("user.view.reviews_from_families_header", "Reviews from other families") ?>
                 </h4>
 
                 <div class="card-area-width">
@@ -100,7 +101,7 @@ $this->title = ucfirst(\Yii::t('title', 'Kidup user {0}', [$profile->first_name]
         <div class="hidden-xs row">
             <div class="col-md-10 col-md-offset-1">
                 <h3>
-                    <?= Yii::t("user", "Products from {0}", [
+                    <?= Yii::t("user.view.products_from_user", "Products from {0}", [
                         $profile->first_name
                     ]) ?>
                 </h3>

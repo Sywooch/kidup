@@ -3,14 +3,14 @@ $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
-if (YII_ENV == 'test') {
-    $keyFile = __DIR__ . '/keys/keys.env';
-    if (!file_exists($keyFile)) {
-        echo 'php ' . __DIR__ . '/load_keyfile.php';
-        exec('php ' . __DIR__ . '/load_keyfile.php');
-    }
-    $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+// if (YII_ENV == 'test') {
+$keyFile = __DIR__ . '/keys/keys.env';
+if (!file_exists($keyFile)) {
+    echo 'php ' . __DIR__ . '/load_keyfile.php';
+    exec('php ' . __DIR__ . '/load_keyfile.php');
 }
+$keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
+// }
 $components = [
     'session' => [
         'class' => 'yii\web\DbSession'
@@ -39,7 +39,7 @@ $components = [
         'class' => 'yii\authclient\Collection',
         'clients' => [
             'facebook' => [
-                'class' => 'app\components\extended\Facebook',
+                'class' => 'app\extended\auth\Facebook',
                 'clientId' => '1515825585365803',
                 'clientSecret' => $keys['facebook_oauth_secret'],
                 'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500],
@@ -53,20 +53,25 @@ $components = [
         ],
     ],
     'view' => [
-        'class' => 'app\components\extended\View',
-    ],
-    'assetManager' => [
-        'converter' => [
-            'class' => 'yii\web\AssetConverter',
-            'commands' => [
-                // compile less, minify if in production
-                'less' => [
-                    'css',
-                    'lessc {from} {to} --no-color ' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? '-x' : '')
+        'class' => 'app\extended\web\View',
+        'renderers' => [
+            'twig' => [
+                'class' => 'yii\twig\ViewRenderer',
+                // set cachePath to false in order to disable template caching
+                'cachePath' => '@runtime/Twig/cache',
+                // Array of twig options:
+                'options' => [
+                    'auto_reload' => true,
+
+                ],
+                'globals' => [
+                    'Image' => 'app/modules/images/widgets/Image'
                 ],
             ],
         ],
-        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? 'assets-prod.php' : 'assets.php')),
+    ],
+    'assetManager' => [
+        'class' => 'app\extended\web\AssetManager',
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
@@ -75,7 +80,7 @@ $components = [
         'class' => (YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
-        'errorAction' => 'site/error',
+        'errorAction' => 'home/error/error',
     ],
     'log' => [
         'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -105,6 +110,8 @@ $components = [
         'rules' => [
             '/' => 'home/home',
             'home' => 'home/home',
+            'change-language' => 'home/change-language',
+            'super-secret-cache-flush' => 'home/super-secret-cache-flush',
             'search' => 'search/search',
             'search/<query>' => 'search/search',
             'login' => 'user/login',
@@ -129,6 +136,7 @@ $components = [
             'booking/<id:\d+>/conversation' => 'booking/default/conversation',
             'mail/click' => 'mail/view/link',
             'mail/<id>' => 'mail/view/index',
+            'sendgrid/webhook-apqcbec' => 'mail/sendgrid/webhook-apqcbec', // sendgrid incomming webhook
             'review/create/<bookingId:\d+>' => 'review/create/index',
             'inbox/<id:\d+>' => 'message/chat/conversation',
             'inbox' => 'message/chat/inbox',
@@ -144,20 +152,18 @@ $components = [
     'i18n' => [
         'translations' => [
             '*' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@app/messages',
+                'class' => 'yii\i18n\DbMessageSource',
+                'sourceMessageTable' => 'i18n_source',
+                'messageTable' => 'i18n_message',
+                'enableCaching' => YII_CACHE
             ],
         ],
     ],
     'user' => [
-        'identityClass' => 'app\modules\user\models\User', // User must implement the IdentityInterface
+        'identityClass' => 'user\models\User', // User must implement the IdentityInterface
         'enableAutoLogin' => true,
     ],
     'keyStore' => ['class' => 'app\components\KeyStore'],
-    'slack' => ['class' => 'app\components\Slack'],
-    'clog' => ['class' => 'app\components\Log'],
-    'widgetRequest' => ['class' => 'app\components\WidgetRequest'],
-    'pages' => ['class' => 'app\components\Pages'],
     'geolocation' => [
         'class' => 'rodzadra\geolocation\Geolocation',
         'config' => [
@@ -180,6 +186,5 @@ if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {
         'clientSecret' => $keys['facebook_oauth_secret']
     ];
 }
-
 
 return $components;

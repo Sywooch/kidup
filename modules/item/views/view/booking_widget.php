@@ -6,13 +6,18 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 /**
- * @var yii\web\View $this
+ * @var \app\extended\web\View $this
  * @var false|string $redirect
- * @var \app\modules\item\forms\CreateBooking $model
+ * @var \item\forms\CreateBooking $model
  */
 
 \yii\jui\JuiAsset::register($this);
 \app\assets\LodashAsset::register($this);
+
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
+$this->registerJsVariables([
+    'userIsGuest' => \Yii::$app->user->isGuest
+]);
 ?>
 <?php Pjax::begin([
 //    'enableReplaceState' => true,
@@ -21,7 +26,6 @@ use yii\widgets\Pjax;
 ]);
 ?>
     <script>
-        window.userIsGuest = <?= \Yii::$app->user->isGuest ? 'true' : 'false' ?>;
         if (typeof window.widget !== "undefined") {
             window.widget.load();
         }
@@ -34,7 +38,7 @@ use yii\widgets\Pjax;
                         <?= $model->currency->forex_name ?> <?= $model->item->price_week ?>
                     </span>
                     <span class="pull-right period">
-                        <?= Yii::t("item", "per week") ?>
+                        <?= Yii::t("item.view.booking_widget.per_week", "per week") ?>
                     </span>
                 </h4>
             </div>
@@ -46,12 +50,11 @@ use yii\widgets\Pjax;
             'enableClientValidation' => false,
             'method' => 'get',
             'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'create-booking-form'],
-//            'action' => \yii\helpers\Url::to('@web/item/view/create-booking?id='.$model->item->id)
         ]); ?>
         <div class="row">
             <div class="col-sm-6">
                 <div class="text">
-                    <?= Yii::t("item", "Starting at") ?>
+                    <?= Yii::t("item.view.booking_widget.starting_at", "Starting at") ?>
                 </div>
                 <?php
                 // pass available dates to javascript
@@ -66,7 +69,7 @@ use yii\widgets\Pjax;
                         ],
                         'options' => [
                             'class' => 'form-control',
-                            'placeholder' => \Yii::t('item', 'dd-mm-yyyy')
+                            'placeholder' => 'dd-mm-yyyy'
                         ],
                         'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
                         'dateFormat' => 'dd-MM-yyyy',
@@ -76,7 +79,7 @@ use yii\widgets\Pjax;
             </div>
             <div class="col-sm-6">
                 <div class="text">
-                    <?= Yii::t("item", "Ending at") ?>
+                    <?= Yii::t("item.view.booking_widget.ending_at", "Ending at") ?>
                 </div>
                 <?php
                 echo $form->field($model, 'dateTo',
@@ -90,7 +93,7 @@ use yii\widgets\Pjax;
                         ],
                         'options' => [
                             'class' => 'form-control',
-                            'placeholder' => \Yii::t('item', 'dd-mm-yyyy')
+                            'placeholder' => 'dd-mm-yyyy'
                         ],
                         'dateFormat' => 'dd-MM-yyyy',
                         'language' => Yii::$app->language == 'en' ? 'en-NZ' : Yii::$app->language,
@@ -131,7 +134,8 @@ use yii\widgets\Pjax;
                             </tr>
                         </table>
                     <?php endif; ?>
-                    <?= Html::submitButton(\Yii::t('item', 'Request to Book'),
+                    <?= Html::submitButton(\Yii::t("item.view.booking_widget.request_to_book_button",
+                        'Request to Book'),
                         [
                             'class' => 'btn btn-danger btn-fill',
                             'style' => 'width:100%',

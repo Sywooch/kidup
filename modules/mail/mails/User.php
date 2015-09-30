@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\mail\mails;
+namespace mail\mails;
 
-use app\modules\mail\models\Mailer;
-use app\modules\mail\models\Token;
+use \mail\models\Mailer;
+use \mail\models\Token;
 use Yii;
 use yii\helpers\Url;
 
@@ -57,7 +57,7 @@ class User extends Mailer
 
         return $this->sendMessage([
             'email' => $user->email,
-            'subject' => \Yii::t('mail', 'KidUp recovery request'),
+            'subject' => \Yii::t('mail.recovery.subject', 'KidUp recovery request'),
             'type' => self::USER_RECOVERY,
             'params' => [
                 'profileName' => $user->profile->first_name,

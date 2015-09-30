@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\booking;
+namespace booking;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\booking\controllers';
+    public $controllerNamespace = '\booking\controllers';
 
     public function init()
     {

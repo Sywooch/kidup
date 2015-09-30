@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\item\widgets;
+namespace item\widgets;
 
 use yii\bootstrap\Widget;
 

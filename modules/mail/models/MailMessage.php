@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\mail\models;
+namespace mail\models;
 
-use app\modules\message\models\Message;
+use \message\models\Message;
 use Carbon\Carbon;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "mail_message".
  */
-class MailMessage extends \app\models\base\MailMessage
+class MailMessage extends base\MailMessage
 {
     public function behaviors()
     {
@@ -55,7 +55,7 @@ class MailMessage extends \app\models\base\MailMessage
         }
 
         /**
-         * @var \app\modules\mail\models\MailAccount $account ;
+         * @var \mail\models\MailAccount $account ;
          */
 
         $senderId = $account->user_id == $account->conversation->initiater_user_id ? $account->conversation->target_user_id : $account->conversation->initiater_user_id;
@@ -98,7 +98,7 @@ class MailMessage extends \app\models\base\MailMessage
         $mm->mail_account_name = $account->name;
 
         if (!$mm->save()) {
-            Yii::$app->clog->debug('MailMessage not created', [$mm, $postData]);
+            Yii::error('MailMessage not created');
             throw new InternalErrorException("Incomming email not parsed");
         }
 

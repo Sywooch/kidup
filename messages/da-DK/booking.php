@@ -38,6 +38,7 @@ return [
     'Booking already seems to be confirmed' => 'Bookingen synes allerede at være bekræftet',
     'Booking has been successfully accepted' => 'Bookingen er blevet succesfuldt accepteret',
     'Booking has been successfully declined' => 'Bookinge er blevet succesfuldt afvist',
+    'Booking information' => '',
     'Bookings' => 'Bookings',
     'By clicking one of the underlying buttons, you agree with our ' => 'Ved at klikke på nedenstående er du enig i vores',
     'Complete payment' => 'Fuldfør betaling',

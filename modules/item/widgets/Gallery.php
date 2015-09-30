@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\item\widgets;
+namespace item\widgets;
 
 use dosamigos\gallery\DosamigosAsset;
 use dosamigos\gallery\GalleryAsset;

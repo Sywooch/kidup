@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\review\forms;
+namespace review\forms;
 
-use app\modules\review\models\Review;
+use \review\models\Review;
 use yii\base\Model;
 
 class OwnerReview extends Model

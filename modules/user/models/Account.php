@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\user\models;
+namespace user\models;
 
 use yii\db\ActiveRecord;
 
@@ -12,12 +12,12 @@ use yii\db\ActiveRecord;
  * @property string $decodedData Json-decoded properties
  * @property User $user        User that this account is connected for.
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  *
  */
 class Account extends ActiveRecord
 {
-    /** @var \app\modules\user\Module */
+    /** @var \user\Module */
     protected $module;
 
     /** @var */

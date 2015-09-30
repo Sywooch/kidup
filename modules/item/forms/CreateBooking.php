@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
-use app\models\base\Currency;
-use app\modules\booking\models\Booking;
-use app\modules\item\models\Item;
+use user\models\base\Currency;
+use \booking\models\Booking;
+use \item\models\Item;
 use Carbon\Carbon;
 use yii\base\Model;
 use yii\helpers\Json;
@@ -80,11 +80,13 @@ class CreateBooking extends Model
                     ':status' => Booking::ACCEPTED
                 ])->count();
             if ($overlapping > 0) {
-                $this->addError('dateFrom', \Yii::t('item', 'A booking already exists in this period'));
+                $this->addError('dateFrom', \Yii::t('item.create_booking.error.already_booked',
+                    'A booking already exists in this period'));
                 return false;
             }
             if ($this->to <= $this->from) {
-                $this->addError('dateFrom', \Yii::t('item', 'The start date should be larger then the end date'));
+                $this->addError('dateFrom', \Yii::t('item.create_booking.error.start_date_larger_then_end_date',
+                    'The start date should be larger then the end date'));
                 return false;
             }
             return true;
@@ -100,19 +102,13 @@ class CreateBooking extends Model
     public function attemptBooking()
     {
         if ($this->validateDates()) {
-            if (isset(\Yii::$app->request->get()['_pjax'])) {
-                $session = Json::decode(\Yii::$app->session->get('ready_to_book'));
-                if (($session['time_from'] == $this->from && $session['time_to'] == $this->to && $this->item->id == $session['item_id'])
-                    || YII_ENV == 'test'
-                ) {
-
-                    if ($this->save()) {
-                        $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
-                        if(YII_ENV === 'test'){
-                            return \Yii::$app->controller->redirect($redirect);
-                        }
-                        return "<script>window.location = '{$redirect}';</script>";
+            if (isset(\Yii::$app->request->get()['_book'])) {
+                if ($this->save()) {
+                    $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
+                    if (YII_ENV === 'test') {
+                        return \Yii::$app->controller->redirect($redirect);
                     }
+                    return "<script>window.location = '{$redirect}';</script>";
                 }
             }
         }
@@ -141,7 +137,8 @@ class CreateBooking extends Model
         }
 
         if (\Yii::$app->user->isGuest) {
-            $this->addError('dateFrom', \Yii::t('item', 'You should be logged in to perform this action.'));
+            $this->addError('dateFrom', \Yii::t('item.create_booking.error.should_be_logged_in',
+                'You should be logged in to perform this action.'));
             return false;
         }
 

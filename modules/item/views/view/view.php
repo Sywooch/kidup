@@ -1,28 +1,35 @@
 <?php
 
-use app\modules\item\widgets\ItemCard;
+use \item\widgets\ItemCard;
 use app\widgets\Map;
 use yii\helpers\Url;
-use app\modules\item\widgets\Gallery;
+use \item\widgets\Gallery;
+use \review\widgets\ReviewScore;
+use \user\widgets\UserImage;
+use \yii\widgets\ListView;
+use Carbon\Carbon;
 
 /**
  * @var yii\web\View $this
  * @var array $images
  * @var string $bookingForm
- * @var app\modules\item\models\Item $model
- * @var app\modules\item\models\Location $location
- * @var bool $show_modalk
+ * @var \item\models\Item $model
+ * @var \item\models\Location $location
+ * @var bool $show_modal
  * @var \yii\data\ActiveDataProvider $reviewDataProvider
+ * @var \item\models\Item[] $related_items
  */
 
-$this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$app->name;
 
 \app\assets\FontAwesomeAsset::register($this);
 \yii\jui\JuiAsset::register($this);
 \dosamigos\gallery\GalleryAsset::register($this);
-\app\modules\item\assets\ViewAsset::register($this);
+\item\assets\ViewAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \yii\widgets\PjaxAsset::register($this);
+
+$this->title = ucfirst($model->name) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <?= $show_modal ? $this->render('share_modal', ['model' => $model]) : '' ?>
 
@@ -34,7 +41,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <div class="row main-info">
                         <div class="col-md-2 owner">
                             <a href="<?= Url::to('@web/user/' . $model->owner_id) ?>">
-                                <?= \app\modules\user\widgets\UserImage::widget(
+                                <?= UserImage::widget(
                                     [
                                         'user_id' => $model->owner_id,
                                         'width' => '80px',
@@ -54,28 +61,34 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                 <?= $model->location->city . ", " . $model->location->country0->name ?>
                             </div>
                             <div class="item-reviews">
-                                <?= \app\modules\review\widgets\ReviewScore::widget(['user_id' => $model->owner_id]); ?>
+                                <?= ReviewScore::widget(['user_id' => $model->owner_id]); ?>
                             </div>
                             <div class="item-category">
-                                <?= Yii::t('categories_and_features', $model->category->parent->name) . " - " .
-                                Yii::t('categories_and_features', $model->category->name) ?>
+                                <?= $model->category->parent->getTranslatedName() . " - " .
+                                $model->category->getTranslatedName() ?>
                             </div>
                         </div>
                     </div>
 
-                    <?= Gallery::widget([
-                        'items' => $images,
-                        'id' => 'gallery',
-                        'clientOptions' => [
-                            'gallery' => true,
-                            'stretchImages' => true,
-                        ]
-                    ]) ?>
+                    <div id="galleryPhotoViewer">
+                        <?= Gallery::widget([
+                            'items' => $images,
+                            'id' => 'galleryPhotoViewer',
+                            'clientOptions' => [
+                                'gallery' => true,
+                                'stretchImages' => true,
+                            ],
+                            'options' => [
+                                'class' => 'smallImages'
+                            ]
+                        ]) ?>
+                    </div>
+
 
                     <div class="card">
                         <div class="content product-content">
                             <h4>
-                                <?= Yii::t("item", "About this product") ?>
+                                <?= Yii::t("item.view.header_about_product", "About this product") ?>
                             </h4>
 
                             <p class="description">
@@ -87,7 +100,7 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                     <div class="card card-product">
                         <div class="content">
                             <h4>
-                                <?= Yii::t("item", "Product info") ?>
+                                <?= Yii::t("item.view.header.product_info", "Product info") ?>
                             </h4>
 
                             <div id="product-info" class="row">
@@ -95,17 +108,17 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Publish date") ?>
+                                                <?= Yii::t("item.view.publish_date", "Publish date") ?>
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= \Carbon\Carbon::createFromTimestamp($model->created_at)->formatLocalized('%d %B %Y'); ?>
+                                                    <?= Carbon::createFromTimestamp($model->created_at)->formatLocalized('%d %B %Y'); ?>
                                                 </b>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Location") ?>
+                                                <?= Yii::t("item.view.location", "Location") ?>
                                             </td>
                                             <td>
                                                 <b>
@@ -115,18 +128,18 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                         </tr>
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Pricing") ?>
+                                                <?= Yii::t("item.view.pricing", "Pricing") ?>
                                             </td>
                                             <td>
                                                 <b>
                                                     <?php
                                                     if (is_int($model->price_day)) {
-                                                        echo $model->price_day . ' ' . Yii::t("item",
-                                                                "per day") . "<br>";
+                                                        echo $model->price_day . ' ' .
+                                                            Yii::t("item.view.per_day", "per day") . "<br>";
                                                     }
-                                                    echo $model->price_week . ' ' . Yii::t("item", "per week");
+                                                    echo $model->price_week . ' ' . Yii::t("item.view.per_week", "per week");
                                                     if (is_int($model->price_month)) {
-                                                        echo "<br>" . $model->price_month . ' ' . Yii::t("item",
+                                                        echo "<br>" . $model->price_month . ' ' . Yii::t("item.view.per_month",
                                                                 "per month") . "<br>";
                                                     } ?>
                                                 </b>
@@ -138,12 +151,12 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <?= Yii::t("item", "Features") ?>
+                                                <?= Yii::t("item.view.features", "Features") ?>
                                             </td>
                                             <td>
                                                 <?php
                                                 foreach ($model->singularFeatures as $feature) {
-                                                    echo \Yii::t('categories_and_features', $feature->name);
+                                                    echo  $feature->getTranslatedName();
                                                 }
                                                 ?>
                                             </td>
@@ -151,12 +164,11 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                                         <?php foreach ($model->itemHasFeatures as $ihf): ?>
                                             <tr>
                                                 <td>
-                                                    <?= Yii::t("categories_and_features", $ihf->feature->name) ?>
+                                                    <?= $ihf->feature->getTranslatedName() ?>
                                                 </td>
                                                 <td>
                                                     <b>
-                                                        <?= \Yii::t('categories_and_features',
-                                                            $ihf->featureValue->name) ?>
+                                                        <?= $ihf->featureValue->getTranslatedName() ?>
                                                     </b>
                                                 </td>
                                             </tr>
@@ -183,16 +195,16 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
                         </div>
                     </div>
 
-                    <h4><b><?= Yii::t('item', 'Reviews') ?></b></h4>
+                    <h4><b><?= Yii::t('item.view.reviews_header', 'Reviews') ?></b></h4>
 
-                    <?= \yii\widgets\ListView::widget([
+                    <?= ListView::widget([
                         'dataProvider' => $reviewDataProvider,
                         'itemView' => 'item_review',
                         'itemOptions' => ['tag' => 'span'],
                     ]) ?>
 
                     <?php if (count($related_items) > 0): ?>
-                        <h4><b><?= Yii::t('item', 'Related products') ?></b></h4>
+                        <h4><b><?= Yii::t('item.view.related_products_header', 'Related products') ?></b></h4>
 
                         <div class="related">
                             <div class="row">
@@ -223,9 +235,8 @@ $this->title = ucfirst(\Yii::t('title', '{0}', [$model->name])) . ' - ' . Yii::$
 
         <div class="buttonContainer" style="z-index:10;">
             <button class="btn btn-fill btn-danger mobileBookingRequestButton visible-sm visible-xs">
-                <?= \Yii::t('item', 'Request to Book') ?>
+                <?= \Yii::t('item.view.booking_widget.request_button', 'Request to Book') ?>
             </button>
         </div>
     </section>
 </div>
-

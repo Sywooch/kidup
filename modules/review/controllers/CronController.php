@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\review\controllers;
+namespace review\controllers;
 
 use Yii;
 use yii\base\Model;

@@ -1,80 +1,96 @@
 <?php
 
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use \kartik\sidenav\SideNav;
 use kartik\icons\Icon;
 use \yii\helpers\Html;
 
 /**
- * @var \yii\web\View $this
- * @var \app\modules\item\forms\Edit $model
- * @var \app\modules\item\models\Item $item
+ * @var \app\extended\web\View $this
+ * @var \item\forms\Edit $model
+ * @var \item\models\Item $item
  * @var array $pageParams
+ * @var array $rightColumnParams
  */
-\app\modules\item\assets\CreateAsset::register($this);
-
+\item\assets\CreateAsset::register($this);
+$this->assetPackage = \app\assets\Package::ITEM_CREATE;
 ?>
 
 <section class="section" id="new-rental">
     <div class="card header">
         <div class="content ">
             <h2 class="title">
-                <?= $item->name ? $item->name : \Yii::t('item', 'New product: '.$item->category->name) ?>
+                <?= $item->name ? $item->name : \Yii::t('item.create.wrapper.new_product',
+                    'New product: ' . $item->category->name) ?>
                 <a href="<?= \yii\helpers\Url::to('@web/item/' . $item->id) ?>" class="pull-right" style="color:white;"
                    target="_blank">
-                    <?= Yii::t("item", "Preview") ?>
+                    <?= Yii::t("item.create.wrapper.preview", "Preview") ?>
                 </a>
             </h2>
         </div>
     </div>
     <div class="row" style="margin-right:0">
         <div class="col-md-3">
-            <?= SideNav::widget([
+            <?php
+            $items = [
+                [
+                    'url' => '@web/item/create/edit-basics?id=' . $item->id,
+                    'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') .
+                        \Yii::t('item.create.menu.basics', 'General'),
+                    'active' => $page == 'basics/basics'
+                ],
+                [
+                    'url' => '@web/item/create/edit-description?id=' . $item->id,
+                    'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') .
+                        \Yii::t('item.create.menu.description', 'Description'),
+                    'active' => $page == 'description/description'
+                ],
+                [
+                    'url' => '@web/item/create/edit-location?id=' . $item->id,
+                    'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') .
+                        \Yii::t('item.create.menu.location', 'Location'),
+                    'active' => $page == 'location/location'
+                ],
+                [
+                    'url' => '@web/item/create/edit-photos?id=' . $item->id,
+                    'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') .
+                        \Yii::t('item.create.menu.photos', 'Photos'),
+                    'active' => $page == 'photos/photos'
+                ],
+                [
+                    'url' => '@web/item/create/edit-pricing?id=' . $item->id,
+                    'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') .
+                        \Yii::t('item.create.menu.pricing', 'Pricing'),
+                    'active' => $page == 'pricing/pricing'
+                ],
+            ];
+
+            if ($item->is_available == 1) {
+                $items[] = [
+                    'url' => '@web/item/create/edit-publish?id=' . $item->id,
+                    'label' => \Yii::t('item.create.menu.unpublish_item', 'Unpublish item'),
+                    'active' => $page == 'unpublish'
+                ];
+            } elseif ($model->isScenarioValid('default')) {
+                $items[] = [
+                    'url' => '@web/item/create/edit-publish?id=' . $item->id,
+                    'label' => \Yii::t('item.create.menu.publish_item', 'Publish item'),
+                    'active' => $page == 'publish'
+                ];
+            }
+
+            echo SideNav::widget([
                 'type' => SideNav::TYPE_PRIMARY,
                 'heading' => false,
                 'encodeLabels' => false,
-                'items' => [
-                    [
-                        'url' => '@web/item/create/edit-basics?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('basics') ? Icon::show('check') : '') . \Yii::t('item', 'General'),
-                        'active' => $page == 'basics/basics'
-                    ],
-                    [
-                        'url' => '@web/item/create/edit-description?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('description') ? Icon::show('check') : '') . \Yii::t('item', 'Description'),
-                        'active' => $page == 'description/description'
-                    ],
-                    [
-                        'url' => '@web/item/create/edit-location?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('location') ? Icon::show('check') : '') . \Yii::t('item', 'Location'),
-                        'active' => $page == 'location/location'
-                    ],
-                    [
-                        'url' => '@web/item/create/edit-photos?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('photos') ? Icon::show('check') : '') . \Yii::t('item', 'Photos'),
-                        'active' => $page == 'photos/photos'
-                    ],
-                    [
-                        'url' => '@web/item/create/edit-pricing?id=' . $item->id,
-                        'label' => ($model->isScenarioValid('pricing') ? Icon::show('check') : '') . \Yii::t('item', 'Pricing'),
-                        'active' => $page == 'pricing/pricing'
-                    ],
-                ],
+                'items' => $items,
             ]); ?>
             <div style="text-align: center">
-                <?php if ($item->is_available == 1) {
-                    echo \Yii::t('item', 'Product is published. Click {a}here{aout} to unpublish.', [
-                        'a' => "<a href='".\yii\helpers\Url::to('@web/item/create/unpublish?id='.$item->id)."'>",
-                        'aout' => '</a>'
-                    ]);
-                }else if($model->isScenarioValid('default')) {
-                    echo Html::a(Html::button(\Yii::t('item', 'Publish'), [
-                        'class' => 'btn btn-danger btn-fill'
-                    ]), '@web/item/create/edit-publish?id=' . $item->id);
-                } else {
-                    echo \Yii::t('item', 'Complete {n, plural, =1{1 step} other{# steps}} to publish your product.', [
-                        'n' => $model->getStepsToCompleteCount()
-                    ]);
+                <?php if ($item->is_available !== 1 && !$model->isScenarioValid('default')) {
+                    echo \Yii::t('item.create.menu.complete_x_steps', 'Complete {n, plural, =1{1 step} other{# steps}} to publish your product.',
+                        [
+                            'n' => $model->getStepsToCompleteCount()
+                        ]);
                 } ?>
             </div>
         </div>
@@ -83,17 +99,21 @@ use \yii\helpers\Html;
             <div class="card">
                 <div class="content">
                     <?= $this->render($page, array_merge($pageParams, ['form' => $form, 'model' => $model])) ?>
-                    <hr>
-                    <div class="row">
-                        <?= \yii\helpers\Html::submitButton(\Yii::t('item', 'Back'), [
-                            'class' => "btn btn-link",
-                            'name' => 'btn-back'
-                        ]); ?>
-                        <?= \yii\helpers\Html::submitButton(\Yii::t('item', 'Next'), [
-                            'class' => "btn btn-danger pull-right btn-fill",
-                            'name' => 'btn-next'
-                        ]); ?>
-                    </div>
+                    <?php if ($page !== 'publish'): ?>
+                        <hr>
+                        <div class="row">
+                            <?php if ($page !== 'basics/basics'): ?>
+                                <?= \yii\helpers\Html::submitButton(\Yii::t('item.create.back', 'Back'), [
+                                    'class' => "btn btn-link",
+                                    'name' => 'btn-back'
+                                ]); ?>
+                            <?php endif; ?>
+                            <?= \yii\helpers\Html::submitButton(\Yii::t('item.create.next', 'Next'), [
+                                'class' => "btn btn-danger pull-right btn-fill",
+                                'name' => 'btn-next'
+                            ]); ?>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
             </div>

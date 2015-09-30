@@ -1,11 +1,14 @@
 <?php
-namespace app\modules\home\assets;
+namespace home\assets;
 
+use app\assets\AngularAsset;
+use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
 class HomeAsset extends AssetBundle
 {
     public $sourcePath = '@app/modules/home/views/home/assets';
+
     public $js = [
         'js/owl.carousel.min.js',
         'js/typist.js',
@@ -16,8 +19,10 @@ class HomeAsset extends AssetBundle
         'home.less',
     ];
 
-    public $depends = [
-        '\yii\web\JqueryAsset',
-        '\app\assets\FullModalAsset'
-    ];
+    public function __construct(){
+        $this->depends = [
+            AppAsset::className(),
+            AngularAsset::className(),
+        ];
+    }
 }

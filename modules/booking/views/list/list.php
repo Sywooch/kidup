@@ -1,7 +1,13 @@
 <?php
-use app\modules\booking\models\Booking;
+use \booking\models\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
+
+/**
+ * @var \app\extended\web\View $this
+ * @var \yii\data\ActiveDataProvider $provider
+ */
+$this->assetPackage = \app\assets\Package::BOOKING;
 
 ?>
 
@@ -12,14 +18,14 @@ use yii\helpers\Html;
             'dataProvider' => $provider,
             'columns' => [
                 [
-                    'attribute' => \Yii::t('booking', 'status'),
+                    'attribute' => \Yii::t('booking.list.label_status', 'status'),
                     'value' => function ($model, $key, $index, $widget) {
                         return $model->getStatusName($model->status);
                     },
                     'format' => 'raw'
                 ],
                 [
-                    'label' => \Yii::t('booking', 'Item Name'),
+                    'label' => \Yii::t('booking.list.label_item_name', 'Item Name'),
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->item->name, '@web/item/' . $model->item_id);
                     },
@@ -31,12 +37,12 @@ use yii\helpers\Html;
 
                         return Html::a($name, '@web/user/' . $model->owner->id);
                     },
-                    'label' => \Yii::t('booking', 'Owner'),
+                    'label' => \Yii::t('booking.list.label_owner', 'Owner'),
                     'format' => 'raw'
                 ],
                 [
                     'attribute' => 'time_from',
-                    'label' => \Yii::t('booking', 'Dates'),
+                    'label' => \Yii::t('booking.list.label_dates', 'Dates'),
                     'value' => function ($model, $key, $index, $widget) {
                         $date1 = \Carbon\Carbon::createFromTimestamp($model->time_from,
                             \Yii::$app->params['serverTimeZone'])->toFormattedDateString();
@@ -48,28 +54,28 @@ use yii\helpers\Html;
                     'format' => 'raw'
                 ],
                 [
-                    'label' => \Yii::t('booking', 'Options'),
+                    'label' => \Yii::t('booking.list.label_options', 'Options'),
                     'value' => function ($model, $key, $index, $widget) {
-                        if ($model->status == \app\modules\booking\models\Booking::AWAITING_PAYMENT) {
+                        if ($model->status == \booking\models\Booking::AWAITING_PAYMENT) {
                             $links = [
-                                Html::a(\Yii::t('booking', 'Complete payment'),
+                                Html::a(\Yii::t('booking.list.label_complete_payment_link', 'Complete payment'),
                                     ['/booking/' . $model->id . '/confirm']),
                             ];
                         } else {
                             /**
-                             * @var \app\modules\booking\models\Booking $model
+                             * @var \booking\models\Booking $model
                              */
                             $links = [];
 
                             if ($model->status !== Booking::DECLINED && $model->status !== Booking::CANCELLED) {
-                                $links [] = Html::a(\Yii::t('booking', 'Receipt'),
+                                $links [] = Html::a(\Yii::t('booking.list.link_receipt', 'Receipt'),
                                     '@web/booking/' . $model->id . '/receipt');
-                                $links [] = Html::a(\Yii::t('booking', 'Invoice'),
+                                $links [] = Html::a(\Yii::t('booking.list.link_invoice', 'Invoice'),
                                     '@web/booking/' . $model->id . '/invoice');
                             };
 
-                            $links[] = Html::a(\Yii::t('booking', 'View Booking'), '@web/booking/' . $model->id);
-                            $links[] = Html::a(\Yii::t('booking', 'Contact {0}', [
+                            $links[] = Html::a(\Yii::t('booking.list.link_view_booking', 'View Booking'), '@web/booking/' . $model->id);
+                            $links[] = Html::a(\Yii::t('booking.list.link_contact_owner', 'Contact {0}', [
                                 $model->item->owner->profile->first_name
                             ]), ['/messages/' . $model->getConversationId()]);
                         }

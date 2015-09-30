@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\item\widgets;
+namespace item\widgets;
 
 use yii\helpers\Html;
 use yii\widgets\InputWidget;

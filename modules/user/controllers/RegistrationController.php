@@ -1,33 +1,33 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\models/>
+ * (c)  project <http://github.com/app\models/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\controllers;
+namespace user\controllers;
 
-use app\controllers\Controller;
-use app\modules\user\Finder;
-use app\modules\user\forms\PostRegistrationProfile;
-use app\modules\user\forms\Registration;
-use app\modules\user\models\User;
+use app\extended\web\Controller;
+use \user\Finder;
+use \user\forms\PostRegistrationProfile;
+use \user\forms\Registration;
+use \user\models\User;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use app\modules\user\models\SocialAccount;
+use \user\models\SocialAccount;
 
 /**
  * RegistrationController is responsible for all registration process, which includes registration of a new account,
  * resending confirmation tokens, email confirmation and registration via social networks.
  *
- * @property \app\modules\user\Module $module
+ * @property \user\Module $module
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */

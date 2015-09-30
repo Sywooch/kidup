@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace admin\controllers;
 
-use app\models\base\User;
-use app\modules\booking\models\Payout;
-use app\modules\item\models\Item;
+use user\models\base\User;
+use booking\models\Payout;
+use item\models\Item;
 use Yii;
 
 class BankStuffController extends Controller

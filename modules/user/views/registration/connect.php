@@ -1,16 +1,17 @@
 <?php
 
-use app\components\ViewHelper;
+use app\helpers\ViewHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var app\modules\user\models\User $model
- * @var app\modules\user\models\Account $account
+ * @var \user\models\User $model
+ * @var \user\models\Account $account
  */
-$this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account to {0}', $account->provider));
+$this->title = ViewHelper::getPageTitle(\Yii::t('user.connect.title', 'Connect your account to {0}', $account->provider));
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 <section style="padding-top:80px" class="container">
     <div class="row">
@@ -23,10 +24,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account t
                 <div class="panel-body">
                     <div class="alert alert-info">
                         <p>
-                            <?= Yii::t('user',
+                            <?= Yii::t('user.connect.first_time_signin',
                                 'Looks like this is first time you are using your {0} account to sign in to {1}',
                                 [$account->provider, Yii::$app->name]) ?>.
-                            <?= Yii::t('user',
+                            <?= Yii::t('user.connect.first_time_signin_use_email_to_connect',
                                 'Connect your email address below, you will never have to use this form again.') ?>.
                         </p>
                     </div>
@@ -37,14 +38,14 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Connect your account t
 
                     <?= $form->field($model, 'email') ?>
 
-                    <?= Html::submitButton(Yii::t('user', 'Finish'),
+                    <?= Html::submitButton(Yii::t('user.connect.finish_button', 'Finish'),
                         ['class' => 'btn btn-primary btn-wide btn-fill']) ?>
 
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
             <p class="text-center">
-                <?= Html::a(Yii::t('user',
+                <?= Html::a(Yii::t('user.connect.already_on_kidup_question',
                     'Already on kidup? Login and connect this account on your verification page'),
                     ['/user/security/login']) ?>.
             </p>

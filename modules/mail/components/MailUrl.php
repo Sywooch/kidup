@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\mail\components;
+namespace mail\components;
 
 use yii\base\Model;
 use yii\helpers\Url;

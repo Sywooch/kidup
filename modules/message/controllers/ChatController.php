@@ -1,10 +1,10 @@
 <?php
-namespace app\modules\message\controllers;
+namespace message\controllers;
 
-use app\controllers\Controller;
-use app\modules\message\forms\ChatMessage;
-use app\modules\message\models\Conversation;
-use app\modules\message\models\Message;
+use app\extended\web\Controller;
+use \message\forms\ChatMessage;
+use \message\models\Conversation;
+use \message\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\booking\controllers;
+namespace booking\controllers;
 
-use app\controllers\Controller;
-use app\modules\booking\forms\Confirm;
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\Payin;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Item;
-use app\modules\user\models\PayoutMethod;
+use app\extended\web\Controller;
+use \booking\forms\Confirm;
+use \booking\models\Booking;
+use \booking\models\Payin;
+use \images\components\ImageHelper;
+use \item\models\Item;
+use \user\models\PayoutMethod;
 use Carbon\Carbon;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
@@ -40,7 +40,7 @@ class DefaultController extends Controller
     public function actionConfirm($id)
     {
         /**
-         * @var \app\modules\booking\models\Booking $booking
+         * @var \booking\models\Booking $booking
          */
         $booking = $this->find($id);
 
@@ -51,12 +51,15 @@ class DefaultController extends Controller
         if ($booking->status !== Booking::AWAITING_PAYMENT) {
             return $this->redirect(['/booking/' . $id]);
         }
-
+        
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
             if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
                 $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
+            }
+            if(\Yii::$app->request->isAjax){
+                return \yii\helpers\Json::encode($model->validate());
             }
             if ($model->save()) {
                 // booking is confirmed
@@ -67,7 +70,7 @@ class DefaultController extends Controller
             }
         }
 
-        $item = Item::findOne($booking->item_id);
+        $item = Item::find()->where(['id' => $booking->item_id])->one();
 
         return $this->render('confirm', [
             'booking' => $booking,
@@ -91,7 +94,7 @@ class DefaultController extends Controller
         }
 
         if ($booking->status !== Booking::PENDING) {
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', "Booking already seems to be confirmed"));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_already_confirmed', "Booking already seems to be confirmed"));
             return $this->redirect('@web/booking/' . $id);
         }
 
@@ -99,7 +102,7 @@ class DefaultController extends Controller
         if ($payoutMethod == 0) {
             $link = Url::to('@web/user/settings/payout-preference');
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
+                \Yii::t('booking.flash.add_payment_method', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
                     'href' => "<a href='{$link}'>",
                     'endHref' => "</a>",
                 ]));
@@ -108,7 +111,7 @@ class DefaultController extends Controller
 
         if ($booking->payin->status !== Payin::STATUS_AUTHORIZED) {
             if ($booking->payin->status == Payin::STATUS_PENDING) {
-                \Yii::$app->session->addFlash('info', \Yii::t('booking',
+                \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_still_unconfirmed',
                     'The payment has to be confirmed before the booking can be accepted. Please try again in a couple of minutes'));
                 return $this->redirect('@web/item/list');
             }
@@ -117,20 +120,20 @@ class DefaultController extends Controller
 
         if ($booking->request_expires_at < time()) {
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking', 'This booking had no response for more then 48 hours, so is removed.'));
+                \Yii::t('booking.request_no_respondse_removed_flash', 'This booking had no response for more then 48 hours, so is removed.'));
             return $this->goHome();
         }
 
         // todo make this POST (safer)
         if ($response == 'accept') {
             $res = $booking->ownerAccepts();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', 'Booking has been successfully accepted'));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_accepted', 'Booking has been successfully accepted'));
             return $this->redirect('@web/booking/' . $id);
         }
 
         if ($response == 'decline') {
             $res = $booking->ownerDeclines();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking', 'Booking has been successfully declined'));
+            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_declined', 'Booking has been successfully declined'));
             return $this->redirect('@web/booking/by-item/' . $booking->item_id);
         }
 

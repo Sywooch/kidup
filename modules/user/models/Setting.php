@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
-class Setting extends \app\models\base\Setting
+class Setting extends base\Setting
 {
     const MAIL_BOOKING_REMINDER = 'rent_reminder';
     const MESSAGE_UPDATE = 'message_update';
@@ -17,11 +17,14 @@ class Setting extends \app\models\base\Setting
     public static function getEmailSettings()
     {
         return [
-            Setting::MAIL_BOOKING_REMINDER => \Yii::t('app', 'Am about to start a reservation.'),
-            Setting::MESSAGE_UPDATE => \Yii::t('app', 'I receive a message from another person on KidUp.'),
-            Setting::BOOKING_STATUS_CHANGE => \Yii::t('app',
-                'My outstanding reservation request is accepted or declined.'),
-            Setting::NEWSLETTER => \Yii::t('app', 'Kidup wants to share some exciting news or updates.'),
+            Setting::MAIL_BOOKING_REMINDER => \Yii::t('user.settings.mail.reservation_start',
+                'Am about to start a reservation.'),
+            Setting::MESSAGE_UPDATE => \Yii::t('user.settings.mail.receive_message_from_kidup_user',
+                'I receive a message from another person on KidUp.'),
+            Setting::BOOKING_STATUS_CHANGE => \Yii::t('user.settings.mail.reservation_status_changes',
+                'My outstanding booking request is accepted or declined.'),
+            Setting::NEWSLETTER => \Yii::t('user.settings.mail.kidup_newsletter_promo',
+                'Kidup wants to share some exciting news or updates.'),
         ];
     }
 

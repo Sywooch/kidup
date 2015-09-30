@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\admin\controllers;
+namespace admin\controllers;
 
-use app\modules\search\models\IpLocation;
-use app\modules\user\models\Profile;
+use \search\models\IpLocation;
+use \user\models\Profile;
 use Yii;
 use yii\web\ForbiddenHttpException;
 
@@ -19,7 +19,6 @@ class Controller extends \yii\web\Controller
     {
         if (\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()) {
             throw new ForbiddenHttpException();
-            return $this->redirect('@web/home');
         }
         return false;
     }

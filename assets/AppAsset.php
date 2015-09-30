@@ -23,7 +23,9 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\web\JqueryAsset',
         'app\assets\FontAwesomeAsset',
+        'app\assets\FullModalAsset',
         'app\assets\GsdkAsset',
+        'yii\bootstrap\BootstrapPluginAsset'
     ];
 }
 

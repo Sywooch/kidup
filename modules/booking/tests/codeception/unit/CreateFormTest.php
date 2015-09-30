@@ -1,10 +1,11 @@
 <?php
 
-namespace app\modules\booking\tests;
+namespace booking\tests;
 
-use app\modules\booking\forms\Create;
+use booking\widgets\CreateBooking;
 use Carbon\Carbon;
 use Codeception\Specify;
+use item\forms\Create;
 use tests\codeception\_support\FixtureHelper;
 use yii\codeception\TestCase;
 
@@ -36,10 +37,7 @@ class CreateFormTest extends TestCase
                 'dateFrom' => Carbon::now()->format('d-m-Y'),
                 'dateto' => Carbon::now()->addDays(25)->format('d-m-Y')
             ]);
-            \yii\helpers\VarDumper::dump($this->form->getErrors(), 10, true);
-            exit();
             $this->assertTrue($this->form->validate());
-
         });
     }
 }

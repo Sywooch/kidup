@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
 use Yii;
 
 /**
  * This is the model class for table "language".
  */
-class Language extends \app\models\base\Language
+class Language extends base\Language
 {
 }

@@ -2,17 +2,20 @@
 use yii\helpers\Url;
 use kartik\typeahead\Typeahead;
 use \yii\bootstrap\ActiveForm;
-use app\modules\item\widgets\GoogleAutoComplete;
+use \item\widgets\GoogleAutoComplete;
 
 /**
- * @var \app\modules\home\forms\Search $model
+ * @var \app\extended\web\View $this
+ * @var \home\forms\Search $model
+ * @var \item\models\Category $defaultCategory
  */
 
-\app\assets\AngularAsset::register($this);
-\app\assets\JQueryTextRangeAsset::register($this);
-$emptyLocation = \Yii::t('search', 'Location: Near Me');
-$emptySearch = \Yii::t('categories_and_features', 'Baby Toys');
-$this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{$emptySearch}';");
+$emptyLocation = \Yii::t('home.search.empty_location', 'Location: Near Me');
+$emptySearch = $defaultCategory->getTranslatedName();
+$this->registerJsVariables([
+    'emptyLocation' => $emptyLocation,
+    'emptySearch' => $emptySearch
+]);
 ?>
 
 <div id="search-area" class="hidden-sm visible-md visible-lg">
@@ -29,9 +32,11 @@ $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{
                     ?>
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
-                            'options' => ['placeholder' => \Yii::t('home', 'e.g. {0}',[
-                                $emptySearch
-                            ])],
+                            'options' => [
+                                'placeholder' => \Yii::t("home.search.placeholder_suggestion", 'e.g. {0}', [
+                                    $emptySearch
+                                ])
+                            ],
                             'pluginOptions' => ['highlight' => true, 'hint' => true],
                             'dataset' => [
                                 [
@@ -43,8 +48,9 @@ $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{
                                     'limit' => 5,
                                     'display' => 'text',
                                     'templates' => [
-                                        'notFound' => '<div class="text-danger" style="padding:0 8px">'.
-                                            \Yii::t('home', "We couldn't find that, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">' .
+                                            \Yii::t("home.search.empty_results",
+                                                "We couldn't find that, perhaps try Stroller, Trampoline or Toy?") . '</div>',
                                         'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                                     ]
                                 ],
@@ -57,7 +63,7 @@ $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{
                         <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
                             'options' => [
                                 'class' => 'form-control location-input',
-                                'placeholder' => \Yii::t('search', 'Location e.g. Copenhagen'),
+                                'placeholder' => \Yii::t("home.search.location_placeholder", 'Location e.g. Copenhagen'),
                                 'autocompleteName' => 'home-search',
                                 'value' => $emptyLocation
                             ],
@@ -69,7 +75,7 @@ $this->registerJs("window.emptyLocation='{$emptyLocation}';window.emptySearch='{
                     </div>
 
                     <div class="col-sm-3 col-md-2">
-                        <?= \yii\bootstrap\Html::submitButton(Yii::t("item", "Search"),
+                        <?= \yii\bootstrap\Html::submitButton(Yii::t("home.search.search_button", "Search"),
                             ['class' => 'btn btn-danger btn-fill btn-wide']) ?>
                     </div>
 

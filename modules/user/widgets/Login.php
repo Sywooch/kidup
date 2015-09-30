@@ -1,19 +1,17 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules>
+ * (c)  project <http://github.com/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\widgets;
+namespace user\widgets;
 
-use app\interfaces\RequestableWidgetInterface;
-use app\modules\user\models\LoginForm;
-use app\modules\user\models\User;
+use \user\models\User;
 use yii\base\Widget;
 
 /**
@@ -32,7 +30,7 @@ class Login extends Widget
     /** @inheritdoc */
     public function run()
     {
-        $model = \Yii::createObject(\app\modules\user\forms\Login::className());
+        $model = \Yii::createObject(\user\forms\Login::className());
 
         if ($this->validate && $model->load(\Yii::$app->request->post()) && $model->login()) {
             return \Yii::$app->response->redirect(User::afterLoginUrl('login'));

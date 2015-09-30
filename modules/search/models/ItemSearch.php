@@ -1,18 +1,17 @@
 <?php
-namespace app\modules\search\models;
+namespace search\models;
 
-use app\models\base\Category;
-use app\models\base\Feature;
-use app\models\base\Item;
-use app\models\base\Language;
+use \item\models\Category;
+use item\models\base\Item;
+use user\models\base\Language;
 use yii\web\BadRequestHttpException;
 
 /**
  * Class ItemSearch
- * @package app\modules\search\models
+ * @package \search\models
  * @author kevin91nl
  */
-class ItemSearch extends \app\models\base\ItemSearch
+class ItemSearch extends base\ItemSearch
 {
     const COMPONENT_MAIN_CATEGORY = 'main-cat';
     const COMPONENT_SUB_CATEGORY = 'sub-cat';
@@ -69,10 +68,10 @@ class ItemSearch extends \app\models\base\ItemSearch
         $categories = Category::find()->all();
         foreach ($categories as $cat) {
             if ($cat->itemCount > 0 && $cat->parent_id !== null) {
-                (new self())->make(self::COMPONENT_SUB_CATEGORY, $cat->id, $cat->name);
+                (new self())->make(self::COMPONENT_SUB_CATEGORY, $cat);
             } else {
                 if ($cat->parent_id === null) {
-                    (new self())->make(self::COMPONENT_MAIN_CATEGORY, $cat->id, $cat->name);
+                    (new self())->make(self::COMPONENT_MAIN_CATEGORY, $cat);
                 }
             }
         }
@@ -85,31 +84,18 @@ class ItemSearch extends \app\models\base\ItemSearch
      * @param string $component
      * @param int $componentId
      * @param string $text
-     * @param Language $language
+     * @param \user\models\base\Language $language
      */
-    private function make($component, $componentId, $text)
+    private function make($component, Category $category)
     {
         $langs = Language::find()->all();
         foreach ($langs as $lang) {
             $is = new ItemSearch();
             $is->component_type = $component;
-            $is->component_id = $componentId;
-            $is->text = self::t($text, $lang->language_id);
+            $is->component_id = $category->id;
+            $is->text = $category->getTranslationName;
             $is->language_id = $lang->language_id;
             $is->save();
         }
-    }
-
-    public static function t($name, $lang = null)
-    {
-        if ($lang == null) {
-            $lang = \Yii::$app->language;
-        }
-
-        $curLang = \Yii::$app->language;
-        \Yii::$app->language = $lang;
-        $translation = \Yii::t("categories_and_features", $name);
-        \Yii::$app->language = $curLang;
-        return $translation;
     }
 }

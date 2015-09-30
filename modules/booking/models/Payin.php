@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -12,7 +12,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
-class Payin extends \app\models\base\Payin
+class Payin extends base\Payin
 {
     // Transaction Status
     const AUTHORIZATION_EXPIRED = 'authorization_expired';
@@ -95,11 +95,8 @@ class Payin extends \app\models\base\Payin
                 (new Payout())->createFromBooking($this->booking);
             }
             if ($this->status == self::STATUS_AUTHORIZED) {
-                /**
-                 * @var Booking $b
-                 */
-                $b = Booking::findOne($this->bookings[0]->id);
-                if ($b->conversation == null) {
+
+                if ($this->booking->conversation == null) {
                     $this->status = self::STATUS_PENDING;
                     return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
                 }

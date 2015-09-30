@@ -41,7 +41,7 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px;">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail", "Hi {1}, {0} sent you a message.", [
+                                                    <?= Yii::t("mail.message.message_by_x", "Hi {1}, {0} sent you a message.", [
                                                         $senderName,
                                                         $profileName
                                                     ]) ?>
@@ -128,7 +128,7 @@
                                                         <td>
                                                             <a href="<?= $urls['chat'] ?>">
 
-                                                                <?= Yii::t("mail",
+                                                                <?= Yii::t("mail.message.to_conversation_link",
                                                                     "Go to conversation") ?>
                                                             </a>
                                                         </td>

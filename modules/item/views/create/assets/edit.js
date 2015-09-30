@@ -70,9 +70,9 @@ $(document).ready(function () {
     $('#new-price').keydown(function () {
         setTimeout(function () {
             var val = $('#new-price').val();
-            $(".suggestion-daily").html('<i>Daily price</i>: ' + Math.round(val * 0.02));
-            $(".suggestion-weekly").html('<i>Weekly price</i>: ' + Math.round(val * 0.04));
-            $(".suggestion-monthly").html('<i>Monthly price</i>: ' + Math.round(val * 0.05));
+            $(".suggestion-daily").html('<i>'+i18n.daily_price+'</i>: ' + Math.round(val * 0.02));
+            $(".suggestion-weekly").html('<i>'+i18n.weekly_price+'</i>: ' + Math.round(val * 0.04));
+            $(".suggestion-monthly").html('<i>'+i18n.monthly_price+'</i>: ' + Math.round(val * 0.05));
         }, 100);
     })
 });

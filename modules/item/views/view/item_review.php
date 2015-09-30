@@ -1,15 +1,17 @@
 <?php
-/**
- * @var $model \app\modules\review\models\Review
- *
- */
-use app\components\WidgetRequest;
+
 use Carbon\Carbon;
 use yii\helpers\Url;
-use app\modules\user\widgets\UserImage;
-use app\modules\review\widgets\ReviewScore;
-use app\modules\review\models\Review;
+use \user\widgets\UserImage;
+use \review\widgets\ReviewScore;
+use \review\models\Review;
 
+/**
+ * @var \app\extended\web\View $this
+ * @var $model \review\models\Review
+ */
+
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 <div class="card card-minimal">
     <div class="row" style="margin:15px;padding:15px;background-color: white;">

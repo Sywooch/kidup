@@ -1,17 +1,14 @@
 <?php
 
-namespace app\modules\item\forms;
+namespace item\forms;
 
-use app\models\base\FeatureValue;
-use app\models\base\ItemHasFeature;
-use app\models\base\ItemHasFeatureSingular;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasCategory;
+use item\models\base\FeatureValue;
+use item\models\base\ItemHasFeature;
+use item\models\base\ItemHasFeatureSingular;
+use \item\models\Category;
+use \item\models\Item;
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "category".
@@ -66,7 +63,7 @@ class Edit extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[$cat->id] = Yii::t('categories_and_features', $cat->parent->name) . ' - '. Yii::t('categories_and_features',$cat->name);
+            $this->categoryData[$cat->id] = $cat->parent->getTranslatedName() . ' - '. $cat->getTranslatedName();
         }
 
         return parent::__construct();
@@ -84,7 +81,7 @@ class Edit extends Model
                 'isEmpty' => function () {
                     return count($this->item->itemHasMedia) == 0;
                 },
-                'message' => \Yii::t('item', 'Please provide atleast one photo of your product')
+                'message' => \Yii::t('item.edit.should_have_one_photo', 'Please provide atleast one photo of your product')
             ]
         ];
     }

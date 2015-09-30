@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
-use app\components\Event;
-use app\modules\message\models\Conversation;
+use app\helpers\Event;
+use \message\models\Conversation;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -16,7 +16,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "Booking".
  */
-class Booking extends \app\models\base\Booking
+class Booking extends base\Booking
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
     const PENDING = 'pending_owner';
@@ -106,22 +106,22 @@ class Booking extends \app\models\base\Booking
     public function getStatusName()
     {
         if ($this->status == self::AWAITING_PAYMENT) {
-            return \Yii::t('app', 'Awaiting payment');
+            return \Yii::t('booking.status.awaiting_payment', 'Awaiting payment');
         }
         if ($this->status == self::PENDING) {
-            return \Yii::t('app', 'Pending');
+            return \Yii::t('booking.status.pending', 'Pending');
         }
         if ($this->status == self::NO_RESPONSE) {
-            return \Yii::t('app', 'Refused');
+            return \Yii::t('booking.status.no_response', 'No responds by Owner');
         }
         if ($this->status == self::DECLINED) {
-            return \Yii::t('app', 'Refused');
+            return \Yii::t('booking.status.refused', 'Refused');
         }
         if ($this->status == self::ACCEPTED) {
-            return \Yii::t('app', 'Accepted');
+            return \Yii::t('booking.status.accepted', 'Accepted');
         }
         if ($this->status == self::CANCELLED) {
-            return \Yii::t('app', 'Cancelled');
+            return \Yii::t('booking.status.cancelled', 'Cancelled');
         }
 
         return false;
@@ -129,7 +129,7 @@ class Booking extends \app\models\base\Booking
 
     public function getConversation()
     {
-        return $this->hasOne(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
+        return $this->hasOne(\message\models\base\Conversation::className(), ['booking_id' => 'id']);
     }
 
     public function getConversationId()
@@ -183,7 +183,7 @@ class Booking extends \app\models\base\Booking
         }
 
         if ($message == '' || $message == null) {
-            $message = \Yii::t('booking', 'This is an automated message from KidUp.');
+            $message = \Yii::t('booking.create.automated_new_message', 'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
         }
 
         return $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
@@ -226,13 +226,7 @@ class Booking extends \app\models\base\Booking
         return $this;
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConversations()
-    {
-        return $this->hasMany(\app\models\base\Conversation::className(), ['booking_id' => 'id']);
-    }
+
 
     public function behaviors()
     {

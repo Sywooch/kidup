@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\review\models;
+namespace review\models;
 
-use app\components\Event;
-use app\modules\booking\models\Booking;
+use app\helpers\Event;
+use \booking\models\Booking;
 use Carbon\Carbon;
 use Yii;
 
 /**
  * This is the model class for table "review".
  */
-class Review extends \app\models\base\Review
+class Review extends base\Review
 {
     // the written reviews
     const TYPE_USER_PUBLIC = 'public_user';

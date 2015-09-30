@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\admin\jobs;
+namespace admin\jobs;
 
-use app\components\Job;
-use app\modules\mail\models\Token;
+use app\extended\job\Job;
+use \mail\models\Token;
 
 class TestJob extends Job{
 

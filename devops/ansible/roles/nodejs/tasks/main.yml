@@ -5,20 +5,12 @@
 - name: Install npm
   sudo: yes
   apt: pkg=npm state=latest
-
-#- name: Link nodejs to user env variables
-#  sudo: yes
-#  command: ln -s /usr/bin/nodejs /usr/bin/node
-
-#- name: Get npm global temporary directory
-  #command: npm -g config get tmp
-  #register: nodejs_npm_tempdir
-  #changed_when: Falsegrid
-
-#- name: Set npm global temporary directory to /tmp
-#  command: npm -g config set tmp /tmp
-#  when: nodejs_npm_tempdir.stdout != '/tmp'
-
+#  todo test this
+- name: Connect NPM less
+  command: source ~/.bashrc
+- name: Copy nodejs to node in /usr/bin
+  command: sudo ln -s /usr/bin/nodejs /usr/bin/node
+#  end test this
 - name: install the latest npm global packages
   npm:
     name: '{{ item }}'

@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\mail\models;
+namespace mail\models;
 
-use app\modules\message\models\Conversation;
+use \message\models\Conversation;
 use Yii;
 
 /**
  * This is the model class for table "mail_account".
  */
-class MailAccount extends \app\models\base\MailAccount
+class MailAccount extends base\MailAccount
 {
 
     public function createForConversation(Conversation $conversation)

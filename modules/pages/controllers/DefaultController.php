@@ -1,36 +1,15 @@
 <?php
 
-namespace app\modules\pages\controllers;
+namespace pages\controllers;
 
-use app\components\Error;
-use app\controllers\Controller;
+use app\extended\web\Controller;
+use pages\helpers\Pages;
 
 class DefaultController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'company' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@pages/views/company'
-            ],
-            'help' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@pages/views/help',
-            ],
-            'tutorial' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@pages/views/tutorial'
-            ],
-        ];
-    }
-
     public function actionWordpress($page)
     {
-        $p = \Yii::$app->pages->get($page);
+        $p = (new Pages())->get($page);
         if (isset($p['content'])) {
             return $this->render('page_wrapper', [
                 'content' => $p['content']
@@ -38,5 +17,4 @@ class DefaultController extends Controller
         }
         return $this->goHome();
     }
-
 }

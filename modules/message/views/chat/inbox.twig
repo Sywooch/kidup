@@ -1,0 +1,59 @@
+{{ use('app/modules/images/widgets') }}
+{{ use('app/modules/message/assets') }}
+{{ register_message_asset() }}
+
+<section class="section" id="inbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="card">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="hidden-xs">
+                                    {{ image_widget({name:'kidup/facebook-kidupdk.jpg', imageOptions: {w:50}}) }}
+                                </div>
+                                <h4 class="title">
+                                    {{ translate("Inbox") }}
+                                </h4>
+                            </div>
+
+                            <div class="col-md-2 col-md-offset-6 booking hidden-xs">
+                                {% if conversationDataProvider.count > 0 %}
+                                    {{ translate("Booking Status") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% set layoutTemplate %}
+                        <table class="table">
+                            {items}
+                        </table>
+                        <div class="row">
+                            {pager}
+                        </div>
+                    {% endset %}
+
+                    {% if conversationDataProvider.count > 0 %}
+                        {{ list_view_widget({
+                            dataProvider: conversationDataProvider,
+                            layout: layoutTemplate,
+                            itemView: 'inboxItem'
+                        }) }}
+                    {% else %}
+                        <div class="text-center empty-inbox">
+                            <h4>
+                                {{ translate("Your inbox is empty at the moment.") }}
+                            </h4>
+
+                            {{ translate("How about searching for a {0} or a {1} and getting some action here?", [
+                                html.a(translate("stroller"), url('@web/search/' + translate("strollers"))),
+                                html.a(translate("bike"), url('@web/search/' + translate("bike")))
+                            ]) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

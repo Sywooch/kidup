@@ -1,7 +1,6 @@
 <?php
-use app\components\WidgetRequest;
-use app\modules\images\components\ImageHelper;
-use app\modules\message\models\Message;
+use \images\components\ImageHelper;
+use \message\models\Message;
 use yii\helpers\Url;
 
 /**
@@ -41,19 +40,19 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             <div class="collapse navbar-collapse">
                 <!--menu for larger then mobile-->
                 <ul class="nav navbar-nav navbar-left ">
-                    <?= \app\modules\item\widgets\MenuSearch::widget() ?>
+                    <?= \item\widgets\MenuSearch::widget() ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right ">
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in-->
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login">
-                                <?= Yii::t("app", "Login") ?>
+                                <?= Yii::t("app.menu.login", "Login") ?>
                             </button>
                         </li>
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal">
-                                <?= Yii::t("app", "Register") ?>
+                                <?= Yii::t("app.menu.register", "Register") ?>
                             </button>
                         </li>
                     <?php endif;
@@ -81,7 +80,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li class="dropdown profile hidden-xs">
                             <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown"
                                aria-expanded="true">
-                                <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                <?= \user\widgets\UserImage::widget([
                                     'user_id' => \Yii::$app->user->id,
                                     'width' => '40px'
                                 ])
@@ -93,28 +92,28 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <li>
                                     <a href="<?= Url::to('@web/user/' . \Yii::$app->user->id) ?>">
                                         <i class="fa fa-user menu-icon"></i>
-                                        <?= Yii::t("app", "View Profile") ?>
+                                        <?= Yii::t("app.menu.view_profile", "View Profile") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?= Url::to('@web/booking/current') ?>">
                                         <i class="fa fa-list-ul menu-icon"></i>
-                                        <?= Yii::t("app", "Your Bookings") ?>
+                                        <?= Yii::t("app.menu-your_bookings", "Your Bookings") ?>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="<?= Url::to('@web/item/list') ?>">
                                         <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 30, 'h' => 30],
                                             ['class' => "menu-icon-kidup"]) ?>
-                                        <?= Yii::t("app", "Your Products") ?>
+                                        <?= Yii::t("app.menu.your_products", "Your Products") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?= Url::to('@web/user/settings/profile') ?>">
                                         <i class="fa fa-gears menu-icon"></i>
-                                        <?= Yii::t("app", "Settings") ?>
+                                        <?= Yii::t("app.menu.settings", "Settings") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
@@ -122,7 +121,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                     <li>
                                         <a href="<?= Url::to('@web/admin') ?>">
                                             <i class="fa fa-gears menu-icon"></i>
-                                            <?= Yii::t("app", "Admin") ?>
+                                            <?= Yii::t("app.menu.admin", "Admin") ?>
                                         </a>
                                     </li>
                                     <li class="divider"></li>
@@ -130,7 +129,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <li>
                                     <a href="<?= Url::to('@web/user/logout') ?>" class="text-danger">
                                         <i class="pe-7s-close-circle"></i>
-                                        <?= Yii::t("app", "Log Out") ?>
+                                        <?= Yii::t("app.menu.log_out", "Log Out") ?>
                                     </a>
                                 </li>
                             </ul>
@@ -140,7 +139,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <li>
                         <a href="<?= Url::to('@web/item/create') ?>"
                            class="btn btn-primary hidden-xs <?= $transparent ? 'btn-fill' : '' ?>">
-                            <?= Yii::t("app", "Rent Out") ?>
+                            <?= Yii::t("app.menu.rent_out", "Rent Out") ?>
                         </a>
 
                     </li>
@@ -153,7 +152,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li>
                             <a href="<?= Url::to('@web/user/login') ?>">
                                 <button class="btn btn-simple">
-                                    <?= Yii::t("app", "Login") ?>
+                                    <?= Yii::t("app.menu.login", "Login") ?>
                                 </button>
                             </a>
                         </li>
@@ -161,7 +160,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <li>
                             <a href="<?= Url::to('@web/user/register') ?>">
                                 <button class="btn btn-simple">
-                                    <?= Yii::t("app", "Register") ?>
+                                    <?= Yii::t("app.menu.register", "Register") ?>
                                 </button>
                             </a>
                         </li>
@@ -169,7 +168,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
                         <?= \app\components\Cache::html('user_widget', function () {
-                            return \app\modules\user\widgets\UserImage::widget([
+                            return \user\widgets\UserImage::widget([
                                 'user_id' => \Yii::$app->user->id,
                                 'width' => '40px'
                             ]);
@@ -179,21 +178,21 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 
                     <li>
                         <a href="<?= Url::to("@web/home") ?>">
-                            <?= Yii::t("app", "Home") ?>
+                            <?= Yii::t("app.menu.home", "Home") ?>
                         </a>
                     </li>
 
                     <li>
                         <a href="<?= Url::to('@web/user/' . \Yii::$app->user->id) ?>">
-                            <?= Yii::t("app", "View Profile") ?>
+                            <?= Yii::t("app.menu.view_profile", "View Profile") ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/inbox') ?>">
-                            <?= Yii::t("app", "Inbox") ?>
+                            <?= Yii::t("app.menu.inbox", "Inbox") ?>
                             <div class="badge"><?=
                                 // todo make this more pretty
-                                \app\models\base\Message::find()->where([
+                                \message\models\base\Message::find()->where([
                                     'receiver_user_id' => \Yii::$app->user->id,
                                     'read_by_receiver' => 0
                                 ])->count(); ?></div>
@@ -201,22 +200,22 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/booking/current') ?>">
-                            <?= Yii::t("app", "Your Bookings") ?>
+                            <?= Yii::t("app.menu.your_bookings", "Your Bookings") ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/item/list') ?>">
-                            <?= Yii::t("app", "Your Products") ?>
+                            <?= Yii::t("app.menu.your_products", "Your Products") ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/user/settings/profile') ?>">
-                            <?= Yii::t("app", "Settings") ?>
+                            <?= Yii::t("app.menu.settings", "Settings") ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= Url::to('@web/user/logout') ?>" class="text-danger">
-                            <?= Yii::t("app", "Log Out") ?>
+                            <?= Yii::t("app.menu.logout", "Log Out") ?>
                         </a>
                     </li>
                 </ul>
@@ -233,10 +232,10 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 if (\Yii::$app->user->isGuest) {
     if ($this->beginCache('layout.menu.widgets')) {
         echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return \app\modules\user\widgets\Login::widget();
+            return \user\widgets\Login::widget();
         });
         echo \app\components\Cache::html('widget_user_register_modal', function () {
-            return \app\modules\user\widgets\Register::widget();
+            return \user\widgets\Register::widget();
         });
         $this->endCache();
     }

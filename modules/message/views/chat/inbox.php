@@ -1,13 +1,15 @@
 <?php
 use yii\widgets\ListView;
 
-/*
+/**
  * @var yii\data\ActiveDataProvider $conversationDataProvider
- * @var yii\web\View $this
+ * @var \app\extended\web\View $this
  */
 
-\app\modules\message\assets\MessageAsset::register($this);
-$this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
+\message\assets\MessageAsset::register($this);
+
+$this->title = ucfirst(\Yii::t('message.inbox.title', 'Inbox')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::MESSAGE;
 ?>
 
 <section class="section" id="inbox">
@@ -18,17 +20,13 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                     <div class="header">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="hidden-xs">
-                                    <?= \app\modules\images\components\ImageHelper::image('kidup/graphics/notification.png',
-                                        ['w' => 55]) ?>
-                                </div>
                                 <h4 class="title">
-                                    <?= Yii::t("message", "Inbox") ?>
+                                    <?= Yii::t("message.inbox.header", "Inbox") ?>
                                 </h4>
                             </div>
 
                             <div class="col-md-2 col-md-offset-6 booking hidden-xs">
-                                <?= $conversationDataProvider->count > 0 ? Yii::t("message", "Booking Status") : '' ?>
+                                <?= $conversationDataProvider->count > 0 ? Yii::t("message.inbox.booking_status", "Booking Status") : '' ?>
                             </div>
                         </div>
                     </div>
@@ -49,12 +47,17 @@ $this->title = ucfirst(\Yii::t('title', 'Inbox')) . ' - ' . Yii::$app->name;
                     } else { ?>
                         <div class="text-center empty-inbox">
                             <h4>
-                                <?= Yii::t("message", "Your inbox is empty at the moment.") ?>
+                                <?= Yii::t("message.inbox.inbox_is_empty", "Your inbox is empty at the moment.") ?>
                             </h4>
-                            <?= Yii::t("message",
+                            <?php
+                            $categories = \item\models\Category::find()->limit(2)->all();
+                            $name1 = $categories[0]->getTranslatedName();
+                            $name2 = $categories[1]->getTranslatedName();
+                            ?>
+                            <?= Yii::t("message.inbox.empty_inbox_alternative_actions",
                                 "How about searching for a {0} or a {1} and getting some action here?", [
-                                    \yii\helpers\Html::a(\Yii::t('message', 'stroller'), '@web/search/'.\Yii::t('categories_and_features', 'Stroller')),
-                                    \yii\helpers\Html::a(\Yii::t('message', 'bike'), '@web/search/'.\Yii::t('categories_and_features', 'Bikes')),
+                                    \yii\helpers\Html::a($name1, '@web/search/'.$name1),
+                                    \yii\helpers\Html::a($name2, '@web/search/'.$name2),
                                 ]) ?>
                         </div>
                     <?php } ?>

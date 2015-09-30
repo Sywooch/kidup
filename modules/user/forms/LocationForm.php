@@ -1,9 +1,10 @@
 <?php
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
-use app\modules\user\models\Location;
-use app\modules\user\Module;
+use \user\models\Location;
+use user\models\User;
+use \user\Module;
 use yii\base\Model;
 
 /**

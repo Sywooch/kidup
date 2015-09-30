@@ -1,10 +1,14 @@
 <?php
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use yii\helpers\Url;
 
+/**
+ * @var \app\extended\web\View $this
+ * @var \item\models\Item $model
+ */
 
-\app\modules\item\assets\ListAsset::register($this);
-
+\item\assets\ListAsset::register($this);
+$this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 
 <tr>
@@ -22,23 +26,23 @@ use yii\helpers\Url;
     <td class="td-actions text-right">
         <a href="<?= Url::to('@web/item/' . $model->id) ?>">
             <button class="btn btn-primary btn-sm">
-                <?= Yii::t("item", "View") ?>
+                <?= Yii::t("item.list.button.view", "View") ?>
             </button>
         </a>
         <a href="<?= Url::to('@web/item/create/edit-basics?id=' . $model->id ) ?>">
             <button class="btn btn-primary btn-sm">
-                <?= Yii::t("item", "Edit") ?>
+                <?= Yii::t("item.list.button.edit", "Edit") ?>
             </button>
         </a>
         <a href="<?= Url::to('@web/booking/by-item/' . $model->id) ?>">
             <button class="btn btn-primary btn-sm">
-                <?= Yii::t("item", "Bookings") ?>
+                <?= Yii::t("item.list.button.bookings", "Bookings") ?>
             </button>
         </a>
         <?php if ($model->is_available == 1): ?>
             <a href="<?= Url::to('@web/item/' . $model->id . '/unpublish') ?>">
                 <button class="btn btn-danger btn-sm">
-                    <?= Yii::t("item", "Unpublish") ?>
+                    <?= Yii::t("item.list.button.unpublish", "Unpublish") ?>
                 </button>
             </a>
         <?php endif; ?>
@@ -46,7 +50,7 @@ use yii\helpers\Url;
         <?php if ($model->is_available == 0): ?>
             <a href="<?= Url::to('@web/item/edit-publish?id=' . $model->id) ?>">
                 <button class="btn btn-danger btn-sm">
-                    <?= Yii::t("item", "Publish") ?>
+                    <?= Yii::t("item.list.button.publish", "Publish") ?>
                 </button>
             </a>
         <?php endif; ?>

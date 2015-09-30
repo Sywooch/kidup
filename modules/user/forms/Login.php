@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of the app\modules project.
+ * This file is part of the  project.
  *
- * (c) app\modules project <http://github.com/app\modules/>
+ * (c)  project <http://github.com//>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
-use app\modules\user\Finder;
-use app\modules\user\helpers\Password;
+use \user\Finder;
+use \user\helpers\Password;
 use yii\base\Model;
 
 /**
@@ -32,10 +32,10 @@ class Login extends Model
     /** @var string Whether to remember the user */
     public $rememberMe = false;
 
-    /** @var \app\modules\user\models\User */
+    /** @var \user\models\User */
     protected $user;
 
-    /** @var \app\modules\user\Module */
+    /** @var \user\Module */
     protected $module;
 
     /** @var Finder */
@@ -56,9 +56,9 @@ class Login extends Model
     public function attributeLabels()
     {
         return [
-            'login' => \Yii::t('user', 'Login'),
-            'password' => \Yii::t('user', 'Password'),
-            'rememberMe' => \Yii::t('user', 'Remember me next time'),
+            'login' => \Yii::t('user.login.login', 'Login'),
+            'password' => \Yii::t('user.login.password', 'Password'),
+            'rememberMe' => \Yii::t('user.login.remember_me', 'Remember Me Next Time'),
         ];
     }
 
@@ -72,7 +72,7 @@ class Login extends Model
                 'password',
                 function ($attribute) {
                     if ($this->user === null || !Password::validate($this->password, $this->user->password_hash)) {
-                        $this->addError($attribute, \Yii::t('user', 'Invalid login or password'));
+                        $this->addError($attribute, \Yii::t('user.login.invalid_error', 'Invalid login or password'));
                     }
                 }
             ],
@@ -80,12 +80,8 @@ class Login extends Model
                 'login',
                 function ($attribute) {
                     if ($this->user !== null) {
-                        $confirmationRequired = $this->module->enableConfirmation && !$this->module->enableUnconfirmedLogin;
-                        if ($confirmationRequired && !$this->user->getIsConfirmed()) {
-                            $this->addError($attribute, \Yii::t('user', 'You need to confirm your email address'));
-                        }
                         if ($this->user->getIsBlocked()) {
-                            $this->addError($attribute, \Yii::t('user', 'Your account has been blocked'));
+                            $this->addError($attribute, \Yii::t('user.login.error_account_blocked', 'Your account has been blocked'));
                         }
                     }
                 }

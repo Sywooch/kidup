@@ -1,16 +1,17 @@
 <?php
-use app\components\WidgetRequest;
 use Carbon\Carbon;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
-/*
- * @var Conversation $conversation
- * @var yii\web\View $this
+/**
+ * @var \message\models\Conversation $conversation
+ * @var \app\extended\web\View $this
  */
-\app\modules\message\assets\MessageAsset::register($this);
-$this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
+
+\message\assets\MessageAsset::register($this);
+$this->title = ucfirst(\Yii::t('message.conversation.title', 'Chat')) . ' - ' . Yii::$app->name;
+$this->assetPackage = \app\assets\Package::MESSAGE;
 ?>
 
 <section class="section" id="conversation">
@@ -18,7 +19,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
         <div class="row">
             <div class="col-sm-8 col-md-6 col-md-offset-1 ">
                 <h3 class="row">
-                    <?= Yii::t("user", "Conversation with {username}", [
+                    <?= Yii::t("message.conversation.conversation_with_user", "Conversation with {username}", [
                         'username' => $conversation->otherUser->first_name
                     ]) ?>
                 </h3>
@@ -29,16 +30,16 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                         <?php
                         if (isset($booking) && isset($booking->item)) {
                             if (\Yii::$app->user->id == $booking->item->owner_id
-                                && $booking->status == \app\modules\booking\models\Booking::PENDING
+                                && $booking->status == \booking\models\Booking::PENDING
                             ) {
                                 echo \yii\bootstrap\Alert::widget([
                                     'options' => [
                                         'class' => 'alert-info',
                                     ],
-                                    'body' => \Yii::t('booking',
+                                    'body' => \Yii::t('message.conversation.booking_waiting_respondse',
                                         'This booking is still waiting for your response, {0} to accept or decline it. You have {1} the booking will void.',
                                         [
-                                            Html::a(\Yii::t('booking', 'click here'),
+                                            Html::a(\Yii::t('message.conversation.booking_response_click_link', 'click here'),
                                                 '@web/booking/' . $booking->id . '/request'),
                                             Carbon::now()->diffForHumans(Carbon::createFromTimestamp($booking->request_expires_at))
                                         ]),
@@ -54,11 +55,12 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
 
                         <?= $form1->field($form, 'message')->label(false)->textarea([
                             'class' => 'form-control',
-                            'placeholder' => \Yii::t('message', 'Your personal message to {0}',
+                            'placeholder' => \Yii::t('message.conversation.personal_message_to_placeholder',
+                                'Your personal message to {0}',
                                 [$conversation->otherUser->first_name]),
                             'rows' => 3
                         ]); ?>
-                        <?= Html::submitButton(\Yii::t('message', 'Send'),
+                        <?= Html::submitButton(\Yii::t('message.conversation.send_message_button', 'Send'),
                             ['class' => 'btn btn-danger btn-fill pull-right']); ?>
                         <?php ActiveForm::end(); ?>
                     </div>
@@ -66,12 +68,12 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                 <div class="row">
                     <div class="col-xs-12 message card">
                         <?php if (isset($booking->id)) {
-                            echo \Yii::t('booking', 'This chat refers to {0}', [
-                                Html::a(\Yii::t('booking', 'booking #{0}', [$booking->id]),
-                                    '@web/booking/' . $booking->id)
-                            ]);
+                            echo \Yii::t('message.conversation.chat_refers_to_booking',
+                                'This chat refers to booking {0}', [
+                                    Html::a("#" . $booking->id, '@web/booking/' . $booking->id)
+                                ]);
                         } ?>
-                        <?= Yii::t("booking",
+                        <?= Yii::t("message.conversation.keep_communication_trough_kidup",
                             "Please keep all your communication through KidUp's secure system. This way KidUp can easily provide support when necessary.") ?>
                     </div>
                 </div>
@@ -81,7 +83,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                             <div class="row">
                                 <div class="col-md-2 col-sm-3">
                                     <?php if ($message->sender_user_id === \Yii::$app->user->id): ?>
-                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                        <?= \user\widgets\UserImage::widget([
                                             'user_id' => $message->sender_user_id
                                         ]) ?>
                                         <h4 style="margin:0" class="">
@@ -97,7 +99,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                                 </div>
                                 <div class="col-md-2 col-sm-3">
                                     <?php if ($message->sender_user_id !== \Yii::$app->user->id): ?>
-                                        <?= WidgetRequest::request(WidgetRequest::USER_PROFILE_IMAGE, [
+                                        <?= \user\widgets\UserImage::widget([
                                             'user_id' => $message->sender_user_id
                                         ]) ?>
                                         <h3 style="margin:0" class="">
@@ -117,8 +119,9 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                 <div class="card other-user">
                     <div class="row">
                         <div class="col-md-4">
-                            <a class="author" href="<?= \yii\helpers\Url::to("@web/user/{$conversation->otherUser->user_id}") ?>">
-                                <?=\app\modules\user\widgets\UserImage::widget([
+                            <a class="author"
+                               href="<?= \yii\helpers\Url::to("@web/user/{$conversation->otherUser->user_id}") ?>">
+                                <?= \user\widgets\UserImage::widget([
                                     'user_id' => $conversation->otherUser->user_id,
                                     'width' => '80px',
                                 ]) ?>
@@ -128,6 +131,7 @@ $this->title = ucfirst(\Yii::t('title', 'Chat')) . ' - ' . Yii::$app->name;
                             <h5>
                                 <?= $conversation->otherUser->first_name ?>
                             </h5>
+
                             <div class="location">
                                 <?= $conversation->booking->item->location->city ?>
                             </div>

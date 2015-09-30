@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\modules\user\forms;
+namespace user\forms;
 
-use app\modules\user\models\User;
-use app\modules\user\Module;
+use \user\models\User;
+use \user\Module;
 use yii\base\Model;
 
 /**
@@ -39,13 +39,6 @@ class Registration extends Model
     public function rules()
     {
         return [
-//            [['first_name', 'last_name'], 'filter', 'filter' => 'trim'],
-            // [['first_name', 'last_name'], 'match', 'pattern' => '/^[a-zA-Z]\w+$/'],
-//            [['first_name', 'last_name'], 'required'],
-            // [['first_name', 'last_name'], 'unique', 'targetClass' => $this->module->modelMap['User'],
-            //'message' => \Yii::t('user', 'This first_name has already been taken')],
-//            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 20],
-
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
@@ -53,7 +46,7 @@ class Registration extends Model
                 'email',
                 'unique',
                 'targetClass' => $this->module->modelMap['User'],
-                'message' => \Yii::t('user', 'This email address has already been taken')
+                'message' => \Yii::t('user.registration.email_already_in_use', 'This email address has already been taken')
             ],
             ['password', 'required', 'skipOnEmpty' => $this->module->enableGeneratingPassword],
             ['password', 'string', 'min' => 6],
@@ -64,10 +57,10 @@ class Registration extends Model
     public function attributeLabels()
     {
         return [
-            'email' => \Yii::t('user', 'Email'),
-            'first_name' => \Yii::t('user', 'First Name'),
-            'last_name' => \Yii::t('user', 'Last Name'),
-            'password' => \Yii::t('user', 'Password'),
+            'email' => \Yii::t('user.attributes.email', 'Email'),
+            'first_name' => \Yii::t('user.attributes.first_name', 'First Name'),
+            'last_name' => \Yii::t('user.attributes.last_name', 'Last Name'),
+            'password' => \Yii::t('user.attributes.password', 'Password'),
         ];
     }
 

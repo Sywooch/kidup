@@ -2,8 +2,6 @@
 
 namespace app\commands;
 
-use app\backup\Database;
-use app\backup\File;
 use Yii;
 use yii\console\Controller;
 
@@ -47,10 +45,5 @@ class CronController extends Controller
                 if(method_exists($controller, 'day')) $controller->day();
             }
         }
-    }
-
-    public function actionBackup(){
-        (new File())->backup();
-        (new Database())->backup();
     }
 }

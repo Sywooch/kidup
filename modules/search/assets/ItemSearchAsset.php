@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\search\assets;
+namespace search\assets;
 
 use yii\web\AssetBundle;
 
@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
  * The asset of the search module is used for loading assets.
  *
  * Class ItemAsset
- * @package app\modules\search\assets
+ * @package \search\assets
  * @author kevin91nl
  */
 class ItemSearchAsset extends AssetBundle

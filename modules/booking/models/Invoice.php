@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
 use Carbon\Carbon;
 use Yii;
@@ -11,7 +11,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "Booking".
  */
-class Invoice extends \app\models\base\Invoice
+class Invoice extends base\Invoice
 {
     public function behaviors()
     {

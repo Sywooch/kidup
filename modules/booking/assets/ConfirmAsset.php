@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\booking\assets;
+namespace booking\assets;
 
 use yii\web\AssetBundle;
 

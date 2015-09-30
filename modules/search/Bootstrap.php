@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\search;
+namespace search;
 
 use Yii;
 use yii\base\BootstrapInterface;

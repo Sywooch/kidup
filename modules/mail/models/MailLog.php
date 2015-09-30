@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\mail\models;
+namespace mail\models;
 
 use Yii;
 use yii\helpers\Json;
@@ -7,7 +7,7 @@ use yii\helpers\Json;
 /**
  * Login form
  */
-class MailLog extends \app\models\base\MailLog
+class MailLog extends base\MailLog
 {
     public static function create($type, $email, $data, $id)
     {

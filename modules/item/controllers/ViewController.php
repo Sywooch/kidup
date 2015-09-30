@@ -1,22 +1,14 @@
 <?php
 
-namespace app\modules\item\controllers;
+namespace item\controllers;
 
-use app\components\Cache;
-use app\components\WidgetRequest;
-use app\controllers\Controller;
-use app\models\base\Currency;
-use app\models\base\Review;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\forms\Create;
-use app\modules\item\forms\CreateBooking;
-use app\modules\item\models\Item;
-use yii\bootstrap\Html;
-use yii\data\ActiveDataProvider;
+use app\extended\web\Controller;
+use user\models\base\Currency;
+use review\models\base\Review;
+use \item\forms\CreateBooking;
+use \item\models\Item;
 use yii\filters\AccessControl;
-use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use Yii;
 
@@ -67,7 +59,7 @@ class ViewController extends Controller
     public function actionIndex($id, $new_publish = false)
     {
         /**
-         * @var $item \app\modules\item\models\Item
+         * @var $item \item\models\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
 
@@ -112,7 +104,7 @@ class ViewController extends Controller
 
         $reviewDataProvider = new \yii\data\ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $item->id])
-                ->andWhere(['type' => \app\modules\review\models\Review::TYPE_USER_PUBLIC]),
+                ->andWhere(['type' => \review\models\Review::TYPE_USER_PUBLIC]),
             'pagination' => [
                 'pageSize' => 20,
             ],

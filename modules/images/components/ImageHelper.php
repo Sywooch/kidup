@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\images\components;
+namespace images\components;
 
 use app\components\Cache;
 use League\Glide\Filesystem\FileNotFoundException;

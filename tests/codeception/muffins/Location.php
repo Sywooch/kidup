@@ -4,7 +4,7 @@ namespace app\tests\codeception\muffins;
 use Codeception\Util\Debug;
 use Faker\Factory as Faker;
 
-class Location extends \app\models\base\Location
+class Location extends \item\models\base\Location
 {
     public function definitions()
     {

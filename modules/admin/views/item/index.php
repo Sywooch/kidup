@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\modules\admin\models\search\Item $searchModel
+ * @var \admin\models\search\Item $searchModel
  */
 
 $this->title = 'Items';
@@ -24,34 +24,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'name',
             [
                 'attribute' => 'description',
                 'value' => function($model){
-                    return $model->description;
+                    return substr($model->description, 0, 50)."...";
                 }
             ],
-            'price_day',
             'price_week',
-//            'price_month', 
-            'owner_id',
-//            'currency_id', 
-            'is_available',
-//            'location_id', 
-            'created_at',
-            'updated_at',
-//            'min_renting_days', 
-//            'category_id', 
-
+            [
+                'attribute' => 'owner_id',
+                'value' => function($model){
+                    return $model->owner->email;
+                }
+            ],
+            'is_available:boolean',
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'category_id',
+                'value' => function($model){
+                    return $model->category->name;
+                }
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'buttons' => [
                 'update' => function ($url, $model) {
                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Yii::$app->urlManager->createUrl(['admin/item/view','id' => $model->id,'edit'=>'t']), [
-                                                    'title' => Yii::t('yii', 'Edit'),
+                                                    'title' => 'Edit',
                                                   ]);}
 
                 ],

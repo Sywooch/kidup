@@ -1,8 +1,8 @@
 <?php
-namespace app\modules\search\controllers;
+namespace search\controllers;
 
-use app\controllers\Controller;
-use app\modules\search\forms\Filter;
+use app\extended\web\Controller;
+use \search\forms\Filter;
 use Yii;
 use yii\filters\AccessControl;
 

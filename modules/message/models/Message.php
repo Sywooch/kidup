@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\message\models;
+namespace message\models;
 
-use app\components\Event;
+use app\helpers\Event;
 use Carbon\Carbon;
 use Yii;
 
 /**
  * This is the model class for table "conversation".
  */
-class Message extends \app\models\base\Message
+class Message extends base\Message
 {
     const EVENT_NEW_MESSAGE = 'new_message';
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\booking\models;
+namespace booking\models;
 
-use app\components\Event;
-use app\modules\user\models\PayoutMethod;
+use app\helpers\Event;
+use \user\models\PayoutMethod;
 use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "payin".
  */
-class Payout extends \app\models\base\Payout
+class Payout extends \booking\models\base\Payout
 {
     const STATUS_WAITING_FOR_BOOKING_START = 'waiting_for_start';
     const STATUS_TO_BE_PROCESSED = 'to_be_processed';

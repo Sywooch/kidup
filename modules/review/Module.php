@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\review;
+namespace review;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\review\controllers';
+    public $controllerNamespace = '\review\controllers';
 
     public function init()
     {

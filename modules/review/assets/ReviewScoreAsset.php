@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\review\assets;
+namespace review\assets;
 
 use yii\web\AssetBundle;
 

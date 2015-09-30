@@ -1,16 +1,17 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
-use app\components\Event;
-use app\modules\images\components\ImageHelper;
-use app\modules\item\models\Location;
-use app\modules\mail\models\Token;
-use app\modules\message\models\Conversation;
-use app\modules\user\Finder;
-use app\modules\user\helpers\Password;
+use app\helpers\Event;
+use \images\components\ImageHelper;
+use \item\models\Location;
+use \mail\models\Token;
+use \message\models\Conversation;
+use \user\Finder;
+use \user\helpers\Password;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\IdentityInterface;
 
@@ -32,11 +33,11 @@ use yii\web\IdentityInterface;
  *
  * Defined relations:
  * @property Account[] $accounts
- * @property \app\modules\user\models\Profile $profile
+ * @property \user\models\Profile $profile
  *
- * @property \app\modules\user\models\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
+ * @property \user\models\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
  */
-class User extends \app\models\base\User implements IdentityInterface
+class User extends base\User implements IdentityInterface
 {
     // events
     const EVENT_USER_CREATE_INIT = 'user_create_init';
@@ -58,10 +59,10 @@ class User extends \app\models\base\User implements IdentityInterface
     /** @var string Plain password. Used for model validation. */
     public $password;
 
-    /** @var \app\modules\user\Module */
+    /** @var \user\Module */
     protected $module;
 
-    /** @var \app\modules\user\Finder */
+    /** @var \user\Finder */
     protected $finder;
 
     private $first_name;
@@ -164,12 +165,12 @@ class User extends \app\models\base\User implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'email' => \Yii::t('user', 'Email'),
-            'registration_ip' => \Yii::t('user', 'Registration ip'),
-            'unconfirmed_email' => \Yii::t('user', 'New email'),
-            'password' => \Yii::t('user', 'Password'),
-            'created_at' => \Yii::t('user', 'Registration time'),
-            'confirmed_at' => \Yii::t('user', 'Confirmation time'),
+            'email' => \Yii::t('user.attributes.email', 'Email'),
+            'registration_ip' => \Yii::t('user.attributes.registration_ip', 'Registration ip'),
+            'unconfirmed_email' => \Yii::t('user.attributes.new_email', 'New email'),
+            'password' => \Yii::t('user.attributes.password', 'Password'),
+            'created_at' => \Yii::t('user.attributes.registration_time', 'Registration time'),
+            'confirmed_at' => \Yii::t('user.attributes.confirmation_time', 'Confirmation time'),
         ];
     }
 
@@ -279,7 +280,7 @@ class User extends \app\models\base\User implements IdentityInterface
     public function canMakeBooking()
     {
         /**
-         * @var $location \app\modules\item\models\Location
+         * @var $location \item\models\Location
          */
 //        $location = Location::findOne($this->locations[0]->id);
 //        && $location->isValid()
@@ -333,7 +334,8 @@ class User extends \app\models\base\User implements IdentityInterface
         ])->one();
         if ($token === null || $token->isExpired) {
             \Yii::$app->session->setFlash('danger',
-                \Yii::t('user', 'The confirmation link is invalid or expired. Please try requesting a new one.'));
+                \Yii::t('user.confirmation.link_invalid_or_expired',
+                    'The confirmation link is invalid or expired. Please try requesting a new one.'));
         } else {
             $token->delete();
 
@@ -345,13 +347,14 @@ class User extends \app\models\base\User implements IdentityInterface
                 $p = Profile::findOne(['user_id' => \Yii::$app->user->id]);
                 $p->email_verified = 1;
                 if ($p->save()) {
-                    \Yii::$app->session->setFlash('success', \Yii::t('user', 'Thank you, your email is now verified!'));
+                    \Yii::$app->session->setFlash('success', \Yii::t('user.confirmation.email_verified_success',
+                        'Thank you, your email is now verified!'));
                 } else {
-                    \Yii::$app->clog->debug('profile not saved', $p->getErrors());
+                    \Yii::error("Profile not saved".Json::encode($p->getErrors()));
                 }
             } else {
                 \Yii::$app->session->setFlash('danger',
-                    \Yii::t('user', 'Something went wrong and your account has not been confirmed.'));
+                    \Yii::t('user.confirmation.some_unknown_error', 'Something went wrong and your account has not been confirmed.'));
             }
         }
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\message\models;
+namespace message\models;
 
-use app\models\base\Profile;
-use app\modules\booking\models\Booking;
-use app\modules\mail\models\MailAccount;
+use user\models\base\Profile;
+use \booking\models\Booking;
+use \mail\models\MailAccount;
 use Carbon\Carbon;
 use Yii;
 use yii\helpers\Json;
@@ -13,7 +13,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "conversation".
  */
-class Conversation extends \app\models\base\Conversation
+class Conversation extends base\Conversation
 {
     public function beforeSave($insert)
     {

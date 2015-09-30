@@ -1,16 +1,17 @@
 <?php
 
-use app\components\ViewHelper;
+use app\helpers\ViewHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\user\models\User $user
- * @var app\modules\user\Module $module
+ * @var \user\models\User $user
+ * @var \user\Module $module
  */
 
-$this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Sign up'));
+$this->title = ViewHelper::getPageTitle(\Yii::t('user.registation.title', 'Sign up'));
+$this->assetPackage = \app\assets\Package::USER;
 ?>
 
 <section class="section container">
@@ -19,7 +20,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Sign up'));
 
         <div class="col-md-4 col-md-offset-4 card col-sm-8 col-sm-offset-2">
             <h3>
-                <center><?= Yii::t('user', "Register on KidUp") ?></center>
+                <center><?= Yii::t('user.registation.header', "Register on KidUp") ?></center>
             </h3>
             <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
                 'baseAuthUrl' => ['/user/security/auth'],
@@ -30,7 +31,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Sign up'));
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
                     <?php $authAuthChoice->clientLink($client,
                         '<i class="fa fa-' . strtolower($client->getTitle()) . '-square"></i> ' .
-                        \Yii::t('user', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
+                        \Yii::t('user.registation.login_with_social', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
                         , ['class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle())]) ?>
                     <br/><br/>
                 <?php endforeach; ?>
@@ -49,12 +50,12 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('title', 'Sign up'));
                 <?= $form->field($model, 'password')->passwordInput() ?>
             <?php endif ?>
 
-            <?= Html::submitButton(Yii::t('user', 'Sign up'), ['class' => 'btn btn-danger btn-fill']) ?>
+            <?= Html::submitButton(Yii::t('user.registation.sign_up_button', 'Sign up'), ['class' => 'btn btn-danger btn-fill']) ?>
 
             <?php ActiveForm::end(); ?>
             <hr/>
             <div class="text-center">
-                <?= Html::a(Yii::t('user', 'Already registered? Sign in!'), ['/user/security/login']) ?>
+                <?= Html::a(Yii::t('user.registation.existing_user_use_signin_link', 'Already registered? Sign in!'), ['/user/security/login']) ?>
             </div>
             <br/>
         </div>

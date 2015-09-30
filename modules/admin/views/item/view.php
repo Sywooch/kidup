@@ -6,7 +6,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var app\models\base\Item $model
+ * @var item\models\base\Item $model
  */
 
 $this->title = $model->name;
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'deleteOptions'=>[
         'url'=>['delete', 'id' => $model->id],
         'data'=>[
-        'confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'),
+        'confirm'=> 'Are you sure you want to delete this item?',
         'method'=>'post',
         ],
         ],

@@ -3,11 +3,11 @@ use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use \app\modules\item\widgets\GoogleAutoComplete;
+use item\widgets\GoogleAutoComplete;
 use \kartik\typeahead\Typeahead;
 
 /**
- * @var \app\modules\search\forms\Filter $model
+ * @var \search\forms\Filter $model
  */
 \app\assets\FullModalAsset::register($this);
 
@@ -17,7 +17,7 @@ use \kartik\typeahead\Typeahead;
         'class' => 'modal modal-fullscreen force-fullscreen'
     ],
     'closeButton' => false,
-    'header' => "<b>".\Yii::t('home', 'KidUp Search')."</b>"
+    'header' => "<b>".\Yii::t("item.mobile_search.header_name", 'KidUp Search')."</b>"
 ]);
 
 ?>
@@ -39,7 +39,7 @@ use \kartik\typeahead\Typeahead;
 
 <?= $form->field($model, 'query')->widget(Typeahead::className(), [
     'options' => [
-        'placeholder' => \Yii::t('home', 'What do you like to get your child?')
+        'placeholder' => \Yii::t("item.mobile_search.placeholder", 'What do you like to get your child?')
     ],
     'pluginOptions' => ['highlight' => true, 'hint' => true],
     'dataset' => [
@@ -52,7 +52,9 @@ use \kartik\typeahead\Typeahead;
             'limit' => 5,
             'display' => 'text',
             'templates' => [
-                'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t('home', "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                'notFound' => '<div class="text-danger" style="padding:0 8px">'.
+                    \Yii::t("item.mobile_search.no_results",
+                        "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
                 'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
             ]
         ]
@@ -70,7 +72,7 @@ use \kartik\typeahead\Typeahead;
     'name' => 'autoCompleteLocationMobileWidget'
 ]); ?>
 
-<?= Html::submitButton(Yii::t('home', 'Search'), [
+<?= Html::submitButton(Yii::t("item.mobile_search.search_button", 'Search'), [
     'class' => 'btn btn-danger btn-fill btn-block',
     'onclick' => 'submitMenuSearchModalForm()'
 ]) ?>
@@ -79,7 +81,8 @@ use \kartik\typeahead\Typeahead;
 
 <?php
 \yii\bootstrap\Modal::end();
-$this->registerJS('
+$this->registerJS(
+<<<JS
 function submitMenuSearchModalForm() {
     var vals = [];
     var val = $("#search-filter-query").val();
@@ -109,7 +112,7 @@ function submitMenuSearchModalForm() {
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }
-
-}');
-
+}
+JS
+);
 ?>

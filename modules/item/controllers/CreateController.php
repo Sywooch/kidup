@@ -1,19 +1,19 @@
 <?php
 
-namespace app\modules\item\controllers;
+namespace item\controllers;
 
-use app\controllers\Controller;
-use app\modules\booking\models\Booking;
-use app\modules\images\components\ImageHelper;
-use app\modules\images\components\ImageManager;
-use app\modules\item\forms\Create;
-use app\modules\item\forms\Edit;
-use app\modules\item\forms\LocationForm;
-use app\modules\item\models\Category;
-use app\modules\item\models\Item;
-use app\modules\item\models\ItemHasMedia;
-use app\modules\item\models\Media;
-use app\modules\search\models\ItemSearch;
+use app\extended\web\Controller;
+use \booking\models\Booking;
+use \images\components\ImageHelper;
+use \images\components\ImageManager;
+use \item\forms\Create;
+use \item\forms\Edit;
+use \item\forms\LocationForm;
+use \item\models\Category;
+use \item\models\Item;
+use \item\models\ItemHasMedia;
+use \item\models\Media;
+use \search\models\ItemSearch;
 use Carbon\Carbon;
 use Yii;
 use yii\filters\AccessControl;
@@ -80,7 +80,8 @@ class CreateController extends Controller
             if ($locationForm->save()) {
                 return $this->redirect('@web/item/create/edit-photos?id='.$locationForm->item_id);
             }else{
-                Yii::$app->session->addFlash('warning', \Yii::t('item', "That address couldn't be found, is it valid?"));
+                Yii::$app->session->addFlash('item', \Yii::t('item.create.flash_address_not_found',
+                    "That address couldn't be found, is it valid?"));
                 return $this->redirect('@web/item/create/edit-location?id='.$locationForm->item_id);
             }
         }
@@ -175,6 +176,38 @@ class CreateController extends Controller
             'page' => 'pricing/pricing',
             'pageParams' => [],
             'rightColumn' => 'pricing/suggestion',
+            'rightColumnParams' => []
+        ]);
+    }
+
+    public function actionEditPublish($id, $publish = false)
+    {
+        $item = $this->getItem($id);
+        if($item->is_available == 1){
+            return $this->redirect('@web/item/' . $id);
+        }
+        $i = $this->defaultPage($id, 'default');
+        if($i instanceof Response){
+            return $i;
+        }
+
+        $isValid = $i['model']->isScenarioValid('default');
+        if (!$isValid) {
+            Yii::$app->session->addFlash('info', \Yii::t('item.create.flash_please_finish_steps',
+                'Please finish all required steps before publishing!'));
+            return $this->redirect('@web/item/create/edit-basics?id=' . $id);
+        }
+        if($publish !== false){
+            $item->is_available = 1;
+            $item->save(false); // save, but don't check if valid, should be done by this point
+            ItemSearch::updateSearch(); // enables the item to be found
+            return $this->redirect('@web/item/'.$id.'?new_publish=true');
+        }
+        return $this->render('wrapper', [
+            'item' => $i['item'],
+            'model' => $i['model'],
+            'page' => 'publish',
+            'pageParams' => [],
             'rightColumnParams' => []
         ]);
     }
@@ -351,40 +384,17 @@ class CreateController extends Controller
         }
 
         if ($bookingInFuture) {
-            \Yii::$app->session->addFlash('warning', \Yii::t('item',
+            \Yii::$app->session->addFlash('warning', \Yii::t('item.create.flash_active_booking_cannot_unpublish',
                 'A booking was made for this product. The product could not be unpublished.'));
             return $this->redirect(['/item/list']);
         } else {
             $item->is_available = 0;
             $item->save();
-            Yii::$app->session->addFlash('info', \Yii::t('item', 'The product has been made unavailable'));
+            Yii::$app->session->addFlash('info', \Yii::t('item.create.item_unavailable', 'The product has been made unavailable'));
             return $this->redirect('@web/item/create/edit-basics?id=' . $id);
         }
     }
 
-    public function actionEditPublish($id, $publish = false)
-    {
-        $item = $this->getItem($id);
-        if($item->is_available == 1){
-            return $this->redirect('@web/item/' . $id);
-        }
-        $i = $this->defaultPage($id, 'default');
-        if($i instanceof Response){
-            return $i;
-        }
 
-        $isValid = $i['model']->isScenarioValid('default');
-        if (!$isValid) {
-            Yii::$app->session->addFlash('info', \Yii::t('item', 'Please finish all required steps before publishing!'));
-            return $this->redirect('@web/item/create/edit-basics?id=' . $id);
-        }
-        if($publish !== false){
-            $item->is_available = 1;
-            $item->save(false); // save, but don't check if valid, should be done by this point
-            ItemSearch::updateSearch(); // enables the item to be found
-            return $this->redirect('@web/item/'.$id.'?new_publish=true');
-        }
-        return $this->render('publish', ['item' => $item]);
-    }
 }
 

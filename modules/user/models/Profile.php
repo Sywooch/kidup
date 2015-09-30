@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\user\models;
+namespace user\models;
 
-use app\modules\images\components\ImageHelper;
+use \images\components\ImageHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class Profile extends \app\models\base\Profile
+class Profile extends base\Profile
 {
     public $img;
 
@@ -46,11 +46,11 @@ class Profile extends \app\models\base\Profile
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'user_id' => Yii::t('app', 'User ID'),
-            'description' => Yii::t('app', 'Profile description'),
-            'img' => Yii::t('app', 'Profile image'),
-            'phone_country' => Yii::t('app', 'Phone Country'),
-            'phone_number' => Yii::t('app', 'Phone Number'),
+            'user_id' => Yii::t('profile.attributes.user_id', 'User'),
+            'description' => Yii::t('profile.attributes.description', 'Profile description'),
+            'img' => Yii::t('profile.attributes.image', 'Profile Image'),
+            'phone_country' => Yii::t('profile.attributes.phone_country', 'Phone Country'),
+            'phone_number' => Yii::t('profile.attributes.phone_number', 'Phone Number'),
         ]);
 
     }

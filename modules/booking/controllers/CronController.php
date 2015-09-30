@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\booking\controllers;
+namespace booking\controllers;
 
-use app\components\Event;
-use app\modules\booking\models\Booking;
-use app\modules\booking\models\BrainTree;
-use app\modules\booking\models\Invoice;
-use app\modules\booking\models\Payin;
-use app\modules\booking\models\Payout;
-use app\modules\review\models\Review;
+use app\helpers\Event;
+use \booking\models\Booking;
+use \booking\models\BrainTree;
+use \booking\models\Invoice;
+use \booking\models\Payin;
+use \booking\models\Payout;
+use \review\models\Review;
 use Carbon\Carbon;
 use Yii;
 use yii\base\Model;
@@ -26,7 +26,7 @@ class CronController extends Model
         $payins = Payin::findAll(['status' => Payin::STATUS_SETTLING]);
         foreach ($payins as $payin) {
             /**
-             * @var $payin \app\modules\booking\models\Payin
+             * @var $payin \booking\models\Payin
              */
             if (\Yii::$app->keyStore->get('braintree_type') == 'sandbox') {
                 require(Yii::$aliases['@vendor'] . '/braintree/braintree_php/tests/TestHelper.php');

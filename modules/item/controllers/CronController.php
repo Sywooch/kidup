@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\item\controllers;
+namespace item\controllers;
 
-use app\components\Event;
-use app\modules\item\models\Item;
+use app\helpers\Event;
+use \item\models\Item;
 use Yii;
 use yii\base\Model;
 

@@ -62,7 +62,7 @@ class ItemCreateCest
         $I->amGoingTo('try to create an item with title');
         $I->fillField('#create-item-name', 'New item name');
         $I->click('Next step');
-        $I->seeRecord('app\models\base\Item', [
+        $I->seeRecord('item\models\base\Item', [
             'name' => 'New item name',
         ]);
         $I->see("step 2 out of 2");

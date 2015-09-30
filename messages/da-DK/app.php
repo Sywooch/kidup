@@ -29,6 +29,7 @@ return [
     'Count Left' => '',
     'Count Total' => '',
     'Create' => '',
+    'Home' => '',
     'Item Id 1' => '',
     'Item Id 2' => '',
     'More info' => '',

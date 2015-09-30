@@ -26,7 +26,8 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-tests/_output/*
+tests/_output
 
-web/assets/*
+web/assets
 !web/assets/_empty
+node_modules

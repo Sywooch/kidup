@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Location e.g. Copenhagen' => '',
     'Location: Near Me' => '',
     'No results found for your query.' => '',
     'Results for' => '',

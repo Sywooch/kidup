@@ -1,10 +1,9 @@
 <?php
-use app\components\WidgetRequest;
 use yii\helpers\Url;
 
 /**
  * @var $this \yii\web\View
- * @var $model \app\modules\message\models\Conversation
+ * @var $model \message\models\Conversation
  */
 ?>
 <tr>
@@ -12,7 +11,7 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-md-2">
                 <a href="<?= Url::to("@web/user/{$model->id}") ?>">
-                    <?= \app\modules\user\widgets\UserImage::widget(['user_id' => $model->otherUser->user_id]) ?>
+                    <?= \user\widgets\UserImage::widget(['user_id' => $model->otherUser->user_id]) ?>
                 </a>
             </div>
             <div class="col-md-2">
