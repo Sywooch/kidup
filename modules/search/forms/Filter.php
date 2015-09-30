@@ -11,6 +11,7 @@ use \item\models\Item;
 use \item\models\Location;
 use \search\models\IpLocation;
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
@@ -340,7 +341,7 @@ class Filter extends Model
                 } else {
                     // use a fallback method
                     $location = Location::getByIP($ip);
-                    if ($location !== null) {
+                    if ($location !== null && $location !== false) {
                         $this->longitude = $location->longitude;
                         $this->latitude = $location->latitude;
                         if (strlen($location->city) > 0 && strlen($location->country_name) > 0) {
