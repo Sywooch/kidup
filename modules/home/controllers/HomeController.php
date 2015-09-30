@@ -26,19 +26,6 @@ class HomeController extends Controller
                     ],
                 ],
             ],
-//            [
-//                'class' => 'yii\filters\HttpCache',
-//                'only' => ['index'],
-//                'cacheControlHeader' => 'public, max-age=300',
-//                'enabled' => YII_CACHE,
-//                'etagSeed' => function ($action, $params) {
-//                    return Json::encode([
-//                        Yii::$app->language,
-//                        \Yii::$app->session->getAllFlashes(),
-//                        \Yii::$app->user->isGuest
-//                    ]);
-//                },
-//            ],
             [
                 'class' => 'yii\filters\PageCache',
                 'only' => ['index'],
@@ -101,7 +88,6 @@ class HomeController extends Controller
 
     public function actionSuperSecretCacheFlush(){
         \Yii::$app->cache->flush();
-//        \app\components\Cache::remove('item_controller-view');
         echo 'dude.. the fu!';
     }
 }
