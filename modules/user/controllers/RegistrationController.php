@@ -192,7 +192,9 @@ class RegistrationController extends Controller
 
         $this->performAjaxValidation($model);
 
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post())) {
+            // try saving, doesnt matter if it works
+            $model->save();
             return $this->redirect(User::afterLoginUrl('post_registration'));
         }
 

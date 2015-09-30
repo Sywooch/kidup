@@ -183,10 +183,12 @@ class Booking extends base\Booking
         }
 
         if ($message == '' || $message == null) {
-            $message = \Yii::t('booking.create.automated_new_message', 'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
+            $message = \Yii::t('booking.create.automated_new_message',
+                'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
         }
 
-        return $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+        $messageBool = $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+        return $messageBool;
     }
 
     public function hasBookinger($id)
