@@ -1,8 +1,8 @@
 <?php
 namespace app\tests\codeception\functional\user;
 
-use app\modules\user\models\User;
-use app\modules\user\models\Profile;
+use user\models\User;
+use user\models\Profile;
 use FunctionalTester;
 
 /**

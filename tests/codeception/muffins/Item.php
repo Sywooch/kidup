@@ -1,10 +1,9 @@
 <?php
 namespace app\tests\codeception\muffins;
 
-use app\modules\images\components\ImageHelper;
 use Faker\Factory as Faker;
 
-class Item extends \app\modules\item\models\Item
+class Item extends \item\models\Item
 {
 
     public function definitions()

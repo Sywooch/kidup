@@ -30,7 +30,7 @@ use yii\helpers\Url;
                 </a>
             </div>
             <div class="col-md-2">
-                <?= $model->booking->getStatusName() ?>
+                <?= $model->booking ? $model->booking->getStatusName() : '' ?>
             </div>
         </div>
     </td>

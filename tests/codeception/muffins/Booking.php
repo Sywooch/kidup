@@ -3,7 +3,7 @@ namespace app\tests\codeception\muffins;
 
 use Faker\Factory as Faker;
 
-class Booking extends \app\modules\booking\models\Booking
+class Booking extends \booking\models\Booking
 {
     public function definitions()
     {

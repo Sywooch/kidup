@@ -1,7 +1,6 @@
 <?php
 namespace app\tests\codeception\muffins;
 
-use Codeception\Util\Debug;
 use Faker\Factory as Faker;
 
 class Location extends \item\models\base\Location

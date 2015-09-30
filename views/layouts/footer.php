@@ -58,8 +58,8 @@ use images\components\ImageHelper;
         </div>
         <div class="row">
             <div class="col-sm-12 language text-center">
-                <?= Html::a('DA', '@web/site/change-language?lang=da-DK') ?> /
-                <?= Html::a('EN', '@web/site/change-language?lang=en-US') ?>
+                <?= Html::a('DA', '@web/home/home/change-language?lang=da-DK') ?> /
+                <?= Html::a('EN', '@web/home/home/change-language?lang=en-US') ?>
             </div>
         </div>
         <div class="row last">
