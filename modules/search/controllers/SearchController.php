@@ -32,7 +32,6 @@ class SearchController extends Controller
                     ],
                 ],
             ],
-
         ];
     }
 
@@ -56,13 +55,11 @@ class SearchController extends Controller
                 $model->loadQueriedFeatures(\Yii::$app->request->get()[$model->formName()]);
             }
         }
-        $model->query = $query;
 
+        $model->query = $query;
         $model->setLocation();
 
-
         if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
-
             return $this->renderAjax('index', [
                 'model' => $model,
                 'results' => $model->findItems()

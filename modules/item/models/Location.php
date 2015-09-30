@@ -102,7 +102,7 @@ class Location extends base\Location
 
     public static function getByAddress($address)
     {
-        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
+        $request_url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
         $xml = simplexml_load_file($request_url);
         if ($xml === false) return false;
         $status = $xml->status;

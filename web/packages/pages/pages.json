@@ -1,1 +1,1 @@
-{"css":["./modules/pages/views/assets/wp.css","./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css"],"js":["./modules/item/widgets/views/assets/menuSearch.js"]}
+{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/kartik-v/yii2-widget-growl/assets/css/kv-bootstrap-notify.css","./vendor/kartik-v/yii2-krajee-base/assets/css/animate.css"],"js":["./modules/item/widgets/views/assets/menuSearch.js"]}

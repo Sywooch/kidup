@@ -65,7 +65,7 @@ AppAsset::register($this);
                 'This website uses cookies to ensure you get the best possible KidUp experience.'),
             'dismiss' => \Yii::t('app.cookie_consent.accept_cookies', 'Accept'),
             'learnMore' => \Yii::t('app.cookie_consent.get_more_info_button', 'More info'),
-            'link' => 'http://kidup.dk/p/privacy',
+            'link' => \yii\helpers\Url::to('@web/p/privacy'),
             'theme' => 'dark-bottom'
         ]);
     });
