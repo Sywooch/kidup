@@ -1,9 +1,7 @@
 <?php
 namespace app\tests\codeception\muffins;
 
-use League\FactoryMuffin\Faker\Facade as Faker;
-
-class Token extends \app\modules\mail\models\Token
+class Token extends \mail\models\Token
 {
     public function definitions()
     {

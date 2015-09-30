@@ -4,13 +4,10 @@ namespace app\tests\codeception\functional\user;
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
 use app\tests\codeception\muffins\Item;
-use app\tests\codeception\muffins\Profile;
-use app\tests\codeception\muffins\Token;
 use app\tests\codeception\muffins\User;
 use Codeception\Util\Debug;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use League\FactoryMuffin\Faker\Facade as Faker;
 
 /**
  * functional test for the login.

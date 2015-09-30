@@ -30,7 +30,7 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
 
 set('shared_dirs', ['runtime', 'web/release-assets/js', 'web/release-assets/css']);
 set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
-set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets']);
+set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets', 'web/packages']);
 
 //$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
 $repo_password = 'd9c7b5bea7deb271c5d3c00376acbd18891c49cd';

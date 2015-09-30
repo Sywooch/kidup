@@ -1,11 +1,10 @@
 <?php
 namespace app\tests\codeception\muffins;
 
-use app\modules\images\components\ImageHelper;
-use Codeception\Util\Debug;
 use Faker\Factory as Faker;
+use images\components\ImageHelper;
 
-class Profile extends \app\modules\user\models\Profile
+class Profile extends \user\models\Profile
 {
     public function definitions()
     {

@@ -1,7 +1,6 @@
 <?php
 namespace app\tests\codeception\muffins;
 
-use app\modules\images\components\ImageHelper;
 use Faker\Factory as Faker;
 
 class Message extends \message\models\base\Message

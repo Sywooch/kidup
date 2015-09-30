@@ -72,6 +72,7 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
+        'converter' => ['class' => 'app\extended\web\AssetManager'],
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],

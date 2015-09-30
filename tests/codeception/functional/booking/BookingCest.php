@@ -1,24 +1,10 @@
 <?php
 namespace app\tests\codeception\functional\booking;
 
-use app\helpers\Event;
-use app\modules\booking\controllers\CronController;
-use app\modules\booking\controllers\DefaultController;
-use app\modules\booking\forms\Confirm;
-use app\modules\booking\widgets\CreateBooking;
-use app\modules\message\models\Message;
-use app\modules\review\models\Review;
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
-use app\tests\codeception\_support\YiiHelper;
-use app\tests\codeception\muffins\Booking;
-use app\tests\codeception\muffins\Invoice;
 use app\tests\codeception\muffins\Item;
-use app\tests\codeception\muffins\Payin;
-use app\tests\codeception\muffins\Payout;
-use app\tests\codeception\muffins\Profile;
 use app\tests\codeception\muffins\User;
-use Codeception\Util\Debug;
 use functionalTester;
 use Faker\Factory as Faker;
 use Yii;
@@ -70,7 +56,7 @@ class BookingCest {
         $I->canSee('Request to Book');
 
         // go to the action page of the form
-        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_pjax=1');
+        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
         $I->canSee('Review and book');
 
         /*CreateBooking::widget([

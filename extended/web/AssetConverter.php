@@ -1,25 +1,20 @@
 <?php
+/**
+ * @link http://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license http://www.yiiframework.com/license/
+ */
 
 namespace app\extended\web;
 
 use Yii;
+use yii\base\Component;
+use yii\base\Exception;
+use yii\web\AssetConverterInterface;
 
-class AssetManager extends \yii\web\AssetManager
+
+class AssetConverter extends \yii\web\AssetConverter implements AssetConverterInterface
 {
-    /**
-     * Dont do anything with the assets accept for returning their pathnames, View will handle the rest
-     * @param string $path
-     * @param array $options
-     * @return array
-     */
-    public function publish($path, $options = [])
-    {
-        $path = Yii::getAlias($path);
-        return [
-            $path,
-            $path
-        ];
-    }
 
     /**
      * Converts a given asset file into a CSS or JS file.
@@ -31,4 +26,6 @@ class AssetManager extends \yii\web\AssetManager
     {
         return $asset;
     }
+
+
 }

@@ -11,7 +11,7 @@ use Yii;
  * @property string $promotion_code_id
  *
  * @property \user\models\User $user
- * @property \user\models\PromotionCode $promotionCode
+ * @property \user\models\base\PromotionCode $promotionCode
  */
 class UserHasPromotionCode extends \yii\db\ActiveRecord
 {

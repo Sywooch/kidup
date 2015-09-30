@@ -119,12 +119,17 @@ desired effect
                 </li>
                 <li>
                     <a href="<?= \yii\helpers\Url::to('@web/admin/item/index') ?>">
-                        <span>Manage Items</span>
+                        <span>Items</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?= \yii\helpers\Url::to('@web/admin/user/index') ?>">
-                        <span>Manage Users</span>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/translation/index') ?>">
+                        <span>Translations</span>
                     </a>
                 </li>
             </ul>

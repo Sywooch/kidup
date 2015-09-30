@@ -2,10 +2,6 @@
 
 namespace user\models\base;
 
-use user\models\base\Country;
-use user\models\base\Currency;
-use item\models\base\Location;
-use user\models\base\User;
 use Yii;
 
 /**
@@ -30,7 +26,7 @@ use Yii;
  *
  * @property \item\models\Location $location
  * @property \user\models\Country $nationality0
- * @property \user\models\Currency $currency
+ * @property \user\models\base\Currency $currency
  * @property \user\models\User $user
  */
 class Profile extends \yii\db\ActiveRecord
