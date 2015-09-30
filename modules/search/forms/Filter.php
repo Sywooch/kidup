@@ -341,13 +341,13 @@ class Filter extends Model
                     // use a fallback method
                     $location = Location::getByIP($ip);
                     if ($location !== null) {
-                        $this->longitude = $location['longitude'];
-                        $this->latitude = $location['latitude'];
-                        if (strlen($location['city']) > 0 && strlen($location['country_name']) > 0) {
-                            $location = $location['city'] . ", " . $location['country_name'];
+                        $this->longitude = $location->longitude;
+                        $this->latitude = $location->latitude;
+                        if (strlen($location->city) > 0 && strlen($location->country_name) > 0) {
+                            $location = $location->city . ", " . $location->country_name;
                         } else {
-                            if (strlen($location['country_name']) > 0) {
-                                $location = $location['country_name'];
+                            if (strlen($location->country_name) > 0) {
+                                $location = $location->country_name;
                             } else {
                                 // if it is really not traceable
                                 $location = null;
