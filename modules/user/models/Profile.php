@@ -60,6 +60,7 @@ class Profile extends base\Profile
         return ArrayHelper::merge([
             'settings' => ['email', 'language', 'currency_id', 'phone_number', 'phone_country'],
             'phonecode' => ['phone_verified'],
+            'social-connect-image' => ['img'],
         ], parent::scenarios());
     }
 

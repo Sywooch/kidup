@@ -64,7 +64,7 @@ $this->assetPackage = \app\assets\Package::USER;
                         } ?>
                     </div>
                     <?= Yii::t("user.view.header_hi_i_am", "Hi, I'm {0}!", [
-                        $profile->first_name
+                        $profile->first_name ? $profile->first_name : \Yii::t('user.view.deafult_name_on_empty_profile_name', 'a KidUpper')
                     ]) ?>
 
                     <br/>

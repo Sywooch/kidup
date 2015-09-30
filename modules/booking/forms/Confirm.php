@@ -35,13 +35,24 @@ class Confirm extends Model
         return [
             [['message'], 'string'],
             [['rules', 'booking'], 'required'],
-            ['nonce', 'required', 'message' => \Yii::t('booking.create.invalid_payment_method', 'Please add a valid payment method.')],
+            [
+                'nonce',
+                'required',
+                'message' => \Yii::t('booking.create.invalid_payment_method', 'Please add a valid payment method.')
+            ],
             [
                 'rules',
                 'compare',
                 'compareValue' => true,
                 'message' => \Yii::t('booking.create.agree_to_terms', 'You must agree to the terms and conditions')
             ],
+            [
+                'owner_id',
+                'compare',
+                'compareValue' => \Yii::$app->user->id,
+                'operator' => '!=',
+                'message' => \Yii::t('booking.create.cannot_book_own_item', 'You cannot book your own item!')
+            ]
         ];
     }
 
@@ -53,10 +64,10 @@ class Confirm extends Model
 
     public function save()
     {
-        if(YII_ENV == 'test'){
+        if (YII_ENV == 'test') {
             $this->nonce = 'fake-valid-nonce';
         }
-        if(!$this->validate()){
+        if (!$this->validate()) {
             return false;
         };
         $payin = new Payin();
@@ -69,15 +80,16 @@ class Confirm extends Model
         if ($payin->save()) {
             // need to set this beore authorize function
             $this->booking->payin_id = $payin->id;
+            $this->booking->startConversation($this->message);
             $this->booking->save();
 
             if ($payin->authorize()) {
                 $this->booking->status = Booking::PENDING;
-                $this->booking->startConversation($this->message);
                 $this->booking->request_expires_at = time() + 48 * 60 * 60;
 
                 if ($this->booking->save()) {
-                    \Yii::$app->session->addFlash('success', \Yii::t('booking.flash.successfully_created', "You're booking has been made!"));
+                    \Yii::$app->session->addFlash('success',
+                        \Yii::t('booking.flash.successfully_created', "You're booking has been made!"));
                     return true;
                 }
             }

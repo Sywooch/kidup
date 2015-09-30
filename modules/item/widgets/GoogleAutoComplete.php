@@ -6,7 +6,7 @@ use yii\widgets\InputWidget;
 
 class GoogleAutoComplete extends InputWidget
 {
-    const API_URL = 'http://maps.googleapis.com/maps/api/js?';
+    const API_URL = 'https://maps.googleapis.com/maps/api/js?';
     public $libraries = 'places';
     public $sensor = true;
     public $autocompleteOptions = [];

@@ -74,18 +74,13 @@ use yii\widgets\ActiveForm;
                 'body' => \Yii::t('user.settings.address.not_found', "We couldn't find that adress, are you sure it's correct?")
             ]);
         }
-    } else {
-//        echo \app\widgets\Map::widget([
-//            'longitude' => $model->longitude,
-//            'latitude' => $model->latitude,
-//        ]);
     }
     ?>
 </div>
-<br/><br/>
 <div class="row save">
     <div class="col-md-12">
         <?= Html::submitButton(Yii::t('user.settings.address.save_button', 'Save'),
             ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
     </div>
 </div>
+<br>

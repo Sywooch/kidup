@@ -1,1 +1,1 @@
-{"js":["./modules/item/widgets/views/assets/menuSearch.js","./vendor/yiisoft/yii2-authclient/assets/authchoice.js"],"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/yiisoft/yii2-authclient/assets/authchoice.css"]}
+{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css"],"js":["./modules/item/widgets/views/assets/menuSearch.js"]}

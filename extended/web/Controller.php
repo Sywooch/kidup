@@ -12,33 +12,19 @@ class Controller extends \yii\web\Controller
     public $noHeaderSpace;
     public $noFooter;
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-            'company' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@app/views/static/company'
-            ],
-            'help' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@app/views/static/help',
-            ],
-            'tutorial' => [
-                'class' => 'yii\web\ViewAction',
-                'viewPrefix' => '@app/views/static/tutorial'
-            ],
-        ];
-    }
 
     public function __construct($id, $controller)
     {
+        // load over https in production, .htaccess didnt work for some reason
+        if(YII_ENV == 'prod'){
+            $r = \Yii::$app->request;
+            if($r->isGet && strpos($r->absoluteUrl, 'https') !== 0){
+                return $this->redirect(str_replace('http://', 'https://', $r->absoluteUrl));
+            }
+        }
+        if(strpos(\Yii::$app->request->absoluteUrl, 'https') !== 0){
+            \yii\helpers\VarDumper::dump('no',10,true); exit();
+        }
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }

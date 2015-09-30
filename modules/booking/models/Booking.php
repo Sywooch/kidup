@@ -172,6 +172,12 @@ class Booking extends base\Booking
 
     public function startConversation($message)
     {
+        if($this->conversation !== null){
+            if(count($this->conversation->messages) == 0){
+                return $this->conversation->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+            }
+            return true;
+        }
         $c = new Conversation();
         $c->initiater_user_id = Yii::$app->user->id;
         $c->target_user_id = $this->item->owner_id;
@@ -183,10 +189,12 @@ class Booking extends base\Booking
         }
 
         if ($message == '' || $message == null) {
-            $message = \Yii::t('booking.create.automated_new_message', 'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
+            $message = \Yii::t('booking.create.automated_new_message',
+                'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
         }
 
-        return $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+        $messageBool = $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+        return $messageBool;
     }
 
     public function hasBookinger($id)

@@ -26,7 +26,11 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
 <section class="section" id="checkout">
     <?php $form = ActiveForm::begin([
         'enableClientValidation' => false,
-//                    'fieldClass' => 'justinvoelker\awesomebootstrapcheckbox\ActiveField',
+        'enableAjaxValidation' => false,
+        'enableClientScript' => false,
+        'validateOnSubmit' => false,
+        'validateOnChange' => false,
+        'validateOnBlur' => false
     ]); ?>
     <div class="container">
         <h2>
@@ -121,7 +125,8 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         <div class="col-md-7">
                             <?= $form->field($model, 'message')->textarea([
                                 'class' => 'form-control',
-                                'placeholder' => \Yii::t('booking.confirm.message_to_placeholder', 'Your private message to {0}',
+                                'placeholder' => \Yii::t('booking.confirm.message_to_placeholder',
+                                    'Your private message to {0}',
                                     [$profile->first_name])
                             ])->label(false) ?>
                         </div>
@@ -168,9 +173,11 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                         <div class="col-md-5">
                             <?= Yii::t("booking.confirm.payment_info_help",
                                 "The total amount will be reserved on your creditcard when this booking is made. The card is only charged if the owner accepts your booking.") ?>
-                            <?= Yii::t("booking.confirm.more_info_see_faq", "For more information please see {link} our FAQ.{linkClose}",
+                            <?= Yii::t("booking.confirm.more_info_see_faq",
+                                "For more information please see {link} our FAQ.{linkClose}",
                                 [
-                                    'link' => Html::beginTag('a', ['href' => \yii\helpers\Url::to('@web/p/faq'),'target' => '_blank']),
+                                    'link' => Html::beginTag('a',
+                                        ['href' => \yii\helpers\Url::to('@web/p/faq'), 'target' => '_blank']),
                                     'linkClose' => Html::endTag('a')
                                 ]) ?>
                         </div>
@@ -268,12 +275,14 @@ $clientToken = (new BrainTree(new Payin()))->getClientToken();
                             <?= Yii::t("booking.confirm.more_info_see_renting_guide",
                                 "For more information please see {link} the renting on KidUp guide.{linkClose}",
                                 [
-                                    'link' => Html::beginTag('a', ['href' => \yii\helpers\Url::to('@web/p/how-to-rent'),'target' => '_blank']),
+                                    'link' => Html::beginTag('a',
+                                        ['href' => \yii\helpers\Url::to('@web/p/how-to-rent'), 'target' => '_blank']),
                                     'linkClose' => Html::endTag('a')
                                 ]) ?>
                         </div>
                     </div>
-                    <?= Html::submitButton(\Yii::t('booking.create.book_now_button', 'Book now'), ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
+                    <?= Html::submitButton(\Yii::t('booking.create.book_now_button', 'Book now'),
+                        ['class' => 'btn btn-lg btn-fill btn-primary']) ?>
                 </div>
             </div>
         </div>
