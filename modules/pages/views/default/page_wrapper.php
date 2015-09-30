@@ -1,5 +1,5 @@
 <?php
-\app\modules\pages\assets\WpAsset::register($this);
+pages\assets\WpAsset::register($this);
 ?>
 <div style="background-color: rgba(235,235,235,0.8);margin-bottom: -90px;padding-bottom:80px;">
     <section class="container">
