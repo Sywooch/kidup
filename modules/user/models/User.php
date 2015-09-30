@@ -95,6 +95,7 @@ class User extends base\User implements IdentityInterface
             'create' => ['email', 'password'],
             'update' => ['email', 'password'],
             'settings' => ['email', 'password'],
+
             'splash' => ['email']
         ];
     }

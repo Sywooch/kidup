@@ -19,15 +19,7 @@ class SocialAccount extends base\SocialAccount
             $user->profile->last_name = str_replace($user->profile->first_name . ' ', '', $data['name']);
             $user->profile->save();
         }
-        // twitter profile pic
-        if (isset($data['profile_image_url'])) {
-            $fileData = file_get_contents($data['profile_image_url']);
-            $uploadedFile = (new ImageManager())->store($fileData, $data['profile_image_url']);
-            if ($uploadedFile !== false) {
-                $user->profile->setAttribute('img', $uploadedFile);
-                $user->profile->save();
-            }
-        }
+
         // facebook profile pic
         if (isset($data['profile_img_url'])) {
             $url = $data['profile_img_url'];
@@ -42,8 +34,11 @@ class SocialAccount extends base\SocialAccount
                 $uploadedFile = false;
             }
             if ($uploadedFile !== false) {
+                $user->profile->setScenario('social-connect-image');
                 $user->profile->setAttribute('img', $uploadedFile);
-                $user->profile->save();
+                if(!$user->profile->save()){
+                    \yii\helpers\VarDumper::dump($user->profile->getErrors(),10,true); exit();
+                }
             }
         }
         return true;

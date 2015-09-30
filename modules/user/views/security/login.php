@@ -13,8 +13,6 @@ $this->title = ucfirst(\Yii::t('user.login.title', 'Log In')) . ' - ' . Yii::$ap
 $this->assetPackage = \app\assets\Package::USER;
 ?>
 
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
-
 <section class="section container">
     <div id="login" class="row">
         <br/><br/>
