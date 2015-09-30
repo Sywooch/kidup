@@ -83,7 +83,7 @@ gulp.task('js', function () {
             .pipe(remember('js' + p))
             // This will output the non-minified version
             .pipe(concat(p + '.js'))
-            .pipe(gulpif(argv.production, uglify()))
+            .pipe(gulpif(argv.production, uglify({mangle: false})))
             .pipe(gulp.dest(DEST + p + "/")));
     }
     return merge.apply(this, streams);

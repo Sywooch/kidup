@@ -3,10 +3,11 @@
 namespace booking\models\base;
 
 use user\models\base\Currency;
-use item\models\base\Item;
-use booking\models\base\Payin;
-use booking\models\base\Payout;
-use user\models\base\User;
+use item\models\Item;
+use booking\models\Payin;
+use booking\models\Payout;
+use user\models\User;
+use review\models\Review;
 use Yii;
 
 /**
@@ -36,12 +37,12 @@ use Yii;
  * @property integer $request_expires_at
  * @property string $promotion_code_id
  *
- * @property \user\models\base\Currency $currency
- * @property \app\modules\item\models\Item $item
- * @property \booking\models\base\Payin $payin
- * @property \booking\models\base\Payout $payout
- * @property \user\models\base\User $renter
- * @property \review\models\base\Review[] $reviews
+ * @property Currency $currency
+ * @property Item $item
+ * @property Payin $payin
+ * @property Payout $payout
+ * @property User $renter
+ * @property Review[] $reviews
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -59,18 +60,71 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'item_id', 'time_from', 'time_to', 'updated_at', 'created_at', 'request_expires_at'], 'required'],
-            [['item_id', 'renter_id', 'currency_id', 'time_from', 'time_to', 'updated_at', 'created_at', 'payin_id', 'payout_id', 'request_expires_at'], 'integer'],
+            [
+                ['status', 'item_id', 'time_from', 'time_to', 'updated_at', 'created_at', 'request_expires_at'],
+                'required'
+            ],
+            [
+                [
+                    'item_id',
+                    'renter_id',
+                    'currency_id',
+                    'time_from',
+                    'time_to',
+                    'updated_at',
+                    'created_at',
+                    'payin_id',
+                    'payout_id',
+                    'request_expires_at'
+                ],
+                'integer'
+            ],
             [['item_backup'], 'string'],
-            [['amount_item', 'amount_payin', 'amount_payin_fee', 'amount_payin_fee_tax', 'amount_payin_costs', 'amount_payout', 'amount_payout_fee', 'amount_payout_fee_tax'], 'number'],
+            [
+                [
+                    'amount_item',
+                    'amount_payin',
+                    'amount_payin_fee',
+                    'amount_payin_fee_tax',
+                    'amount_payin_costs',
+                    'amount_payout',
+                    'amount_payout_fee',
+                    'amount_payout_fee_tax'
+                ],
+                'number'
+            ],
             [['status'], 'string', 'max' => 50],
             [['refund_status'], 'string', 'max' => 20],
             [['promotion_code_id'], 'string', 'max' => 255],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => \user\models\base\Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
-            [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']],
-            [['payin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payin::className(), 'targetAttribute' => ['payin_id' => 'id']],
-            [['payout_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payout::className(), 'targetAttribute' => ['payout_id' => 'id']],
-            [['renter_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['renter_id' => 'id']]
+            [
+                ['currency_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Currency::className(),
+                'targetAttribute' => ['currency_id' => 'id']
+            ],
+            [
+                ['item_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Item::className(),
+                'targetAttribute' => ['item_id' => 'id']
+            ],
+            [
+                ['payin_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Payin::className(),
+                'targetAttribute' => ['payin_id' => 'id']
+            ],
+
+            [
+                ['renter_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['renter_id' => 'id']
+            ]
         ];
     }
 
@@ -111,7 +165,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\user\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -119,7 +173,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\app\modules\item\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
 
     /**
@@ -127,7 +181,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getPayin()
     {
-        return $this->hasOne(\booking\models\base\Payin::className(), ['id' => 'payin_id']);
+        return $this->hasOne(Payin::className(), ['id' => 'payin_id']);
     }
 
     /**
@@ -135,7 +189,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getPayout()
     {
-        return $this->hasOne(\booking\models\base\Payout::className(), ['id' => 'payout_id']);
+        return $this->hasOne(Payout::className(), ['id' => 'payout_id']);
     }
 
     /**
@@ -143,7 +197,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getRenter()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'renter_id']);
+        return $this->hasOne(User::className(), ['id' => 'renter_id']);
     }
 
     /**
@@ -151,7 +205,7 @@ class Booking extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(\review\models\base\Review::className(), ['booking_id' => 'id']);
+        return $this->hasMany(Review::className(), ['booking_id' => 'id']);
     }
 
 }

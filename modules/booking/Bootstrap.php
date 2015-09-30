@@ -12,7 +12,7 @@ class Bootstrap implements BootstrapInterface
     {
         /** @var $module Module */
         if ($app->hasModule('booking') && ($module = $app->getModule('booking')) instanceof Module) {
-            Yii::setAlias('@booking', '@web/booking');
+            Yii::setAlias('@booking', __DIR__);
         }
     }
 }

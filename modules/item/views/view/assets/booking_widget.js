@@ -88,6 +88,10 @@ var widgetFactory = function () {
 
             var params = {};
             var baseUrl = 'http://' + window.location.hostname + window.location.pathname;
+            // see if data table is defined, if true add the _book=true parameter
+            if(typeof $("#create-booking-form .table")[0] !== 'undefined'){
+                params['_book'] = '1';
+            }
             _.map(getParams(settings.url), function (param) {
                 params[param[0]] = param[1];
             });

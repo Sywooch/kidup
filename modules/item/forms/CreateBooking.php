@@ -102,18 +102,13 @@ class CreateBooking extends Model
     public function attemptBooking()
     {
         if ($this->validateDates()) {
-            if (isset(\Yii::$app->request->get()['_pjax'])) {
-                $session = Json::decode(\Yii::$app->session->get('ready_to_book'));
-                if (($session['time_from'] == $this->from && $session['time_to'] == $this->to && $this->item->id == $session['item_id'])
-                    || YII_ENV == 'test'
-                ) {
-                    if ($this->save()) {
-                        $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
-                        if(YII_ENV === 'test'){
-                            return \Yii::$app->controller->redirect($redirect);
-                        }
-                        return "<script>window.location = '{$redirect}';</script>";
+            if (isset(\Yii::$app->request->get()['_book'])) {
+                if ($this->save()) {
+                    $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
+                    if (YII_ENV === 'test') {
+                        return \Yii::$app->controller->redirect($redirect);
                     }
+                    return "<script>window.location = '{$redirect}';</script>";
                 }
             }
         }

@@ -2,6 +2,10 @@
 
 namespace booking\models\base;
 
+use booking\models\Booking;
+use booking\models\Invoice;
+use user\models\base\Currency;
+use user\models\User;
 use Yii;
 
 /**
@@ -17,10 +21,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $invoice_id
  *
- * @property \app\models\Booking[] $bookings
- * @property \app\models\Invoice $invoice
- * @property \app\models\Currency $currency
- * @property \app\models\User $user
+ * @property Booking[] $bookings
+ * @property Invoice $invoice
+ * @property Currency $currency
+ * @property User $user
  */
 class Payout extends \yii\db\ActiveRecord
 {
@@ -56,7 +60,7 @@ class Payout extends \yii\db\ActiveRecord
             'amount' => Yii::t('payout.attributes.amount', 'Amount'),
             'currency_id' => Yii::t('payout.attributes.currency_id', 'Currency'),
             'user_id' => Yii::t('payout.attributes.user_id', 'User'),
-            'processed_at' => Yii::t('payout.attributes.processed_at', 'Processed At'),
+            'processed_at' => Yii::t('payout.attributes.processed', 'Processed At'),
             'created_at' => Yii::t('payout.attributes.created_at', 'Created At'),
             'updated_at' => Yii::t('payout.attributes.updated_at', 'Updated At'),
             'invoice_id' => Yii::t('payout.attributes.invoice_id', 'Invoice'),
@@ -68,7 +72,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\booking\models\base\Booking::className(), ['payout_id' => 'id']);
+        return $this->hasMany(Booking::className(), ['payout_id' => 'id']);
     }
 
     /**
@@ -76,7 +80,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getInvoice()
     {
-        return $this->hasOne(\booking\models\base\Invoice::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(Invoice::className(), ['id' => 'invoice_id']);
     }
 
     /**
@@ -84,7 +88,7 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\user\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -92,6 +96,6 @@ class Payout extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
