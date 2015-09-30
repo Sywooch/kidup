@@ -38,7 +38,7 @@ class LocationForm extends Model
             [['city'], 'string', 'max' => 100],
             [['country'], 'string', 'max' => 100],
             [['zip_code'], 'string', 'max' => 10],
-            [['street'], 'string', 'max' => 256, 'min' => 5],
+            [['street'], 'string', 'max' => 256, 'min' => 1],
             [
                 'street',
                 function ($attribute, $params) {

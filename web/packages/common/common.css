@@ -7919,18 +7919,6 @@ fieldset[disabled] .form-control {
 .kv-input-group-hide .input-group-btn {
     visibility: hidden;
 }
-.section {
-  position: relative;
-  background-color: #fbfbfb;
-}
-.section-primary {
-  background-color: #71baaf;
-}
-.section-white {
-  background-color: #FFFFFF;
-}
-
-
 /*
  * typehead.js-bootstrap3.less
  * @version 0.2.3
@@ -8151,6 +8139,18 @@ fieldset[disabled] .twitter-typeahead .tt-input {
 .tt-menu .tt-suggestion p {
     margin: 0;
 }
+
+.section {
+  position: relative;
+  background-color: #fbfbfb;
+}
+.section-primary {
+  background-color: #71baaf;
+}
+.section-white {
+  background-color: #FFFFFF;
+}
+
 
 /*!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2015

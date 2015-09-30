@@ -93,7 +93,7 @@ class ItemSearch extends base\ItemSearch
             $is = new ItemSearch();
             $is->component_type = $component;
             $is->component_id = $category->id;
-            $is->text = $category->getTranslationName;
+            $is->text = $category->getTranslatedName();
             $is->language_id = $lang->language_id;
             $is->save();
         }

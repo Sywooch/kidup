@@ -101,6 +101,7 @@ class Settings extends Model
             [['rent_reminder', 'message_update', 'rent_status_change', 'newsletter', 'currency_id'], 'required'],
             [['rent_reminder', 'message_update', 'rent_status_change', 'newsletter', 'currency_id'], 'integer'],
             [['phone_country', 'phone_number'], 'integer'],
+            [['phone_number'], 'integer', 'max' => 9999999999, 'min' => 100000],
             [['language'], 'string'],
         ];
     }
