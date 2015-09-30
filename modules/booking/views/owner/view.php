@@ -43,12 +43,14 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.view.booking_status", "Booking Status") ?> <b class="pull-right">
+                                    <?= Yii::t("booking.view.booking_status", "Booking Status") ?> <b
+                                        class="pull-right">
                                         <?= $booking->getStatusName() ?>
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.view.pickup_address", "Pickup Address") ?> <b class="pull-right">
+                                    <?= Yii::t("booking.view.pickup_address", "Pickup Address") ?> <b
+                                        class="pull-right">
                                         <?= $item->location->street_name ?> <?= $item->location->street_number ?>
                                         , <?= $item->location->city ?>
                                     </b>
@@ -84,16 +86,19 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                 <?= Yii::t("booking.view.actions", "Actions") ?>
                             </h4>
                             <?= Html::a(Yii::t("booking.view.link_contact_renter", 'Contact Renter'),
-                                '@web/inbox/' . $booking->getConversationId()) ?>
-                            <?= Html::a(Yii::t("booking.view.link_view_receipt", 'View Receipt'), '@web/booking/' . $booking->id . '/receipt',
+                                '@web/inbox/' . $booking->conversation->id) ?>
+                            <?= Html::a(Yii::t("booking.view.link_view_receipt", 'View Receipt'),
+                                '@web/booking/' . $booking->id . '/receipt',
                                 ['target' => '_blank']) ?>
-                            <?= Html::a(Yii::t("booking.view.link_view_invoice", 'View Invoice'), '@web/booking/' . $booking->id . '/invoice',
+                            <?= Html::a(Yii::t("booking.view.link_view_invoice", 'View Invoice'),
+                                '@web/booking/' . $booking->id . '/invoice',
                                 ['target' => '_blank']) ?>
                         </div>
                     </div>
                 </div>
             <span class="pull-left">
-                <?= Yii::t("booking.view.no_rights_from_page", "No rights can be derived from the contents of this page.") ?>
+                <?= Yii::t("booking.view.no_rights_from_page",
+                    "No rights can be derived from the contents of this page.") ?>
             </span>
                 <?php if (!isset($_GET['pdf'])): ?>
                     <a href="?pdf=true" target="_blank">

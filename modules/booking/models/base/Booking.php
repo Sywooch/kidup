@@ -8,6 +8,7 @@ use booking\models\Payin;
 use booking\models\Payout;
 use user\models\User;
 use review\models\Review;
+use message\models\Conversation;
 use Yii;
 
 /**
@@ -43,6 +44,7 @@ use Yii;
  * @property Payout $payout
  * @property User $renter
  * @property Review[] $reviews
+ * @property Conversation $conversation
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -208,4 +210,11 @@ class Booking extends \yii\db\ActiveRecord
         return $this->hasMany(Review::className(), ['booking_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConversation()
+    {
+        return $this->hasOne(Conversation::className(), ['booking_id' => 'id']);
+    }
 }

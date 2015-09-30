@@ -51,7 +51,7 @@ class DefaultController extends Controller
         if ($booking->status !== Booking::AWAITING_PAYMENT) {
             return $this->redirect(['/booking/' . $id]);
         }
-
+        
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {

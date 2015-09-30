@@ -48,7 +48,7 @@ class Mailer
 
     public static function send($type, $data)
     {
-        $mailerClassName = "app\\modules\mail\mails\\" . explode('.', $type)[0];
+        $mailerClassName = "mail\\mails\\" . explode('.', $type)[0];
         $mailer = new $mailerClassName();
 
         return $mailer->{explode('.', $type)[1]}($data);

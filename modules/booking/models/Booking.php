@@ -226,13 +226,7 @@ class Booking extends base\Booking
         return $this;
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConversations()
-    {
-        return $this->hasMany(\message\models\base\Conversation::className(), ['booking_id' => 'id']);
-    }
+
 
     public function behaviors()
     {

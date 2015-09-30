@@ -95,11 +95,8 @@ class Payin extends base\Payin
                 (new Payout())->createFromBooking($this->booking);
             }
             if ($this->status == self::STATUS_AUTHORIZED) {
-                /**
-                 * @var Booking $b
-                 */
-                $b = Booking::findOne($this->bookings[0]->id);
-                if ($b->conversation == null) {
+
+                if ($this->booking->conversation == null) {
                     $this->status = self::STATUS_PENDING;
                     return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
                 }

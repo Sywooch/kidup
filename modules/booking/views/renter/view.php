@@ -82,7 +82,9 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                         <?= $booking->amount_payin ?> DKK
                                     </b>
                                 </li>
-                                <br/><br/>
+                                <li>
+                                    <hr>
+                                </li>
                                 <li>
                                     <?= Yii::t("booking.view.payment_received", "Payment Received") ?>
                                     <b class="pull-right">
@@ -104,7 +106,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                 <?= Yii::t("booking.view.actions", "Actions") ?>
                             </h4>
                             <?= Html::a(\Yii::t("booking.view.link_contact_owner", 'Contact Owner'),
-                                '@web/inbox/' . $booking->conversations[0]->id) ?>
+                                '@web/inbox/' . $booking->conversation->id) ?>
                             <br/>
                             <?= Html::a(\Yii::t("booking.view.link_view_receipt", 'View Receipt'), '@web/booking/' . $booking->id . '/receipt',
                                 ['target' => '_blank']) ?>
