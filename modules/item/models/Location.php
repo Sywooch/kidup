@@ -127,7 +127,7 @@ class Location extends base\Location
      * on an IP address.
      *
      * @param $ip string
-     * @return Array|Boolean false if no record could be found and otherwise an array with the following keys:
+     * @return Object|Boolean false if no record could be found and otherwise an array with the following keys:
      *          country_code        Country code (2 characters) (if detected)
      *          country_code3       Country code (3 charachters) (if detected)
      *          country_name        Country name (if detected)
