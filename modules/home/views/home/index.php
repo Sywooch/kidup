@@ -26,8 +26,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <h1>
                         <?= \Yii::t("home.share", 'Share'); ?>
                         <strong id="typist-element"
-                                data-typist="<?= Yii::t("home.scrolling_header_share_items", "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item",
-                                'a trolley') ?></strong>
+                                data-typist="<?= Yii::t("home.scrolling_header_share_items", "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item", 'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
                     </h1>
