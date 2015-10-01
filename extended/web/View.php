@@ -244,9 +244,19 @@ JS;
         $this->registerJs($js);
     }
 
-    private function getHashedFileName($file){
-        return Cache::data('assets.hashed_file_name.'.$file, function() use ($file){
-            return Yii::$aliases['@web'] .$file."?_h=".hash_file('md5', Yii::$aliases['@app'] . 'web/'.$file);
+    private function getHashedFileName($fileInput){
+        return Cache::data('assets.hashed_file_name.'.$fileInput, function() use ($fileInput){
+            $file = Yii::$aliases['@app'] . '/web/'.$fileInput;
+            if(!is_file($file)){
+                $file = Yii::$aliases['@app'] . '/web'.$fileInput;
+            }
+            if(!is_file($file)){
+                $hash = time();
+                Yii::error("could not find asset file for hashing: $file");
+            }else{
+                $hash = hash_file('md5', $file);
+            }
+            return Yii::$aliases['@web'] .$fileInput."?_h=".$hash;
         }, 5*60);
     }
 }
