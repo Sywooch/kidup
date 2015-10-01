@@ -6,6 +6,7 @@ use app\tests\codeception\_support\UserHelper;
 use app\tests\codeception\muffins\Booking;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\User;
+use Codeception\Util\Debug;
 use functionalTester;
 use Faker\Factory as Faker;
 use League\FactoryMuffin\FactoryMuffin;
@@ -25,7 +26,7 @@ class BookingCest {
     protected $fm = null;
 
     public function _before() {
-        $this->fm = (new MuffinHelper())->init()->getFactory();
+        $this->fm = (new MuffinHelper())->init();
     }
 
     public function makeBooking(FunctionalTester $I) {
@@ -40,16 +41,15 @@ class BookingCest {
         $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
 
         /**
-         * @var \booking\models\Booking $booking
+         * @var Booking $booking
          */
-        $booking = $this->fm->create(Booking::class, ['item.owner_id' => 1]);
-//        UserHelper::login($booking->renter);
-//
-//        // check the generated table
-//        $I->amOnPage('/booking/' . $booking->id . '/confirm');
-//        $I->canSee('Secure Booking - Pay in 1 Minute');
-//        $I->canSee('Message to '.$booking->item->owner->profile->first_name);
+        $booking = $this->fm->create(Booking::class);
+        UserHelper::login($booking->renter);
 
+        // check the generated table
+        $I->amOnPage('/booking/' . $booking->id . '/confirm');
+        $I->canSee('Secure Booking - Pay in 1 Minute');
+        $I->canSee('Message to '.$booking->item->owner->profile->first_name);
     }
 
 //    public function checkBookings($I){

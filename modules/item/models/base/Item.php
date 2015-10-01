@@ -53,9 +53,6 @@ class Item extends \yii\db\ActiveRecord
         return 'item';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -76,7 +73,7 @@ class Item extends \yii\db\ActiveRecord
                 ],
                 'integer'
             ],
-            [['created_at', 'updated_at', 'category_id'], 'required'],
+            [['created_at', 'updated_at', 'category_id', 'name', 'description', 'price_week', 'min_renting_days', 'owner_id'], 'required'],
             [['name'], 'string', 'max' => 140],
             [
                 ['category_id'],
@@ -99,13 +96,9 @@ class Item extends \yii\db\ActiveRecord
                 'targetClass' => Location::className(),
                 'targetAttribute' => ['location_id' => 'id']
             ],
-            [
-                ['owner_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => User::className(),
-                'targetAttribute' => ['owner_id' => 'id']
-            ]
+            [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
+            [['description'], 'string', 'min' => 2],
+            [['name'], 'string', 'max' => 50]
         ];
     }
 
@@ -129,6 +122,22 @@ class Item extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('item.attributes.updated_at', 'Updated At'),
             'min_renting_days' => Yii::t('item.attributes.min_renting_days', 'Min Renting Days'),
             'category_id' => Yii::t('item.attributes.category_id', 'Category'),
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'create' => ['owner_id', 'is_available', 'min_renting_days', 'category_id'],
+            'default' => [
+                'name',
+                'description',
+                'price_week',
+                'owner_id',
+                'currency_id',
+                'min_renting_days'
+            ],
+            'location' => ['location_id']
         ];
     }
 

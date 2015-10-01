@@ -54,7 +54,7 @@ class MuffinHelper extends Module
     /**
      * Method called before any suite tests run. Loads User fixture login user
      * to use in acceptance and functional tests.
-     * @param array $settings
+     * @return FactoryMuffin
      */
     public function init()
     {
@@ -65,10 +65,6 @@ class MuffinHelper extends Module
             Debug::debug($model);
         }
         static::$factory->setSaveMethod('save')->setDeleteMethod('delete');
-        return $this;
-    }
-
-    public function getFactory() {
         return self::$factory;
     }
 
