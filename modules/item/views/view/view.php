@@ -230,6 +230,11 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         'model' => $bookingForm,
                     ]) ?>
                 </div>
+                <div id="booking-is-being-created-message" class="col-md-3 card" style="display: none;margin-top:30px;">
+                    <div style="padding:15px;">
+                        <?= Yii::t("item.view.booking_widget.booking_is_being_created", "You're booking is being made, one second please.") ?>
+                    </div>
+                </div>
             </div>
         </div>
 

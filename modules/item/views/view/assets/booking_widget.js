@@ -56,21 +56,7 @@ var widgetFactory = function () {
     api.singleLoad = function () {
 
         window.singleIsLoaded = true;
-        $("#request-booking-btn").click(function (event) {
-            if (window.userIsGuest) {
-                event.preventDefault();
-                $('#bookingModal').modal('hide');
-                $('#loginModal').modal('show');
-            }
-            var val1 = $('#create-booking-datefrom').val();
-            var val2 = $('#create-booking-datefrom').val();
-            if (val1 == "" || val2 == "") {
-                event.preventDefault();
-                $("#create-booking-datefrom").datepicker("hide");
-                $("#create-booking-dateto").datepicker("hide");
-                $("#create-booking-datefrom").datepicker("show");
-            }
-        });
+
 
 
         $(document).on('pjax:beforeSend', function (xhr, options, settings) {
@@ -160,29 +146,24 @@ var widgetFactory = function () {
     };
 
     api.load = function () {
-        if (typeof redirect === "undefined") {
-            //if (typeof window.widget === "undefined") {
-            //    window.widget = widgetFactory();
-            //}
-            //$("#booking-widget .overlay").css("visibility", "hidden");
-            //jQuery(document).pjax("#pjax-create-booking-form a", "#pjax-create-booking-form", {
-            //    "push": true,
-            //    "replace": false,
-            //    "timeout": 2000,
-            //    "scrollTo": false
-            //});
-            //jQuery(document).on('submit', "#pjax-create-booking-form form['#create-booking-form']", function (event) {
-            //    console.log('event');
-            //    jQuery.pjax.submit(event, '#pjax-create-booking-form', {
-            //        "push": true,
-            //        "replace": false,
-            //        "timeout": 2000,
-            //        "scrollTo": false
-            //    });
-            //});
-            //$.pjax.defaults.maxCacheLength = 0;
-        }
+        $("#request-booking-btn").click(function (event) {
+            if (window.userIsGuest == 1) {
+                event.preventDefault();
+                $('#bookingModal').modal('hide');
+                $('#loginModal').modal('show');
+            }
+            var val1 = $('#create-booking-datefrom').val();
+            var val2 = $('#create-booking-datefrom').val();
+            if (val1 == "" || val2 == "") {
+                event.preventDefault();
+                $("#create-booking-datefrom").datepicker("hide");
+                $("#create-booking-dateto").datepicker("hide");
+                $("#create-booking-datefrom").datepicker("show");
+            }
+        });
     };
+
+    api.load();
 
     api.singleLoad();
 

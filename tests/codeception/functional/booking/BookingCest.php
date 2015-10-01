@@ -3,10 +3,12 @@ namespace app\tests\codeception\functional\booking;
 
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
+use app\tests\codeception\muffins\Booking;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\User;
 use functionalTester;
 use Faker\Factory as Faker;
+use League\FactoryMuffin\FactoryMuffin;
 use Yii;
 
 /**
@@ -17,10 +19,13 @@ use Yii;
  */
 class BookingCest {
 
-    protected static $fm = null;
+    /**
+     * @var FactoryMuffin
+     */
+    protected $fm = null;
 
     public function _before() {
-        static::$fm = (new MuffinHelper())->init()->getFactory();
+        $this->fm = (new MuffinHelper())->init()->getFactory();
     }
 
     public function makeBooking(FunctionalTester $I) {
@@ -34,42 +39,17 @@ class BookingCest {
         // calculate the number of days between these dates
         $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
 
-        // define the users and the item
-        $renter = static::$fm->create(User::class);
-        $owner = static::$fm->create(User::class);
-        $item = static::$fm->create(Item::class);
-        $item->owner_id = (int)$owner->id;
-        $item->save();
-        UserHelper::login($renter);
+        /**
+         * @var \booking\models\Booking $booking
+         */
+        $booking = $this->fm->create(Booking::class, ['item.owner_id' => 1]);
+//        UserHelper::login($booking->renter);
+//
+//        // check the generated table
+//        $I->amOnPage('/booking/' . $booking->id . '/confirm');
+//        $I->canSee('Secure Booking - Pay in 1 Minute');
+//        $I->canSee('Message to '.$booking->item->owner->profile->first_name);
 
-        $params = [
-            'create-booking' => [
-                'dateFrom' => date($format, $dateFrom),
-                'dateTo' => date($format, $dateTo),
-            ]
-        ];
-
-        // check the generated table
-        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params));
-        $I->canSee('Service fee');
-        $I->canSee($numDays . ' days');
-        $I->canSee('Request to Book');
-
-        // go to the action page of the form
-        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
-        $I->canSee('Review and book');
-
-        /*CreateBooking::widget([
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'currency_id' => 1,
-            'item_id' => $item->id
-        ])->run();
-        $I->seeRecord(\booking\models\base\Booking::class, [
-            'renter_id' => $renter->id,
-            'item_id' => $item->id,
-        ]);*/
-        // @todo
     }
 
 //    public function checkBookings($I){

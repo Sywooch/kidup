@@ -3,7 +3,7 @@
 namespace app\tests\codeception\_support;
 
 use AcceptanceTester;
-use app\modules\user\models\User;
+use \user\models\User;
 use FunctionalTester;
 use Yii;
 
@@ -12,10 +12,8 @@ class UserHelper
 
     /**
      * Login a user.
-     *
-     * @param User the user to login
      */
-    public static function login($user)
+    public static function login(User $user)
     {
         if (!Yii::$app->getUser()->getIsGuest()) {
             UserHelper::logout();

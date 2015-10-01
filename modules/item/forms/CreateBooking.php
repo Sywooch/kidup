@@ -110,6 +110,7 @@ class CreateBooking extends Model
                     }
                     return "<script>window.location = '{$redirect}';</script>";
                 }
+                return false;
             }
         }
 
