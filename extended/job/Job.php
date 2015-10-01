@@ -2,7 +2,7 @@
 
 namespace app\extended\job;
 
-use item\models\base\JobQueue;
+use app\models\base\JobQueue;
 use Aws;
 use yii\base\Exception;
 use yii\base\Model;
