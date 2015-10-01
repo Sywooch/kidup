@@ -3,6 +3,7 @@
 namespace booking\controllers;
 
 use app\extended\web\Controller;
+use app\jobs\SlackJob;
 use \booking\forms\Confirm;
 use \booking\models\Booking;
 use \booking\models\Payin;
@@ -64,7 +65,9 @@ class DefaultController extends Controller
             if ($model->save()) {
                 // booking is confirmed
                 if (YII_ENV == 'prod') {
-                    \Yii::$app->slack->send("New booking payin has been made (id) " . $id);
+                    new SlackJob([
+                        'message' => "New booking payin has been made, id: " . $id
+                    ]);
                 }
                 return $this->redirect(['/booking/' . $id]);
             }
