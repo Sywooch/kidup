@@ -22,9 +22,6 @@ class Controller extends \yii\web\Controller
                 return $this->redirect(str_replace('http://', 'https://', $r->absoluteUrl));
             }
         }
-        if(strpos(\Yii::$app->request->absoluteUrl, 'https') !== 0){
-            \yii\helpers\VarDumper::dump('no',10,true); exit();
-        }
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }

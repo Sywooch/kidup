@@ -118,6 +118,9 @@ class ViewController extends Controller
     {
         $this->noFooter = false;
         $booking = $this->load($id);
+        if($booking instanceof \yii\web\Response){
+            return $booking;
+        }
         if ($booking->renter_id == \Yii::$app->user->id) {
             $viewFile = '/renter/view';
         } else {

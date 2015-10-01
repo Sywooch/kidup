@@ -34,7 +34,8 @@ class MuffinHelper extends Module
      *
      * @return array list with all muffin classes
      */
-    public static function getClasses() {
+    public static function getClasses()
+    {
         return [
             Booking::class,
             Currency::class,
@@ -54,21 +55,22 @@ class MuffinHelper extends Module
     /**
      * Method called before any suite tests run. Loads User fixture login user
      * to use in acceptance and functional tests.
-     * @param array $settings
+     * @return FactoryMuffin
      */
     public function init()
     {
         static::$factory = new FactoryMuffin();
         foreach (self::getClasses() as $model) {
             $defs = $model::definitions();
-            static::$factory->define($model)->setDefinitions($defs);
-            Debug::debug($model);
+            if (method_exists($model, 'callback')) {
+                static::$factory->define($model)->setDefinitions($defs)->setCallback(function ($object, $saved) use ($model) {
+                    return $model::callback($object, $saved);
+                });
+            } else {
+                static::$factory->define($model)->setDefinitions($defs);
+            }
         }
         static::$factory->setSaveMethod('save')->setDeleteMethod('delete');
-        return $this;
-    }
-
-    public function getFactory() {
         return self::$factory;
     }
 

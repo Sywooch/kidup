@@ -85,7 +85,7 @@ class ViewController extends Controller
                 return $this->renderAjax('booking_widget', [
                     'model' => $model,
                     'item' => $item,
-                    'periods' => []
+                    'periods' => [],
                 ]);
             } else {
                 if ($attempt !== false){

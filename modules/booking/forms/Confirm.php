@@ -46,13 +46,7 @@ class Confirm extends Model
                 'compareValue' => true,
                 'message' => \Yii::t('booking.create.agree_to_terms', 'You must agree to the terms and conditions')
             ],
-            [
-                'owner_id',
-                'compare',
-                'compareValue' => \Yii::$app->user->id,
-                'operator' => '!=',
-                'message' => \Yii::t('booking.create.cannot_book_own_item', 'You cannot book your own item!')
-            ]
+
         ];
     }
 

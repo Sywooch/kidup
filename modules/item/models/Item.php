@@ -23,48 +23,6 @@ class Item extends \item\models\base\Item
     public $images;
     public $distance;
 
-    public function rules()
-    {
-        return array_merge(parent::rules(), [
-            [['name', 'description', 'price_week', 'min_renting_days'], 'required'],
-            [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
-            [['description'], 'string', 'min' => 5],
-            [['name'], 'string', 'max' => 50]
-        ]);
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('item.attribute.id', 'ID'),
-            'name' => Yii::t('item.attribute.name', 'Name'),
-            'description' => Yii::t('item.attribute.description', 'Description'),
-            'price_day' => Yii::t('item.attribute.price_day', 'Price Day'),
-            'price_week' => Yii::t('item.attribute.price_week', 'Price Week'),
-            'price_month' => Yii::t('item.attribute.price_month', 'Price Month'),
-            'owner_id' => Yii::t('item.attribute.owner_id', 'Owner'),
-            'currency_id' => Yii::t('item.attribute.currency_id', 'Currency'),
-            'is_available' => Yii::t('item.attribute.is_available', 'Available to book'),
-            'created_at' => Yii::t('item.attribute.created_at', 'Created At'),
-            'category_id' => Yii::t('item.attribute.category_id', 'Category')
-        ];
-    }
-
-    public function scenarios()
-    {
-        return [
-            'create' => ['owner_id', 'is_available', 'min_renting_days', 'category_id'],
-            'default' => [
-                'name',
-                'description',
-                'price_week',
-                'owner_id',
-                'currency_id',
-                'min_renting_days'
-            ],
-            'location' => ['location_id']
-        ];
-    }
 
     public function backup()
     {
@@ -83,7 +41,9 @@ class Item extends \item\models\base\Item
         if ($insert == true) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->currency_id = 1;
-            $this->owner_id = Yii::$app->user->id;
+            if(YII_ENV !== 'test'){
+                $this->owner_id = Yii::$app->user->id;
+            }
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
 

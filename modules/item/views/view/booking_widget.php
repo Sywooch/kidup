@@ -134,6 +134,11 @@ $this->registerJsVariables([
                             </tr>
                         </table>
                     <?php endif; ?>
+                    <?php if($model->hasErrors()){
+                        foreach ($model->errors as $attr => $error) {
+                            // echo $error[0];
+                        }
+                    } ?>
                     <?= Html::submitButton(\Yii::t("item.view.booking_widget.request_to_book_button",
                         'Request to Book'),
                         [
@@ -155,6 +160,4 @@ $this->registerJsVariables([
     </div>
 
 <?php Pjax::end(); ?>
-<div id="booking-is-being-created-message" style="display: none;">
-    <?= Yii::t("item.view.booking_widget.booking_is_being_created", "You're booking is being made, one second please.") ?>
-</div>
+

@@ -3,10 +3,17 @@ namespace app\tests\codeception\functional\booking;
 
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
+use app\tests\codeception\_support\YiiHelper;
+use app\tests\codeception\muffins\Booking;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\User;
+use booking\models\Payin;
+use Codeception\Util\Debug;
 use functionalTester;
 use Faker\Factory as Faker;
+use item\controllers\CronController;
+use League\FactoryMuffin\FactoryMuffin;
+use message\models\Message;
 use Yii;
 
 /**
@@ -17,13 +24,21 @@ use Yii;
  */
 class BookingCest {
 
-    protected static $fm = null;
+    /**
+     * @var FactoryMuffin
+     */
+    protected $fm = null;
 
     public function _before() {
-        static::$fm = (new MuffinHelper())->init()->getFactory();
+        $this->fm = (new MuffinHelper())->init();
     }
 
-    public function makeBooking(FunctionalTester $I) {
+    public function testBookingProcess(FunctionalTester $I){
+        $booking = $this->startBooking($I);
+        $this->completeBookingRequest($I, $booking);
+    }
+
+    private function startBooking(FunctionalTester $I) {
         $faker = Faker::create();
         $format = 'd-m-Y';
 
@@ -34,12 +49,11 @@ class BookingCest {
         // calculate the number of days between these dates
         $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
 
-        // define the users and the item
-        $renter = static::$fm->create(User::class);
-        $owner = static::$fm->create(User::class);
-        $item = static::$fm->create(Item::class);
-        $item->owner_id = (int)$owner->id;
-        $item->save();
+        /**
+         * @var \item\models\Item $item
+         */
+        $item = $this->fm->create(Item::class);
+        $renter = $this->fm->create(User::class);
         UserHelper::login($renter);
 
         $params = [
@@ -58,173 +72,41 @@ class BookingCest {
         // go to the action page of the form
         $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
         $I->canSee('Review and book');
-
-        /*CreateBooking::widget([
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'currency_id' => 1,
-            'item_id' => $item->id
-        ])->run();
-        $I->seeRecord(\booking\models\base\Booking::class, [
-            'renter_id' => $renter->id,
-            'item_id' => $item->id,
-        ]);*/
-        // @todo
+        return $item->bookings[0];
     }
 
-//    public function checkBookings($I){
-//        $this->booking = $this->makeBooking($I);
-//        $this->declineBooking($I, $this->booking);
-//
-//        $this->_before(null);
-//
-//        $this->booking = $this->makeBooking($I);
-//        $this->acceptBooking($I, $this->booking);
-//    }
-//
-//    /**
-//     * Create a booking.
-//     *
-//     * @param FunctionalTester $I
-//     * @return \app\modules\booking\models\Booking created booking
-//     */
-//    private function makeBooking($I)
-//    {
-//        // count the e-mails
-//        $emailCountBefore = count(YiiHelper::listEmails());
-//
-//        $dateFrom = date('d-m-Y', 1 * 24 * 60 * 60 + time());
-//        $dateTo = date('d-m-Y', 3 * 24 * 60 * 60 + time());
-//
-//        // load information
-//        $renterMessage = 'Because this is such an awesome item.';
-//        UserHelper::loginRenter();
-//        $this->renter = Yii::$app->getUser();
-//        $item = Item::findOne(2);
-//        $this->owner = User::findOne($item->owner_id);
-//
-//        // check the database
-//        $I->dontSeeRecord(Booking::class, [
-//            'item_id' => 2
-//        ]);
-//        $I->dontSeeRecord(Review::class, [
-//            'item_id' => 2
-//        ]);
-//        $I->dontSeeRecord(Payin::class, [
-//            'status' => 'init'
-//        ]);
-//        $I->dontSeeRecord(Message::class, [
-//            'receiver_user_id' => $this->owner->id,
-//            'sender_user_id' => $this->renter->id
-//        ]);
-//
-//        // go to the initial page to make a booking
-//        $I->amOnPage('/item/2');
-//
-//        // fill in the booking form
-//        $I->amGoingTo('try to fill in the booking form');
-//        $I->fillField('#create-booking-datefrom', $dateFrom);
-//        $I->fillField('#create-booking-dateto', $dateTo);
-//        // tests only have to click once, frontend users twice
-//        $I->click('Request to Book');
-//        $I->seeRecord(Booking::class, [
-//            'item_id' => 2,
-//            'status' => Booking::AWAITING_PAYMENT,
-//            'renter_id' => $this->renter->id
-//        ]);
-//
-//        // fake that a credit card payment was made
-//        $booking = Booking::find()
-//            ->where([
-//                'item_id' => 2,
-//                'renter_id' => $this->renter->id
-//            ])
-//            ->one();
-//        $I->amOnPage('/booking/' . $booking->id . '/confirm');
-//        $I->see('Review and book');
-//        $I->fillField('#confirm-booking-message', $renterMessage);
-//        $I->checkOption('#confirm-booking-rules');
-//        $I->click('Book now');
-//        $I->amOnPage('/booking/' . $booking->id);
-//
-//        // refresh data
-//        $booking = Booking::findOne($booking->id);
-//        $this->booking = $booking;
-//
-//        $I->seeRecord(Payin::class, [
-//            'id' => $booking->payin_id
-//        ]);
-//
-//        // check whether there was sent a message to the product owner
-//        $I->seeRecord(Message::class, [
-//            'receiver_user_id' => $this->owner->id,
-//            'sender_user_id' => $this->renter->id
-//        ]);
-//
-//        // there should be some e-mails in the queue
-//        $emailCountAfter = count(YiiHelper::listEmails());
-//        $emailDeltaCount = $emailCountAfter - $emailCountBefore;
-//        $I->assertTrue($emailDeltaCount == 1);
-//        return $booking;
-//    }
-//
-//    /**
-//     * Decline a booking.
-//     *
-//     * @param $I FunctionalTester
-//     * @param \app\modules\booking\models\Booking Booking to decline.
-//     */
-//    private function declineBooking($I, $booking)
-//    {
-//        UserHelper::loginOwner();
-//
-//        // execute the crons
-//        $cron = new CronController();
-//        $cron->minute();
-//
-//        // decline the booking
-//        $I->amOnPage('/booking/' . $booking->id . '/request');
-//        $I->see('Decline booking');
-//        $I->click('Decline booking');
-//        $I->see('Declined');
-//
-//        // refresh data
-//        $booking = Booking::findOne($booking->id);
-//        $this->booking = $booking;
-//
-//        // there must be a record
-//        $I->assertEquals(Booking::DECLINED, $booking->status);
-//    }
-//
-//    /**
-//     * Accept a booking.
-//     *
-//     * @param $I FunctionalTester
-//     * @param \app\modules\booking\models\Booking Booking to accept.
-//     */
-//    private function acceptBooking($I, $booking)
-//    {
-//        UserHelper::loginOwner();
-//
-//        // execute the crons
-//        $cron = new CronController();
-//        $cron->minute();
-//
-//        // accept the booking
-//        $I->amOnPage('/booking/' . $booking->id . '/request');
-//        $I->see('Accept booking');
-//        $I->click('Accept booking');
-//        $I->see('Accepted');
-//
-//        // refresh data
-//        $booking = Booking::findOne($booking->id);
-//        $this->booking = $booking;
-//
-//        // there must be a record
-//        $I->assertEquals(Booking::ACCEPTED, $booking->status);
-//    }
+    private function completeBookingRequest(FunctionalTester $I, \booking\models\Booking $booking) {
+        UserHelper::login($booking->renter);
 
+        // check the generated table
+        $I->amOnPage('/booking/' . $booking->id . '/confirm');
+        $I->canSee('Secure Booking - Pay in 1 Minute');
+        $I->canSee('Message to '.$booking->item->owner->profile->first_name);
+        $I->see('Review and book');
+        $I->fillField('#confirm-booking-message', 'testmessage');
+        $I->checkOption('#confirm-booking-rules');
+        $emailCountBefore = count(YiiHelper::listEmails());
+        $I->click('Book now');
 
+        $booking->refresh();
+        $I->amOnPage('/booking/' . $booking->id);
+        $I->seeRecord(Payin::class, [
+            'id' => $booking->payin_id
+        ]);
+
+        // check whether there was sent a message to the product owner
+        $I->seeRecord(Message::class, [
+            'receiver_user_id' => $booking->item->owner_id,
+            'sender_user_id' => $booking->renter_id,
+            'message' => 'testmessage'
+        ]);
+
+        // there should be some e-mails in the queue
+        $emailCountAfter = count(YiiHelper::listEmails());
+        $emailDeltaCount = $emailCountAfter - $emailCountBefore;
+        // new conversation mail, renter confirmation, booker request email
+        $I->assertEquals($emailDeltaCount, 3);
+    }
 }
 
 ?>

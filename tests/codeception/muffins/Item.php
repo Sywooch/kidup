@@ -1,11 +1,11 @@
 <?php
 namespace app\tests\codeception\muffins;
 
+use app\tests\codeception\_support\MuffinHelper;
 use Faker\Factory as Faker;
 
 class Item extends \item\models\Item
 {
-
     public function definitions()
     {
         $faker = Faker::create();
@@ -18,9 +18,9 @@ class Item extends \item\models\Item
             'price_day' => $priceDay,
             'price_week' => $priceWeek,
             'price_month' => $priceMonth,
-            'owner_id' => 'factory|'.User::class,
+            'owner_id' => 'factory|'.User::className(),
             'currency_id' => 1,
-            'location_id' => 'factory|'.Location::class,
+            'location_id' => 'factory|'.Location::className(),
             'is_available' => 1,
             'category_id' => $faker->numberBetween(2, 6),
             'created_at' => $faker->dateTimeBetween('- 20 days', '- 10 days')->getTimestamp(),
