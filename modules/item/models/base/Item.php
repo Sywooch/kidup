@@ -2,11 +2,11 @@
 
 namespace item\models\base;
 
-use booking\models\base\Booking;
+use booking\models\Booking;
 use item\models\Category;
-use review\models\base\Review;
+use review\models\Review;
 use user\models\base\Currency;
-use user\models\base\User;
+use user\models\User;
 use Yii;
 
 /**

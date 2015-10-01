@@ -24,7 +24,7 @@ class ItemCest {
     private $fm = null;
 
     public function _before() {
-        $this->fm = (new MuffinHelper())->init()->getFactory();
+        $this->fm = (new MuffinHelper())->init();
     }
 
     public function makeBooking(FunctionalTester $I) {
@@ -38,13 +38,11 @@ class ItemCest {
         // calculate the number of days between these dates
         $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
 
-        // define the users and the item
-        $renter = $this->fm->create(User::class);
-        $owner = $this->fm->create(User::class);
+        /**
+         * @var \item\models\Item $item
+         */
         $item = $this->fm->create(Item::class);
-        $item->owner_id = (int)$owner->id;
-        $item->save();
-        UserHelper::login($renter);
+        UserHelper::login($item->owner);
 
         $params = [
             'create-booking' => [
@@ -63,7 +61,6 @@ class ItemCest {
         $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
         $I->canSee('Review and book');
     }
-
 }
 
 ?>
