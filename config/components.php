@@ -29,7 +29,7 @@ $components = [
             'host' => 'smtp.sendgrid.net',
             'username' => $keys['sendgrid_user'],
             'password' => $keys['sendgrid_password'],
-            'port' => '587',
+            'port' => '25',
 //            'encryption' => 'tls',
         ],
         'useFileTransport' => YII_ENV == 'dev' ? true : false,
