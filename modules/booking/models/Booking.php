@@ -127,10 +127,6 @@ class Booking extends base\Booking
         return false;
     }
 
-    public function getConversation()
-    {
-        return $this->hasOne(\message\models\base\Conversation::className(), ['booking_id' => 'id']);
-    }
 
     public function getConversationId()
     {
@@ -154,20 +150,6 @@ class Booking extends base\Booking
             $this->status = self::PENDING;
             $this->save();
         }
-    }
-
-    /**
-     * Make sure all the correct emails are send if the status changes
-     * @param bool $insert
-     * @return bool
-     */
-    public function beforeSave($insert)
-    {
-        if ($this->isAttributeChanged('status')) {
-
-        }
-
-        return parent::beforeSave($insert);
     }
 
     public function startConversation($message)

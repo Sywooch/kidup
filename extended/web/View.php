@@ -246,7 +246,7 @@ JS;
 
     private function getHashedFileName($file){
         return Cache::data('assets.hashed_file_name.'.$file, function() use ($file){
-            return Yii::$aliases['@web'] .$file."?_h=".hash_file('md5', Yii::$aliases['@app'] . '/web/'.$file);
+            return Yii::$aliases['@web'] .$file."?_h=".hash_file('md5', Yii::$aliases['@app'] . 'web/'.$file);
         }, 5*60);
     }
 }
