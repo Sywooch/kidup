@@ -23,6 +23,7 @@ class UserHelper
         Yii::$app->session->set('lang', 'en');
     }
 
+
     /**
      * Logout a user.
      *

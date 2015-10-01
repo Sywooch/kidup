@@ -34,7 +34,8 @@ class MuffinHelper extends Module
      *
      * @return array list with all muffin classes
      */
-    public static function getClasses() {
+    public static function getClasses()
+    {
         return [
             Booking::class,
             Currency::class,
@@ -61,8 +62,13 @@ class MuffinHelper extends Module
         static::$factory = new FactoryMuffin();
         foreach (self::getClasses() as $model) {
             $defs = $model::definitions();
-            static::$factory->define($model)->setDefinitions($defs);
-            Debug::debug($model);
+            if (method_exists($model, 'callback')) {
+                static::$factory->define($model)->setDefinitions($defs)->setCallback(function ($object, $saved) use ($model) {
+                    return $model::callback($object, $saved);
+                });
+            } else {
+                static::$factory->define($model)->setDefinitions($defs);
+            }
         }
         static::$factory->setSaveMethod('save')->setDeleteMethod('delete');
         return self::$factory;

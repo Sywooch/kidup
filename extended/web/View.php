@@ -2,6 +2,7 @@
 namespace app\extended\web;
 
 use app\assets\Package;
+use app\components\Cache;
 use League\Flysystem\Filesystem;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -204,15 +205,17 @@ class View extends \yii\web\View
             $filesystem->update($packagePath, Json::encode($packageAssets));
         }
 
+
+
         if($this->assetPackage !== Package::ADMIN){
-            $cssLines = [Html::cssFile(Yii::$aliases['@web'] . "/packages/common/common.css")];
+            $cssLines = [Html::cssFile($this->getHashedFileName( "/packages/common/common.css"))];
         }else{
             $cssLines = [];
         }
-        $jsLines = [Html::jsFile(Yii::$aliases['@web'] . "/packages/common/common.js")];
+        $jsLines = [Html::jsFile($this->getHashedFileName( "/packages/common/common.js"))];
 
-        $jsLines[] = Html::jsFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.js");
-        $cssLines[] = Html::cssFile(Yii::$aliases['@web'] . "/packages/{$this->assetPackage}/{$this->assetPackage}.css");
+        $jsLines[] = Html::jsFile($this->getHashedFileName( "/packages/{$this->assetPackage}/{$this->assetPackage}.js"));
+        $cssLines[] = Html::cssFile($this->getHashedFileName( "/packages/{$this->assetPackage}/{$this->assetPackage}.css"));
 
         if ($type == 'js') {
             return ArrayHelper::merge($lines,$jsLines);
@@ -239,5 +242,11 @@ $varName = $value;
 JS;
         }
         $this->registerJs($js);
+    }
+
+    private function getHashedFileName($file){
+        return Cache::data('assets.hashed_file_name.'.$file, function() use ($file){
+            return Yii::$aliases['@web'] .$file."?_h=".hash_file('md5', Yii::$aliases['@app'] . '/web/'.$file);
+        }, 5*60);
     }
 }

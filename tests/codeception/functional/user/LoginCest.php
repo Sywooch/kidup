@@ -19,33 +19,42 @@ class LoginCest
 {
 
     /**
-     * Test whether login works.
-     *
-     * @param functionalTester $I
+     * @var FactoryMuffin
      */
-    public function checkLogin(functionalTester $I)
-    {
-        /**
-         * @var FactoryMuffin $fm
-         */
-        $fm = (new MuffinHelper())->init()->getFactory();
-        $user = $fm->create(User::className());
-        $items = $fm->seed(5, Item::className(), ['owner_id' => $user->id]);
-        Debug::debug($items[0]->owner_id);
-//        $I->assertTrue($user->id === $items[0]->owner_id);
+    protected $fm;
+    protected $user;
 
-        $I->wantTo('ensure that I can login');
-        UserHelper::login($user);
-        $I->assertFalse(\Yii::$app->getUser()->getIsGuest(), 'I should not be a guest now');
+    public function _before() {
+        $this->fm = (new MuffinHelper())->init();
+        $this->user = $this->fm->create(User::class, [
+            'password_hash' => \Yii::$app->security->generatePasswordHash('testtest')
+        ]);
     }
 
-//    public function checkLogout(functionalTester $I){
-//        $I->amOnPage('/home');
-//        $I->canSee('Log Out');
-//        $I->click('Log Out');
-//        $I->amOnPage('/home');
-//        $I->dontSee('Log Out');
-//    }
+    public function checkLogin(functionalTester $I)
+    {
+        UserHelper::logout();
+
+        $I->wantTo('ensure that I can login trough the login page');
+        UserHelper::logout();
+        $I->assertTrue(\Yii::$app->getUser()->getIsGuest(), 'I should be a guest now');
+        $I->amOnPage('/user/login');
+        $I->see('Login to KidUp');
+        $I->fillField("login-form[login]", $this->user->email);
+        $I->fillField("login-form[password]", 'testtest');
+        $I->see("Sign in");
+        $I->click("Sign in");
+        $I->assertTrue(\Yii::$app->getUser()->getIsGuest(), 'I should not be a guest now');
+    }
+
+    public function checkLogout(functionalTester $I){
+        UserHelper::login($this->user);
+        $I->amOnPage('/home');
+        $I->canSee('Log Out');
+        $I->click('Log Out');
+        $I->amOnPage('/home');
+        $I->dontSee('Log Out');
+    }
 }
 
 ?>

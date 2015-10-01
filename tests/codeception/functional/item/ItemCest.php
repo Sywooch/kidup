@@ -23,43 +23,9 @@ class ItemCest {
      */
     private $fm = null;
 
-    public function _before() {
+    public function _before()
+    {
         $this->fm = (new MuffinHelper())->init();
-    }
-
-    public function makeBooking(FunctionalTester $I) {
-        $faker = Faker::create();
-        $format = 'd-m-Y';
-
-        // generate random dates
-        $dateFrom = $faker->dateTimeBetween('+2 days', '+3 days')->getTimestamp();
-        $dateTo = $faker->dateTimeBetween('+5 days', '+8 days')->getTimestamp();
-
-        // calculate the number of days between these dates
-        $numDays = floor($dateTo / 3600 / 24) - floor($dateFrom / 3600 / 24);
-
-        /**
-         * @var \item\models\Item $item
-         */
-        $item = $this->fm->create(Item::class);
-        UserHelper::login($item->owner);
-
-        $params = [
-            'create-booking' => [
-                'dateFrom' => date($format, $dateFrom),
-                'dateTo' => date($format, $dateTo),
-            ]
-        ];
-
-        // check the generated table
-        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params));
-        $I->canSee('Service fee');
-        $I->canSee($numDays . ' days');
-        $I->canSee('Request to Book');
-
-        // go to the action page of the form
-        $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
-        $I->canSee('Review and book');
     }
 }
 

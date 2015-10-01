@@ -9,6 +9,7 @@ use app\tests\codeception\muffins\Conversation;
 use app\tests\codeception\muffins\Message;
 use app\tests\codeception\muffins\User;
 use FunctionalTester;
+use League\FactoryMuffin\FactoryMuffin;
 
 /**
  * Functional test for the message module.
@@ -18,11 +19,13 @@ use FunctionalTester;
  */
 class MessageCest
 {
-
-    protected static $fm = null;
+    /**
+     * @var FactoryMuffin
+     */
+    protected $fm;
 
     public function _before() {
-        static::$fm = (new MuffinHelper())->init()->getFactory();
+        $this->fm = (new MuffinHelper())->init();
     }
 
     /**
@@ -32,8 +35,8 @@ class MessageCest
      */
     public function testBadgeCount(FunctionalTester $I)
     {
-        $initiater = static::$fm->create(User::class);
-        $receiver = static::$fm->create(User::class);
+        $initiater = $this->fm->create(User::class);
+        $receiver = $this->fm->create(User::class);
 
         $I->wantTo('ensure that the badge count is displayed correctly on the home page.');
         UserHelper::login($receiver);
@@ -41,10 +44,10 @@ class MessageCest
         $I->dontSeeElement('.message .badge');
 
         // now insert a fake message
-        $conversation = static::$fm->create(Conversation::class);
+        $conversation = $this->fm->create(Conversation::class);
         $conversation->initiater_user_id = $initiater->id;
         $conversation->target_user_id = $receiver->id;
-        $message = static::$fm->create(Message::class);
+        $message = $this->fm->create(Message::class);
         $message->conversation_id = $conversation->id;
         $message->sender_user_id = $initiater->id;
         $message->receiver_user_id = $receiver->id;

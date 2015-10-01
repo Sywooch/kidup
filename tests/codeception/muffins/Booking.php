@@ -1,6 +1,7 @@
 <?php
 namespace app\tests\codeception\muffins;
 
+use Codeception\Util\Debug;
 use Faker\Factory as Faker;
 
 class Booking extends \booking\models\Booking
@@ -34,4 +35,8 @@ class Booking extends \booking\models\Booking
         ];
     }
 
+    public static function callback($object, $saved){
+        Debug::debug($object);
+        Debug::debug($saved);
+    }
 }
