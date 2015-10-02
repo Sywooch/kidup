@@ -58,7 +58,6 @@ use yii\helpers\Html;
             </div>
         </div>
 
-
         <?php ActiveForm::end(); ?>
     </div>
 </div>

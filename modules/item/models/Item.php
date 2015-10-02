@@ -190,7 +190,7 @@ class Item extends \item\models\base\Item
             $images = [];
             $count = count($itemImages);
             foreach ($itemImages as $i => $img) {
-                if(count($itemImages) == 1){
+                if($count == 1 || ($i == 0 && $count > 2)){
                     $w = 650;
                     $h = 300;
                 }else{

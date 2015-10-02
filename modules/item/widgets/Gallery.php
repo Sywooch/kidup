@@ -97,9 +97,9 @@ class Gallery extends Widget
                 $prepend = $this->renderItem($item);
                 $prepend = str_replace('w=250', 'w=650', $prepend);
                 $prepend = str_replace('h=200', 'h=300', $prepend);
+            }else{
+                $items[] = $this->renderItem($item);
             }
-
-            $items[] = $this->renderItem($item);
         }
         return $prepend.Html::tag('div', implode("\n", array_filter($items)), $this->options);
     }
