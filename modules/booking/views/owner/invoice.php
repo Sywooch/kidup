@@ -93,7 +93,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.invoice.vat", "TAX") ?>
+                                    <?= Yii::t("booking.invoice.vat", "VAT") ?>
                                     <b class="pull-right">
                                         <?= round($booking->amount_payout_fee_tax, 2) ?> DKK
                                     </b>

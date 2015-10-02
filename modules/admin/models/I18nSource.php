@@ -26,7 +26,7 @@ class I18nSource extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'category', 'message'], 'required'],
+            [['category', 'message'], 'required'],
             [['category', 'message'], 'string'],
             [['id'], 'integer'],
             [['category'], 'string', 'max' => 128],
@@ -37,5 +37,13 @@ class I18nSource extends \yii\db\ActiveRecord
 
     public function getI18nMessages(){
         return $this->hasMany(I18nMessage::className(), ['id' => 'id']);
+    }
+
+    public static function getDb(){
+        if(YII_CONSOLE){
+            return Yii::$app->dbaws;
+        }else{
+            return Yii::$app->db;
+        }
     }
 }

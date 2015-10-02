@@ -35,34 +35,34 @@ class MessageCest
      */
     public function testBadgeCount(FunctionalTester $I)
     {
-        $initiater = $this->fm->create(User::class);
-        $receiver = $this->fm->create(User::class);
+        /**
+         * @var \message\models\Conversation $conversation
+         */
+        $conversation = $this->fm->create(Conversation::class);
 
         $I->wantTo('ensure that the badge count is displayed correctly on the home page.');
-        UserHelper::login($receiver);
+        UserHelper::login($conversation->targetUser);
         $I->amOnPage('/');
         $I->dontSeeElement('.message .badge');
 
         // now insert a fake message
-        $conversation = $this->fm->create(Conversation::class);
-        $conversation->initiater_user_id = $initiater->id;
-        $conversation->target_user_id = $receiver->id;
-        $message = $this->fm->create(Message::class);
-        $message->conversation_id = $conversation->id;
-        $message->sender_user_id = $initiater->id;
-        $message->receiver_user_id = $receiver->id;
-        $message->save();
+        $message = $this->fm->create(Message::class,[
+            'conversation_id' => $conversation->id,
+            'receiver_user_id'=> $conversation->target_user_id
+        ]);
+
         $I->amOnPage('/');
         $I->canSeeElement('.message .badge');
         $I->canSee('1', '.message .badge');
 
-        // now set the message to read
+        // now set the message to read by going to the inbox
+
+        $I->amOnPage('/inbox/'.$conversation->id);
         $message->read_by_receiver = true;
         $message->save();
         $I->amOnPage('/');
         $I->dontSeeElement('.message .badge');
     }
-
 }
 
 ?>

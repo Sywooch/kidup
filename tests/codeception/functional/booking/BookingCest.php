@@ -4,11 +4,9 @@ namespace app\tests\codeception\functional\booking;
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
 use app\tests\codeception\_support\YiiHelper;
-use app\tests\codeception\muffins\Booking;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\User;
 use booking\models\Payin;
-use Codeception\Util\Debug;
 use functionalTester;
 use Faker\Factory as Faker;
 use item\controllers\CronController;
@@ -108,5 +106,4 @@ class BookingCest {
         $I->assertEquals($emailDeltaCount, 3);
     }
 }
-
 ?>

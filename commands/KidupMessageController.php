@@ -9,6 +9,7 @@ use admin\models\I18nMessage;
 use admin\models\I18nSource;
 use Yii;
 use yii\console\Exception;
+use yii\helpers\Console;
 use yii\helpers\FileHelper;
 
 /**
@@ -81,15 +82,85 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
         $this->saveMessagesToDb(
             $messages,
-            $db,
-            $sourceMessageTable,
-            $messageTable,
-            $config['removeUnused'],
-            $config['languages'],
-            $config['markUnused']
+            $db
         );
-
     }
+
+    /**
+     * Saves messages to database
+     *
+     * @param array $messages
+     * @param \yii\db\Connection $db
+     */
+    protected function saveMessagesToDb($messages, $db)
+    {
+        $hasErrors = false;
+        foreach ($messages as $category => $categoryMessages) {
+            foreach ($categoryMessages as $i => $m) {
+                if ($m !== $categoryMessages[0]) {
+                    if ($category == '' || $category == ' ') {
+                        unset($messages[$category]);
+                        continue;
+                    }
+                    $uses = implode(' ', $categoryMessages);
+                    $coloredFileName = Console::ansiFormat("'$category' '{$uses}'", [Console::FG_RED]);
+                    $this->stderr("This identifier is used twice with different messages: $coloredFileName");
+                    $this->stdout(PHP_EOL);
+                    $this->stdout(PHP_EOL);
+                    $hasErrors = true;
+                }
+            }
+        }
+        if ($hasErrors) {
+            exit();
+        }
+        $sources = I18nSource::find()->indexBy('category')->all();
+        $newMessages = 0;
+        $updatedMessages = 0;
+        foreach ($messages as $category => $categoryMessages) {
+            if (!isset($sources[$category])) {
+                $s = new I18nSource();
+                $s->setAttributes([
+                    'category' => $category,
+                    'message' => $categoryMessages[0]
+                ]);
+                $s->save();
+                foreach (['da-DK', 'en-US'] as $lang) {
+                    $m = new I18nMessage();
+                    $m->setAttributes([
+                        'id' => $s->id,
+                        'language' => $lang,
+                        'translation' => null
+                    ]);
+                    $m->save();
+                }
+
+                $newMessages++;
+                $sources[$category] = $s;
+            } elseif ($sources[$category]->message !== $categoryMessages[0]) {
+                // default message updated
+                $sources[$category]->message = $categoryMessages[0];
+                $sources[$category]->save();
+                $updatedMessages++;
+            }
+
+            foreach (['da-DK', 'en-US'] as $lang) {
+                $m = I18nMessage::find()->where(['language' => $lang, 'id' => $sources[$category]->id])->count();
+                if ($m == 0) {
+                    $m = new I18nMessage();
+                    $m->setAttributes([
+                        'id' => $sources[$category]->id,
+                        'language' => $lang,
+                        'translation' => null
+                    ]);
+                    $m->save();
+                }
+            }
+        }
+        $this->stdout("{$newMessages} new inserted...");
+        $this->stdout("{$updatedMessages} defaults updated...");
+    }
+
 
     public function getDbCategories()
     {
@@ -108,6 +179,10 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $features = Feature::find()->all();
         foreach ($features as $feature) {
             $lower = str_replace(" ", '_', strtolower($feature->name));
+            if ($lower == 'size') {
+                // baby and children cloth sizes
+                $lower = 'size_' . strtolower(explode(" ", $feature->description)[0]);
+            }
             $res['item.feature.' . $lower . '_name'][] = $feature->name;
             $res['item.feature.' . $lower . '_description'][] = $feature->description;
         }
@@ -122,22 +197,4 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         return $res;
     }
 
-    public function actionFilesToDb()
-    {
-        $dir = scandir(Yii::$aliases['@app'] . '/messages/da-DK/');
-        foreach ($dir as $file) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            $messages = include Yii::$aliases['@app'] . '/messages/da-DK/' . $file;
-            foreach ($messages as $orig => $danish) {
-                $source = I18nSource::find()->where(['message' => $orig])->all();
-                foreach ($source as $s) {
-                    $m = I18nMessage::find()->where(['id' => $s->id])->one();
-                    $m->translation = $danish;
-                    $m->save();
-                }
-            }
-        }
-    }
 }

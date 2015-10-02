@@ -47,7 +47,7 @@ class Profile extends base\Profile
     {
         return array_merge(parent::attributeLabels(), [
             'user_id' => Yii::t('profile.attributes.user_id', 'User'),
-            'description' => Yii::t('profile.attributes.description', 'Profile description'),
+            'description' => Yii::t('profile.attributes.description', 'Description'),
             'img' => Yii::t('profile.attributes.image', 'Profile Image'),
             'phone_country' => Yii::t('profile.attributes.phone_country', 'Phone Country'),
             'phone_number' => Yii::t('profile.attributes.phone_number', 'Phone Number'),

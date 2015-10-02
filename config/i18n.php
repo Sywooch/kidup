@@ -60,7 +60,7 @@ return [
     // 'db' output format is for saving messages to database.
     'format' => 'db',
     // Connection component to use. Optional.
-    'db' => 'db2',
+    'db' => 'dbaws',
     // Custom source message table. Optional.
     'sourceMessageTable' => 'i18n_source',
     // Custom name for translation message table. Optional.

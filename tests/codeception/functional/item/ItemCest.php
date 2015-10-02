@@ -18,15 +18,6 @@ use Yii;
  */
 class ItemCest {
 
-    /**
-     * @var FactoryMuffin
-     */
-    private $fm = null;
-
-    public function _before()
-    {
-        $this->fm = (new MuffinHelper())->init();
-    }
 }
 
 ?>
