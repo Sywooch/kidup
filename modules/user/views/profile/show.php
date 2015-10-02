@@ -32,23 +32,30 @@ $this->assetPackage = \app\assets\Package::USER;
                         </div>
                         <h4><?= Yii::t("user.view.verification_header", "Verification") ?></h4>
 
-                        <?php $verified = function ($type, $icon = '<i class="fa fa-check"></i>') {
+                        <?php
+                        $emailVerified = ImageHelper::image('kidup/user/verification/email.png', ['w' => 45]);
+                        $fbVerified = ImageHelper::image('kidup/user/verification/facebook.png', ['w' => 45]);
+                        $phoneVerified = ImageHelper::image('kidup/user/verification/phone.png', ['w' => 45]);
+                        $verified = function ($type, $icon) {
                             return
-                                '<div class="row verifyEntity">
-                            <div class="col-xs-2">
+                                '<div class="col-md-4 verifyEntity">
                                 ' . $icon . '
-                            </div>
-                            <div class="col-xs-8 entity">
+                            <div class="entity">
                                 ' . $type . '
                             </div>
                         </div>';
                         } ?>
-                        <?= $profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp ? $verified(
-                            \Yii::t('user.view.kidup_ambassador', 'KidUp Ambassador')):''?>
-                        <?= $fbVerified ? $verified('Facebook') : '' ?>
-                        <?= $twVerified ? $verified('Twitter') : '' ?>
-                        <?= $profile->email_verified == 1 ? $verified(\Yii::t('user.view.email', 'Email')) : '' ?>
-                        <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user.view.phone', 'Phone')) : '' ?>
+                        <?php if ($profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp): ?>
+                                <?= \Yii::t('user.view.kidup_ambassador', 'KidUp Ambassador') ?>
+                        <?php endif; ?>
+                        <div class="row">
+                            <?= $fbVerified ? $verified('Facebook', $fbVerified) : '' ?>
+                            <?= $profile->email_verified == 1 ? $verified(\Yii::t('user.view.email', 'Email'),
+                                $emailVerified) : '' ?>
+                            <?= $profile->phone_verified == 1 ? $verified(\Yii::t('user.view.phone', 'Phone'),
+                                $phoneVerified) : '' ?>
+                        </div>
+
                     </div>
 
                 </div>
@@ -60,11 +67,12 @@ $this->assetPackage = \app\assets\Package::USER;
                     <div class="pull-right">
                         <?php
                         if ($profile->user->created_at < Carbon::createFromDate(2015, 12, 30)->timestamp) {
-                            echo ImageHelper::image('kidup/user/ambassador.png', ['w' => 150])."<br>";
+                            echo ImageHelper::image('kidup/user/ambassador.png', ['w' => 150]) . "<br>";
                         } ?>
                     </div>
                     <?= Yii::t("user.view.header_hi_i_am", "Hi, I'm {0}!", [
-                        $profile->first_name ? $profile->first_name : \Yii::t('user.view.deafult_name_on_empty_profile_name', 'a KidUpper')
+                        $profile->first_name ? $profile->first_name : \Yii::t('user.view.deafult_name_on_empty_profile_name',
+                            'a KidUpper')
                     ]) ?>
 
                     <br/>
@@ -101,9 +109,9 @@ $this->assetPackage = \app\assets\Package::USER;
         <div class="hidden-xs row">
             <div class="col-md-10 col-md-offset-1">
                 <h3>
-                    <?= Yii::t("user.view.products_from_user", "Products from {0}", [
+                    <?= count($items) > 0 ? Yii::t("user.view.products_from_user", "Products from {0}", [
                         $profile->first_name
-                    ]) ?>
+                    ]) : '' ?>
                 </h3>
 
                 <div class="row">

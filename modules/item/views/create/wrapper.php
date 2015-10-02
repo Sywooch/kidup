@@ -67,7 +67,7 @@ $this->assetPackage = \app\assets\Package::ITEM_CREATE;
 
             if ($item->is_available == 1) {
                 $items[] = [
-                    'url' => '@web/item/create/edit-publish?id=' . $item->id,
+                    'url' => '@web/item/create/unpublish?id=' . $item->id,
                     'label' => \Yii::t('item.create.menu.unpublish_item', 'Unpublish item'),
                     'active' => $page == 'unpublish'
                 ];
