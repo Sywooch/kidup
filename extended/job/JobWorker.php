@@ -21,9 +21,9 @@ class JobWorker
                 'jobData' => $jobData['job_data'],
             ]);
 
-            $res = $job->handle();
-
-            if ($res == false) {
+            try {
+                $job->handle();
+            } catch (\Exception $e) {
                 $jobQueue->attempts++;
                 $jobQueue->execution_time = time() + $job->retryPeriod;
                 if ($jobQueue->attempts >= $job->maxAttempts) {
@@ -32,26 +32,44 @@ class JobWorker
                 $errors = Json::encode($job->getErrors());
                 \Yii::error("Job failed: {$jobData['job_class']} {$errors}");
                 $jobQueue->save();
-            } else {
-                $jobQueue->delete();
             }
+
+            $jobQueue->delete();
         }
         return null;
     }
 
-    private function getServerCpu(){
+    public static function shellStart()
+    {
+        $shellScript = shell_exec("ps aux | grep 'php yii job/worker'");
+        $found = false;
+
+        foreach (explode(PHP_EOL, $shellScript) as $line) {
+            if (strpos($line, 'grep') == false && strlen($line) > 10) {
+                $found = true;
+            }
+        }
+        if (!$found) {
+            return shell_exec("cd " . \Yii::$aliases['@app'] . " && nohup php yii job/worker > /dev/null 2>&1 &");
+        }
+        return false;
+    }
+
+    private function getServerCpu()
+    {
         $load = sys_getloadavg();
         return $load[0];
     }
 
-    private function getServerMemory(){
+    private function getServerMemory()
+    {
         $free = shell_exec('free');
         $free = (string)trim($free);
         $free_arr = explode("\n", $free);
         $mem = explode(" ", $free_arr[1]);
         $mem = array_filter($mem);
         $mem = array_merge($mem);
-        $memory_usage = $mem[2]/$mem[1]*100;
+        $memory_usage = $mem[2] / $mem[1] * 100;
 
         return $memory_usage;
     }

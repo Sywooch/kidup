@@ -8,14 +8,14 @@ use yii\console\Controller;
 
 class JobController extends Controller
 {
+    /**
+     * The actual worker, managed by the minute cron which checks every min if its still up, and starts it if its not
+     */
     public function actionWorker()
     {
         while (true) {
-            $performedJob = @(new \app\extended\job\JobWorker())->doJob();
-            if ($performedJob == null) {
-                sleep(2);
-            }
-            echo 1;
+            @(new \app\extended\job\JobWorker())->doJob();
+            sleep(1);
         }
     }
 
@@ -24,20 +24,5 @@ class JobController extends Controller
         new SlackJob([
             'message' => 'test from terminal',
         ]);
-    }
-
-    public function actionShellStart()
-    {
-        $shellScript = shell_exec("ps aux | grep 'php yii job/worker'");
-        $found = false;
-
-        foreach (explode(PHP_EOL, $shellScript) as $line) {
-            if(strpos($line, 'grep') < 0 && strlen($line) > 10){
-                $found = true;
-            }
-        }
-        if(!$found){
-            $res = shell_exec("cd ".Yii::$aliases['@app']." && php yii job/worker > /dev/null 2>&1");
-        }
     }
 }

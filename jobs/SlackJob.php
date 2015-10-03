@@ -7,8 +7,6 @@ use yii\helpers\Json;
 
 class SlackJob extends Job{
 
-    public $maxAttempts = 3;
-
     /**
      * @var $message
      * Message to be sent to slack
@@ -16,6 +14,12 @@ class SlackJob extends Job{
     public $message;
 
     private $client;
+
+    public function init(){
+        $this->maxAttempts = 2000;
+        $this->retryPeriod = 10;
+        parent::init();
+    }
 
     public function handle(){
         $settings = [
