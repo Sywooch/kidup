@@ -17,7 +17,7 @@ $this->title = Yii::$app->name . ' - ' . \Yii::t('kidup.error.title', 'Error');
         </div>
         <div class="col-md-8">
             <h1 style="color:black">
-                <?= Yii::t("kidup.error.title", "Oh no! An error happened") ?>
+                <?= Yii::t("kidup.error.header", "Oh no! An error happened") ?>
             </h1>
 
             <span style="font-size: 16px">

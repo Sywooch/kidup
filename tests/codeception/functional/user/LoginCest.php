@@ -2,6 +2,7 @@
 namespace app\tests\codeception\functional\user;
 
 use app\tests\codeception\_support\MuffinHelper;
+use app\tests\codeception\_support\MuffinTrait;
 use app\tests\codeception\_support\UserHelper;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\User;
@@ -17,12 +18,11 @@ use League\FactoryMuffin\FactoryMuffin;
  */
 class LoginCest
 {
-
+    protected $user;
     /**
      * @var FactoryMuffin
      */
-    protected $fm;
-    protected $user;
+    protected $fm = null;
 
     public function _before() {
         $this->fm = (new MuffinHelper())->init();
@@ -33,8 +33,6 @@ class LoginCest
 
     public function checkLogin(functionalTester $I)
     {
-        UserHelper::logout();
-
         $I->wantTo('ensure that I can login trough the login page');
         UserHelper::logout();
         $I->assertTrue(\Yii::$app->getUser()->getIsGuest(), 'I should be a guest now');

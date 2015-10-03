@@ -17,8 +17,8 @@ $this->assetPackage = \app\assets\Package::BOOKING;
         <div class="row">
             <div class="col-sm-12 col-md-10 col-md-offset-1 text-center ">
                 <h2>
-                    <?= Yii::t("booking.receipt.header", "Receipt #R{0}", [
-                        $booking->id
+                    <?= Yii::t("booking.receipt.header", "Receipt #{0}", [
+                        "R".$booking->id
                     ]) ?>
                 </h2>
 

@@ -81,45 +81,4 @@ class TestController extends Controller
         return $review->save();
     }
 
-    public function actionNamespaces(){
-        new Booking();
-        new Item();
-        new Payin();
-        new Payout();
-        new Category();
-        new CategoryHasFeature();
-        new Conversation();
-        new Country();
-        new Currency();
-        new Feature();
-        new FeatureValue();
-        new I18nSource();
-        new I18nMessage();
-        new Invoice();
-        new IpLocation();
-        new \search\models\IpLocation();
-        new ItemHasFeature();
-        new ItemHasFeatureSingular();
-        new ItemHasMedia();
-        new ItemSearch();
-        new ItemSimilarity();
-        new \app\models\base\JobQueue();
-        new Language();
-        new Location();
-        new \item\models\Location();
-        new MailAccount();
-        new MailMessage();
-        new Media();
-        new Message();
-        new PayoutMethod();
-        new Profile();
-        new PromotionCode();
-        new Review();
-        new Setting();
-        new SocialAccount();
-        new Token();
-        new User();
-        new UserHasPromotionCode();
-    }
-
 }

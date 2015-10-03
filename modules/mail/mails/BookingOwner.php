@@ -11,7 +11,7 @@ class BookingOwner extends Mailer
 {
     /**
      * Owner booking request
-     * @param \booking\models\Booking $data
+     * @param \booking\models\Booking $booking
      * @return bool
      */
     public function request($booking)
@@ -37,7 +37,7 @@ class BookingOwner extends Mailer
             ],
             'urls' => [
                 'response' => Url::to('@web/booking/' . $booking->id . '/request', true),
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
             ]
         ]);
     }
@@ -74,7 +74,7 @@ class BookingOwner extends Mailer
                 'amountTotal' => round($booking->amount_payout) . ' DKK',
             ],
             'urls' => [
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
                 'help' => Url::to('@web/help', true),
                 'contact' => Url::to('@web/contact', true),
@@ -105,7 +105,7 @@ class BookingOwner extends Mailer
                 'endDate' => $endDate,
             ],
             'urls' => [
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
             ]
         ]);
@@ -164,7 +164,7 @@ class BookingOwner extends Mailer
             ],
             'urls' => [
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
                 'help' => Url::to('@web/contact', true),
             ]
         ]);

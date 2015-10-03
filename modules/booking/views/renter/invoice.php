@@ -83,7 +83,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                             <h3><?= Yii::t("booking.invoice.service_fee_header", "KidUp Service Fee for use of the platform") ?></h3>
                             <ul class="list-unstyled list-lines">
                                 <li>
-                                    <?= Yii::t("booking.invoice.service_fee", "KidUp Service Fees") ?>
+                                    <?= Yii::t("booking.invoice.service_fee", "KidUp Service Fee") ?>
                                     <b class="pull-right">
                                         <?= round($invoice['data']['booking']['amount_payin_fee'], 2) ?> DKK
                                     </b>

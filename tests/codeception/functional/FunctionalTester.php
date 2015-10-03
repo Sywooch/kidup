@@ -2312,7 +2312,7 @@ class FunctionalTester extends \Codeception\Actor
      *
      * Method called before any suite tests run. Loads User fixture login user
      * to use in acceptance and functional tests.
-     * @return this
+     * @return FactoryMuffin
      * @see \app\tests\codeception\_support\MuffinHelper::init()
      */
     public function init() {

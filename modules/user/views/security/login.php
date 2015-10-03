@@ -57,7 +57,7 @@ $this->assetPackage = \app\assets\Package::USER;
                 ]
             ])->passwordInput()->label(Yii::t('user.login.password',
                     'Password') . ' (' . Html::a(Yii::t('user.login.forgot_password_link',
-                    'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')') ?>
+                    'Forgot your password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')') ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '4']) ?>
 

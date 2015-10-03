@@ -41,7 +41,7 @@ class Conversation extends Mailer
                 'title' => $message->conversation->title
             ],
             'urls' => [
-                'chat' => Url::to('@web/messages/' . $message->conversation_id, true),
+                'chat' => Url::to('@web/inbox/' . $message->conversation_id, true),
             ]
         ]);
     }

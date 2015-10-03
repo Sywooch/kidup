@@ -70,7 +70,7 @@ class User extends Mailer
 
     /**
      * Reconfirm Email
-     * @param $data
+     * @param $user
      * @return bool
      */
     public function reconfirm($user)

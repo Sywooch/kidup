@@ -8,6 +8,7 @@ use \home\forms\Search;
 use \item\models\Category;
 use \item\models\Item;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 class HomeController extends Controller
@@ -54,9 +55,15 @@ class HomeController extends Controller
             return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
-            return Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->all();
+            // get 4 with review, or callback if not 4
+            $items = Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
+            if(count($items) < 4){
+                $items = ArrayHelper::merge($items, Item::find()->limit(4-count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
+            }
+            return $items;
         }, 6 * 3600);
 
+        
         $res = $this->render('index', [
             'categories' => $categories,
             'items' => $items,

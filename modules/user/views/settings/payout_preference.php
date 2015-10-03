@@ -2,19 +2,18 @@
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
-/*
+/**
+ * @var \app\extended\web\View $this
  * @var \user\forms\PayoutPreference $model
  */
 ?>
-
-
 <div class="row">
     <div class="col-md-12">
         <h3>
             <?= Yii::t("user.settings.payout_method.header", "Prefered payout method") ?>
         </h3>
         <?= Yii::t("user.settings.payout_method.help_text",
-            "Kidup currently only offers payouts to danish bank accounts, identified with a konto number and bank code.") ?>
+            "Kidup currently only offers payouts to danish bank accounts, identified with a konto number and bank code. If you have a 16 digit number, the first 4 are the 'bank number', the other 12 the 'konto number'.") ?>
         <br/>
 
         <br/>
@@ -28,27 +27,34 @@ use yii\helpers\Html;
             'enableClientValidation' => true,
         ]); ?>
 
-        <?= $form->field($model, 'payee_name')->label(\Yii::t('user.settings.payout_method.bank_holder_name',
-            'Name')) ?>
+
         <?php if ($model->identifier_1 !== null): ?>
             <?= Yii::t("user.settings.payout_method.secure_storage",
-                "Your current payout method is stored securely in our database.") ?> <br>
-            <?= \Yii::t('user.settings.payout_method.konto_number',
-            'Konto Number') . ': ' . $model->identifier_1 ?> <br>
+                "Your payout details are stored securely in our database.") ?> <br>
             <?= \Yii::t('user.settings.payout_method.bank_number',
             'Bank Number') . ': ' . $model->identifier_2 ?> <br>
+            <?= \Yii::t('user.settings.payout_method.konto_number',
+            'Konto Number') . ': ' . $model->identifier_1 ?> <br>
             <?= Yii::t("user.settings.payout_method.for_change_reenter_data",
-                "If you'd like to change them, please re-enter them below.") ?><br><br>
+                "If you'd like to change them, please {link}click here{linkOut}.",[
+                    'link' => Html::beginTag('a', ['id' => 'open-form-payout-preferences']),
+                    'linkOut' => Html::endTag('a')
+                ]) ?><br><br>
+            <?= $this->registerJs('$("#open-form-payout-preferences").click(function(){$("#payout-preferences-fields").show();});')?>
         <?php endif; ?>
-        <?= $form->field($model, 'identifier_1_encrypted') ?>
-        <?= $form->field($model, 'identifier_2_encrypted') ?>
-        <hr/>
+        <div style="<?= $model->identifier_1 !== null ? 'display:none' : '' ?>" id="payout-preferences-fields">
+            <?= $form->field($model, 'payee_name')->label(\Yii::t('user.settings.payout_method.bank_holder_name',
+                'Name')) ?>
+            <?= $form->field($model, 'identifier_2_encrypted') ?>
+            <?= $form->field($model, 'identifier_1_encrypted') ?>
+            <hr/>
 
-        <div class="form-group">
-            <div class="col-lg-offset-3 col-lg-9">
-                <?= Html::submitButton(Yii::t('user.settings.payout_method.save_button', 'Save'),
-                    ['class' => 'btn pull-right btn-primary btn-fill']) ?>
-                <br>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-9">
+                    <?= Html::submitButton(Yii::t('user.settings.payout_method.save_button', 'Save'),
+                        ['class' => 'btn pull-right btn-primary btn-fill']) ?>
+                    <br>
+                </div>
             </div>
         </div>
 

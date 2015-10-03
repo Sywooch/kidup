@@ -32,7 +32,7 @@ class BookingRenter extends Mailer
                 'endDate' => $endDate,
             ],
             'urls' => [
-                'chat' => Url::to('@web/messages/' . $booking->id . '/conversation', true),
+                'chat' => Url::to('@web/inbox/' . $booking->id . '/conversation', true),
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
             ]
         ]);
@@ -87,7 +87,7 @@ class BookingRenter extends Mailer
                 'endDate' => $endDate,
             ],
             'urls' => [
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
             ]
         ]);
@@ -163,7 +163,7 @@ class BookingRenter extends Mailer
             ],
             'urls' => [
                 'booking' => Url::to('@web/booking/' . $booking->id, true),
-                'chat' => Url::to('@web/messages/' . $booking->conversation->id, true),
+                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
                 'help' => Url::to('@web/contact', true),
             ]
         ]);
@@ -172,6 +172,7 @@ class BookingRenter extends Mailer
     /**
      * Payin of the booking has failed
      * @param Booking $booking
+     * @return bool
      */
     public function failed($booking)
     {

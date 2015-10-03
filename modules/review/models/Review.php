@@ -3,6 +3,7 @@
 namespace review\models;
 
 use app\helpers\Event;
+use app\jobs\SlackJob;
 use \booking\models\Booking;
 use Carbon\Carbon;
 use Yii;
@@ -94,9 +95,7 @@ class Review extends base\Review
     public function afterSave($insert, $changedAttrs)
     {
         if ($this->type == self::TYPE_PRIVATE_KIDUP && $this->value != '') {
-            \Yii::$app->slack->send("User $this->reviewer_id had kidup feedback on booking $this->booking_id:
-    $this->value
-            ");
+            new SlackJob(['message' => "User $this->reviewer_id had kidup feedback on booking $this->booking_id : '$this->value'"]);
         }
         return parent::afterSave($insert, $changedAttrs);
     }

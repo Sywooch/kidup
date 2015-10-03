@@ -18,7 +18,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                 <div class="site-area-header">
                     <div class="checkout-header">
                         <h2><?= Yii::t("booking.receipt.header", "Receipt #{0}", [
-                                $booking->id
+                                "O".$booking->id
                             ]) ?>
                         </h2>
                     </div>
@@ -78,7 +78,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                         <div class="col-md-3 col-md-offset-2">
                             <ul class="list-unstyled list-lines">
                                 <li>
-                                    <?= Yii::t("booking.receipt.rent_for_x_days", "Item rent for {0} days", [
+                                    <?= Yii::t("booking.receipt.rent_for_x_days", "Rent for {0} days", [
                                         Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to))
                                     ]) ?>
                                     <b class="pull-right">

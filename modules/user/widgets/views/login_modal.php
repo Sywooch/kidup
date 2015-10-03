@@ -52,7 +52,7 @@ use \yii\helpers\Url;
     <!-- this dismisses the current modal and calls the register modal-->
     <div data-dismiss="modal">
         <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal">
-            <span class="text-muted"><a id="ChangeToRegisterModal"><?= Yii::t("user.login.new_to_kidup_link", "New on KidUp?") ?></a></span>
+            <span class="text-muted"><a id="ChangeToRegisterModal"><?= Yii::t("user.login.new_to_kidup_link", "New to KidUp?") ?></a></span>
         </button>
     </div>
     <span class="text-muted"><a href="<?= Url::to('@web/user/recovery/request') ?>">
