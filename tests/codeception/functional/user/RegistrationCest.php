@@ -4,7 +4,8 @@ namespace app\tests\codeception\functional\user;
 use user\models\User;
 use user\models\Profile;
 use FunctionalTester;
-
+use League\FactoryMuffin;
+use app\tests\codeception\_support\MuffinHelper;
 /**
  * functional test for the login.
  *
@@ -13,6 +14,16 @@ use FunctionalTester;
  */
 class RegistrationCest
 {
+
+    /**
+     * @var FactoryMuffin
+     */
+    protected $fm = null;
+
+    public function _before()
+    {
+        $this->fm = (new MuffinHelper())->init();
+    }
 
     public function checkRegister(FunctionalTester $I)
     {

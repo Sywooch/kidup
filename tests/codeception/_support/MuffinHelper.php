@@ -8,6 +8,7 @@ use app\tests\codeception\muffins\Currency;
 use app\tests\codeception\muffins\Invoice;
 use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\Location;
+use app\tests\codeception\muffins\Media;
 use app\tests\codeception\muffins\Message;
 use app\tests\codeception\muffins\Payin;
 use app\tests\codeception\muffins\Payout;
@@ -48,7 +49,8 @@ class MuffinHelper extends Module
             User::class,
             Location::class,
             Conversation::class,
-            Message::class
+            Message::class,
+            Media::class
         ];
     }
 
