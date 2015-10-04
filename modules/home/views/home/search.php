@@ -31,11 +31,11 @@ $this->registerJsVariables([
                     ]);
                     ?>
 
-                    <div class="row">
+
                         <div class="col-sm-12 text-center">
-                            <h2><?= Yii::t("home.grid.header", "Find Kids stuff") ?></h2>
+                            <h2><?= Yii::t("home.search.header", "Rent this now") ?></h2>
                         </div>
-                    </div>
+
                     
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
