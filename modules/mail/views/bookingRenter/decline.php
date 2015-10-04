@@ -68,7 +68,7 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Udlejere kan have mange grunde til at afvise inklusive
+                                                    Udlejere kan have mange grunde til at afvise en booking inklusive
                                                     uoverensstemmende anmodninger på dine lejedatoer og manglende
                                                     tid mellem reservationer.
                                                 </p>
@@ -84,8 +84,8 @@
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Vi ved, at denne specifikke reservation ikke lykkedes,
-                                                    men der er masser af andre opslog. Og vi opfordrer dig til
-                                                    at blive ved med at lede!. Vi har fjernet den <b>midlertidige
+                                                    men der er masser af andre opslag. Og vi opfordrer dig til
+                                                    at blive ved med at lede! Vi har fjernet den <b>midlertidige
                                                         autorisation</b>
                                                     på din betalingsmetode, så du kan booke nyt udstyr.
                                                 </p>

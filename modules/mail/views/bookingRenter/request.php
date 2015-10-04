@@ -58,11 +58,11 @@
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Du har nu tilkendegivet overfor <?= $ownerName ?>, at du gerne vil
-                                                    leje hendes <?= $itemName ?> i perioden <?= $startDate ?>
+                                                    leje <?= $itemName ?> i perioden <?= $startDate ?>
                                                     - <?= $endDate ?>, og vi har nu sendt din anmodning til
                                                     udlejeren <?= $ownerName ?>
                                                     <a href="<?= $urls['booking'] ?>">her</a>. Har du rettelser til din
-                                                    booking anmodning, kan du stadig nå at lave det om her. Har du
+                                                    booking, kan du stadig nå at lave det om. Har du
                                                     spørgsmål til udlejeren kan du chatte med <?= $ownerName ?> <a
                                                         href="<?= $urls['chat'] ?>">her</a>.
                                                 </p>
@@ -79,7 +79,7 @@
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Vi vil gøre dig opmærksom på, at dette ikke er en
                                                     bekræftelsesmail. <?= $ownerName ?> har nu 48 timer til at
-                                                    accepterer din forespørgsel og dele sin <?= $itemName ?>.
+                                                    accepterer din forespørgsel og udleje sin <?= $itemName ?>.
                                                 </p>
                                             </td>
                                         </tr>
@@ -93,7 +93,7 @@
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Vi har autoriseret betalingen, så skulle det mod forventning ikke
-                                                    blive accepteret, bliver de <?= $payinAmount ?> ikke trukket.
+                                                    blive accepteret, bliver dine penge ikke trukket.
                                                 </p>
                                             </td>
                                         </tr>

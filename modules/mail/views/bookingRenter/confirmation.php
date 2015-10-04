@@ -130,13 +130,13 @@
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Husk, at vi altid passer på hinandens ting, og behandler dem som var
                                                     de vore egne.
-                                                    Det indebærer selvfølgelig en god rengøring af Barnevognen inden den
+                                                    Det indebærer selvfølgelig en god rengøring af barnevognen inden den
                                                     leveres tilbage til
-                                                    <?= $ownerName ?>, det samme gør Britta nemlig inden du får den i
+                                                    <?= $ownerName ?>, det samme gør <?= $ownerName ?> nemlig inden du får den i
                                                     hænderne første gang.
-                                                    Hvis noget skulle gå i stykker, så kontakt Britta og få det snakket
+                                                    Hvis noget skulle gå i stykker, så kontakt <?= $ownerName ?> og få det snakket
                                                     igennem, kan i ikke komme
-                                                    til en løsning er vi selvfølgelig behjælpelige og sikker på, at vi
+                                                    til en løsning er vi selvfølgelig sikker på, at vi
                                                     nok skal finde frem
                                                     til et resultat i fællesskab!
                                                 </p>

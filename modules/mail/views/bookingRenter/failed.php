@@ -81,7 +81,7 @@
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    Har du spørgsmål angående din betaling kan du læse mere her eller
+                                                    Har du spørgsmål angående din betaling kan du læse mere eller
                                                     kontakte os direkte på
                                                     <a href="<?= $kidUpEmail ?>">mail</a>.
                                                 </p>
