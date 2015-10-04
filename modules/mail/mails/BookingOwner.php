@@ -31,7 +31,7 @@ class BookingOwner extends Mailer
                 'renterName' => $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name,
                 'message' => $booking->conversation->messages[0]->message, // there should only be one message
                 'payout' => round($booking->amount_payout) . ' DKK',
-                'dayPrice' => ($booking->amount_item / $numberOfDays) . ' DKK',
+                'dayPrice' => round($booking->amount_item / $numberOfDays) . ' DKK',
                 'startDate' => $startDate,
                 'endDate' => $endDate,
             ],
