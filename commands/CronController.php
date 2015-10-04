@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\extended\job\JobWorker;
 use Yii;
 use yii\console\Controller;
 
@@ -27,6 +28,7 @@ class CronController extends Controller
                 if(method_exists($controller, 'minute')) $controller->minute();
             }
         }
+        JobWorker::shellStart(); // starts a new jobworker if none exists yet
     }
 
     public function actionHour()
