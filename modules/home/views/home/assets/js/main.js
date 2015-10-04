@@ -41,6 +41,7 @@ $(document).ready(function () {
         if (val == '') {
             val = window.emptySearch;
         }
+
         if ((window.emptyLocation == location || location.length == 0) && navigator.geolocation) {
             // ask permission to get the location of the user
             navigator.geolocation.getCurrentPosition(function (position) {
