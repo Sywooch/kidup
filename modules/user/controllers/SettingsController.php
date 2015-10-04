@@ -19,6 +19,7 @@ use \user\Finder;
 use \user\forms\LocationForm;
 use \user\forms\Settings;
 use app\helpers\SelectData;
+use user\forms\Verification;
 use \user\models\Account;
 use \user\models\Profile;
 use \user\models\User;
@@ -254,6 +255,16 @@ class SettingsController extends Controller
     {
         /** @var \user\models\Profile $profile * */
         $profile = Profile::findOne(\Yii::$app->user->id);
+        $model = new Verification(\Yii::$app->user->identity, $profile);
+        $this->performAjaxValidation($model);
+
+        if ($model->load(\Yii::$app->request->post())) {
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', \Yii::t('user.settings.verification.success_flash',
+                    'Your verification settings have been updated'));
+                return $this->refresh();
+            }
+        }
 
         if ($confirm_email && !$profile->email_verified) {
             // resend email verification
@@ -291,7 +302,8 @@ class SettingsController extends Controller
 
         $page = $this->renderPartial('verification', [
             'user' => \Yii::$app->user->identity,
-            'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id])
+            'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id]),
+            'model' => $model
         ]);
 
         return $this->render('_wrapper', [

@@ -9,7 +9,10 @@
  * file that was distributed with this source code.
  */
 
-use \user\widgets\Connect;
+use app\helpers\SelectData;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\Select2;
+use user\widgets\Connect;
 use yii\helpers\Html;
 
 /**
@@ -20,6 +23,18 @@ use yii\helpers\Html;
 
 ?>
 
+<?php $form = ActiveForm::begin([
+    'id' => 'profile-form',
+    'type' => ActiveForm::TYPE_VERTICAL,
+    'options' => ['enctype' => 'multipart/form-data'],
+    'fieldConfig' => [
+        'template' => "{label}{input} \n {error} {hint}",
+        // 'labelOptions' => ['class' => 'control-label'],
+    ],
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'validateOnBlur' => false,
+]); ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -88,37 +103,34 @@ use yii\helpers\Html;
         <div class="form-group">
             <label><?= Yii::t("user.settings.trust.phone", "Phone") ?></label>
 
-            <div id="phone-verification-area" class="row">
-                <div class="col-md-6">
-                    <?= Yii::t("user.settings.trust.phone_text",
-                        "Rest assured, your number is only shared with another KidUp user once you have a confirmed booking.") ?>
-                </div>
-                <div class="col-md-6">
-                    <?php
-                    if (!$profile->getPhoneNumber()) {
-                        echo Yii::t('user.settings.trust.please_set_phone', 'Please set a phone number');
-                    } elseif (!$profile->isValidPhoneNumber()) {
-                        echo Yii::t('user.settings.trust.phone_appears_invalid',
-                            'Your phone number appears to be invalid');
-                    } elseif (!$profile->phone_verified) {
-                        echo $profile->getPhoneNumber();
-                    } ?>
-                    <br/>
-                    <?php
-                    if ($profile->getPhoneNumber() && $profile->isValidPhoneNumber()) {
-                        if ($profile->phone_verified) {
-                            echo '<button class="btn btn-primary btn-fill" disabled><i class="fa fa-check"></i>
-                                                        ' . $profile->getPhoneNumber() . '
-                                                    </button>';
-                        } else {
-                            echo Html::a(Html::button(Yii::t('user.settings.trust.confirm_button', 'Confirm'),
-                                ['class' => 'btn btn-primary btn-fill btn-lg']),
-                                ['/user/settings/verification', 'confirm_phone' => 1]);
+            <div class="form-group field-profile-description">
+                <label class="control-label" for="profile-description">
+                    <?= Yii::t("user.settings.account.phone_number", "Phone number") ?>
+                </label>
 
-                        }
-                    } ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'phone_country')->widget(Select2::classname(), [
+                            'data' => SelectData::phoneCountries(),
+                            'options' => ['placeholder' => \Yii::t('user.settings.account.country_code_phone', 'Country code')],
+                            'pluginOptions' => [
+                                'allowClear' => false
+                            ],
+                        ])->label(false); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'phone_number')->label(false)->textInput([
+                            'placeholder' => \Yii::t('user.settings.account.phone_number_placeholder', 'e.g. 26415315')
+                        ]); ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<?= \yii\helpers\Html::submitButton(Yii::t('user.settings.verification.save_button', 'Save'),
+    ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
+<br/><br/>
+
+<?php ActiveForm::end(); ?>
