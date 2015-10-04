@@ -31,6 +31,8 @@ $(document).ready(function () {
 
     // autoselect
     $('#main-search').on('submit', function (event) {
+        // prevent the default submit action, also note the many "return false"
+        // statements, which block the action and will redirect the user
         event.preventDefault();
 
         var vals = [];
@@ -39,8 +41,10 @@ $(document).ready(function () {
         if (val == '') {
             val = window.emptySearch;
         }
-        if (window.emptyLocation == location && navigator.geolocation) {
+        if ((window.emptyLocation == location || location.length == 0) && navigator.geolocation) {
+            // ask permission to get the location of the user
             navigator.geolocation.getCurrentPosition(function (position) {
+                // location accepted
                 var geocoder = new google.maps.Geocoder;
                 var latlng = {
                     lat: parseFloat(position['coords']['latitude']),
@@ -59,21 +63,33 @@ $(document).ready(function () {
                     }
                 });
                 window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+                return false;
+            }, function() {
+                // in the case that it was declined
+                window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+                return false;
             });
+            // the submit while executing an asynchronous action needs to be blocked
+            return false;
         } else if (window.emptyLocation) {
+            // some autocompleted field has been filled in
+            // note here that we don't know the location if it was not choosen by Google Autocomplete!
             var autocomplete = $(window).attr('autocomplete-home-search');
             var place = autocomplete.getPlace();
-            if(typeof place !== 'undefined'){
+            if(typeof place !== 'undefined' && place.length > 0){
                 vals.push("search-filter[latitude]=" + place.geometry.location.lat());
                 vals.push("search-filter[longitude]=" + place.geometry.location.lng());
                 vals.push("search-filter[location]=" + place.formatted_address);
             }
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
         }else{
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
         }
         //catcher
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+        return false;
     });
 
     // on select of filled out location
