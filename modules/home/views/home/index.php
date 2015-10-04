@@ -122,6 +122,9 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <div class="row values">
                         <div class="col-sm-8 col-sm-offset-2 text-center">
                             <h1><?= \Yii::t("home.slider.approved_experts", 'Approved by Experts') ?></h1>
+                            <h4><?= \Yii::t("home.slider.approved_subheader",
+                                    'When renting from other parents, you are sure to get the right expert help.') ?>
+                            </h4>
                         </div>
                     </div>
                 </div>
