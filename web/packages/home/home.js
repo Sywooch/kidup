@@ -1328,7 +1328,7 @@ $(document).ready(function () {
                 });
                 window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
                 return false;
-            }, function() {
+            }, function () {
                 // in the case that it was declined
                 window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
                 return false;
@@ -1340,14 +1340,14 @@ $(document).ready(function () {
             // note here that we don't know the location if it was not choosen by Google Autocomplete!
             var autocomplete = $(window).attr('autocomplete-home-search');
             var place = autocomplete.getPlace();
-            if(typeof place !== 'undefined' && place.length > 0){
+            if (typeof place !== 'undefined' && place.length > 0) {
                 vals.push("search-filter[latitude]=" + place.geometry.location.lat());
                 vals.push("search-filter[longitude]=" + place.geometry.location.lng());
                 vals.push("search-filter[location]=" + place.formatted_address);
             }
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
             return false;
-        }else{
+        } else {
             window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
             return false;
         }
@@ -1357,9 +1357,9 @@ $(document).ready(function () {
     });
 
     // on select of filled out location
-    $("#search-home-location").on('focus', function(){
+    $("#search-home-location").on('focus', function () {
         var location = $("#search-home-location").val();
-        if(window.emptyLocation == location){
+        if (window.emptyLocation == location) {
             $("#search-home-location").val('');
         }
     });
@@ -1462,7 +1462,15 @@ $('#menu-search-form').on('submit', function (event) {
                     }
                 }
             });
+            window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
+        }, function() {
+            // in the case that it was declined
+            window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
         });
+        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+        return false;
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }

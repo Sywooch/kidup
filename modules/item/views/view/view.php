@@ -58,7 +58,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         <div class="col-md-10">
                             <div class="item-title"><?= $model->name ?></div>
                             <div class="item-location">
-                                <?= $model->location->city . ", " . $model->location->country0->name ?>
+                                <?= $model->location ? $model->location->city . ", " . $model->location->country0->name : '' ?>
                             </div>
                             <div class="item-reviews">
                                 <?= ReviewScore::widget(['user_id' => $model->owner_id]); ?>
@@ -122,7 +122,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                             </td>
                                             <td>
                                                 <b>
-                                                    <?= $model->location->city . ", " . $model->location->country0->name ?>
+                                                    <?= $model->location ? $model->location->city . ", " . $model->location->country0->name : '' ?>
                                                 </b>
                                             </td>
                                         </tr>
@@ -137,7 +137,8 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                                         echo $model->price_day . ' ' .
                                                             Yii::t("item.view.per_day", "per day") . "<br>";
                                                     }
-                                                    echo $model->price_week . ' ' . Yii::t("item.view.per_week", "per week");
+                                                    echo $model->price_week . ' ' . Yii::t("item.view.per_week",
+                                                            "per week");
                                                     if (is_int($model->price_month)) {
                                                         echo "<br>" . $model->price_month . ' ' . Yii::t("item.view.per_month",
                                                                 "per month") . "<br>";
@@ -156,7 +157,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                             <td>
                                                 <?php
                                                 foreach ($model->singularFeatures as $feature) {
-                                                    echo  $feature->getTranslatedName()."<br>";
+                                                    echo $feature->getTranslatedName() . "<br>";
                                                 }
                                                 ?>
                                             </td>
@@ -180,14 +181,14 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                 <div style="margin-left:-25px;margin-right:-25px;">
                                     <div class="map1">
                                         <div class="google1">
-                                            <?= Map::widget([
+                                            <?= $location ? Map::widget([
                                                 'longitude' => $location->longitude,
                                                 'latitude' => $location->latitude,
                                                 'addRandCircle' => true,
                                                 'options' => [
                                                     'height' => "400px"
                                                 ]
-                                            ]); ?>
+                                            ]) : ''; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +233,8 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                 </div>
                 <div id="booking-is-being-created-message" class="col-md-3 card" style="display: none;margin-top:30px;">
                     <div style="padding:15px;">
-                        <?= Yii::t("item.view.booking_widget.booking_is_being_created", "You're booking is being made, one second please.") ?>
+                        <?= Yii::t("item.view.booking_widget.booking_is_being_created",
+                            "You're booking is being made, one second please.") ?>
                     </div>
                 </div>
             </div>
