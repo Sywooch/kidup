@@ -51,7 +51,7 @@ class Map extends \yii\bootstrap\Widget {
 //        }
 
 
-        $this->getView()->registerJs("L.Icon.Default.imagePath = 'test';");
+        $this->getView()->registerJs("L.Icon.Default.imagePath = './../packages/images/leaflet';");
         // finally render the widget
         echo \dosamigos\leaflet\widgets\Map::widget(['leafLet' => $leaflet]);
     }

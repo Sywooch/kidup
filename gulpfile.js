@@ -128,7 +128,9 @@ gulp.task('fonts', function () {
 gulp.task('images', function () {
     var jqueryUi = gulp.src('vendor/bower/jquery-ui/themes/base/images/*.*')
         .pipe(gulp.dest('web/packages/images/jquery-ui'));
-    return merge(jqueryUi);
+    var mapIcons = gulp.src('vendor/bower/leaflet/dist/images/*.*')
+        .pipe(gulp.dest('web/packages/images/leaflet'));
+    return merge(jqueryUi, mapIcons);
 });
 
 gulp.task('watch-js', function () {
