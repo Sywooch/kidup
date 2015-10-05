@@ -36,7 +36,7 @@ class ItemCardCest
             'showDistance' => false
         ]);
         $I->assertContains($item->name, $card);
-        $I->assertContains($item->price_week . '', $card);
+        $I->assertContains($item->price_day . '', $card);
         $I->assertContains($item->location->city, $card);
     }
 

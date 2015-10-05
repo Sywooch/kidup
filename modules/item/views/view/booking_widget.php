@@ -35,8 +35,7 @@ $this->registerJsVariables([
         <div class="col-md-12">
             <h4>
                     <span class="pull-left">
-                        <?= $model->currency->forex_name ?>
-                        <?= $model->item->price_day !== null ? $model->item->price_day : round($model->item->price_week / 7) ?>
+                        <?= $model->currency->forex_name ?> <?= $model->item->price_day !== null ? $model->item->price_day : round($model->item->price_week / 7) ?>
                     </span>
                     <span class="pull-right period">
                         <?= Yii::t("item.view.booking_widget.per_day", "per day") ?>
