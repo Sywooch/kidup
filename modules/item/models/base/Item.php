@@ -195,7 +195,7 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getItemHasMedia()
     {
-        return $this->hasMany(ItemHasMedia::className(), ['item_id' => 'id']);
+        return $this->hasMany(ItemHasMedia::className(), ['item_id' => 'id'])->orderBy('order ASC');
     }
 
     /**
@@ -203,8 +203,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasMany(Media::className(), ['id' => 'media_id'])->viaTable('item_has_media',
-            ['item_id' => 'id']);
+        return $this->hasMany(Media::className(), ['id' => 'media_id'])
+            ->viaTable('item_has_media', ['item_id' => 'id']);
     }
 
     /**
