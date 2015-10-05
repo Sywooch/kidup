@@ -37,7 +37,11 @@ Dropzone.options.dropzoneForm = {
     },
     url: window.uploadUrl,
     addRemoveLinks: true,
-    clickable: true
+    clickable: true,
+    dictDefaultMessage: i18n.dictDefaultMessage,
+    dictFallbackMessage: i18n.dictFallbackMessage,
+    dictInvalidFileType: i18n.dictInvalidFileType,
+    dictFileTooBig: i18n.dictFileTooBig
 };
 $(document).ready(function () {
     /* Select Categories */
@@ -70,9 +74,9 @@ $(document).ready(function () {
     $('#new-price').keydown(function () {
         setTimeout(function () {
             var val = $('#new-price').val();
-            $(".suggestion-daily").html('<i>'+i18n.daily_price+'</i>: ' + Math.round(val * 0.01));
-            $(".suggestion-weekly").html('<i>'+i18n.weekly_price+'</i>: ' + Math.round(val * 0.03));
-            $(".suggestion-monthly").html('<i>'+i18n.monthly_price+'</i>: ' + Math.round(val * 0.06));
+            $(".suggestion-daily").html('<i>' + i18n.daily_price + '</i>: ' + Math.round(val * 0.01));
+            $(".suggestion-weekly").html('<i>' + i18n.weekly_price + '</i>: ' + Math.round(val * 0.03));
+            $(".suggestion-monthly").html('<i>' + i18n.monthly_price + '</i>: ' + Math.round(val * 0.06));
         }, 100);
     })
 });
@@ -103,17 +107,17 @@ $(function () {
     dr.disableSelection();
 });
 
-$(function() {
-    var timer = setInterval(function() {
+$(function () {
+    var timer = setInterval(function () {
         if ($(window).attr('autocomplete-item-create') !== undefined) {
             var autocomplete = $(window).attr('autocomplete-item-create');
-            autocomplete.addListener('place_changed', function() {
+            autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
                 var streetAddress = {};
-                $.each(place['address_components'], function() {
+                $.each(place['address_components'], function () {
                     var address = this;
                     var name = address['long_name'];
-                    $.each(address['types'], function() {
+                    $.each(address['types'], function () {
                         var type = this;
                         if (type == 'postal_code') {
                             $('#location-form-zip_code').val(name);
