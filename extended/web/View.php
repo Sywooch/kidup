@@ -229,7 +229,8 @@ class View extends \yii\web\View
      * @param $array
      */
     public function registerJsVariables($array, $scope = 'window'){
-        $js = '';
+        $js = "if(typeof($scope) === 'undefined'){ {$scope} = {}; };";
+
         foreach ($array as $varName => $value) {
             $varName = $scope.".".$varName;
             if(is_object($value) || is_array($value)){
@@ -241,7 +242,7 @@ class View extends \yii\web\View
 $varName = $value;
 JS;
         }
-        $this->registerJs($js);
+        $this->registerJs($js, self::POS_BEGIN);
     }
 
     private function getHashedFileName($fileInput){
