@@ -96,10 +96,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                         </div>
                     </div>
                 </div>
-            <span class="pull-left">
-                <?= Yii::t("booking.view.no_rights_from_page",
-                    "No rights can be derived from the contents of this page.") ?>
-            </span>
+
                 <?php if (!isset($_GET['pdf'])): ?>
                     <a href="?pdf=true" target="_blank">
                         <div class="pull-right btn btn-primary">

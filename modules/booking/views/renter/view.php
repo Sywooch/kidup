@@ -46,14 +46,22 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.view.booking_status", "Booking Status") ?> <b class="pull-right">
+                                    <?= Yii::t("booking.view.booking_status", "Booking Status") ?> <b
+                                        class="pull-right">
                                         <?= $booking->getStatusName() ?>
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.view.pickup_address", "Pickup Address") ?> <b class="pull-right">
-                                        <?= $item->location->street_name ?> <?= $item->location->street_number ?>
-                                        , <?= $item->location->city ?>
+                                    <?= Yii::t("booking.view.pickup_address", "Pickup Address") ?> <b
+                                        class="pull-right">
+                                        <?php if ($booking->status !== \booking\models\Booking::PENDING): ?>
+                                            <?= $item->location->street_name ?> <?= $item->location->street_number ?>
+                                            , <?= $item->location->city ?>
+                                        <?php else: ?>
+                                            <?= Yii::t("booking.view.address_available_after_accepted",
+                                                "Location is available after the owner accepted the booking.") ?>
+                                        <?php endif; ?>
+
                                     </b>
                                 </li>
                             </ul>
@@ -71,7 +79,8 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                     </b>
                                 </li>
                                 <li>
-                                    <?= Yii::t("booking.view.service_fee_incl_vat", "KidUp Service Fees (including VAT)") ?>
+                                    <?= Yii::t("booking.view.service_fee_incl_vat",
+                                        "KidUp Service Fees (including VAT)") ?>
                                     <b class="pull-right">
                                         <?= $booking->amount_payin - $booking->amount_item ?> DKK
                                     </b>
@@ -108,18 +117,18 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                             <?= Html::a(\Yii::t("booking.view.link_contact_owner", 'Contact Owner'),
                                 '@web/inbox/' . $booking->conversation->id) ?>
                             <br/>
-                            <?= Html::a(\Yii::t("booking.view.link_view_receipt", 'View Receipt'), '@web/booking/' . $booking->id . '/receipt',
+                            <?= Html::a(\Yii::t("booking.view.link_view_receipt", 'View Receipt'),
+                                '@web/booking/' . $booking->id . '/receipt',
                                 ['target' => '_blank']) ?>
                             <br/>
-                            <?= Html::a(\Yii::t("booking.view.link_view_invoice", 'View Invoice'), '@web/booking/' . $booking->id . '/invoice',
+                            <?= Html::a(\Yii::t("booking.view.link_view_invoice", 'View Invoice'),
+                                '@web/booking/' . $booking->id . '/invoice',
                                 ['target' => '_blank']) ?>
                         </div>
                     </div>
                     <br/><br/>
                 </div>
-            <span class="pull-left">
-                <?= Yii::t("booking.view.no_rights_from_page", "No rights can be derived from the contents of this page.") ?>
-            </span>
+
                 <?php if (!isset($_GET['pdf'])): ?>
                     <a href="?pdf=true" target="_blank">
                         <div class="pull-right btn btn-primary">

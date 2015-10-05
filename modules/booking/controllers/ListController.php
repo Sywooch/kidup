@@ -36,9 +36,7 @@ class ListController extends Controller
     {
         $provider = new ActiveDataProvider([
             'query' => Booking::find()->where(['renter_id' => \Yii::$app->user->id])
-                ->andWhere('time_to >= :time', [':time' => Carbon::now(\Yii::$app->params['serverTimeZone'])])
-                ->andWhere('(status != :status or created_at > :twoDaysAgo)',
-                    [':status' => Booking::AWAITING_PAYMENT, ':twoDaysAgo' => time() - (2 * 24 * 60 * 60)]),
+                ->andWhere('time_to >= :time', [':time' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp]),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -52,9 +50,7 @@ class ListController extends Controller
     {
         $provider = new ActiveDataProvider([
             'query' => Booking::find()->where(['renter_id' => \Yii::$app->user->id])
-                ->andWhere('time_to <= :time', [':time' => Carbon::now(\Yii::$app->params['serverTimeZone'])])
-                ->andWhere('status != :status or created_at > :twoDaysAgo',
-                    [':status' => Booking::AWAITING_PAYMENT, ':twoDaysAgo' => time() - (2 * 24 * 60 * 60)]),
+                ->andWhere('time_to <= :time', [':time' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp]),
             'pagination' => [
                 'pageSize' => 20,
             ],
