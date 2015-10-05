@@ -61,7 +61,7 @@
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #000000; text-align:left; line-height: 24px; ">
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Dette er en påmindelse om, at du har en kommende reservation. Vi
-                                                    anbefaler, at du verificere den eksakte adresse, telefonnummer,
+                                                    anbefaler, at du verificerer den eksakte adresse og telefonnummer,
                                                     direkte med værten.
                                                 </p>
                                             </td>

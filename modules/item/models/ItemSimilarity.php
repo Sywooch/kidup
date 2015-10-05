@@ -18,6 +18,9 @@ class ItemSimilarity extends \item\models\base\ItemSimilarity
      */
     public function compute(Item $item)
     {
+        if($item->is_available == 0){
+            return false;
+        }
         $this->item = $item;
         $this->removeOld();
         $this->insertNewSimilarities();

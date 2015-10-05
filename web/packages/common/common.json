@@ -46,6 +46,7 @@
     "./vendor/yiisoft/yii2/assets/yii.activeForm.js",
     "./vendor/yiisoft/yii2/assets/yii.validation.js",
     "./vendor/cinghie/yii2-cookie-consent/assets/js/cookieconsent.js",
-    "./vendor/kartik-v/yii2-widget-growl/assets/js/bootstrap-notify.js"
+    "./vendor/kartik-v/yii2-widget-growl/assets/js/bootstrap-notify.js",
+    "./modules/item/widgets/views/assets/menuSearch.js"
   ]
 }

@@ -21,6 +21,9 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
 <!--Area for all categories-->
 <Section id="categories">
     <div class="container">
+        <div class="col-sm-12 text-center">
+            <h2><?= Yii::t("home.grid.header", "Rent this now") ?></h2>
+        </div>
         <div class="row">
             <?php
             foreach ($items as $i => $item) {

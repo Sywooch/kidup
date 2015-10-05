@@ -39320,7 +39320,15 @@ $('#menu-search-form').on('submit', function (event) {
                     }
                 }
             });
+            window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
+        }, function() {
+            // in the case that it was declined
+            window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+            return false;
         });
+        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
+        return false;
     }else{
         window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
     }

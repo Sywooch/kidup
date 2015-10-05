@@ -4,7 +4,7 @@ use \kartik\social\FacebookPlugin;
 
 /**
  * @var \app\extended\web\View $this
- * @var $model \review\models\Review
+ * @var  \item\models\Item $model
  */
 
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
@@ -19,6 +19,9 @@ echo \Yii::t('item.view.share_modal.tip',
 echo "<div style='text-align:center;margin-top:20px;font-size:30px;'>";
 echo FacebookPlugin::widget([
     'type' => FacebookPlugin::SHARE,
+    'settings' => [
+        'data-href' => \yii\helpers\Url::to('@web/item/'.$model->id)
+    ]
 ]);
 echo "</div>";
 

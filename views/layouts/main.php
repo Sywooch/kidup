@@ -30,8 +30,8 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!--Facebook meta tags - Important for sharing links-->
-        <meta property="og:image" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
-        <meta property="og:image:secure_url" content="<?= ImageHelper::url('kidup/facebook-kidupdk.jpg') ?>">
+        <?= \app\widgets\FacebookPreviewImage::widget() ?>
+
         <meta property="og:title" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:site_name" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:url" content="http://kidup.dk"/>

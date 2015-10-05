@@ -15,7 +15,7 @@
     <div class="form-group">
         <label class="control-label" for="edit-item-features-4"><?= Yii::t("item.create.basics.category", "Category") ?></label>
         <br>
-        <?= $model->item->category->parent->name; ?> - <?= $model->item->category->name; ?>
+        <?= $model->item->category->parent->getTranslatedName(); ?> - <?= $model->item->category->getTranslatedName(); ?>
         <?= \yii\helpers\Html::a(\Yii::t('item.create.basics.change_category_link', '(change)'), '#', ['id' => 'showCategoryChange']) ?>
 
         <?= $this->registerJs('$("#showCategoryChange").click(function(){$("#categoryChange").show();});') ?>
@@ -34,7 +34,7 @@ foreach ($model->item->category->nonSingularFeatures as $feature) {
      */
     $dropDownItems = [];
     foreach ($feature->featureValues as $f) {
-        $dropDownItems[$f->id] = $f->name;
+        $dropDownItems[$f->id] = $f->getTranslatedName();
     }
     $isRequiredText = ($feature->is_required == 1) ? \Yii::t('item.create.basics.required', '(required)') : \Yii::t('item.create.basics.optional', '(optional)');
     echo $form->field($model, "features[{$feature->id}]")->widget(\kartik\select2\Select2::className(), [

@@ -118,7 +118,7 @@
                                                 <p class="BrdtekstA" style="text-align: left;">
                                                     Vi hjælper dig med at nå dine mål med support, udlejningstips og
                                                     gode råde. Du kan også have ro i sindet: alle dækkede bookinger på
-                                                    KidUp er beskyttet af vores forældregaranti på 500.000 DKK.
+                                                    KidUp er beskyttet af vores forældregaranti på 25.000 DKK.
                                                 </p>
                                             </td>
                                         </tr>

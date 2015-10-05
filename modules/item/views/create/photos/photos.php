@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 /**
- * @var \yii\web\View $this
+ * @var \app\extended\web\View $this
  * @var \item\forms\Edit $model
  * @var string $preload
  * @var string $fileUrl
@@ -13,6 +13,13 @@ $this->registerJs("
     window.preloadImages = " . $preload . ";
     window.fileUrl = '" . $fileUrl . "/';
 ", \yii\web\View::POS_HEAD);
+
+$this->registerJsVariables([
+    'dictDefaultMessage' => \Yii::t('item.create.photo.upload_widget.default', "Drop files here to upload"),
+    'dictFallbackMessage' => \Yii::t('item.create.photo.upload_widget.fallback', "Your browser does not support drag and drop file uploads."),
+    'dictInvalidFileType' => \Yii::t('item.create.photo.upload_widget.invalid_file_type', "This type of file cannot be uploaded - images only."),
+    'dictFileTooBig' => \Yii::t('item.create.photo.upload_widget.file_to_big', "File is too big - max upload size is 10MB."),
+], 'i18n');
 
 \app\assets\DropZoneAsset::register($this);
 

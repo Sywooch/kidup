@@ -2,15 +2,15 @@
 use yii\helpers\Url;
 
 /**
- * @var $this \yii\web\View
- * @var $model \message\models\Conversation
+ * @var \yii\web\View $this
+ * @var \message\models\Conversation $model
  */
 ?>
 <tr>
     <td>
         <div class="row">
             <div class="col-md-2">
-                <a href="<?= Url::to("@web/user/{$model->id}") ?>">
+                <a href="<?= Url::to("@web/user/{$model->otherUser->user_id}") ?>">
                     <?= \user\widgets\UserImage::widget(['user_id' => $model->otherUser->user_id]) ?>
                 </a>
             </div>

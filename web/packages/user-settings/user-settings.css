@@ -544,115 +544,6 @@ label.disabled, label.readonly, .disabled label, .readonly label {
     margin-top: 0.4em;
     text-align: center;
 }
-#settings {
-  margin-top: 70px;
-  /*Profile*/
-  /*Pickup*/
-  /*Verification*/
-}
-#settings .panel {
-  background-color: transparent !important;
-}
-#settings .nav-stacked > li {
-  float: left;
-}
-@media (min-width: 768px) {
-  #settings .nav-stacked > li {
-    clear: both;
-  }
-}
-@media (max-width: 767px) {
-  #settings .nav-stacked > li {
-    padding-right: 40px;
-  }
-}
-#settings .nav-icons > li > a {
-  padding: 0 0px;
-  text-align: left;
-}
-#settings li.active a {
-  color: #E95E5E;
-}
-#settings .tab-content {
-  padding: 0 10px 30px;
-}
-#settings .save {
-  margin-top: 40px;
-}
-@media (max-width: 767px) {
-  #settings .nav-icons > li > a i {
-    font-size: 2.4em;
-    margin-bottom: 10px;
-    width: 50px;
-  }
-  #settings .nav-icons > li > a {
-    text-align: center;
-  }
-}
-@media (min-width: 767px) {
-  #settings .card {
-    margin-top: -70px;
-  }
-}
-@media (max-width: 767px) {
-  #settings .card {
-    border-radius: 0 !important;
-    box-shadow: 0 !important;
-    margin-bottom: 0 !important;
-  }
-}
-#settings img {
-  border-radius: 50%;
-  max-height: 250px;
-  width: auto;
-  border: 2px solid #71baaf;
-  display: block;
-  margin: auto;
-  margin-bottom: 20px;
-  margin-top: 50px;
-}
-#settings .register-kids .form-group {
-  position: relative;
-}
-#settings .register-kids .fa {
-  position: absolute;
-  top: 12px;
-  right: 15px;
-  color: #71baaf;
-}
-#settings .register-kids .fa.fa-trash {
-  right: -22px;
-  color: #E95E5E;
-  cursor: pointer;
-  opacity: 0.6;
-}
-#settings .register-kids .fa.fa-trash:hover {
-  opacity: 1;
-}
-#settings .register-kids small {
-  opacity: 0.7;
-}
-#settings .map {
-  margin-top: 30px;
-}
-#settings #stacked-verification .form-group {
-  padding: 10px 0;
-}
-#settings .file-preview-frame {
-  border: none;
-  box-shadow: none;
-  height: 100%;
-  display: block;
-  float: none;
-}
-#settings .file-preview-frame:hover {
-  box-shadow: none;
-}
-#settings .btn-default,
-#settings .btn-primary {
-  border-color: #e3e3e3;
-}
-
 .select2-container {
   box-sizing: border-box;
   display: inline-block;
@@ -776,6 +667,115 @@ label.disabled, label.readonly, .disabled label, .readonly label {
   padding: 0 !important;
   position: absolute !important;
   width: 1px !important; }
+
+#settings {
+  margin-top: 70px;
+  /*Profile*/
+  /*Pickup*/
+  /*Verification*/
+}
+#settings .panel {
+  background-color: transparent !important;
+}
+#settings .nav-stacked > li {
+  float: left;
+}
+@media (min-width: 768px) {
+  #settings .nav-stacked > li {
+    clear: both;
+  }
+}
+@media (max-width: 767px) {
+  #settings .nav-stacked > li {
+    padding-right: 40px;
+  }
+}
+#settings .nav-icons > li > a {
+  padding: 0 0px;
+  text-align: left;
+}
+#settings li.active a {
+  color: #E95E5E;
+}
+#settings .tab-content {
+  padding: 0 10px 30px;
+}
+#settings .save {
+  margin-top: 40px;
+}
+@media (max-width: 767px) {
+  #settings .nav-icons > li > a i {
+    font-size: 2.4em;
+    margin-bottom: 10px;
+    width: 50px;
+  }
+  #settings .nav-icons > li > a {
+    text-align: center;
+  }
+}
+@media (min-width: 767px) {
+  #settings .card {
+    margin-top: -70px;
+  }
+}
+@media (max-width: 767px) {
+  #settings .card {
+    border-radius: 0 !important;
+    box-shadow: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+#settings img {
+  border-radius: 50%;
+  max-height: 250px;
+  width: auto;
+  border: 2px solid #71baaf;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+#settings .register-kids .form-group {
+  position: relative;
+}
+#settings .register-kids .fa {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  color: #71baaf;
+}
+#settings .register-kids .fa.fa-trash {
+  right: -22px;
+  color: #E95E5E;
+  cursor: pointer;
+  opacity: 0.6;
+}
+#settings .register-kids .fa.fa-trash:hover {
+  opacity: 1;
+}
+#settings .register-kids small {
+  opacity: 0.7;
+}
+#settings .map {
+  margin-top: 30px;
+}
+#settings #stacked-verification .form-group {
+  padding: 10px 0;
+}
+#settings .file-preview-frame {
+  border: none;
+  box-shadow: none;
+  height: 100%;
+  display: block;
+  float: none;
+}
+#settings .file-preview-frame:hover {
+  box-shadow: none;
+}
+#settings .btn-default,
+#settings .btn-primary {
+  border-color: #e3e3e3;
+}
 
 /*!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2015

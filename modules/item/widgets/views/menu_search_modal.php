@@ -5,12 +5,12 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use item\widgets\GoogleAutoComplete;
 use \kartik\typeahead\Typeahead;
-
+use item\assets\MenuSearchAsset;
 /**
+ * @var \app\extended\web\View $this
  * @var \search\forms\Filter $model
  */
 \app\assets\FullModalAsset::register($this);
-
 \yii\bootstrap\Modal::begin([
     'id' => 'searchModal',
     'options' => [
@@ -81,38 +81,4 @@ use \kartik\typeahead\Typeahead;
 
 <?php
 \yii\bootstrap\Modal::end();
-$this->registerJS(
-<<<JS
-function submitMenuSearchModalForm() {
-    var vals = [];
-    var val = $("#search-filter-query").val();
-    if(val == ""){
-        val = "Strollers";
-    }
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var geocoder = new google.maps.Geocoder;
-            var latlng = {
-                lat: parseFloat(position["coords"]["latitude"]),
-                lng: parseFloat(position["coords"]["longitude"])
-            };
-            vals.push("search-filter[latitude]="+latlng.lat);
-            vals.push("search-filter[longitude]="+latlng.lng);
-            geocoder.geocode({"location": latlng}, function (results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    if (results.length > 0) {
-                        var result = results[0];
-                        var location = result["formatted_address"];
-                        vals.push("search-filter[location]=" + location);
-                        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
-                    }
-                }
-            });
-        });
-    }else{
-        window.location = event.currentTarget.action + "/" + val + "?" + vals.join("&");
-    }
-}
-JS
-);
 ?>

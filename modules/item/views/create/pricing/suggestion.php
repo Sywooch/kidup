@@ -6,7 +6,7 @@ $this->registerJsVariables([
     'daily_price' => Yii::t("item.create.pricing.suggestion.daily_price", "Daily Price"),
     'weekly_price' => Yii::t("item.create.pricing.suggestion.weekly_price", "Weekly Price"),
     'monthly_price' => Yii::t("item.create.pricing.suggestion.monthly_price", "Monthly Price")
-])
+], 'i18n')
 ?>
 
 <div class="card">
