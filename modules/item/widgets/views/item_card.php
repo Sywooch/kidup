@@ -20,12 +20,12 @@ use \review\widgets\ReviewScore;
                  style="<?= ImageHelper::bgImg($model->getImageName(0),
                      ['q' => 90, 'w' => 300]) ?>; background-size: cover; background-position: 50% 50%;">
                 <div class="price-badge">
+                    <span class="time">
+                        <?= Yii::t("item.card.from", "from") ?>
+                    </span>
                     <span class="currency">kr.</span>
                     <span class="price">
-                        <?= $model->price_week ?>
-                    </span>
-                    <span class="time">
-                        <?= Yii::t("item.card.per_week", "/ week") ?>
+                        <?= $model->price_day !== null ? $model->price_day : round($model->price_week / 7) ?>
                     </span>
                 </div>
                 <div class="author">

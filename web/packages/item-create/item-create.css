@@ -2426,6 +2426,67 @@ body .ui-tooltip {
     position: absolute !important;
 }
 .carousel.carousel-fit{position:relative}.carousel.carousel-fit.slide{overflow:hidden}.carousel.carousel-fit .carousel-inner>.next,.carousel.carousel-fit .carousel-inner>.prev{bottom:0}.carousel.carousel-fit .carousel-inner>.item{text-align:center}.carousel.carousel-fit .carousel-inner>.item>img{display:inline-block}.carousel.carousel-fit .carousel-inner>.item>.carousel-caption{bottom:0;left:0;right:0}.modal.modal-fullscreen .modal-dialog,.modal.modal-fullscreen .modal-content{bottom:0;left:0;position:absolute;right:0;top:0}.modal.modal-fullscreen .modal-dialog{margin:0;width:100%}.modal.modal-fullscreen .modal-content{border:none;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:inherit;-moz-box-shadow:inherit;-o-box-shadow:inherit;box-shadow:inherit}.modal.modal-fullscreen.force-fullscreen .modal-body{padding:0}.modal.modal-fullscreen.force-fullscreen .modal-header,.modal.modal-fullscreen.force-fullscreen .modal-footer{left:0;position:absolute;right:0}.modal.modal-fullscreen.force-fullscreen .modal-header{top:0}.modal.modal-fullscreen.force-fullscreen .modal-footer{bottom:0}
+/*!
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2013
+ * @package yii2-widgets
+ * @version 3.1.0
+ *
+ * Side navigation menu bar styling for Twitter Bootstrap 3.0
+ * Built for Yii Framework 2.0
+ * Author: Kartik Visweswaran
+ * Year: 2013
+ * For more Yii related demos visit http://demos.krajee.com
+ */
+.kv-sidenav ul {
+    padding: 0;
+    margin: 0;
+}
+
+.kv-sidenav li a {
+    border-radius: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.kv-sidenav .opened, .kv-sidenav .closed {
+    float: right;
+}
+
+.kv-sidenav .indicator {
+    color: #999999;
+}
+
+.kv-sidenav .active > a > span > .indicator {
+    color: #ffffff;
+}
+
+.kv-sidenav .active > ul {
+    background-color: #f3f8fC;
+}
+
+.kv-sidenav .nav {
+    display: none;
+}
+
+.kv-sidenav .nav .nav {
+    display: none;
+}
+
+.kv-sidenav .nav a {
+    padding-left: 9%;
+}
+
+.kv-sidenav .nav .nav a {
+    padding-left: 18%;
+}
+
+.kv-sidenav .active > ul {
+    display: block;
+}
+
+.kv-sidenav .nav .active > ul {
+    display: block;
+}
+
 /* Google Autocomplete bugfix */
 .pac-container {
   background-color: #FFF;
@@ -2596,67 +2657,6 @@ body .ui-tooltip {
 #new-rental .nav-pills > li.active > a:hover,
 #new-rental .nav-pills > li.active > a:focus {
   background-color: #dbdbdb;
-}
-
-/*!
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2013
- * @package yii2-widgets
- * @version 3.1.0
- *
- * Side navigation menu bar styling for Twitter Bootstrap 3.0
- * Built for Yii Framework 2.0
- * Author: Kartik Visweswaran
- * Year: 2013
- * For more Yii related demos visit http://demos.krajee.com
- */
-.kv-sidenav ul {
-    padding: 0;
-    margin: 0;
-}
-
-.kv-sidenav li a {
-    border-radius: 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.kv-sidenav .opened, .kv-sidenav .closed {
-    float: right;
-}
-
-.kv-sidenav .indicator {
-    color: #999999;
-}
-
-.kv-sidenav .active > a > span > .indicator {
-    color: #ffffff;
-}
-
-.kv-sidenav .active > ul {
-    background-color: #f3f8fC;
-}
-
-.kv-sidenav .nav {
-    display: none;
-}
-
-.kv-sidenav .nav .nav {
-    display: none;
-}
-
-.kv-sidenav .nav a {
-    padding-left: 9%;
-}
-
-.kv-sidenav .nav .nav a {
-    padding-left: 18%;
-}
-
-.kv-sidenav .active > ul {
-    display: block;
-}
-
-.kv-sidenav .nav .active > ul {
-    display: block;
 }
 
 /*!

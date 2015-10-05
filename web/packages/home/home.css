@@ -113,90 +113,6 @@
     width: 100%;
     height: 5px;
 }
-/* For a better mobile experience */
-@media all and (max-width: 768px) {
-  .card-width .price-badge {
-    left: 10px !important;
-  }
-  .card-width .author {
-    right: 15px !important;
-  }
-  .content {
-    padding: 20px 35px !important;
-  }
-}
-/*Gloabl product card*/
-.card-width {
-  cursor: pointer;
-  text-align: left;
-}
-.card-width .title,
-.card-width .category {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card-width .reviews,
-.card-width .location {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card-width .reviews {
-  width: 60%;
-}
-.card-width .location {
-  width: 40%;
-}
-.card-width .location {
-  text-align: right;
-}
-.card-width .footer-divs {
-  margin-top: 8px;
-}
-.card-width .price-badge {
-  position: absolute;
-  left: -2px;
-  bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  color: #FFFFFF;
-  z-index: 999999999;
-  font-size: 14px;
-  font-weight: 600;
-}
-.card-width .price-badge .price {
-  font-size: 24px;
-}
-.card-width .price-badge .time {
-  display: block;
-  margin-top: -5px;
-  font-weight: 300;
-}
-.card-width .fa {
-  font-size: 14px;
-}
-.card-width h3 {
-  font-size: 16px;
-  margin: 0;
-}
-.card-width .author {
-  position: absolute;
-  right: 1px;
-  bottom: 10px;
-}
-.card-width .image {
-  border-bottom: 3px solid #71baaf;
-}
-.card-width .content {
-  margin: 0;
-}
-.card-width .location {
-  float: right;
-}
-
 @charset "UTF-8";
 
 /*!
@@ -3322,6 +3238,91 @@ Copyright (c) 2015 Daniel Eden
     -webkit-animation-name: zoomOutUp;
     animation-name: zoomOutUp;
 }
+/* For a better mobile experience */
+@media all and (max-width: 768px) {
+  .card-width .price-badge {
+    left: 10px !important;
+  }
+  .card-width .author {
+    right: 15px !important;
+  }
+  .content {
+    padding: 20px 35px !important;
+  }
+}
+/*Gloabl product card*/
+.card-width {
+  cursor: pointer;
+  text-align: left;
+}
+.card-width .title,
+.card-width .category {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-width .reviews,
+.card-width .location {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-width .reviews {
+  width: 60%;
+}
+.card-width .location {
+  width: 40%;
+}
+.card-width .location {
+  text-align: right;
+}
+.card-width .footer-divs {
+  margin-top: 8px;
+}
+.card-width .price-badge {
+  position: absolute;
+  left: -2px;
+  bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  color: #FFFFFF;
+  z-index: 999999999;
+  font-size: 14px;
+  font-weight: 600;
+}
+.card-width .price-badge .price {
+  font-size: 24px;
+}
+.card-width .price-badge .time {
+  display: block;
+  margin-bottom: -5px;
+  margin-top: -5px;
+  font-weight: 300;
+}
+.card-width .fa {
+  font-size: 14px;
+}
+.card-width h3 {
+  font-size: 16px;
+  margin: 0;
+}
+.card-width .author {
+  position: absolute;
+  right: 1px;
+  bottom: 10px;
+}
+.card-width .image {
+  border-bottom: 3px solid #71baaf;
+}
+.card-width .content {
+  margin: 0;
+}
+.card-width .location {
+  float: right;
+}
+
 .user-review-stars .fa-star {
   color: #71baaf;
 }

@@ -156,7 +156,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                             <td>
                                                 <?php
                                                 foreach ($model->singularFeatures as $feature) {
-                                                    echo  $feature->getTranslatedName();
+                                                    echo  $feature->getTranslatedName()."<br>";
                                                 }
                                                 ?>
                                             </td>

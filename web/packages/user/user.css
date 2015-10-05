@@ -4104,6 +4104,7 @@ Copyright (c) 2015 Daniel Eden
 }
 .card-width .price-badge .time {
   display: block;
+  margin-bottom: -5px;
   margin-top: -5px;
   font-weight: 300;
 }
