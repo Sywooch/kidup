@@ -22,7 +22,7 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
 <Section id="categories">
     <div class="container">
         <div class="col-sm-12 text-center">
-            <h2><?= Yii::t("home.grid.header", "Rent this now") ?></h2>
+            <h2><?= Yii::t("home.grid.items.header", "Rent this now") ?></h2>
         </div>
         <div class="row">
             <?php
