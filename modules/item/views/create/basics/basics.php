@@ -34,7 +34,7 @@ foreach ($model->item->category->nonSingularFeatures as $feature) {
      */
     $dropDownItems = [];
     foreach ($feature->featureValues as $f) {
-        $dropDownItems[$f->id] = $f->name;
+        $dropDownItems[$f->id] = $f->getTranslatedName();
     }
     $isRequiredText = ($feature->is_required == 1) ? \Yii::t('item.create.basics.required', '(required)') : \Yii::t('item.create.basics.optional', '(optional)');
     echo $form->field($model, "features[{$feature->id}]")->widget(\kartik\select2\Select2::className(), [
