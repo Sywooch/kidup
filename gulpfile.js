@@ -76,7 +76,7 @@ gulp.task('js', function () {
     var streams = [];
     for (var p in packages) { // dont use map for this
         pack = packages[p];
-        if (pack.js.length == 0) return false;
+        if (typeof pack.js === "undefined" || pack.js.length == 0) return false;
         streams.push(gulp.src(pack.js)
             .pipe(cache('js' + p))
             .pipe(plumber())
@@ -93,7 +93,7 @@ gulp.task('css', function () {
     var streams = [];
     for (var p in packages) { // dont use map for this
         pack = packages[p];
-        if (pack.css.length == 0) continue;
+        if (typeof pack.css === "undefined" || pack.css.length == 0) continue;
         var lessFilter = filter('**/*.less', {restore: true});
         streams.push(gulp.src(pack.css)
             .pipe(cache('css' + p))
@@ -142,7 +142,7 @@ gulp.task('watch-css', function () {
 });
 
 gulp.task('watch-json', function () {
-    return gulp.watch('web/packages/**/*.json', ['css',  'js'])
+    return gulp.watch('web/packages/**/*.json', ['css', 'js'])
 });
 
 gulp.task('browser-sync', function () {

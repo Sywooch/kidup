@@ -58,6 +58,29 @@ task('deploy:cache-cleanup', function () {
     run('php {{release_path}}/yii deploy/after-deploy');
 })->desc("Cleaning cache");
 
+/**
+ * Cleanup old releases. Customized function as it needs a sudo for production
+ */
+task('cleanup', function () {
+    $releases = env('releases_list');
+
+    $keep = get('keep_releases');
+
+    while ($keep > 0) {
+        array_shift($releases);
+        --$keep;
+    }
+
+    foreach ($releases as $release) {
+        run("sudo rm -rf {{deploy_path}}/releases/$release");
+    }
+
+    run("cd {{deploy_path}} && if [ -e release ]; then rm release; fi");
+    run("cd {{deploy_path}} && if [ -h release ]; then rm release; fi");
+
+})->desc('Cleaning up old releases');
+
+
 task('deploy', [
     'deploy:prepare',
     'deploy:release',
