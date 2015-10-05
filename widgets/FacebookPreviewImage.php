@@ -12,7 +12,6 @@ use item\models\Item;
  */
 class FacebookPreviewImage extends \yii\bootstrap\Widget
 {
-
     public function run()
     {
         $route = @\Yii::$app->controller->getRoute();
