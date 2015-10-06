@@ -1832,9 +1832,10 @@ body .ui-tooltip {
 #item #booking-widget h4 .period {
   font-size: 15px;
 }
-#item #booking-widget h4 small {
+#item #booking-widget .times {
   color: white;
-  font-size: 12px;
+  font-size: 13px;
+  margin-top: -40px;
 }
 #item #booking-widget .form-control {
   border-radius: 2px;
