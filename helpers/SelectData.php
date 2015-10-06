@@ -53,8 +53,8 @@ class SelectData extends Model
 
     public static function priceUnits(){
         return [
-            'price_week' => \Yii::t('item.price.per_week', 'Price per week'),
             'price_day' => \Yii::t('item.price.per_day', 'Price per day'),
+            'price_week' => \Yii::t('item.price.per_week', 'Price per week'),
             'price_month' => \Yii::t('item.price.per_month', 'Price per month'),
         ];
     }

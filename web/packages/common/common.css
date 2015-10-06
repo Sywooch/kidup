@@ -7893,6 +7893,18 @@ fieldset[disabled] .form-control {
   background-color: #999999;
 }
 
+.section {
+  position: relative;
+  background-color: #fbfbfb;
+}
+.section-primary {
+  background-color: #71baaf;
+}
+.section-white {
+  background-color: #FFFFFF;
+}
+
+
 /*!
  * @package    yii2-krajee-base
  * @subpackage yii2-widget-activeform
@@ -8165,18 +8177,6 @@ fieldset[disabled] .twitter-typeahead .tt-input {
     background-color: #EEEEEE;
     cursor: not-allowed;
 }
-
-.section {
-  position: relative;
-  background-color: #fbfbfb;
-}
-.section-primary {
-  background-color: #71baaf;
-}
-.section-white {
-  background-color: #FFFFFF;
-}
-
 
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -13364,9 +13364,6 @@ a:focus {
   vertical-align: middle;
 }
 @media (max-width: 900px) {
-  .navbar .form-inline {
-    margin-left: -20px;
-  }
   .navbar .form-inline input {
     min-width: 200px;
   }

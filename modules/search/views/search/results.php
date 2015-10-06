@@ -17,10 +17,10 @@ use \item\widgets\ItemCard;
         </h3>
         <?php
         if ($model->resultsAreFake) {
-            ?><p><?php
+            ?><p style="padding-left:11px;"><?php
             $cat = \item\models\Category::findOne(['id' => $model->categories[0]]);
             if($cat !== null){
-                echo \Yii::t('search.results_interesting_products_text', 'Below are some products you might find interesting in {0}.', [
+                echo \Yii::t('search.results_interesting_products_text', 'Below are some other products you might find interesting.', [
                     '<b>' . $cat->getTranslatedName() . '</b>'
                 ]);
             }

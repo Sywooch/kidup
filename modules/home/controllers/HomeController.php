@@ -79,6 +79,7 @@ class HomeController extends Controller
         if($l !== null){
             Yii::$app->session->remove('lang');
             Yii::$app->session->set('lang', $lang);
+            
         }else{
             Yii::error('Language undefined: '.$lang);
         }

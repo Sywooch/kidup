@@ -16725,13 +16725,14 @@ var widgetFactory = function () {
             });
 
             settings.url = baseUrl + added.join('');
-            console.log(settings.url);
+            scrollFunc();
             return settings;
         });
 
         $("#create-booking-form").on('submit', function (event) {
             $("#booking-widget .overlay").fadeTo(0.3, 0.6);
             $("#booking-widget .overlay").css("visibility", "visible");
+            scrollFunc();
         });
 
         $("#wrapper").css("margin-bottom", "0px"); /// visual misalignment with wrapper on item view page
@@ -16774,6 +16775,7 @@ var widgetFactory = function () {
     };
 
     api.load = function () {
+        scrollFunc();
         $("#request-booking-btn").click(function (event) {
             if (window.userIsGuest == 1) {
                 event.preventDefault();
@@ -16788,6 +16790,7 @@ var widgetFactory = function () {
                 $("#create-booking-dateto").datepicker("hide");
                 $("#create-booking-datefrom").datepicker("show");
             }
+            scrollFunc();
         });
     };
 

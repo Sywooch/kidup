@@ -1,1 +1,1 @@
-{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/bower/jquery-ui/themes/smoothness/jquery-ui.css"],"js":["./vendor/bower/jquery-ui/jquery-ui.js"]}
+{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/yiisoft/yii2-authclient/assets/authchoice.css"],"js":["./vendor/yiisoft/yii2-authclient/assets/authchoice.js"]}
