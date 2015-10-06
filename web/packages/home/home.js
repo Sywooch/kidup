@@ -1303,7 +1303,7 @@ $(document).ready(function () {
         var val = $("#search-home-query").val();
         var location = $("#search-home-location").val();
         if (val == '') {
-            val = window.emptySearch;
+            val = "%20"; // temporary buisiness requirement window.emptySearch;
         }
         if ((window.emptyLocation == location || location.length == 0) && navigator.geolocation) {
             // ask permission to get the location of the user

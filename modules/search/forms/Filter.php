@@ -319,7 +319,7 @@ class Filter extends Model
     private function _getGeoData()
     {
         $location = $this->location;
-        $location = Cache::data('location_' . $this->location, function () use ($location) {
+        $location = Cache::data('location_' . $location, function () use ($location) {
             return Location::getByAddress($location);
         }, 30 * 24 * 60 * 60);
         if ($location == null) {
@@ -333,7 +333,7 @@ class Filter extends Model
 
     public function setLocation()
     {
-        if (isset($this->location)) {
+        if (isset($this->location) || (isset($this->longitude) && isset($this->latitude))) {
             return false;
         }
         // use IP based location
