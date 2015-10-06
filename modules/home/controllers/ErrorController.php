@@ -40,9 +40,6 @@ class ErrorController extends Controller
             }
 
             $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error', 'An internal server error occurred.');
-            if (YII_DEBUG) {
-                get_call_stack();
-            }
         }
 
         if (Yii::$app->getRequest()->getIsAjax()) {

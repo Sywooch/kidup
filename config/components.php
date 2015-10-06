@@ -84,7 +84,7 @@ $components = [
         'errorAction' => 'home/error/error',
     ],
     'log' => [
-        'traceLevel' => YII_DEBUG ? 3 : 0,
+        'traceLevel' => 5,
         'targets' => [
             'file' => [
                 'class' => 'yii\log\FileTarget',

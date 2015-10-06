@@ -1225,6 +1225,88 @@ body .ui-tooltip {
 }
 
 .carousel.carousel-fit{position:relative}.carousel.carousel-fit.slide{overflow:hidden}.carousel.carousel-fit .carousel-inner>.next,.carousel.carousel-fit .carousel-inner>.prev{bottom:0}.carousel.carousel-fit .carousel-inner>.item{text-align:center}.carousel.carousel-fit .carousel-inner>.item>img{display:inline-block}.carousel.carousel-fit .carousel-inner>.item>.carousel-caption{bottom:0;left:0;right:0}.modal.modal-fullscreen .modal-dialog,.modal.modal-fullscreen .modal-content{bottom:0;left:0;position:absolute;right:0;top:0}.modal.modal-fullscreen .modal-dialog{margin:0;width:100%}.modal.modal-fullscreen .modal-content{border:none;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:inherit;-moz-box-shadow:inherit;-o-box-shadow:inherit;box-shadow:inherit}.modal.modal-fullscreen.force-fullscreen .modal-body{padding:0}.modal.modal-fullscreen.force-fullscreen .modal-header,.modal.modal-fullscreen.force-fullscreen .modal-footer{left:0;position:absolute;right:0}.modal.modal-fullscreen.force-fullscreen .modal-header{top:0}.modal.modal-fullscreen.force-fullscreen .modal-footer{bottom:0}
+.clients {
+    overflow:auto;
+}
+
+.auth-icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url(authchoice.png) no-repeat;
+}
+
+.auth-icon.google, 
+.auth-icon.google_openid,
+.auth-icon.google_oauth {
+    background-position: 0 -34px;
+}
+.auth-icon.twitter {
+    background-position: 0 -68px;
+}
+.auth-icon.yandex,
+.auth-icon.yandex_openid,
+.auth-icon.yandex_oauth {
+    background-position: 0 -102px;
+}
+.auth-icon.vkontakte {
+    background-position: 0 -136px;
+}
+.auth-icon.facebook {
+    background-position: 0 -170px;
+}
+.auth-icon.mailru {
+    background-position: 0 -204px;
+}
+.auth-icon.moikrug {
+    background-position: 0 -238px;
+}
+.auth-icon.odnoklassniki {
+    background-position: 0 -272px;
+}
+.auth-icon.linkedin {
+    background-position: 0 -306px;
+}
+.auth-icon.github {
+    background-position: 0 -340px;
+}
+.auth-icon.live {
+    background-position: 0 -372px;
+}
+
+.auth-link:hover .auth-icon i,
+.auth-link:focus .auth-icon i {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url(authchoice.png) 0 0 no-repeat;
+}
+
+.auth-clients {
+    margin: 0 0 1em;
+    list-style: none;
+    overflow: auto;
+}
+
+.auth-client {
+    float: left;
+    margin: 0 1em 0 0;
+}
+
+.auth-clients .auth-client .auth-link {
+    display: block;
+    width: 58px;
+}
+
+.auth-client .auth-link .auth-icon {
+    margin: 0 auto;
+}
+
+.auth-client .auth-link .auth-title {
+    display: block;
+    margin-top: 0.4em;
+    text-align: center;
+}
 /* Google Autocomplete bugfix */
 .pac-container {
   background-color: #FFF;
@@ -1325,88 +1407,6 @@ body .ui-tooltip {
   display: none;
 }
 
-.clients {
-    overflow:auto;
-}
-
-.auth-icon {
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: url(authchoice.png) no-repeat;
-}
-
-.auth-icon.google, 
-.auth-icon.google_openid,
-.auth-icon.google_oauth {
-    background-position: 0 -34px;
-}
-.auth-icon.twitter {
-    background-position: 0 -68px;
-}
-.auth-icon.yandex,
-.auth-icon.yandex_openid,
-.auth-icon.yandex_oauth {
-    background-position: 0 -102px;
-}
-.auth-icon.vkontakte {
-    background-position: 0 -136px;
-}
-.auth-icon.facebook {
-    background-position: 0 -170px;
-}
-.auth-icon.mailru {
-    background-position: 0 -204px;
-}
-.auth-icon.moikrug {
-    background-position: 0 -238px;
-}
-.auth-icon.odnoklassniki {
-    background-position: 0 -272px;
-}
-.auth-icon.linkedin {
-    background-position: 0 -306px;
-}
-.auth-icon.github {
-    background-position: 0 -340px;
-}
-.auth-icon.live {
-    background-position: 0 -372px;
-}
-
-.auth-link:hover .auth-icon i,
-.auth-link:focus .auth-icon i {
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: url(authchoice.png) 0 0 no-repeat;
-}
-
-.auth-clients {
-    margin: 0 0 1em;
-    list-style: none;
-    overflow: auto;
-}
-
-.auth-client {
-    float: left;
-    margin: 0 1em 0 0;
-}
-
-.auth-clients .auth-client .auth-link {
-    display: block;
-    width: 58px;
-}
-
-.auth-client .auth-link .auth-icon {
-    margin: 0 auto;
-}
-
-.auth-client .auth-link .auth-title {
-    display: block;
-    margin-top: 0.4em;
-    text-align: center;
-}
 /* For a better mobile experience */
 @media all and (max-width: 768px) {
   .card-width .price-badge {

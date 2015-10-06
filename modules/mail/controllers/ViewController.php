@@ -8,6 +8,7 @@ use \booking\models\Payin;
 use \mail\models\Mailer;
 use \mail\models\MailLog;
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
@@ -33,9 +34,7 @@ class ViewController extends Controller
     {
         $url = base64_decode($url);
         preg_match("/http:\/\/(.*).kidup.dk/", $url, $output_array); // check if actually a kidup URL
-        if (count($output_array) == 0 && !YII_DEBUG) {
-            throw new ServerErrorHttpException("You're being spoofed");
-        }
+        preg_match("/https:\/\/(.*).kidup.dk/", $url, $output_array_https); // check if actually a kidup URL
 
         return $this->redirect($url);
     }
