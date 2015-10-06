@@ -19,7 +19,7 @@ $this->registerJsVariables([
     'dictFallbackMessage' => \Yii::t('item.create.photo.upload_widget.fallback', "Your browser does not support drag and drop file uploads."),
     'dictInvalidFileType' => \Yii::t('item.create.photo.upload_widget.invalid_file_type', "This type of file cannot be uploaded - images only."),
     'dictFileTooBig' => \Yii::t('item.create.photo.upload_widget.file_to_big', "File is too big - max upload size is 10MB."),
-], 'i18n');
+]);
 
 \app\assets\DropZoneAsset::register($this);
 

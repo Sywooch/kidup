@@ -1,1 +1,1 @@
-{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css"]}
+{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/bower/jquery-ui/themes/smoothness/jquery-ui.css"],"js":["./vendor/bower/jquery-ui/jquery-ui.js"]}

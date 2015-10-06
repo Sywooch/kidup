@@ -19,6 +19,7 @@ use images\components\ImageHelper;
                                 <li><p><?= Html::a(Yii::t('app.footer.about_us', 'About Us'), '@web/p/about-kidup')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app.footer.terms_and_conditions', 'Terms and Conditions'), '@web/p/terms-and-conditions')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app.footer.privacy', 'Privacy'), '@web/p/privacy')?></p></li>
+                                <li><p><?= Html::a(Yii::t('app.footer.cookies', 'Cookies'), '@web/p/cookies')?></p></li>
                                 <li><p><?= Html::a(Yii::t('app.footer.contact', 'Contact'), '@web/p/about-kidup')?></p></li>
                             </ul>
                         </div>

@@ -44,6 +44,14 @@
       vertical-align: middle;
     }
   }
+  @media (max-width: 900px) {
+    .form-inline {
+      input {
+        min-width: 200px;
+      }
+      margin-left: -20px;
+    }
+  }
   li a.btn-danger {
     margin-right: 20px !important;
     color: @danger-color;
@@ -112,7 +120,7 @@
   li a.btn-primary {
     font-weight: 600;
     color: white;
-    &:hover, &:active{
+    &:hover, &:active {
       color: white;
     }
   }
@@ -123,7 +131,7 @@
     font-weight: 600;
     color: white;
     opacity: 1;
-    &:hover, &:active{
+    &:hover, &:active {
       opacity: 0.8;
     }
   }
