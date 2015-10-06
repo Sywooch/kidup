@@ -84,13 +84,19 @@ class Filter extends Model
         // show something if there is no result
         if ($countQuery == 0) {
             $this->resultText = \Yii::t('search.no_results', 'No results found for your query.');
-            return [];
+            $this->resultsAreFake = true;
+            $this->_query = Item::find();
+            $this->_query->andWhere(['is_available' => 1]);
+            $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
+            $countQuery = clone $this->_query;
+            $countQuery = (int)$countQuery->count();
+            $this->estimatedResultCount = $countQuery;
         }
 
         $this->filterLocation();
 
         // search results, order by some semi random but constant order
-        return $this->_query->orderBy('(item.id mod 10)*item.created_at')->all();
+        return $this->_query->orderBy('(item.id mod 8)*item.created_at')->all();
     }
 
     /**
@@ -245,9 +251,10 @@ class Filter extends Model
             if ($this->resultsAreFake) {
                 // if the results are faked, use the parent category of the selected search category
                 foreach ($this->categories as $cat) {
-                    $cat = Category::find()->where(['id' => $cat])->andWhere('parent_id is not null')->one();
-                    if ($cat !== null) {
-                        $this->categories = [$cat->parent_id]; // set parent as top category
+                    $cat = Category::find()->where(['id' => $cat])->andWhere('parent_id is null')->all();
+                    $this->categories = [];
+                    foreach ($cat as $c) {
+                        $this->categories = [$c->id];
                     }
                 }
             }

@@ -8,7 +8,7 @@ $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 
 /////////////////////////////////////////////// DEPLOY API ///////////////////////////////////////////
 
-$production = server('production', '54.93.103.33', 22)
+$production = server('production', '52.29.49.174', 22)
     ->env('deploy_path', '/var/www')
     ->env('branch', 'master')
     ->user('ubuntu')

@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'password')->passwordInput([
             'class' => "form-control",
-            'placeholder' => "Password"
+            'placeholder' => \Yii::t('user.register.password_paceholder', "Password")
         ])->label(false) ?>
 
         <?= \yii\helpers\Html::submitButton(Yii::t('user.register.register_button', 'Register'),

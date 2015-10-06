@@ -38,10 +38,10 @@ Dropzone.options.dropzoneForm = {
     url: window.uploadUrl,
     addRemoveLinks: true,
     clickable: true,
-    dictDefaultMessage: i18n.dictDefaultMessage,
-    dictFallbackMessage: i18n.dictFallbackMessage,
-    dictInvalidFileType: i18n.dictInvalidFileType,
-    dictFileTooBig: i18n.dictFileTooBig
+    dictDefaultMessage: window.dictDefaultMessage,
+    dictFallbackMessage: window.dictFallbackMessage,
+    dictInvalidFileType: window.dictInvalidFileType,
+    dictFileTooBig: window.dictFileTooBig
 };
 $(document).ready(function () {
     /* Select Categories */

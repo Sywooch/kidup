@@ -200,7 +200,7 @@ use yii\helpers\Url;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="#">Færdiggør profil</a>
+                                                                        <a href="https://kidup.dk/user/settings/profile">Færdiggør profil</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -343,7 +343,7 @@ use yii\helpers\Url;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="#">Tilføj verifikationer</a>
+                                                                        <a href="https://kidup.dk/user/settings/verification">Tilføj verifikationer</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -486,7 +486,7 @@ use yii\helpers\Url;
                                                             <table class="button">
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="#">Gå på opdagelse</a>
+                                                                        <a href="https://kidup.dk/search/P%C3%A5%20Vejen">Gå på opdagelse</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>

@@ -23,7 +23,8 @@ class Pages extends Component
             53 => 'about-kidup',
             62 => 'how-to-rent',
             68 => 'why-rent',
-            26 => 'guide'
+            26 => 'guide',
+            245 => 'cookies'
         ];
         return parent::__construct();
     }
