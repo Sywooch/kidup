@@ -20,6 +20,10 @@ use item\assets\MenuSearchAsset;
     'header' => "<b>".\Yii::t("item.mobile_search.header_name", 'KidUp Search')."</b>"
 ]);
 
+$emptyLocation = \Yii::t('home.search.empty_location', 'Location: Near Me');
+$this->registerJsVariables([
+    'emptyLocation' => $emptyLocation,
+]);
 ?>
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
     <i class="fa fa-close"></i>
@@ -64,17 +68,19 @@ use item\assets\MenuSearchAsset;
 <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
     'options' => [
         'class' => 'form-control location-input',
-        'autocompleteName' => 'searchMobile'
+        'placeholder' => \Yii::t("home.search.location_placeholder", 'Location e.g. Copenhagen'),
+        'autocompleteName' => 'menu-search-modal',
+        'value' => $emptyLocation
     ],
     'autocompleteOptions' => [
         'types' => ['geocode']
     ],
-    'name' => 'autoCompleteLocationMobileWidget'
-]); ?>
+    'name' => 'autoCompleteLocationMenuSearch'
+])->label(false); ?>
 
 <?= Html::submitButton(Yii::t("item.mobile_search.search_button", 'Search'), [
     'class' => 'btn btn-danger btn-fill btn-block',
-    'onclick' => 'submitMenuSearchModalForm()'
+    'id' => 'menu-search-submit-button'
 ]) ?>
 
 <?php ActiveForm::end(); ?>
