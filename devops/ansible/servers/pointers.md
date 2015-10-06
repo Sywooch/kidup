@@ -12,3 +12,7 @@ ssh-add *.pem
 sudo chmod 0777 /home/vagrant/.ansible
 sudo chmod 0777 /home/vagrant/.ansible -R
 ansible-playbook -i ansible/test-server/hosts  ansible/beta-server.yml -vvvv
+
+
+eval `ssh-agent -s`
+ssh-add

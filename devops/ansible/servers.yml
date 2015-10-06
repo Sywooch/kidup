@@ -25,7 +25,7 @@
   sudo: true
   vars:
     web_server: apachephp
-    servername: 54.93.103.33 kidup.dk
+    servername: 52.29.49.174 kidup.dk
     timezone: Europe/Amsterdam
     hostname: kidup.dk
     doc_root: /var/www/current
