@@ -192,9 +192,14 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                 <div class="text-center" style="font-size: 22px;margin-bottom:20px;margin-top:80px;">
                     <?= Yii::t("home.grid.featured_on_header", "We are honered to be featured on") ?>
                 </div>
-                <div class="col-md-2 col-md-offset-1 text-center">
+                <div class="col-md-2 text-center">
                     <?= ImageHelper::image('kidup/home/mentions/aarhus_stiftidende.png', ['w' => 180], [
                         'style' => 'opacity:0.5;'
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-center">
+                    <?= ImageHelper::image('kidup/home/mentions/politiken.png', ['w' => 180], [
+                        'style' => 'opacity:0.5;margin-top: 4px;'
                     ]) ?>
                 </div>
                 <div class="col-md-2 text-center">
