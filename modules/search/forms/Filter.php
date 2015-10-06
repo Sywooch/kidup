@@ -75,7 +75,7 @@ class Filter extends Model
         $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
         $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
-        
+
 
         $countQuery = clone $this->_query;
         $countQuery = (int)$countQuery->count();
@@ -250,13 +250,7 @@ class Filter extends Model
         if (is_array($this->categories)) {
             if ($this->resultsAreFake) {
                 // if the results are faked, use the parent category of the selected search category
-                foreach ($this->categories as $cat) {
-                    $cat = Category::find()->where(['id' => $cat])->andWhere('parent_id is null')->all();
-                    $this->categories = [];
-                    foreach ($cat as $c) {
-                        $this->categories = [$c->id];
-                    }
-                }
+                $this->categories = null;
             }
             foreach ($this->categories as $cat) {
                 $cat = Category::find()->where(['id' => $cat])->one();
@@ -280,17 +274,15 @@ class Filter extends Model
         } else {
             $this->resultsAreFake = true;
             $suggestionWord = ItemSearch::find()->orderBy('rand()')->where(['language_id' => \Yii::$app->language])->one();
-            if($suggestionWord !== null){
+            if ($suggestionWord !== null) {
                 $t = $suggestionWord->text;
-            }else{
+            } else {
                 $t = '';
             }
             $this->resultText = \Yii::t('search.nothing_found_suggestions', "We couldn't find {0}. Perhaps try {1}?", [
                 '<b>"' . $this->query . '"</b>',
                 Html::a($t, '@web/search/' . $t, ['data-pjax' => 0])
             ]);
-            $this->categories = [[1, 7, 12, 17, 25, 30, 37][rand(0, 6)]];
-            $this->filterCategories();
         }
     }
 
@@ -319,7 +311,7 @@ class Filter extends Model
     private function _getGeoData()
     {
         $location = $this->location;
-        $location = Cache::data('location_' . $this->location, function () use ($location) {
+        $location = Cache::data('location_' . $location, function () use ($location) {
             return Location::getByAddress($location);
         }, 30 * 24 * 60 * 60);
         if ($location == null) {
@@ -333,7 +325,7 @@ class Filter extends Model
 
     public function setLocation()
     {
-        if (isset($this->location)) {
+        if (isset($this->location) || (isset($this->longitude) && isset($this->latitude))) {
             return false;
         }
         // use IP based location

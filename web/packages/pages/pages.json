@@ -1,1 +1,6 @@
-{"css":["./vendor/bower/bootstrap-modal-carousel/dist/css/bootstrap-modal-carousel.min.css","./vendor/kartik-v/yii2-widget-growl/assets/css/kv-bootstrap-notify.css","./vendor/kartik-v/yii2-krajee-base/assets/css/animate.css","./vendor/yiisoft/yii2-authclient/assets/authchoice.css"],"js":["./modules/item/widgets/views/assets/menuSearch.js","./vendor/yiisoft/yii2-authclient/assets/authchoice.js"]}
+{
+  "css": [
+  ],
+  "js": [
+  ]
+}

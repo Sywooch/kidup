@@ -59,16 +59,14 @@ AppAsset::register($this);
         return $this->render('footer.php');
     }, ['variations' => [$this->context->noFooter]]);
 
-    echo Cache::html('layout_cookie-widget', function () {
-        return \cinghie\cookieconsent\widgets\CookieWidget::widget([
-            'message' => \Yii::t('app.cookie_consent.website_uses_cookies_for_experience',
-                'This website uses cookies to ensure you get the best possible KidUp experience.'),
-            'dismiss' => \Yii::t('app.cookie_consent.accept_cookies', 'Accept'),
-            'learnMore' => \Yii::t('app.cookie_consent.get_more_info_button', 'More info'),
-            'link' => \yii\helpers\Url::to('@web/p/cookies'),
-            'theme' => 'dark-bottom'
-        ]);
-    });
+    echo \cinghie\cookieconsent\widgets\CookieWidget::widget([
+        'message' => \Yii::t('app.cookie_consent.website_uses_cookies_for_experience',
+            'This website uses cookies to ensure you get the best possible KidUp experience.'),
+        'dismiss' => \Yii::t('app.cookie_consent.accept_cookies', 'Accept'),
+        'learnMore' => \Yii::t('app.cookie_consent.get_more_info_button', 'More info'),
+        'link' => \yii\helpers\Url::to('@web/p/cookies'),
+        'theme' => false // we load the css ourselves
+    ]);
 
     if (YII_ENV == 'prod') {
         echo Cache::html('layout_ga', function () {

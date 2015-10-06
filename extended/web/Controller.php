@@ -15,6 +15,7 @@ class Controller extends \yii\web\Controller
 
     public function __construct($id, $controller)
     {
+        \yii\web\Controller::__construct($id, $controller); // do this at first, otherwise https residrect will not work
         // load over https in production, .htaccess didnt work for some reason
         if(YII_ENV == 'prod'){
             $r = \Yii::$app->request;
@@ -53,7 +54,7 @@ class Controller extends \yii\web\Controller
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
-        return \yii\web\Controller::__construct($id, $controller);
+        return true;
     }
 
 }

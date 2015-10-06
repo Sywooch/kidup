@@ -30,10 +30,8 @@
                                                 </p>
 
                                                 <p class="BrdtekstA" style="text-align: left;">
-                                                    <?= Yii::t("mail.recovery.requested_password",
-                                                        "You've requested a password recovery on KidUp, and here it is!") ?>
-                                                    <?= Yii::t("mail.recovery.click_button",
-                                                        "Please click the following button to set a new password:") ?>
+                                                    Du har sendt os en forespørgsel på at gendanne dit kodeord. Hvis dette har været en fejl skal du blot se bort fra denne mail.
+                                                    Hvis du ønsker at ændre dit kodeord skal du klikke på nedenstående knap:
                                                 </p>
                                             </td>
                                         </tr>
