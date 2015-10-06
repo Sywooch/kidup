@@ -43,7 +43,7 @@ $('#menu-search-submit-button').on('click', function (event) {
     } else if (window.emptyLocation) {
         // some autocompleted field has been filled in
         // note here that we don't know the location if it was not choosen by Google Autocomplete!
-        var autocomplete = $(window).attr('autocomplete-home-search');
+        var autocomplete = $(window).attr('autocomplete-menu-search-modal');
         var place = autocomplete.getPlace();
         if (typeof place !== 'undefined' && place.length > 0) {
             vals.push("search-filter[latitude]=" + place.geometry.location.lat());
