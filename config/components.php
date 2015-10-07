@@ -62,7 +62,6 @@ $components = [
                 // Array of twig options:
                 'options' => [
                     'auto_reload' => true,
-
                 ],
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image'
@@ -72,7 +71,11 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
-        'converter' => ['class' => 'app\extended\web\AssetManager'],
+        'hashCallback' =>
+            function ($path) {
+                return hash('md4', $path);
+            },
+        'converter' => ['class' => 'app\extended\web\AssetConverter'],
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],

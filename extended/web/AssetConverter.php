@@ -24,8 +24,6 @@ class AssetConverter extends \yii\web\AssetConverter implements AssetConverterIn
      */
     public function convert($asset, $basePath)
     {
-        return $asset;
+        return str_replace('.less', '.css', $asset);
     }
-
-
 }

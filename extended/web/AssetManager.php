@@ -2,33 +2,40 @@
 
 namespace app\extended\web;
 
+use League\Flysystem\Filesystem;
 use Yii;
+use yii\helpers\Json;
 
 class AssetManager extends \yii\web\AssetManager
 {
-    /**
-     * Dont do anything with the assets accept for returning their pathnames, View will handle the rest
-     * @param string $path
-     * @param array $options
-     * @return array
-     */
-    public function publish($path, $options = [])
-    {
-        $path = Yii::getAlias($path);
-        return [
-            $path,
-            $path
-        ];
-    }
+    public function registerOriginalsWatcher(){
+        $commonPath = 'originals.json';
+        $adapter = new \League\Flysystem\Adapter\Local(Yii::$aliases['@app'] . '/web/packages/');
+        $filesystem = new Filesystem($adapter);
 
-    /**
-     * Converts a given asset file into a CSS or JS file.
-     * @param string $asset the asset file path, relative to $basePath
-     * @param string $basePath the directory the $asset is relative to.
-     * @return string the converted asset file path, relative to $basePath.
-     */
-    public function convert($asset, $basePath)
-    {
-        return $asset;
+        if (!$filesystem->has($commonPath)) {
+            $filesystem->write($commonPath, Json::encode(['css' => [], 'js' => []]));
+        }
+        $commonAssets = Json::decode($filesystem->read($commonPath));
+        foreach ($this->bundles as $bundle){
+            foreach ($bundle->css as $file) {
+                if(strpos($bundle->sourcePath, "/vagrant/vendor") > -1 || strpos($bundle->sourcePath, "/vagrant/@bower") > -1){
+                    continue;
+                }
+                $source = str_replace("/vagrant/", '', $bundle->sourcePath).'/'.$file;
+                $source = str_replace("@app/", '', $source);
+                $commonAssets['css']["web".$bundle->baseUrl.'/'.$file] = $source;
+            }
+            foreach ($bundle->js as $file) {
+                if(strpos($bundle->sourcePath, "/vagrant/vendor") > -1 || strpos($bundle->sourcePath, "/vagrant/@bower") > -1){
+                    continue;
+                }
+                $source = str_replace("/vagrant/", '', $bundle->sourcePath).'/'.$file;
+                $source = str_replace("@app/", '', $source);
+                $commonAssets['js']["web".$bundle->baseUrl.'/'.$file] = $source;
+            }
+        }
+
+        $filesystem->update($commonPath, Json::encode($commonAssets));
     }
 }
