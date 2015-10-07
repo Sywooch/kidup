@@ -28,7 +28,8 @@ class ItemSearchAsset extends AssetBundle
         '\app\assets\AngularAsset',
         '\yii\web\JqueryAsset',
         '\yii\jui\JuiAsset',
-        '\yii\widgets\PjaxAsset'
+        '\yii\widgets\PjaxAsset',
+        'search\assets\SearchWidgetAsset'
     ];
 
 }

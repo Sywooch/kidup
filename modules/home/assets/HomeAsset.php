@@ -12,7 +12,7 @@ class HomeAsset extends AssetBundle
     public $js = [
         'js/owl.carousel.min.js',
         'js/typist.js',
-        'js/main.js',
+        'js/main.js'
     ];
 
     public $css = [
@@ -23,6 +23,7 @@ class HomeAsset extends AssetBundle
         $this->depends = [
             AppAsset::className(),
             AngularAsset::className(),
+            'search\assets\SearchWidgetAsset'
         ];
     }
 }
