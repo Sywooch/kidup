@@ -21,6 +21,6 @@ $schedule->command('cron/hour')->hourly();
 $schedule->command('cron/hour')->daily();
 
 // This command will call callback function every day at 10:00
-$schedule->call(function(\yii\console\Application $app) {
-    // Some code here...
-})->dailyAt('10:00');
+//$schedule->call(function(\yii\console\Application $app) {
+//    // Some code here...
+//})->dailyAt('10:00');

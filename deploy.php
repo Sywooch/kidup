@@ -13,11 +13,11 @@ $production = server('production', '54.93.103.33', 22)
     ->env('branch', 'master')
     ->user('ubuntu')
     ->stage('production');
-$productionLarge = server('production', '52.29.49.174', 22)
-    ->env('deploy_path', '/var/www')
-    ->env('branch', 'master')
-    ->user('ubuntu')
-    ->stage('production');
+//$productionLarge = server('production', '52.29.41.0', 22)
+//    ->env('deploy_path', '/var/www')
+//    ->env('branch', 'master')
+//    ->user('ubuntu')
+//    ->stage('production');
 $test = server('test', '178.62.234.114', 22)
     ->env('deploy_path', '/var/www')
     ->env('branch', 'develop')
@@ -26,11 +26,11 @@ $test = server('test', '178.62.234.114', 22)
 
 if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $production->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
-    $productionLarge->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
+//    $productionLarge->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
     $test->password(getenv('CIRCLECI_TEST_PASSWORD'));
 } else {
     $production->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
-    $productionLarge->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
+//    $productionLarge->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
