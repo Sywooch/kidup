@@ -18,7 +18,10 @@ echo \yii2mod\c3\chart\Chart::widget([
             ],
         ],
         'size' => [
-            'width' => '600'
+            'width' => '800'
+        ],
+        'tooltip' => [
+            'show' => true
         ],
         'axis' => [
             'x' => [
