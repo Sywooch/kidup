@@ -118,10 +118,13 @@ class View extends \yii\web\View
         $origFile = $filesystem->read($commonPath);
         $commonAssets = Json::decode($origFile);
         foreach ($this->webpackCssFiles as $file => $html) {
-            $commonAssets['css'][] = $file;
+            if(strpos($file, 'http') === 0){
+                continue;
+            }
+            $commonAssets['css'][] = str_replace(".css", ".less", 'web'.$file);
         }
         foreach ($this->webpackJsFiles as $file => $html) {
-            $commonAssets['js'][] = $file;
+            $commonAssets['js'][] = 'web'.$file;
         }
 
         $commonAssets['js'] = array_values(array_unique( $commonAssets['js']));

@@ -76,7 +76,11 @@ gulp.task('less', function () {
         var lessFilter = filter('**/*.less', {restore: true});
         var stream = gulp.src(file)
             .pipe(cache(file))
-            .pipe(plumber())
+            .pipe(plumber({
+                errorHandler: function (err) {
+                    console.log(err);
+                }
+            }))
             .pipe(lessFilter)
             .pipe(less({
                 paths: [path.join('.', '../')]

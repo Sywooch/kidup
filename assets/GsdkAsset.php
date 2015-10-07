@@ -15,10 +15,11 @@ class GsdkAsset extends AssetBundle
         "fonts/proxima/proxima.less",
         "fonts/adelle/adelle.less",
         "css/jquery-ui-1.10.0.custom.less",
-        "css/footer.less"
+        "css/footer.less",
+        "css/style.less"
     ];
     public $js = [
-        'js/basic.js'
+        "js/basic.js"
     ];
 }
 

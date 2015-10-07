@@ -15,14 +15,6 @@ class Controller extends \yii\web\Controller
 
     public function __construct($id, $controller)
     {
-        \yii\web\Controller::__construct($id, $controller); // do this at first, otherwise https residrect will not work
-        // load over https in production, .htaccess didnt work for some reason
-//        if(YII_ENV == 'prod'){
-//            $r = \Yii::$app->request;
-//            if($r->isGet && strpos($r->absoluteUrl, 'https') !== 0){
-//                return $this->redirect(str_replace('http://', 'https://', $r->absoluteUrl));
-//            }
-//        }
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }
@@ -54,7 +46,7 @@ class Controller extends \yii\web\Controller
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
-        return true;
+        return  \yii\web\Controller::__construct($id, $controller);
     }
 
 }
