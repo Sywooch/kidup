@@ -70,12 +70,19 @@ $components = [
         ],
     ],
     'assetManager' => [
-        'class' => 'app\extended\web\AssetManager',
-        'hashCallback' =>
-            function ($path) {
-                return hash('md4', $path);
-            },
-        'converter' => ['class' => 'app\extended\web\AssetConverter'],
+//        'class' => 'app\extended\web\AssetManager',
+        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? 'assets-prod.php' : 'assets.php')),
+        'converter' => [
+//            'class' => 'app\extended\web\AssetConverter',
+            'commands' =>  [
+                // compile less, minify if in production
+                'less' => [
+                    'css',
+                    'lessc {from} {to} --no-color -x'
+                ],
+            ],
+        ],
+
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
