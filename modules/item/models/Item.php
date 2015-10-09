@@ -129,7 +129,7 @@ class Item extends \item\models\base\Item
         $dailyPrices = [
             'day' => $this->price_day,
             'week' => $this->price_week / 7,
-            'month' => $this->price_week / 30,
+            'month' => $this->price_month / 30,
         ];
         if ($days <= 7) {
             $price = $dailyPrices['day'] > 0 ? $days * $dailyPrices['day'] : $days * $dailyPrices['week'];
