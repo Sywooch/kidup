@@ -44,7 +44,8 @@ class View extends \yii\web\View
             $lines[] = implode("\n", $this->jsFiles[self::POS_HEAD]);
         }
         if (!empty($this->js[self::POS_HEAD])) {
-            $lines[] = Html::script(implode("\n", $this->js[self::POS_HEAD]), ['type' => 'text/javascript']);
+            $lines[] = Html::script($this->compressJs(implode("\n", $this->js[self::POS_HEAD])),
+                ['type' => 'text/javascript']);
         }
 
         return empty($lines) ? '' : implode("\n", $lines);
@@ -79,28 +80,31 @@ class View extends \yii\web\View
                 $scripts[] = implode("\n", $this->js[\yii\web\View::POS_LOAD]);
             }
             if (!empty($scripts)) {
-                $lines[] = Html::script(implode("\n", $scripts), ['type' => 'text/javascript']);
+                $lines[] = Html::script($this->compressJs(implode("\n", $scripts)), ['type' => 'text/javascript']);
             }
         } else {
             if (!empty($this->js[\yii\web\View::POS_END])) {
-                $lines[] = Html::script(implode("\n", $this->js[\yii\web\View::POS_END]), ['type' => 'text/javascript']);
+                $lines[] = Html::script($this->compressJs(implode("\n", $this->js[\yii\web\View::POS_END])),
+                    ['type' => 'text/javascript']);
             }
             if (!empty($this->js[\yii\web\View::POS_READY])) {
                 // customization
-                $js = "var yiiOnReadyFunction = function(){\n" . implode("\n", $this->js[\yii\web\View::POS_READY]) . "\n};";
+                $js = "var yiiOnReadyFunction = function(){\n" . implode("\n",
+                        $this->js[\yii\web\View::POS_READY]) . "\n};";
                 $js .= "jQuery(document).ready(yiiOnReadyFunction);";
 
                 // customization out
-                $lines[] = Html::script($js, ['type' => 'text/javascript']);
+                $lines[] = Html::script($this->compressJs($js), ['type' => 'text/javascript']);
             }
             if (!empty($this->js[\yii\web\View::POS_LOAD])) {
-                $js = "jQuery(window).load(function () {\n" . implode("\n", $this->js[\yii\web\View::POS_LOAD]) . "\n});";
-                $lines[] = Html::script($js, ['type' => 'text/javascript']);
+                $js = "jQuery(window).load(function () {\n" . implode("\n",
+                        $this->js[\yii\web\View::POS_LOAD]) . "\n});";
+                $lines[] = Html::script($this->compressJs($js), ['type' => 'text/javascript']);
             }
         }
 
         $this->processPackageFiles();
-        $this->getAssetManager()->registerOriginalsWatcher();
+        (new AssetManager())->registerOriginalsWatcher();
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
@@ -118,19 +122,19 @@ class View extends \yii\web\View
         $origFile = $filesystem->read($commonPath);
         $commonAssets = Json::decode($origFile);
         foreach ($this->webpackCssFiles as $file => $html) {
-            if(strpos($file, 'http') === 0){
+            if (strpos($file, 'http') === 0) {
                 continue;
             }
-            $commonAssets['css'][] = str_replace(".css", ".less", 'web'.$file);
+            $commonAssets['css'][] = str_replace(".css", ".less", 'web' . $file);
         }
         foreach ($this->webpackJsFiles as $file => $html) {
-            $commonAssets['js'][] = 'web'.$file;
+            $commonAssets['js'][] = 'web' . $file;
         }
 
-        $commonAssets['js'] = array_values(array_unique( $commonAssets['js']));
-        $commonAssets['css'] = array_values(array_unique( $commonAssets['css']));
+        $commonAssets['js'] = array_values(array_unique($commonAssets['js']));
+        $commonAssets['css'] = array_values(array_unique($commonAssets['css']));
 
-        if($origFile !== Json::encode($origFile)){
+        if ($origFile !== Json::encode($origFile)) {
             $filesystem->update($commonPath, Json::encode($commonAssets));
         }
     }
@@ -139,20 +143,29 @@ class View extends \yii\web\View
      * Reigsters js variables into the scope
      * @param $array
      */
-    public function registerJsVariables($array, $scope = 'window'){
+    public function registerJsVariables($array, $scope = 'window')
+    {
         $js = "if(typeof($scope) === 'undefined'){ {$scope} = {}; };";
 
         foreach ($array as $varName => $value) {
-            $varName = $scope.".".$varName;
-            if(is_object($value) || is_array($value)){
+            $varName = $scope . "." . $varName;
+            if (is_object($value) || is_array($value)) {
                 $value = Json::encode($value);
-            }else{
-                $value = "'".$value."'";
+            } else {
+                $value = "'" . $value . "'";
             }
             $js .= <<<JS
 $varName = $value;
 JS;
         }
         $this->registerJs($js, self::POS_BEGIN);
+    }
+
+    protected function compressJs($js)
+    {
+        if (YII_ENV !== 'dev') {
+            $js = \JShrink\Minifier::minify($js);
+        }
+        return $js;
     }
 }

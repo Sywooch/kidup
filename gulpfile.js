@@ -83,7 +83,7 @@ gulp.task('less', function () {
             }))
             .pipe(lessFilter)
             .pipe(less({
-                paths: [path.join('.', '../')]
+                paths: [path.join('.')]
             }))
             .pipe(lessFilter.restore)
             .pipe(remember(file))
@@ -106,4 +106,4 @@ gulp.task('watch-less', function () {
     return gulp.watch(cssFiles, ['less'])
 });
 
-gulp.task('default', ['js', 'css', 'watch-js', 'watch-css', 'watch-less']);
+gulp.task('default', ['js', 'css', 'less','watch-js', 'watch-css', 'watch-less']);

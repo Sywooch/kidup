@@ -58,7 +58,12 @@ class AssetManager extends \yii\web\AssetManager
      */
     public function getAssetUrl($bundle, $asset)
     {
-        $asset = str_replace('.less', '.css', $asset);
+        if (strpos($asset, '.less') !== false) {
+            if (!is_file(str_replace('.less', '.css', $asset))) {
+                $this->getConverter()->convert($asset, $bundle->basePath);
+            }
+            $asset = str_replace('.less', '.css', $asset);
+        }
         if (($actualAsset = $this->resolveAsset($bundle, $asset)) !== false) {
             if (strncmp($actualAsset, '@web/', 5) === 0) {
                 $asset = substr($actualAsset, 5);

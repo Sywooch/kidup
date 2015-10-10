@@ -19,10 +19,11 @@ class HomeAsset extends AssetBundle
         'home.less',
     ];
 
-    public function __construct(){
+    public function __construct($config = []){
         $this->depends = [
             AppAsset::className(),
             AngularAsset::className(),
         ];
+        parent::__construct($config);
     }
 }

@@ -9,31 +9,52 @@
 
 $ret = [
     'bundles' => [
-//    'app\assets\AppAsset',
-        'yii\web\YiiAsset',
-        'yii\web\JqueryAsset',
-        'home\assets\HomeAsset',
+        \home\assets\HomeAsset::className(),
+        \item\assets\ItemAsset::className(),
+        \kartik\typeahead\TypeaheadAsset::className(),
+        \yii\web\JqueryAsset::className(),
+        \yii\web\YiiAsset::className(),
+        \app\assets\AppAsset::className(),
+        \review\assets\ReviewScoreAsset::className(),
+        \yii\authclient\widgets\AuthChoiceAsset::className(),
+        \cinghie\cookieconsent\assets\CookieAsset::className(),
+        \yii\widgets\ActiveFormAsset::className(),
+        \yii\validators\ValidationAsset::className(),
+        \kartik\form\ActiveFormAsset::className(),
+        \kartik\typeahead\TypeaheadHBAsset::className(),
+        \kartik\base\WidgetAsset::className()
     ],
     // Asset bundle for compression output:
     'targets' => [
-        'all' => [
+
+        'home' => [
             'class' => 'yii\web\AssetBundle',
             'basePath' => '@app/web/release-assets',
             'baseUrl' => '@web/release-assets',
-            'js' => 'js/all-{hash}.js',
-            'css' => 'css/all-{hash}.css',
+            'js' => 'js/home-{hash}.js',
+            'css' => 'css/home-{hash}.css',
+            'depends' => [
+                'home\assets\HomeAsset',
+            ]
+        ],
+        'common' => [
+            'class' => 'yii\web\AssetBundle',
+            'basePath' => '@app/web/release-assets',
+            'baseUrl' => '@web/release-assets',
+            'js' => 'js/common-{hash}.js',
+            'css' => 'css/common-{hash}.css',
+            // catches all leftovers
+            'depends' => []
         ],
     ],
     // Asset manager configuration:
     'assetManager' => [
         'basePath' => '@app/web/assets',
         'baseUrl' => '@web/assets',
-    ]
+    ],
+    'jsCompressor' => 'uglifyjs {from} -o {to} -c --define >> /dev/null 2>&1',
+    'cssCompressor' => 'cleancss -o {to} {from}',
 ];
 
-//if(YII_ENV != 'dev' || YII_CONSOLE){
-$ret['jsCompressor'] = 'uglifyjs {from} -o {to} -c --define >> /dev/null 2>&1';
-$ret['cssCompressor'] = 'cleancss -o {to} {from}';
-//}
 
 return $ret;

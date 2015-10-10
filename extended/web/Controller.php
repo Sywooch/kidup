@@ -35,7 +35,8 @@ class Controller extends \yii\web\Controller
             } else {
                 $location = IpLocation::get(\Yii::$app->request->getUserIP());
                 if ($location->country == 'Netherlands' || $location->country == 'United States' ||
-                    (YII_ENV == 'dev' || YII_ENV == 'test')) {
+                    (YII_ENV == 'dev' || YII_ENV == 'test')
+                ) {
                     Yii::$app->language = 'en-US';
                 } else {
                     Yii::$app->language = 'da-DK';
@@ -46,7 +47,6 @@ class Controller extends \yii\web\Controller
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
-        return  \yii\web\Controller::__construct($id, $controller);
+        return \yii\web\Controller::__construct($id, $controller);
     }
-
 }

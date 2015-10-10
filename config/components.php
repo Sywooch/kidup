@@ -70,12 +70,11 @@ $components = [
         ],
     ],
     'assetManager' => [
-//        'class' => 'app\extended\web\AssetManager',
-        'bundles' => require(__DIR__ . '/assets/' . ((YII_ENV == 'prod' || YII_ENV == 'stage') ? 'assets-prod.php' : 'assets.php')),
+        'class' => 'app\extended\web\AssetManager',
+//        'bundles' => require(__DIR__ . '/assets/assets-prod.php'),
         'converter' => [
-//            'class' => 'app\extended\web\AssetConverter',
+            'class' => 'yii\web\AssetConverter',
             'commands' =>  [
-                // compile less, minify if in production
                 'less' => [
                     'css',
                     'lessc {from} {to} --no-color -x'
