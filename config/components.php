@@ -71,7 +71,7 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
-        'bundles' => YII_ENV != 'dev' ? require(__DIR__ . '/assets/assets-prod.php') : [],
+        'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
         'converter' => [
             'class' => 'yii\web\AssetConverter',
             'commands' =>  [
@@ -165,7 +165,8 @@ $components = [
                 'class' => 'yii\i18n\DbMessageSource',
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
-                'enableCaching' => YII_CACHE
+                'enableCaching' => YII_CACHE,
+                'cachingDuration' => YII_CACHE ? 24*60*60 : 0
             ],
         ],
     ],
