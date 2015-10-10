@@ -28,6 +28,10 @@ phpunit.phar
 
 tests/_output
 
-web/assets
+web/assets/*
 !web/assets/_empty
+web/release-assets/css/*
+!web/release-assets/css/_empty
+web/release-assets/js/*
+!web/release-assets/js/_empty
 node_modules
