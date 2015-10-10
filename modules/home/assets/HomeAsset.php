@@ -19,11 +19,12 @@ class HomeAsset extends AssetBundle
         'home.less',
     ];
 
-    public function __construct(){
+    public function __construct($config = []){
         $this->depends = [
             AppAsset::className(),
             AngularAsset::className(),
             'search\assets\SearchWidgetAsset'
         ];
+        parent::__construct($config);
     }
 }

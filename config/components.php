@@ -62,7 +62,6 @@ $components = [
                 // Array of twig options:
                 'options' => [
                     'auto_reload' => true,
-
                 ],
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image'
@@ -72,7 +71,17 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
-        'converter' => ['class' => 'app\extended\web\AssetManager'],
+        'bundles' => YII_ENV != 'dev' ? require(__DIR__ . '/assets/assets-prod.php') : [],
+        'converter' => [
+            'class' => 'yii\web\AssetConverter',
+            'commands' =>  [
+                'less' => [
+                    'css',
+                    'lessc {from} {to} --no-color -x'
+                ],
+            ],
+        ],
+
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],

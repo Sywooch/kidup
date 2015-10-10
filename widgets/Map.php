@@ -26,7 +26,7 @@ class Map extends \yii\bootstrap\Widget {
 
         // The Tile Layer (very important)
         $tileLayer = new \dosamigos\leaflet\layers\TileLayer([
-            'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
+            'urlTemplate' => 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
             'clientOptions' => [
 //                'attribution' => 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> ' .
 //                    '<img src="http://developer.mapquest.com/content/osm/mq_logo.png">, ' .
@@ -51,7 +51,7 @@ class Map extends \yii\bootstrap\Widget {
 //        }
 
 
-        $this->getView()->registerJs("L.Icon.Default.imagePath = './../packages/images/leaflet';");
+//        $this->getView()->registerJs("L.Icon.Default.imagePath = './../packages/images/leaflet';");
         // finally render the widget
         echo \dosamigos\leaflet\widgets\Map::widget(['leafLet' => $leaflet]);
     }

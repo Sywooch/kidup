@@ -30,7 +30,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'dateTo')->widget(\yii\jui\DatePicker::className()) ?>
     </div>
     <div class="col-md-2">
-        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary 2']) ?>
     </div>
 
 </div>
