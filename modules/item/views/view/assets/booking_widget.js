@@ -128,7 +128,7 @@ var widgetFactory = function () {
 
 
     var scrollFunc = function () {
-        if ($(document).width() < 990) return false;
+        if ($(document).width() < 1184) return false;
         var docScroll = $(document).scrollTop();
         var navHeight = $('.navbar').height();
         if (typeof $('#footer').offset() === "undefined") {

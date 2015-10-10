@@ -223,9 +223,10 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                     <?php endif; ?>
                 </div>
                 <div id="bookingWidget">
-                    <div class="visible-xs visible-sm" id="mobileCloseBookingRequest"
-                         style="display:none;">
-                        <i class="fa fa-close"></i>
+                    <div class="visible-xs visible-sm visible-md">
+                        <div style="display:none !important;" id="mobileCloseBookingRequest">
+                            <i class="fa fa-close"></i>
+                        </div>
                     </div>
                     <?php echo $this->render('booking_widget', [
                         'model' => $bookingForm,
