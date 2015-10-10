@@ -5,7 +5,7 @@ IndexIgnore */*
 RewriteEngine on
 
 RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"'
-RewriteRule ^(.*)$ https://kidup.dk/$1 [L]
+RewriteRule ^(.*)$ https://www.kidup.dk/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
