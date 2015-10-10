@@ -56,16 +56,10 @@ use images\components\ImageHelper;
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 language text-center">
-                <?= Html::a('DA', '@web/home/home/change-language?lang=da-DK') ?> /
-                <?= Html::a('EN', '@web/home/home/change-language?lang=en-US') ?>
-            </div>
-        </div>
         <div class="row last">
             <div class="col-sm-12 text-center">
                 <img src="<?= ImageHelper::url('kidup/logo/horizontal-white.png') ?>" width="80px">
-                <h4>&#169;KidUp | 2015</h4>
+                <h4>&#169;KidUp | <?= date('Y') ?></h4>
             </div>
         </div>
     </div>

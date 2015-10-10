@@ -77,16 +77,17 @@ class HomeController extends Controller
         $l = \user\models\Language::findOne($lang);
 
         if($l !== null){
-            Yii::$app->session->remove('lang');
+            if(!\Yii::$app->user->isGuest){
+                $u = (new \DeepCopy\DeepCopy())->copy(\Yii::$app->user->identity->profile);
+                $u->language = $lang;
+                $u->save();
+            }
             Yii::$app->session->set('lang', $lang);
-            
+            Yii::$app->session->close(); // forces a write to the db, not done by default because it returns a redirect, not a page
         }else{
             Yii::error('Language undefined: '.$lang);
         }
-        if(!\Yii::$app->user->isGuest){
-            Yii::$app->session->setFlash('info', \Yii::t('home.flash.use_settings_for_permanent_change',
-                "Please change your profile settings to permanently change the language!"));
-        }
+
         if(isset($_SERVER["HTTP_REFERER"])){
             return $this->redirect($_SERVER["HTTP_REFERER"]);
         }else{
