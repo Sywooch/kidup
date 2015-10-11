@@ -14,6 +14,8 @@ Modal::begin([
             'Yay! Your product is now online and ready to be rented out!') . '</h3>',
     'id' => 'sharingModal'
 ]);
+echo \images\components\ImageHelper::image('kidup/graphics/celebration.png', ['w' => 400]);
+echo "<br>";
 echo \Yii::t('item.view.share_modal.tip',
     'Tip: There is a 83% bigger chance to rent out the product within the first 14 days if you share it on Facebook!');
 echo "<div style='text-align:center;margin-top:20px;font-size:30px;'>";
@@ -25,8 +27,7 @@ $image = urlencode(\images\components\ImageHelper::url($model->getImageName(0), 
 ?>
     <a onClick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[url]=<?php echo $url; ?>&amp;p[images][0]=<?php echo $image; ?>','sharer','toolbar=0,status=0,width=548,height=325');"
        href="javascript: void(0)">
-        <div class="btn btn-lg btn-primary btn-fill">
-
+        <div class="btn btn-lg btn-danger">
             <?= Yii::t("facebook_share.button.text", "Share your item on facebook!") ?>
         </div>
     </a>
