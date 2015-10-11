@@ -54,7 +54,11 @@ task('deploy:minify_assets', function () {
 })->desc('Minifying assets');
 
 task('deploy:enable_ssl', function () {
-    run('sudo mv -f {{release_path}}/web/ssl.htaccess {{release_path}}/web/.htaccess');
+    $branch = env('branch');
+    // only do this for production
+    if($branch == 'master'){
+        run('sudo mv -f {{release_path}}/web/ssl.htaccess {{release_path}}/web/.htaccess');
+    }
 })->desc('Enabling ssl');
 
 task('deploy:cache-cleanup', function () {

@@ -52,13 +52,15 @@ AppAsset::register($this);
 
     <!-- Load modals -->
     <?php
-    echo Cache::html('layout_mobile-search-modal', function () {
+    echo Cache::build('layout_mobile-search-modal')->html(function () {
         return item\widgets\MenuSearchModal::widget();
     });
 
-    echo Cache::html('layout_footer', function () {
-        return $this->render('footer.php');
-    }, ['variations' => [$this->context->noFooter]]);
+    echo Cache::build('layout_mobile-search-modal')
+        ->variations($this->context->noFooter)
+        ->html(function () {
+            return $this->render('footer.php');
+        });
 
     echo \cinghie\cookieconsent\widgets\CookieWidget::widget([
         'message' => \Yii::t('app.cookie_consent.website_uses_cookies_for_experience',
@@ -69,8 +71,8 @@ AppAsset::register($this);
         'theme' => false // we load the css ourselves
     ]);
 
-    if (YII_ENV == 'prod') {
-        echo Cache::html('layout_ga', function () {
+    if (Yii::$app->keyStore->enable_analytics) {
+        echo Cache::build('layout_ga')->html(function () {
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }

@@ -70,7 +70,9 @@ class Item extends \item\models\base\Item
             }
             return $imgs;
         };
-        return Cache::data('item_names' . $this->id, $function, 60 * 60);
+        return Cache::build('item-image-names')
+            ->variations([$this->id])
+            ->duration(60 * 60)->data($function);
     }
 
     public function getImageName($order)
@@ -232,7 +234,7 @@ class Item extends \item\models\base\Item
 
     public function getCarouselImages()
     {
-        return Cache::data('item_view-images-carousel' . $this->id, function () {
+        $func = function () {
             $itemImages = $this->getImageNames();
 
             $images = [];
@@ -252,7 +254,12 @@ class Item extends \item\models\base\Item
                 ];
             }
             return $images;
-        }, 10 * 60);
+        };
+
+        return Cache::build('item-view-images-carousel')
+            ->variations([$this->id])
+            ->duration(10 * 60)
+            ->data($func);
     }
 
 

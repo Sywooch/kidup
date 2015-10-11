@@ -45,7 +45,8 @@ class Controller extends \yii\web\Controller
             }
         }
 
-        if(!\Yii::$app->user->isGuest){
+        if(Yii::$app->request->isHead
+        ){
             Yii::$app->request->enableCsrfValidation = true;
         }
         // set the locale for Carbon

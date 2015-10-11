@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc7838fff9acc3f016c7e8c533e6e39f",
-    "content-hash": "06dfdfc05beeeebf1dcc4407dbd88289",
+    "hash": "efc9d9c2703b2adcec91e6ac885b11c2",
+    "content-hash": "10c315cbb5ec13c1abea73b6cca44187",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -4774,7 +4774,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/17d27d9fde15a3aa3c9a80c5fef51c570658a4a2",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/e7c5fcb19d991da3894858bb4d4775be57094eda",
                 "reference": "17d27d9fde15a3aa3c9a80c5fef51c570658a4a2",
                 "shasum": ""
             },
@@ -5406,6 +5406,54 @@
                 "yii2"
             ],
             "time": "2015-09-29 10:49:11"
+        },
+        {
+            "name": "yiisoft/yii2-redis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-redis.git",
+                "reference": "c5b33d17602811e99ece1d7b7daee424859da797"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-redis/zipball/c5b33d17602811e99ece1d7b7daee424859da797",
+                "reference": "c5b33d17602811e99ece1d7b7daee424859da797",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\redis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "cache",
+                "redis",
+                "session",
+                "yii2"
+            ],
+            "time": "2015-09-29 10:51:47"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -7480,7 +7528,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/4ad7b96c4546b85d75dc8a7f0d3234518b5dd05a",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/35bde11fc81eecb2409eb60c5f7920659ad7e00a",
                 "reference": "4ad7b96c4546b85d75dc8a7f0d3234518b5dd05a",
                 "shasum": ""
             },
@@ -7534,7 +7582,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/984e13389331cc32d38ed7bd56a62bb4102dd515",
+                "url": "https://api.github.com/repos/symfony/console/zipball/3f8418691d71b6024adbb2a7add9598af5b0494c",
                 "reference": "984e13389331cc32d38ed7bd56a62bb4102dd515",
                 "shasum": ""
             },
@@ -7590,7 +7638,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b02e0da3b07c3f8d3a610cfeee091f0d3d7155e4",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/01e341a68e06e540e0322017506b58b0e072c626",
                 "reference": "b02e0da3b07c3f8d3a610cfeee091f0d3d7155e4",
                 "shasum": ""
             },
@@ -7640,7 +7688,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/15ae076d1b4f52aed1c53bb1b19221052b405719",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/93bfc2cc94cdfc16c728c663658117a25acd1aa5",
                 "reference": "15ae076d1b4f52aed1c53bb1b19221052b405719",
                 "shasum": ""
             },
@@ -7692,7 +7740,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/59f90e9f4e8181df7df2e4e804334be8309f1f48",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0be7b94be9dc4c5204dd89665bbd2e409738b3e3",
                 "reference": "59f90e9f4e8181df7df2e4e804334be8309f1f48",
                 "shasum": ""
             },
@@ -7749,7 +7797,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/7b47b53f465a34be054ad01fd1edd94288613cef",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/dcd5aaba34ca332abb7f33ec554ebd4d829cb202",
                 "reference": "7b47b53f465a34be054ad01fd1edd94288613cef",
                 "shasum": ""
             },
@@ -7795,7 +7843,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/cc1284d9f1a3291c4aad07ae9f8901e141bdb6a1",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/725887b209844abda9d864de722515d0fc13dd75",
                 "reference": "cc1284d9f1a3291c4aad07ae9f8901e141bdb6a1",
                 "shasum": ""
             },
@@ -8067,19 +8115,20 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dmstr/yii2-db": 20,
-        "bower-asset/momentjs": 20,
-        "kartik-v/yii2-social": 20,
-        "yiisoft/yii2-jui": 20,
-        "josegonzalez/dotenv": 20,
-        "nesbot/carbon": 20,
-        "maknz/slack": 20,
-        "monolog/monolog": 20,
-        "bower-asset/lodash": 20,
         "bower-asset/bootstrap-modal-carousel": 20,
-        "yiisoft/yii2-twig": 20,
+        "bower-asset/lodash": 20,
+        "bower-asset/momentjs": 20,
+        "dmstr/yii2-db": 20,
+        "josegonzalez/dotenv": 20,
         "kartik-v/yii2-editable": 20,
         "kartik-v/yii2-popover-x": 20,
+        "kartik-v/yii2-social": 20,
+        "maknz/slack": 20,
+        "monolog/monolog": 20,
+        "nesbot/carbon": 20,
+        "yiisoft/yii2-jui": 20,
+        "yiisoft/yii2-twig": 20,
+        "yiisoft/yii2-redis": 20,
         "warrence/yii2-kartikgii": 20
     },
     "prefer-stable": false,

@@ -8,6 +8,7 @@ use \home\forms\Search;
 use \item\models\Category;
 use \item\models\Item;
 use Yii;
+use yii\caching\TagDependency;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -57,13 +58,14 @@ class HomeController extends Controller
         $items = Yii::$app->db->cache(function () {
             // get 4 with review, or callback if not 4
             $items = Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
-            if(count($items) < 4){
-                $items = ArrayHelper::merge($items, Item::find()->limit(4-count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
+            if (count($items) < 4) {
+                $items = ArrayHelper::merge($items,
+                    Item::find()->limit(4 - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
             }
             return $items;
         }, 6 * 3600);
 
-        
+
         $res = $this->render('index', [
             'categories' => $categories,
             'items' => $items,
@@ -73,30 +75,48 @@ class HomeController extends Controller
         return $res;
     }
 
-    public function actionChangeLanguage($lang){
+    public function actionChangeLanguage($lang)
+    {
         $l = \user\models\Language::findOne($lang);
 
-        if($l !== null){
-            if(!\Yii::$app->user->isGuest){
+        if ($l !== null) {
+            if (!\Yii::$app->user->isGuest) {
                 $u = (new \DeepCopy\DeepCopy())->copy(\Yii::$app->user->identity->profile);
                 $u->language = $lang;
                 $u->save();
             }
             Yii::$app->session->set('lang', $lang);
             Yii::$app->session->close(); // forces a write to the db, not done by default because it returns a redirect, not a page
-        }else{
-            Yii::error('Language undefined: '.$lang);
+        } else {
+            Yii::error('Language undefined: ' . $lang);
         }
 
-        if(isset($_SERVER["HTTP_REFERER"])){
+        if (isset($_SERVER["HTTP_REFERER"])) {
             return $this->redirect($_SERVER["HTTP_REFERER"]);
-        }else{
+        } else {
             return $this->goHome();
         }
     }
 
-    public function actionSuperSecretCacheFlush(){
+    public function actionSuperSecretCacheFlush()
+    {
         \Yii::$app->cache->flush();
         echo 'dude.. the fu!';
+    }
+
+    public function actionTest()
+    {
+        $cache = function(){
+            return time();
+        };
+        Cache::build('some')
+            ->tags(['a', 'b'])
+            ->duration(100)
+            ->html($cache);
+    }
+
+    public function actionTestFlush()
+    {
+        TagDependency::invalidate(\Yii::$app->cache, ['a']);
     }
 }

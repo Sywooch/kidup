@@ -29,9 +29,12 @@ class FacebookTracker extends \yii\bootstrap\Widget
 
         if (isset($patterns[$route])) {
             $trackerId = $patterns[$route];
-            return Cache::data('facebook_tracker_widget-view-render'.$trackerId, function () use ($trackerId) {
-                return $this->render('fb_tracker', ['id' => $trackerId]);
-            }, 60 * 60);
+            return Cache::build('facebook_tracker_widget-view-render')
+                ->variations($trackerId)
+                ->duration(60 * 60)
+                ->data(function () use ($trackerId) {
+                    return $this->render('fb_tracker', ['id' => $trackerId]);
+                });
         }
         return '';
     }

@@ -90,7 +90,7 @@ $components = [
         'enableCsrfValidation' => false
     ],
     'cache' => [
-        'class' => (YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
+        'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
         'errorAction' => 'home/error/error',
@@ -161,6 +161,12 @@ $components = [
             'p/<page>' => 'pages/default/wordpress',
             'p/<page>/<view>' => 'pages/default/<page>',
         ],
+    ],
+    'redis' => [
+        'class' => 'yii\redis\Connection',
+        'hostname' => 'localhost',
+        'port' => 6379,
+        'database' => 0,
     ],
     'i18n' => [
         'translations' => [
