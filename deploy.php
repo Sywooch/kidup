@@ -13,11 +13,11 @@ $production = server('production', '54.93.103.33', 22)
     ->env('branch', 'master')
     ->user('ubuntu')
     ->stage('production');
-$productionLarge = server('production', '52.29.49.174', 22)
-    ->env('deploy_path', '/var/www')
-    ->env('branch', 'master')
-    ->user('ubuntu')
-    ->stage('production');
+//$productionLarge = server('production', '52.29.41.0', 22)
+//    ->env('deploy_path', '/var/www')
+//    ->env('branch', 'master')
+//    ->user('ubuntu')
+//    ->stage('production');
 $test = server('test', '178.62.234.114', 22)
     ->env('deploy_path', '/var/www')
     ->env('branch', 'develop')
@@ -26,11 +26,9 @@ $test = server('test', '178.62.234.114', 22)
 
 if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $production->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
-    $productionLarge->password(getenv('CIRCLECI_PRODUCTION_PASSWORD'));
     $test->password(getenv('CIRCLECI_TEST_PASSWORD'));
 } else {
     $production->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
-    $productionLarge->pemFile('/vagrant/devops/.private/ssh/kidup-aws.pem');
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
@@ -47,19 +45,17 @@ task('deploy:vendors', function () use ($repo_password) {
     run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
-task('deploy:bower_folder', function () {
-    run("cd {{release_path}} && [ -d ./vendor/bower-asset ] && mv ./vendor/bower-asset ./vendor/bower");
-})->desc('Moving bower asset folder');
-
 task('deploy:run_migrations', function () {
     run('php {{release_path}}/yii migrate up --interactive=0');
 })->desc('Run migrations');
 
 task('deploy:minify_assets', function () {
-    // todo change this to gulp
-    run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets-all.php {{release_path}}/config/assets/assets-all-def.php');
     run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets.php {{release_path}}/config/assets/assets-prod.php');
 })->desc('Minifying assets');
+
+task('deploy:enable_ssl', function () {
+    run('sudo mv -f {{release_path}}/web/ssl.htaccess {{release_path}}/web/.htaccess');
+})->desc('Enabling ssl');
 
 task('deploy:cache-cleanup', function () {
     run('php {{release_path}}/yii deploy/after-deploy');
@@ -95,9 +91,9 @@ task('deploy', [
     'deploy:shared',
     'deploy:writable',
     'deploy:vendors',
-//    'deploy:bower_folder',
-//    'deploy:minify_assets',
+    'deploy:minify_assets',
     'deploy:run_migrations',
+    'deploy:enable_ssl',
     'deploy:symlink',
     'deploy:cache-cleanup',
     'cleanup',

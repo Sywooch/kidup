@@ -39,9 +39,7 @@ use images\components\ImageHelper;
                                 <li><p><?= Html::a(Yii::t('app.footer.faq', 'FAQ'), '@web/p/faq')?></p></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="social">
-                        <div class="col-sm-3 text-center">
+                        <div class="col-sm-3 social">
                             <p class="titel"><?= Yii::t("app.footer.follow_us", "Follow us") ?></p>
                             <a href="https://www.facebook.com/kidup.social" target="_blank" title="Facebook">
                                 <i id="facebook" class="fa fa-facebook fa-2x"></i>
@@ -54,19 +52,14 @@ use images\components\ImageHelper;
                             </a>
                         </div>
                     </div>
+
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 language text-center">
-                <?= Html::a('DA', '@web/home/home/change-language?lang=da-DK') ?> /
-                <?= Html::a('EN', '@web/home/home/change-language?lang=en-US') ?>
             </div>
         </div>
         <div class="row last">
             <div class="col-sm-12 text-center">
                 <img src="<?= ImageHelper::url('kidup/logo/horizontal-white.png') ?>" width="80px">
-                <h4>&#169;KidUp | 2015</h4>
+                <h4>&#169;KidUp | <?= date('Y') ?></h4>
             </div>
         </div>
     </div>

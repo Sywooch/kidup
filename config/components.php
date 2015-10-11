@@ -62,7 +62,6 @@ $components = [
                 // Array of twig options:
                 'options' => [
                     'auto_reload' => true,
-
                 ],
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image'
@@ -72,7 +71,17 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
-        'converter' => ['class' => 'app\extended\web\AssetManager'],
+        'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
+        'converter' => [
+            'class' => 'yii\web\AssetConverter',
+            'commands' =>  [
+                'less' => [
+                    'css',
+                    'lessc {from} {to} --no-color -x'
+                ],
+            ],
+        ],
+
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
@@ -156,7 +165,8 @@ $components = [
                 'class' => 'yii\i18n\DbMessageSource',
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
-                'enableCaching' => YII_CACHE
+                'enableCaching' => YII_CACHE,
+                'cachingDuration' => YII_CACHE ? 24*60*60 : 0
             ],
         ],
     ],

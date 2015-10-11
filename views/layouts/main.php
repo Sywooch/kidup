@@ -35,10 +35,12 @@ AppAsset::register($this);
         <meta property="og:title" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:site_name" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
         <meta property="og:url" content="http://kidup.dk"/>
+
     </head>
     <body>
     <?php
     $this->beginBody();
+
     echo \app\widgets\FacebookTracker::widget();
     echo \app\widgets\GoogleTagManager::widget();
 

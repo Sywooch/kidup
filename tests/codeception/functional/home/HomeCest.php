@@ -28,25 +28,8 @@ class HomeCest
     {
         $I->wantTo('make sure translations work');
         $I->amOnPage('/home');
-        $I->click('DA');
-//        $I->canSee('KidUp er din online');
-        $I->canSeeElement('input#search-home-query');
-//        $I->canSee('Babyting');
-//        $I->canSee('Registrer');
-    }
-
-    public function checkTranslationChangeLinks(FunctionalTester $I) {
-        $I->amOnPage('/home');
-
-        // check state when clicked on EN
-        $I->click('EN');
-        $I->canSeeLink('EN');
-        $I->canSeeLink('DA');
-
-        // check state when clicked on DA
-        $I->click('DA');
-        $I->canSeeLink('EN');
-        $I->canSeeLink('DA');
+        $I->see('Danish');
+        $I->click('Danish');
     }
 }
 ?>

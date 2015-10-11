@@ -122,6 +122,37 @@
   position: absolute !important;
   width: 1px !important; }
 
+/*Public profile*/
+#public-profile {
+  margin-top: 70px;
+}
+#public-profile .card-user {
+  margin-top: 60px;
+}
+#public-profile .avatar {
+  border-color: #fbfbfb;
+}
+#public-profile .footer {
+  color: #9A9A9A;
+  text-align: center;
+}
+#public-profile .verifyEntity {
+  margin-bottom: 2px;
+  font-size: 22px;
+  text-align: center;
+}
+#public-profile .verifyEntity .entity {
+  padding-top: 4px;
+  font-size: 15px;
+}
+#public-profile .verifyEntity .fa-check {
+  color: #71baaf;
+}
+#public-profile h4 {
+  margin-top: -13px;
+  margin-bottom: -1px;
+}
+
 /*!
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2015
  * @version 2.0.0
@@ -770,37 +801,6 @@
 .form-control.select2-hidden-accessible {
     position: absolute !important;
 }
-/*Public profile*/
-#public-profile {
-  margin-top: 70px;
-}
-#public-profile .card-user {
-  margin-top: 60px;
-}
-#public-profile .avatar {
-  border-color: #fbfbfb;
-}
-#public-profile .footer {
-  color: #9A9A9A;
-  text-align: center;
-}
-#public-profile .verifyEntity {
-  margin-bottom: 2px;
-  font-size: 22px;
-  text-align: center;
-}
-#public-profile .verifyEntity .entity {
-  padding-top: 4px;
-  font-size: 15px;
-}
-#public-profile .verifyEntity .fa-check {
-  color: #71baaf;
-}
-#public-profile h4 {
-  margin-top: -13px;
-  margin-bottom: -1px;
-}
-
 /*!
  * @package    yii2-krajee-base
  * @subpackage yii2-widget-activeform

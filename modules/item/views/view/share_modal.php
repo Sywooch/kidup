@@ -17,12 +17,20 @@ Modal::begin([
 echo \Yii::t('item.view.share_modal.tip',
     'Tip: There is a 83% bigger chance to rent out the product within the first 14 days if you share it on Facebook!');
 echo "<div style='text-align:center;margin-top:20px;font-size:30px;'>";
-echo FacebookPlugin::widget([
-    'type' => FacebookPlugin::SHARE,
-    'settings' => [
-        'data-href' => \yii\helpers\Url::to('@web/item/'.$model->id)
-    ]
-]);
+
+$title = urlencode(\Yii::t('facebook_share.new_window_title', 'Share KidUp on Facebook'));
+$url = urlencode(\yii\helpers\Url::to('@web/item/' . $model->id));
+$image = urlencode(\images\components\ImageHelper::url($model->getImageName(0), ['w' => 400]));
+
+?>
+    <a onClick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[url]=<?php echo $url; ?>&amp;p[images][0]=<?php echo $image; ?>','sharer','toolbar=0,status=0,width=548,height=325');"
+       href="javascript: void(0)">
+        <div class="btn btn-lg btn-primary btn-fill">
+
+            <?= Yii::t("facebook_share.button.text", "Share your item on facebook!") ?>
+        </div>
+    </a>
+<?php
 echo "</div>";
 
 Modal::end();
@@ -31,6 +39,12 @@ $js = <<<JS
 $(window).load(function(){
     $('#sharingModal').modal('show');
 });
+$('.btnShare').click(function(){
+            elem = $(this);
+            postToFeed(elem.data('title'), elem.data('desc'), elem.prop('href'), elem.data('image'));
+
+            return false;
+        });
 JS;
 $this->registerJs($js);
 ?>

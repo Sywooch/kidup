@@ -8,6 +8,7 @@ $config = [
     'id' => 'KidUp',
     'name' => 'KidUp',
     'basePath' => dirname(__DIR__),
+    'sourceLanguage' => 'en', // this allows en-US translations to overwrite the default messages
     'bootstrap' => [
         'log',
         'user\\Bootstrap',

@@ -143,6 +143,29 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         </a>
 
                     </li>
+                    <li class="dropdown profile hidden-xs">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           aria-expanded="true">
+                            <?= \Yii::$app->language == 'da-DK' ?
+                                ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) :
+                                ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25])
+                            ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= Url::to('@web/home/home/change-language?lang=da-DK') ?>">
+                                    <?= ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) ?>
+                                    <?= Yii::t("menu.languages.danish", "Danish") ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>">
+                                    <?= ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25]) ?>
+                                    <?= Yii::t("menu.languages.english", "English") ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <!--Mobile menu!!-->

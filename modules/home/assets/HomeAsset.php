@@ -12,17 +12,19 @@ class HomeAsset extends AssetBundle
     public $js = [
         'js/owl.carousel.min.js',
         'js/typist.js',
-        'js/main.js',
+        'js/main.js'
     ];
 
     public $css = [
         'home.less',
     ];
 
-    public function __construct(){
+    public function __construct($config = []){
         $this->depends = [
             AppAsset::className(),
             AngularAsset::className(),
+            'search\assets\SearchWidgetAsset'
         ];
+        parent::__construct($config);
     }
 }
