@@ -77,6 +77,7 @@ $(document).ready(function () {
             $(".suggestion-daily").html('<i>' + i18n.daily_price + '</i>: ' + Math.round(val * 0.01));
             $(".suggestion-weekly").html('<i>' + i18n.weekly_price + '</i>: ' + Math.round(val * 0.03));
             $(".suggestion-monthly").html('<i>' + i18n.monthly_price + '</i>: ' + Math.round(val * 0.06));
+            $(".suggestion-yearly").html('<i>' + i18n.yearly_price + '</i>: ' + Math.round(val * 0.15));
         }, 100);
     })
 });

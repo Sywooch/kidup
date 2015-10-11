@@ -79,7 +79,7 @@ class ImageHelper extends BaseHtml
                 return '';
             }
             if (YII_ENV == 'test') {
-                return "http://placehold.it/2x2";
+                return "https://placehold.it/2x2";
             }
             $isStaticFile = false;
             $folders = explode("/", $filename);

@@ -9,24 +9,24 @@
 
 $ret = [
     'bundles' => [
+        // order does matter here for the common package to compile correctly
+        \yii\web\JqueryAsset::className(),
+        \yii\web\YiiAsset::className(),
+        \yii\widgets\ActiveFormAsset::className(),
+        \yii\validators\ValidationAsset::className(),
+        \yii\authclient\widgets\AuthChoiceAsset::className(),
+        \kartik\base\WidgetAsset::className(),
+        \kartik\form\ActiveFormAsset::className(),
+        \kartik\typeahead\TypeaheadHBAsset::className(),
         \home\assets\HomeAsset::className(),
         \item\assets\ItemAsset::className(),
         \kartik\typeahead\TypeaheadAsset::className(),
-        \yii\web\JqueryAsset::className(),
-        \yii\web\YiiAsset::className(),
         \app\assets\AppAsset::className(),
         \review\assets\ReviewScoreAsset::className(),
-        \yii\authclient\widgets\AuthChoiceAsset::className(),
         \cinghie\cookieconsent\assets\CookieAsset::className(),
-        \yii\widgets\ActiveFormAsset::className(),
-        \yii\validators\ValidationAsset::className(),
-        \kartik\form\ActiveFormAsset::className(),
-        \kartik\typeahead\TypeaheadHBAsset::className(),
-        \kartik\base\WidgetAsset::className()
     ],
     // Asset bundle for compression output:
     'targets' => [
-
         'home' => [
             'class' => 'yii\web\AssetBundle',
             'basePath' => '@app/web/release-assets',
@@ -41,6 +41,7 @@ $ret = [
             'class' => 'yii\web\AssetBundle',
             'basePath' => '@app/web/release-assets',
             'baseUrl' => '@web/release-assets',
+            // DO NOT RENAME! (see depencendy in \app\extended\web\View
             'js' => 'js/common-{hash}.js',
             'css' => 'css/common-{hash}.css',
             // catches all leftovers

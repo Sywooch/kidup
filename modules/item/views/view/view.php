@@ -142,7 +142,11 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                                     if (is_int($model->price_month)) {
                                                         echo "<br>" . $model->price_month . ' ' . Yii::t("item.view.per_month",
                                                                 "per month") . "<br>";
-                                                    } ?>
+                                                    }
+                                                    if (is_int($model->price_year)) {
+                                                        echo "<br>" . $model->price_year . ' ' . Yii::t("item.view.per_year",
+                                                                "per year") . "<br>";
+                                                    }?>
                                                 </b>
                                             </td>
                                         </tr>
