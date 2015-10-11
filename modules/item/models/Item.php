@@ -186,7 +186,7 @@ class Item extends \item\models\base\Item
                 '{n, plural, =1{1 month} other{# months}}', ['n' => $using['count']]);
             $using['period_price'] = $this->price_month;
         } else {
-            $using['period_text'] = \Yii::t('item.pricing_table.month_period',
+            $using['period_text'] = \Yii::t('item.pricing_table.year_period',
                 '{n, plural, =1{1 year} other{# years}}', ['n' => $using['count']]);
             $using['period_price'] = $this->price_year;
         }
