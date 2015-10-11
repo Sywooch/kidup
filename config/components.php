@@ -85,6 +85,9 @@ $components = [
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
+        'enableCsrfCookie' => true,
+        'csrfCookie' => ['httpOnly' => true],
+        'enableCsrfValidation' => false
     ],
     'cache' => [
         'class' => (YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
