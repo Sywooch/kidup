@@ -8,7 +8,7 @@ return [
     'components' => [
         'dbaws' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=kidup-production-large.c5gkrouylqmw.eu-central-1.rds.amazonaws.com;dbname=kidup',
+            'dsn' => 'mysql:host=kidup-production.c5gkrouylqmw.eu-central-1.rds.amazonaws.com;dbname=kidup',
             'charset' => 'utf8',
             'enableSchemaCache' => YII_CACHE,
             // Duration of schema cache.

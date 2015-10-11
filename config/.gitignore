@@ -1,5 +1,4 @@
 config-local.php
 keys/keys.env
 keys/keys.json
-assets/assets-prod.php
-assets/assets-prod-all.phpc
+#assets/assets-prod.php
