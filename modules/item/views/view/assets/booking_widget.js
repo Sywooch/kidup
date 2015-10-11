@@ -1,7 +1,8 @@
 var widgetFactory = function () {
     var api = {
         dateFrom: {},
-        dateTo: {}
+        dateTo: {},
+        buttonIsClicked: false,
     };
 
 
@@ -73,7 +74,7 @@ var widgetFactory = function () {
             var params = {};
             var baseUrl = window.location.protocol + '//' + window.location.hostname + window.location.pathname;
             // see if data table is defined, if true add the _book=true parameter
-            if (typeof $("#create-booking-form .table")[0] !== 'undefined') {
+            if (typeof $("#create-booking-form .table")[0] !== 'undefined' && api.buttonIsClicked) {
                 params['_book'] = '1';
                 $("#booking-is-being-created-message").show();
             }
@@ -147,6 +148,10 @@ var widgetFactory = function () {
     api.load = function () {
         scrollFunc();
         $("#request-booking-btn").click(function (event) {
+            api.buttonIsClicked = true;
+            setTimeout(function(){
+                api.buttonIsClicked = false;
+            },10000);
             if (window.userIsGuest == 1) {
                 event.preventDefault();
                 $('#bookingModal').modal('hide');

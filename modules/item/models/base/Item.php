@@ -18,6 +18,7 @@ use Yii;
  * @property integer $price_day
  * @property integer $price_week
  * @property integer $price_month
+ * @property integer $price_year
  * @property integer $owner_id
  * @property integer $currency_id
  * @property integer $is_available
@@ -62,6 +63,7 @@ class Item extends \yii\db\ActiveRecord
                     'price_day',
                     'price_week',
                     'price_month',
+                    'price_year',
                     'owner_id',
                     'currency_id',
                     'is_available',
@@ -96,7 +98,7 @@ class Item extends \yii\db\ActiveRecord
                 'targetClass' => Location::className(),
                 'targetAttribute' => ['location_id' => 'id']
             ],
-            [['price_day', 'price_week', 'price_month'], 'integer', 'min' => 0, 'max' => 999999],
+            [['price_day', 'price_week', 'price_month', 'price_year'], 'integer', 'min' => 0, 'max' => 999999],
             [['description'], 'string', 'min' => 2],
             [['name'], 'string', 'max' => 50]
         ];
@@ -114,6 +116,7 @@ class Item extends \yii\db\ActiveRecord
             'price_day' => Yii::t('item.attributes.price_day', 'Price Day'),
             'price_week' => Yii::t('item.attributes.price_week', 'Price Week'),
             'price_month' => Yii::t('item.attributes.price_month', 'Price Month'),
+            'price_year' => Yii::t('item.attributes.price_year', 'Price Year'),
             'owner_id' => Yii::t('item.attributes.owner_id', 'Owner'),
             'currency_id' => Yii::t('item.attributes.currency_id', 'Currency'),
             'is_available' => Yii::t('item.attributes.is_available', 'Is Available'),

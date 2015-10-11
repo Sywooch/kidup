@@ -66,7 +66,6 @@ class View extends \yii\web\View
         // todo ugly fix to prevent the all package from being loaded after ready
         if(isset($this->jsFiles[self::POS_READY])){
             foreach ($this->jsFiles[self::POS_READY] as $file => $str) {
-
                 if(strpos($file, "release-assets/js/common") === 1){
                     $this->jsFiles[self::POS_END] = ArrayHelper::merge([$file => $str], $this->jsFiles[self::POS_END]);
                     unset($this->jsFiles[self::POS_READY][$file]);
