@@ -107,11 +107,21 @@ use kartik\widgets\Select2;
                 </div>
             <?php } ?>
         </div>
+        <a href="#" id="showPasswordFields">
+            <?= \Yii::t('user.settings.account.notify_me_of', 'To change your password click here') ?>
+        </a>
+        <div class="passwordFields" style="display: none;">
+            <?= $form->field($model, 'old_password')->label(\Yii::t('user.settings.account.old_password', 'Old Password'))->passwordInput(); ?>
+            <?= $form->field($model, 'new_password')->label(\Yii::t('user.settings.account.new_password', 'New Password'))->passwordInput(); ?>
+        </div>
+        <?php $this->registerJs('$("#showPasswordFields").click(function(){$(".passwordFields").slideToggle()});'); ?>
+        <br>
         <?= \yii\helpers\Html::submitButton(Yii::t('user.settings.account.save', 'Save'),
             ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
         <br/><br/>
 
     </div>
+
 
 </div>
 <?php ActiveForm::end(); ?>
