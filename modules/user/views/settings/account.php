@@ -107,14 +107,17 @@ use kartik\widgets\Select2;
                 </div>
             <?php } ?>
         </div>
-        <a href="#" id="showPasswordFields">
-            <?= \Yii::t('user.settings.account.notify_me_of', 'To change your password click here') ?>
-        </a>
-        <div class="passwordFields" style="display: none;">
-            <?= $form->field($model, 'old_password')->label(\Yii::t('user.settings.account.old_password', 'Old Password'))->passwordInput(); ?>
-            <?= $form->field($model, 'new_password')->label(\Yii::t('user.settings.account.new_password', 'New Password'))->passwordInput(); ?>
+        <h4>
+            <?= Yii::t("user.settings.account.change_password", "Change Password") ?>
+        </h4>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'old_password')->label(\Yii::t('user.settings.account.old_password', 'Old Password'))->passwordInput(); ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'new_password')->label(\Yii::t('user.settings.account.new_password', 'New Password'))->passwordInput(); ?>
+            </div>
         </div>
-        <?php $this->registerJs('$("#showPasswordFields").click(function(){$(".passwordFields").slideToggle()});'); ?>
         <br>
         <?= \yii\helpers\Html::submitButton(Yii::t('user.settings.account.save', 'Save'),
             ['class' => 'btn btn-primary btn-fill btn-lg']) ?>
