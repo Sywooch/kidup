@@ -82,7 +82,7 @@ $config = [
 if (YII_ENV == 'dev') {
     // configuration adjustments for 'dev' environment
 
-    if(YII_DEBUG){
+    if(YII_DEBUG && !YII_CACHE){
         $config['bootstrap'][] = 'debug';
         $config['modules']['debug'] = [
             'class' => 'yii\debug\Module',

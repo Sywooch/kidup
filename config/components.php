@@ -162,12 +162,12 @@ $components = [
             'p/<page>/<view>' => 'pages/default/<page>',
         ],
     ],
-    'redis' => [
-        'class' => 'yii\redis\Connection',
-        'hostname' => 'localhost',
-        'port' => 6379,
-        'database' => 0,
-    ],
+//    'redis' => [
+//        'class' => 'yii\redis\Connection',
+//        'hostname' => 'localhost',
+//        'port' => 6379,
+//        'database' => 0,
+//    ],
     'i18n' => [
         'translations' => [
             '*' => [

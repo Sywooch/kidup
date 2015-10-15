@@ -191,14 +191,11 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif;
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
-                        <?= \app\components\Cache::build('user_widget')
-                            ->variations(\Yii::$app->user->id)
-                            ->html(function () {
-                                return \user\widgets\UserImage::widget([
-                                    'user_id' => \Yii::$app->user->id,
-                                    'width' => '40px'
-                                ]);
-                            })
+                        <?= \user\widgets\UserImage::widget([
+                            'user_id' => \Yii::$app->user->id,
+                            'width' => '40px'
+                        ]);
+
                         ?>
                     </li>
 
@@ -256,12 +253,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
-    echo Cache::build('widget_user_login_modal')->html(function () {
-        return \user\widgets\Login::widget();
-    });
-    echo Cache::build('widget_user_register_modal')->html(function () {
-        return \user\widgets\Register::widget();
-    });
+    echo \user\widgets\Login::widget();
+    echo \user\widgets\Register::widget();
 }
 
 // this is the notification plugin, showing all errors

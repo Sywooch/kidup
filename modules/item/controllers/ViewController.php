@@ -29,29 +29,20 @@ class ViewController extends Controller
                     ],
                 ],
             ],
-//            [
-//                'class' => 'yii\filters\HttpCache',
-//                'only' => ['index'],
-//                'cacheControlHeader' => 'public, max-age=300',
-//                'enabled' => true,
-//                'etagSeed' => function ($action, $params) {
-//                    $bCount = false;
-//                    if (@\Yii::$app->request->get()['id']) {
-//                        $q = Item::find()->where(['id' => \Yii::$app->request->get()['id']])->one();
-//                        if ($q !== null) {
-//                            $bCount = Json::encode([$q->getBookingsCount(), $q->updated_at]);
-//                        }
-//                    }
-//                    return md5(Json::encode([
-//                        Yii::$app->language,
-//                        \Yii::$app->session->getAllFlashes(),
-//                        \Yii::$app->user->isGuest,
-//                        \Yii::$app->request->getUrl(),
-//                        $params,
-//                        $bCount
-//                    ]));
-//                },
-//            ],
+            [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['index'],
+                'cacheControlHeader' => 'public, max-age=300',
+                'enabled' => YII_CACHE,
+            ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60 * 30,
+                'enabled' => YII_CACHE,
+                'variations' => [
+                ],
+            ],
         ];
     }
 

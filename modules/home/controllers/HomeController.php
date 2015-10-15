@@ -49,7 +49,7 @@ class HomeController extends Controller
     {
         $this->transparentNav = true;
         $this->noContainer = true;
-
+        
         $searchModel = new Search();
 
         $categories = Yii::$app->db->cache(function () {
@@ -64,7 +64,6 @@ class HomeController extends Controller
             }
             return $items;
         }, 6 * 3600);
-
 
         $res = $this->render('index', [
             'categories' => $categories,
@@ -102,21 +101,5 @@ class HomeController extends Controller
     {
         \Yii::$app->cache->flush();
         echo 'dude.. the fu!';
-    }
-
-    public function actionTest()
-    {
-        $cache = function(){
-            return time();
-        };
-        Cache::build('some')
-            ->tags(['a', 'b'])
-            ->duration(100)
-            ->html($cache);
-    }
-
-    public function actionTestFlush()
-    {
-        TagDependency::invalidate(\Yii::$app->cache, ['a']);
     }
 }
