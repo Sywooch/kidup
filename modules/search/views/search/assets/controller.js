@@ -236,3 +236,13 @@ window.submitFromModal = function(){
         $("#search-form").submit();
     },50);
 };
+
+// apply infinite scroll
+$(document).scroll(function() {
+    // check the number of pixels between the current scroll and the end of the page
+    var scrollBottom = $(document).height() - $(window).scrollTop() - $(window).height();
+    // trigger to load the next items when the bottom scroll is beneath a certain threshold
+    if (scrollBottom < 600) {
+        $('.ias-trigger').trigger('click');
+    }
+});

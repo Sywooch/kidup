@@ -4,6 +4,7 @@ namespace search\controllers;
 use app\extended\web\Controller;
 use \search\forms\Filter;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -59,17 +60,25 @@ class SearchController extends Controller
         $model->query = $query;
         $model->setLocation();
 
+        // create the data provider
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getQuery(),
+            'pagination' => [
+                'pageSize' => 30,
+            ],
+        ]);
+
         if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
             return $this->renderAjax('index', [
                 'model' => $model,
-                'results' => $model->findItems()
+                'dataProvider' => $dataProvider
             ]);
         }
 
         // render the index
         return $this->render('index', [
             'model' => $model,
-            'results' => $model->findItems()
+            'dataProvider' => $dataProvider
         ]);
     }
 }
