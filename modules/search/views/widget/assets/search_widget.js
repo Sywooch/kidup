@@ -7,7 +7,6 @@
  * @param testMode           when true, all the objects are logged to the console
  */
 function initializeSearchWidget(queryField, locationField, submitButton, testMode) {
-    testMode = false;
     // check the test mode
     if (testMode !== undefined && testMode === true) {
         console.log('Search widget test mode is on.');
