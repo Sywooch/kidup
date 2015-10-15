@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc7838fff9acc3f016c7e8c533e6e39f",
-    "content-hash": "06dfdfc05beeeebf1dcc4407dbd88289",
+    "hash": "99a7682cf9cfc74313304973bb92e317",
+    "content-hash": "ed89877e0698cc9186fc61a67866797c",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1948,7 +1948,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/44c9a6bb292e50cf8a1e4b5030c7954c2709c089",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/e6c9cd03d6b2a870e74da03332feeb97d477fc87",
                 "reference": "44c9a6bb292e50cf8a1e4b5030c7954c2709c089",
                 "shasum": ""
             },
@@ -3771,6 +3771,57 @@
             "time": "2015-04-21 15:37:51"
         },
         {
+            "name": "kop/yii2-scroll-pager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kop/yii2-scroll-pager.git",
+                "reference": "9e2f1a53db8bb5f50b906a0874b21a071a6215fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/9e2f1a53db8bb5f50b906a0874b21a071a6215fc",
+                "reference": "9e2f1a53db8bb5f50b906a0874b21a071a6215fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "webcreate/jquery-ias": "~2.2.0",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "codeception/codeception": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kop\\y2sp\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Koptiev",
+                    "email": "ivan.koptiev@codex.systems",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Infinite AJAX scrolling for Yii2 ListView widget",
+            "homepage": "http://kop.github.io/yii2-scroll-pager/",
+            "keywords": [
+                "pager",
+                "pagination",
+                "scroll",
+                "scrolling",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-08-13 19:58:46"
+        },
+        {
             "name": "kriswallsmith/buzz",
             "version": "v0.15",
             "source": {
@@ -4774,7 +4825,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/17d27d9fde15a3aa3c9a80c5fef51c570658a4a2",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/e7c5fcb19d991da3894858bb4d4775be57094eda",
                 "reference": "17d27d9fde15a3aa3c9a80c5fef51c570658a4a2",
                 "shasum": ""
             },
@@ -4880,7 +4931,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/aa1596785b515a96cd10275849dc0408ffcfef12",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/656ecc0a5ce61c5b030eddb53c9e400fa99ee48a",
                 "reference": "aa1596785b515a96cd10275849dc0408ffcfef12",
                 "shasum": ""
             },
@@ -4930,6 +4981,46 @@
                 "templating"
             ],
             "time": "2015-10-08 15:08:17"
+        },
+        {
+            "name": "webcreate/jquery-ias",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webcreate/infinite-ajax-scroll.git",
+                "reference": "7380f74fca64180a4c5da18d01065a8aef0494b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webcreate/infinite-ajax-scroll/zipball/7380f74fca64180a4c5da18d01065a8aef0494b7",
+                "reference": "7380f74fca64180a4c5da18d01065a8aef0494b7",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fieg",
+                    "email": "jeroen@fieg.nl",
+                    "homepage": "http://webcreate.nl"
+                }
+            ],
+            "description": "Infinite AJAX Scroll: A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
+            "homepage": "http://infiniteajaxscroll.com",
+            "keywords": [
+                "ajax",
+                "ias",
+                "infinite",
+                "jquery",
+                "pagination",
+                "scroll",
+                "scrolling"
+            ],
+            "time": "2015-05-08 14:58:16"
         },
         {
             "name": "willdurand/geocoder",
@@ -7058,7 +7149,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/29e632348652ace0450f96a8ffa7af2eaa1c24a1",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/3f8aec2f840d2560a5b9d5b13e552a3fac56220d",
                 "reference": "29e632348652ace0450f96a8ffa7af2eaa1c24a1",
                 "shasum": ""
             },
@@ -7480,7 +7571,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/4ad7b96c4546b85d75dc8a7f0d3234518b5dd05a",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/35bde11fc81eecb2409eb60c5f7920659ad7e00a",
                 "reference": "4ad7b96c4546b85d75dc8a7f0d3234518b5dd05a",
                 "shasum": ""
             },
@@ -7534,7 +7625,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/984e13389331cc32d38ed7bd56a62bb4102dd515",
+                "url": "https://api.github.com/repos/symfony/console/zipball/89a795226477f66745e8ea10415e769304114920",
                 "reference": "984e13389331cc32d38ed7bd56a62bb4102dd515",
                 "shasum": ""
             },
@@ -7590,7 +7681,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b02e0da3b07c3f8d3a610cfeee091f0d3d7155e4",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/01e341a68e06e540e0322017506b58b0e072c626",
                 "reference": "b02e0da3b07c3f8d3a610cfeee091f0d3d7155e4",
                 "shasum": ""
             },
@@ -7640,7 +7731,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/15ae076d1b4f52aed1c53bb1b19221052b405719",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/93bfc2cc94cdfc16c728c663658117a25acd1aa5",
                 "reference": "15ae076d1b4f52aed1c53bb1b19221052b405719",
                 "shasum": ""
             },
@@ -7692,7 +7783,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/59f90e9f4e8181df7df2e4e804334be8309f1f48",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/41899a21d196332ab23e40f76e1276f2b7aa4d0d",
                 "reference": "59f90e9f4e8181df7df2e4e804334be8309f1f48",
                 "shasum": ""
             },
@@ -7749,7 +7840,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/7b47b53f465a34be054ad01fd1edd94288613cef",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/dcd5aaba34ca332abb7f33ec554ebd4d829cb202",
                 "reference": "7b47b53f465a34be054ad01fd1edd94288613cef",
                 "shasum": ""
             },
@@ -7795,7 +7886,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/cc1284d9f1a3291c4aad07ae9f8901e141bdb6a1",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/ff7f886a33f5b7a26a94d62f6e14bb9cf0e3bf5d",
                 "reference": "cc1284d9f1a3291c4aad07ae9f8901e141bdb6a1",
                 "shasum": ""
             },
@@ -8067,19 +8158,20 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dmstr/yii2-db": 20,
-        "bower-asset/momentjs": 20,
-        "kartik-v/yii2-social": 20,
-        "yiisoft/yii2-jui": 20,
-        "josegonzalez/dotenv": 20,
-        "nesbot/carbon": 20,
-        "maknz/slack": 20,
-        "monolog/monolog": 20,
-        "bower-asset/lodash": 20,
         "bower-asset/bootstrap-modal-carousel": 20,
-        "yiisoft/yii2-twig": 20,
+        "bower-asset/lodash": 20,
+        "bower-asset/momentjs": 20,
+        "dmstr/yii2-db": 20,
+        "josegonzalez/dotenv": 20,
         "kartik-v/yii2-editable": 20,
         "kartik-v/yii2-popover-x": 20,
+        "kartik-v/yii2-social": 20,
+        "maknz/slack": 20,
+        "monolog/monolog": 20,
+        "nesbot/carbon": 20,
+        "yiisoft/yii2-jui": 20,
+        "yiisoft/yii2-twig": 20,
+        "kop/yii2-scroll-pager": 20,
         "warrence/yii2-kartikgii": 20
     },
     "prefer-stable": false,

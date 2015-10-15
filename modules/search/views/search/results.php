@@ -1,5 +1,8 @@
 <?php
+use item\models\Item;
 use \item\widgets\ItemCard;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
 
 // displaying the search results
 
@@ -15,7 +18,30 @@ use \item\widgets\ItemCard;
             echo $model->resultText;
             ?>
         </h3>
+
         <?php
+        $dataProvider = new ActiveDataProvider([
+            'query' => Item::find(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        echo ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemView' => 'item-view',
+            'itemOptions' => ['class' => 'item'],
+            'pager' => [
+                'class' => \kop\y2sp\ScrollPager::className(),
+                'negativeMargin' => 600,
+                'delay' => 200,
+                'triggerText' => 'You are awesum'
+            ]
+        ]);
+        ?>
+
+        <?php
+        // original code
+        /*
         if ($model->resultsAreFake) {
             ?><p style="padding-left:11px;"><?php
             $cat = \item\models\Category::findOne(['id' => $model->categories[0]]);
@@ -43,6 +69,7 @@ use \item\widgets\ItemCard;
         echo \yii\widgets\LinkPager::widget([
             'pagination' => $pagination,
         ]);
+        */
         ?>
     </div>
 </div>

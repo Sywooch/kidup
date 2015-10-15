@@ -11,6 +11,7 @@ use \app\assets\AppAsset;
 
 $url = @Yii::$app->request->getUrl();
 $transparent = ($url == '/' || $url == '/home');
+$displayFooter = (strpos($url, '/search/') === false);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -57,9 +58,11 @@ AppAsset::register($this);
         return item\widgets\MenuSearchModal::widget();
     });
 
-    echo Cache::html('layout_footer', function () {
-        return $this->render('footer.php');
-    }, ['variations' => [$this->context->noFooter]]);
+    if ($displayFooter) {
+        echo Cache::html('layout_footer', function () {
+            return $this->render('footer.php');
+        }, ['variations' => [$this->context->noFooter]]);
+    }
 
     echo \cinghie\cookieconsent\widgets\CookieWidget::widget([
         'message' => \Yii::t('app.cookie_consent.website_uses_cookies_for_experience',
