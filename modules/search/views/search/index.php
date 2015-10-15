@@ -62,7 +62,7 @@ $this->assetPackage = \app\assets\Package::SEARCH;
                                     <?php
                                     // render the results
                                     echo $this->render('results', [
-                                        'results' => $results,
+                                        'dataProvider' => $dataProvider,
                                         'model' => $model
                                     ]);
                                     ?>
