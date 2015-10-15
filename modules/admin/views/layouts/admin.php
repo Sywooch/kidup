@@ -132,6 +132,16 @@ desired effect
                         <span>Translations</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/category/index') ?>">
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/feature/index') ?>">
+                        <span>Features</span>
+                    </a>
+                </li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
