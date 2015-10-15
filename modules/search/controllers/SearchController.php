@@ -64,7 +64,7 @@ class SearchController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => $model->getQuery(),
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => 16,
             ],
         ]);
 
