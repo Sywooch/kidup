@@ -128,6 +128,11 @@ desired effect
                     </a>
                 </li>
                 <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/booking/index') ?>">
+                        <span>Bookings</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?= \yii\helpers\Url::to('@web/admin/translation/index') ?>">
                         <span>Translations</span>
                     </a>

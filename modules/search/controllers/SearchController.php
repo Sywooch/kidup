@@ -6,6 +6,7 @@ use \search\forms\Filter;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 
 /**
  * The item controller of the search module is used for handling actions related to searching items.
@@ -46,6 +47,8 @@ class SearchController extends Controller
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
         $this->noContainer = true;
+
+        Url::remember();
 
         $model = new Filter();
 

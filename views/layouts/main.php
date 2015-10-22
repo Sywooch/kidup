@@ -18,6 +18,7 @@ AppAsset::register($this);
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
+        <?= \app\widgets\Optimizely::widget() ?>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <?= $this->renderDynamic('echo yii\helpers\Html::csrfMetaTags();'); ?>

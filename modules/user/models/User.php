@@ -3,6 +3,7 @@
 namespace user\models;
 
 use app\helpers\Event;
+use app\jobs\SlackJob;
 use \images\components\ImageHelper;
 use \item\models\Location;
 use \mail\models\Token;
@@ -298,6 +299,8 @@ class User extends base\User implements IdentityInterface
      * @return string
      */
     public static function afterLoginUrl($type){
+
+
         // always follow the after_login_url if set
         if(\Yii::$app->session->has('after_login_url')){
             $loginUrl = \Yii::$app->session->get('after_login_url');

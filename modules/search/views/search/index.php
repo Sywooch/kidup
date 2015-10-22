@@ -111,3 +111,5 @@ $this->assetPackage = \app\assets\Package::SEARCH;
         </div>
     </div>
 <?php Pjax::end(); ?>
+
+<?= \Yii::$app->user->isGuest && !\Yii::$app->session->has('stop-attempting-signup') ? $this->render('signup-modal') : '' ?>

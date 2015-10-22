@@ -18,7 +18,7 @@ class Controller extends \yii\web\Controller
     private function checkAdmin()
     {
         if (\Yii::$app->user->isGuest || !\Yii::$app->user->identity->isAdmin()) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException("You need admin privileges to get in here!");
         }
         return false;
     }
