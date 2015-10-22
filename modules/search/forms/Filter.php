@@ -319,9 +319,10 @@ class Filter extends Model
     private function _getGeoData()
     {
         $location = $this->location;
-        $location = Cache::data('location_' . $location, function () use ($location) {
-            return Location::getByAddress($location);
-        }, 30 * 24 * 60 * 60);
+        $location = Cache::build('location')->variations($location)->duration(30 * 24 * 60 * 60)
+            ->data(function () use ($location) {
+                return Location::getByAddress($location);
+            });
         if ($location == null) {
             return false;
         }

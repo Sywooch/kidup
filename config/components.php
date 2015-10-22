@@ -75,7 +75,7 @@ $components = [
         'bundles' => [],
         'converter' => [
             'class' => 'yii\web\AssetConverter',
-            'commands' =>  [
+            'commands' => [
                 'less' => [
                     'css',
                     'lessc {from} {to} --no-color -x'
@@ -86,9 +86,13 @@ $components = [
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
+        'enableCsrfCookie' => true,
+        'enableCsrfValidation' => true,
+        'csrfCookie' => ['httpOnly' => true],
+        'enableCookieValidation' => true,
     ],
     'cache' => [
-        'class' => (YII_CACHE == true) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
+        'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
         'errorAction' => 'home/error/error',
@@ -160,6 +164,12 @@ $components = [
             'p/<page>/<view>' => 'pages/default/<page>',
         ],
     ],
+//    'redis' => [
+//        'class' => 'yii\redis\Connection',
+//        'hostname' => 'localhost',
+//        'port' => 6379,
+//        'database' => 0,
+//    ],
     'i18n' => [
         'translations' => [
             '*' => [
@@ -167,7 +177,7 @@ $components = [
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
                 'enableCaching' => YII_CACHE,
-                'cachingDuration' => YII_CACHE ? 24*60*60 : 0
+                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0
             ],
         ],
     ],

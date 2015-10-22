@@ -2,6 +2,7 @@
 use \images\components\ImageHelper;
 use \message\models\Message;
 use yii\helpers\Url;
+use app\components\Cache;
 
 /**
  * @var \yii\web\View $this
@@ -190,12 +191,11 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif;
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
-                        <?= \app\components\Cache::html('user_widget', function () {
-                            return \user\widgets\UserImage::widget([
-                                'user_id' => \Yii::$app->user->id,
-                                'width' => '40px'
-                            ]);
-                        }, ['variations' => [\Yii::$app->user->id]])
+                        <?= \user\widgets\UserImage::widget([
+                            'user_id' => \Yii::$app->user->id,
+                            'width' => '40px'
+                        ]);
+
                         ?>
                     </li>
 
@@ -253,15 +253,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
-    if ($this->beginCache('layout.menu.widgets')) {
-        echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return \user\widgets\Login::widget();
-        });
-        echo \app\components\Cache::html('widget_user_register_modal', function () {
-            return \user\widgets\Register::widget();
-        });
-        $this->endCache();
-    }
+    echo \user\widgets\Login::widget();
+    echo \user\widgets\Register::widget();
 }
 
 // this is the notification plugin, showing all errors

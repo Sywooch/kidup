@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\jobs\SlackJob;
 use item\models\base\Category;
 use item\models\base\Feature;
 use item\models\base\FeatureValue;
@@ -159,6 +160,9 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         }
         $this->stdout("{$newMessages} new inserted...");
         $this->stdout("{$updatedMessages} defaults updated...");
+        new SlackJob([
+            'message' => "@sherlockholmes New messages to be translated: {$newMessages} new ones and {$updatedMessages} are updated."
+        ]);
     }
 
 
