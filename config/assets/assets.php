@@ -57,5 +57,4 @@ $ret = [
     'cssCompressor' => 'cleancss -o {to} {from}',
 ];
 
-
 return $ret;

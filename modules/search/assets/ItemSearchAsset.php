@@ -24,6 +24,7 @@ class ItemSearchAsset extends AssetBundle
     ];
 
     public $depends = [
+        '\app\assets\AppAsset',
         '\app\assets\AngularAsset',
         '\yii\web\JqueryAsset',
         '\yii\jui\JuiAsset',
