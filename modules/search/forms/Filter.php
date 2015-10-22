@@ -57,13 +57,11 @@ class Filter extends Model
     }
 
     /**
-     * Find items.
+     * Get the query based on the values of the filters.
      *
-     * @return ActiveDataProvider the results
+     * @return \yii\db\Query Query object
      */
-    public function findItems()
-    {
-
+    public function getQuery() {
         $this->queryExtraction();
         $this->findFeatureFilters();
         // initialize the query
@@ -96,7 +94,17 @@ class Filter extends Model
         $this->filterLocation();
 
         // search results, order by some semi random but constant order
-        return $this->_query->orderBy('(item.id mod 8)*item.created_at')->all();
+        return $this->_query->orderBy('(item.id mod 8)*item.created_at');
+    }
+
+    /**
+     * Find items.
+     *
+     * @return array the results
+     */
+    public function findItems()
+    {
+        return $this->getQuery()->all();
     }
 
     /**

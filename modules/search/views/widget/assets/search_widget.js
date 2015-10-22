@@ -7,7 +7,6 @@
  * @param testMode           when true, all the objects are logged to the console
  */
 function initializeSearchWidget(queryField, locationField, submitButton, testMode) {
-    testMode = false;
     // check the test mode
     if (testMode !== undefined && testMode === true) {
         console.log('Search widget test mode is on.');
@@ -54,6 +53,9 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
 
         // the query the user has typed
         var query = queryField.val();
+
+        // make it a space when it is empty
+        if (query.length == 0) query = ' ';
 
         // fetch the geocoder
         var geocoder = new google.maps.Geocoder;

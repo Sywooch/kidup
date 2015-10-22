@@ -70,6 +70,7 @@ $this->registerJsVariables([
         'class' => 'form-control location-input',
         'placeholder' => \Yii::t("home.search.location_placeholder", 'Location e.g. Copenhagen'),
         'autocompleteName' => 'menu-search-modal',
+        'id' => 'search-modal-location',
         'value' => $emptyLocation
     ],
     'autocompleteOptions' => [

@@ -33,7 +33,7 @@ class ItemViewCest
         $I->see($item->description);
         $I->see("Product info");
         $I->see("Request to Book");
-        $I->see("DKK ".$item->price_day);
+        $I->see($item->price_day.",-");
     }
 }
 

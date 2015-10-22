@@ -20,16 +20,17 @@ class ItemSearchAsset extends AssetBundle
     ];
 
     public $js = [
-        'controller.js',
-        'infinity.directive.js',
+        'controller.js'
     ];
 
     public $depends = [
+        '\app\assets\AppAsset',
         '\app\assets\AngularAsset',
         '\yii\web\JqueryAsset',
         '\yii\jui\JuiAsset',
         '\yii\widgets\PjaxAsset',
-        'search\assets\SearchWidgetAsset'
+        '\kop\y2sp\assets\InfiniteAjaxScrollAsset',
+        '\search\assets\SearchWidgetAsset'
     ];
 
 }

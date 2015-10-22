@@ -59,6 +59,7 @@ class ViewController extends Controller
         }
 
         Url::remember('', 'after_login_url');
+        Url::remember();
         $this->noContainer = true;
 
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;

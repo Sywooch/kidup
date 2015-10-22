@@ -169,7 +169,7 @@ class Item extends \item\models\base\Item
             }
         } else {
             $price = $dailyPrices['year'] > 0 ? $days * $dailyPrices['year'] :
-                $dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week'];
+                ($dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week']);
             $using = ['year', round($days / 365, 1)];
         }
 
@@ -188,7 +188,7 @@ class Item extends \item\models\base\Item
                 '{n, plural, =1{1 month} other{# months}}', ['n' => $using['count']]);
             $using['period_price'] = $this->price_month;
         } else {
-            $using['period_text'] = \Yii::t('item.pricing_table.year_period',
+            $using['period_text'] = \Yii::t('item.pricing_table.month_year',
                 '{n, plural, =1{1 year} other{# years}}', ['n' => $using['count']]);
             $using['period_price'] = $this->price_year;
         }

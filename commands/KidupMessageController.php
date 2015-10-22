@@ -99,7 +99,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         foreach ($messages as $category => $categoryMessages) {
             foreach ($categoryMessages as $i => $m) {
                 if ($m !== $categoryMessages[0]) {
-                    if ($category == '' || $category == ' ') {
+                    if ($category == '' || $category == ' ' || $category == 'app') {
                         unset($messages[$category]);
                         continue;
                     }

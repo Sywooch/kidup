@@ -12,6 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
+use app\jobs\SlackJob;
 use \user\Finder;
 use \user\forms\Login;
 use \user\models\Account;
@@ -133,6 +134,9 @@ class SecurityController extends Controller
                 'data' => json_encode($attributes),
             ]);
             $account->save(false);
+            new SlackJob([
+                'message' => "User registered with fb via page ".substr(Url::previous(),0,100)
+            ]);
         }
 
         if (null === ($user = $account->user)) {

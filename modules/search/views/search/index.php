@@ -62,7 +62,7 @@ $this->assetPackage = \app\assets\Package::SEARCH;
                                     <?php
                                     // render the results
                                     echo $this->render('results', [
-                                        'results' => $results,
+                                        'dataProvider' => $dataProvider,
                                         'model' => $model
                                     ]);
                                     ?>
@@ -111,3 +111,5 @@ $this->assetPackage = \app\assets\Package::SEARCH;
         </div>
     </div>
 <?php Pjax::end(); ?>
+
+<?= \Yii::$app->user->isGuest && !\Yii::$app->session->has('stop-attempting-signup') ? $this->render('signup-modal') : '' ?>

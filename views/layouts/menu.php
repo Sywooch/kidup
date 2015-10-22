@@ -33,8 +33,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
                     <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
-                        ['h' => 46], ['style' => 'padding-top:5px;'])
-                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
+                        ['h' => 53], ['style' => 'padding-top:5px;'])
+                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53]) ?>
                 </a>
             </div>
 
@@ -149,7 +149,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                            aria-expanded="true">
                             <?= \Yii::$app->language == 'da-DK' ?
                                 ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) :
-                                ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25])
+                                ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25])
                             ?>
                         </a>
                         <ul class="dropdown-menu">
@@ -161,7 +161,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                             </li>
                             <li>
                                 <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>">
-                                    <?= ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25]) ?>
+                                    <?= ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.english", "English") ?>
                                 </a>
                             </li>

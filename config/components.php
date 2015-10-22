@@ -71,7 +71,8 @@ $components = [
     ],
     'assetManager' => [
         'class' => 'app\extended\web\AssetManager',
-        'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
+//        'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
+        'bundles' => [],
         'converter' => [
             'class' => 'yii\web\AssetConverter',
             'commands' =>  [
