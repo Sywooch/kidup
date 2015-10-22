@@ -13,12 +13,14 @@ $url = @Yii::$app->request->getUrl();
 $transparent = ($url == '/' || $url == '/home');
 $displayFooter = (strpos($url, '/search/') === false);
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
         <?= \app\widgets\Optimizely::widget() ?>
+        <?= $this->renderDynamic('echo yii\helpers\Html::csrfMetaTags();'); ?>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <title>
@@ -54,14 +56,16 @@ AppAsset::register($this);
 
     <!-- Load modals -->
     <?php
-    echo Cache::build('layout_mobile-search-modal')->html(function () {
-        return item\widgets\MenuSearchModal::widget();
-    });
+    echo Cache::build('layout_mobile-search-modal')
+        ->html(function () {
+            return item\widgets\MenuSearchModal::widget();
+        });
 
     if ($displayFooter) {
-        echo Cache::html('layout_footer', function () {
-            return $this->render('footer.php');
-        }, ['variations' => [$this->context->noFooter]]);
+        echo Cache::build('layout_footer')
+            ->html(function () {
+                return $this->render('footer.php');
+            });
     }
 
     echo \cinghie\cookieconsent\widgets\CookieWidget::widget([
@@ -74,7 +78,7 @@ AppAsset::register($this);
     ]);
 
     if (YII_ENV == 'prod') {
-        echo Cache::html('layout_ga', function () {
+        echo Cache::build('layout_ga')->html(function () {
             return \kartik\social\GoogleAnalytics::widget([]);
         });
     }

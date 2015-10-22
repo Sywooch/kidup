@@ -32,11 +32,18 @@ class Register extends Widget
     /** @inheritdoc */
     public function run()
     {
+        if(!\Yii::$app->user->isGuest){
+            return false;
+        }
         $model = new Registration();
 
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post()) && $model->register()) {
+
+            if(YII_ENV == 'test'){
+                return false;
+            }
             return \Yii::$app->controller->redirect(User::afterLoginUrl('registration'));
         }
 
