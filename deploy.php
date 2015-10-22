@@ -55,7 +55,7 @@ task('deploy:minify_assets', function () {
 
 task('deploy:enable_ssl', function () {
     // only do this for production
-    if(env('stage') == 'production'){
+    if(env('branch') == 'master'){
         run('sudo mv -f {{release_path}}/web/ssl.htaccess {{release_path}}/web/.htaccess');
     }
 })->desc('Enabling ssl');
