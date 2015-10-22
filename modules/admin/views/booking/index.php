@@ -7,17 +7,20 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var \admin\models\search\Item $searchModel
+ * @var admin\models\search\Booking $searchModel
  */
 
-$this->title = 'Items';
+$this->title = 'Bookings';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="item-index">
+<div class="booking-index">
+    <div class="page-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+    </div>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php /* echo Html::a('Create Item', ['create'], ['class' => 'btn btn-success'])*/ ?>
+        <?php /* echo Html::a('Create Booking', ['create'], ['class' => 'btn btn-success'])*/ ?>
     </p>
 
     <?php Pjax::begin();
@@ -26,43 +29,45 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'name',
             [
-                'attribute' => 'description',
+                'attribute' => 'status',
                 'value' => function ($model) {
-                    return substr($model->description, 0, 50) . "...";
+                    return $model->getStatusName();
+                }
+            ],
+            [
+                'attribute' => 'item_id',
+                'value' => function ($model) {
+                    return Html::a($model->item->name,'@web/admin/item/view?id='.$model->item->id);
                 },
                 'format' => 'raw'
             ],
-            'price_week',
             [
-                'attribute' => 'owner_id',
+                'attribute' => 'renter_id',
                 'value' => function ($model) {
-                    return Html::a($model->owner->email, '@web/admin/user/view?id=' . $model->owner->id);
+                    return Html::a($model->renter->email,'@web/admin/user/view?id='.$model->renter->id);
                 },
                 'format' => 'raw'
             ],
-            'is_available:boolean',
+            'time_from:datetime',
+            'time_to:datetime',
+//            'item_backup:ntext', 
             'created_at:datetime',
-            'updated_at:datetime',
-            [
-                'attribute' => 'category_id',
-                'value' => function ($model) {
-                    return $model->category->name;
-                },
-                'format' => 'raw'
-            ],
+//            'payin_id', 
+//            'payout_id', 
+//            'amount_item', 
+//            'amount_payin', 
+//            'amount_payin_fee', 
+//            'amount_payin_fee_tax', 
+//            'amount_payin_costs', 
+//            'amount_payout', 
+//            'amount_payout_fee', 
+//            'amount_payout_fee_tax', 
+//            'request_expires_at', 
+//            'promotion_code_id', 
+
             [
                 'class' => 'yii\grid\ActionColumn',
-                'buttons' => [
-                    'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
-                            Yii::$app->urlManager->createUrl(['admin/item/view', 'id' => $model->id, 'edit' => 't']), [
-                                'title' => 'Edit',
-                            ]);
-                    }
-
-                ],
             ],
         ],
         'responsive' => true,
