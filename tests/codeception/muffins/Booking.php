@@ -36,7 +36,5 @@ class Booking extends \booking\models\Booking
     }
 
     public static function callback($object, $saved){
-        Debug::debug($object);
-        Debug::debug($saved);
     }
 }
