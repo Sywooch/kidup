@@ -167,7 +167,7 @@ class Item extends \item\models\base\Item
             }
         } else {
             $price = $dailyPrices['year'] > 0 ? $days * $dailyPrices['year'] :
-                $dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week'];
+                ($dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week']);
             $using = ['year', round($days / 365, 1)];
         }
 
@@ -218,7 +218,6 @@ class Item extends \item\models\base\Item
     {
         $prices = $this->getPriceForPeriod($from, $to, $currency);
         $days = floor(($to - $from) / (60 * 60 * 24));
-
         return [
             'price' => [
                 $prices['periodInfo']['period_text'] . ' x ' . $currency->forex_name . ' ' . $prices['periodInfo']['period_price'],
