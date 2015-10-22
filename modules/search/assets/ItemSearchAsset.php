@@ -29,7 +29,7 @@ class ItemSearchAsset extends AssetBundle
         '\yii\jui\JuiAsset',
         '\yii\widgets\PjaxAsset',
         '\kop\y2sp\assets\InfiniteAjaxScrollAsset',
-        'search\assets\SearchWidgetAsset'
+        '\search\assets\SearchWidgetAsset'
     ];
 
 }

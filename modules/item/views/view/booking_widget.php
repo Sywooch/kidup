@@ -31,21 +31,76 @@ $this->registerJsVariables([
     }
 </script>
 <div class="col-md-3 card" id="booking-widget">
-    <div class="row price-bg">
+    <div class="row header">
         <div class="col-md-12">
             <h4>
-                <?= $model->currency->forex_name ?> <?= $model->item->price_day !== null ? $model->item->price_day : round($model->item->price_week / 7) ?>
-                / <?= $model->item->price_week ?><?= $model->item->price_month !== null ? " / " . $model->item->price_month : '' ?>
+                <?= Yii::t("item.view.booking_widget.title", "Book this product now!") ?>
             </h4>
-            <div class="times">
-                <?= Yii::t("item.view.booking_widget.day", "day") ?> /
-                <?= Yii::t("item.view.booking_widget.week", "week") ?>
-                <?= $model->item->price_month !== null ? " / " . Yii::t("item.view.booking_widget.month",
-                        "month") : '' ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="shortTermPrice">
+            <div class="col-md-4 ">
+                <h4>
+                    <?= $model->item->price_day !== null ? $model->item->price_day . ",-" : round($model->item->price_week / 7) . ",-" ?>
+                </h4>
+
+                <div class="times">
+                    <?= Yii::t("item.view.booking_widget.per_day", "per day") ?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4>
+                    <?= $model->item->price_week . ",-" ?>
+                </h4>
+
+                <div class="times">
+                    <?= Yii::t("item.view.booking_widget.per_week", "per week") ?>
+                </div>
+            </div>
+            <div class="col-md-4" id="viewLongTerm">
+                <h4>
+                    <i class="fa fa-angle-right"></i>
+                </h4>
+
+                <div class="times">
+                    <div><?= Yii::t("item.view.booking_widget.view_long_term", "Long term") ?></div>
+                </div>
+            </div>
+        </div>
+        <div class="longTermPrice" style="display: none;">
+            <div class="col-md-4 "  id="viewShortTerm">
+                <h4>
+                    <i class="fa fa-angle-left"></i>
+                </h4>
+
+                <div class="times">
+                    <div><?= Yii::t("item.view.booking_widget.view_short_term", "Short term") ?></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4>
+                    <?= $model->item->price_month !== null ? $model->item->price_month . ",-" : round($model->item->price_week * (30 / 7)) . ",-" ?>
+                </h4>
+
+                <div class="times">
+                    <?= Yii::t("item.view.booking_widget.per_month", "per month") ?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4>
+                    <?= $model->item->price_year !== null ? $model->item->price_year . ",-" :
+                        ($model->item->price_month !== null ? round($model->item->price_month * 12) . ",-" : round($model->item->price_week * 52) . ",-") ?>
+                </h4>
+                <div class="times">
+                    <?= Yii::t("item.view.booking_widget.per_year", "per year") ?>
+                </div>
             </div>
         </div>
     </div>
 
+    <hr>
     <?php
 
     $form = ActiveForm::begin([

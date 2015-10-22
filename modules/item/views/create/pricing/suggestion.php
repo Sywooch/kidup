@@ -6,7 +6,7 @@ $this->registerJsVariables([
     'daily_price' => Yii::t("item.create.pricing.suggestion.daily_price", "Daily Price"),
     'weekly_price' => Yii::t("item.create.pricing.suggestion.weekly_price", "Weekly Price"),
     'monthly_price' => Yii::t("item.create.pricing.suggestion.monthly_price", "Monthly Price"),
-    'yearly_price' => Yii::t("item.create.pricing.suggestion.monthly_price", "Yearly Price")
+    'yearly_price' => Yii::t("item.create.pricing.suggestion.yearly_price", "Yearly Price")
 ], 'i18n')
 ?>
 

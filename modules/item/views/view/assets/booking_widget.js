@@ -125,6 +125,8 @@ var widgetFactory = function () {
             $("#bookingWidget").hide();
             $(".mobileBookingRequestButton").css("visibility", "visible");
         });
+
+
     };
 
 
@@ -166,6 +168,15 @@ var widgetFactory = function () {
                 $("#create-booking-datefrom").datepicker("show");
             }
             scrollFunc();
+        });
+        // prices
+        $("#viewLongTerm").click(function(){
+            $(".longTermPrice").show();
+            $(".shortTermPrice").hide();
+        });
+        $("#viewShortTerm").click(function(){
+            $(".longTermPrice").hide();
+            $(".shortTermPrice").show();
         });
     };
 

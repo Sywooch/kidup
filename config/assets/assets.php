@@ -34,7 +34,7 @@ $ret = [
             'js' => 'js/home-{hash}.js',
             'css' => 'css/home-{hash}.css',
             'depends' => [
-                'home\assets\HomeAsset',
+                \home\assets\HomeAsset::className()
             ]
         ],
         'common' => [
