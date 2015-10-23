@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $email
  * @property string $password_hash
- * @property string $auth_key
  * @property integer $confirmed_at
  * @property string $unconfirmed_email
  * @property integer $blocked_at
@@ -56,11 +55,10 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'password_hash', 'auth_key', 'status', 'role', 'created_at', 'updated_at'], 'required'],
+            [['email', 'password_hash', 'status', 'role', 'created_at', 'updated_at'], 'required'],
             [['confirmed_at', 'blocked_at', 'flags', 'status', 'role', 'created_at', 'updated_at'], 'integer'],
             [['email', 'unconfirmed_email'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
-            [['auth_key'], 'string', 'max' => 32],
             [['registration_ip'], 'string', 'max' => 45]
         ];
     }
@@ -74,7 +72,6 @@ class User extends \yii\db\ActiveRecord
             'id' => 'ID',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
-            'auth_key' => 'Auth Key',
             'confirmed_at' => 'Confirmed At',
             'unconfirmed_email' => 'Unconfirmed Email',
             'blocked_at' => 'Blocked At',

@@ -157,6 +157,19 @@ $components = [
             'conversation/<id:\d+>' => 'message.conversation',
             'p/<page>' => 'pages/default/wordpress',
             'p/<page>/<view>' => 'pages/default/<page>',
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/items' => 'api/item'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/oauth2' => 'api/oauth2'],
+                'extraPatterns' => [
+                    'POST token' => 'token',
+                    'POST refresh' => 'refresh',
+                ]
+            ],
+
         ],
     ],
     'i18n' => [

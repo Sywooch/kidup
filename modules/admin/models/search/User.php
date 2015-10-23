@@ -16,7 +16,7 @@ class User extends UserModel
     {
         return [
             [['id', 'confirmed_at', 'blocked_at', 'flags', 'status', 'role', 'created_at', 'updated_at'], 'integer'],
-            [['email', 'password_hash', 'auth_key', 'unconfirmed_email', 'registration_ip'], 'safe'],
+            [['email', 'password_hash', 'unconfirmed_email', 'registration_ip'], 'safe'],
         ];
     }
 
@@ -51,7 +51,6 @@ class User extends UserModel
 
         $query->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'unconfirmed_email', $this->unconfirmed_email])
             ->andFilterWhere(['like', 'registration_ip', $this->registration_ip]);
 
