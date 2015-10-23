@@ -71,6 +71,12 @@ class ImageHelper extends BaseHtml
         return false;
     }
 
+    /**
+     * Returns the url for a filename, either locally of on aws if in production
+     * @param $filename
+     * @param array $options
+     * @return mixed
+     */
     public static function url($filename, $options = [])
     {
         $function = function () use ($filename, $options) {
@@ -127,5 +133,22 @@ class ImageHelper extends BaseHtml
             return $url;
         };
         return Cache::data('imageurl' . $filename . Json::encode($options), $function, 24 * 60 * 60);
+    }
+
+    /**
+     * Returns a set of urls for a given url
+     * @param $filename
+     * @bool $isMobile
+     */
+    public static function urlSet($filename, $isMobile = false){
+        $m = 1;
+        if($isMobile){
+            $m = 0.7;
+        }
+        return [
+            'original' => self::url($filename),
+            'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
+            'medium' => self::url($filename, ['w' => 250*$m, 'q' => 90]),
+        ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace user\models;
 
-use api\models\OauthAccessToken;
+use api\models\oauth\OauthAccessToken;
 use api\oauth2\models\OauthAccessTokens;
 use app\helpers\Event;
 use \images\components\ImageHelper;

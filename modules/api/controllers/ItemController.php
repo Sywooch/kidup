@@ -1,9 +1,7 @@
 <?php
 namespace api\controllers;
 
-use api\models\Item;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
+use api\models\oauth\Item;
 
 class ItemController extends Controller
 {
@@ -12,23 +10,11 @@ class ItemController extends Controller
         parent::init();
     }
 
-    public function behaviors()
-    {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                'except' => ['index', 'view']
-            ],
-            'accessControl' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'list'],
-                        'roles' => ['?']
-                    ],
-                ],
-            ],
-        ]);
+    public function accessControl(){
+        return [
+            'guest' => ['index', 'view'],
+            'user' => []
+        ];
     }
 
     public function actions(){
@@ -36,7 +22,12 @@ class ItemController extends Controller
         unset($actions['delete']);
         unset($actions['create']);
         unset($actions['update']);
+//        unset($actions['view']);
         return $actions;
+    }
+
+    public function actionView($id){
+        return Item::findOne($id);
     }
 
 }

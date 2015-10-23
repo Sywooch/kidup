@@ -2,9 +2,9 @@
 
 namespace api\controllers;
 
-use api\models\OauthAccessToken;
-use api\models\OauthClient;
-use api\models\OauthRefreshToken;
+use api\models\oauth\OauthAccessToken;
+use api\models\oauth\OauthClient;
+use api\models\oauth\OauthRefreshToken;
 use user\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
