@@ -74,7 +74,7 @@ $components = [
         'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
         'converter' => [
             'class' => 'yii\web\AssetConverter',
-            'commands' =>  [
+            'commands' => [
                 'less' => [
                     'css',
                     'lessc {from} {to} --no-color -x'
@@ -163,6 +163,10 @@ $components = [
             ],
             [
                 'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/users' => 'api/user'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/oauth2' => 'api/oauth2'],
                 'extraPatterns' => [
                     'POST token' => 'token',
@@ -179,7 +183,7 @@ $components = [
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
                 'enableCaching' => YII_CACHE,
-                'cachingDuration' => YII_CACHE ? 24*60*60 : 0
+                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0
             ],
         ],
     ],
@@ -195,7 +199,18 @@ $components = [
             'format' => '[SUPORTED_PLUGIN_FORMAT]',
             'api_key' => '[YOUR_API_KEY]',
         ],
-    ]
+    ],
+//    'docGenerator' => [
+//        'class' => 'eold\apidocgen\src\ApiDocGenerator',
+//        'isActive' => true,
+//        // Flag to set plugin active
+//        'versionRegexFind' => '/\/api\/(\d+)/i',
+//        // regex used in preg_replace function to find Yii api version format (usually 'v1', 'vX') ...
+//        'versionRegexReplace' => '${2}.0.0',
+//        // .. and replace it in Apidoc format (usually 'x.x.x')
+//        'docDataAlias' => '@runtime/api_docs'
+//        // Folder to save output. make sure is writable.
+//    ],
 ];
 
 if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {

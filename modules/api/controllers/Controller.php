@@ -28,8 +28,8 @@ class Controller extends \yii\rest\ActiveController
 
     public function afterAction($action, $result)
     {
-        if(\Yii::$app->request->get('access-token') && in_array($action->controller->action, $this->accessControl())){
-            // access-token is set, but not used by yii because it's a publicly available api point
+        // log in users manually if they set an access token
+        if(\Yii::$app->request->get('access-token')){
             \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
         }
         if(\Yii::$app->request->get('lang')){

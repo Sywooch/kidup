@@ -1,19 +1,19 @@
 <?php
 namespace api\controllers;
 
-use api\models\Item;
+use api\models\User;
 
-class ItemController extends Controller
+class UserController extends Controller
 {
     public function init(){
-        $this->modelClass = Item::className();
+        $this->modelClass = User::className();
         parent::init();
     }
 
     public function accessControl(){
         return [
-            'guest' => ['index', 'view'],
-            'user' => []
+            'guest' => ['index', 'view', 'create'],
+            'user' => ['update']
         ];
     }
 

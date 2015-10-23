@@ -22,6 +22,7 @@ $config = [
         'admin\\Bootstrap',
         'search\\Bootstrap',
         'api\\Bootstrap',
+//        'docGenerator'
     ],
     'extensions' => array_merge(
         require($vendorDir . '/yiisoft/extensions.php')
