@@ -37,6 +37,8 @@ class Settings extends Model
     public $currency_id;
     public $phone_country;
     public $phone_number;
+    public $old_password;
+    public $new_password;
     /** @var Module */
     protected $module;
     /** @var User */
@@ -101,6 +103,32 @@ class Settings extends Model
             [['rent_reminder', 'message_update', 'rent_status_change', 'newsletter', 'currency_id'], 'required'],
             [['rent_reminder', 'message_update', 'rent_status_change', 'newsletter', 'currency_id'], 'integer'],
             [['phone_country', 'phone_number'], 'integer'],
+            [['new_password'], 'string', 'min' => 6],
+            [
+                ['old_password'],
+                function () {
+                    if (!\Yii::$app->security->validatePassword($this->old_password,
+                        \Yii::$app->user->identity->password_hash)
+                    ) {
+                        $this->addError('old_password', \Yii::t('user.settings.account.update_password.old_not_correct',
+                            "Please fill in your current password here."));
+                    }
+                }
+            ],
+            [
+                ['old_password'],
+                'required',
+                'when' => function () {
+                    return isset($this->new_password);
+                },
+            ],
+            [
+                ['new_password'],
+                'required',
+                'when' => function () {
+                    return isset($this->old_password);
+                },
+            ],
             [['phone_number'], 'integer', 'max' => 9999999999, 'min' => 100000],
             [['language'], 'string'],
         ];
@@ -155,6 +183,11 @@ class Settings extends Model
             $profile->phone_number = $this->phone_number;
 
             $profile->save();
+
+            if (isset($this->new_password)) {
+                // should all be validated
+                $this->user->password_hash = \Yii::$app->security->generatePasswordHash($this->new_password);
+            }
 
             return $this->user->save();
         }

@@ -56,8 +56,9 @@
     "yiisoft/yii2-imagine": "*",
     "yiisoft/yii2-jui": "~2.0.4@dev",
     "yiisoft/yii2-swiftmailer": "*",
+    "kop/yii2-scroll-pager": "*",
     "yiisoft/yii2-twig": "^2.0@dev",
-    "kop/yii2-scroll-pager": "dev-master"
+    "eold/yii2-apidoc-generator": "^1.0."
   },
   "require-dev": {
     "codeception/codeception": "2.0.15",

@@ -23,19 +23,6 @@ class Item extends \item\models\base\Item
     public $images;
     public $distance;
 
-
-    public function backup()
-    {
-        $item = Item::find()->where(['id' => $this->item_id])->asArray()->with([
-            'owner.profile',
-            'owner.locations'
-        ])->one();
-        $renter = User::find()->where(['id' => $this->renter_id])->asArray()->with(['profile', 'locations'])->one();
-        $this->item_backup = json_encode(['item' => $item, 'renter' => $renter]);
-
-        return $this->save();
-    }
-
     public function beforeSave($insert)
     {
         if ($insert == true) {

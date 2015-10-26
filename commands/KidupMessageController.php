@@ -30,7 +30,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
      * this file and then customize it for your needs.
      * @throws Exception on failure.
      */
-    public function actionExtract($configFile = 'config/i18n.php')
+    public function actionExtract($configFile = 'config/i18n.php', $db = 'db')
     {
         $configFile = Yii::getAlias($configFile);
         if (!is_file($configFile)) {
@@ -81,7 +81,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         }
         $sourceMessageTable = isset($config['sourceMessageTable']) ? $config['sourceMessageTable'] : '{{%source_message}}';
         $messageTable = isset($config['messageTable']) ? $config['messageTable'] : '{{%message}}';
-        $this->saveMessagesToDb(
+        $this->saveMessages(
             $messages,
             $db
         );
@@ -93,7 +93,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
      * @param array $messages
      * @param \yii\db\Connection $db
      */
-    protected function saveMessagesToDb($messages, $db)
+    protected function saveMessages($messages, $db)
     {
         $hasErrors = false;
         foreach ($messages as $category => $categoryMessages) {
