@@ -174,8 +174,8 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/oauth2' => 'api/oauth2'],
                 'extraPatterns' => [
-                    'POST,OPTIONS token' => 'token',
-                    'POST,OPTIONS refresh' => 'refresh',
+                    'token' => 'token',
+                    'refresh' => 'refresh',
                 ]
             ],
 

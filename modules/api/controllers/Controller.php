@@ -16,7 +16,8 @@ class Controller extends \yii\rest\ActiveController
         'collectionEnvelope' => 'items',
     ];
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [];
     }
 
@@ -29,10 +30,10 @@ class Controller extends \yii\rest\ActiveController
     public function afterAction($action, $result)
     {
         // log in users manually if they set an access token
-        if(\Yii::$app->request->get('access-token')){
+        if (\Yii::$app->request->get('access-token')) {
             \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
         }
-        if(\Yii::$app->request->get('lang')){
+        if (\Yii::$app->request->get('lang')) {
             // access-token is set, but not used by yii because it's a publicly available api point
             \Yii::$app->language = \Yii::$app->request->get('lang');
         }
@@ -40,19 +41,13 @@ class Controller extends \yii\rest\ActiveController
         return parent::afterAction($action, $result);
     }
 
-    public function beforeAction($action)
-    {
-        \Yii::$app->request->parsers[] = 'yii\web\JsonParser';
-        return parent::beforeAction($action);
-    }
-
     public function behaviors()
     {
         $res = $this->accessControl();
-        if(!isset($res['guest'])){
+        if (!isset($res['guest'])) {
             throw new ServerErrorHttpException("Access control for guest should be defined!");
         }
-        if(!isset($res['user'])){
+        if (!isset($res['user'])) {
             throw new ServerErrorHttpException("Access control for user should be defined!");
         }
 
@@ -63,8 +58,9 @@ class Controller extends \yii\rest\ActiveController
                     'Origin' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                     'Access-Control-Request-Headers' => ['*'],
-//                    'Access-Control-Allow-Credentials' => true,
-//                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Allow-Credentials' => true,
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Allow-Origin' => '*',
                 ],
             ],
             'authenticator' => [
@@ -88,5 +84,4 @@ class Controller extends \yii\rest\ActiveController
             ],
         ]);
     }
-
 }

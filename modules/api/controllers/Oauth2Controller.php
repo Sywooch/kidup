@@ -13,7 +13,6 @@ use yii\web\UnauthorizedHttpException;
 
 class Oauth2Controller extends Controller
 {
-
     public function init(){
         $this->modelClass = User::className();
         parent::init();
@@ -33,11 +32,6 @@ class Oauth2Controller extends Controller
 
     public function actionToken()
     {
-        if(\Yii::$app->request->isOptions){
-            return true;
-        }
-        \yii\helpers\VarDumper::dump(12,10,true); exit();
-
 
         $params = \Yii::$app->request->post();
         /**

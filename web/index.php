@@ -13,7 +13,7 @@ require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 $config = require(__DIR__ . '/../config/config.php');
 
-header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Origin: *');
 
 if(is_file(__DIR__ . '/../config/config-local.php')){
     $config = yii\helpers\ArrayHelper::merge($config, require(__DIR__ . '/../config/config-local.php'));
