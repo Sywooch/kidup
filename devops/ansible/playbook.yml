@@ -19,4 +19,5 @@
     - mysql
     - phpcommon
     - nodejs
+    - redis
     - app

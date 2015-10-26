@@ -21,6 +21,8 @@ $config = [
         'pages\\Bootstrap',
         'admin\\Bootstrap',
         'search\\Bootstrap',
+        'api\\Bootstrap',
+//        'docGenerator'
     ],
     'extensions' => array_merge(
         require($vendorDir . '/yiisoft/extensions.php')
@@ -46,6 +48,7 @@ $config = [
         'review' =>         ['class' => '\review\Module'],
         'admin' =>          ['class' => '\admin\Module'],
         'search' =>         ['class' => '\search\Module'],
+        'api' =>            ['class' => '\api\Module'],
         'social' => [
             // the module class
             'class' => 'kartik\social\Module',
@@ -75,14 +78,14 @@ $config = [
         '@review' => '@app/modules/review',
         '@admin' => '@app/modules/admin',
         '@search' => '@app/modules/search',
+        '@api' => '@app/modules/api',
     ],
-
 ];
 
 if (YII_ENV == 'dev') {
     // configuration adjustments for 'dev' environment
 
-    if(YII_DEBUG){
+    if(YII_DEBUG && !YII_CACHE){
         $config['bootstrap'][] = 'debug';
         $config['modules']['debug'] = [
             'class' => 'yii\debug\Module',

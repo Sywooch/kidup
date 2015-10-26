@@ -38,18 +38,14 @@ class ErrorController extends Controller
                 debug_backtrace();
                 exit();
             }
-
-            $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error', 'An internal server error occurred.');
+            $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error',
+                'An internal server error occurred.');
         }
 
-        if (Yii::$app->getRequest()->getIsAjax()) {
-            return "$name: $message";
-        } else {
-            return $this->render('error', [
-                'name' => $name,
-                'message' => $message,
-                'exception' => $exception,
-            ]);
-        }
+        return $this->render('error', [
+            'name' => $name,
+            'message' => $message,
+            'exception' => $exception,
+        ]);
     }
 }

@@ -15,8 +15,8 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'consoleWebAlias' => YII_ENV == 'dev' ? 'web/' : YII_ENV == 'test' ? '/' : '/',
     'uploadPath' => __DIR__ . "/../uploads/",
-    'payinServiceFeePercentage' => 0.06, // equals to 6%
-    'payoutServiceFeePercentage' => 0.06, // equals to 6%
+    'payinServiceFeePercentage' => 0.075, // equals to 6%
+    'payoutServiceFeePercentage' => 0.075, // equals to 6%
     'serverTimeZone' => 'Europe/Copenhagen',
     'kidupAddressLine1' => 'Ceres Alle 1',
     'kidupAddressLine2' => '8000 Aarhus C, Denmark',

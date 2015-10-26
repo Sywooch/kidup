@@ -23,19 +23,6 @@ class Item extends \item\models\base\Item
     public $images;
     public $distance;
 
-
-    public function backup()
-    {
-        $item = Item::find()->where(['id' => $this->item_id])->asArray()->with([
-            'owner.profile',
-            'owner.locations'
-        ])->one();
-        $renter = User::find()->where(['id' => $this->renter_id])->asArray()->with(['profile', 'locations'])->one();
-        $this->item_backup = json_encode(['item' => $item, 'renter' => $renter]);
-
-        return $this->save();
-    }
-
     public function beforeSave($insert)
     {
         if ($insert == true) {
@@ -70,7 +57,9 @@ class Item extends \item\models\base\Item
             }
             return $imgs;
         };
-        return Cache::data('item_names' . $this->id, $function, 60 * 60);
+        return Cache::build('item-image-names')
+            ->variations([$this->id])
+            ->duration(60 * 60)->data($function);
     }
 
     public function getImageName($order)
@@ -131,7 +120,7 @@ class Item extends \item\models\base\Item
             'day' => $this->price_day,
             'week' => $this->price_week / 7,
             'month' => $this->price_month / 30,
-            'year' => $this->price_year / 356,
+            'year' => $this->price_year / 356 ,
         ];
 
         // assume that only weekly price is set for sure
@@ -218,6 +207,7 @@ class Item extends \item\models\base\Item
     {
         $prices = $this->getPriceForPeriod($from, $to, $currency);
         $days = floor(($to - $from) / (60 * 60 * 24));
+
         return [
             'price' => [
                 $prices['periodInfo']['period_text'] . ' x ' . $currency->forex_name . ' ' . $prices['periodInfo']['period_price'],
@@ -231,7 +221,7 @@ class Item extends \item\models\base\Item
 
     public function getCarouselImages()
     {
-        return Cache::data('item_view-images-carousel' . $this->id, function () {
+        $func = function () {
             $itemImages = $this->getImageNames();
 
             $images = [];
@@ -251,7 +241,12 @@ class Item extends \item\models\base\Item
                 ];
             }
             return $images;
-        }, 10 * 60);
+        };
+
+        return Cache::build('item-view-images-carousel')
+            ->variations([$this->id])
+            ->duration(10 * 60)
+            ->data($func);
     }
 
 

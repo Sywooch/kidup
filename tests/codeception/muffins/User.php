@@ -10,7 +10,6 @@ class User extends \user\models\User
         return [
             'email' => Faker::email(),
             // generating random stuff here every time would be pretty expensive
-            'auth_key' => 'some-lame-auth-key',
             'password_hash' => '$2y$13$zSOTbjAPHZ7PloN466qJMO1DkCvLNsFLAdZEuKr/v.SbIh.xwLx4a',
         ];
     }

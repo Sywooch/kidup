@@ -45,7 +45,6 @@ class Controller extends \yii\web\Controller
                 Yii::$app->session->set('lang', Yii::$app->language);
             }
         }
-
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));

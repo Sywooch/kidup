@@ -8,8 +8,8 @@
 #  todo test this
 #- name: Connect NPM less
 #  command: source ~/.bashrc
-- name: Copy nodejs to node in /usr/bin
-  command: sudo ln -s /usr/bin/nodejs /usr/bin/node
+#- name: Copy nodejs to node in /usr/bin
+#  command: sudo ln -s /usr/bin/nodejs /usr/bin/node
 #  end test this
 - name: install the latest npm global packages
   npm:
