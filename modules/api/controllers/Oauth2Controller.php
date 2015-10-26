@@ -14,24 +14,16 @@ use yii\web\UnauthorizedHttpException;
 class Oauth2Controller extends Controller
 {
 
-    public $modelClass = 'user\models\User';
+    public function init(){
+        $this->modelClass = User::className();
+        parent::init();
+    }
 
-    public function behaviors()
-    {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                'except' => ['token', 'refresh'],
-            ],
-            'accessControl' => [
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['refresh', 'token'],
-                        'roles' => ['?']
-                    ],
-                ],
-            ],
-        ]);
+    public function accessControl(){
+        return [
+            'guest' => ['token', 'refresh'],
+            'user' => ['']
+        ];
     }
 
     public function actions(){
@@ -41,6 +33,12 @@ class Oauth2Controller extends Controller
 
     public function actionToken()
     {
+        if(\Yii::$app->request->isOptions){
+            return true;
+        }
+        \yii\helpers\VarDumper::dump(12,10,true); exit();
+
+
         $params = \Yii::$app->request->post();
         /**
          * @var OauthClient $client
@@ -64,6 +62,7 @@ class Oauth2Controller extends Controller
         }
         $token = OauthAccessToken::make($user, $client);
         $refreshToken = OauthRefreshToken::make($user, $client);
+        
 
         return [
             'token' => $token->access_token,
@@ -74,6 +73,10 @@ class Oauth2Controller extends Controller
 
     public function actionRefresh()
     {
+        if(\Yii::$app->request->isOptions){
+            return true;
+        }
+
         $params = \Yii::$app->request->post();
 
         /**
