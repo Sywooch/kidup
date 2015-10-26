@@ -120,7 +120,7 @@ class Item extends \item\models\base\Item
             'day' => $this->price_day,
             'week' => $this->price_week / 7,
             'month' => $this->price_month / 30,
-            'year' => $this->price_year / 356,
+            'year' => $this->price_year / 356 ,
         ];
 
         // assume that only weekly price is set for sure
