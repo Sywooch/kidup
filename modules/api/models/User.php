@@ -36,7 +36,7 @@ class User extends \user\models\User
                 return (bool)$model->profile->phone_verified;
             },
             'img' => function ($model) {
-                return ImageHelper::urlSet($model->profile->getAttribute('img'));
+                return ImageHelper::urlSet($model->profile->getAttribute('img'), true);
             },
             'email' => function ($model) {
                 return $model->id === \Yii::$app->user->id ? $model->email : '';

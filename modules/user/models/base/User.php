@@ -95,14 +95,6 @@ class User extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getChildren()
-    {
-        return $this->hasMany(\user\models\Child::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getConversations()
     {
         return $this->hasMany(\message\models\Conversation::className(), ['initiater_user_id' => 'id']);

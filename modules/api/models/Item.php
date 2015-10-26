@@ -19,7 +19,7 @@ class Item extends \item\models\Item
 
     public function extraFields()
     {
-        return ['owner', 'category', 'location', 'currency'];
+        return ['owner', 'category', 'location', 'currency', 'media'];
     }
 
     public function getOwner(){
@@ -36,5 +36,11 @@ class Item extends \item\models\Item
 
     public function getCurrency(){
         return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
+    }
+
+    public function getMedia()
+    {
+        return $this->hasMany(Media::className(), ['id' => 'media_id'])
+            ->viaTable('item_has_media', ['item_id' => 'id']);
     }
 }

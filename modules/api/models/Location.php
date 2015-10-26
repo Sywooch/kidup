@@ -7,12 +7,6 @@ namespace api\models;
  */
 class Location extends \user\models\Location
 {
-    public function isUser($model, $prop){
-        if($model->id === \Yii::$app->user->id){
-            return $model->profile->{$prop};
-        }
-        return '';
-    }
 
     public function fields()
     {
