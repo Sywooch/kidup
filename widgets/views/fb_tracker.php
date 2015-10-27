@@ -7,7 +7,7 @@
 
     fbq('init', '640617159413576');
     fbq('track', "PageView");
-    fbq('track', <?= $id ?>);
+    fbq('track', "<?= $id ?>");
 </script>
 <noscript><img height="1" width="1" style="display:none"
                src="https://www.facebook.com/tr?id=640617159413576&ev=PageView&noscript=1"
