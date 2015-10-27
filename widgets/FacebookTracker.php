@@ -19,19 +19,22 @@ class FacebookTracker extends \yii\bootstrap\Widget
         }
 
         $patterns = [
-            'search/search/index' => '6027473304499',
-            'user/registration/post-registration' => '6027473275699',
-            'item/create/index' => '6027473382499',
-            'item/create/edit-publish' => '6027473357499',
+            'search/search/index' =>                    'Search',
+            'user/registration/post-registration' =>    'CompleteRegistration',
+            'item/create/index' =>                      'Lead',
+            'item/view/index' =>                        'ViewContent',
         ];
 
         $route = @\Yii::$app->controller->getRoute();
 
         if (isset($patterns[$route])) {
             $trackerId = $patterns[$route];
-            return Cache::data('facebook_tracker_widget-view-render'.$trackerId, function () use ($trackerId) {
-                return $this->render('fb_tracker', ['id' => $trackerId]);
-            }, 60 * 60);
+            return Cache::build('facebook_tracker_widget-view-render')
+                ->variations($trackerId)
+                ->duration(60 * 60)
+                ->data(function () use ($trackerId) {
+                    return $this->render('fb_tracker', ['id' => $trackerId]);
+                });
         }
         return '';
     }
