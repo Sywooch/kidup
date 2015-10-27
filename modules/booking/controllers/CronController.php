@@ -20,6 +20,9 @@ class CronController extends Model
         // see if the booking expired (owner did not respond)
         $payins = Payin::findAll(['status' => Payin::STATUS_PENDING]);
         foreach ($payins as $payin) {
+            /**
+             * @var $payin \booking\models\Payin
+             */
             $payin->booking->updateStatus();
         }
 
@@ -32,9 +35,6 @@ class CronController extends Model
                 require(Yii::$aliases['@vendor'] . '/braintree/braintree_php/tests/TestHelper.php');
                 $b = new BrainTree($payin);
                 $b->sandboxSettlementAccept();
-            } else {
-                $b = new BrainTree($payin);
-                $b->capture();
             }
             $payin->booking->updateStatus();
         }

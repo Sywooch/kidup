@@ -23,13 +23,14 @@
     </div>
 </div>
 <?= Yii::t("item.create.pricing.discounts_by_daily_prices",
-    "You can offer discounts for longer or shorter rents by setting {link} daily and monthly prices{linkOut}.",[
+    "You can offer discounts for longer or shorter rents by setting {link} daily, monthly and yearly prices{linkOut}.",[
         'link' => '<a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">',
         'linkOut' => '</a>'
     ]) ?>
 <div class="row">
     <div class="col-md-4" style="padding-left:0">
         <div class="collapse" id="collapseExample">
+
             <?= Yii::t("item.create.pricing.daily_price", "Daily price") ?><br>
             <?= $form->field($model, 'price_day')->input('number', [
                 'class' => 'form-control',
@@ -38,6 +39,12 @@
             ?>
             <?= Yii::t("item.create.pricing.monthly_price", "Montly price") ?><br>
             <?= $form->field($model, 'price_month')->input('number', [
+                'class' => 'form-control',
+                'min' => 0
+            ])->label(false)
+            ?>
+            <?= Yii::t("item.create.pricing.yearly_price", "Yearly price") ?><br>
+            <?= $form->field($model, 'price_year')->input('number', [
                 'class' => 'form-control',
                 'min' => 0
             ])->label(false)

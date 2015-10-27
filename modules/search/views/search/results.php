@@ -1,10 +1,10 @@
 <?php
-use \item\widgets\ItemCard;
+use yii\widgets\ListView;
 
 // displaying the search results
 
 /**
- * @var array $results
+ * @var \yii\data\ActiveDataProvider $dataProvider
  * @var \search\forms\Filter $model
  */
 ?>
@@ -15,33 +15,18 @@ use \item\widgets\ItemCard;
             echo $model->resultText;
             ?>
         </h3>
+
         <?php
-        if ($model->resultsAreFake) {
-            ?><p style="padding-left:11px;"><?php
-            $cat = \item\models\Category::findOne(['id' => $model->categories[0]]);
-            if($cat !== null){
-                echo \Yii::t('search.results_interesting_products_text', 'Below are some other products you might find interesting.', [
-                    '<b>' . $cat->getTranslatedName() . '</b>'
-                ]);
-            }
-            ?></p><?php
-        }
-        foreach ($results as $result) {
-            echo ItemCard::widget([
-                'model' => $result,
-                'showDistance' => true,
-                'numberOfCards' => 3,
-                'titleCutoff' => 32
-            ]);
-        }
-        $pagination = new \yii\data\Pagination([
-            'totalCount' => $model->estimatedResultCount,
-            'pageSize' => 12,
-            'pageParam' => 'search-filter[page]'
-        ]);
-        $pagination->setPage($model->page - 1);
-        echo \yii\widgets\LinkPager::widget([
-            'pagination' => $pagination,
+        echo ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemView' => 'item-view',
+            'itemOptions' => ['class' => 'item'],
+            'pager' => [
+                'class' => \kop\y2sp\ScrollPager::className(),
+                'delay' => 200,
+                'triggerText' => '',
+                'noneLeftText' => ''
+            ]
         ]);
         ?>
     </div>

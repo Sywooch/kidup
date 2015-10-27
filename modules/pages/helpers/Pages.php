@@ -39,10 +39,14 @@ class Pages extends Component
             }
         }
         $client = new Client();
-        return Cache::data('pages-wordpress-call-'.$id, function() use ($client, $id){
+        $func = function () use ($client, $id) {
             $res = $client->get($this->baseUrl . 'posts/' . $id);
             return $res->json();
-        });
+        };
+        return Cache::build('pages-wordpress')
+            ->variations($id)
+            ->tags(['wordpress'])
+            ->data($func);
     }
 
     public function getPages()

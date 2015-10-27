@@ -121,26 +121,39 @@
     margin-top: 40px;
     .text {
       margin-bottom: 10px;
+      text-align: center;
     }
-    .price-bg {
+
+    .header{
       background-color: @primary-bg;
       margin-bottom: 20px;
-    }
-    h4 {
-      font-weight: 600;
-      font-size: 20px;
-      .period {
-        font-size: 15px;
+      h4 {
+        font-weight: 600;
+        font-size: 20px;
+        color: white;
+        margin-top: 5px;
+        padding-bottom: 0;
+        margin-bottom: 5px;
       }
-      color: white;
-      margin-top: 5px;
-      padding-bottom: 20px;
-
+    }
+    #viewLongTerm, #viewShortTerm{
+      cursor: pointer;
+    }
+    h4{
+      padding-bottom: 0;
+      margin-bottom: 5px;
+      text-align: center;
+      .price{
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 5px;
+      }
     }
     .times{
-      color:white;
-      font-size:13px;
-      margin-top:-40px;
+      text-align: center;
+      font-size:11px;
+      color: grey;
+      margin-bottom: 15px;
     }
     .form-control {
       border-radius: 2px;
@@ -229,5 +242,12 @@
     display: none;
     height: 180px;
     background-color: white;
+  }
+}
+
+#sharingModal{
+  .modal-content{
+    border-radius: 2px;
+    text-align: center;
   }
 }

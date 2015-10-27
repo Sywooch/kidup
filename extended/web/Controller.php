@@ -4,6 +4,7 @@ namespace app\extended\web;
 use search\models\IpLocation;
 use user\models\Profile;
 use Yii;
+use yii\helpers\Url;
 
 class Controller extends \yii\web\Controller
 {

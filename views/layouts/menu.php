@@ -2,6 +2,7 @@
 use \images\components\ImageHelper;
 use \message\models\Message;
 use yii\helpers\Url;
+use app\components\Cache;
 
 /**
  * @var \yii\web\View $this
@@ -32,8 +33,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                 </button>
                 <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
                     <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
-                        ['h' => 46], ['style' => 'padding-top:5px;'])
-                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 46]) ?>
+                        ['h' => 53], ['style' => 'padding-top:5px;'])
+                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53]) ?>
                 </a>
             </div>
 
@@ -148,7 +149,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                            aria-expanded="true">
                             <?= \Yii::$app->language == 'da-DK' ?
                                 ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) :
-                                ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25])
+                                ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25])
                             ?>
                         </a>
                         <ul class="dropdown-menu">
@@ -160,7 +161,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                             </li>
                             <li>
                                 <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>">
-                                    <?= ImageHelper::image('kidup/common/flags/usa.png', ['w' => 25]) ?>
+                                    <?= ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.english", "English") ?>
                                 </a>
                             </li>
@@ -190,12 +191,11 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php endif;
                     if (!\Yii::$app->user->isGuest): ?>
                     <li>
-                        <?= \app\components\Cache::html('user_widget', function () {
-                            return \user\widgets\UserImage::widget([
-                                'user_id' => \Yii::$app->user->id,
-                                'width' => '40px'
-                            ]);
-                        }, ['variations' => [\Yii::$app->user->id]])
+                        <?= \user\widgets\UserImage::widget([
+                            'user_id' => \Yii::$app->user->id,
+                            'width' => '40px'
+                        ]);
+
                         ?>
                     </li>
 
@@ -253,15 +253,8 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
 <?php
 // add the login / register model if user is guest
 if (\Yii::$app->user->isGuest) {
-    if ($this->beginCache('layout.menu.widgets')) {
-        echo \app\components\Cache::html('widget_user_login_modal', function () {
-            return \user\widgets\Login::widget();
-        });
-        echo \app\components\Cache::html('widget_user_register_modal', function () {
-            return \user\widgets\Register::widget();
-        });
-        $this->endCache();
-    }
+    echo \user\widgets\Login::widget();
+    echo \user\widgets\Register::widget();
 }
 
 // this is the notification plugin, showing all errors

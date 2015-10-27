@@ -4,7 +4,9 @@ namespace search\controllers;
 use app\extended\web\Controller;
 use \search\forms\Filter;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 
 /**
  * The item controller of the search module is used for handling actions related to searching items.
@@ -46,6 +48,8 @@ class SearchController extends Controller
         $this->noFooter = true;
         $this->noContainer = true;
 
+        Url::remember();
+
         $model = new Filter();
 
         $model->load(\Yii::$app->request->get(), $model->formName());
@@ -59,17 +63,25 @@ class SearchController extends Controller
         $model->query = $query;
         $model->setLocation();
 
+        // create the data provider
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getQuery(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
         if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
             return $this->renderAjax('index', [
                 'model' => $model,
-                'results' => $model->findItems()
+                'dataProvider' => $dataProvider
             ]);
         }
 
         // render the index
         return $this->render('index', [
             'model' => $model,
-            'results' => $model->findItems()
+            'dataProvider' => $dataProvider
         ]);
     }
 }

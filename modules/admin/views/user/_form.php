@@ -30,10 +30,7 @@ use kartik\datecontrol\DateControl;
                 'type' => Form::INPUT_TEXT,
                 'options' => ['placeholder' => 'Enter Password Hash...', 'maxlength' => 60]
             ],
-            'auth_key' => [
-                'type' => Form::INPUT_TEXT,
-                'options' => ['placeholder' => 'Enter Auth Key...', 'maxlength' => 32]
-            ],
+
             'status' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Status...']],
             'role' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Role...']],
             'created_at' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Created At...']],

@@ -54,6 +54,9 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
         // the query the user has typed
         var query = queryField.val();
 
+        // make it a space when it is empty
+        if (query.length == 0) query = ' ';
+
         // fetch the geocoder
         var geocoder = new google.maps.Geocoder;
 

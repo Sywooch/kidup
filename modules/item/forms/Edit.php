@@ -22,6 +22,7 @@ class Edit extends Model
     public $price_week;
     public $price_day;
     public $price_month;
+    public $price_year;
     public $description;
     public $rules;
     public $min_renting_days;
@@ -45,6 +46,7 @@ class Edit extends Model
         $this->price_week = $item->price_week;
         $this->price_day = $item->price_day;
         $this->price_month = $item->price_month;
+        $this->price_year = $item->price_year;
         $this->description = $item->description;
         $this->min_renting_days = $item->min_renting_days;
         $this->is_available = $item->is_available;
@@ -103,7 +105,7 @@ class Edit extends Model
             'location' => ['location_id'],
             'description' => ['name', 'description'],
             'basics' => ['category_id'],
-            'pricing' => ['price_week', 'price_day', 'price_month'],
+            'pricing' => ['price_week', 'price_day', 'price_month', 'price_year'],
             'photos' => ['photos'],
         ];
     }
@@ -162,6 +164,7 @@ class Edit extends Model
         $item->price_week = $this->price_week;
         $item->price_day = $this->price_day;
         $item->price_month = $this->price_month;
+        $item->price_year = $this->price_year;
         $item->description = $this->description;
         $item->min_renting_days = $this->min_renting_days;
         $item->is_available = $this->is_available;

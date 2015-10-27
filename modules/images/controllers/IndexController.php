@@ -29,12 +29,12 @@ class IndexController extends \app\extended\web\Controller
                     ],
                 ],
             ],
-            [
-                'class' => 'yii\filters\HttpCache',
-                'only' => ['index'],
-                'cacheControlHeader' => 'public, max-age=300',
-                'enabled' => YII_CACHE,
-            ],
+//            [
+//                'class' => 'yii\filters\HttpCache',
+//                'only' => ['index'],
+//                'cacheControlHeader' => 'public, max-age=300',
+//                'enabled' => YII_CACHE,
+//            ],
             [
                 'class' => 'yii\filters\PageCache',
                 'only' => ['index'],
@@ -57,7 +57,6 @@ class IndexController extends \app\extended\web\Controller
         $folder3 = null,
         $fm = null
     ) {
-
         $model = DynamicModel::validateData(compact('id', 'w', 'h', 'q', 'fit', 'folder1', 'folder2', 'folder3', 'fm', 'bri'),
             [
                 [['id', 'fit', 'folder1', 'folder2', 'folder3', 'fm'], 'string', 'max' => 52],
@@ -117,7 +116,7 @@ class IndexController extends \app\extended\web\Controller
         try{
             $server->outputImage($filename, $options);
         }catch (\League\Glide\Filesystem\FileNotFoundException $e){
-            return '';
+            echo '';
         }
         exit();
     }

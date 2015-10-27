@@ -23,25 +23,12 @@ class Item extends \item\models\base\Item
     public $images;
     public $distance;
 
-
-    public function backup()
-    {
-        $item = Item::find()->where(['id' => $this->item_id])->asArray()->with([
-            'owner.profile',
-            'owner.locations'
-        ])->one();
-        $renter = User::find()->where(['id' => $this->renter_id])->asArray()->with(['profile', 'locations'])->one();
-        $this->item_backup = json_encode(['item' => $item, 'renter' => $renter]);
-
-        return $this->save();
-    }
-
     public function beforeSave($insert)
     {
         if ($insert == true) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->currency_id = 1;
-            if(YII_ENV !== 'test'){
+            if (YII_ENV !== 'test') {
                 $this->owner_id = Yii::$app->user->id;
             }
         }
@@ -70,7 +57,9 @@ class Item extends \item\models\base\Item
             }
             return $imgs;
         };
-        return Cache::data('item_names' . $this->id, $function, 60 * 60);
+        return Cache::build('item-image-names')
+            ->variations([$this->id])
+            ->duration(60 * 60)->data($function);
     }
 
     public function getImageName($order)
@@ -97,7 +86,8 @@ class Item extends \item\models\base\Item
      *
      * @return string json of results
      */
-    public function preloadMedia(){
+    public function preloadMedia()
+    {
         $preload = [];
         $allMedia = Media::find()->where(['item_has_media.item_id' => $this->id])
             ->innerJoinWith('itemHasMedia')
@@ -130,13 +120,64 @@ class Item extends \item\models\base\Item
             'day' => $this->price_day,
             'week' => $this->price_week / 7,
             'month' => $this->price_month / 30,
+            'year' => $this->price_year / 356 ,
         ];
+
+        // assume that only weekly price is set for sure
+        $using = [];
+        $isDiscounted = false;
         if ($days <= 7) {
             $price = $dailyPrices['day'] > 0 ? $days * $dailyPrices['day'] : $days * $dailyPrices['week'];
+            $using = ['day', $days];
+            if ($this->price_week < $price) {
+                $price = $this->price_week;
+                $using = ['week', 1];
+                $isDiscounted = true;
+            }
         } elseif ($days > 7 && $days <= 31) {
             $price = $dailyPrices['week'] * $days;
-        } else {
+            $using = ['week', round($days / 7, 1)];
+            if (is_int($this->price_month)) {
+                if ($this->price_month < $price) {
+                    $price = $this->price_month;
+                    $using = ['month', 1];
+                    $isDiscounted = true;
+                }
+            }
+        } elseif ($days > 31 && $days <= 356) {
             $price = $dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week'];
+            $using = ['month', round($days / 30, 1)];
+            if (is_int($this->price_year)) {
+                if ($this->price_year < $price) {
+                    $price = $this->price_year;
+                    $using = ['year', 1];
+                    $isDiscounted = true;
+                }
+            }
+        } else {
+            $price = $dailyPrices['year'] > 0 ? $days * $dailyPrices['year'] :
+                ($dailyPrices['month'] > 0 ? $days * $dailyPrices['month'] : $days * $dailyPrices['week']);
+            $using = ['year', round($days / 365, 1)];
+        }
+
+        $using = ['period' => $using[0], 'count' => $using[1]];
+
+        if ($using['period'] == 'day') {
+            $using['period_text'] = \Yii::t('item.pricing_table.day_period', '{n, plural, =1{1 day} other{# days}}',
+                ['n' => $using['count']]);
+            $using['period_price'] = $this->price_day;
+        } elseif ($using['period'] == 'week') {
+            $using['period_text'] = \Yii::t('item.pricing_table.week_period', '{n, plural, =1{1 week} other{# weeks}}',
+                ['n' => $using['count']]);
+            $using['period_price'] = $this->price_week;
+        } elseif ($using['period'] == 'month') {
+            $using['period_text'] = \Yii::t('item.pricing_table.month_period',
+                '{n, plural, =1{1 month} other{# months}}', ['n' => $using['count']]);
+            $using['period_price'] = $this->price_month;
+        } else {
+            $using['period_text'] = \Yii::t('item.pricing_table.month_year',
+                '{n, plural, =1{1 year} other{# years}}', ['n' => $using['count']]);
+            $using['period_price'] = $this->price_year;
         }
 
         $payinFee = \Yii::$app->params['payinServiceFeePercentage'] * $price;
@@ -145,6 +186,8 @@ class Item extends \item\models\base\Item
             'price' => round($price),
             'fee' => round($payinFee + $payinFeeTax),
             'total' => round($price + $payinFee + $payinFeeTax),
+            'periodInfo' => $using,
+            'isDiscounted' => $isDiscounted,
             '_detailed' => [
                 'price' => $price,
                 'fee' => $payinFee,
@@ -160,40 +203,34 @@ class Item extends \item\models\base\Item
      * @param Currency $currency
      * @return bool
      */
-    public function getTableData($from, $to, Currency $currency){
+    public function getTableData($from, $to, Currency $currency)
+    {
         $prices = $this->getPriceForPeriod($from, $to, $currency);
         $days = floor(($to - $from) / (60 * 60 * 24));
-        if ($days <= 7) {
-            $period = \Yii::t('item.pricing_table.day_period', '{n, plural, =1{1 day} other{# days}}', ['n' => $days]);
-            $periodPrice = $this->price_day;
-        } elseif ($days > 7 && $days <= 31) {
-            $period = \Yii::t('item.pricing_table.week_period', '{n, plural, =1{1 week} other{# weeks}}', ['n' => round($days / 7)]);
-            $periodPrice = $this->price_week;
-        } else {
-            $period = \Yii::t('item.pricing_table.month_period', '{n, plural, =1{1 month} other{# months}}', ['n' => round($days / 30)]);
-            $periodPrice = $this->price_month;
-        }
+
         return [
             'price' => [
-                $period . ' x ' . $currency->forex_name . ' ' . $periodPrice,
-                $currency->abbr . ' ' . $prices['price']
+                $prices['periodInfo']['period_text'] . ' x ' . $currency->forex_name . ' ' . $prices['periodInfo']['period_price'],
+                $currency->abbr . ' ' . $prices['price'],
+                $prices['isDiscounted']
             ],
             'fee' => [\Yii::t('item.pricing_table.service_fee', 'Service fee'), $currency->abbr . ' ' . $prices['fee']],
             'total' => [\Yii::t('item.pricing_table.total', 'Total'), $currency->abbr . ' ' . $prices['total']]
         ];
     }
 
-    public function getCarouselImages(){
-        return Cache::data('item_view-images-carousel' . $this->id, function () {
+    public function getCarouselImages()
+    {
+        $func = function () {
             $itemImages = $this->getImageNames();
 
             $images = [];
             $count = count($itemImages);
             foreach ($itemImages as $i => $img) {
-                if($count == 1 || ($i == 0 && $count > 2)){
+                if ($count == 1 || ($i == 0 && $count > 2)) {
                     $w = 650;
                     $h = 300;
-                }else{
+                } else {
                     $w = 250;
                     $h = 200;
                 }
@@ -204,9 +241,13 @@ class Item extends \item\models\base\Item
                 ];
             }
             return $images;
-        }, 10 * 60);
-    }
+        };
 
+        return Cache::build('item-view-images-carousel')
+            ->variations([$this->id])
+            ->duration(10 * 60)
+            ->data($func);
+    }
 
 
     /**
@@ -225,8 +266,10 @@ class Item extends \item\models\base\Item
         }
         $res = [];
         foreach ($similarities as $s) {
-            if(count($res) >= $numItems) return $res;
-            if($s->similarItem->is_available == 1){
+            if (count($res) >= $numItems) {
+                return $res;
+            }
+            if ($s->similarItem->is_available == 1) {
                 $res[] = $s->similarItem;
             }
         }

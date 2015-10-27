@@ -1,7 +1,6 @@
 <?php
 namespace home\assets;
 
-use app\assets\AngularAsset;
 use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
@@ -22,7 +21,6 @@ class HomeAsset extends AssetBundle
     public function __construct($config = []){
         $this->depends = [
             AppAsset::className(),
-            AngularAsset::className(),
             'search\assets\SearchWidgetAsset'
         ];
         parent::__construct($config);

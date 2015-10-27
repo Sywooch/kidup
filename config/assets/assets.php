@@ -34,7 +34,7 @@ $ret = [
             'js' => 'js/home-{hash}.js',
             'css' => 'css/home-{hash}.css',
             'depends' => [
-                'home\assets\HomeAsset',
+                \home\assets\HomeAsset::className()
             ]
         ],
         'common' => [
@@ -56,6 +56,5 @@ $ret = [
     'jsCompressor' => 'uglifyjs {from} -o {to} -c --define >> /dev/null 2>&1',
     'cssCompressor' => 'cleancss -o {to} {from}',
 ];
-
 
 return $ret;

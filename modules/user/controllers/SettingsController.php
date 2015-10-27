@@ -227,27 +227,6 @@ class SettingsController extends Controller
     }
 
     /**
-     * Attempts changing user's password, not used atm
-     * @param  integer $id
-     * @param  string $code
-     * @return string
-     * @throws \yii\web\HttpException
-     */
-    public function actionConfirm($id, $code)
-    {
-        /** @var \user\models\User $user * */
-//        $user = $this->finder->findUserById($id);
-//
-//        if ($user === null || $this->module->emailChangeStrategy == Module::STRATEGY_INSECURE) {
-//            throw new NotFoundHttpException;
-//        }
-//
-//        $user->attemptEmailChange($code);
-//
-//        return $this->redirect(['account']);
-    }
-
-    /**
      * Displays list of connected network accounts.
      * @return string
      */

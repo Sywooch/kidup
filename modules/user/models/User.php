@@ -2,7 +2,10 @@
 
 namespace user\models;
 
+use api\models\oauth\OauthAccessToken;
+use api\oauth2\models\OauthAccessTokens;
 use app\helpers\Event;
+use app\jobs\SlackJob;
 use \images\components\ImageHelper;
 use \item\models\Location;
 use \mail\models\Token;
@@ -13,6 +16,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\web\HttpException;
 use yii\web\IdentityInterface;
 
 /**
@@ -23,7 +27,6 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $unconfirmed_email
  * @property string $password_hash
- * @property string $auth_key
  * @property integer $registration_ip
  * @property integer $confirmed_at
  * @property integer $blocked_at
@@ -83,7 +86,14 @@ class User extends base\User implements IdentityInterface
     /** @inheritdoc */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        $token = OauthAccessToken::find()->where(['access_token' => $token])->one();
+        if ($token == null) {
+            return false;
+        }
+        if($token->expires < time()){
+            throw new HttpException(401, "Access Token expired");
+        }
+        return $token->user;
     }
 
     public function scenarios()
@@ -95,7 +105,6 @@ class User extends base\User implements IdentityInterface
             'create' => ['email', 'password'],
             'update' => ['email', 'password'],
             'settings' => ['email', 'password'],
-
             'splash' => ['email']
         ];
     }
@@ -155,12 +164,7 @@ class User extends base\User implements IdentityInterface
     {
         return $this->getAttribute('id');
     }
-
-    /** @inheritdoc */
-    public function getAuthKey()
-    {
-        return $this->getAttribute('auth_key');
-    }
+    
 
     /** @inheritdoc */
     public function attributeLabels()
@@ -205,7 +209,7 @@ class User extends base\User implements IdentityInterface
     /** @inheritdoc */
     public function validateAuthKey($authKey)
     {
-        return $this->getAttribute('auth_key') == $authKey;
+        return false;
     }
 
     /**
@@ -297,21 +301,23 @@ class User extends base\User implements IdentityInterface
      * @var string $type (login,connect,connect_new,registration,post_registration)
      * @return string
      */
-    public static function afterLoginUrl($type){
+    public static function afterLoginUrl($type)
+    {
+
         // always follow the after_login_url if set
-        if(\Yii::$app->session->has('after_login_url')){
+        if (\Yii::$app->session->has('after_login_url')) {
             $loginUrl = \Yii::$app->session->get('after_login_url');
             \Yii::$app->session->remove('after_login_url');
             return $loginUrl;
         }
 
-        if($type == 'login' || $type == 'connect' || $type == 'post_registration'){
-            if(strpos(Url::previous(), 'user/login') !== false){
+        if ($type == 'login' || $type == 'connect' || $type == 'post_registration') {
+            if (strpos(Url::previous(), 'user/login') !== false) {
                 return Url::to('@web/home');
             }
             return Url::previous();
         }
-        if($type == 'registration' || $type == 'connect_new'){
+        if ($type == 'registration' || $type == 'connect_new') {
             return Url::to('@web/user/registration/post-registration');
         }
         return Url::to('@web/home');
@@ -351,11 +357,12 @@ class User extends base\User implements IdentityInterface
                     \Yii::$app->session->setFlash('success', \Yii::t('user.confirmation.email_verified_success',
                         'Thank you, your email is now verified!'));
                 } else {
-                    \Yii::error("Profile not saved".Json::encode($p->getErrors()));
+                    \Yii::error("Profile not saved" . Json::encode($p->getErrors()));
                 }
             } else {
                 \Yii::$app->session->setFlash('danger',
-                    \Yii::t('user.confirmation.some_unknown_error', 'Something went wrong and your account has not been confirmed.'));
+                    \Yii::t('user.confirmation.some_unknown_error',
+                        'Something went wrong and your account has not been confirmed.'));
             }
         }
     }
@@ -398,7 +405,6 @@ class User extends base\User implements IdentityInterface
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
             if (\Yii::$app instanceof \yii\web\Application) {
                 $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
             }
@@ -435,7 +441,8 @@ class User extends base\User implements IdentityInterface
      * @return bool
      * @throws \yii\base\InvalidConfigException
      */
-    private function setNewUserDefaults($lang){
+    private function setNewUserDefaults($lang)
+    {
         $profile = \Yii::createObject([
             'class' => Profile::className(),
             'user_id' => $this->id,
@@ -471,7 +478,6 @@ class User extends base\User implements IdentityInterface
     }
 
 
-
     public function isAdmin()
     {
         return ($this->role === self::ROLE_ADMIN);
@@ -491,5 +497,10 @@ class User extends base\User implements IdentityInterface
     public function getPayoutMethod()
     {
         return $this->hasOne(PayoutMethod::className(), ['user_id' => 'id']);
+    }
+
+    public function getAuthKey()
+    {
+        return false;
     }
 }

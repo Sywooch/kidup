@@ -22,7 +22,7 @@ class ImageHelper extends BaseHtml
             }
             $htmlOptions['src'] = $url;
 
-            if(!isset($htmlOptions['style'])){
+            if (!isset($htmlOptions['style'])) {
                 $htmlOptions['style'] = '';
             }
             if (isset($options['w'])) {
@@ -42,7 +42,11 @@ class ImageHelper extends BaseHtml
             }
             return static::tag('img', '', $htmlOptions);
         };
-        return Cache::data('image_' . $filename . Json::encode([$options, $htmlOptions]), $function, 24 * 60 * 60);
+        return Cache::build('image-helper-image')->variations([
+            $filename,
+            $options,
+            $htmlOptions
+        ])->duration(24 * 60 * 60)->html($function);
     }
 
     public static function img($filename, $options = [], $htmlOptions = [])
@@ -62,7 +66,7 @@ class ImageHelper extends BaseHtml
 
     public static function urlToFilename($url)
     {
-        $expl = explode("---xxx---", str_replace(['?', '/'], '---xxx---', $url ));
+        $expl = explode("---xxx---", str_replace(['?', '/'], '---xxx---', $url));
         foreach ($expl as $e) {
             if (strpos($e, '.png') !== false || strpos($e, '.jpg') !== false) {
                 return $e;
@@ -71,6 +75,12 @@ class ImageHelper extends BaseHtml
         return false;
     }
 
+    /**
+     * Returns the url for a filename, either locally of on aws if in production
+     * @param $filename
+     * @param array $options
+     * @return mixed
+     */
     public static function url($filename, $options = [])
     {
         $function = function () use ($filename, $options) {
@@ -110,14 +120,16 @@ class ImageHelper extends BaseHtml
             }
             if (YII_ENV != 'dev') {
                 if (!$server->cacheFileExists($filename, $options)) {
-                    try{
+                    try {
                         $server->makeImage($filename, $options);
-                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename, $options);
-                    }catch (FileNotFoundException $e){
+                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
+                                $options);
+                    } catch (FileNotFoundException $e) {
                         $url = 'http://placehold.it/300x300';
                     }
-                }else{
-                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename, $options);
+                } else {
+                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
+                            $options);
                 }
             } else {
                 $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
@@ -126,6 +138,23 @@ class ImageHelper extends BaseHtml
 
             return $url;
         };
-        return Cache::data('imageurl' . $filename . Json::encode($options), $function, 24 * 60 * 60);
+        return Cache::build('image-url')->variations([$filename, $options])->variations(24*60*60)->data($function);
+    }
+
+    /**
+     * Returns a set of urls for a given url
+     * @param $filename
+     * @bool $isMobile
+     */
+    public static function urlSet($filename, $isMobile = false){
+        $m = 1;
+        if($isMobile){
+            $m = 0.7;
+        }
+        return [
+            'original' => self::url($filename),
+            'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
+            'medium' => self::url($filename, ['w' => 250*$m, 'q' => 90]),
+        ];
     }
 }
