@@ -35,14 +35,14 @@ class ViewController extends Controller
                 'cacheControlHeader' => 'public, max-age=300',
                 'enabled' => YII_CACHE,
             ],
-            [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
-                'duration' => 60 * 30,
-                'enabled' => YII_CACHE,
-                'variations' => [
-                ],
-            ],
+//            [
+//                'class' => 'yii\filters\PageCache',
+//                'only' => ['index'],
+//                'duration' => 60 * 30,
+//                'enabled' => YII_CACHE,
+//                'variations' => [
+//                ],
+//            ],
         ];
     }
 
