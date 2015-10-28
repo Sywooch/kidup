@@ -113,6 +113,8 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
                     // redirect the user to the search page
                     window.location = '/search/' + query + '?' + params.join('&');
                 });
+            }, function(error) {
+                alert(window.i18n_search.location_not_given);
             });
             // prevent form submitting
             return false;

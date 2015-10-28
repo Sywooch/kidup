@@ -5,6 +5,10 @@ use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
 
 \item\assets\MenuSearchAsset::register($this);
+
+$this->registerJsVariables([
+    'location_not_given' => Yii::t("search.location.not_given", "We need a location in order to search. Please fill in the location field or allow us to get your location."),
+], 'window.i18n_search')
 ?>
 
 <?php $form = ActiveForm::begin([
