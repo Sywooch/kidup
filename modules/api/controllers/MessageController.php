@@ -34,7 +34,7 @@ class MessageController extends Controller
         return new ActiveDataProvider([
             'query' => Message::find()
                 ->where(['conversation_id' => $id])
-                ->orderBy('created_at DESC')
+                ->orderBy('message.created_at DESC')
         ]);
     }
 

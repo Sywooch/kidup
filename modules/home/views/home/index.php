@@ -34,9 +34,22 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                         <?= \Yii::t("home.kidup_is_marketplace", 'KidUp is your online parent-to-parent marketplace.') ?>
                     </h4>
 
-                    <div class="btn btn-default hidden-xs hidden-sm" id="how-it-works-btn">
-                        <?= Yii::t("home.subheader_how_it_works", "How it Works") ?>
+                    <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button" data-toggle="modal" data-target="#registerModal">
+                        <?= Yii::t("home.signup_call_to_action", "Sign up for free and win a family trip to legoland!") ?>
+                        &nbsp;<i class="fa fa-angle-right"></i>
                     </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="btn btn-default hidden-xs hidden-sm pull-right" id="how-it-works-btn">-->
+<!--                                --><?//= Yii::t("home.subheader_how_it_works", "How it Works") ?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6">-->
+<!--                            -->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
                     <?php $this->registerJs("$('#how-it-works-btn').click(function() {
                         $('html, body').animate({
                             scrollTop: $('#how-it-works').offset().top

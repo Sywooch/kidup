@@ -44,6 +44,6 @@ class Conversation extends \message\models\Conversation
     }
 
     public function getLastMessage(){
-        return $this->hasOne(Message::className(), ['conversation_id' => 'id'])->orderBy('created_at DESC');
+        return $this->hasOne(Message::className(), ['conversation_id' => 'id'])->orderBy('message.created_at DESC');
     }
 }
