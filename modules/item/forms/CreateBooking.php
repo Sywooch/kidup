@@ -99,12 +99,12 @@ class CreateBooking extends Model
      * Attempt to make a booking based on session data. Returns false or a redirect url
      * @return bool|string
      */
-    public function attemptBooking()
+    public function attemptBooking($fakeBooking)
     {
         if ($this->validateDates()) {
             if (isset(\Yii::$app->request->get()['_book'])) {
-                if ($this->save()) {
-                    $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
+                if ($this->save($fakeBooking)) {
+                    $redirect = Url::to('@web/booking/confirm', true);
                     if (YII_ENV === 'test') {
                         return \Yii::$app->controller->redirect($redirect);
                     }
@@ -131,7 +131,7 @@ class CreateBooking extends Model
      * Tries to save an actual booking
      * @return bool
      */
-    private function save()
+    public function save($fakeBooking)
     {
         if (!$this->validate()) {
             return false;
@@ -152,6 +152,10 @@ class CreateBooking extends Model
         $booking->currency_id = $this->currency->id;
         $booking->status = Booking::AWAITING_PAYMENT;
         $booking->setPayinPrices();
+        if ($fakeBooking) {
+            $this->booking = $booking;
+            return true;
+        }
         if ($booking->save()) {
             $this->booking = $booking;
             return true;

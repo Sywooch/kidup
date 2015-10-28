@@ -43,22 +43,12 @@ class DefaultController extends Controller
 
     public function actionConfirm()
     {
-        $session = Yii::$app->session;
-        $currentBooking = $session->get('currentBooking');
-
-        // check whether the current booking is correct
-        if (!is_array($currentBooking)) {
-            throw new ForbiddenHttpException(Yii::t('error.booking.invalid', "Invalid booking"));
-        }
-        $keys = ['itemID', 'currencyID', 'dateFrom', 'dateTo'];
-        foreach ($keys as $key) {
-            if (!array_key_exists($key, $currentBooking)) {
-                throw new ForbiddenHttpException(Yii::t('error.booking.invalid', "Invalid booking"));
-            }
-        }
-
+        // fetch all the parameters
+        $currentBooking = Yii::$app->session->get('currentBooking');
         $itemID = $currentBooking['itemID'];
         $currencyID = $currentBooking['currencyID'];
+        $dateFrom = $currentBooking['dateFrom'];
+        $dateTo = $currentBooking['dateTo'];
 
         // find the corresponding item
         $items = Item::find()->where(['id' => $itemID, 'is_available' => 1]);
@@ -74,21 +64,15 @@ class DefaultController extends Controller
         }
         $currency = $currencies->one();
 
-        // now check if the booking is valid
+        // now create a fake booking
         $createBooking = new CreateBooking($item, $currency);
-        $createBooking->dateFrom = $currentBooking['dateFrom'];
-        $createBooking->dateTo = $currentBooking['dateTo'];
-        if (!$createBooking->isValid()) {
-            throw new ForbiddenHttpException(Yii::t('error.booking.daterange.invalid', "Invalid dates for booking"));
-        }
-        
-        $model = new Confirm($createBooking);
-        $booking = \Yii::createObject([
-            'status' => Booking::AWAITING_PAYMENT,
-            'item_id' => $item->id,
-            'currency_id' => $currency->id,
+        $createBooking->dateFrom = $dateFrom;
+        $createBooking->dateTo = $dateTo;
+        $createBooking->validateDates();
+        $createBooking->save(true);
+        $booking = $createBooking->booking;
 
-        ]);
+        $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
             if(isset(\Yii::$app->request->post()['payment_method_nonce'])){

@@ -64,6 +64,7 @@ class Confirm extends Model
         if (!$this->validate()) {
             return false;
         };
+
         $payin = new Payin();
         $payin->nonce = $this->nonce;
         $payin->status = Payin::STATUS_INIT;
@@ -72,6 +73,7 @@ class Confirm extends Model
         $payin->amount = $this->booking->amount_payin;
 
         if ($payin->save()) {
+            $this->booking->save();
             // need to set this beore authorize function
             $this->booking->payin_id = $payin->id;
             $this->booking->startConversation($this->message);
