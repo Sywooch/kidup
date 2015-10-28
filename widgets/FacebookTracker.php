@@ -19,10 +19,10 @@ class FacebookTracker extends \yii\bootstrap\Widget
         }
 
         $patterns = [
-            'search/search/index' =>                    '640617159413576',
-            'user/registration/post-registration' =>    '640617159413576',
-            'item/create/index' =>                      '640617159413576',
-            'item/create/edit-publish' =>               '640617159413576',
+            'search/search/index' =>                    'Search',
+            'user/registration/post-registration' =>    'CompleteRegistration',
+            'item/create/index' =>                      'Lead',
+            'item/view/index' =>                        'ViewContent',
         ];
 
         $route = @\Yii::$app->controller->getRoute();
