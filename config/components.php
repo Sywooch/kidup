@@ -171,6 +171,13 @@ $components = [
             ],
             [
                 'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/bookings' => 'api/booking'],
+                'extraPatterns' => [
+                    'costs' => 'costs',
+                ]
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/conversations' => 'api/conversation'],
             ],
             [

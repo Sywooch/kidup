@@ -99,11 +99,14 @@ class CreateBooking extends Model
      * Attempt to make a booking based on session data. Returns false or a redirect url
      * @return bool|string
      */
-    public function attemptBooking()
+    public function attemptBooking($isAPICall = false)
     {
         if ($this->validateDates()) {
-            if (isset(\Yii::$app->request->get()['_book'])) {
+            if (isset(\Yii::$app->request->get()['_book']) || $isAPICall) {
                 if ($this->save()) {
+                    if ($isAPICall) {
+                        return $this->booking;
+                    }
                     $redirect = Url::to('@web/booking/' . $this->booking->id . '/confirm', true);
                     if (YII_ENV === 'test') {
                         return \Yii::$app->controller->redirect($redirect);
