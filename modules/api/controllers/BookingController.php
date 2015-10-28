@@ -94,7 +94,7 @@ class BookingController extends Controller
         ];
 
         // save the booking
-        $bookingObject = $booking->attemptBooking(true);
+        $bookingObject = $booking->attemptBooking();
         if ($bookingObject !== false) {
             $result['success'] = true;
             $result['bookingID'] = $bookingObject->id;

@@ -2,15 +2,18 @@
 
 namespace booking\controllers;
 
+use api\models\Currency;
 use app\extended\web\Controller;
 use app\jobs\SlackJob;
 use \booking\forms\Confirm;
 use \booking\models\Booking;
 use \booking\models\Payin;
 use \images\components\ImageHelper;
+use item\forms\CreateBooking;
 use \item\models\Item;
 use \user\models\PayoutMethod;
 use Carbon\Carbon;
+use Yii;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -38,22 +41,54 @@ class DefaultController extends Controller
 
     public $enableCsrfValidation = false;
 
-    public function actionConfirm($id)
+    public function actionConfirm()
     {
-        /**
-         * @var \booking\models\Booking $booking
-         */
-        $booking = $this->find($id);
+        $session = Yii::$app->session;
+        $currentBooking = $session->get('currentBooking');
 
-        if ($booking->renter_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException();
+        // check whether the current booking is correct
+        if (!is_array($currentBooking)) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.invalid', "Invalid booking"));
+        }
+        $keys = ['itemID', 'currencyID', 'dateFrom', 'dateTo'];
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $currentBooking)) {
+                throw new ForbiddenHttpException(Yii::t('error.booking.invalid', "Invalid booking"));
+            }
         }
 
-        if ($booking->status !== Booking::AWAITING_PAYMENT) {
-            return $this->redirect(['/booking/' . $id]);
+        $itemID = $currentBooking['itemID'];
+        $currencyID = $currentBooking['currencyID'];
+
+        // find the corresponding item
+        $items = Item::find()->where(['id' => $itemID, 'is_available' => 1]);
+        if ($items->count() != 1) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.item.invalid', "Invalid item for booking"));
+        }
+        $item = $items->one();
+
+        // find the corresponding currency
+        $currencies = Currency::find()->where(['id' => $currencyID]);
+        if ($currencies->count() != 1) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.currency.invalid', "Invalid currency for booking"));
+        }
+        $currency = $currencies->one();
+
+        // now check if the booking is valid
+        $createBooking = new CreateBooking($item, $currency);
+        $createBooking->dateFrom = $currentBooking['dateFrom'];
+        $createBooking->dateTo = $currentBooking['dateTo'];
+        if (!$createBooking->isValid()) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.daterange.invalid', "Invalid dates for booking"));
         }
         
-        $model = new Confirm($booking);
+        $model = new Confirm($createBooking);
+        $booking = \Yii::createObject([
+            'status' => Booking::AWAITING_PAYMENT,
+            'item_id' => $item->id,
+            'currency_id' => $currency->id,
+
+        ]);
 
         if ($model->load(\Yii::$app->request->post())) {
             if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
@@ -64,16 +99,15 @@ class DefaultController extends Controller
             }
             if ($model->save()) {
                 // booking is confirmed
+                $booking = $model->booking;
                 if (YII_ENV == 'prod') {
                     new SlackJob([
-                        'message' => "New booking payin has been made, id: " . $id
+                        'message' => "New booking payin has been made, id: " . $booking->id
                     ]);
                 }
-                return $this->redirect(['/booking/' . $id]);
+                return $this->redirect(['/booking/' . $booking->id]);
             }
         }
-
-        $item = Item::find()->where(['id' => $booking->item_id])->one();
 
         return $this->render('confirm', [
             'booking' => $booking,
