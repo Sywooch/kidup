@@ -33,7 +33,7 @@ $this->registerJsVariables([
     'fieldConfig' => [
         'template' => "{input}"
     ],
-    'action' => Url::to('@web/search'),
+    'action' => Url::to('@web/search', true),
     'method' => 'get',
     'options' => [
         'style' => 'padding:15px;padding-top:80px;',

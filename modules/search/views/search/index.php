@@ -18,8 +18,6 @@ $this->assetPackage = \app\assets\Package::SEARCH;
 ?>
 
 <?php Pjax::begin([
-//    'enableReplaceState' => false,
-//    'enableReplaceState' => true,
     'id' => 'pjax-search',
     'timeout' => 1000000
 ]);

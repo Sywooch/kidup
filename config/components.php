@@ -168,6 +168,14 @@ $components = [
             ],
             [
                 'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/conversations' => 'api/conversation'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/messages' => 'api/message'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/users' => 'api/user'],
             ],
             [

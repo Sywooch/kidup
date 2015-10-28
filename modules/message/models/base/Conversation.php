@@ -22,6 +22,7 @@ use Yii;
  * @property \user\models\User $targetUser
  * @property MailAccount[] $mailAccounts
  * @property \message\models\Message[] $messages
+ * @property \message\models\Message $lastMessage
  */
 class Conversation extends \yii\db\ActiveRecord
 {
@@ -91,6 +92,14 @@ class Conversation extends \yii\db\ActiveRecord
     public function getMessages()
     {
         return $this->hasMany(\message\models\Message::className(), ['conversation_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLastMessage()
+    {
+        return $this->hasOne(\message\models\Message::className(), ['conversation_id' => 'id'])->orderBy('created_at DESC');
     }
 
     /**

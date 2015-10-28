@@ -8,7 +8,7 @@ use yii\helpers\Html;
 ?>
 
 <?php $form = ActiveForm::begin([
-    'action' => Url::to('@web/search'),
+    'action' => Url::to('@web/search', true),
     'method' => 'get',
     'options' => [
         'class' => 'form-inline hidden-xs',
