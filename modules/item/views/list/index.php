@@ -38,6 +38,19 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                         </a>
                     </div>
                 </div>
+
+                <!-- display a warning for mobile visitors -->
+                <div class="row visible-xs">
+                    <div class="col-xs-12">
+                        <div class="alert alert-info" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <?= Yii::t("item.create.mobile_warning", "It is not possible to create a product on mobile devices right now, but it is possible on desktop
+                            computers and notebooks. Currently we are working on a mobile app where it will be possible
+                            to create a product on mobile devices.") ?>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <?php $this->beginBlock('pending'); ?>
                     <div class="form-group">
