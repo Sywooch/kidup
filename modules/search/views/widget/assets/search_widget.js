@@ -72,9 +72,19 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
                         if (results.length > 0) {
                             // set the address as an input parameter for the search
                             var place = results[0];
-                            params.push("search-filter[latitude]=" + place.geometry.location.lat());
-                            params.push("search-filter[longitude]=" + place.geometry.location.lng());
-                            params.push("search-filter[location]=" + place.formatted_address);
+                            var address = place.formatted_address;
+                            if (place != undefined) {
+                                params.push("search-filter[latitude]=" + place.geometry.location.lat());
+                                params.push("search-filter[longitude]=" + place.geometry.location.lng());
+                            } else {
+                                params.push("search-filter[latitude]=");
+                                params.push("search-filter[longitude]=");
+                            }
+                            if (address != undefined) {
+                                params.push("search-filter[location]=" + address);
+                            } else {
+                                params.push("search-filter[location]=");
+                            }
                             // redirect the user to the search page
                             window.location = '/search/' + query + '?' + params.join('&');
                         }
@@ -107,11 +117,15 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
                             // set the address as an input parameter for the search
                             var result = results[0];
                             var location = result['formatted_address'];
-                            params.push("search-filter[location]=" + location);
+                            if (location != undefined) {
+                                params.push("search-filter[location]=" + location);
+                            } else {
+                                params.push("search-filter[location]=");
+                            }
                         }
                     }
                     // redirect the user to the search page
-                    window.location = '/search/' + query + '?' + params.join('&');
+                    //window.location = '/search/' + query + '?' + params.join('&');
                 });
             }, function(error) {
                 alert(window.i18n_search.location_not_given);
