@@ -22,7 +22,7 @@ Modal::begin([
 ]) ?>
 <?= \images\components\ImageHelper::image('kidup/logo/horizontal-no-text.png',
     ['w' => 400, 'q' => 90],
-    ['style' => 'margin-left:-100px;margin-top:-40px;margin-bottom:-140px;', 'class' => 'hidden-xs hidden-sm']) ?>
+    ['style' => 'margin-left:-100px;margin-top:-32px;margin-bottom:-140px;', 'class' => 'hidden-xs hidden-sm']) ?>
     <div class="social-area">
         <?php foreach ($authAuthChoice->getClients() as $client): ?>
             <?php $authAuthChoice->clientLink($client,
