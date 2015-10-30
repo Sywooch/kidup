@@ -64,6 +64,7 @@ class ViewController extends Controller
 
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
 
+        \Yii::$app->session->set('currentBooking', null);
         $model = new CreateBooking($item, $currency);
         if ($model->load(\Yii::$app->request->get())) {
             $attempt = $model->attemptBooking(true);

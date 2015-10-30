@@ -41,33 +41,26 @@ class DefaultController extends Controller
 
     public $enableCsrfValidation = false;
 
-    public function actionConfirm()
+    public function actionConfirm($item_id, $date_from, $date_to)
     {
         // fetch all the parameters
-        $currentBooking = Yii::$app->session->get('currentBooking');
-        $itemID = $currentBooking['itemID'];
-        $currencyID = $currentBooking['currencyID'];
-        $dateFrom = $currentBooking['dateFrom'];
-        $dateTo = $currentBooking['dateTo'];
 
         // find the corresponding item
-        $items = Item::find()->where(['id' => $itemID, 'is_available' => 1]);
-        if ($items->count() != 1) {
-            throw new ForbiddenHttpException(Yii::t('error.booking.item.invalid', "Invalid item for booking"));
+        $item = Item::find()->where(['id' => $item_id, 'is_available' => 1])->one();
+        if ($item === null) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.item.invalid', "Item not found."));
         }
-        $item = $items->one();
 
         // find the corresponding currency
-        $currencies = Currency::find()->where(['id' => $currencyID]);
-        if ($currencies->count() != 1) {
-            throw new ForbiddenHttpException(Yii::t('error.booking.currency.invalid', "Invalid currency for booking"));
+        $currency = Currency::find()->where(['id' => 1])->one();
+        if ($currency === null) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.currency.invalid', "Currency not found."));
         }
-        $currency = $currencies->one();
 
         // now create a fake booking
         $createBooking = new CreateBooking($item, $currency);
-        $createBooking->dateFrom = $dateFrom;
-        $createBooking->dateTo = $dateTo;
+        $createBooking->dateFrom = $date_from;
+        $createBooking->dateTo = $date_to;
         $createBooking->validateDates();
         $createBooking->save(true);
         $booking = $createBooking->booking;

@@ -104,7 +104,8 @@ class CreateBooking extends Model
         if ($this->validateDates()) {
             if (isset(\Yii::$app->request->get()['_book'])) {
                 if ($this->save($fakeBooking)) {
-                    $redirect = Url::to('@web/booking/confirm', true);
+                    $redirect = Url::to('@web/booking/confirm?item_id=' . $this->item->id . '&date_from=' . $this->dateFrom . '&date_to=' . $this->dateTo,
+                        true);
                     if (YII_ENV === 'test') {
                         return \Yii::$app->controller->redirect($redirect);
                     }
