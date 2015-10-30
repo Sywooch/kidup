@@ -64,9 +64,9 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
         if (hasLocationField) {
             // find the address the user has filled in
             var address = locationField.val();
-            // if there was a focus in the location field and the field is not empty, then try to use the geocoder
-            // to fetch the position of the user
+
             if (numLocationFieldFocus !== 0 && address.length > 0) {
+
                 geocoder.geocode({'address': address}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (results.length > 0) {
@@ -90,6 +90,8 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
                         }
                     }
                 });
+                // if there was a focus in the location field and the field is not empty, then try to use the geocoder
+                // to fetch the position of the user
                 // prevent form submitting
                 return false;
             }
@@ -97,6 +99,7 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
 
         // check whether geo location is available
         if (navigator.geolocation) {
+
             // try to fetch the current position of the user
             navigator.geolocation.getCurrentPosition(function (position) {
                 // find the coordinates of the location
@@ -110,10 +113,13 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
 
                 // now try to find the name of the found address
                 geocoder.geocode({'location': latlng}, function (results, status) {
+
                     // some name was found
                     if (status === google.maps.GeocoderStatus.OK) {
+
                         // and if there were results
                         if (results.length > 0) {
+
                             // set the address as an input parameter for the search
                             var result = results[0];
                             var location = result['formatted_address'];
@@ -125,7 +131,7 @@ function initializeSearchWidget(queryField, locationField, submitButton, testMod
                         }
                     }
                     // redirect the user to the search page
-                    //window.location = '/search/' + query + '?' + params.join('&');
+                    window.location = '/search/' + query + '?' + params.join('&');
                 });
             }, function(error) {
                 alert(window.i18n_search.location_not_given);

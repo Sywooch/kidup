@@ -53,6 +53,7 @@ class Confirm extends Model
     public function __construct(Booking $booking)
     {
         $this->booking = $booking;
+
         return parent::__construct();
     }
 

@@ -30,11 +30,6 @@ $this->registerJsVariables([
                         'id' => 'main-search'
                     ]);
                     ?>
-
-
-
-
-                    
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
                             'options' => [
