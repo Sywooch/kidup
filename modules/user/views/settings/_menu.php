@@ -13,6 +13,17 @@ use kartik\sidenav\SideNav;
 use kartik\icons\Icon;
 ?>
 
+<!-- display a warning for mobile visitors -->
+<div class="row visible-xs">
+    <br />
+    <div class="col-xs-12">
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <?= Yii::t("user.settings.mobile_warning", "This page is not optimized for mobile devices. Currently we are working on a mobile app where it is easier to change your settings.") ?>
+        </div>
+    </div>
+</div>
+
 <?= SideNav::widget([
     'type' => SideNav::TYPE_PRIMARY,
     'heading' => false,

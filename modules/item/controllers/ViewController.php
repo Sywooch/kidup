@@ -64,9 +64,18 @@ class ViewController extends Controller
 
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
 
+        \Yii::$app->session->set('currentBooking', null);
         $model = new CreateBooking($item, $currency);
         if ($model->load(\Yii::$app->request->get())) {
-            $attempt = $model->attemptBooking();
+            $attempt = $model->attemptBooking(true);
+            if ($attempt !== false) {
+                \Yii::$app->session->set('currentBooking', [
+                    'itemID' => $item->id,
+                    'currencyID' => $currency->id,
+                    'dateFrom' => $model->dateFrom,
+                    'dateTo' => $model->dateTo
+                ]);
+            }
 
             // post for testing and non supporting pjax
             if (Yii::$app->request->isPjax || (YII_ENV == 'test' && Yii::$app->request->isPost)) {

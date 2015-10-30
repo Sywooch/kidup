@@ -183,7 +183,7 @@ window.initAngular = function () {
                 };
 
                 var params = {};
-                var baseUrl = 'https://' + window.location.hostname + window.location.pathname;
+                var baseUrl = window.location.protocol + "//" + window.location.hostname + window.location.pathname;
                 _.map(getParams(settings.url), function (param) {
                     params[param[0]] = param[1];
                 });

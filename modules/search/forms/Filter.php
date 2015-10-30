@@ -36,6 +36,7 @@ class Filter extends Model
     public $features;
     public $singularFeatures;
     public $page;
+    public $pageSize = 12;
 
     public $resultsAreFake = false; // if the results are not results from the actual query, but just to have something
     public $resultText = false; // toptext in resultPage
@@ -61,7 +62,7 @@ class Filter extends Model
      *
      * @return \yii\db\Query Query object
      */
-    public function getQuery() {
+    public function getQuery($isAPICall = false) {
         $this->queryExtraction();
         $this->findFeatureFilters();
         // initialize the query
@@ -72,26 +73,32 @@ class Filter extends Model
         $this->filterPrice();
         $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
-        $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
 
-
+        // count before limiting the query
         $countQuery = clone $this->_query;
         $countQuery = (int)$countQuery->count();
         $this->estimatedResultCount = $countQuery;
 
+        // set the pagination
+        $this->_query->limit($this->pageSize)->offset(round($this->page) * $this->pageSize);
+
         // show something if there is no result
-        if ($countQuery == 0) {
+        if (!$isAPICall && $countQuery == 0) {
             $this->resultText = \Yii::t('search.no_results', 'No results found for your query.');
             $this->resultsAreFake = true;
             $this->_query = Item::find();
             $this->_query->andWhere(['is_available' => 1]);
-            $this->_query->limit(12)->offset(round($this->page) * 12); // pagination
+            $this->_query->limit($this->pageSize)->offset(round($this->page) * $this->pageSize); // pagination
             $countQuery = clone $this->_query;
             $countQuery = (int)$countQuery->count();
             $this->estimatedResultCount = $countQuery;
         }
 
-        $this->filterLocation();
+        if ($isAPICall) {
+            $this->filterLocationLongitudeLatitude();
+        } else {
+            $this->filterLocation();
+        }
 
         // search results, order by some semi random but constant order
         return $this->_query->orderBy('(item.id mod 8)*item.created_at');
@@ -233,21 +240,28 @@ class Filter extends Model
         }
 
         if (!is_null($this->latitude) && !is_null($this->location)) {
-            $latitude = floatval($this->latitude);
-            $longitude = floatval($this->longitude);
-            $distanceQ = '( 6371  * acos( cos( radians( ' . ($latitude) . ' ) )
-                        * cos( radians( `location`.`latitude` ) )
-                        * cos( radians( `location`.`longitude` ) - radians(' . ($longitude) . ') )
-                        + sin( radians(' . ($latitude) . ') )
-                        * sin( radians( `location`.`latitude` ) ) ) )';
-            $this->_query->select($distanceQ . ' as distance, `item`.*');
-            $this->_query->innerJoinWith('location');
-
-            $this->_query->orderBy('distance');
+            $this->filterLocationLongitudeLatitude();
         } else {
             // no matching location could be found, return no results
             //$query->andWhere('true = false');
         }
+    }
+
+    /**
+     * Filter the location based on longitude and latitude.
+     */
+    public function filterLocationLongitudeLatitude() {
+        $latitude = floatval($this->latitude);
+        $longitude = floatval($this->longitude);
+        $distanceQ = '( 6371  * acos( cos( radians( ' . ($latitude) . ' ) )
+                        * cos( radians( `location`.`latitude` ) )
+                        * cos( radians( `location`.`longitude` ) - radians(' . ($longitude) . ') )
+                        + sin( radians(' . ($latitude) . ') )
+                        * sin( radians( `location`.`latitude` ) ) ) )';
+        $this->_query->select($distanceQ . ' as distance, `item`.*');
+        $this->_query->innerJoinWith('location');
+
+        $this->_query->orderBy('distance');
     }
 
     /**

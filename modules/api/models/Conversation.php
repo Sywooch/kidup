@@ -32,7 +32,7 @@ class Conversation extends \message\models\Conversation
 
     public function extraFields()
     {
-        return ['otherUser'];
+        return ['otherUser', 'lastMessage'];
     }
 
     public function getOtherUser(){
@@ -41,5 +41,9 @@ class Conversation extends \message\models\Conversation
         }else{
             return $this->hasOne(User::className(), ['id' => 'initiater_user_id']);
         }
+    }
+
+    public function getLastMessage(){
+        return $this->hasOne(Message::className(), ['conversation_id' => 'id'])->orderBy('message.created_at DESC');
     }
 }

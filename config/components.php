@@ -141,7 +141,7 @@ $components = [
             'item/<id:\d+>/unpublish' => 'item/create/unpublish',
             'item/<id:\d+>/bookings' => 'item/list/bookings',
             'booking/<id:\d+>' => 'booking/view/index',
-            'booking/<id:\d+>/confirm' => 'booking/default/confirm',
+            'booking/confirm' => 'booking/default/confirm',
             'booking/current' => 'booking/list/current',
             'booking/previous' => 'booking/list/previous',
             'booking/by-item/<id:\d+>' => 'booking/list/by-item',
@@ -165,6 +165,16 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/items' => 'api/item'],
+                'extraPatterns' => [
+                    'search' => 'search'
+                ]
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/bookings' => 'api/booking'],
+                'extraPatterns' => [
+                    'costs' => 'costs',
+                ]
             ],
             [
                 'class' => 'yii\rest\UrlRule',

@@ -3,7 +3,7 @@
 use \images\components\ImageHelper;
 use \item\widgets\ItemCard;
 use yii\helpers\Url;
-
+use app\helpers\ViewHelper;
 /**
  * @var \app\extended\web\View $this
  * @var \item\models\Category[] $categories
@@ -24,7 +24,7 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
         <div class="col-sm-12 text-center">
             <h2><?= Yii::t("home.grid.items.header", "Rent this now") ?></h2>
         </div>
-        <div class="row">
+        <div class="row" <?= ViewHelper::trackClick("home.click_item") ?>>
             <?php
             foreach ($items as $i => $item) {
                 if ($i > 6) {
@@ -46,7 +46,7 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
         <?php
         $category = function ($category, $image) { ?>
             <div class="col-md-2 category">
-                <a href="<?= Url::to('@web/search/' . $category) ?>">
+                <a href="<?= Url::to('@web/search/' . $category) ?>" <?= ViewHelper::trackClick("home.click_category", $image) ?>>
                     <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200]) ?>
                     <div class="text-center">
                         <h4><?= $category ?></h4>
