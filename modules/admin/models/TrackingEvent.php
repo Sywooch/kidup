@@ -28,7 +28,7 @@ class TrackingEvent extends \yii\db\ActiveRecord
         'home.click_search',            // click big call to action search on homepage
         'home.click_category',          // click on one of the categories on homepage
         'home.click_item',              // click on one of the items on homepage
-        'signup_modal.click_facebook',  // clicks facebook in the signup modal
+        'signup_modal.click_facebook',  // click facebook in the signup modal
         'item.click_do_like',           // click the do-like-x on the item page
         'item.click_book_now',          // click the request to book button on an item page
         'item.click_short_bookwidget',  // click the short term pricing info in the booking widget of an item page

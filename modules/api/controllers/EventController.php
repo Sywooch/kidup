@@ -19,6 +19,11 @@ class EventController extends Controller
         if($detect->isTablet()){
             $device = 2;
         }
+        if(\Yii::$app->session->gCProbability)
+        if($detect->is("Bot") || $detect->is("MobileBot")){
+            // don't track bots
+            exit();
+        }
         $country = null;
         $city = null;
         $location = Location::getByIP(\Yii::$app->request->getUserIP());
