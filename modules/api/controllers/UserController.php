@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function actions(){
         $actions = parent::actions();
-        unset($actions['-delete']);
+        unset($actions['delete']);
         unset($actions['create']);
         unset($actions['update']);
         return $actions;

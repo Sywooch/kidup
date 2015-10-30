@@ -3,7 +3,7 @@ use \images\components\ImageHelper;
 use \message\models\Message;
 use yii\helpers\Url;
 use app\components\Cache;
-
+use app\helpers\ViewHelper;
 /**
  * @var \yii\web\View $this
  */
@@ -47,12 +47,14 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in-->
                         <li class="hidden-xs">
-                            <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login">
+                            <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login"
+                                <?= ViewHelper::trackClick('menu.click_login')?>>
                                 <?= Yii::t("app.menu.login", "Login") ?>
                             </button>
                         </li>
                         <li class="hidden-xs">
-                            <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal">
+                            <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal"
+                                <?= ViewHelper::trackClick('menu.click_register')?>>
                                 <?= Yii::t("app.menu.register", "Register") ?>
                             </button>
                         </li>
@@ -154,13 +156,15 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= Url::to('@web/home/home/change-language?lang=da-DK') ?>">
+                                <a href="<?= Url::to('@web/home/home/change-language?lang=da-DK') ?>"
+                                    <?= ViewHelper::trackClick('menu.switch_to_dk')?>>
                                     <?= ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.danish", "Danish") ?>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>">
+                                <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>"
+                                    <?= ViewHelper::trackClick('menu.switch_to_en')?>>
                                     <?= ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.english", "English") ?>
                                 </a>

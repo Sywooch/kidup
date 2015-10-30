@@ -1,4 +1,5 @@
 <?php
+use app\helpers\ViewHelper;
 /**
  * @var \app\extended\web\View $this
  */
@@ -13,7 +14,7 @@ $this->assetPackage = \app\assets\Package::PAGES;
                     <?= Yii::t("pages.signup-trigger-line-1", "Thank you for your interest in KidUp!") ?>
                     <br>
                     <small>
-                        <a href="#" style="color:#71baaf;" data-toggle="modal" data-target="#signup-conversion-modal">
+                        <a href="#" style="color:#71baaf;" data-toggle="modal" data-target="#signup-conversion-modal" <?= ViewHelper::trackClick('pages.click_modal')?>>
                             <?= Yii::t("pages.signup-trigger-line-2", "Register here and get all the updates!") ?>
                         </a>
                     </small>

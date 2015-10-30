@@ -59,7 +59,9 @@ $this->registerJsVariables([
                     <?= Yii::t("item.view.booking_widget.per_week", "per week") ?>
                 </div>
             </div>
-            <div class="col-md-4" id="viewLongTerm">
+            <div class="col-md-4"
+                 id="viewLongTerm" <?= \app\helpers\ViewHelper::trackClick("item.click_long_bookwidget",
+                $model->item->id) ?>>
                 <h4>
                     <i class="fa fa-angle-right"></i>
                 </h4>
@@ -70,7 +72,9 @@ $this->registerJsVariables([
             </div>
         </div>
         <div class="longTermPrice" style="display: none;">
-            <div class="col-md-4 "  id="viewShortTerm">
+            <div class="col-md-4 "
+                 id="viewShortTerm" <?= \app\helpers\ViewHelper::trackClick("item.click_short_bookwidget",
+                $model->item->id) ?>>
                 <h4>
                     <i class="fa fa-angle-left"></i>
                 </h4>
@@ -93,6 +97,7 @@ $this->registerJsVariables([
                     <?= $model->item->price_year !== null ? $model->item->price_year . ",-" :
                         ($model->item->price_month !== null ? round($model->item->price_month * 12) . ",-" : round($model->item->price_week * 52) . ",-") ?>
                 </h4>
+
                 <div class="times">
                     <?= Yii::t("item.view.booking_widget.per_year", "per year") ?>
                 </div>
@@ -201,7 +206,8 @@ $this->registerJsVariables([
                     [
                         'class' => 'btn btn-danger btn-fill',
                         'style' => 'width:100%',
-                        'id' => 'request-booking-btn'
+                        'id' => 'request-booking-btn',
+                        'onclick' => \app\helpers\ViewHelper::trackClick("item.click_book_now", $model->item->id, false)
                     ]); ?>
                 <div class="overlay">
                     <img alt=""

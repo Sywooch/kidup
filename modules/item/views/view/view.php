@@ -252,6 +252,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
         </div>
     </section>
     <?= \Yii::$app->user->isGuest ? $this->render('signup_widget', [
-        'owner' => $model->owner
+        'owner' => $model->owner,
+        'itemId' => $model->id
     ]) : '' ?>
 </div>

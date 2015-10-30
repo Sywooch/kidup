@@ -43,7 +43,8 @@ AppAsset::register($this);
     <body>
     <?php
     $this->beginBody();
-
+    echo \admin\widgets\Tracker::widget();
+    echo \app\helpers\ViewHelper::trackPageView();
     echo \app\widgets\FacebookTracker::widget();
     echo \app\widgets\GoogleTagManager::widget();
 

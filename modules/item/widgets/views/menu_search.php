@@ -7,7 +7,8 @@ use yii\helpers\Html;
 \item\assets\MenuSearchAsset::register($this);
 
 $this->registerJsVariables([
-    'location_not_given' => Yii::t("search.location.not_given", "We need a location in order to search. Please fill in the location field or allow us to get your location."),
+    'location_not_given' => Yii::t("search.location.not_given",
+        "We need a location in order to search. Please fill in the location field or allow us to get your location."),
 ], 'window.i18n_search')
 ?>
 
@@ -46,8 +47,8 @@ $this->registerJsVariables([
                 'limit' => 5,
                 'display' => 'text',
                 'templates' => [
-                    'notFound' => '<div class="text-danger" style="padding:0 8px">'.\Yii::t("item.menu_search.no_results",
-                            "No results, perhaps try Stroller, Trampoline or Toy?").'</div>',
+                    'notFound' => '<div class="text-danger" style="padding:0 8px">' . \Yii::t("item.menu_search.no_results",
+                            "No results, perhaps try Stroller, Trampoline or Toy?") . '</div>',
                     'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div>{{text}}</div>')")
                 ]
             ]
@@ -56,7 +57,8 @@ $this->registerJsVariables([
 
 </div>
 
-<?= Html::submitButton(Yii::t("item.menu_search.search_button", "Search"), ['class' => "btn btn-fill btn-danger"]) ?>
+<?= Html::submitButton(Yii::t("item.menu_search.search_button", "Search"),
+    ['class' => "btn btn-fill btn-danger", 'onclick' => \app\helpers\ViewHelper::trackClick("menu.click_search")]) ?>
 
 <?php ActiveForm::end() ?>
 
