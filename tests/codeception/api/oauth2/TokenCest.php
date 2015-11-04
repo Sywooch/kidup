@@ -1,6 +1,7 @@
 <?php
 namespace oauth2;
 use \ApiTester;
+use app\tests\codeception\muffins\OauthClient;
 use app\tests\codeception\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
 use app\tests\codeception\_support\MuffinHelper;
@@ -12,6 +13,7 @@ class TokenCest
      */
     protected $fm = null;
     private $user;
+    private $client;
 
     public function _before()
     {
@@ -19,13 +21,14 @@ class TokenCest
         $this->user = $this->fm->create(User::class, [
             'password_hash' => \Yii::$app->security->generatePasswordHash('testtest')
         ]);
+
+        $this->client = $this->fm->create(OauthClient::class);
     }
 
-    // tests
     public function getToken(ApiTester $I)
     {
         $I->wantTo('get an api token');
-        $this->sendPost($I, $this->user->email, 'testst');
+        $this->sendPost($I, $this->user->email, 'testtest', $this->client);
         $I->seeResponseCodeIs(200);
 
         $I->seeResponseContains("refresh_token");
@@ -33,20 +36,29 @@ class TokenCest
         $I->seeResponseContains('"token":');
     }
 
+    public function dontGetTokenWithWrongClient(ApiTester $I)
+    {
+        $I->wantTo('get an api token');
+        $this->client->client_id = 'dontexist1249012757125';
+        $this->sendPost($I, $this->user->email, 'testtest', $this->client);
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseContainsJson(['message' => 'Client not found.']);
+    }
+
     public function dontGetTokenFromNonUser(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
         $I->wantTo('get an api token');
-        $this->sendPost($I, $faker->email, 'testst');
+        $this->sendPost($I, $faker->email, 'testst', $this->client);
         $I->seeResponseCodeIs(400);
     }
 
-    protected function sendPost(ApiTester $I, $user, $pass){
+    protected function sendPost(ApiTester $I, $user, $pass, OauthClient $client){
         $I->sendPOST('oauth2/token', [
             'username' => $user,
             'password' => $pass,
-            'client_id' => 'testclient',
-            'client_secret' => 'testpass'
+            'client_id' => $client->client_id,
+            'client_secret' => $client->client_secret
         ]);
         $I->seeResponseIsJson();
     }

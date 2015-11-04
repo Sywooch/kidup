@@ -189,6 +189,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
+                    '<id>/<relation>' => 'api/<relation>'
                 ]
             ],
             [

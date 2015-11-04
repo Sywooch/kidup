@@ -11,14 +11,12 @@ use app\tests\codeception\muffins\Location;
 use app\tests\codeception\muffins\Media;
 use app\tests\codeception\muffins\Message;
 use app\tests\codeception\muffins\OauthAccessToken;
+use app\tests\codeception\muffins\OauthClient;
 use app\tests\codeception\muffins\Payin;
 use app\tests\codeception\muffins\Payout;
 use app\tests\codeception\muffins\Profile;
 use app\tests\codeception\muffins\Token;
 use app\tests\codeception\muffins\User;
-use Codeception\Util\Debug;
-use League\FactoryMuffin\Exceptions\ModelException;
-use League\FactoryMuffin\Exceptions\ModelNotFoundException;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 
@@ -52,7 +50,8 @@ class MuffinHelper extends Module
             Conversation::class,
             Message::class,
             Media::class,
-            OauthAccessToken::class
+            OauthAccessToken::class,
+            OauthClient::class,
         ];
     }
 
