@@ -1,22 +1,22 @@
 <?php
 
-namespace app\tests\codeception\_support;
+namespace tests\_support;
 
-use app\tests\codeception\muffins\Booking;
-use app\tests\codeception\muffins\Conversation;
-use app\tests\codeception\muffins\Currency;
-use app\tests\codeception\muffins\Invoice;
-use app\tests\codeception\muffins\Item;
-use app\tests\codeception\muffins\Location;
-use app\tests\codeception\muffins\Media;
-use app\tests\codeception\muffins\Message;
-use app\tests\codeception\muffins\OauthAccessToken;
-use app\tests\codeception\muffins\OauthClient;
-use app\tests\codeception\muffins\Payin;
-use app\tests\codeception\muffins\Payout;
-use app\tests\codeception\muffins\Profile;
-use app\tests\codeception\muffins\Token;
-use app\tests\codeception\muffins\User;
+use tests\muffins\Booking;
+use tests\muffins\Conversation;
+use tests\muffins\Currency;
+use tests\muffins\Invoice;
+use tests\muffins\Item;
+use tests\muffins\Location;
+use tests\muffins\Media;
+use tests\muffins\Message;
+use tests\muffins\OauthAccessToken;
+use tests\muffins\OauthClient;
+use tests\muffins\Payin;
+use tests\muffins\Payout;
+use tests\muffins\Profile;
+use tests\muffins\Token;
+use tests\muffins\User;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 

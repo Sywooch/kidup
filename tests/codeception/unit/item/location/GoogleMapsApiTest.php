@@ -1,5 +1,5 @@
 <?php
-namespace app\tests\codeception\unit\item\location;
+namespace tests\unit\item\location;
 
 use FunctionalTester;
 use Codeception\Specify;
@@ -10,7 +10,7 @@ use yii\codeception\TestCase;
  * Functional test for the Google Maps API.
  *
  * Class GoogleMapsAPI
- * @package app\tests\codeception\functional\vendor
+ * @package tests\functional\vendor
  */
 class GoogleMapsAPI extends TestCase
 {

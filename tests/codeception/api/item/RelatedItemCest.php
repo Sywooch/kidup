@@ -1,13 +1,13 @@
 <?php
-use app\tests\codeception\_support\MuffinHelper;
-use app\tests\codeception\muffins\Item;
+use tests\_support\MuffinHelper;
+use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
  * API test for viewing related items of an item.
  *
  * Class RelatedItemCest
- * @package app\tests\codeception\api\item
+ * @package tests\api\item
  */
 class RelatedItemCest
 {

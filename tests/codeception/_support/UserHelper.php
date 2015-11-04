@@ -1,9 +1,9 @@
 <?php
 
-namespace app\tests\codeception\_support;
+namespace tests\_support;
 
 use AcceptanceTester;
-use app\tests\codeception\muffins\OauthAccessToken;
+use tests\muffins\OauthAccessToken;
 use Codeception\Util\Debug;
 use \user\models\User;
 use FunctionalTester;

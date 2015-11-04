@@ -1,5 +1,5 @@
 <?php
-namespace app\tests\codeception\muffins;
+namespace tests\muffins;
 
 class OauthAccessToken extends \api\models\oauth\OauthAccessToken
 {

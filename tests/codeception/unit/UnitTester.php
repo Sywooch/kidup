@@ -7,7 +7,7 @@
 
 use Codeception\Module\Filesystem;
 use Codeception\Module\Yii2;
-use app\tests\codeception\_support\MuffinHelper;
+use tests\_support\MuffinHelper;
 use Codeception\Module\Asserts;
 
 /**
@@ -2300,7 +2300,7 @@ class UnitTester extends \Codeception\Actor
      * Get a list with all muffin classes.
      *
      * @return array list with all muffin classes
-     * @see \app\tests\codeception\_support\MuffinHelper::getClasses()
+     * @see \tests\_support\MuffinHelper::getClasses()
      */
     public function getClasses() {
         return $this->scenario->runStep(new \Codeception\Step\Action('getClasses', func_get_args()));
@@ -2313,7 +2313,7 @@ class UnitTester extends \Codeception\Actor
      * Method called before any suite tests run. Loads User fixture login user
      * to use in acceptance and functional tests.
      * @return FactoryMuffin
-     * @see \app\tests\codeception\_support\MuffinHelper::init()
+     * @see \tests\_support\MuffinHelper::init()
      */
     public function init() {
         return $this->scenario->runStep(new \Codeception\Step\Action('init', func_get_args()));

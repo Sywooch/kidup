@@ -1,15 +1,15 @@
 <?php
-use app\tests\codeception\_support\MuffinHelper;
-use app\tests\codeception\_support\UserHelper;
-use app\tests\codeception\muffins\User;
-use app\tests\codeception\muffins\Item;
+use tests\_support\MuffinHelper;
+use tests\_support\UserHelper;
+use tests\muffins\User;
+use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
  * API test for checking the costs of a booking.
  *
  * Class CostsBookingCest
- * @package app\tests\codeception\api\booking
+ * @package tests\api\booking
  */
 class CostsBookingCest
 {

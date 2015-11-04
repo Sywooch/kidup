@@ -1,8 +1,8 @@
 <?php
-namespace app\tests\codeception\functional\message;
+namespace tests\functional\message;
 
-use app\tests\codeception\_support\MuffinHelper;
-use app\tests\codeception\muffins\Item;
+use tests\_support\MuffinHelper;
+use tests\muffins\Item;
 use FunctionalTester;
 use item\widgets\ItemCard;
 use League\FactoryMuffin\FactoryMuffin;
@@ -11,7 +11,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * Functional test for the item card widget.
  *
  * Class ItemCardCest
- * @package app\tests\codeception\functional\widget
+ * @package tests\functional\widget
  */
 class ItemCardCest
 {

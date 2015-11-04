@@ -1,10 +1,10 @@
 <?php
 namespace oauth2;
 use \ApiTester;
-use app\tests\codeception\muffins\OauthClient;
-use app\tests\codeception\muffins\User;
+use tests\muffins\OauthClient;
+use tests\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
-use app\tests\codeception\_support\MuffinHelper;
+use tests\_support\MuffinHelper;
 
 class TokenCest
 {

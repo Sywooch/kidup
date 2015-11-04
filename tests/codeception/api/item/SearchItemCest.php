@@ -1,13 +1,13 @@
 <?php
-use app\tests\codeception\_support\MuffinHelper;
-use app\tests\codeception\muffins\Item;
+use tests\_support\MuffinHelper;
+use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
  * API test for the item search.
  *
  * Class SearchItemCest
- * @package app\tests\codeception\api\item
+ * @package tests\api\item
  */
 class SearchItemCest
 {

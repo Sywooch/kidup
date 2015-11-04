@@ -1,7 +1,7 @@
 <?php
-namespace app\tests\codeception\muffins;
+namespace tests\muffins;
 
-use app\tests\codeception\_support\MuffinHelper;
+use tests\_support\MuffinHelper;
 use Faker\Factory as Faker;
 
 class Item extends \item\models\Item

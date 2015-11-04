@@ -2,7 +2,7 @@
 namespace oauth2;
 use \ApiTester;
 use League\FactoryMuffin\FactoryMuffin;
-use app\tests\codeception\_support\MuffinHelper;
+use tests\_support\MuffinHelper;
 
 class RefreshCest
 {

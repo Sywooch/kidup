@@ -1,8 +1,8 @@
 <?php
-namespace app\tests\codeception\functional\search;
+namespace tests\functional\search;
 
 use FunctionalTester;
-use app\tests\codeception\_support\FixtureHelper;
+use tests\_support\FixtureHelper;
 use tests\codeception\_pages\ItemSearchPage;
 
 /**
