@@ -37,7 +37,7 @@ class ItemController extends Controller
     /**
      * Search for items.
      *
-     * @param page          page to start on (required, start with page=0)
+     * @param int $page          page to start on (required, start with page=0)
      *
      * The following parameters are optional, but whenever a search feature is used, certain parameters
      * need to be set. Therefore, the documentation is grouped per feature to see what parameters

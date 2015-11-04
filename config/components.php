@@ -187,6 +187,9 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/users' => 'api/user'],
+                'extraPatterns' => [
+                    'me' => 'me',
+                ]
             ],
             [
                 'class' => 'yii\rest\UrlRule',
