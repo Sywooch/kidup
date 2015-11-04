@@ -57,6 +57,10 @@ class OauthClient extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getId(){
+        return $this->client_id;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

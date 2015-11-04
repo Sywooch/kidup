@@ -40,7 +40,7 @@ class UserHelper
     /**
      * Returns the parameters for a user login
      */
-    public static function apiLogin(User $user, $array = []){
+    public static function apiLogin($user, $array = []){
         foreach ($user->validOauthAccessTokens as $validOauthAccessToken) {
             return ArrayHelper::merge($array, [
                 'access-token' => $validOauthAccessToken->access_token
