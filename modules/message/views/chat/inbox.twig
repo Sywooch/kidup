@@ -1,5 +1,8 @@
 {{ use('app/modules/images/widgets') }}
 {{ use('app/modules/message/assets') }}
+
+{# @param int test #}
+
 {{ register_message_asset() }}
 
 <section class="section" id="inbox">
@@ -47,8 +50,8 @@
                             </h4>
 
                             {{ translate("How about searching for a {0} or a {1} and getting some action here?", [
-                                html.a(translate("stroller"), url('@web/search/' + translate("strollers"))),
-                                html.a(translate("bike"), url('@web/search/' + translate("bike")))
+                            html.a(translate("stroller"), url('@web/search/' + translate("strollers"))),
+                            html.a(translate("bike"), url('@web/search/' + translate("bike")))
                             ]) }}
                         </div>
                     {% endif %}
