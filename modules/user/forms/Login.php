@@ -11,8 +11,8 @@
 
 namespace user\forms;
 
-use \user\Finder;
-use \user\helpers\Password;
+use user\Finder;
+use user\helpers\Password;
 use yii\base\Model;
 
 /**

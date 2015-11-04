@@ -1,7 +1,6 @@
 <?php
-use \yii\bootstrap\ActiveForm;
-use \yii\bootstrap\Html;
-use \yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 \yii\bootstrap\Modal::begin([
     'id' => 'loginModal',

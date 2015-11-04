@@ -1,5 +1,5 @@
 <?php
-use \booking\models\Booking;
+use booking\models\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 

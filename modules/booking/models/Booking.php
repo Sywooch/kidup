@@ -3,8 +3,8 @@
 namespace booking\models;
 
 use app\helpers\Event;
-use \message\models\Conversation;
 use Carbon\Carbon;
+use message\models\Conversation;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

@@ -1,6 +1,6 @@
 <?php
-use \images\components\ImageHelper;
 use Carbon\Carbon;
+use images\components\ImageHelper;
 
 /**
  * @var \app\extended\web\View $this

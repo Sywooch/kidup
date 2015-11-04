@@ -1,9 +1,9 @@
 <?php
 namespace mail\models;
 
-use \mail\components\MailUrl;
-use \user\models\Profile;
-use \user\models\User;
+use mail\components\MailUrl;
+use user\models\Profile;
+use user\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\helpers\Url;

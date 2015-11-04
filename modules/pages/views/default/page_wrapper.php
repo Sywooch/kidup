@@ -1,5 +1,6 @@
 <?php
 use app\helpers\ViewHelper;
+
 /**
  * @var \app\extended\web\View $this
  */

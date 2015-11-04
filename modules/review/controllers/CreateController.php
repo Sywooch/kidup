@@ -2,11 +2,11 @@
 namespace review\controllers;
 
 use app\extended\web\Controller;
-use \booking\models\Booking;
-use \item\models\Item;
-use \review\forms\OwnerReview;
-use \review\forms\RenterReview;
-use \review\models\Review;
+use booking\models\Booking;
+use item\models\Item;
+use review\forms\OwnerReview;
+use review\forms\RenterReview;
+use review\models\Review;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;

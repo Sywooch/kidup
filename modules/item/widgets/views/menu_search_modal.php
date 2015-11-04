@@ -1,11 +1,10 @@
 <?php
-use yii\helpers\Url;
-use yii\bootstrap\Modal;
+use item\widgets\GoogleAutoComplete;
+use kartik\typeahead\Typeahead;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use item\widgets\GoogleAutoComplete;
-use \kartik\typeahead\Typeahead;
-use item\assets\MenuSearchAsset;
+use yii\helpers\Url;
+
 /**
  * @var \app\extended\web\View $this
  * @var \search\forms\Filter $model

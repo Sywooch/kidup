@@ -2,10 +2,10 @@
 
 namespace admin\models\search;
 
+use item\models\base\Feature;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use item\models\base\Feature;
 
 /**
  * FeatureSearch represents the model behind the search form about `item\models\base\Feature`.

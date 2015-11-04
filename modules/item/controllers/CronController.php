@@ -3,7 +3,7 @@
 namespace item\controllers;
 
 use app\helpers\Event;
-use \item\models\Item;
+use item\models\Item;
 use Yii;
 use yii\base\Model;
 

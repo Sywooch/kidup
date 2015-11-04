@@ -2,9 +2,9 @@
 namespace message\controllers;
 
 use app\extended\web\Controller;
-use \message\forms\ChatMessage;
-use \message\models\Conversation;
-use \message\models\Message;
+use message\forms\ChatMessage;
+use message\models\Conversation;
+use message\models\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

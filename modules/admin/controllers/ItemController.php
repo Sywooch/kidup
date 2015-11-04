@@ -2,11 +2,11 @@
 
 namespace admin\controllers;
 
-use Yii;
+use admin\models\search\Item as ItemSearch;
 use item\models\base\Item;
-use \admin\models\search\Item as ItemSearch;
-use yii\web\NotFoundHttpException;
+use Yii;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * ItemController implements the CRUD actions for Item model.

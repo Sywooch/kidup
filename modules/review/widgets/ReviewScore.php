@@ -2,10 +2,10 @@
 
 namespace review\widgets;
 
-use app\components\Cache;
-use \review\models\Review;
+use review\models\Review;
 use Yii;
 use yii\helpers\Html;
+
 class ReviewScore extends \yii\bootstrap\Widget
 {
     public $user_id = null;

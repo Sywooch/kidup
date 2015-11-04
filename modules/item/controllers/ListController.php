@@ -3,8 +3,8 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use \booking\models\Booking;
-use \item\models\Item;
+use booking\models\Booking;
+use item\models\Item;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

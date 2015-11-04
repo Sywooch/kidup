@@ -1,7 +1,7 @@
 <?php
-use \booking\models\Payin;
-use \images\components\ImageHelper;
+use booking\models\Payin;
 use Carbon\Carbon;
+use images\components\ImageHelper;
 
 /**
  * @var \app\extended\web\View $this

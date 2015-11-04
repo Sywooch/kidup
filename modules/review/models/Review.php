@@ -4,7 +4,7 @@ namespace review\models;
 
 use app\helpers\Event;
 use app\jobs\SlackJob;
-use \booking\models\Booking;
+use booking\models\Booking;
 use Carbon\Carbon;
 use Yii;
 

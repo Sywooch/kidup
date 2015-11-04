@@ -2,7 +2,7 @@
 namespace search\controllers;
 
 use app\extended\web\Controller;
-use \search\forms\Filter;
+use search\forms\Filter;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

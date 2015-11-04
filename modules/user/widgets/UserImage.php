@@ -1,9 +1,9 @@
 <?php
 namespace user\widgets;
 
-use \images\components\ImageHelper;
-use \user\models\Profile;
+use images\components\ImageHelper;
 use kartik\widgets\Widget;
+use user\models\Profile;
 
 class UserImage extends Widget
 {

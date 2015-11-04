@@ -1,5 +1,5 @@
 <?php
-use \booking\models\Payin;
+use booking\models\Payin;
 use Carbon\Carbon;
 use yii\helpers\Html;
 

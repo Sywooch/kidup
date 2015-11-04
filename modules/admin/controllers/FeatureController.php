@@ -2,13 +2,12 @@
 
 namespace admin\controllers;
 
+use admin\models\search\FeatureSearch;
+use item\models\base\Feature;
 use item\models\base\FeatureValue;
 use Yii;
-use item\models\base\Feature;
-use admin\models\search\FeatureSearch;
-use admin\controllers\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * FeatureController implements the CRUD actions for Feature model.

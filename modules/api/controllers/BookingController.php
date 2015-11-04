@@ -1,8 +1,8 @@
 <?php
 namespace api\controllers;
 
-use booking\models\Booking;
 use api\models\Item;
+use booking\models\Booking;
 use item\forms\CreateBooking;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;

@@ -2,10 +2,10 @@
 
 namespace message\models;
 
-use user\models\base\Profile;
-use \booking\models\Booking;
-use \mail\models\MailAccount;
+use booking\models\Booking;
 use Carbon\Carbon;
+use mail\models\MailAccount;
+use user\models\base\Profile;
 use Yii;
 use yii\helpers\Json;
 use yii\web\ServerErrorHttpException;

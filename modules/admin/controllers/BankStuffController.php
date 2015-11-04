@@ -2,9 +2,7 @@
 
 namespace admin\controllers;
 
-use user\models\base\User;
 use booking\models\Payout;
-use item\models\Item;
 use Yii;
 
 class BankStuffController extends Controller

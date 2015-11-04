@@ -2,9 +2,7 @@
 
 namespace home\forms;
 
-use \item\models\Category;
-use \item\models\Item;
-use \item\models\ItemHasCategory;
+use item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;

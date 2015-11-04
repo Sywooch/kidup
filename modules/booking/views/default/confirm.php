@@ -1,11 +1,11 @@
 <?php
 
+use booking\models\BrainTree;
+use booking\models\Payin;
+use images\components\ImageHelper;
+use review\widgets\ReviewScore;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use \booking\models\BrainTree;
-use \booking\models\Payin;
-use \images\components\ImageHelper;
-use \review\widgets\ReviewScore;
 
 /**
  * @var \app\extended\web\View $this

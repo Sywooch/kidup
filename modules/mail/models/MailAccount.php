@@ -2,7 +2,7 @@
 
 namespace mail\models;
 
-use \message\models\Conversation;
+use message\models\Conversation;
 use Yii;
 
 /**

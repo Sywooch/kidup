@@ -2,7 +2,7 @@
 
 namespace mail\controllers;
 
-use \mail\models\MailMessage;
+use mail\models\MailMessage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -2,13 +2,13 @@
 
 namespace booking\models\base;
 
-use user\models\base\Currency;
-use item\models\Item;
 use booking\models\Payin;
 use booking\models\Payout;
-use user\models\User;
-use review\models\Review;
+use item\models\Item;
 use message\models\Conversation;
+use review\models\Review;
+use user\models\base\Currency;
+use user\models\User;
 use Yii;
 
 /**

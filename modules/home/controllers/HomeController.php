@@ -2,11 +2,10 @@
 
 namespace home\controllers;
 
-use app\components\Cache;
 use app\extended\web\Controller;
-use \home\forms\Search;
-use \item\models\Category;
-use \item\models\Item;
+use home\forms\Search;
+use item\models\Category;
+use item\models\Item;
 use Yii;
 use yii\caching\TagDependency;
 use yii\helpers\ArrayHelper;

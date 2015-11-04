@@ -11,18 +11,18 @@
 
 namespace user\controllers;
 
-use app\helpers\Event;
 use app\extended\web\Controller;
-use \images\components\ImageManager;
-use \mail\models\Token;
-use \user\Finder;
-use \user\forms\LocationForm;
-use \user\forms\Settings;
+use app\helpers\Event;
 use app\helpers\SelectData;
+use images\components\ImageManager;
+use mail\models\Token;
+use user\Finder;
+use user\forms\LocationForm;
+use user\forms\Settings;
 use user\forms\Verification;
-use \user\models\Account;
-use \user\models\Profile;
-use \user\models\User;
+use user\models\Account;
+use user\models\Profile;
+use user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;

@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-use kartik\sidenav\SideNav;
 use kartik\icons\Icon;
+use kartik\sidenav\SideNav;
+
 ?>
 
 <!-- display a warning for mobile visitors -->

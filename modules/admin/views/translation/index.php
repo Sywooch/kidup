@@ -5,11 +5,12 @@
  * @var ActiveDataProvider $dataProvider
  * @var array $tabContent
  */
-use yii\data\ActiveDataProvider;
 use kartik\grid\GridView;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
+
 echo Breadcrumbs::widget(['links' => [
     $this->title
 ]]);

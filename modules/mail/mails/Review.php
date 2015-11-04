@@ -1,8 +1,8 @@
 <?php
 namespace mail\mails;
 
-use \mail\models\Mailer;
 use Carbon\Carbon;
+use mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 

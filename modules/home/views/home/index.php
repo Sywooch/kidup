@@ -1,6 +1,6 @@
 <?php
 use app\helpers\ViewHelper;
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
 
 /**
  * @var \app\extended\web\View $this

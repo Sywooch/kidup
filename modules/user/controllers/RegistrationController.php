@@ -12,16 +12,16 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use \user\Finder;
-use \user\forms\PostRegistrationProfile;
-use \user\forms\Registration;
-use \user\models\User;
+use user\Finder;
+use user\forms\PostRegistrationProfile;
+use user\forms\Registration;
+use user\models\SocialAccount;
+use user\models\User;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use \user\models\SocialAccount;
 
 /**
  * RegistrationController is responsible for all registration process, which includes registration of a new account,

@@ -12,10 +12,10 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use \item\models\Item;
-use \review\models\Review;
-use \user\Finder;
-use \user\models\Profile;
+use item\models\Item;
+use review\models\Review;
+use user\Finder;
+use user\models\Profile;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;

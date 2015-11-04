@@ -3,8 +3,8 @@
 namespace booking\models;
 
 use app\helpers\Event;
-use \user\models\PayoutMethod;
 use Carbon\Carbon;
+use user\models\PayoutMethod;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

@@ -2,11 +2,11 @@
 
 namespace mail\controllers;
 
-use app\helpers\Event;
 use app\extended\web\Controller;
-use \booking\models\Payin;
-use \mail\models\Mailer;
-use \mail\models\MailLog;
+use app\helpers\Event;
+use booking\models\Payin;
+use mail\models\Mailer;
+use mail\models\MailLog;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;

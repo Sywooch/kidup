@@ -1,8 +1,7 @@
 <?php
 namespace images\controllers;
 
-use \images\components\ImageHelper;
-use \images\components\ImageManager;
+use images\components\ImageManager;
 use Yii;
 use yii\base\DynamicModel;
 use yii\web\BadRequestHttpException;

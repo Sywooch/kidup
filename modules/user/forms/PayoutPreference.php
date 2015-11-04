@@ -12,8 +12,8 @@
 namespace user\forms;
 
 use app\helpers\Encrypter;
-use \user\models\Country;
-use \user\models\PayoutMethod;
+use user\models\Country;
+use user\models\PayoutMethod;
 use yii\base\Model;
 use yii\helpers\Json;
 

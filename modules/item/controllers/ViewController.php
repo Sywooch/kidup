@@ -3,14 +3,14 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use user\models\base\Currency;
+use item\forms\CreateBooking;
+use item\models\Item;
 use review\models\base\Review;
-use \item\forms\CreateBooking;
-use \item\models\Item;
+use user\models\base\Currency;
+use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
-use Yii;
 
 class ViewController extends Controller
 {

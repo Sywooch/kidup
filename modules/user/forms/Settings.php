@@ -11,10 +11,10 @@
 
 namespace user\forms;
 
-use \user\models\Profile;
-use \user\models\Setting;
-use \user\models\User;
-use \user\Module;
+use user\models\Profile;
+use user\models\Setting;
+use user\models\User;
+use user\Module;
 use yii\base\Model;
 
 /**

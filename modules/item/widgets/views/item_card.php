@@ -1,8 +1,9 @@
 <?php
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
+use review\widgets\ReviewScore;
+use user\widgets\UserImage;
 use yii\helpers\Url;
-use \user\widgets\UserImage;
-use \review\widgets\ReviewScore;
+
 /**
  * @var \app\extended\web\View $this
  * @var \item\models\Item $model

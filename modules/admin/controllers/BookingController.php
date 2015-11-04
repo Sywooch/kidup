@@ -2,12 +2,11 @@
 
 namespace admin\controllers;
 
-use Yii;
-use booking\models\Booking;
 use admin\models\search\Booking as BookingSearch;
-use admin\controllers\Controller;
-use yii\web\NotFoundHttpException;
+use booking\models\Booking;
+use Yii;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * BookingController implements the CRUD actions for Booking model.

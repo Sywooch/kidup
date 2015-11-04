@@ -3,15 +3,12 @@
 namespace user\models;
 
 use api\models\oauth\OauthAccessToken;
-use api\oauth2\models\OauthAccessTokens;
 use app\helpers\Event;
-use app\jobs\SlackJob;
-use \images\components\ImageHelper;
-use \item\models\Location;
-use \mail\models\Token;
-use \message\models\Conversation;
-use \user\Finder;
-use \user\helpers\Password;
+use images\components\ImageHelper;
+use item\models\Location;
+use mail\models\Token;
+use user\Finder;
+use user\helpers\Password;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Json;

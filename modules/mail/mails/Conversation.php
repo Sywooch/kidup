@@ -1,8 +1,8 @@
 <?php
 namespace mail\mails;
 
-use \mail\models\MailAccount;
-use \mail\models\Mailer;
+use mail\models\MailAccount;
+use mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 

@@ -2,7 +2,7 @@
 
 namespace user\models;
 
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 

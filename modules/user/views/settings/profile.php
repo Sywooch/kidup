@@ -1,6 +1,6 @@
 <?php
 
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
 use kartik\form\ActiveForm;
 use kartik\widgets\FileInput;
 

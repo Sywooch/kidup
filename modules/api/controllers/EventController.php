@@ -4,9 +4,9 @@ namespace api\controllers;
 use admin\models\TrackingEvent;
 use app\extended\web\Controller;
 use item\models\Location;
+use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\UnauthorizedHttpException;
-use Yii;
 
 class EventController extends Controller
 {

@@ -3,12 +3,9 @@
 namespace item\models;
 
 use app\components\Cache;
-use user\models\base\Currency;
-use \images\components\ImageHelper;
-use \user\models\User;
 use Carbon\Carbon;
-use Location\Coordinate;
-use Location\Distance\Vincenty;
+use images\components\ImageHelper;
+use user\models\base\Currency;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;

@@ -3,12 +3,12 @@
 namespace mail;
 
 use app\helpers\Event;
-use \booking\models\Booking;
-use \booking\models\Payin;
-use \item\models\Item;
-use \mail\models\Mailer;
-use \message\models\Message;
-use \user\models\User;
+use booking\models\Booking;
+use booking\models\Payin;
+use item\models\Item;
+use mail\models\Mailer;
+use message\models\Message;
+use user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;

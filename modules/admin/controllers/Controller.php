@@ -1,8 +1,6 @@
 <?php
 namespace admin\controllers;
 
-use \search\models\IpLocation;
-use \user\models\Profile;
 use Yii;
 use yii\web\ForbiddenHttpException;
 

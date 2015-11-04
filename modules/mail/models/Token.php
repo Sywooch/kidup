@@ -11,8 +11,8 @@
 
 namespace mail\models;
 
-use \user\models\User;
 use Carbon\Carbon;
+use user\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;

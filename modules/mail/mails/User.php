@@ -1,8 +1,8 @@
 <?php
 namespace mail\mails;
 
-use \mail\models\Mailer;
-use \mail\models\Token;
+use mail\models\Mailer;
+use mail\models\Token;
 use Yii;
 use yii\helpers\Url;
 

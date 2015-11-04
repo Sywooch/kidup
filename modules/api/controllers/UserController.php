@@ -1,9 +1,6 @@
 <?php
 namespace api\controllers;
 
-use api\models\oauth\OauthAccessToken;
-use api\models\oauth\OauthClient;
-use api\models\oauth\OauthRefreshToken;
 use api\models\User;
 use yii\web\BadRequestHttpException;
 use yii\web\UnauthorizedHttpException;

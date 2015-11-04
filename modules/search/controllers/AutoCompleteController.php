@@ -2,7 +2,7 @@
 namespace search\controllers;
 
 use app\extended\web\Controller;
-use \search\models\ItemSearch;
+use search\models\ItemSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
