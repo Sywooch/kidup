@@ -167,6 +167,8 @@ $components = [
                 'controller' => ['api/v1/items' => 'api/item'],
                 'extraPatterns' => [
                     'search' => 'search',
+                    'recommended' => 'recommended',
+                    'related' => 'related',
                     '<id>/reviews' => 'review'
                 ]
             ],

@@ -2,10 +2,12 @@
 namespace api\controllers;
 
 use api\models\Item;
+use item\controllers\ViewController;
 use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\web\HttpException;
+use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
@@ -17,7 +19,7 @@ class ItemController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => ['index', 'view', 'search'],
+            'guest' => ['index', 'view', 'search', 'recommended', 'related'],
             'user' => []
         ];
     }
@@ -32,6 +34,7 @@ class ItemController extends Controller
         return $actions;
     }
 
+    // default action, does not need documentation
     public function actionIndex(){
         return new ActiveDataProvider([
             'query' => Item::find()->where(['is_available' => 1])
@@ -40,17 +43,48 @@ class ItemController extends Controller
 
     // default action, does not need documentation
     public function actionView($id) {
-        $query = Item::find()->where(['is_available' => 1, 'id' => $id]);
-        if ($query->count() == 0) {
-            throw new NotFoundHttpException('Item not found.');
+        $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
         }
-        return $query->one();
+        return $item;
+    }
+
+    /**
+     * @api {get} items/related
+     * @apiName         relatedItem
+     * @apiGroup        Item
+     * @apiDescription  Find items which are related to a given item.
+     *
+     * @apiParam {Number}       item_id           The item_id of the item to find related items for.
+     * @apiSuccess {Object[]}   related_items     A list of related items.
+     */
+    public function actionRelated() {
+        $params = \Yii::$app->request->get();
+        if (!array_key_exists('item_id', $params)) {
+            throw new NotAcceptableHttpException('No item_id is given.');
+        }
+        $itemId = $params['item_id'];
+        $item = Item::find()->where(['is_available' => 1, 'id' => $itemId])->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
+        }
+        $related_items = $item->getRecommendedItems($item, 2);
+        return [
+            'related_items' => $related_items
+        ];
+    }
+
+
+    public function actionRecommended() {
+        echo 'test';
     }
 
     /**
      * @api {post} items/search
-     * @apiName     searchItem
-     * @apiGroup    Item
+     * @apiName         searchItem
+     * @apiGroup        Item
+     * @apiDescription  Search for items.
      *
      * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
