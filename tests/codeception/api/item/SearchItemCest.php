@@ -6,10 +6,10 @@ use League\FactoryMuffin\FactoryMuffin;
 /**
  * API test for the item search.
  *
- * Class ItemSearchCest
+ * Class SearchItemCest
  * @package app\tests\codeception\api\item
  */
-class ItemSearchCest
+class SearchItemCest
 {
     /**
      * @var FactoryMuffin

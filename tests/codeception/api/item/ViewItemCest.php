@@ -4,12 +4,12 @@ use app\tests\codeception\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
- * API test for the item search.
+ * API test for viewing an item.
  *
- * Class ItemSearchCest
+ * Class ViewItemCest
  * @package app\tests\codeception\api\item
  */
-class ItemSearchCest
+class ViewItemCest
 {
     /**
      * @var FactoryMuffin
@@ -25,48 +25,45 @@ class ItemSearchCest
     }
 
     /**
-     * Generate $n items.
-     *
-     * @param $n int Number of items to generate (default: 24).
-     * @return \item\models\Item[] List of items.
-     */
-    private function generateItems($n = 24) {
-        $items = [];
-        for ($i = 0; $i < $n; $i++) {
-            $items[] = $this->fm->create(Item::className());
-        }
-        return $items;
-    }
-
-    /**
-     * Perform a simple search.
+     * Try to view an item that is not available.
      *
      * @param $I ApiTester The tester.
      */
-    public function checkSimpleSearch(ApiTester $I)
+    public function checkViewNotAvailable(ApiTester $I)
     {
-        $n = 25;
-        $itemsPerPage = 12;
+        $I->wantTo("try to view an item that is not available");
 
-        // generate the items
-        $this->generateItems($n);
+        // create an item that is not available
+        $item = $this->fm->create(Item::className());
+        $item->is_available = false;
+        $item->save();
 
-        $I->wantTo("perform a simple search with {$n} items");
-        $I->sendPOST('items/search', [
-            'page' => 0
-        ]);
+        $I->sendGET('items/' . $item->id);
+
+        $I->seeResponseCodeIs(404);
+    }
+
+    /**
+     * View an item.
+     *
+     * @param $I ApiTester The tester.
+     */
+    public function checkView(ApiTester $I)
+    {
+        $I->wantTo("view an item");
+
+        // create an item that is available
+        $item = $this->fm->create(Item::className());
+        $item->is_available = true;
+        $item->save();
+
+        $I->sendGET('items/' . $item->id);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse(), true);
 
-        $I->assertTrue(array_key_exists('results', $response));
-        $I->assertEquals(count($response['results']), $itemsPerPage);
-
-        $I->assertTrue(array_key_exists('num_items', $response));
-        $I->assertEquals($response['num_items'], $n);
-
-        $I->assertTrue(array_key_exists('num_pages', $response));
-        $I->assertEquals($response['num_pages'], ceil($n / $itemsPerPage));
+        $I->assertTrue(array_key_exists('id', $response));
+        $I->assertEquals($item->id, $response['id']);
     }
 
 }

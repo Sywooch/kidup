@@ -4,6 +4,8 @@ namespace api\controllers;
 use api\models\Item;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
@@ -35,9 +37,13 @@ class ItemController extends Controller
         ]);
     }
 
-    public function actionView() {
-        echo 'test';
-        die();
+    // default action, does not need documentation
+    public function actionView($id) {
+        $query = Item::find()->where(['is_available' => 1, 'id' => $id]);
+        if ($query->count() == 0) {
+            throw new NotFoundHttpException('Item not found.');
+        }
+        return $query->one();
     }
 
     /**
