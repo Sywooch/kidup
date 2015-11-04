@@ -24,7 +24,7 @@ class OauthAccessToken extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%oauth_access_token}}';
+        return 'oauth_access_token';
     }
 
     /**

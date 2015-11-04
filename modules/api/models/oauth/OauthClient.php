@@ -24,7 +24,7 @@ class OauthClient extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%oauth_client}}';
+        return 'oauth_client';
     }
 
     /**

@@ -12,5 +12,4 @@ class OauthAccessToken extends \api\models\oauth\OauthAccessToken
             'expires' => time()+24*60*60,
         ];
     }
-
 }

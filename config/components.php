@@ -189,7 +189,6 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
-                    '<id>/<relation>' => 'api/<relation>'
                 ]
             ],
             [
@@ -200,6 +199,10 @@ $components = [
                     'refresh' => 'refresh',
                 ]
             ],
+            [
+                'pattern' => 'api/v1/<base>/<id>/<relation>/<relationId>',
+                'route' => ''
+            ]
 
         ],
     ],

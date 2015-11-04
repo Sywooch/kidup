@@ -24,7 +24,7 @@ class OauthRefreshToken extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%oauth_refresh_token}}';
+        return 'oauth_refresh_token';
     }
 
     /**
