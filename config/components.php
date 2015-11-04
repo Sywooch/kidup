@@ -168,7 +168,7 @@ $components = [
                 'extraPatterns' => [
                     'search' => 'search',
                     'recommended' => 'recommended',
-                    'related' => 'related'
+                    'related' => 'related',
                     '<id>/reviews' => 'review'
                 ]
             ],
