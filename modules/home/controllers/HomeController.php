@@ -55,13 +55,7 @@ class HomeController extends Controller
             return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
-            // get 4 with review, or callback if not 4
-            $items = Item::find()->limit(4)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
-            if (count($items) < 4) {
-                $items = ArrayHelper::merge($items,
-                    Item::find()->limit(4 - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
-            }
-            return $items;
+            Item::getRecommended(4);
         }, 6 * 3600);
 
         $res = $this->render('index', [

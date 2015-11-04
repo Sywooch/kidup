@@ -75,9 +75,16 @@ class ItemController extends Controller
         ];
     }
 
-
+    /**
+     * @api {get}       items/recommended
+     * @apiName         recommendedItem
+     * @apiGroup        Item
+     * @apiDescription  Get recommended items.
+     *
+     * @apiSuccess {Object[]}   recommended_items     A list of recommended items.
+     */
     public function actionRecommended() {
-        echo 'test';
+        return Item::getRecommended(4);
     }
 
     /**

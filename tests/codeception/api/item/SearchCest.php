@@ -1,7 +1,9 @@
 <?php
-use tests\_support\MuffinHelper;
-use tests\muffins\Item;
+
+namespace tests\api\item;
 use League\FactoryMuffin\FactoryMuffin;
+use ApiTester;
+
 
 /**
  * API test for the item search.
@@ -9,7 +11,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * Class SearchItemCest
  * @package tests\api\item
  */
-class SearchItemCest
+class SearchCest
 {
     /**
      * @var FactoryMuffin

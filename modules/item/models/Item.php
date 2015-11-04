@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use images\components\ImageHelper;
 use user\models\base\Currency;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
@@ -19,6 +20,22 @@ class Item extends \item\models\base\Item
 
     public $images;
     public $distance;
+
+    /**
+     * Get $numItems recommended items.
+     *
+     * @param $numItems int The number of recommended items to get.
+     * @return \item\models\Item[] The list of recommended items.
+     */
+    public static function getRecommended($numItems)
+    {
+        $items = Item::find()->limit($numItems)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
+        if (count($items) < $numItems) {
+            $items = ArrayHelper::merge($items,
+                Item::find()->limit($numItems - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
+        }
+        return $items;
+    }
 
     public function beforeSave($insert)
     {
