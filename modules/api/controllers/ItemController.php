@@ -41,9 +41,9 @@ class ItemController extends Controller
     }
 
     /**
-     * @api {post} /items/search
-     * @apiName ItemSearch
-     * @apiGroup Item
+     * @api {post} items/search
+     * @apiName     searchItem
+     * @apiGroup    Item
      *
      * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
@@ -66,7 +66,7 @@ class ItemController extends Controller
      *
      * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
      * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
-     * @apiParam {Number[]}     feature[].value[]             A list of feature_value_id which are used.
+     * @apiParam {Number[]}     feature[].value[]           A list of feature_value_id which are used.
      *
      * @apiSuccess {Number}     num_pages                   The total number of pages.
      * @apiSuccess {Number}     num_items                   The total number of items.
