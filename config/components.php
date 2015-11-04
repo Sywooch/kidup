@@ -166,7 +166,8 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/items' => 'api/item'],
                 'extraPatterns' => [
-                    'search' => 'search'
+                    'search' => 'search',
+                    '<id>/reviews' => 'review'
                 ]
             ],
             [
@@ -189,6 +190,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
+                    '<id>/reviews' => 'review'
                 ]
             ],
             [
@@ -199,11 +201,11 @@ $components = [
                     'refresh' => 'refresh',
                 ]
             ],
-            [
-                'pattern' => 'api/v1/<base>/<id>/<relation>/<relationId>',
-                'route' => ''
-            ]
-
+//            [
+//                'pattern' => 'api/v1/<base>/<id>/<relation1>/<relation1Id>',
+//                'route' => 'api/relation/index',
+//                'defaults' => ['relation1Id' => null]
+//            ]
         ],
     ],
 //    'redis' => [

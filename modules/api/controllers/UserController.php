@@ -1,8 +1,10 @@
 <?php
 namespace api\controllers;
 
+use api\models\Review;
 use api\models\User;
 use user\forms\Registration;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
@@ -18,7 +20,7 @@ class UserController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'create'],
+            'guest' => ['index', 'view', 'create', 'review'],
             'user' => ['update', 'me']
         ];
     }
@@ -63,5 +65,11 @@ class UserController extends Controller
             throw new NotFoundHttpException("User not found");
         }
         return $user;
+    }
+
+    public function actionReview($id){
+        return new ActiveDataProvider([
+            'query' => Review::find()->where(['reviewed_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
+        ]);
     }
 }

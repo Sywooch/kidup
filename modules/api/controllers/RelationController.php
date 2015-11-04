@@ -1,88 +1,51 @@
 <?php
 namespace api\controllers;
 
-use yii\filters\AccessControl;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
-use yii\web\Response;
-use yii\web\ServerErrorHttpException;
+use api\models\Review;
+use api\Module;
+use user\models\User;
+use yii\db\Query;
+use yii\db\QueryBuilder;
 
-class Controller extends \yii\rest\ActiveController
+class RelationController extends \yii\base\Controller
 {
+    private $classMap;
+    private $controllerMap;
 
-    public $serializer = [
-        'class' => 'yii\rest\Serializer',
-        'collectionEnvelope' => 'items',
-    ];
-
-    public function accessControl()
-    {
-        return [];
-    }
-
-    public function init()
-    {
+    public function init(){
         parent::init();
-        \Yii::$app->user->enableSession = false;
+        $this->classMap = [
+            'users' => User::className(),
+            'reviews' => Review::className()
+        ];
+        $this->controllerMap = [
+            'users' => UserController::className(),
+            'reviews' => ReviewController::className(),
+        ];
     }
 
-    public function afterAction($action, $result)
-    {
-        // log in users manually if they set an access token
-        if (\Yii::$app->request->get('access-token')) {
-            \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
-        }
-        if (\Yii::$app->request->get('lang')) {
-            // access-token is set, but not used by yii because it's a publicly available api point
-            \Yii::$app->language = \Yii::$app->request->get('lang');
-        }
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-        return parent::afterAction($action, $result);
-    }
 
-    public function behaviors()
+    public function actionIndex()
     {
-        $res = $this->accessControl();
-        if (!isset($res['guest'])) {
-            throw new ServerErrorHttpException("Access control for guest should be defined!");
-        }
-        if (!isset($res['user'])) {
-            throw new ServerErrorHttpException("Access control for user should be defined!");
+        $params = \Yii::$app->request->get();
+
+        $class = \Yii::createObject($this->classMap[$params['relation1']]);
+        $controllerName = $this->controllerMap[$params['relation1']];
+        $controller = new $controllerName(
+            null,
+            \Yii::$app->getModule('api')
+        );
+
+        if(\Yii::$app->request->isGet){
+            $controller->relationalWhere = [];
+            if(isset($params['relation1Id'])){
+                return $controller->runAction('view', ['id' => $params['id']]);
+            }else{
+                return $controller->runAction('index', []);
+            }
         }
 
-        return ArrayHelper::merge(parent::behaviors(), [
-            'cors' => [
-                'class' => Cors::className(),
-                'cors' => [
-                    'Origin' => ['*'],
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                    'Access-Control-Request-Headers' => ['*'],
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Max-Age' => 86400,
-                    'Access-Control-Allow-Origin' => '*',
-                ],
-            ],
-            'authenticator' => [
-                'class' => QueryParamAuth::className(),
-                'except' => $res['guest']
-            ],
-            'accessControl' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => $res['guest'],
-                        'roles' => ['?']
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => $res['user'],
-                        'roles' => ['@']
-                    ],
-                ],
-            ],
-        ]);
+        return false;
     }
 
 }

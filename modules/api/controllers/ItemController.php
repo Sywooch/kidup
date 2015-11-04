@@ -2,6 +2,7 @@
 namespace api\controllers;
 
 use api\models\Item;
+use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 
@@ -127,6 +128,12 @@ class ItemController extends Controller
             'num_items' => $model->estimatedResultCount,
             'results' => $query->all()
         ];
+    }
+
+    public function actionReview($id){
+        return new ActiveDataProvider([
+            'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
+        ]);
     }
 
 }
