@@ -7,5 +7,11 @@ namespace api\models;
  */
 class Review extends \review\models\Review
 {
-
+    public function fields()
+    {
+        if($this->is_public == 0){
+            return [];
+        }
+        return parent::fields();
+    }
 }

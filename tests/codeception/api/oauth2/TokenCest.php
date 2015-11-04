@@ -25,6 +25,12 @@ class TokenCest
         $this->client = $this->fm->create(OauthClient::class);
     }
 
+    public function _after()
+    {
+        User::deleteAll();
+        OauthClient::deleteAll();
+    }
+
     public function getToken(ApiTester $I)
     {
         $I->wantTo('get an api token');
