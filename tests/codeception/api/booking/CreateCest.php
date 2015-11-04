@@ -11,10 +11,10 @@ use ApiTester;
 /**
  * API test for creating a booking.
  *
- * Class CreateBookingCest
+ * Class CreateCest
  * @package tests\api\booking
  */
-class CreateBookingCest
+class CreateCest
 {
     /**
      * @var FactoryMuffin

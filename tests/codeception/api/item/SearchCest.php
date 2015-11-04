@@ -4,12 +4,12 @@ namespace tests\api\item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 use tests\_support\MuffinHelper;
-use item\models\Item;
+use tests\muffins\Item;
 
 /**
  * API test for the item search.
  *
- * Class SearchItemCest
+ * Class SearchCest
  * @package tests\api\item
  */
 class SearchCest
@@ -28,20 +28,6 @@ class SearchCest
     }
 
     /**
-     * Generate $n items.
-     *
-     * @param $n int Number of items to generate (default: 24).
-     * @return \item\models\Item[] List of items.
-     */
-    private function generateItems($n = 24) {
-        $items = [];
-        for ($i = 0; $i < $n; $i++) {
-            $items[] = $this->fm->create(Item::className());
-        }
-        return $items;
-    }
-
-    /**
      * Perform a simple search.
      *
      * @param $I ApiTester The tester.
@@ -52,7 +38,7 @@ class SearchCest
         $itemsPerPage = 12;
 
         // generate the items
-        $this->generateItems($n);
+        $this->fm->seed($n, Item::className());
 
         $I->wantTo("perform a simple search with {$n} items");
         $I->sendPOST('items/search', [

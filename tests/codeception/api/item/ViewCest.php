@@ -8,10 +8,10 @@ use ApiTester;
 /**
  * API test for viewing an item.
  *
- * Class ViewItemCest
+ * Class ViewCest
  * @package tests\api\item
  */
-class ViewItemCest
+class ViewCest
 {
     /**
      * @var FactoryMuffin
@@ -62,11 +62,7 @@ class ViewItemCest
         $I->sendGET('items/' . $item->id);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $response = json_decode($I->grabResponse(), true);
-
-        $I->assertTrue(array_key_exists('model', $response));
-        $I->assertTrue(array_key_exists('id', $response['model']));
-        $I->assertEquals($item->id, $response['model']['id']);
+        $I->seeResponseContainsJson(['id' => $item->id]);
     }
 
 }

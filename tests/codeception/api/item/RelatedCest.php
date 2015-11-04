@@ -10,10 +10,10 @@ use ApiTester;
 /**
  * API test for viewing related items of an item.
  *
- * Class RelatedItemCest
+ * Class RelatedCest
  * @package tests\api\item
  */
-class RelatedItemCest
+class RelatedCest
 {
     /**
      * @var FactoryMuffin

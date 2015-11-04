@@ -9,7 +9,7 @@ use ApiTester;
 /**
  * API test for viewing related items of an item.
  *
- * Class RelatedItemCest
+ * Class RelatedCest
  * @package app\tests\codeception\api\item
  */
 class RecommendedCest

@@ -8,13 +8,14 @@ use tests\muffins\User;
 use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
+
 /**
  * API test for checking the costs of a booking.
  *
- * Class CostsBookingCest
+ * Class CostsCest
  * @package tests\api\booking
  */
-class CostsBookingCest
+class CostsCest
 {
     /**
      * @var FactoryMuffin
