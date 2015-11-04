@@ -1,8 +1,10 @@
 <?php
+namespace tests\api\item;
+
 use tests\_support\MuffinHelper;
 use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
-
+use ApiTester;
 /**
  * API test for viewing an item.
  *

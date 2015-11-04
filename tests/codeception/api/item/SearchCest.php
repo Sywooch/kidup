@@ -3,7 +3,8 @@
 namespace tests\api\item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
-
+use tests\_support\MuffinHelper;
+use item\models\Item;
 
 /**
  * API test for the item search.

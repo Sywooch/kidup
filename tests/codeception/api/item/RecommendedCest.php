@@ -1,9 +1,10 @@
 <?php
 namespace tests\api\item;
 
-use app\tests\codeception\_support\MuffinHelper;
-use app\tests\codeception\muffins\Item;
+use tests\_support\MuffinHelper;
+use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
+use ApiTester;
 
 /**
  * API test for viewing related items of an item.

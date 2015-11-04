@@ -1,10 +1,13 @@
 <?php
+
+namespace tests\api\booking;
+
 use tests\_support\MuffinHelper;
 use tests\_support\UserHelper;
 use tests\muffins\User;
 use tests\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
-
+use ApiTester;
 /**
  * API test for checking the costs of a booking.
  *
