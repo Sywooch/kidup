@@ -10,6 +10,7 @@ use app\tests\codeception\muffins\Item;
 use app\tests\codeception\muffins\Location;
 use app\tests\codeception\muffins\Media;
 use app\tests\codeception\muffins\Message;
+use app\tests\codeception\muffins\OauthAccessToken;
 use app\tests\codeception\muffins\Payin;
 use app\tests\codeception\muffins\Payout;
 use app\tests\codeception\muffins\Profile;
@@ -50,7 +51,8 @@ class MuffinHelper extends Module
             Location::class,
             Conversation::class,
             Message::class,
-            Media::class
+            Media::class,
+            OauthAccessToken::class
         ];
     }
 

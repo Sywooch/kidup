@@ -2,6 +2,7 @@
 
 namespace user\models\base;
 
+use \api\models\oauth\OauthAccessToken;
 use Yii;
 
 /**
@@ -38,6 +39,7 @@ use Yii;
  * @property \user\models\Setting[] $settings
  * @property \user\models\SocialAccount[] $socialAccounts
  * @property \user\models\base\Token[] $tokens
+ * @property \api\models\oauth\OauthAccessToken[] $validOauthAccessTokens
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -218,5 +220,13 @@ class User extends \yii\db\ActiveRecord
     public function getTokens()
     {
         return $this->hasMany(\user\models\base\Token::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getValidOauthAccessTokens()
+    {
+        return $this->hasMany(OauthAccessToken::className(), ['user_id' => 'id'])->andWhere('expires >= :t')->params([':t' => time()]);
     }
 }
