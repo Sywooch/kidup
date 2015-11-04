@@ -169,6 +169,7 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related'
+                    '<id>/reviews' => 'review'
                 ]
             ],
             [
@@ -191,6 +192,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
+                    '<id>/reviews' => 'review'
                 ]
             ],
             [
@@ -201,11 +203,11 @@ $components = [
                     'refresh' => 'refresh',
                 ]
             ],
-            [
-                'pattern' => 'api/v1/<base>/<id>/<relation>/<relationId>',
-                'route' => ''
-            ]
-
+//            [
+//                'pattern' => 'api/v1/<base>/<id>/<relation1>/<relation1Id>',
+//                'route' => 'api/relation/index',
+//                'defaults' => ['relation1Id' => null]
+//            ]
         ],
     ],
 //    'redis' => [
