@@ -1,15 +1,15 @@
 <?php
-namespace tests\functional\home;
+namespace codecept\functional\home;
 
-use tests\_support\MuffinHelper;
+use codecept\_support\MuffinHelper;
 use FunctionalTester;
-use tests\_support\FixtureHelper;
+use codecept\_support\FixtureHelper;
 
 /**
  * Functional test for the home module.
  *
  * Class HomeCest
- * @package tests\functional\home
+ * @package codecept\functional\home
  */
 class HomeCest
 {

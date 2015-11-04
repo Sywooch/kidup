@@ -1,8 +1,8 @@
 <?php
-namespace tests\functional\message;
+namespace codecept\functional\message;
 
-use tests\_support\MuffinHelper;
-use tests\muffins\Item;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\Item;
 use FunctionalTester;
 use item\widgets\ItemCard;
 use League\FactoryMuffin\FactoryMuffin;
@@ -11,7 +11,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * Functional test for the item card widget.
  *
  * Class ItemCardCest
- * @package tests\functional\widget
+ * @package codecept\functional\widget
  */
 class ItemCardCest
 {

@@ -11,7 +11,7 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - tests\_support\MuffinHelper
+        - codecept\_support\MuffinHelper
         - WebDriver
 # you can use WebDriver instead of PhpBrowser to test javascript and ajax.
 # This will require you to install selenium. See http://codeception.com/docs/04-AcceptanceTests#Selenium

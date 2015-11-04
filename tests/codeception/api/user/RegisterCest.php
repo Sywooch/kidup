@@ -1,13 +1,13 @@
 <?php
-use tests\_support\MuffinHelper;
-use tests\muffins\User;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
  * functional test for the login.
  *
  * Class RegisterCest
- * @package tests\api\user
+ * @package codecept\api\user
  */
 class RegisterCest
 {

@@ -79,7 +79,7 @@ $config = [
         '@admin' => '@app/modules/admin',
         '@search' => '@app/modules/search',
         '@api' => '@app/modules/api',
-        '@tests' => '@app/tests/codeception',
+        '@codecept' => '@app/tests/codeception',
     ],
 ];
 

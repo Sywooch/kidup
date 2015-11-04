@@ -1,18 +1,18 @@
 <?php
-namespace tests\api\booking;
+namespace codecept\api\booking;
 
-use tests\_support\MuffinHelper;
-use tests\_support\UserHelper;
-use tests\muffins\User;
-use tests\muffins\Item;
+use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
+use codecept\muffins\User;
+use codecept\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 
 /**
  * API test for creating a booking.
  *
- * Class CreateCest
- * @package tests\api\booking
+ * Class CreateBookingCest
+ * @package codecept\api\booking
  */
 class CreateCest
 {

@@ -9,7 +9,7 @@ $conf = [
             'class' => 'yii\faker\FixtureController',
             'fixtureDataPath' => '@tests/codeception/fixtures',
             'templatePath' => '@tests/codeception/templates',
-            'namespace' => 'tests\codeception\fixtures',
+            'namespace' => 'codecept\codeception\fixtures',
         ],
     ],
     'components' => [

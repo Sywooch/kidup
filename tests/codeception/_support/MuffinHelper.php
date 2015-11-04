@@ -1,22 +1,22 @@
 <?php
 
-namespace tests\_support;
+namespace codecept\_support;
 
-use tests\muffins\Booking;
-use tests\muffins\Conversation;
-use tests\muffins\Currency;
-use tests\muffins\Invoice;
-use tests\muffins\Item;
-use tests\muffins\Location;
-use tests\muffins\Media;
-use tests\muffins\Message;
-use tests\muffins\OauthAccessToken;
-use tests\muffins\OauthClient;
-use tests\muffins\Payin;
-use tests\muffins\Payout;
-use tests\muffins\Profile;
-use tests\muffins\Token;
-use tests\muffins\User;
+use codecept\muffins\Booking;
+use codecept\muffins\Conversation;
+use codecept\muffins\Currency;
+use codecept\muffins\Invoice;
+use codecept\muffins\Item;
+use codecept\muffins\Location;
+use codecept\muffins\Media;
+use codecept\muffins\Message;
+use codecept\muffins\OauthAccessToken;
+use codecept\muffins\OauthClient;
+use codecept\muffins\Payin;
+use codecept\muffins\Payout;
+use codecept\muffins\Profile;
+use codecept\muffins\Token;
+use codecept\muffins\User;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 

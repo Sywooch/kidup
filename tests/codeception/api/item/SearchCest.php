@@ -1,16 +1,15 @@
 <?php
 
-namespace tests\api\item;
+namespace codecept\api\item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
-use tests\_support\MuffinHelper;
-use tests\muffins\Item;
-
+use codecept\_support\MuffinHelper;
+use codecept\muffins\Item;
 /**
  * API test for the item search.
  *
- * Class SearchCest
- * @package tests\api\item
+ * Class SearchItemCest
+ * @package codecept\api\item
  */
 class SearchCest
 {

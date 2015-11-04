@@ -1,22 +1,22 @@
 <?php
-namespace tests\functional\item;
+namespace codecept\functional\item;
 
-use tests\_support\UserHelper;
-use tests\muffins\Media;
-use tests\muffins\User;
+use codecept\_support\UserHelper;
+use codecept\muffins\Media;
+use codecept\muffins\User;
 use functionalTester;
 use item\models\base\ItemHasFeature;
 use item\models\base\ItemHasFeatureSingular;
 use item\models\base\ItemHasMedia;
 use item\models\Item;
 use League\FactoryMuffin\FactoryMuffin;
-use tests\_support\MuffinHelper;
+use codecept\_support\MuffinHelper;
 
 /**
  * functional test for the item module.
  *
  * Class ItemCest
- * @package tests\functional\item
+ * @package codecept\functional\item
  */
 class ItemCreateCest
 {
@@ -100,7 +100,7 @@ class ItemCreateCest
     private function checkLocation(FunctionalTester $I)
     {
         $I->amGoingTo('add one of my locations to my item');
-        $location = $this->fm->create(\tests\muffins\Location::class,
+        $location = $this->fm->create(\codecept\muffins\Location::class,
             ['user_id' => $this->item->owner->id]);
         $I->see('Set your pickup location');
         $I->see('Add new location');

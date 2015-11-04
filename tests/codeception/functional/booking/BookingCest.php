@@ -1,11 +1,11 @@
 <?php
-namespace tests\functional\booking;
+namespace codecept\functional\booking;
 
-use tests\_support\MuffinHelper;
-use tests\_support\UserHelper;
-use tests\_support\YiiHelper;
-use tests\muffins\Item;
-use tests\muffins\User;
+use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
+use codecept\_support\YiiHelper;
+use codecept\muffins\Item;
+use codecept\muffins\User;
 use booking\models\Payin;
 use functionalTester;
 use Faker\Factory as Faker;
@@ -18,7 +18,7 @@ use Yii;
  * Functional test for the booking module.
  *
  * Class BookingCest
- * @package tests\functional\booking
+ * @package codecept\functional\booking
  */
 class BookingCest {
 

@@ -1,15 +1,15 @@
 <?php
-namespace tests\api\item;
+namespace codecept\api\item;
 
-use tests\_support\MuffinHelper;
-use tests\muffins\Item;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 /**
  * API test for viewing an item.
  *
- * Class ViewCest
- * @package tests\api\item
+ * Class ViewItemCest
+ * @package codecept\api\item
  */
 class ViewCest
 {

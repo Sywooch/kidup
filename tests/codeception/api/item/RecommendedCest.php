@@ -1,16 +1,16 @@
 <?php
-namespace tests\api\item;
+namespace codecept\api\item;
 
-use tests\_support\MuffinHelper;
-use tests\muffins\Item;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 
 /**
  * API test for viewing related items of an item.
  *
- * Class RelatedCest
- * @package app\tests\codeception\api\item
+ * Class RelatedItemCest
+ * @package app\codecept\codeception\api\item
  */
 class RecommendedCest
 {

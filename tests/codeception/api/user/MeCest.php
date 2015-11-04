@@ -1,13 +1,13 @@
 <?php
-use tests\_support\MuffinHelper;
-use tests\muffins\User;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
-use tests\_support\UserHelper;
+use codecept\_support\UserHelper;
 /**
  * functional test for the /me api point.
  *
  * Class RegisterCest
- * @package tests\api\user
+ * @package codecept\api\user
  */
 class MeCest
 {

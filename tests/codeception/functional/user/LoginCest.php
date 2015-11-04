@@ -1,11 +1,11 @@
 <?php
-namespace tests\functional\user;
+namespace codecept\functional\user;
 
-use tests\_support\MuffinHelper;
-use tests\_support\MuffinTrait;
-use tests\_support\UserHelper;
-use tests\muffins\Item;
-use tests\muffins\User;
+use codecept\_support\MuffinHelper;
+use codecept\_support\MuffinTrait;
+use codecept\_support\UserHelper;
+use codecept\muffins\Item;
+use codecept\muffins\User;
 use Codeception\Util\Debug;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
@@ -14,7 +14,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * functional test for the login.
  *
  * Class LoginCest
- * @package tests\functional\user
+ * @package codecept\functional\user
  */
 class LoginCest
 {

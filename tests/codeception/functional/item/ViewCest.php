@@ -1,15 +1,15 @@
 <?php
-namespace tests\functional\item;
+namespace codecept\functional\item;
 
-use tests\muffins\Item;
+use codecept\muffins\Item;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use tests\_support\MuffinHelper;
+use codecept\_support\MuffinHelper;
 /**
  * functional test for the item module.
  *
  * Class ItemCest
- * @package tests\functional\item
+ * @package codecept\functional\item
  */
 class ItemViewCest
 {

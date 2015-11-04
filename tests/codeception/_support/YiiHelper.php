@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\_support;
+namespace codecept\_support;
 use AcceptanceTester;
 use app\modules\user\models\User;
 use FunctionalTester;

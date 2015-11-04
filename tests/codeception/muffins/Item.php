@@ -1,7 +1,7 @@
 <?php
-namespace tests\muffins;
+namespace codecept\muffins;
 
-use tests\_support\MuffinHelper;
+use codecept\_support\MuffinHelper;
 use Faker\Factory as Faker;
 
 class Item extends \item\models\Item

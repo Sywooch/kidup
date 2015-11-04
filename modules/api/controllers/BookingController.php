@@ -6,6 +6,7 @@ use api\models\Item;
 use booking\models\Booking;
 use item\forms\CreateBooking;
 use yii\base\Exception;
+use yii\data\ActiveDataProvider;
 
 class BookingController extends Controller
 {
@@ -29,6 +30,14 @@ class BookingController extends Controller
         unset($actions['costs']);
 
         return $actions;
+    }
+
+    function actionIndex(){
+        return new ActiveDataProvider([
+            'query' => Booking::find()->where([
+                'renter_id' => \Yii::$app->user->id
+            ])
+        ]);
     }
 
     /**

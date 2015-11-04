@@ -1,13 +1,13 @@
 <?php
-namespace tests\functional\message;
+namespace codecept\functional\message;
 
-use tests\_support\FixtureHelper;
-use tests\_support\MessageHelper;
-use tests\_support\MuffinHelper;
-use tests\_support\UserHelper;
-use tests\muffins\Conversation;
-use tests\muffins\Message;
-use tests\muffins\User;
+use codecept\_support\FixtureHelper;
+use codecept\_support\MessageHelper;
+use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
+use codecept\muffins\Conversation;
+use codecept\muffins\Message;
+use codecept\muffins\User;
 use FunctionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 
@@ -15,7 +15,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * Functional test for the message module.
  *
  * Class MessageCest
- * @package tests\functional\message
+ * @package codecept\functional\message
  */
 class MessageCest
 {

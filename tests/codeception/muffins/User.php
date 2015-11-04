@@ -1,5 +1,5 @@
 <?php
-namespace tests\muffins;
+namespace codecept\muffins;
 
 use League\FactoryMuffin\Faker\Facade as Faker;
 
