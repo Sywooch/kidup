@@ -6,7 +6,7 @@ use app\tests\codeception\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
- * Functional test for creating a booking.
+ * API test for creating a booking.
  *
  * Class CreateBookingCest
  * @package app\tests\codeception\api\booking

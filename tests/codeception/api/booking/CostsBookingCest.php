@@ -6,7 +6,7 @@ use app\tests\codeception\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
- * Functional test for checking the costs of a booking.
+ * API test for checking the costs of a booking.
  *
  * Class CostsBookingCest
  * @package app\tests\codeception\api\booking
