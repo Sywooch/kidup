@@ -62,8 +62,9 @@ class ViewItemCest
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse(), true);
 
-        $I->assertTrue(array_key_exists('id', $response));
-        $I->assertEquals($item->id, $response['id']);
+        $I->assertTrue(array_key_exists('model', $response));
+        $I->assertTrue(array_key_exists('id', $response['model']));
+        $I->assertEquals($item->id, $response['model']['id']);
     }
 
 }

@@ -166,7 +166,9 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/items' => 'api/item'],
                 'extraPatterns' => [
-                    'search' => 'search'
+                    'search' => 'search',
+                    'recommended' => 'recommended',
+                    'related' => 'related'
                 ]
             ],
             [
