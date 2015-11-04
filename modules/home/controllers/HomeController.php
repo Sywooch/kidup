@@ -55,7 +55,7 @@ class HomeController extends Controller
             return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
         $items = Yii::$app->db->cache(function () {
-            Item::getRecommended(4);
+            return Item::getRecommended(4);
         }, 6 * 3600);
 
         $res = $this->render('index', [
