@@ -25,6 +25,7 @@ class ItemController extends Controller
         unset($actions['create']);
         unset($actions['index']);
         unset($actions['update']);
+        unset($actions['view']);
         return $actions;
     }
 
@@ -34,83 +35,87 @@ class ItemController extends Controller
         ]);
     }
 
+    public function actionView() {
+        echo 'test';
+        die();
+    }
+
     /**
-     * Search for items.
+     * @api {post} /items/search
+     * @apiName ItemSearch
+     * @apiGroup Item
      *
-     * @param int $page          page to start on (required, start with page=0)
+     * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
-     * The following parameters are optional, but whenever a search feature is used, certain parameters
-     * need to be set. Therefore, the documentation is grouped per feature to see what parameters
-     * are related.
+     * @apiParam {Object[]}     price                       The specification of the price filter (optional).
+     * @apiParam {String}       price.price_unit            The price unit, which is one of the following:
+     *                                                          "price_day"    Price per day
+     *                                                          "price_week"   Price per week
+     *                                                          "price_month"  Price per month
+     * @apiParam {Number}       price.price_min             The minimum price to search for.
+     * @apiParam {Number}       price.price_max             The maximum price to search for.
      *
-     * Pricing: (priceUnit required, one of priceMin or priceMax required)
-     * @param priceUnit     price_day, price_week, price_month
-     * @param priceMin      minimum price
-     * @param priceMax      maximum price
+     * @apiParam {Object[]}     location_by_name            The specification of the location by name filter (optional).
+     * @apiParam {String}       location_by_name.location   The name of the location (e.g. a city or a place).
      *
-     * Named location: (location required)
-     * @param location      the name of the location (longitude and latitude will be automatically retrieved)
+     * @apiParam {Object[]}     location_by_geo             The specification of the geo-location filter (optional).
+     * @apiParam {Number}       location_by_geo.longitude   The longitude of the location.
+     * @apiParam {Number}       location_by_geo.latitude    The latitude of the location.
      *
-     * Location: (longitude and latitude required)
-     * @param longitude     the longitude of the location
-     * @param latitude      the latitude of the location
+     * @apiParam {Number[]}     category                    A list of all categories (specified by their category_id) that are enabled (optional).
      *
-     * Categories: (categories required)
-     * @param categories    an array of ids of categories
+     * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
+     * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
+     * @apiParam {Number[]}     feature[].value[]             A list of feature_value_id which are used.
      *
-     * @return array
-     *              usedFilter      all filter that have been applied on the search
-     *              numPages        the total number of pages
-     *              numItems        the total number of items
-     *              results         a JSON representation of all the retrieved items
+     * @apiSuccess {Number}     num_pages                   The total number of pages.
+     * @apiSuccess {Number}     num_items                   The total number of items.
+     * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
     public function actionSearch() {
-        // fetch the parameters
-        $params = \Yii::$app->request->get();
+        // load the page number
+        $page = \Yii::$app->request->post('page', 0);
+
+        // load the other parameters
+        $params = \Yii::$app->request->post();
 
         // set some read-only parameters
         $pageSize = 12;
-
-        // load the parameters
-        $page = $params['page']; // page (starting from 0)
-
-        // a list of all filters used (based on the parameters)
-        $usedFilters = [];
 
         $model = new Filter();
         $model->page = $page;
         $model->pageSize = $pageSize;
 
         // load the pricing
-        if (isset($params['priceUnit'])) {
-            $usedFilters[] = 'priceUnit';
-            $model->priceUnit = $params['priceUnit'];
-            if (isset($params['priceMin'])) {
-                $usedFilters[] = 'priceMin';
-                $model->priceMin = $params['priceMin'];
+        if (isset($params['price_unit'])) {
+            $model->priceUnit = $params['price_unit'];
+            if (isset($params['price_min'])) {
+                $model->priceMin = $params['price_min'];
             }
-            if (isset($params['priceMax'])) {
-                $usedFilters[] = 'priceMax';
-                $model->priceMax = $params['priceMax'];
+            if (isset($params['price_max'])) {
+                $model->priceMax = $params['price_max'];
             }
         }
 
         // load location
-        if (isset($params['location'])) {
-            $usedFilters[] = 'namedLocation';
-            $model->location = $params['location'];
+        if (isset($params['location_by_name'])) {
+            if (isset($params['location_by_name']['location'])) {
+                $model->location = $params['location_by_name']['location'];
+            }
         }
 
         // load location based on longitude and latitude
-        if (isset($params['longitude']) && isset($params['latitude'])) {
-            $usedFilters[] = 'location';
-            $model->longitude = $params['longitude'];
-            $model->latitude = $params['latitude'];
+        if (isset($params['location_by_geo'])) {
+            $locationByGeo = $params['location_by_geo'];
+            if (isset($locationByGeo['longitude']) && isset($locationByGeo['latitude'])) {
+                $model->longitude = $locationByGeo['longitude'];
+                $model->latitude = $locationByGeo['latitude'];
+            }
         }
 
         // load the categories
-        if (isset($params['categories'])) {
-            $model->categories = $params['categories'];
+        if (isset($params['category'])) {
+            $model->categories = $params['category'];
         }
 
         // now get the query
@@ -118,9 +123,8 @@ class ItemController extends Controller
 
         // and give back the results
         return [
-            'usedFilters' => $usedFilters,
-            'numPages' => ceil($model->estimatedResultCount / $pageSize),
-            'numItems' => $model->estimatedResultCount,
+            'num_pages' => ceil($model->estimatedResultCount / $pageSize),
+            'num_items' => $model->estimatedResultCount,
             'results' => $query->all()
         ];
     }

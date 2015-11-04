@@ -3417,4 +3417,5 @@ class ApiTester extends \Codeception\Actor
     public function dontSeeResponseCodeIs($code) {
         return $this->scenario->runStep(new \Codeception\Step\Assertion('dontSeeResponseCodeIs', func_get_args()));
     }
+
 }
