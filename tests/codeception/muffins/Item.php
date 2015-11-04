@@ -12,12 +12,14 @@ class Item extends \item\models\Item
         $priceDay = $faker->numberBetween(10, 1000);
         $priceWeek = (int)(rand(5 * 100, 7 * 100) / 100 * $priceDay);
         $priceMonth = (int)(rand(25 * 100, 30 * 100) / 100 * $priceDay);
+        $priceYear = (int)(rand(200 * 100, 250 * 100) / 100 * $priceDay);
         return [
             'name' => $faker->text(50),
             'description' => $faker->text(200),
             'price_day' => $priceDay,
             'price_week' => $priceWeek,
             'price_month' => $priceMonth,
+            'price_year' => $priceYear,
             'owner_id' => 'factory|'.User::className(),
             'currency_id' => 1,
             'location_id' => 'factory|'.Location::className(),

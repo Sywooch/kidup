@@ -5,6 +5,8 @@ use api\models\Item;
 use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
@@ -36,15 +38,19 @@ class ItemController extends Controller
         ]);
     }
 
-    public function actionView() {
-        echo 'test';
-        die();
+    // default action, does not need documentation
+    public function actionView($id) {
+        $query = Item::find()->where(['is_available' => 1, 'id' => $id]);
+        if ($query->count() == 0) {
+            throw new NotFoundHttpException('Item not found.');
+        }
+        return $query->one();
     }
 
     /**
-     * @api {post} /items/search
-     * @apiName ItemSearch
-     * @apiGroup Item
+     * @api {post} items/search
+     * @apiName     searchItem
+     * @apiGroup    Item
      *
      * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
@@ -67,7 +73,7 @@ class ItemController extends Controller
      *
      * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
      * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
-     * @apiParam {Number[]}     feature[].value[]             A list of feature_value_id which are used.
+     * @apiParam {Number[]}     feature[].value[]           A list of feature_value_id which are used.
      *
      * @apiSuccess {Number}     num_pages                   The total number of pages.
      * @apiSuccess {Number}     num_items                   The total number of items.

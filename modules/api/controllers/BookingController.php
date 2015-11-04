@@ -32,18 +32,16 @@ class BookingController extends Controller
     }
 
     /**
-     * POST /api/v1/bookings
+     * @api {post} bookings
+     * @apiGroup        Booking
+     * @apiName         createBooking
+     * @apiDescription  Create a booking.
      *
-     * Create a booking.
-     *
-     * @param int $item_id        the item_id to create to booking for
-     * @param string $date_from      d-m-Y formatted date to start the booking on
-     * @param integer $date_to       d-m-Y formatted date to end the booking on
-     * @return bool $success      whether the booking was successfully created or not
-     * @return integer booking_id    the ID of the newly created booking (only if success === true)
-     * @throws Exception    when item_id is not set
-     * @throws Exception    when date_from is not set
-     * @throws Exception    when date_to is not set
+     * @apiParam {Number}       item_id             The item_id of the item to create the booking for.
+     * @apiParam {String}       date_from           d-m-Y formatted date to start the booking on.
+     * @apiParam {String}       date_end            d-m-Y formatted date to end the booking on.
+     * @apiSuccess {boolean}    success             Whether or not the booking was successfully created.
+     * @apiSuccess {Number}     booking_id          The booking_id of the newly created booking (only if success === true).
      */
     public function actionCreate() {
         // fetch the parameters
@@ -84,7 +82,7 @@ class BookingController extends Controller
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
-        $booking->date_from = $date_from;
+        $booking->dateFrom = $date_from;
         $booking->dateTo = $date_to;
 
         // create the result
@@ -93,8 +91,12 @@ class BookingController extends Controller
         ];
 
         // save the booking
-        $bookingObject = $booking->attemptBooking();
-        if ($bookingObject !== false) {
+        $bookingObject = null;
+        if ($booking->validateDates()) {
+            $booking->save(false);
+            $bookingObject = $booking->booking;
+        }
+        if (is_object($bookingObject) && isset($bookingObject->id) && is_numeric($bookingObject->id) && $bookingObject->id > 0) {
             $result['success'] = true;
             $result['booking_id'] = $bookingObject->id;
         }
@@ -103,17 +105,15 @@ class BookingController extends Controller
     }
 
     /**
-     * POST /api/v1/bookings/costs
+     * @api {post} bookings/costs
+     * @apiGroup        Booking
+     * @apiName         costsBooking
+     * @apiDescription  Check the costs of a booking.
      *
-     * Calculate the costs for a booking.
-     *
-     * @param item_id        the item_id to create to booking for
-     * @param date_from      d-m-Y formatted date to start the booking on
-     * @param date_to       d-m-Y formatted date to end the booking on
-     * @return tableData    an array containing the costs of the booking
-     * @throws Exception    when item_id is not set
-     * @throws Exception    when date_from is not set
-     * @throws Exception    when date_to is not set
+     * @apiParam {Number}       item_id             The item_id of the item to create the booking for.
+     * @apiParam {String}       date_from           d-m-Y formatted date to start the booking on.
+     * @apiParam {String}       date_end            d-m-Y formatted date to end the booking on.
+     * @apiSuccess {Object[]}   tableData           An array containing the costs of the booking.
      */
     public function actionCosts() {
         // fetch the parameters
@@ -155,7 +155,7 @@ class BookingController extends Controller
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
-        $booking->date_from = $date_from;
+        $booking->dateFrom = $date_from;
         $booking->dateTo = $date_to;
 
         // do not save, display the table data
