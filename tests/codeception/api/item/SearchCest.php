@@ -1,4 +1,6 @@
 <?php
+namespace tests\api\item;
+
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
@@ -9,7 +11,7 @@ use League\FactoryMuffin\FactoryMuffin;
  * Class SearchItemCest
  * @package app\tests\codeception\api\item
  */
-class SearchItemCest
+class SearchCest
 {
     /**
      * @var FactoryMuffin

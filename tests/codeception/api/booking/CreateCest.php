@@ -1,4 +1,6 @@
 <?php
+namespace tests\api\booking;
+
 use app\tests\codeception\_support\MuffinHelper;
 use app\tests\codeception\_support\UserHelper;
 use app\tests\codeception\muffins\User;
@@ -6,12 +8,12 @@ use app\tests\codeception\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
- * API test for checking the costs of a booking.
+ * API test for creating a booking.
  *
- * Class CostsBookingCest
+ * Class CreateBookingCest
  * @package app\tests\codeception\api\booking
  */
-class CostsBookingCest
+class CreateCest
 {
     /**
      * @var FactoryMuffin
@@ -27,18 +29,35 @@ class CostsBookingCest
     }
 
     /**
-     * Check if I can retrieve expected costs of a booking.
+     * Check if I cannot make a booking as a guest.
      *
      * @param ApiTester $I
      */
-    public function checkBookingCosts(ApiTester $I) {
+    public function checkBookingGuest(ApiTester $I) {
+        $item = $this->fm->create(Item::className());
+        $I->wantTo("create a simple booking");
+        $I->sendPOST('bookings', [
+            'item_id' => $item->id,
+            'date_from' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 3, date('Y'))),
+            'date_to' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 5, date('Y')))
+        ]);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(401);
+    }
+
+    /**
+     * Create a simple booking.
+     *
+     * @param $I ApiTester The tester.
+     */
+    public function checkSimpleBooking(ApiTester $I)
+    {
         $accessToken = UserHelper::apiLogin($this->user)['access-token'];
         $item = $this->fm->create(Item::className());
         $item->is_available = true;
-        $item->price_day = 1;
         $item->save();
-        $I->wantTo("see the costs of a simple booking");
-        $I->sendPOST('bookings/costs?access-token=' . $accessToken, array_merge([
+        $I->wantTo("create a simple booking");
+        $I->sendPOST('bookings?access-token=' . $accessToken, array_merge([
             'item_id' => $item->id,
             'date_from' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 3, date('Y'))),
             'date_to' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 5, date('Y'))),
@@ -47,7 +66,9 @@ class CostsBookingCest
         $I->seeResponseIsJson();
         $response = $I->grabResponse();
         $response = json_decode($response, true);
-        $I->assertTrue(array_key_exists('tableData', $response));
+        $I->assertTrue(array_key_exists('success', $response));
+        $I->assertEquals(true, $response['success']);
+        $I->assertTrue(array_key_exists('booking_id', $response));
     }
 
 }
