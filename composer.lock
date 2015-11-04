@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a748a165889c0ca71855d846fc5103fe",
-    "content-hash": "e71306786b6638d4e0a489b354c1aa7c",
+    "hash": "edcb59c9588cba7a1193223de4dd96b8",
+    "content-hash": "fa57b5c5f8dccbf24ebb8388737ebcee",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1228,48 +1228,6 @@
             "time": "2015-07-15 15:07:13"
         },
         {
-            "name": "bryglen/yii2-sendgrid",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bryglen/yii2-sendgrid.git",
-                "reference": "3836996332da9dda36d07d8f5b3a805c65aae0a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bryglen/yii2-sendgrid/zipball/3836996332da9dda36d07d8f5b3a805c65aae0a5",
-                "reference": "3836996332da9dda36d07d8f5b3a805c65aae0a5",
-                "shasum": ""
-            },
-            "require": {
-                "sendgrid/sendgrid": "2.2.1"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "bryglen\\sendgrid\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bryan Jayson Tan",
-                    "email": "bryantan16@gmail.com"
-                }
-            ],
-            "description": "Sendgrid Mailer for Yii 2",
-            "keywords": [
-                "bryglen",
-                "extension",
-                "sendgrid",
-                "yii2"
-            ],
-            "time": "2015-04-16 16:00:43"
-        },
-        {
             "name": "cebe/markdown",
             "version": "dev-master",
             "source": {
@@ -1551,6 +1509,44 @@
             "time": "2015-04-03 20:31:47"
         },
         {
+            "name": "flow/jsonpath",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FlowCommunications/JSONPath.git",
+                "reference": "e064398010089f9efb46044f85ee63c458ae89e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FlowCommunications/JSONPath/zipball/e064398010089f9efb46044f85ee63c458ae89e1",
+                "reference": "e064398010089f9efb46044f85ee63c458ae89e1",
+                "shasum": ""
+            },
+            "require-dev": {
+                "peekmo/jsonpath": "dev-master",
+                "phpunit/phpunit": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Flow\\JSONPath": "src/",
+                    "Flow\\JSONPath\\Test": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Frank",
+                    "email": "stephen@flowsa.com"
+                }
+            ],
+            "description": "JSONPath implementation for parsing, searching and flattening arrays",
+            "time": "2015-10-12 07:39:47"
+        },
+        {
             "name": "geoip/geoip",
             "version": "v1.15",
             "source": {
@@ -1609,7 +1605,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/75277038380dbeba6c915749add6c0d38edd3719",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/8e2e8f97645b99cbb570494e4aa2aa7b321ee34b",
                 "reference": "75277038380dbeba6c915749add6c0d38edd3719",
                 "shasum": ""
             },
@@ -2548,7 +2544,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/336f55b201e8f1d37a8d5ac89dae637eda3eea84",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/cbb3ce2fa20171fd5ae13525621f60ea2caebd20",
                 "reference": "336f55b201e8f1d37a8d5ac89dae637eda3eea84",
                 "shasum": ""
             },
@@ -2878,7 +2874,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/076f49747309f30658085eb008276ecd3370b151",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/1ccb21990894bf99cac2ab58605055b40ed18a7b",
                 "reference": "076f49747309f30658085eb008276ecd3370b151",
                 "shasum": ""
             },
@@ -3122,7 +3118,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/6fff3dba1fbe706234e28ded9365b23d9c52c312",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/4225026470784805e4750a4dc1a29cf720a4691c",
                 "reference": "6fff3dba1fbe706234e28ded9365b23d9c52c312",
                 "shasum": ""
             },
@@ -3922,7 +3918,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f46f18a62f50d85750798d1d2f57fb04e1cdc707",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5e77b62a894b4c8f1b3bd550447292482ed8b50f",
                 "reference": "f46f18a62f50d85750798d1d2f57fb04e1cdc707",
                 "shasum": ""
             },
@@ -4163,7 +4159,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/8e5c7902b9fcc1daffcf33f633646b4a78683a20",
+                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/1b852007a12cf8a83ac921e35c93ceb72ffbd895",
                 "reference": "8e5c7902b9fcc1daffcf33f633646b4a78683a20",
                 "shasum": ""
             },
@@ -4664,99 +4660,6 @@
             "time": "2015-07-03 13:48:55"
         },
         {
-            "name": "sendgrid/sendgrid",
-            "version": "2.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sendgrid/sendgrid-php.git",
-                "reference": "83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9",
-                "reference": "83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3",
-                "sendgrid/smtpapi": "0.*"
-            },
-            "replace": {
-                "sendgrid/sendgrid-php": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "vlucas/phpdotenv": "1.0.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "SendGrid": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "This library allows you to quickly and easily send emails through SendGrid using PHP.",
-            "homepage": "http://github.com/sendgrid/sendgrid-php",
-            "keywords": [
-                "email",
-                "grid",
-                "send",
-                "sendgrid"
-            ],
-            "time": "2015-01-29 22:34:03"
-        },
-        {
-            "name": "sendgrid/smtpapi",
-            "version": "0.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sendgrid/smtpapi-php.git",
-                "reference": "05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/smtpapi-php/zipball/05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5",
-                "reference": "05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "replace": {
-                "sendgrid/smtpapi-php": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Smtpapi": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Build SendGrid X-SMTPAPI headers in PHP.",
-            "homepage": "http://github.com/sendgrid/smtpapi-php",
-            "keywords": [
-                "X-SMTP",
-                "api",
-                "email",
-                "grid",
-                "send",
-                "sendgrid",
-                "smtp",
-                "smtpapi",
-                "xsmtp"
-            ],
-            "time": "2015-04-14 02:37:45"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "5.x-dev",
             "source": {
@@ -4869,7 +4772,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/e7c5fcb19d991da3894858bb4d4775be57094eda",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/6c78cad7c0b39a88931e00737d973175f69680cd",
                 "reference": "e7c5fcb19d991da3894858bb4d4775be57094eda",
                 "shasum": ""
             },
@@ -4975,7 +4878,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/53aa70a3f43cc0094cf5a72b22f3d63a87713eb5",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/fd84403ac725fe1a053a0a109e26ecdb9928c912",
                 "reference": "53aa70a3f43cc0094cf5a72b22f3d63a87713eb5",
                 "shasum": ""
             },
@@ -5357,7 +5260,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/7c6b244d9cfd58a5a10cad9853edc090ffd479b1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/09a5bfe72c0141ad26281848f1ae9c3f42541f20",
                 "reference": "7c6b244d9cfd58a5a10cad9853edc090ffd479b1",
                 "shasum": ""
             },
@@ -5673,6 +5576,48 @@
             }
         },
         {
+            "name": "bryglen/yii2-sendgrid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bryglen/yii2-sendgrid.git",
+                "reference": "3836996332da9dda36d07d8f5b3a805c65aae0a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bryglen/yii2-sendgrid/zipball/3836996332da9dda36d07d8f5b3a805c65aae0a5",
+                "reference": "3836996332da9dda36d07d8f5b3a805c65aae0a5",
+                "shasum": ""
+            },
+            "require": {
+                "sendgrid/sendgrid": "2.2.1"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bryglen\\sendgrid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bryan Jayson Tan",
+                    "email": "bryantan16@gmail.com"
+                }
+            ],
+            "description": "Sendgrid Mailer for Yii 2",
+            "keywords": [
+                "bryglen",
+                "extension",
+                "sendgrid",
+                "yii2"
+            ],
+            "time": "2015-04-16 16:00:43"
+        },
+        {
             "name": "codeception/codeception",
             "version": "2.0.15",
             "source": {
@@ -5833,7 +5778,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/35ed9dd3e414dd4044fa83ad692ad3b9c211bdd7",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/65cc8a9790b0808b86e28a3327621d9314048852",
                 "reference": "35ed9dd3e414dd4044fa83ad692ad3b9c211bdd7",
                 "shasum": ""
             },
@@ -6047,7 +5992,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/c6304f5f7d495b8998cb7f306419cc30e3c1fc11",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/2c30a74c45197befa78a57632ae761dcf765def2",
                 "reference": "c6304f5f7d495b8998cb7f306419cc30e3c1fc11",
                 "shasum": ""
             },
@@ -6429,7 +6374,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/84b9e77aad937d2662934e2664d0190a7c332dd3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/2c9d4848ca3888f83565c15a7a1662c0c7155aca",
                 "reference": "84b9e77aad937d2662934e2664d0190a7c332dd3",
                 "shasum": ""
             },
@@ -7193,7 +7138,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/182c9d3b374fcfb48a9a110dd531917ffaf9e15b",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/fca59a36a23dd2d888c5059f0370d571c038411e",
                 "reference": "182c9d3b374fcfb48a9a110dd531917ffaf9e15b",
                 "shasum": ""
             },
@@ -7606,6 +7551,99 @@
             "time": "2015-06-21 13:59:46"
         },
         {
+            "name": "sendgrid/sendgrid",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sendgrid/sendgrid-php.git",
+                "reference": "83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9",
+                "reference": "83cec4aa7a86064c8ea30cc7180b1b558b0ac7e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "sendgrid/smtpapi": "0.*"
+            },
+            "replace": {
+                "sendgrid/sendgrid-php": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "vlucas/phpdotenv": "1.0.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SendGrid": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This library allows you to quickly and easily send emails through SendGrid using PHP.",
+            "homepage": "http://github.com/sendgrid/sendgrid-php",
+            "keywords": [
+                "email",
+                "grid",
+                "send",
+                "sendgrid"
+            ],
+            "time": "2015-01-29 22:34:03"
+        },
+        {
+            "name": "sendgrid/smtpapi",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sendgrid/smtpapi-php.git",
+                "reference": "05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sendgrid/smtpapi-php/zipball/05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5",
+                "reference": "05ccf57bad5d1524e479b6dc0a2dfade88b3fbe5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "replace": {
+                "sendgrid/smtpapi-php": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Smtpapi": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Build SendGrid X-SMTPAPI headers in PHP.",
+            "homepage": "http://github.com/sendgrid/smtpapi-php",
+            "keywords": [
+                "X-SMTP",
+                "api",
+                "email",
+                "grid",
+                "send",
+                "sendgrid",
+                "smtp",
+                "smtpapi",
+                "xsmtp"
+            ],
+            "time": "2015-04-14 02:37:45"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "2.8.x-dev",
             "source": {
@@ -7615,7 +7653,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/35bde11fc81eecb2409eb60c5f7920659ad7e00a",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/589f32fe4f43155ea303d505171634c45f15e876",
                 "reference": "35bde11fc81eecb2409eb60c5f7920659ad7e00a",
                 "shasum": ""
             },
@@ -7669,7 +7707,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/89a795226477f66745e8ea10415e769304114920",
+                "url": "https://api.github.com/repos/symfony/console/zipball/74bf9202a531cc6942454eb9e2dd1e13bde34a31",
                 "reference": "89a795226477f66745e8ea10415e769304114920",
                 "shasum": ""
             },
@@ -7725,7 +7763,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/01e341a68e06e540e0322017506b58b0e072c626",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b600fec37c0efca08046d481d79e7eabc07108ff",
                 "reference": "01e341a68e06e540e0322017506b58b0e072c626",
                 "shasum": ""
             },
@@ -7775,7 +7813,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/93bfc2cc94cdfc16c728c663658117a25acd1aa5",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/740c98235f5b6e2b0b13df2fb97c7a1c7d1a18fc",
                 "reference": "93bfc2cc94cdfc16c728c663658117a25acd1aa5",
                 "shasum": ""
             },
@@ -7827,7 +7865,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/22db6ac518817c5459e704dbd21727777a764f32",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a5eb815363c0388e83247e7e9853e5dbc14999cc",
                 "reference": "22db6ac518817c5459e704dbd21727777a764f32",
                 "shasum": ""
             },
@@ -7884,7 +7922,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/dcd5aaba34ca332abb7f33ec554ebd4d829cb202",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/ead9b07af4ba77b6507bee697396a5c79e633f08",
                 "reference": "dcd5aaba34ca332abb7f33ec554ebd4d829cb202",
                 "shasum": ""
             },
@@ -7930,7 +7968,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/ff7f886a33f5b7a26a94d62f6e14bb9cf0e3bf5d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/cb8f989f3580e9749244d86dfac156cd0ef6ca76",
                 "reference": "ff7f886a33f5b7a26a94d62f6e14bb9cf0e3bf5d",
                 "shasum": ""
             },
@@ -8016,7 +8054,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/d2c91b5a5dbde172f9adbbde10b0a523d1bfc388",
+                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/22e981b8c93d9882ccd333ba001767a6b99aa9a1",
                 "reference": "d2c91b5a5dbde172f9adbbde10b0a523d1bfc388",
                 "shasum": ""
             },
@@ -8061,7 +8099,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/a8eba1bb9a7163df5120fb07c0c000e298a8bcf0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/7ba01f0049f691bd76259e10bdede0709323ffc2",
                 "reference": "a8eba1bb9a7163df5120fb07c0c000e298a8bcf0",
                 "shasum": ""
             },
@@ -8155,7 +8193,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/3946123b429ef6aa95618a4159f3c0360054ddec",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/741ef183702cb8ba8f7d790040ff2c38124cc8c2",
                 "reference": "3946123b429ef6aa95618a4159f3c0360054ddec",
                 "shasum": ""
             },
@@ -8215,6 +8253,7 @@
         "nesbot/carbon": 20,
         "yiisoft/yii2-jui": 20,
         "yiisoft/yii2-twig": 20,
+        "flow/jsonpath": 20,
         "warrence/yii2-kartikgii": 20
     },
     "prefer-stable": false,
