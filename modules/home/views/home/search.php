@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use kartik\typeahead\Typeahead;
 use \yii\bootstrap\ActiveForm;
 use \item\widgets\GoogleAutoComplete;
+use app\helpers\ViewHelper;
 
 /**
  * @var \app\extended\web\View $this
@@ -30,11 +31,6 @@ $this->registerJsVariables([
                         'id' => 'main-search'
                     ]);
                     ?>
-
-
-
-
-                    
                     <div class="col-sm-9 col-md-6">
                         <?= $form->field($model, 'query')->widget(Typeahead::className(), [
                             'options' => [
@@ -68,7 +64,8 @@ $this->registerJsVariables([
                         <?= $form->field($model, 'location')->widget(GoogleAutoComplete::className(), [
                             'options' => [
                                 'class' => 'form-control location-input',
-                                'placeholder' => \Yii::t("home.search.location_placeholder", 'Location e.g. Copenhagen'),
+                                'placeholder' => \Yii::t("home.search.location_placeholder",
+                                    'Location e.g. Copenhagen'),
                                 'autocompleteName' => 'home-search',
                                 'value' => $emptyLocation
                             ],
@@ -81,7 +78,10 @@ $this->registerJsVariables([
 
                     <div class="col-sm-3 col-md-2">
                         <?= \yii\bootstrap\Html::submitButton(Yii::t("home.search.search_button", "Search"),
-                            ['class' => 'btn btn-danger btn-fill btn-wide']) ?>
+                            [
+                                'class' => 'btn btn-danger btn-fill btn-wide',
+                                'onclick' => ViewHelper::trackClick('home.click_search', null, false)
+                            ]) ?>
                     </div>
 
                     <?php

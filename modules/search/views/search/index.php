@@ -18,8 +18,6 @@ $this->assetPackage = \app\assets\Package::SEARCH;
 ?>
 
 <?php Pjax::begin([
-//    'enableReplaceState' => false,
-//    'enableReplaceState' => true,
     'id' => 'pjax-search',
     'timeout' => 1000000
 ]);
@@ -112,4 +110,4 @@ $this->assetPackage = \app\assets\Package::SEARCH;
     </div>
 <?php Pjax::end(); ?>
 
-<?= \Yii::$app->user->isGuest && !\Yii::$app->session->has('stop-attempting-signup') ? $this->render('signup-modal') : '' ?>
+<?= \app\widgets\SignupModal::widget() ?>

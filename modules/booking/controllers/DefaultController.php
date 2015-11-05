@@ -2,15 +2,18 @@
 
 namespace booking\controllers;
 
+use api\models\Currency;
 use app\extended\web\Controller;
 use app\jobs\SlackJob;
 use \booking\forms\Confirm;
 use \booking\models\Booking;
 use \booking\models\Payin;
 use \images\components\ImageHelper;
+use item\forms\CreateBooking;
 use \item\models\Item;
 use \user\models\PayoutMethod;
 use Carbon\Carbon;
+use Yii;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -38,21 +41,30 @@ class DefaultController extends Controller
 
     public $enableCsrfValidation = false;
 
-    public function actionConfirm($id)
+    public function actionConfirm($item_id, $date_from, $date_to)
     {
-        /**
-         * @var \booking\models\Booking $booking
-         */
-        $booking = $this->find($id);
+        // fetch all the parameters
 
-        if ($booking->renter_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException();
+        // find the corresponding item
+        $item = Item::find()->where(['id' => $item_id, 'is_available' => 1])->one();
+        if ($item === null) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.item.invalid', "Item not found."));
         }
 
-        if ($booking->status !== Booking::AWAITING_PAYMENT) {
-            return $this->redirect(['/booking/' . $id]);
+        // find the corresponding currency
+        $currency = Currency::find()->where(['id' => 1])->one();
+        if ($currency === null) {
+            throw new ForbiddenHttpException(Yii::t('error.booking.currency.invalid', "Currency not found."));
         }
-        
+
+        // now create a fake booking
+        $createBooking = new CreateBooking($item, $currency);
+        $createBooking->dateFrom = $date_from;
+        $createBooking->dateTo = $date_to;
+        $createBooking->validateDates();
+        $createBooking->save(true);
+        $booking = $createBooking->booking;
+
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
@@ -64,16 +76,15 @@ class DefaultController extends Controller
             }
             if ($model->save()) {
                 // booking is confirmed
+                $booking = $model->booking;
                 if (YII_ENV == 'prod') {
                     new SlackJob([
-                        'message' => "New booking payin has been made, id: " . $id
+                        'message' => "New booking payin has been made, id: " . $booking->id
                     ]);
                 }
-                return $this->redirect(['/booking/' . $id]);
+                return $this->redirect(['/booking/' . $booking->id]);
             }
         }
-
-        $item = Item::find()->where(['id' => $booking->item_id])->one();
 
         return $this->render('confirm', [
             'booking' => $booking,

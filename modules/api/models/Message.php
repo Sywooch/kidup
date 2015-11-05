@@ -27,7 +27,6 @@ class Message extends \message\models\Message
         unset($fields['sender_user_id']);
         unset($fields['receiver_user_id']);
         unset($fields['updated_at']);
-        unset($fields['created_at']);
 
         return $fields;
     }

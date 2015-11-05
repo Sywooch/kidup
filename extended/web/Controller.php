@@ -1,6 +1,7 @@
 <?php
 namespace app\extended\web;
 
+use admin\models\TrackingEvent;
 use search\models\IpLocation;
 use user\models\Profile;
 use Yii;

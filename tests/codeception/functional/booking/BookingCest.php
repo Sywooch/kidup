@@ -25,6 +25,7 @@ class BookingCest {
     /**
      * @var FactoryMuffin
      */
+    private $item;
     protected $fm = null;
 
     public function _before() {
@@ -32,8 +33,8 @@ class BookingCest {
     }
 
     public function testBookingProcess(FunctionalTester $I){
-        $booking = $this->startBooking($I);
-        $this->completeBookingRequest($I, $booking);
+        $renter = $this->startBooking($I);
+        $this->completeBookingRequest($I, $renter);
     }
 
     private function startBooking(FunctionalTester $I) {
@@ -51,6 +52,7 @@ class BookingCest {
          * @var \item\models\Item $item
          */
         $item = $this->fm->create(Item::class);
+        $this->item = $item;
         $renter = $this->fm->create(User::class);
         UserHelper::login($renter);
 
@@ -70,23 +72,22 @@ class BookingCest {
         // go to the action page of the form
         $I->amOnPage('/item/' . $item->id . '?' . http_build_query($params) . '&_book=1');
         $I->canSee('Review and book');
-        return $item->bookings[0];
+        return $renter;
     }
 
-    private function completeBookingRequest(FunctionalTester $I, \booking\models\Booking $booking) {
-        UserHelper::login($booking->renter);
+    private function completeBookingRequest(FunctionalTester $I, $renter) {
+        UserHelper::login($renter);
 
         // check the generated table
-        $I->amOnPage('/booking/' . $booking->id . '/confirm');
         $I->canSee('Secure Booking - Pay in 1 Minute');
-        $I->canSee('Message to '.$booking->item->owner->profile->first_name);
+        $I->canSee('Message to ');
         $I->see('Review and book');
         $I->fillField('#confirm-booking-message', 'testmessage');
         $I->checkOption('#confirm-booking-rules');
         $emailCountBefore = count(YiiHelper::listEmails());
         $I->click('Book now');
 
-        $booking->refresh();
+        $booking = $this->item->bookings[0];
         $I->amOnPage('/booking/' . $booking->id);
         $I->seeRecord(Payin::class, [
             'id' => $booking->payin_id

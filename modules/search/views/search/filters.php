@@ -16,6 +16,7 @@ use yii\web\JsExpression;
 $form = ActiveForm::begin([
     'enableClientValidation' => false,
     'method' => 'get',
+    'action' => Url::to('@web/search', true),
     'options' => ['name' => 'data-pjax', 'data-pjax' => true, 'id' => 'search-form'],
 ]); ?>
     <!--location-->
