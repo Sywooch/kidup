@@ -5,6 +5,7 @@ use mail\components\MailUrl;
 use user\models\Profile;
 use user\models\User;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
 
@@ -36,7 +37,7 @@ class Mailer
 
     const MESSAGE = 'Conversation.newMessage';
     const USER_RECONFIRM = 'User.reconfirm';
-    const USER_WELCOME = 'User.welcome';
+    const USER_WELCOME = 'User.welcome.twig';
     const USER_RECOVERY = 'User.recovery';
 
     public function __construct()
@@ -44,6 +45,7 @@ class Mailer
         $this->sender = 'info@kidup.dk';
         $this->senderName = 'KidUp';
         $this->viewPath = '@app/modules/mail/views';
+        $this->registerWidgets();
     }
 
     public static function send($type, $data)
@@ -90,30 +92,37 @@ class Mailer
             ->send();
     }
 
-    public function sendTemplateTester($template)
-    {
-        $mailer = \Yii::$app->mailer;
-        $mailer->viewPath = $this->viewPath;
-        $mailer->getView()->theme = \Yii::$app->view->theme;
-
-        return $mailer->compose($template, [])
-            ->setTo('test@simon.com')
-            ->setFrom($this->sender)
-            ->setSubject('test')
-            ->send();
-    }
-
     /**
-     * get the view of a certain type email
-     * @param $type
-     * @return string
+     * Register all email widgets to the global twig scope
      */
-    public static function getView($type)
-    {
-        $folder = strtolower(explode('.', $type)[0]);
-        $file = explode('.', $type)[1];
-        $folder = str_replace('bookingrenter', 'bookingRenter', $folder);
-        $folder = str_replace('bookingowner', 'bookingOwner', $folder);
-        return $folder . '/' . $file;
+    public function registerWidgets(){
+        $path = \Yii::$aliases['@mail'].'/widgets/';
+        $results = scandir($path);
+
+        $globals = [];
+        $functions = [];
+        foreach ($results as $result) {
+            if ($result === '.' or $result === '..') continue;
+
+            if (is_dir($path . '/' . $result)) {
+                $globals[$result] = "mail\\widgets\\".$result."\\".ucfirst($result);
+            }
+        }
+
+        $originalConfig = Yii::$app->getComponents()['view'];
+        if(!isset($originalConfig['renderers']['twig']['functions'])){
+            $originalConfig['renderers']['twig']['functions'] = [];
+        }
+        if(!isset($originalConfig['renderers']['twig']['globals'])){
+            $originalConfig['renderers']['twig']['globals'] = [];
+        }
+        $originalConfig['renderers']['twig']['functions'] = ArrayHelper::merge($functions,
+            $originalConfig['renderers']['twig']['functions']);
+        $originalConfig['renderers']['twig']['globals'] = ArrayHelper::merge($globals,
+            $originalConfig['renderers']['twig']['globals']);
+
+        Yii::$app->setComponents([
+            'view' => $originalConfig
+        ]);
     }
 }

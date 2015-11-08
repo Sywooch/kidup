@@ -1,0 +1,20 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textBlock.begin()) }}
+<p style="text-align: center;">
+    Hej dude
+</p>
+<p style="text-align: left;">
+    Du har sendt os en forespørgsel på at gendanne dit kodeord. Hvis dette har været en fejl skal du blot se bort fra
+    denne mail.
+    Hvis du ønsker at ændre dit kodeord skal du klikke på nedenstående knap:
+</p>
+{{ void(textBlock.end()) }}
+
+{{ void(table.end()) }}
+
+{{ button.widget({
+    content: t("mail.recovery.link", "Password recovery"),
+    url: vm.recoveryUrl,
+    wide: true
+}) | raw }}

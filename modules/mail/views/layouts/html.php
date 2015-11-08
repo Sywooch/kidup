@@ -499,7 +499,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                                     style="display: block; border-style: none !important; border: 0 !important;">
                                                     <img width="100" border="0" style="display: block;"
                                                          src="<?= ImageHelper::url('kidup/logo/horizontal.png',
-                                                             ['w' => 100]) ?>"
+                                                             ['w' => 150]) ?>"
                                                          alt=""/></p>
                                             </td>
                                         </tr>
@@ -584,7 +584,7 @@ if (isset(\Yii::$app->params['tmp_email_params'])) {
                                                                 <img width="6" height="13" border="0"
                                                                      style="display: block; width: auto;"
                                                                      src="<?= ImageHelper::url('kidup/email/facebook.png',
-                                                                         ['w' => 6]) ?>"
+                                                                         ['w' => 13]) ?>"
                                                                      alt=""/></a>
                                                         </td>
                                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

@@ -9,38 +9,7 @@ use yii\helpers\Url;
 
 class BookingOwner extends Mailer
 {
-    /**
-     * Owner booking request
-     * @param \booking\models\Booking $booking
-     * @return bool
-     */
-    public function request($booking)
-    {
-        $startDate = Carbon::createFromTimestamp($booking->time_from)->toFormattedDateString();
-        $endDate = Carbon::createFromTimestamp($booking->time_to)->toFormattedDateString();
 
-        $numberOfDays = Carbon::createFromTimestamp($booking->time_from)->diffInDays(Carbon::createFromTimestamp($booking->time_to));
-        return $this->sendMessage([
-            'email' => $booking->item->owner->email,
-            'subject' => "Bookinghenvendelse for {$booking->item->name} for {$startDate} – {$endDate}",
-            'type' => self::BOOKING_OWNER_REQUEST,
-            'params' => [
-                'booking' => $booking,
-                'itemName' => $booking->item->name,
-                'profileName' => $booking->item->owner->profile->first_name,
-                'renterName' => $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name,
-                'message' => $booking->conversation->messages[0]->message, // there should only be one message
-                'payout' => round($booking->amount_payout) . ' DKK',
-                'dayPrice' => round($booking->amount_item / $numberOfDays) . ' DKK',
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-            ],
-            'urls' => [
-                'response' => Url::to('@web/booking/' . $booking->id . '/request', true),
-                'chat' => Url::to('@web/inbox/' . $booking->conversation->id, true),
-            ]
-        ]);
-    }
 
     /**
      * Owner booking has been accepted by owner

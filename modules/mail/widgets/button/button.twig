@@ -1,0 +1,18 @@
+{% if wide %}
+{{ void(outerTable.begin()) }}
+{% endif %}
+<tr>
+    <td style="font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #000000; text-align:left; line-height: 24px;"
+        class="padding-right15">
+        <table class="button">
+            <tr>
+                <td>
+                    <a href="{{ url }}" style="text-decoration: none;  width:100%; display:inline-block">{{ content }}</a>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+{% if wide %}
+    {{ void(outerTable.end()) }}
+{% endif %}

@@ -67,10 +67,6 @@ class Oauth2Controller extends Controller
 
     public function actionRefresh()
     {
-        if(\Yii::$app->request->isOptions){
-            return true;
-        }
-
         $params = \Yii::$app->request->post();
 
         /**

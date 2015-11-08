@@ -76,12 +76,7 @@ class User extends Mailer
     public function reconfirm($user)
     {
         Token::deleteAll(['user_id' => $user->id, 'type' => Token::TYPE_CONFIRMATION]);
-        $token = new Token();
-        $token->setAttributes([
-            'user_id' => $user->id,
-            'type' => Token::TYPE_CONFIRMATION,
-        ]);
-        $token->save();
+
         $url = $token->getUrl();
 
         return $this->sendMessage([

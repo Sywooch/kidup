@@ -3,15 +3,18 @@
 namespace mail;
 
 use app\helpers\Event;
-use booking\models\Booking;
-use booking\models\Payin;
-use item\models\Item;
-use mail\models\Mailer;
-use message\models\Message;
-use user\models\User;
+use \booking\models\Booking;
+use \booking\models\Payin;
+use \item\models\Item;
+use mail\mails\user\ReconfirmFactory;
+use \mail\models\Mailer;
+use mail\widgets\button\Button;
+use \message\models\Message;
+use \user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
+use yii\helpers\ArrayHelper;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -25,8 +28,10 @@ class Bootstrap implements BootstrapInterface
             Yii::setAlias('@mailAssets', Yii::getAlias('@web') . '/assets_web/modules/mail');
         }
 
+
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
+            MailSender::send(ReconfirmFactory::create($event->sender));
 
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
