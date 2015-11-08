@@ -4,6 +4,7 @@ namespace api\controllers;
 use api\models\Currency;
 use api\models\Item;
 use booking\models\Booking;
+use booking\models\BrainTree;
 use item\forms\CreateBooking;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
@@ -17,7 +18,7 @@ class BookingController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => [],
+            'guest' => ['payment-token'],
             'user' => ['index', 'create', 'costs']
         ];
     }
@@ -172,6 +173,20 @@ class BookingController extends Controller
 
         return [
             'tableData' => $booking->tableData
+        ];
+    }
+
+    /**
+     * @api {get} bookings/payment-token
+     * @apiGroup        Booking
+     * @apiName         paymentTokenBooking
+     * @apiDescription  Returns a client token to be used for braintree creditcard processing.
+     *
+     * @apiSuccess {Array}   token           The client token.
+     */
+    public function actionPaymentToken(){
+        return [
+            'token' => (new BrainTree())->getClientToken()
         ];
     }
 
