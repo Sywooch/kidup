@@ -56,7 +56,7 @@ $components = [
         'class' => 'app\extended\web\View',
         'renderers' => [
             'twig' => [
-                'class' => 'yii\twig\ViewRenderer',
+                'class' => 'app\extended\web\TwigRenderer',
                 // set cachePath to false in order to disable template caching
                 'cachePath' => '@runtime/Twig/cache',
                 // Array of twig options:
@@ -66,6 +66,17 @@ $components = [
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image'
                 ],
+                'functions' => [
+                    't' => function ($cat, $default) {
+                        return \Yii::t($cat, $default);
+                    },
+                    'image' => function ($file, $options, $htmlOptions) {
+                        return \images\components\ImageHelper::image($file, $options, $htmlOptions);
+                    },
+                    'imageUrl' => function ($file, $options) {
+                        return \images\components\ImageHelper::url($file, $options);
+                    }
+                ]
             ],
         ],
     ],
@@ -82,7 +93,6 @@ $components = [
                 ],
             ],
         ],
-
     ],
     'request' => [
         'cookieValidationKey' => $keys['cookie_validation_key'],
@@ -177,6 +187,7 @@ $components = [
                 'controller' => ['api/v1/bookings' => 'api/booking'],
                 'extraPatterns' => [
                     'costs' => 'costs',
+                    'GET payment-token' => 'payment-token',
                 ]
             ],
             [
