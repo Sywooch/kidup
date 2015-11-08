@@ -27,9 +27,17 @@ class UrlFactory
         return self::url("search");
     }
 
+    public static function seeInBrowser($id){
+        return self::url("view/".$id);
+    }
+
+    public static function changeSettings(){
+        return self::url('user/settings');
+    }
+
     public static function url($to){
         return Url::to("@web/".$to, [
             'mail_id' => 'x'
-        ]);
+        ], true);
     }
 }

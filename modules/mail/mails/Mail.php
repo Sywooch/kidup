@@ -3,6 +3,7 @@ namespace mail\mails;
 
 use mail\components\MailUrl;
 use mail\models\MailLog;
+use mail\models\UrlFactory;
 use user\models\User;
 use Yii;
 use yii\base\Object;
@@ -15,6 +16,7 @@ abstract class Mail extends Object implements MailInterface
     public $mailId;
     public $seeInBrowserUrl;
     public $changeSettingsUrl;
+    public $userName;
 
     private $template;
     private $sender;
@@ -27,9 +29,12 @@ abstract class Mail extends Object implements MailInterface
         $this->senderName = 'KidUp';
         $this->viewPath = '@app/modules/mail/views';
         $this->mailId = MailLog::getUniqueId();
+        $this->seeInBrowserUrl = UrlFactory::seeInBrowser($this->mailId);
+        $this->changeSettingsUrl = UrlFactory::changeSettings();
+        $this->userName = $this->getUserName();
     }
 
-    public function getUserName(){
+    private function getUserName(){
         $user = User::findOne(['email' => $this->emailAddress]);
         return $user->profile->getUserName();
     }
