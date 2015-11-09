@@ -26,6 +26,7 @@ class MessageController extends Controller
         unset($actions['view']);
         unset($actions['index']);
         unset($actions['update']);
+        unset($actions['create']);
         return $actions;
     }
 
@@ -46,7 +47,7 @@ class MessageController extends Controller
          */
         $c = Conversation::findOne(['id' => $params['conversation_id']]);
         $m = new Message();
-        $m->receiver_user_id = $c->otherUser->user_id;
+        $m->receiver_user_id = $c->otherUser->id;
         $m->read_by_receiver = 0;
         $m->sender_user_id = \Yii::$app->user->id;
         $m->message = $params['message'];

@@ -81,7 +81,7 @@ class Controller extends \yii\rest\ActiveController
                     ],
                     [
                         'allow' => true,
-                        'actions' => $res['user'],
+                        'actions' => array_merge($res['guest'], $res['user']),
                         'roles' => ['@']
                     ],
                 ],

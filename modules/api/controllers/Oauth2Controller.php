@@ -9,6 +9,7 @@ use user\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
 class Oauth2Controller extends Controller
@@ -56,7 +57,7 @@ class Oauth2Controller extends Controller
         }
         $token = OauthAccessToken::make($user, $client);
         $refreshToken = OauthRefreshToken::make($user, $client);
-        
+
 
         return [
             'token' => $token->access_token,
@@ -67,19 +68,16 @@ class Oauth2Controller extends Controller
 
     public function actionRefresh()
     {
-        if(\Yii::$app->request->isOptions){
-            return true;
-        }
-
-        $params = \Yii::$app->request->post();
+        $params = \Yii::$app->request->post('refresh_token');
 
         /**
          * @var OauthRefreshToken $oldRefreshToken
          */
-        $oldRefreshToken = OauthRefreshToken::findOne(['refresh_token' => $params['refresh_token']]);
+        $oldRefreshToken = OauthRefreshToken::findOne(['refresh_token' => $params]);
         if($oldRefreshToken == null){
-            throw new BadRequestHttpException("Refresh token not found.");
+            throw new NotFoundHttpException("Refresh token not found.");
         }
+
 
         $token = OauthAccessToken::make($oldRefreshToken->user, $oldRefreshToken->client);
         $refreshToken = OauthRefreshToken::make($oldRefreshToken->user, $oldRefreshToken->client);
