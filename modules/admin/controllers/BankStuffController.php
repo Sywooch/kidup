@@ -32,9 +32,9 @@ class BankStuffController extends Controller
             file_put_contents(\Yii::$aliases['@runtime'] . '/payout-export-' . time(), $enCrypted);
             $res  = Encrypter::decrypt($enCrypted, $key);
             $time = time();
-//            foreach ($payouts as $p) {
-//                $p->markAsProcessed();
-//            }
+            foreach ($payouts as $p) {
+                $p->markAsProcessed();
+            }
             echo nl2br($e);exit();
         }
 
