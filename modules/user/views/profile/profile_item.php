@@ -1,7 +1,7 @@
 <?php
-use \images\components\ImageHelper;
+use item\widgets\ItemCard;
 use yii\helpers\Url;
-use \item\widgets\ItemCard;
+
 /**
  * @var $model \item\models\Item
  *

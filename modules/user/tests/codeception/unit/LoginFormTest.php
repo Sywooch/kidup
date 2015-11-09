@@ -2,9 +2,8 @@
 
 namespace user\tests;
 
-use \user\forms\Login;
-use \user\tests\codeception\_support\FixtureHelper;
 use Codeception\Specify;
+use user\forms\Login;
 use yii\codeception\TestCase;
 
 class LoginFormTest extends TestCase

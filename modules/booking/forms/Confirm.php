@@ -2,9 +2,8 @@
 
 namespace booking\forms;
 
-use \booking\models\Booking;
-use \booking\models\BrainTree;
-use \booking\models\Payin;
+use booking\models\Booking;
+use booking\models\Payin;
 use yii\base\Model;
 
 class Confirm extends Model

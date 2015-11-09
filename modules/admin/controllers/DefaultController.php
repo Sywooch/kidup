@@ -3,9 +3,8 @@
 namespace admin\controllers;
 
 use admin\forms\Query;
-use app\commands\KidupMessageController;
+use item\models\Item;
 use user\models\base\User;
-use \item\models\Item;
 use Yii;
 
 class DefaultController extends Controller

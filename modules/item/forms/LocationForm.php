@@ -2,9 +2,9 @@
 
 namespace item\forms;
 
-use \item\models\Item;
-use \item\models\Location;
-use \user\models\Country;
+use item\models\Item;
+use item\models\Location;
+use user\models\Country;
 use Yii;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;

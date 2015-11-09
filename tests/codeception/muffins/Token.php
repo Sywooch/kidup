@@ -1,5 +1,5 @@
 <?php
-namespace app\tests\codeception\muffins;
+namespace codecept\muffins;
 
 class Token extends \mail\models\Token
 {

@@ -11,9 +11,9 @@
 
 namespace user\widgets;
 
-use \user\forms\Registration;
-use \user\models\User;
 use kartik\form\ActiveForm;
+use user\forms\Registration;
+use user\models\User;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\web\Response;

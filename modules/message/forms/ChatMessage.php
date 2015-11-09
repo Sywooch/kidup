@@ -2,7 +2,7 @@
 
 namespace message\forms;
 
-use \message\models\Message;
+use message\models\Message;
 use yii\base\Model;
 
 class ChatMessage extends Model

@@ -1,10 +1,10 @@
 <?php
 
 use Carbon\Carbon;
+use review\models\Review;
+use review\widgets\ReviewScore;
+use user\widgets\UserImage;
 use yii\helpers\Url;
-use \user\widgets\UserImage;
-use \review\widgets\ReviewScore;
-use \review\models\Review;
 
 /**
  * @var \app\extended\web\View $this

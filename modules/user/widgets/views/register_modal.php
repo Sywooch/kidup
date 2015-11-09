@@ -1,5 +1,4 @@
 <?php
-use yii\bootstrap\Html;
 use yii\widgets\ActiveForm;
 
 \yii\bootstrap\Modal::begin([

@@ -1,5 +1,5 @@
 <?php
-namespace app\tests\codeception\functional\pages;
+namespace codecept\functional\pages;
 
 use FunctionalTester;
 use pages\helpers\Pages;
@@ -8,7 +8,7 @@ use pages\helpers\Pages;
  * Functional test for the pages module.
  *
  * Class PagesCest
- * @package app\tests\codeception\functional\pages
+ * @package codecept\functional\pages
  */
 class PagesCest
 {

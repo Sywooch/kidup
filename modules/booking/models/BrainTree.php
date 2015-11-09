@@ -10,7 +10,7 @@ class BrainTree extends Model
 {
     public $payin;
 
-    public function __construct(Payin $payin)
+    public function __construct(Payin $payin = null)
     {
         $this->payin = $payin;
 

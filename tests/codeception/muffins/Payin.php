@@ -1,5 +1,5 @@
 <?php
-namespace app\tests\codeception\muffins;
+namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 

@@ -24,7 +24,7 @@ class OauthClient extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%oauth_client}}';
+        return 'oauth_client';
     }
 
     /**
@@ -55,6 +55,10 @@ class OauthClient extends \yii\db\ActiveRecord
             'scope' => 'Scope',
             'user_id' => 'User ID',
         ];
+    }
+
+    public function getId(){
+        return $this->client_id;
     }
 
     /**

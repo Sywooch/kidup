@@ -2,8 +2,8 @@
 
 namespace mail\models;
 
-use \message\models\Message;
 use Carbon\Carbon;
+use message\models\Message;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;

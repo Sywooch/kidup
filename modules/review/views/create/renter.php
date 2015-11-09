@@ -1,6 +1,6 @@
 <?php
-use \images\components\ImageHelper;
 use Carbon\Carbon;
+use images\components\ImageHelper;
 use kartik\rating\StarRating;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;

@@ -2,12 +2,11 @@
 
 namespace admin\controllers;
 
-use Yii;
-use item\models\Category;
 use admin\models\search\CategorySearch;
-use admin\controllers\Controller;
-use yii\web\NotFoundHttpException;
+use item\models\Category;
+use Yii;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * CategoryController implements the CRUD actions for Category model.

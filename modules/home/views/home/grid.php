@@ -1,9 +1,10 @@
 <?php
 
-use \images\components\ImageHelper;
-use \item\widgets\ItemCard;
-use yii\helpers\Url;
 use app\helpers\ViewHelper;
+use images\components\ImageHelper;
+use item\widgets\ItemCard;
+use yii\helpers\Url;
+
 /**
  * @var \app\extended\web\View $this
  * @var \item\models\Category[] $categories

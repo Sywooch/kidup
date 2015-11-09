@@ -1,5 +1,5 @@
 <?php
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
 use yii\helpers\Html;
 
 /* @var $this \app\extended\web\View */

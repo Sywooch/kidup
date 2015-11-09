@@ -11,7 +11,7 @@
 
 namespace user\forms;
 
-use \user\models\Profile;
+use user\models\Profile;
 use yii\base\Model;
 
 /**

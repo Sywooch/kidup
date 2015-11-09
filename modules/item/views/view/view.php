@@ -1,13 +1,13 @@
 <?php
 
-use \item\widgets\ItemCard;
 use app\widgets\Map;
-use yii\helpers\Url;
-use \item\widgets\Gallery;
-use \review\widgets\ReviewScore;
-use \user\widgets\UserImage;
-use \yii\widgets\ListView;
 use Carbon\Carbon;
+use item\widgets\Gallery;
+use item\widgets\ItemCard;
+use review\widgets\ReviewScore;
+use user\widgets\UserImage;
+use yii\helpers\Url;
+use yii\widgets\ListView;
 
 /**
  * @var yii\web\View $this

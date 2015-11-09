@@ -1,7 +1,7 @@
 <?php
 namespace mail\mails;
 
-use \mail\models\Mailer;
+use mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 

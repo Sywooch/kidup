@@ -1,7 +1,7 @@
 <?php
 
 use app\helpers\ViewHelper;
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;

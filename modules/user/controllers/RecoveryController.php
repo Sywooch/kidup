@@ -12,9 +12,9 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use \mail\models\Token;
-use \user\Finder;
-use \user\forms\Recovery;
+use mail\models\Token;
+use user\Finder;
+use user\forms\Recovery;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;

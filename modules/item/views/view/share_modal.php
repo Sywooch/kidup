@@ -1,6 +1,5 @@
 <?php
 use yii\bootstrap\Modal;
-use \kartik\social\FacebookPlugin;
 
 /**
  * @var \app\extended\web\View $this

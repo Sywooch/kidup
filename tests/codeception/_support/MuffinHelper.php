@@ -1,23 +1,22 @@
 <?php
 
-namespace app\tests\codeception\_support;
+namespace codecept\_support;
 
-use app\tests\codeception\muffins\Booking;
-use app\tests\codeception\muffins\Conversation;
-use app\tests\codeception\muffins\Currency;
-use app\tests\codeception\muffins\Invoice;
-use app\tests\codeception\muffins\Item;
-use app\tests\codeception\muffins\Location;
-use app\tests\codeception\muffins\Media;
-use app\tests\codeception\muffins\Message;
-use app\tests\codeception\muffins\Payin;
-use app\tests\codeception\muffins\Payout;
-use app\tests\codeception\muffins\Profile;
-use app\tests\codeception\muffins\Token;
-use app\tests\codeception\muffins\User;
-use Codeception\Util\Debug;
-use League\FactoryMuffin\Exceptions\ModelException;
-use League\FactoryMuffin\Exceptions\ModelNotFoundException;
+use codecept\muffins\Booking;
+use codecept\muffins\Conversation;
+use codecept\muffins\Currency;
+use codecept\muffins\Invoice;
+use codecept\muffins\Item;
+use codecept\muffins\Location;
+use codecept\muffins\Media;
+use codecept\muffins\Message;
+use codecept\muffins\OauthAccessToken;
+use codecept\muffins\OauthClient;
+use codecept\muffins\Payin;
+use codecept\muffins\Payout;
+use codecept\muffins\Profile;
+use codecept\muffins\Token;
+use codecept\muffins\User;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 
@@ -50,7 +49,9 @@ class MuffinHelper extends Module
             Location::class,
             Conversation::class,
             Message::class,
-            Media::class
+            Media::class,
+            OauthAccessToken::class,
+            OauthClient::class,
         ];
     }
 

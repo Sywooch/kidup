@@ -2,6 +2,7 @@
 namespace admin\assets;
 use yii\base\Exception;
 use yii\web\AssetBundle;
+
 /**
  * AdminLte AssetBundle
  * @since 0.1

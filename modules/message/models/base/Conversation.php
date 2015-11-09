@@ -2,9 +2,9 @@
 
 namespace message\models\base;
 
+use booking\models\Booking;
 use mail\models\MailAccount;
 use user\models\User;
-use booking\models\Booking;
 use Yii;
 
 /**

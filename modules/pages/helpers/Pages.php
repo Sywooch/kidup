@@ -2,10 +2,10 @@
 
 namespace pages\helpers;
 
+use app\components\Cache;
 use GuzzleHttp\Client;
 use yii\base\Component;
 use yii\helpers\Url;
-use app\components\Cache;
 
 class Pages extends Component
 {

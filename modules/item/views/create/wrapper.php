@@ -1,9 +1,8 @@
 <?php
 
-use \images\components\ImageHelper;
-use \kartik\sidenav\SideNav;
 use kartik\icons\Icon;
-use \yii\helpers\Html;
+use kartik\sidenav\SideNav;
+use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this

@@ -1,8 +1,7 @@
 <?php
 namespace user\models;
 
-use \images\components\ImageManager;
-use yii\authclient\clients\Facebook;
+use images\components\ImageManager;
 
 /**
  *

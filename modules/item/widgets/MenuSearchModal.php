@@ -3,7 +3,7 @@
 
 namespace item\widgets;
 
-use \search\forms\Filter;
+use search\forms\Filter;
 use yii\bootstrap\Widget;
 
 class MenuSearchModal extends Widget

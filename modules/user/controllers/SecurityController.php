@@ -13,10 +13,10 @@ namespace user\controllers;
 
 use app\extended\web\Controller;
 use app\jobs\SlackJob;
-use \user\Finder;
-use \user\forms\Login;
-use \user\models\Account;
-use \user\models\User;
+use user\Finder;
+use user\forms\Login;
+use user\models\Account;
+use user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;

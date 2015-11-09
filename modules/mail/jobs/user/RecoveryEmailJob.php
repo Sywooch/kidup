@@ -3,10 +3,9 @@
 namespace mail\jobs\user;
 
 use app\extended\job\Job;
-use mail\models\base\MailAccount;
-use \mail\models\Mailer;
-use \mail\models\Token;
-use \user\models\User;
+use mail\models\Mailer;
+use mail\models\Token;
+use user\models\User;
 use yii\helpers\Url;
 
 class RecoveryEmailJob extends Job{

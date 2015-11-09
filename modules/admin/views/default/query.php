@@ -1,7 +1,7 @@
 <?php
-use yii\helpers\Html;
 use kartik\form\ActiveForm;
-use \yii2mod\c3\chart\Chart;
+use yii\helpers\Html;
+use yii2mod\c3\chart\Chart;
 
 /**
  * @var \admin\forms\Query $model

@@ -1,8 +1,8 @@
 <?php
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 \item\assets\MenuSearchAsset::register($this);
 

@@ -1,9 +1,9 @@
 <?php
 
-use \item\widgets\ItemCard;
 use Carbon\Carbon;
-use \user\widgets\UserImage;
-use \images\components\ImageHelper;
+use images\components\ImageHelper;
+use item\widgets\ItemCard;
+use user\widgets\UserImage;
 
 /**
  * @var \yii\web\View $this

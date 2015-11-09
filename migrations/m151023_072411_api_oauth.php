@@ -10,12 +10,12 @@ class m151023_072411_api_oauth extends Migration
         return $this->db->driverName === 'mysql' ? $yes : $no;
     }
 
-    public function primaryKey($columns)
+    public function primaryKeyCustom($columns)
     {
         return 'PRIMARY KEY (' . $this->db->getQueryBuilder()->buildColumns($columns) . ')';
     }
 
-    public function foreignKey($columns, $refTable, $refColumns, $onDelete = null, $onUpdate = null)
+    public function foreignKeyCustom($columns, $refTable, $refColumns, $onDelete = null, $onUpdate = null)
     {
         $builder = $this->db->getQueryBuilder();
         $sql = ' FOREIGN KEY (' . $builder->buildColumns($columns) . ')'
@@ -51,7 +51,7 @@ class m151023_072411_api_oauth extends Migration
                 'grant_types' => Schema::TYPE_STRING . '(100) NOT NULL',
                 'scope' => Schema::TYPE_STRING . '(2000) DEFAULT NULL',
                 'user_id' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
-                $this->primaryKey('client_id'),
+                $this->primaryKeyCustom('client_id'),
             ], $tableOptions);
             $this->createTable('{{%oauth_access_token}}', [
                 'access_token' => Schema::TYPE_STRING . '(40) NOT NULL',
@@ -59,8 +59,8 @@ class m151023_072411_api_oauth extends Migration
                 'user_id' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
                 'expires' => Schema::TYPE_INTEGER . " NOT NULL",
                 'scope' => Schema::TYPE_STRING . '(2000) DEFAULT NULL',
-                $this->primaryKey('access_token'),
-                $this->foreignKey('client_id', '{{%oauth_client}}', 'client_id', 'CASCADE', 'CASCADE'),
+                $this->primaryKeyCustom('access_token'),
+                $this->foreignKeyCustom('client_id', '{{%oauth_client}}', 'client_id', 'CASCADE', 'CASCADE'),
             ], $tableOptions);
             $this->createTable('{{%oauth_refresh_token}}', [
                 'refresh_token' => Schema::TYPE_STRING . '(40) NOT NULL',
@@ -68,8 +68,8 @@ class m151023_072411_api_oauth extends Migration
                 'user_id' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
                 'expires' => Schema::TYPE_INTEGER . " NOT NULL",
                 'scope' => Schema::TYPE_STRING . '(2000) DEFAULT NULL',
-                $this->primaryKey('refresh_token'),
-                $this->foreignKey('client_id', '{{%oauth_client}}', 'client_id', 'CASCADE', 'CASCADE'),
+                $this->primaryKeyCustom('refresh_token'),
+                $this->foreignKeyCustom('client_id', '{{%oauth_client}}', 'client_id', 'CASCADE', 'CASCADE'),
             ], $tableOptions);
             // insert client data
             $this->batchInsert('{{%oauth_client}}', ['client_id', 'client_secret', 'redirect_uri', 'grant_types'], [

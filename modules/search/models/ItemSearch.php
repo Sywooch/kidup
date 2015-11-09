@@ -1,8 +1,8 @@
 <?php
 namespace search\models;
 
-use \item\models\Category;
 use item\models\base\Item;
+use item\models\Category;
 use user\models\base\Language;
 use yii\web\BadRequestHttpException;
 

@@ -13,9 +13,9 @@ namespace user\forms;
 
 use app\helpers\Event;
 use mail\models\Mailer;
-use \mail\models\Token;
-use \user\Finder;
-use \user\models\User;
+use mail\models\Token;
+use user\Finder;
+use user\models\User;
 use yii\base\Model;
 
 /**

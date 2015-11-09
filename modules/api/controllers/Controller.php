@@ -11,6 +11,8 @@ use yii\web\ServerErrorHttpException;
 class Controller extends \yii\rest\ActiveController
 {
 
+    public $relationalQuery;
+
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -20,6 +22,8 @@ class Controller extends \yii\rest\ActiveController
     {
         return [];
     }
+
+
 
     public function init()
     {
@@ -84,4 +88,5 @@ class Controller extends \yii\rest\ActiveController
             ],
         ]);
     }
+
 }

@@ -1,9 +1,9 @@
 <?php
 namespace mail\mails;
 
-use \booking\models\Booking;
-use \mail\models\Mailer;
+use booking\models\Booking;
 use Carbon\Carbon;
+use mail\models\Mailer;
 use Yii;
 use yii\helpers\Url;
 

@@ -1,10 +1,10 @@
 <?php
-namespace app\tests\codeception\functional\item;
+namespace codecept\functional\item;
 
 use app\modules\booking\models\Booking;
 use app\modules\review\models\Review;
-use app\modules\user\tests\codeception\_support\FixtureHelper;
-use app\tests\codeception\_support\UserHelper;
+use app\modules\user\codecept\codeception\_support\FixtureHelper;
+use codecept\_support\UserHelper;
 use functionalTester;
 use Yii;
 
@@ -12,7 +12,7 @@ use Yii;
  * functional test for the item module.
  *
  * Class ItemBookingCest
- * @package app\tests\codeception\functional\item
+ * @package codecept\functional\item
  */
 class ReviewCest
 {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use \user\widgets\Connect;
+use user\widgets\Connect;
 use yii\helpers\Html;
 
 /**

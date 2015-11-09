@@ -10,10 +10,10 @@
  */
 
 use app\helpers\SelectData;
-use \user\models\Setting;
 use kartik\checkbox\CheckboxX;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use user\models\Setting;
 
 /**
  * @var $this  yii\web\View

@@ -1,8 +1,6 @@
 <?php
 
-use \kartik\sidenav\SideNav;
-use kartik\icons\Icon;
-use \yii\helpers\Html;
+use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this

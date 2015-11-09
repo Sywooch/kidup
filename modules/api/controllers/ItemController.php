@@ -2,8 +2,13 @@
 namespace api\controllers;
 
 use api\models\Item;
+use item\controllers\ViewController;
+use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
+use yii\web\HttpException;
+use yii\web\NotAcceptableHttpException;
+use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
@@ -14,7 +19,7 @@ class ItemController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => ['index', 'view', 'search'],
+            'guest' => ['index', 'view', 'search', 'recommended', 'related'],
             'user' => []
         ];
     }
@@ -25,92 +30,140 @@ class ItemController extends Controller
         unset($actions['create']);
         unset($actions['index']);
         unset($actions['update']);
+        unset($actions['view']);
         return $actions;
     }
 
+    // default action, does not need documentation
     public function actionIndex(){
         return new ActiveDataProvider([
             'query' => Item::find()->where(['is_available' => 1])
         ]);
     }
 
+    // default action, does not need documentation
+    public function actionView($id) {
+        $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
+        }
+        return $item;
+    }
+
     /**
-     * Search for items.
+     * @api {get} items/related
+     * @apiName         relatedItem
+     * @apiGroup        Item
+     * @apiDescription  Find items which are related to a given item.
      *
-     * @param page          page to start on (required, start with page=0)
+     * @apiParam {Number}       item_id           The item_id of the item to find related items for.
+     * @apiSuccess {Object[]}   related_items     A list of related items.
+     */
+    public function actionRelated() {
+        $params = \Yii::$app->request->get();
+        if (!array_key_exists('item_id', $params)) {
+            throw new NotAcceptableHttpException('No item_id is given.');
+        }
+        $itemId = $params['item_id'];
+        $item = Item::find()->where(['is_available' => 1, 'id' => $itemId])->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
+        }
+        $related_items = $item->getRecommendedItems($item, 2);
+        return [
+            'related_items' => $related_items
+        ];
+    }
+
+    /**
+     * @api {get}       items/recommended
+     * @apiName         recommendedItem
+     * @apiGroup        Item
+     * @apiDescription  Get recommended items.
      *
-     * The following parameters are optional, but whenever a search feature is used, certain parameters
-     * need to be set. Therefore, the documentation is grouped per feature to see what parameters
-     * are related.
+     * @apiSuccess {Object[]}   recommended_items     A list of recommended items.
+     */
+    public function actionRecommended() {
+        return Item::getRecommended(4);
+    }
+
+    /**
+     * @api {post} items/search
+     * @apiName         searchItem
+     * @apiGroup        Item
+     * @apiDescription  Search for items.
      *
-     * Pricing: (priceUnit required, one of priceMin or priceMax required)
-     * @param priceUnit     price_day, price_week, price_month
-     * @param priceMin      minimum price
-     * @param priceMax      maximum price
+     * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
-     * Named location: (location required)
-     * @param location      the name of the location (longitude and latitude will be automatically retrieved)
+     * @apiParam {Object[]}     price                       The specification of the price filter (optional).
+     * @apiParam {String}       price.price_unit            The price unit, which is one of the following:
+     *                                                          "price_day"    Price per day
+     *                                                          "price_week"   Price per week
+     *                                                          "price_month"  Price per month
+     * @apiParam {Number}       price.price_min             The minimum price to search for.
+     * @apiParam {Number}       price.price_max             The maximum price to search for.
      *
-     * Location: (longitude and latitude required)
-     * @param longitude     the longitude of the location
-     * @param latitude      the latitude of the location
+     * @apiParam {Object[]}     location_by_name            The specification of the location by name filter (optional).
+     * @apiParam {String}       location_by_name.location   The name of the location (e.g. a city or a place).
      *
-     * Categories: (categories required)
-     * @param categories    an array of ids of categories
+     * @apiParam {Object[]}     location_by_geo             The specification of the geo-location filter (optional).
+     * @apiParam {Number}       location_by_geo.longitude   The longitude of the location.
+     * @apiParam {Number}       location_by_geo.latitude    The latitude of the location.
      *
-     * @return array
-     *              usedFilter      all filter that have been applied on the search
-     *              numPages        the total number of pages
-     *              numItems        the total number of items
-     *              results         a JSON representation of all the retrieved items
+     * @apiParam {Number[]}     category                    A list of all categories (specified by their category_id) that are enabled (optional).
+     *
+     * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
+     * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
+     * @apiParam {Number[]}     feature[].value[]           A list of feature_value_id which are used.
+     *
+     * @apiSuccess {Number}     num_pages                   The total number of pages.
+     * @apiSuccess {Number}     num_items                   The total number of items.
+     * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
     public function actionSearch() {
-        // fetch the parameters
-        $params = \Yii::$app->request->get();
+        // load the page number
+        $page = \Yii::$app->request->post('page', 0);
+
+        // load the other parameters
+        $params = \Yii::$app->request->post();
 
         // set some read-only parameters
         $pageSize = 12;
-
-        // load the parameters
-        $page = $params['page']; // page (starting from 0)
-
-        // a list of all filters used (based on the parameters)
-        $usedFilters = [];
 
         $model = new Filter();
         $model->page = $page;
         $model->pageSize = $pageSize;
 
         // load the pricing
-        if (isset($params['priceUnit'])) {
-            $usedFilters[] = 'priceUnit';
-            $model->priceUnit = $params['priceUnit'];
-            if (isset($params['priceMin'])) {
-                $usedFilters[] = 'priceMin';
-                $model->priceMin = $params['priceMin'];
+        if (isset($params['price_unit'])) {
+            $model->priceUnit = $params['price_unit'];
+            if (isset($params['price_min'])) {
+                $model->priceMin = $params['price_min'];
             }
-            if (isset($params['priceMax'])) {
-                $usedFilters[] = 'priceMax';
-                $model->priceMax = $params['priceMax'];
+            if (isset($params['price_max'])) {
+                $model->priceMax = $params['price_max'];
             }
         }
 
         // load location
-        if (isset($params['location'])) {
-            $usedFilters[] = 'namedLocation';
-            $model->location = $params['location'];
+        if (isset($params['location_by_name'])) {
+            if (isset($params['location_by_name']['location'])) {
+                $model->location = $params['location_by_name']['location'];
+            }
         }
 
         // load location based on longitude and latitude
-        if (isset($params['longitude']) && isset($params['latitude'])) {
-            $usedFilters[] = 'location';
-            $model->longitude = $params['longitude'];
-            $model->latitude = $params['latitude'];
+        if (isset($params['location_by_geo'])) {
+            $locationByGeo = $params['location_by_geo'];
+            if (isset($locationByGeo['longitude']) && isset($locationByGeo['latitude'])) {
+                $model->longitude = $locationByGeo['longitude'];
+                $model->latitude = $locationByGeo['latitude'];
+            }
         }
 
         // load the categories
-        if (isset($params['categories'])) {
-            $model->categories = $params['categories'];
+        if (isset($params['category'])) {
+            $model->categories = $params['category'];
         }
 
         // now get the query
@@ -118,11 +171,16 @@ class ItemController extends Controller
 
         // and give back the results
         return [
-            'usedFilters' => $usedFilters,
-            'numPages' => ceil($model->estimatedResultCount / $pageSize),
-            'numItems' => $model->estimatedResultCount,
+            'num_pages' => ceil($model->estimatedResultCount / $pageSize),
+            'num_items' => $model->estimatedResultCount,
             'results' => $query->all()
         ];
+    }
+
+    public function actionReview($id){
+        return new ActiveDataProvider([
+            'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
+        ]);
     }
 
 }

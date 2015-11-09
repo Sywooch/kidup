@@ -4,10 +4,11 @@
  *
  */
 use Carbon\Carbon;
+use review\models\Review;
+use review\widgets\ReviewScore;
+use user\widgets\UserImage;
 use yii\helpers\Url;
-use \user\widgets\UserImage;
-use \review\widgets\ReviewScore;
-use \review\models\Review;
+
 $this->assetPackage = \app\assets\Package::USER;
 ?>
 <div class="card card-minimal">

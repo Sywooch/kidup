@@ -2,8 +2,6 @@
 
 namespace booking\models\base;
 
-use booking\models\base\Payin;
-use booking\models\base\Payout;
 use Yii;
 
 /**
