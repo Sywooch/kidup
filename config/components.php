@@ -203,7 +203,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
-                    '<id>/reviews' => 'review'
+                    '<id>/reviews' => 'reviews'
                 ]
             ],
             [
