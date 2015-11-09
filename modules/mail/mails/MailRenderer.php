@@ -2,22 +2,22 @@
 namespace mail\mails;
 
 use mail\components\MailUrl;
+use mail\models\base\MailTemplate;
 use mail\models\Mailer;
 use mail\models\MailLog;
 use user\models\User;
 use Yii;
 use yii\helpers\Json;
 
-class MailSender
+class MailRenderer
 {
     private $mail;
 
     public function __construct(Mail $mail){
         $this->mail = $mail;
-        $this->send();
     }
 
-    private function send()
+    public function render()
     {
         $mailer = \Yii::$app->mailer;
         $mailer->viewPath = $this->mail->getViewPath();
@@ -41,14 +41,24 @@ class MailSender
 //        $view = self::getView($data['type']);
 //        \Yii::$app->params['tmp_email_params'] = $params;
         (new Mailer())->registerWidgets();
-        $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath().'/'.$this->mail->getTemplatePath(),['vm' => $viewModel]);
+        if($this->mail->getTemplateId()){
+            // this is hacky, save tmp to the file system for yii to be able to render it
+            $fileName = Yii::$aliases['@runtime'].'/tmp-email-'.\Yii::$app->security->generateRandomString().'.twig';
+            $template = MailTemplate::findOne($this->mail->getTemplateId());
+            file_put_contents($fileName, $template->template);
+            $renderedTemplate = \Yii::$app->view->renderFile($fileName);
+            unlink($fileName);
+        }else{
+            $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath().'/'.$this->mail->getTemplatePath(),['vm' => $viewModel]);
+        }
         $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath().'/layouts/html.twig',['content' => $renderedTemplate]);
-        return $mailer->compose()
-            ->setTo($this->mail->emailAddress)
-            ->setReplyTo([$this->mail->getSender() => $this->mail->getSenderName()])
-            ->setFrom(['info@kidup.dk' => $this->mail->getSenderName()])
-            ->setSubject($this->mail->subject)
-            ->setHtmlBody($renderedLayout)
-            ->send();
+        return $renderedLayout;
+//        return $mailer->compose()
+//            ->setTo($this->mail->emailAddress)
+//            ->setReplyTo([$this->mail->getSender() => $this->mail->getSenderName()])
+//            ->setFrom(['info@kidup.dk' => $this->mail->getSenderName()])
+//            ->setSubject($this->mail->subject)
+//            ->setHtmlBody($renderedLayout)
+//            ->send();
     }
 }

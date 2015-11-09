@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "edcb59c9588cba7a1193223de4dd96b8",
-    "content-hash": "fa57b5c5f8dccbf24ebb8388737ebcee",
+    "hash": "c5e7e32fd4fe743256b81eaad13e0c29",
+    "content-hash": "8ab74a0afcfda807c005951c16320d13",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -319,6 +319,22 @@
                 "sdk"
             ],
             "time": "2015-07-28 22:59:37"
+        },
+        {
+            "name": "bower-asset/ace-builds",
+            "version": "v1.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajaxorg/ace-builds.git",
+                "reference": "e3ccd2c654cf45ee41ffb09d0e7fa5b40cf91a8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ajaxorg/ace-builds/zipball/e3ccd2c654cf45ee41ffb09d0e7fa5b40cf91a8f",
+                "reference": "e3ccd2c654cf45ee41ffb09d0e7fa5b40cf91a8f",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/angular",
@@ -1987,7 +2003,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/e6c9cd03d6b2a870e74da03332feeb97d477fc87",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/2d8de6577b86c8b3bf49b6578d659ba9ee21fcc1",
                 "reference": "e6c9cd03d6b2a870e74da03332feeb97d477fc87",
                 "shasum": ""
             },
@@ -3118,7 +3134,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/4225026470784805e4750a4dc1a29cf720a4691c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/2ad71f7a8f4fdd03b999c4f50257f42b2c1b74fe",
                 "reference": "6fff3dba1fbe706234e28ded9365b23d9c52c312",
                 "shasum": ""
             },
@@ -4002,7 +4018,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/714843e7e8240c8bbfc3be5b2d7641afff9b961f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/7e4ce27d563cf251a26afc0017e726d5836e4d49",
                 "reference": "714843e7e8240c8bbfc3be5b2d7641afff9b961f",
                 "shasum": ""
             },
@@ -4436,7 +4452,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/74711084ac7fdcc9ec13b802d7af030617f3b168",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/9bab6a54f490002809ed3c621e26955b9672d5de",
                 "reference": "74711084ac7fdcc9ec13b802d7af030617f3b168",
                 "shasum": ""
             },
@@ -4869,6 +4885,48 @@
             "time": "2015-07-04 07:35:09"
         },
         {
+            "name": "trntv/yii2-aceeditor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/trntv/yii2-aceeditor.git",
+                "reference": "e7feee2e04049248183f6dde89b40067b891bddb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/trntv/yii2-aceeditor/zipball/e7feee2e04049248183f6dde89b40067b891bddb",
+                "reference": "e7feee2e04049248183f6dde89b40067b891bddb",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/ace-builds": "~1.1.8",
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "trntv\\aceeditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Eugine Terentev",
+                    "email": "eugine@terentev.net"
+                }
+            ],
+            "description": "Yii2 ajax.org Ace Editor widget",
+            "keywords": [
+                "aceeditor",
+                "code editor",
+                "yii"
+            ],
+            "time": "2015-04-26 18:58:15"
+        },
+        {
             "name": "twig/twig",
             "version": "1.x-dev",
             "source": {
@@ -4878,7 +4936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/fd84403ac725fe1a053a0a109e26ecdb9928c912",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b7c124bae00ab0a019a084c6b99f1df023bcb996",
                 "reference": "53aa70a3f43cc0094cf5a72b22f3d63a87713eb5",
                 "shasum": ""
             },
@@ -5778,7 +5836,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/65cc8a9790b0808b86e28a3327621d9314048852",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/0cec970f4d2150b962f4066ce37956caf988b525",
                 "reference": "35ed9dd3e414dd4044fa83ad692ad3b9c211bdd7",
                 "shasum": ""
             },
@@ -6468,7 +6526,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/factory-muffin/zipball/2eb5d75e2c59c4dbc28d925d4633f2fcec37f1f2",
+                "url": "https://api.github.com/repos/thephpleague/factory-muffin/zipball/6e96a0de7ac280cc624f76fdc98c49c4c390a57e",
                 "reference": "2eb5d75e2c59c4dbc28d925d4633f2fcec37f1f2",
                 "shasum": ""
             },
@@ -6530,7 +6588,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/factory-muffin-faker/zipball/c33d27c12c7de3149382d98290aeb0fc6d56dd46",
+                "url": "https://api.github.com/repos/thephpleague/factory-muffin-faker/zipball/85ceee12297816a76b722ff0ea20ab28632bb96a",
                 "reference": "c33d27c12c7de3149382d98290aeb0fc6d56dd46",
                 "shasum": ""
             },
@@ -7138,7 +7196,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/fca59a36a23dd2d888c5059f0370d571c038411e",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/32e1a102834903510c18e13e33a4fdd36cead707",
                 "reference": "182c9d3b374fcfb48a9a110dd531917ffaf9e15b",
                 "shasum": ""
             },
@@ -7968,7 +8026,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/cb8f989f3580e9749244d86dfac156cd0ef6ca76",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/5ff00ea2999343d42398fcb793bbfc64c92235ff",
                 "reference": "ff7f886a33f5b7a26a94d62f6e14bb9cf0e3bf5d",
                 "shasum": ""
             },

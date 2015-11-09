@@ -22,6 +22,7 @@ abstract class Mail extends Object implements MailInterface
     private $sender;
     private $senderName;
     private $viewPath;
+    public $templateId;
 
     public function __construct($config = []){
         parent::__construct($config);
@@ -31,7 +32,6 @@ abstract class Mail extends Object implements MailInterface
         $this->mailId = MailLog::getUniqueId();
         $this->seeInBrowserUrl = UrlFactory::seeInBrowser($this->mailId);
         $this->changeSettingsUrl = UrlFactory::changeSettings();
-        $this->userName = $this->getUserName();
     }
 
     private function getUserName(){
@@ -59,5 +59,12 @@ abstract class Mail extends Object implements MailInterface
 
     public function getViewPath(){
         return $this->viewPath;
+    }
+
+    public function getTemplateId(){
+        if(isset($this->templateId)){
+            return $this->templateId;
+        }
+        return false;
     }
 }

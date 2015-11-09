@@ -6,7 +6,7 @@ use mail\widgets\BaseWidget;
 class Table extends BaseWidget
 {
 
-    public $bgColor = '#EEEEEE';
+    public $bgColor = '#F5F5F5';
 
     public function init()
     {

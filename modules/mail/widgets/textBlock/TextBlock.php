@@ -1,13 +1,10 @@
 <?php
-namespace mail\widgets\table;
+namespace mail\widgets\textBlock;
 
 use mail\widgets\BaseWidget;
 
-class Table extends BaseWidget
+class TextBlock extends BaseWidget
 {
-
-    public $bgColor = '#EEEEEE';
-
     public function init()
     {
         parent::init();
@@ -19,7 +16,6 @@ class Table extends BaseWidget
         $content = ob_get_clean();
         return $this->renderTwig([
             'content' => $content,
-            'bgColor' => $this->bgColor,
         ]);
     }
 
