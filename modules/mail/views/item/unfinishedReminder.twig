@@ -1,0 +1,25 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textBlock.begin()) }}
+<p style="text-align: center;">
+    Hej {{ vm.userName }}
+</p>
+<p style="text-align: left;">
+    Du er kun få trin fra at være færdig med din opslagsside! Når du
+    færdiggør det og offentliggør det, kan du udleje dit børneudstyr og
+    tjene ekstra penge.
+</p>
+{{ space.widget() }}
+<p style="text-align: left;">
+    Vi hjælper dig med at nå dine mål med support, udlejningstips og
+    gode råde. Du kan også have ro i sindet: alle dækkede bookinger på
+    KidUp er beskyttet af vores forældregaranti på 25.000 DKK.
+</p>
+{{ space.widget() }}
+<p style="text-align: left;">
+    Gør dig klar til at udleje til andre forældre ved at
+    <a href="{{ vm.itemUrl }}">gøre din opslagsside færdig.</a>
+</p>
+{{ void(textBlock.end()) }}
+
+{{ void(table.end()) }}

@@ -8,4 +8,8 @@ use mail\mails\Mail;
  */
 class Request extends BaseReview
 {
+    /**
+     * @var string where review can be made
+     */
+    public $reviewUrl;
 }

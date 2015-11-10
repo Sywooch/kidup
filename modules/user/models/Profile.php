@@ -73,6 +73,10 @@ class Profile extends base\Profile
         return $this->phone_country . ' ' . $this->phone_number;
     }
 
+    public function getFullName(){
+        return $this->first_name.' '.$this->last_name;
+    }
+
     public function isValidPhoneNumber()
     {
         if (empty($this->phone_number)) {

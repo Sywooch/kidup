@@ -6,11 +6,10 @@ use mail\mails\Mail;
 /**
  * Base class for the review emails
  */
-class BaseReview extends Mail
+class Publish extends BaseReview
 {
     /**
-     * @var string url to the recovery
+     * @var string Url of own profile
      */
-    public $otherName;
-    public $profileName;
+    public $profileUrl;
 }

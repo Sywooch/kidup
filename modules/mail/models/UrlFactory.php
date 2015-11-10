@@ -11,7 +11,9 @@
 
 namespace mail\models;
 
+use booking\models\Booking;
 use Carbon\Carbon;
+use item\models\Item;
 use user\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -33,6 +35,14 @@ class UrlFactory
 
     public static function changeSettings(){
         return self::url('user/settings');
+    }
+
+    public static function review(Booking $booking){
+        return self::url('review/create/'.$booking->id);
+    }
+
+    public static function itemCompletion(Item $item){
+        return self::url("item/edit-basics?id=".$item->id);
     }
 
     public static function url($to){
