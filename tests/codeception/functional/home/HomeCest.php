@@ -18,7 +18,7 @@ class HomeCest
     {
         $I->wantTo('ensure that I can see the homepage');
         $I->amOnPage('/home');
-        $I->canSee('KidUp is your online');
+        $I->canSee('Share a');
         $I->canSeeElement('input#search-home-query');
         $I->canSee('Baby Necessities');
         $I->canSee('Register');
