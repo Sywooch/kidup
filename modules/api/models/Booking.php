@@ -20,6 +20,6 @@ class Booking extends \booking\models\Booking
 
     public function extraFields()
     {
-        return [];
+        return ['item'];
     }
 }

@@ -22,7 +22,7 @@ class Message extends \message\models\Message
             }
         };
 
-        $field['is_from_me'] = function($model){
+        $fields['is_from_me'] = function($model){
             /**
              * @var Message $model
              */
