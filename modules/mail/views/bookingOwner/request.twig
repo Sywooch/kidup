@@ -1,0 +1,33 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textBlock.begin()) }}
+    {{ void(paragraph.begin({align: 'center'})) }}
+        Hej {{ vm.userName }}
+    {{ void(paragraph.end()) }}
+    {{ vm.renterName }} har sendt dig en henvendelse om {{ vm.itemName }}.
+    Svare, forhåndsgodkend eller afvis inden <span
+            style="font-weight: 600">{{ timestampToDate(vm.startDate) }}</span>
+    den <span style="font-weight: 600">{{ timestampToDate(vm.endDate) }}</span>. Baseret
+    på din pris på <span
+            style="font-weight: 600">{{ vm.dayPrice }}</span> pr.
+    Døgn samt de tilhørende gebyrer er din potentielle udbetaling for
+    denne reservation <span
+            style="font-weight: 600">{{ vm.payout }}</span>.
+
+    <br /><br />
+
+    <i>{{ vm.message }}</i>
+
+    {{ button.widget({
+        content: "Svar",
+        url: vm.chatUrl,
+        wide: false
+    }) | raw }}
+{{ void(textBlock.end()) }}
+{{ void(table.end()) }}
+
+{{ button.widget({
+    content: "Forhåndsgodkend / Afvis",
+    url: vm.responseUrl,
+    wide: true
+}) | raw }}

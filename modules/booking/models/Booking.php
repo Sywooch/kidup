@@ -138,6 +138,27 @@ class Booking extends base\Booking
     }
 
     /**
+     * Get the number of days of this booking.
+     *
+     * @return int The number of days this booking lasts.
+     * @todo PLEASE REMOVE THIS FUNCTIONALITY IN ITEM!
+     */
+    public function getNumberOfDays() {
+        $to = $this->time_to;
+        $from = $this->time_from;
+        return floor(($to - $from) / (60 * 60 * 24));
+    }
+
+    /**
+     * Get the day price.
+     *
+     * @return int The day price.
+     */
+    public function getDayPrice() {
+        return round($this->amount_item / $this->getNumberOfDays());
+    }
+
+    /**
      * Triggers a payin update request
      * @return bool
      */

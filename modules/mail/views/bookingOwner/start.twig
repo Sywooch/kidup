@@ -1,0 +1,17 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textBlock.begin()) }}
+    {{ void(paragraph.begin({align: 'center'})) }}
+        Hej {{ vm.userName }}
+    {{ void(paragraph.end()) }}
+
+    Dette er en p&aring;mindelse om, at {{ vm.renterName }} har en reservation
+    hos dig i perioden <span style="font-weight: 700;">{{ timestampToDate(vm.startDate) }}
+        - {{ timestampToDate(vm.endDate) }}</span> af {{ vm.itemName }}.
+
+    {{ space.widget() | raw }}
+
+    abc
+{{ void(textBlock.end()) }}
+
+{{ void(table.end()) }}

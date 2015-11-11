@@ -9,7 +9,7 @@ use Yii;
 use yii\base\Object;
 use yii\helpers\Json;
 
-abstract class Mail extends Object implements MailInterface
+abstract class Mail extends Object
 {
     public $emailAddress;
     public $subject;
@@ -26,8 +26,8 @@ abstract class Mail extends Object implements MailInterface
 
     public function __construct($config = []){
         parent::__construct($config);
-        $this->sender = 'info@kidup.dk';
-        $this->senderName = 'KidUp';
+        $sender = (new MailUserFactory())->create('info@kidup.dk', 'KidUp');
+        $this->setSender($sender);
         $this->viewPath = '@app/modules/mail/views';
         $this->mailId = MailLog::getUniqueId();
         $this->seeInBrowserUrl = UrlFactory::seeInBrowser($this->mailId);
@@ -67,4 +67,25 @@ abstract class Mail extends Object implements MailInterface
         }
         return false;
     }
+
+    /**
+     * Set the receiver of the e-mail.
+     *
+     * @param MailUser $receiver
+     */
+    public function setReceiver(MailUser $receiver) {
+        $this->emailAddress = $receiver->email;
+        $this->userName = $receiver->name;
+    }
+
+    /**
+     * Set the sender of the e-mail.
+     *
+     * @param MailUser $sender
+     */
+    public function setSender(MailUser $sender) {
+        $this->sender = $sender->email;
+        $this->senderName = $sender->name;
+    }
+
 }

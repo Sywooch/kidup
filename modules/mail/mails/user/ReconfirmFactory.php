@@ -9,7 +9,7 @@ use mail\models\TokenFactory;
  */
 class ReconfirmFactory
 {
-    public static function create(\user\models\User $user)
+    public function create(\user\models\User $user)
     {
         $e = new Reconfirm();
 

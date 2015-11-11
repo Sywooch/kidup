@@ -1,5 +1,5 @@
 <?php
-namespace mail\models;
+namespace mail\mails;
 
 use mail\components\MailUrl;
 use user\models\Profile;
@@ -17,7 +17,7 @@ class WidgetFactory
     /**
      * Register all email widgets to the global twig scope
      */
-    public function registerWidgets(){
+    public static function registerWidgets(){
         $path = \Yii::$aliases['@mail'].'/widgets/';
         $results = scandir($path);
 

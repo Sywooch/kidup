@@ -38,6 +38,7 @@ class MailRenderer
      */
     public function render()
     {
+        WidgetFactory::registerWidgets();
         $mailer = \Yii::$app->mailer;
         $mailer->viewPath = $this->mail->getViewPath();
         $viewModel = Json::decode(Json::encode($this->mail));

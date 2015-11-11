@@ -75,6 +75,10 @@ $components = [
                     },
                     'imageUrl' => function ($file, $options) {
                         return \images\components\ImageHelper::url($file, $options);
+                    },
+                    'timestampToDate' => function ($timestamp) {
+                        Carbon\Carbon::setToStringFormat("d-m-y");
+                        return Carbon\Carbon::createFromTimestamp($timestamp);
                     }
                 ]
             ],

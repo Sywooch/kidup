@@ -2,13 +2,14 @@
 
 namespace mail\controllers;
 
-use app\helpers\Event;
 use app\extended\web\Controller;
-use \booking\models\Payin;
+use booking\models\Booking;
+use mail\mails\bookingOwner\RequestFactory;
+use mail\mails\bookingOwner\StartFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmFactory;
-use mail\mails\user\RecoveryFactory;
+use mail\mails\user\ReconfirmInterface;
 use mail\mails\user\WelcomeFactory;
 use \mail\models\Mailer;
 use \mail\models\MailLog;
@@ -27,8 +28,8 @@ class ViewController extends Controller
     {
         $mailLog = MailLog::findOne($id);
         if ($mailLog == null) {
-            throw new NotFoundHttpException("Email not found");
-        }
+        throw new NotFoundHttpException("Email not found");
+    }
 
         $view = '/' . Mailer::getView($mailLog->type);
         $this->layout = '@mail/views/layouts/html';
@@ -48,9 +49,15 @@ class ViewController extends Controller
 
     public function actionTest()
     {
+        $factory = new WelcomeFactory();
+
+        // define many objects to play with
         $user = User::find()->one();
-        $factory = ReconfirmFactory::create($user);
-        return new MailRenderer($factory);
+        $booking = Booking::find()->one();
+
+        $mail = $factory->create($user);
+        return new MailRenderer($mail);
     }
+
 }
 
