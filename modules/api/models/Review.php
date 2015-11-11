@@ -14,4 +14,9 @@ class Review extends \review\models\Review
         }
         return parent::fields();
     }
+
+    public function extraFields()
+    {
+        return ['reviewer'];
+    }
 }

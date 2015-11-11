@@ -19,7 +19,7 @@ class ItemController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => ['index', 'view', 'search', 'recommended', 'related'],
+            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews'],
             'user' => []
         ];
     }
@@ -65,6 +65,9 @@ class ItemController extends Controller
             throw new NotAcceptableHttpException('No item_id is given.');
         }
         $itemId = $params['item_id'];
+        /**
+         * @var Item $item
+         */
         $item = Item::find()->where(['is_available' => 1, 'id' => $itemId])->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
@@ -131,6 +134,7 @@ class ItemController extends Controller
         $pageSize = 12;
 
         $model = new Filter();
+        $model->_query = Item::find();
         $model->page = $page;
         $model->pageSize = $pageSize;
 
@@ -171,13 +175,20 @@ class ItemController extends Controller
 
         // and give back the results
         return [
-            'num_pages' => ceil($model->estimatedResultCount / $pageSize),
-            'num_items' => $model->estimatedResultCount,
-            'results' => $query->all()
+            'items' => $model->findItems(),
+            'filters' => $model->featureFilters,
+            // todo make this real
+            '_meta' => [
+                'currentPage' => 0,
+                'pageCount' => 1,
+                'perPage' => 20,
+                'totalCount' => 100
+            ]
         ];
     }
 
-    public function actionReview($id){
+    public function actionReviews($id){
+        $this->modelClass = Review::className();
         return new ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);

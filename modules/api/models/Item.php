@@ -12,7 +12,7 @@ class Item extends \item\models\Item
         $fields = parent::fields();
 
         // remove fields that contain sensitive information
-        unset($fields['created_at'], $fields['updated_at'], $fields['min_renting_days']);
+        unset($fields['updated_at'], $fields['min_renting_days']);
 
         return $fields;
     }

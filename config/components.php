@@ -179,7 +179,7 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',
-                    '<id>/reviews' => 'review'
+                    '<id>/reviews' => 'reviews'
                 ]
             ],
             [

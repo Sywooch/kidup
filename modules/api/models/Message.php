@@ -22,6 +22,17 @@ class Message extends \message\models\Message
             }
         };
 
+        $field['is_from_me'] = function($model){
+            /**
+             * @var Message $model
+             */
+            if(\Yii::$app->user->id === $model->sender_user_id){
+                return true;
+            }else{
+                return false;
+            }
+        };
+
         unset($fields['sender_user_id']);
         unset($fields['receiver_user_id']);
         unset($fields['updated_at']);
