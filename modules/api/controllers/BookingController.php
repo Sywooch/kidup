@@ -74,8 +74,8 @@ class BookingController extends Controller
         if (!isset($params['time_from'])) {
             throw(new Exception("No time_from (timestamp) is set."));
         }
-        if (!isset($params['date_to'])) {
-            throw(new Exception("No date_to (timestamp) is set."));
+        if (!isset($params['time_to'])) {
+            throw(new Exception("No time_to (timestamp) is set."));
         }
         if (!isset($params['payment_nonce'])) {
             throw(new Exception("No payment_method_nonce (string) is set."));
@@ -105,7 +105,7 @@ class BookingController extends Controller
         // create a new booking
         $booking = new CreateBooking($item, $currency);
         $booking->dateFrom = date("d-m-Y", round($params['time_from']));
-        $booking->dateTo = date("d-m-Y", round($params['date_to']));
+        $booking->dateTo = date("d-m-Y", round($params['time_to']));
 
         // create the result
         $result = [
@@ -151,12 +151,12 @@ class BookingController extends Controller
      * @apiParam {Integer}      time_to            timestamp formatted date to end the booking on.
      * @apiSuccess {Object[]}   tableData           An array containing the costs of the booking.
      */
-    public function actionCosts($item_id, $time_from, $date_to)
+    public function actionCosts($item_id, $time_from, $time_to)
     {
         // load the parameters
         // dates should be in d-m-Y format
         $time_from = date("d-m-Y", (int)$time_from);
-        $date_to = date("d-m-Y", (int)$date_to);
+        $time_to = date("d-m-Y", (int)$time_to);
 
         // fetch the item
         $item = Item::find()->where([
@@ -178,7 +178,7 @@ class BookingController extends Controller
         // create a new booking
         $booking = new CreateBooking($item, $currency);
         $booking->dateFrom = $time_from;
-        $booking->dateTo = $date_to;
+        $booking->dateTo = $time_to;
 
         // do not save, display the table data
         $booking->calculateTableData();
