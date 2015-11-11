@@ -5,6 +5,7 @@ namespace mail\controllers;
 use app\helpers\Event;
 use app\extended\web\Controller;
 use \booking\models\Payin;
+use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmFactory;
 use mail\mails\user\RecoveryFactory;
@@ -49,7 +50,7 @@ class ViewController extends Controller
     {
         $user = User::find()->one();
         $factory = ReconfirmFactory::create($user);
-        new MailSender($factory);
+        return new MailRenderer($factory);
     }
 }
 
