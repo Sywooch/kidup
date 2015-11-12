@@ -53,6 +53,10 @@ abstract class Mail extends Object
         return $this->sender;
     }
 
+    public function setSender($sender){
+        $this->sender = $sender;
+    }
+
     public function getSenderName(){
         return $this->senderName;
     }

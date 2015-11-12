@@ -14,6 +14,7 @@ namespace mail\models;
 use booking\models\Booking;
 use Carbon\Carbon;
 use item\models\Item;
+use message\models\Conversation;
 use user\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -43,6 +44,10 @@ class UrlFactory
 
     public static function itemCompletion(Item $item){
         return self::url("item/edit-basics?id=".$item->id);
+    }
+
+    public static function conversation(Conversation $conversation){
+        return self::url("inbox/".$conversation->id);
     }
 
     public static function url($to){
