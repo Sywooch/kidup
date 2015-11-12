@@ -29,10 +29,10 @@ class Item extends \item\models\base\Item
      */
     public static function getRecommended($numItems)
     {
-        $items = Item::find()->limit($numItems)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
+        $items = self::find()->limit($numItems)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
         if (count($items) < $numItems) {
             $items = ArrayHelper::merge($items,
-                Item::find()->limit($numItems - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
+                self::find()->limit($numItems - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
         }
         return $items;
     }

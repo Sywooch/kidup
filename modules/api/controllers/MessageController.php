@@ -15,7 +15,7 @@ class MessageController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => [],
+            'guest' => ['options'],
             'user' => ['create', 'view']
         ];
     }

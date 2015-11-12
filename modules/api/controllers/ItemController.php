@@ -12,37 +12,42 @@ use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
-    public function init(){
+    public function init()
+    {
         $this->modelClass = Item::className();
         parent::init();
     }
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [
-            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews'],
-            'user' => []
+            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews', 'options'],
+            'user' => ['update', 'create']
         ];
     }
 
-    public function actions(){
+    public function actions()
+    {
         $actions = parent::actions();
         unset($actions['delete']);
-        unset($actions['create']);
+//        unset($actions['create']);
         unset($actions['index']);
-        unset($actions['update']);
+//        unset($actions['update']);
         unset($actions['view']);
         return $actions;
     }
 
     // default action, does not need documentation
-    public function actionIndex(){
+    public function actionIndex()
+    {
         return new ActiveDataProvider([
             'query' => Item::find()->where(['is_available' => 1])
         ]);
     }
 
     // default action, does not need documentation
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
@@ -59,7 +64,8 @@ class ItemController extends Controller
      * @apiParam {Number}       item_id           The item_id of the item to find related items for.
      * @apiSuccess {Object[]}   related_items     A list of related items.
      */
-    public function actionRelated() {
+    public function actionRelated()
+    {
         $params = \Yii::$app->request->get();
         if (!array_key_exists('item_id', $params)) {
             throw new NotAcceptableHttpException('No item_id is given.');
@@ -86,8 +92,19 @@ class ItemController extends Controller
      *
      * @apiSuccess {Object[]}   recommended_items     A list of recommended items.
      */
-    public function actionRecommended() {
-        return Item::getRecommended(4);
+    public function actionRecommended()
+    {
+        // todo this is rather ugly, but an activedataprovider needs to be returned for consitency
+        $items = Item::getRecommended(4);
+
+
+        $res = [];
+        foreach ($items as $item) {
+            $res[] = $item->id;
+        }
+        return new ActiveDataProvider([
+            'query' => Item::find()->where(['IN', 'id', $res])
+        ]);
     }
 
     /**
@@ -123,7 +140,8 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
-    public function actionSearch() {
+    public function actionSearch()
+    {
         // load the page number
         $page = \Yii::$app->request->post('page', 0);
 
@@ -187,7 +205,8 @@ class ItemController extends Controller
         ];
     }
 
-    public function actionReviews($id){
+    public function actionReviews($id)
+    {
         $this->modelClass = Review::className();
         return new ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
