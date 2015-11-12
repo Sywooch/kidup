@@ -15,11 +15,44 @@ class Booking extends \booking\models\Booking
             return [];
         }
 
+        if($this->renter_id === \Yii::$app->user->id){
+            unset($fields['amount_payout']);
+            unset($fields['amount_payout_fee']);
+            unset($fields['amount_payout_fee_tax']);
+        }
+        unset($fields['amount_payin_costs']);
+
+        if($this->item->owner_id === \Yii::$app->user->id){
+            unset($fields['amount_payin']);
+            unset($fields['amount_payin_fee']);
+            unset($fields['amount_payin_fee_tax']);
+        }
+
+        $fields['conversation_id'] = function($model){
+            /**
+             * @var Booking $model
+             */
+            if($model->conversation){
+                return $model->conversation->id;
+            }
+            return null;
+        };
+
         return $fields;
     }
 
     public function extraFields()
     {
-        return ['item'];
+        return ['item', 'conversation'];
+    }
+
+    public function getConversation()
+    {
+        return $this->hasOne(Conversation::className(), ['booking_id' => 'id']);
+    }
+
+    public function getItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
 }

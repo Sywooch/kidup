@@ -1,10 +1,10 @@
 <?php
 namespace api\controllers;
 
+use api\models\Booking;
 use api\models\Currency;
 use api\models\Item;
 use booking\forms\Confirm;
-use booking\models\Booking;
 use booking\models\BrainTree;
 use item\forms\CreateBooking;
 use yii\base\Exception;
@@ -23,8 +23,8 @@ class BookingController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['payment-token', 'index', 'view', 'costs'],
-            'user' => ['create']
+            'guest' => ['payment-token', 'costs'],
+            'user' => ['create', 'view', 'index']
         ];
     }
 
@@ -35,6 +35,7 @@ class BookingController extends Controller
         // overwrite the default create action
         unset($actions['create']);
         unset($actions['costs']);
+        unset($actions['index']);
 
         return $actions;
     }
@@ -115,12 +116,12 @@ class BookingController extends Controller
         // save the booking
         $bookingObject = null;
         if ($booking->validateDates()) {
-            if($booking->save(false)){
+            if ($booking->save(false)) {
                 $bookingObject = $booking->booking;
-            }else{
+            } else {
                 return $booking->getErrors();
             }
-        }else{
+        } else {
             return $booking->getErrors();
         }
         if (is_object($bookingObject) && isset($bookingObject->id) && is_numeric($bookingObject->id) && $bookingObject->id > 0) {
@@ -133,7 +134,7 @@ class BookingController extends Controller
                 // booking is made and payed!
                 $result['success'] = true;
                 $result['booking'] = $bookingObject;
-            }else{
+            } else {
                 $result['error'] = 'Payment failed - no idea why';
             }
         }
