@@ -2,6 +2,7 @@
 
 namespace user\models;
 
+use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
 use app\helpers\Event;
 use images\components\ImageHelper;
@@ -87,7 +88,7 @@ class User extends base\User implements IdentityInterface
         if ($token == null) {
             return false;
         }
-        if($token->expires < time()){
+        if ($token->expires < time()) {
             throw new HttpException(401, "Access Token expired");
         }
         return $token->user;
@@ -161,7 +162,7 @@ class User extends base\User implements IdentityInterface
     {
         return $this->getAttribute('id');
     }
-    
+
 
     /** @inheritdoc */
     public function attributeLabels()
@@ -500,4 +501,16 @@ class User extends base\User implements IdentityInterface
     {
         return false;
     }
+
+    /**
+     * Whether a given user is allowed access to private attributes of this user
+     * @param User $user
+     * @return bool
+     */
+    public function allowPrivateAttributes(User $user){
+        $c = Booking::find()->orWhere(['item.owner_id' => $user->id, 'renter_id' => $user->id])->innerJoinWith('item')->count();
+        return $c > 0;
+    }
+
+
 }

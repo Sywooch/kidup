@@ -100,6 +100,9 @@ $components = [
         'enableCsrfValidation' => true,
         'csrfCookie' => ['httpOnly' => true],
         'enableCookieValidation' => true,
+        'parsers' => [
+            'application/json' => 'yii\web\JsonParser',
+        ]
     ],
     'cache' => [
         'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
@@ -193,6 +196,13 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/conversations' => 'api/conversation'],
+                'extraPatterns' => [
+                    '<id>/messages' => 'messages'
+                ]
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/locations' => 'api/location'],
             ],
             [
                 'class' => 'yii\rest\UrlRule',
@@ -214,11 +224,7 @@ $components = [
                     'refresh' => 'refresh',
                 ]
             ],
-//            [
-//                'pattern' => 'api/v1/<base>/<id>/<relation1>/<relation1Id>',
-//                'route' => 'api/relation/index',
-//                'defaults' => ['relation1Id' => null]
-//            ]
+            'api/v1/pages/<page>' => 'api/pages/view'
         ],
     ],
 //    'redis' => [

@@ -30,18 +30,9 @@ class MessageController extends Controller
         return $actions;
     }
 
-    public function actionView($id){
-        // todo: security check
-        return new ActiveDataProvider([
-            'query' => Message::find()
-                ->where(['conversation_id' => $id])
-                ->orderBy('message.created_at ASC')
-        ]);
-    }
-
     public function actionCreate(){
         // todo: security check
-        $params = \Yii::$app->request->post();
+        $params = \Yii::$app->request->getBodyParams();
         /**
          * @var Conversation $c
          */

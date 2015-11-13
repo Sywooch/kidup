@@ -2,7 +2,9 @@
 namespace api\controllers;
 
 use api\models\Conversation;
+use api\models\Message;
 use yii\data\ActiveDataProvider;
+use yii\web\BadRequestHttpException;
 
 class ConversationController extends Controller
 {
@@ -14,7 +16,7 @@ class ConversationController extends Controller
     public function accessControl(){
         return [
             'guest' => [''],
-            'user' => ['index', 'view']
+            'user' => ['index', 'view', 'messages']
         ];
     }
 
@@ -32,7 +34,19 @@ class ConversationController extends Controller
             'query' => Conversation::find()->where(['target_user_id' => \Yii::$app->user->id])
                 ->orWhere(['initiater_user_id' => \Yii::$app->user->id])
                 ->innerJoinWith('lastMessage')
-                ->orderBy('message.created_at DESC')
+                ->orderBy('message.created_at ASC')
+        ]);
+    }
+
+    public function actionMessages($id){
+        if((int)$id != $id){
+            throw new BadRequestHttpException("Id should be an integer!");
+        }
+        return new ActiveDataProvider([
+            'query' => Message::find()
+                ->where(['conversation_id' => $id])
+                ->orWhere(['sender_user_id' => \Yii::$app->user->id,'receiver_user_id' => \Yii::$app->user->id])
+                ->orderBy('created_at ASC')
         ]);
     }
 }
