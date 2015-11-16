@@ -23,7 +23,7 @@ class BookingController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['payment-token', 'costs'],
+            'guest' => ['payment-token', 'costs', 'options'],
             'user' => ['create', 'view', 'index']
         ];
     }
@@ -70,16 +70,16 @@ class BookingController extends Controller
 
         // check the parameters
         if (!isset($params['item_id'])) {
-            throw(new Exception("No item_id is set."));
+            throw(new BadRequestHttpException("No item_id is set."));
         }
         if (!isset($params['time_from'])) {
-            throw(new Exception("No time_from (timestamp) is set."));
+            throw(new BadRequestHttpException("No time_from (timestamp) is set."));
         }
         if (!isset($params['time_to'])) {
-            throw(new Exception("No time_to (timestamp) is set."));
+            throw(new BadRequestHttpException("No time_to (timestamp) is set."));
         }
         if (!isset($params['payment_nonce'])) {
-            throw(new Exception("No payment_method_nonce (string) is set."));
+            throw(new BadRequestHttpException("No payment_method_nonce (string) is set."));
         }
 
         // load the parameters
@@ -108,21 +108,16 @@ class BookingController extends Controller
         $booking->dateFrom = date("d-m-Y", round($params['time_from']));
         $booking->dateTo = date("d-m-Y", round($params['time_to']));
 
-        // create the result
-        $result = [
-            'success' => false
-        ];
-
         // save the booking
         $bookingObject = null;
         if ($booking->validateDates()) {
             if ($booking->save(false)) {
                 $bookingObject = $booking->booking;
             } else {
-                return $booking->getErrors();
+                throw new BadRequestHttpException('Booking object couldnt validate');
             }
         } else {
-            return $booking->getErrors();
+            throw new BadRequestHttpException('Dates are invalid');
         }
         if (is_object($bookingObject) && isset($bookingObject->id) && is_numeric($bookingObject->id) && $bookingObject->id > 0) {
             // do the actual payment
@@ -132,13 +127,12 @@ class BookingController extends Controller
             $model->rules = 1;
             if ($model->save()) {
                 // booking is made and payed!
-                $result['success'] = true;
-                $result['booking'] = $bookingObject;
+                return $bookingObject;
             } else {
-                $result['error'] = 'Payment failed - no idea why';
+                throw new BadRequestHttpException('Payment failed - no idea why');
             }
         }
-        return $result;
+        throw new BadRequestHttpException('Booking failed');
     }
 
     /**
