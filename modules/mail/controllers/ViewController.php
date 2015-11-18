@@ -49,13 +49,13 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new WelcomeFactory();
+        $factory = new StartFactory();
 
         // define many objects to play with
         $user = User::find()->one();
         $booking = Booking::find()->one();
 
-        $mail = $factory->create($user);
+        $mail = $factory->create($booking);
         return new MailRenderer($mail);
     }
 

@@ -1,17 +1,70 @@
-{{ void(table.begin({bgColor: 'white'})) }}
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
 
+    {{ void(textBlock.begin({fontSize: 24})) }}
+        <strong>Hej {{ vm.userName }},</strong>
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+                Dette er en p&aring;mindelse om, at {{ vm.renterName }} har en reservation
+                hos dig i perioden <span style="font-weight: 700;">{{ timestampToDate(vm.startDate) }}
+                    - {{ timestampToDate(vm.endDate) }}</span> af {{ vm.itemName }}.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+                Du kan kontakt brugeren via telefon p&aring; {{ vm.phone }} eller via
+                e-mail.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+<table width="100%">
+    <tr>
+        {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+            Udleje starter<br />
+            <strong>{{ timestampToDate(vm.startDate) }}</strong>
+        {{ void(textBlock.end()) }}
+
+        {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+            Udleje slutter<br />
+            <strong>{{ timestampToDate(vm.endDate) }}</strong>
+        {{ void(textBlock.end()) }}
+    </tr>
+</table>
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+{{ space.widget({height: 15}) | raw }}
 {{ void(textBlock.begin()) }}
-    {{ void(paragraph.begin({align: 'center'})) }}
-        Hej {{ vm.userName }}
-    {{ void(paragraph.end()) }}
-
-    Dette er en p&aring;mindelse om, at {{ vm.renterName }} har en reservation
-    hos dig i perioden <span style="font-weight: 700;">{{ timestampToDate(vm.startDate) }}
-        - {{ timestampToDate(vm.endDate) }}</span> af {{ vm.itemName }}.
-
-    {{ space.widget() | raw }}
-
-    abc
+    {{ vm.renterName }} har allerede betalt {{ vm.itemAmount }} +
+    servicegebyr til KidUp. Pengene (fratrukket udlejningsgebyr) bliver
+    overf&oslash;rt til dig dagen efter, at g&aelig;sten har modtaget dit udstyr.
 {{ void(textBlock.end()) }}
+{{ space.widget({height: 15}) | raw }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+{{ space.widget({height: 20}) | raw }}
+{{ void(textBlock.begin()) }}
+    Udlejnings-tjekliste
+    <ol>
+        <li>Kontakt lejeren via e-mail eller telefon for at bekr&aelig;fte udvekslingstidspunkt.</li>
+        <li>Udstyret er rengjort</li>
+        <li>Udstyret er gennemtjekket og fyldt funktionsdygtigt.</li>
+        <li>Udskriv din udlejnings bekr&aelig;ftelse, s&aring; du har lejerens e-mail og telefonnummer ved h&aring;nden.</li>
+        <li>Find nyttige oplysninger i vores hj&aelig;lpecenter.</li>
+    </ol>
+{{ void(textBlock.end()) }}
+{{ space.widget({height: 15}) | raw }}
+{{ void(textBlock.begin()) }}
+    Du kan kontakt brugeren via telefon p&aring; {{ vm.phone }} eller via
+    e-mail.
+{{ void(textBlock.end()) }}
+{{ space.widget({height: 15}) | raw }}
 
 {{ void(table.end()) }}

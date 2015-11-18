@@ -20,6 +20,8 @@ class StartFactory
         $e->endDate = $booking->time_to;
         $e->renterName = $booking->renter->profile->getFullName();
         $e->itemName = $booking->item->name;
+        $e->phone = $booking->renter->profile->phone_number;
+        $e->itemAmount = round($booking->amount_item);
         $e->helpUrl = Url::to('@web/contact', true);
 
         return $e;
