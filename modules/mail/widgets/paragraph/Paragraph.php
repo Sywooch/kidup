@@ -11,6 +11,7 @@ use mail\widgets\BaseWidget;
  *
  * Options:
  *      align  string  The alignment (left, right, center) of the text inside the paragraph (optional).
+ *      size   int     The font size (in pixels) (optional).
  *
  * @package mail\widgets\paragraph
  */
@@ -18,6 +19,7 @@ class Paragraph extends BaseWidget
 {
 
     public $align = 'left';
+    public $size = 12;
 
     public function init()
     {
@@ -30,6 +32,7 @@ class Paragraph extends BaseWidget
         $content = ob_get_clean();
         return $this->renderTwig([
             'align' => $this->align,
+            'size' => $this->size,
             'content' => $content,
         ]);
     }
