@@ -8,6 +8,7 @@ use mail\mails\bookingOwner\PayoutFactory;
 use mail\mails\bookingOwner\RequestFactory;
 use mail\mails\bookingOwner\StartFactory;
 use mail\mails\bookingOwner\FailedFactory;
+use mail\mails\bookingOwner\ConfirmationFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmFactory;
@@ -51,7 +52,7 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new FailedFactory();
+        $factory = new ConfirmationFactory();
 
         // define many objects to play with
         $user = User::find()->one();

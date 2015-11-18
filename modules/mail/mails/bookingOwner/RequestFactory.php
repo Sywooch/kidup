@@ -2,6 +2,7 @@
 namespace mail\mails\bookingOwner;
 
 use mail\mails\MailUserFactory;
+use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
@@ -27,7 +28,7 @@ class RequestFactory
         $e->responseUrl = Url::to('@web/booking/' . $booking->id . '/request', true);
         if (is_object($booking->conversation)) {
             $e->message = $booking->conversation->messages[0];
-            $e->chatUrl = Url::to('@web/messages/' . $booking->conversation->id, true);
+            $e->chatUrl = UrlFactory::chat($booking->conversation);
         }
 
         return $e;

@@ -55,10 +55,23 @@ class UrlFactory
         return self::url("item/edit-basics?id=" . $item->id);
     }
 
+    public static function chat(Conversation $conversation) {
+        return self::url('messages/' . $conversation->id);
+    }
+
+    public static function help() {
+        return self::url("contact");
+    }
+
+    public static function receipt(Booking $booking) {
+        return self::url('booking/' . $booking->id . '/receipt');
+    }
+
     public static function url($to)
     {
         return Url::to("@web/" . $to, [
             'mail_id' => 'x'
         ], true);
     }
+
 }

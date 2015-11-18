@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /**
  * Owner booking failed.
  */
-class FailedFactory
+class ConfirmationFactory
 {
 
     public function create(\booking\models\Booking $booking)

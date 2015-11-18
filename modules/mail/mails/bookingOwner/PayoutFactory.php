@@ -2,6 +2,7 @@
 namespace mail\mails\bookingOwner;
 
 use mail\mails\MailUserFactory;
+use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
@@ -22,7 +23,7 @@ class PayoutFactory
         $e->amountTotal = $booking->amount_payout . ' DKK';
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;
-        $e->viewReceiptUrl = Url::to('@web/booking/' . $booking->id . '/receipt', true);
+        $e->viewReceiptUrl = UrlFactory::receipt($booking);
 
         return $e;
     }
