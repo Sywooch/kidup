@@ -79,6 +79,9 @@ $components = [
                     'timestampToDate' => function ($timestamp) {
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
+                    },
+                    'now' => function() {
+                        return date('d-m-y H:i');
                     }
                 ]
             ],

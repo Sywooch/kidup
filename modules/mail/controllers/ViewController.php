@@ -6,6 +6,7 @@ use app\extended\web\Controller;
 use booking\models\Booking;
 use mail\mails\bookingRenter\DeclineFactory;
 use mail\mails\bookingRenter\PayoutFactory;
+use mail\mails\bookingRenter\ReceiptFactory;
 use mail\mails\bookingRenter\RequestFactory;
 use mail\mails\bookingRenter\StartFactory;
 use mail\mails\bookingRenter\FailedFactory;
@@ -53,7 +54,7 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new DeclineFactory();
+        $factory = new ReceiptFactory();
 
         // define many objects to play with
         $user = User::find()->one();

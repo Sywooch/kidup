@@ -10,7 +10,13 @@ use mail\widgets\BaseWidget;
  * {{ void(table.end()) }}
  *
  * The options are the following:
- *      bgColor  string     The background color of the table (optional).
+ *      bgColor         string     The background color of the table (optional).
+ *      borderColor     string     The color of the border.
+ *      borderSize      int        The size (in pixels) of the border.
+ *      borderBottom    boolean    Whether or not the bottom border should be shown (available when borderSize > 0).
+ *      borderTop       boolean    Whether or not the top border should be shown (available when borderSize > 0).
+ *      borderLeft      boolean    Whether or not the left border should be shown (available when borderSize > 0).
+ *      borderRight     boolean    Whether or not the right border should be shown (available when borderSize > 0).
  *
  * @package mail\widgets\textBlock
  */
@@ -19,6 +25,12 @@ class Table extends BaseWidget
 
     public $bgColor = '#F5F5F5';
     public $outerTable = true;
+    public $borderColor = '#999999';
+    public $borderSize = 0;
+    public $borderBottom = true;
+    public $borderTop = true;
+    public $borderLeft = true;
+    public $borderRight = true;
 
     public function init()
     {
@@ -33,6 +45,12 @@ class Table extends BaseWidget
             'content' => $content,
             'outerTable' => $this->outerTable,
             'bgColor' => $this->bgColor,
+            'borderColor' => $this->borderColor,
+            'borderSize' => $this->borderSize,
+            'borderBottom' => $this->borderBottom,
+            'borderTop' => $this->borderTop,
+            'borderLeft' => $this->borderLeft,
+            'borderRight' => $this->borderRight,
         ]);
     }
 
