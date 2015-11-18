@@ -60,7 +60,7 @@ class UrlFactory
         return self::url("item/edit-basics?id=" . $item->id);
     }
 
-    public static function chat(Conversation $conversation) {
+    public static function chat(\message\models\Conversation $conversation) {
         return self::url('messages/' . $conversation->id);
     }
 
