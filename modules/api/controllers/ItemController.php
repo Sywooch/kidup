@@ -108,7 +108,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @api {post} items/search
+     * @api {get} items/search
      * @apiName         searchItem
      * @apiGroup        Item
      * @apiDescription  Search for items.
@@ -140,13 +140,10 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
-    public function actionSearch()
+    public function actionSearch($page = 0)
     {
-        // load the page number
-        $page = \Yii::$app->request->post('page', 0);
-
         // load the other parameters
-        $params = \Yii::$app->request->post();
+        $params = \Yii::$app->request->get();
 
         // set some read-only parameters
         $pageSize = 12;
@@ -192,17 +189,21 @@ class ItemController extends Controller
         $query = $model->getQuery(true);
 
         // and give back the results
-        return [
-            'items' => $model->findItems(),
-            'filters' => $model->featureFilters,
-            // todo make this real
-            '_meta' => [
-                'currentPage' => 0,
-                'pageCount' => 1,
-                'perPage' => 20,
-                'totalCount' => 100
-            ]
-        ];
+//        return [
+//            'items' => $model->findItems(),
+//            'filters' => $model->featureFilters,
+//            // todo make this real
+//            '_meta' => [
+//                'currentPage' => 0,
+//                'pageCount' => 1,
+//                'perPage' => 20,
+//                'totalCount' => 100
+//            ]
+//        ];
+
+        return new ActiveDataProvider([
+            'query' => $model->getQuery()
+        ]);
     }
 
     public function actionReviews($id)
