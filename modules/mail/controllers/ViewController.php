@@ -54,7 +54,7 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new ReceiptFactory();
+        $factory = new RequestFactory();
 
         // define many objects to play with
         $user = User::find()->one();
