@@ -60,11 +60,19 @@ class UrlFactory
     }
 
     public static function help() {
+        return self::url("help");
+    }
+
+    public static function contact() {
         return self::url("contact");
     }
 
     public static function receipt(Booking $booking) {
         return self::url('booking/' . $booking->id . '/receipt');
+    }
+
+    public static function booking(Booking $booking) {
+        return self::url('booking/' . $booking->id);
     }
 
     public static function url($to)
