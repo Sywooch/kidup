@@ -5,20 +5,20 @@ use mail\mails\Mail;
 
 
 /**
- * Owner booking request
- * @param \booking\models\Booking $booking
- * @return bool
+ * Owner booking failed
  */
-class Start extends Mail {
+class Failed extends Mail {
 
     public $startDate;
     public $endDate;
 
-    public $profileName;
     public $renterName;
+    public $profileName;
     public $phone;
     public $itemName;
     public $itemAmount;
+
+    public $kidUpEmail;
 
     public $helpUrl;
 

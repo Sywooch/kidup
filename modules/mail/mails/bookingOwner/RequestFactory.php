@@ -20,6 +20,7 @@ class RequestFactory
         $e->endDate = $booking->time_to;
         $e->numberOfDays = $booking->getNumberOfDays();
         $e->renterName = $booking->renter->profile->getFullName();
+        $e->profileName = $booking->item->owner->profile->first_name;
         $e->itemName = $booking->item->name;
         $e->payout = $booking->amount_payout . ' DKK';
         $e->dayPrice = $booking->getDayPrice();

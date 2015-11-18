@@ -14,6 +14,7 @@ class Request extends Mail {
     public $endDate;
 
     public $renterName;
+    public $profileName;
     public $itemName;
     public $dayPrice;
     public $payout;

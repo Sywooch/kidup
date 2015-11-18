@@ -19,6 +19,7 @@ class StartFactory
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;
         $e->renterName = $booking->renter->profile->getFullName();
+        $e->profileName = $booking->item->owner->profile->first_name;
         $e->itemName = $booking->item->name;
         $e->phone = $booking->renter->profile->phone_number;
         $e->itemAmount = round($booking->amount_item);
