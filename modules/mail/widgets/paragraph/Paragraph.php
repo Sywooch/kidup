@@ -3,6 +3,17 @@ namespace mail\widgets\paragraph;
 
 use mail\widgets\BaseWidget;
 
+/**
+ * Wraps text in a paragraph HTML element. Usage:
+ * {{ void(paragraph.begin({align: 'center'})) }}
+ * My content
+ * {{ void(paragraph.end()) }}
+ *
+ * Options:
+ *      align  string  The alignment (left, right, center) of the text inside the paragraph (optional).
+ *
+ * @package mail\widgets\paragraph
+ */
 class Paragraph extends BaseWidget
 {
 

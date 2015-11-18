@@ -3,6 +3,17 @@ namespace mail\widgets\button;
 
 use mail\widgets\BaseWidget;
 
+/**
+ * A Button widget which renders a button. Usage:
+ * {{ button.widget({content:'My Button', url:'http://demo.com/', 'wide':true}) | raw }}
+ *
+ * Options:
+ *      content  string     The title displayed on the button (required).
+ *      url      string     The URL the button points to (required).
+ *      wide     boolean    Whether or not the button has the full width (optional).
+ *
+ * @package mail\widgets\button
+ */
 class Button extends BaseWidget
 {
     public $content = '';
