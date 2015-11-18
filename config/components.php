@@ -206,6 +206,10 @@ $components = [
             ],
             [
                 'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/categories' => 'api/category'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/messages' => 'api/message'],
             ],
             [
