@@ -69,7 +69,7 @@ class CreateCest
         ]));
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $I->seeResponseContains('"booking":');
+        $I->seeResponseContains('"item_id":');
         $I->seeResponseContainsJson(['success' => true]);
     }
 
