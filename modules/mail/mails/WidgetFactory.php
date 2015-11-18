@@ -1,41 +1,43 @@
 <?php
 namespace mail\mails;
 
-use mail\components\MailUrl;
-use user\models\Profile;
-use user\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
 
 /**
- * Login form
+ * Widget factory which initializes all widgets.
  */
 class WidgetFactory
 {
     /**
-     * Register all email widgets to the global twig scope
+     * Load all widgets.
      */
-    public static function registerWidgets(){
-        $path = \Yii::$aliases['@mail'].'/widgets/';
+    public static function registerWidgets()
+    {
+        $path = \Yii::$aliases['@mail'] . '/widgets/';
         $results = scandir($path);
 
+        // loop through all widgets in the widget path
         $globals = [];
         $functions = [];
         foreach ($results as $result) {
-            if ($result === '.' or $result === '..') continue;
+            if ($result === '.' or $result === '..') {
+                continue;
+            }
 
             if (is_dir($path . '/' . $result)) {
-                $globals[$result] = "mail\\widgets\\".$result."\\".ucfirst($result);
+                $globals[$result] = "mail\\widgets\\" . $result . "\\" . ucfirst($result);
             }
         }
 
+        // add the found functions to Twig
         $originalConfig = Yii::$app->getComponents()['view'];
-        if(!isset($originalConfig['renderers']['twig']['functions'])){
+        if (!isset($originalConfig['renderers']['twig']['functions'])) {
             $originalConfig['renderers']['twig']['functions'] = [];
         }
-        if(!isset($originalConfig['renderers']['twig']['globals'])){
+        if (!isset($originalConfig['renderers']['twig']['globals'])) {
             $originalConfig['renderers']['twig']['globals'] = [];
         }
         $originalConfig['renderers']['twig']['functions'] = ArrayHelper::merge($functions,
@@ -43,6 +45,7 @@ class WidgetFactory
         $originalConfig['renderers']['twig']['globals'] = ArrayHelper::merge($globals,
             $originalConfig['renderers']['twig']['globals']);
 
+        // finally, override the Twig configuration
         Yii::$app->setComponents([
             'view' => $originalConfig
         ]);

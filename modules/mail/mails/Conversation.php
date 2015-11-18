@@ -10,6 +10,7 @@ class Conversation extends Mailer
 {
     /**
      * Reminder for unfinished item
+     *
      * @param \message\models\Message $message
      * @return bool
      */

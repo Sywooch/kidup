@@ -1,30 +1,56 @@
 <?php
 namespace mail\mails;
 
-use mail\components\MailUrl;
 use mail\models\MailLog;
 use mail\models\UrlFactory;
-use user\models\User;
 use Yii;
 use yii\base\Object;
 use yii\helpers\Json;
 
+/**
+ * An abstract mail class, which can be extended. This defined how a mail should look like and which data a mail should
+ * contain.
+ *
+ * @package mail\mails
+ */
 abstract class Mail extends Object
 {
+
+    // E-mail address of the receiver
     public $emailAddress;
-    public $subject;
-    public $mailId;
-    public $seeInBrowserUrl;
-    public $changeSettingsUrl;
+
+    // The username of the receiver
     public $userName;
 
-    private $template;
-    private $sender;
-    private $senderName;
-    private $viewPath;
+    // Subject of the mail
+    public $subject;
+
+    // ID of the mail
+    public $mailId;
+
+    // The URL to views this mail in the browser
+    public $seeInBrowserUrl;
+
+    // The URL to the webpage which allows the user to change the e-mail settings
+    public $changeSettingsUrl;
+
+    // The template ID of the mail
     public $templateId;
 
-    public function __construct($config = []){
+    // The template of the mail
+    private $template;
+
+    // The e-mail address of the sender
+    private $sender;
+
+    // The name of the sender
+    private $senderName;
+
+    // The path to the views of all the mails
+    private $viewPath;
+
+    public function __construct($config = [])
+    {
         parent::__construct($config);
         $sender = (new MailUserFactory())->create('info@kidup.dk', 'KidUp');
         $this->setSender($sender);
@@ -34,35 +60,60 @@ abstract class Mail extends Object
         $this->changeSettingsUrl = UrlFactory::changeSettings();
     }
 
-    private function getUserName(){
-        $user = User::findOne(['email' => $this->emailAddress]);
-        return $user->profile->getUserName();
-    }
-    
-    public function getTemplatePath(){
-        if(isset($this->template)){
+    /**
+     * Find the template path of  mail.
+     *
+     * @return string The path of the template.
+     */
+    public function getTemplatePath()
+    {
+        if (isset($this->template)) {
             return $this->template;
         }
         $className = $this->className();
         $templatePath = str_replace("mail\\mails\\", '', $className);
         $templatePath = str_replace("\\", '/', $templatePath);
-        return strtolower($templatePath.".twig");
+        return strtolower($templatePath . ".twig");
     }
 
-    public function getSender(){
+    /**
+     * Get the sender e-mail address.
+     *
+     * @return string E-mail address of the sender.
+     */
+    public function getSenderEmail()
+    {
         return $this->sender;
     }
 
-    public function getSenderName(){
+    /**
+     * Get the name of the sender.
+     *
+     * @return string Name of the sender.
+     */
+    public function getSenderName()
+    {
         return $this->senderName;
     }
 
-    public function getViewPath(){
+    /**
+     * Get the path where the views of the mails are stored.
+     *
+     * @return string Path to the views of the mails.
+     */
+    public function getViewPath()
+    {
         return $this->viewPath;
     }
 
-    public function getTemplateId(){
-        if(isset($this->templateId)){
+    /**
+     * Get the template ID of the mail.
+     *
+     * @return bool|int The template ID if the mail has one, false otherwise.
+     */
+    public function getTemplateId()
+    {
+        if (isset($this->templateId)) {
             return $this->templateId;
         }
         return false;
@@ -73,7 +124,8 @@ abstract class Mail extends Object
      *
      * @param MailUser $receiver
      */
-    public function setReceiver(MailUser $receiver) {
+    public function setReceiver(MailUser $receiver)
+    {
         $this->emailAddress = $receiver->email;
         $this->userName = $receiver->name;
     }
@@ -83,7 +135,8 @@ abstract class Mail extends Object
      *
      * @param MailUser $sender
      */
-    public function setSender(MailUser $sender) {
+    public function setSender(MailUser $sender)
+    {
         $this->sender = $sender->email;
         $this->senderName = $sender->name;
     }

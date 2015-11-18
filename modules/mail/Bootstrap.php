@@ -8,7 +8,6 @@ use \booking\models\Payin;
 use \item\models\Item;
 use mail\mails\user\ReconfirmFactory;
 use \mail\models\Mailer;
-use mail\widgets\button\Button;
 use \message\models\Message;
 use \user\models\User;
 use Yii;
@@ -31,7 +30,7 @@ class Bootstrap implements BootstrapInterface
 
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
-            MailSender::send(ReconfirmFactory::create($event->sender));
+            MailSender::send(ReconfirmFactory->create($event->sender));
 
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });

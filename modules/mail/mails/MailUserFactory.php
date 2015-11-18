@@ -9,7 +9,8 @@ use user\models\User;
  * Class MailUserFactory
  * @package mail\mails
  */
-class MailUserFactory {
+class MailUserFactory
+{
 
     /**
      * Create a mail user based on a real user.
@@ -17,7 +18,8 @@ class MailUserFactory {
      * @param \user\models\User $user User to create the mail user for.
      * @return MailUser The mail user.
      */
-    public function createForUser(User $user) {
+    public function createForUser(User $user)
+    {
         $mailUser = new MailUser();
         $mailUser->name = $user->profile->getFullName();
         $mailUser->email = $user->email;
@@ -27,11 +29,12 @@ class MailUserFactory {
     /**
      * Create a mail user based on attributes.
      *
-     * @param $name Name the mail user has.
-     * @param $email E-mail address of the mail user.
+     * @param $name   string  Name the mail user has.
+     * @param $email  string  E-mail address of the mail user.
      * @return MailUser The mail user.
      */
-    public function create($name, $email) {
+    public function create($name, $email)
+    {
         $mailUser = new MailUser();
         $mailUser->name = $name;
         $mailUser->email = $email;

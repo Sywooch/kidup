@@ -11,7 +11,14 @@ use yii\helpers\Url;
  */
 class WelcomeFactory
 {
-    public static function create(\user\models\User $user)
+
+    /**
+     * Create the Welcome Mail.
+     *
+     * @param \user\models\User $user User to send the e-mail to.
+     * @return Mail E-mail.
+     */
+    public static function create($user)
     {
         $e = new Welcome();
 
@@ -25,4 +32,5 @@ class WelcomeFactory
 
         return $e;
     }
+
 }

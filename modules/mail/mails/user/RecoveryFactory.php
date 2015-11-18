@@ -2,16 +2,24 @@
 namespace mail\mails\user;
 
 use \mail\models\Token;
+
 /**
  * Recover email factory
  */
 class RecoveryFactory
 {
-    public static function create(\user\models\User $user)
+
+    /**
+     * Create the Recovery Mail.
+     *
+     * @param \user\models\User $user User to send the e-mail to.
+     * @return Mail Recovery.
+     */
+    public static function create($user)
     {
         $e = new Recovery();
 
-        $token = new \mail\models\Token();
+        $token = new Token();
         $token->setAttributes([
             'user_id' => $user->id,
             'type' => Token::TYPE_RECOVERY,

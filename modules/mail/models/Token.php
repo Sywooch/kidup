@@ -17,6 +17,11 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
+/**
+ * Class Token.
+ *
+ * @package mail\models
+ */
 class Token extends \user\models\base\Token
 {
     const TYPE_CONFIRMATION = 0;

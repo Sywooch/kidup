@@ -7,6 +7,7 @@ use user\models\User;
 use Yii;
 use yii\helpers\Json;
 
+// @todo split up
 abstract class MailFactory
 {
     public $template;
@@ -19,14 +20,16 @@ abstract class MailFactory
     private $senderName;
     private $viewPath;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->sender = 'info@kidup.dk';
         $this->senderName = 'KidUp';
         $this->viewPath = '@app/modules/mail/views';
         $this->mailId = MailLog::getUniqueId();
     }
 
-    public function getUserName(){
+    public function getUserName()
+    {
         $user = User::findOne(['email' => $this->emailAddress]);
         return $user->profile->getUserName();
     }

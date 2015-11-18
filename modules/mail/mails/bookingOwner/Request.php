@@ -3,7 +3,6 @@ namespace mail\mails\bookingOwner;
 
 use mail\mails\Mail;
 
-
 /**
  * Owner booking request
  * @param \booking\models\Booking $booking

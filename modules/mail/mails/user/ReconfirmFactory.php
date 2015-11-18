@@ -5,11 +5,18 @@ use \mail\models\Token;
 use mail\models\TokenFactory;
 
 /**
- * Recover email factory
+ * Reconfirm email factory
  */
 class ReconfirmFactory
 {
-    public function create(\user\models\User $user)
+
+    /**
+     * Create the Reconfirm Mail.
+     *
+     * @param \user\models\User $user User to send the e-mail to.
+     * @return Mail E-mail.
+     */
+    public function create($user)
     {
         $e = new Reconfirm();
 
