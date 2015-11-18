@@ -18,6 +18,7 @@ class Table extends BaseWidget
 {
 
     public $bgColor = '#F5F5F5';
+    public $outerTable = true;
 
     public function init()
     {
@@ -30,6 +31,7 @@ class Table extends BaseWidget
         $content = ob_get_clean();
         return $this->renderTwig([
             'content' => $content,
+            'outerTable' => $this->outerTable,
             'bgColor' => $this->bgColor,
         ]);
     }

@@ -1,4 +1,6 @@
+{% if outerTable %}
 {{ void(outerTable.begin()) }}
+{% endif %}
 <table width="560" cellpadding="0" cellspacing="0" border="0" align="center"
        class="devicewidthinner" bgcolor="{{ bgColor }}">
     <tbody>
@@ -18,5 +20,6 @@
     </tr>
     </tbody>
 </table>
-
-{{ void(outerTable.end()) }}
+{% if outerTable %}
+    {{ void(outerTable.end()) }}
+{% endif %}
