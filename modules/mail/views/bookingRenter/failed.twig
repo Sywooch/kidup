@@ -1,0 +1,31 @@
+{{ void(table.begin({bgColor:'#FFFFFF'})) }}
+
+    {{ space.widget({height:20}) | raw }}
+
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Din betaling med kreditkort ved leje af {{ vm.itemName }} er
+        mislykket.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Din booking er grundet denne mislykkede betaling blevet annulleret.
+        Såfremt du stadig ønsker at leje {{ vm.itemName }} skal du gennemføre
+        bookingen igen. Du kan komme direkte til din ønskede booking
+        <a href="{{ vm.bookingUrl }}">her</a>.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Har du spørgsmål angående din betaling kan du læse mere eller
+        kontakte os direkte på
+        <a href="mailto:{{ vm.kidUpEmail }}">mail</a>.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+{{ void(table.end()) }}

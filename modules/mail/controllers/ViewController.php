@@ -4,11 +4,11 @@ namespace mail\controllers;
 
 use app\extended\web\Controller;
 use booking\models\Booking;
-use mail\mails\bookingOwner\PayoutFactory;
-use mail\mails\bookingOwner\RequestFactory;
-use mail\mails\bookingOwner\StartFactory;
-use mail\mails\bookingOwner\FailedFactory;
-use mail\mails\bookingOwner\ConfirmationFactory;
+use mail\mails\bookingRenter\PayoutFactory;
+use mail\mails\bookingRenter\RequestFactory;
+use mail\mails\bookingRenter\StartFactory;
+use mail\mails\bookingRenter\FailedFactory;
+use mail\mails\bookingRenter\ConfirmationFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmFactory;
