@@ -30,7 +30,7 @@ class Bootstrap implements BootstrapInterface
 
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
-            MailSender::send(ReconfirmFactory->create($event->sender));
+            MailSender::send((new ReconfirmFactory())->create($event->sender));
 
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });

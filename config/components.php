@@ -70,10 +70,10 @@ $components = [
                     't' => function ($cat, $default) {
                         return \Yii::t($cat, $default);
                     },
-                    'image' => function ($file, $options, $htmlOptions) {
+                    'image' => function ($file, $options = [], $htmlOptions = []) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
-                    'imageUrl' => function ($file, $options) {
+                    'imageUrl' => function ($file, $options = []) {
                         return \images\components\ImageHelper::url($file, $options);
                     },
                     'timestampToDate' => function ($timestamp) {

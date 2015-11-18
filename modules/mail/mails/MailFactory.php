@@ -7,7 +7,11 @@ use user\models\User;
 use Yii;
 use yii\helpers\Json;
 
-// @todo split up
+/**
+ * Class MailFactory used for sending an e-mail by rendering the e-mail and log the data.
+ *
+ * @package mail\mails
+ */
 abstract class MailFactory
 {
     public $template;
@@ -57,7 +61,7 @@ abstract class MailFactory
             $this->senderName = $data['senderName'] . ' (KidUp)';
         }
 
-        $log = MailLog::create($data['type'], $data['email'], $params, $logId);
+        MailLog::create($data['type'], $data['email'], $params, $logId);
 
         $view = self::getView($data['type']);
         \Yii::$app->params['tmp_email_params'] = $params;
