@@ -35,6 +35,11 @@ class UrlFactory
         return self::url("search");
     }
 
+    public static function website()
+    {
+        return self::url("home");
+    }
+
     public static function seeInBrowser($id)
     {
         return self::url("view/" . $id);

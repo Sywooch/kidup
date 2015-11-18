@@ -5,9 +5,7 @@ use mail\mails\Mail;
 
 
 /**
- * Owner booking request
- * @param \booking\models\Booking $booking
- * @return bool
+ * Renter booking request.
  */
 class Start extends Mail {
 

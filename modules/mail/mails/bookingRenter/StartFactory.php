@@ -6,7 +6,7 @@ use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
- * Owner booking request.
+ * Renter booking request.
  */
 class StartFactory
 {

@@ -6,25 +6,22 @@ use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
- * Owner booking payout.
+ * Renter booking confirmation.
  */
-class PayoutFactory
+class DeclineFactory
 {
 
     public function create(\booking\models\Booking $booking)
     {
         $receiver = (new MailUserFactory())->createForUser($booking->renter);
 
-        $e = new Payout();
+        $e = new Decline();
         $e->setReceiver($receiver);
-        $e->profileName = $booking->renter->profile->first_name;
-        $e->ownerName = $booking->item->owner->profile->first_name;
+        $e->websiteUrl = UrlFactory::website();
         $e->itemName = $booking->item->name;
-        $e->amountServiceFee = $booking->amount_item - $booking->amount_payout . ' DKK';
-        $e->amountTotal = $booking->amount_payout . ' DKK';
+        $e->profileName = $booking->renter->profile->first_name;
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;
-        $e->viewReceiptUrl = UrlFactory::receipt($booking);
 
         return $e;
     }

@@ -6,7 +6,7 @@ use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
- * Owner booking failed.
+ * Renter booking failed.
  */
 class FailedFactory
 {

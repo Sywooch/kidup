@@ -6,7 +6,7 @@ use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
- * Owner booking confirmation.
+ * Renter booking confirmation.
  */
 class ConfirmationFactory
 {

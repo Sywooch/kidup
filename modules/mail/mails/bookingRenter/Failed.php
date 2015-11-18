@@ -5,7 +5,7 @@ use mail\mails\Mail;
 
 
 /**
- * Owner booking failed
+ * Renter booking failed
  */
 class Failed extends Mail {
 

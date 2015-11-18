@@ -4,7 +4,7 @@ namespace mail\mails\bookingRenter;
 use mail\mails\Mail;
 
 /**
- * Owner booking confirmation.
+ * Renter booking confirmation.
  */
 class Confirmation extends Mail {
 

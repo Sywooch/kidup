@@ -4,6 +4,7 @@ namespace mail\controllers;
 
 use app\extended\web\Controller;
 use booking\models\Booking;
+use mail\mails\bookingRenter\DeclineFactory;
 use mail\mails\bookingRenter\PayoutFactory;
 use mail\mails\bookingRenter\RequestFactory;
 use mail\mails\bookingRenter\StartFactory;
@@ -52,7 +53,7 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new ConfirmationFactory();
+        $factory = new DeclineFactory();
 
         // define many objects to play with
         $user = User::find()->one();
