@@ -58,10 +58,15 @@ class HomeController extends Controller
             return Item::getRecommended(4);
         }, 6 * 3600);
 
+        $rotationImage = rand(1,2);
+        $fileName = "kidup/home/rotating-headers/header-{$rotationImage}.jpg";
+
         $res = $this->render('index', [
             'categories' => $categories,
             'items' => $items,
-            'searchModel' => $searchModel
+            'searchModel' => $searchModel,
+            'image' => $rotationImage,
+            'rotatingImage' => $fileName
         ]);
 
         return $res;

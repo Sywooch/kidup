@@ -22,6 +22,9 @@ $this->registerJsVariables([
 <div id="search-area" class="hidden-sm visible-md visible-lg">
     <div class="row search-area">
         <div class="container">
+            <h3 style="text-align: center;font-weight: 300;">
+                <?= Yii::t("home.search_header", "Search your child need") ?>
+            </h3>
             <div class="col-sm-12 col-md-10 col-md-offset-1">
                 <div class="row">
                     <?php

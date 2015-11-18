@@ -1,6 +1,7 @@
 <?php
 namespace codecept\api\booking;
 
+use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\User;
@@ -34,13 +35,14 @@ class CreateCest
      *
      * @param ApiTester $I
      */
-    public function checkBookingGuest(ApiTester $I) {
+    public function checkBookingGuest(ApiTester $I)
+    {
         $item = $this->fm->create(Item::className());
         $I->wantTo("create a simple booking");
         $I->sendPOST('bookings', [
             'item_id' => $item->id,
-            'date_from' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 3, date('Y'))),
-            'date_to' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 5, date('Y')))
+            'date_from' => Carbon::now()->addDays(3)->timestamp,
+            'date_to' => Carbon::now()->addDays(5)->timestamp
         ]);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(401);
@@ -60,16 +62,15 @@ class CreateCest
         $I->wantTo("create a simple booking");
         $I->sendPOST('bookings?access-token=' . $accessToken, array_merge([
             'item_id' => $item->id,
-            'date_from' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 3, date('Y'))),
-            'date_to' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 5, date('Y'))),
+            'time_from' => Carbon::now()->addDays(3)->timestamp,
+            'time_to' => Carbon::now()->addDays(5)->timestamp,
+            'message' => '',
+            'payment_nonce' => 'fake-nonce'
         ]));
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $response = $I->grabResponse();
-        $response = json_decode($response, true);
-        $I->assertTrue(array_key_exists('success', $response));
-        $I->assertEquals(true, $response['success']);
-        $I->assertTrue(array_key_exists('booking_id', $response));
+        $I->seeResponseContains('"booking":');
+        $I->seeResponseContainsJson(['success' => true]);
     }
 
 }

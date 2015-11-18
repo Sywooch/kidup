@@ -2,6 +2,7 @@
 
 namespace booking\models;
 
+use app\helpers\Encrypter;
 use app\helpers\Event;
 use Carbon\Carbon;
 use user\models\PayoutMethod;
@@ -65,7 +66,7 @@ class Payout extends \booking\models\base\Payout
         }
     }
 
-    public function exportDankseBank()
+    public function exportDankseBank($key)
     {
         if ($this->status !== self::STATUS_TO_BE_PROCESSED) {
             return false;
@@ -85,11 +86,11 @@ class Payout extends \booking\models\base\Payout
         $field[7] = "N"; // todo check
         $field[13] = "J"; // todo check
 
-        $field[24] = "KidUp Payout " . $this->id;
-        $field[83] = "You're awesome!";
+        $field[24] = "KidUp-Payout-" . (string)$this->id;
+        $field[83] = "Tnx for using KidUp!";
         // to account, this needs to be processed by externall process.php (in veracrypt container)
-        $field[84] = $payoutMethod->identifier_1_encrypted;
-        $field[85] = $payoutMethod->identifier_2_encrypted; // to account
+        $field[84] = Encrypter::decrypt($payoutMethod->identifier_1_encrypted,$key);
+        $field[85] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted, $key); // to account
         $str = [];
         for ($i = 1; $i <= 86; $i++) {
             if (!isset($field[$i])) {
@@ -99,8 +100,8 @@ class Payout extends \booking\models\base\Payout
             }
         }
 
-        echo '"' . implode('","', $str) . '",';
-        return false;
+        $res = "\"" . implode('","', $str) . '"';
+        return $res;
     }
 
     /**

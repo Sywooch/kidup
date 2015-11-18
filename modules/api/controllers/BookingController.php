@@ -1,39 +1,47 @@
 <?php
 namespace api\controllers;
 
+use api\models\Booking;
 use api\models\Currency;
 use api\models\Item;
-use booking\models\Booking;
+use booking\forms\Confirm;
 use booking\models\BrainTree;
 use item\forms\CreateBooking;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
+use yii\web\BadRequestHttpException;
 
 class BookingController extends Controller
 {
-    public function init(){
+    public function init()
+    {
         $this->modelClass = Booking::className();
         parent::init();
     }
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [
-            'guest' => ['payment-token', 'index', 'create', 'view'],
-            'user' => ['costs']
+            'guest' => ['payment-token', 'costs', 'options'],
+            'user' => ['create', 'view', 'index']
         ];
     }
 
-    public function actions(){
+    public function actions()
+    {
         $actions = parent::actions();
 
         // overwrite the default create action
         unset($actions['create']);
         unset($actions['costs']);
+        unset($actions['index']);
 
         return $actions;
     }
 
-    function actionIndex(){
+    function actionIndex()
+    {
         return new ActiveDataProvider([
             'query' => Booking::find()->where([
                 'renter_id' => \Yii::$app->user->id
@@ -48,31 +56,36 @@ class BookingController extends Controller
      * @apiDescription  Create a booking.
      *
      * @apiParam {Number}       item_id             The item_id of the item to create the booking for.
-     * @apiParam {String}       date_from           d-m-Y formatted date to start the booking on.
-     * @apiParam {String}       date_end            d-m-Y formatted date to end the booking on.
+     * @apiParam {Integer}      time_from           timestamp formatted date to start the booking on.
+     * @apiParam {Integer}      time_to            timestamp formatted date to end the booking on.
+     * @apiParam {String}       payment_nonce       a valid braintree payment nonce.
+     * @apiParam {String}       message             message to the owner.
      * @apiSuccess {boolean}    success             Whether or not the booking was successfully created.
      * @apiSuccess {Number}     booking_id          The booking_id of the newly created booking (only if success === true).
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         // fetch the parameters
         $params = \Yii::$app->request->post();
 
         // check the parameters
         if (!isset($params['item_id'])) {
-            throw(new Exception("No item_id is set."));
+            throw(new BadRequestHttpException("No item_id is set."));
         }
-        if (!isset($params['date_from'])) {
-            throw(new Exception("No date_from (timestamp) is set."));
+        if (!isset($params['time_from'])) {
+            throw(new BadRequestHttpException("No time_from (timestamp) is set."));
         }
-        if (!isset($params['date_to'])) {
-            throw(new Exception("No date_to (timestamp) is set."));
+        if (!isset($params['time_to'])) {
+            throw(new BadRequestHttpException("No time_to (timestamp) is set."));
+        }
+        if (!isset($params['payment_nonce'])) {
+            throw(new BadRequestHttpException("No payment_method_nonce (string) is set."));
         }
 
         // load the parameters
         $item_id = $params['item_id'];
-        // dates should be in d-m-Y format
-        $date_from = $params['date_from'];
-        $date_to = $params['date_to'];
+        $nonce = $params['payment_nonce'];
+        $message = $params['message'];
 
         /**
          * @var $item Item
@@ -92,59 +105,53 @@ class BookingController extends Controller
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
-        $booking->dateFrom = $date_from;
-        $booking->dateTo = $date_to;
-
-        // create the result
-        $result = [
-            'success' => false
-        ];
+        $booking->dateFrom = date("d-m-Y", round($params['time_from']));
+        $booking->dateTo = date("d-m-Y", round($params['time_to']));
 
         // save the booking
         $bookingObject = null;
         if ($booking->validateDates()) {
-            $booking->save(false);
-            $bookingObject = $booking->booking;
+            if ($booking->save(false)) {
+                $bookingObject = $booking->booking;
+            } else {
+                throw new BadRequestHttpException('Booking object couldnt validate');
+            }
+        } else {
+            throw new BadRequestHttpException('Dates are invalid');
         }
         if (is_object($bookingObject) && isset($bookingObject->id) && is_numeric($bookingObject->id) && $bookingObject->id > 0) {
-            $result['success'] = true;
-            $result['booking_id'] = $bookingObject->id;
+            // do the actual payment
+            $model = new Confirm($bookingObject);
+            $model->message = $message;
+            $model->nonce = $nonce;
+            $model->rules = 1;
+            if ($model->save()) {
+                // booking is made and payed!
+                return $bookingObject;
+            } else {
+                throw new BadRequestHttpException('Payment failed - no idea why');
+            }
         }
-
-        return $result;
+        throw new BadRequestHttpException('Booking failed');
     }
 
     /**
-     * @api {post} bookings/costs
-     * @apiGroup        Booking
+     * @api {get} bookings/costs
+     * @apiGroup        Bookingc
      * @apiName         costsBooking
      * @apiDescription  Check the costs of a booking.
      *
      * @apiParam {Number}       item_id             The item_id of the item to create the booking for.
-     * @apiParam {String}       date_from           d-m-Y formatted date to start the booking on.
-     * @apiParam {String}       date_end            d-m-Y formatted date to end the booking on.
+     * @apiParam {Integer}      time_from           timestamp formatted date to start the booking on.
+     * @apiParam {Integer}      time_to            timestamp formatted date to end the booking on.
      * @apiSuccess {Object[]}   tableData           An array containing the costs of the booking.
      */
-    public function actionCosts() {
-        // fetch the parameters
-        $params = \Yii::$app->request->post();
-
-        // check the parameters
-        if (!isset($params['item_id'])) {
-            throw(new Exception("No item_id is set."));
-        }
-        if (!isset($params['date_from'])) {
-            throw(new Exception("No date_from (timestamp) is set."));
-        }
-        if (!isset($params['date_to'])) {
-            throw(new Exception("No date_to (timestamp) is set."));
-        }
-
+    public function actionCosts($item_id, $time_from, $time_to)
+    {
         // load the parameters
-        $item_id = $params['item_id'];
         // dates should be in d-m-Y format
-        $date_from = $params['date_from'];
-        $date_to = $params['date_to'];
+        $time_from = date("d-m-Y", (int)$time_from);
+        $time_to = date("d-m-Y", (int)$time_to);
 
         // fetch the item
         $item = Item::find()->where([
@@ -165,15 +172,13 @@ class BookingController extends Controller
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
-        $booking->dateFrom = $date_from;
-        $booking->dateTo = $date_to;
+        $booking->dateFrom = $time_from;
+        $booking->dateTo = $time_to;
 
         // do not save, display the table data
         $booking->calculateTableData();
 
-        return [
-            'tableData' => $booking->tableData
-        ];
+        return $booking->tableData;
     }
 
     /**
@@ -184,7 +189,8 @@ class BookingController extends Controller
      *
      * @apiSuccess {Array}   token           The client token.
      */
-    public function actionPaymentToken(){
+    public function actionPaymentToken()
+    {
         return [
             'token' => (new BrainTree())->getClientToken()
         ];

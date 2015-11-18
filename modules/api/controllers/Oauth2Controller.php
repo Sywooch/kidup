@@ -57,7 +57,7 @@ class Oauth2Controller extends Controller
         }
         $token = OauthAccessToken::make($user, $client);
         $refreshToken = OauthRefreshToken::make($user, $client);
-        
+
 
         return [
             'token' => $token->access_token,
