@@ -50,7 +50,7 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new PayoutFactory();
+        $factory = new StartFactory();
 
         // define many objects to play with
         $user = User::find()->one();

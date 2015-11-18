@@ -1,10 +1,6 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
 
-    {{ void(textBlock.begin({fontSize: 24})) }}
-        <strong>Hej {{ vm.userName }},</strong>
-    {{ void(textBlock.end()) }}
-
-    {{ space.widget({height: 15}) | raw }}
+    {{ greeter.widget({name: vm.userName}) | raw }}
 
     {{ void(textBlock.begin()) }}
                 Dette er en p&aring;mindelse om, at {{ vm.renterName }} har en reservation

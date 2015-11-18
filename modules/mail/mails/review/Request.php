@@ -6,8 +6,6 @@ namespace mail\mails\review;
  */
 class Request extends BaseReview
 {
-    /**
-     * @var string where review can be made
-     */
-    public $reviewUrl;
+    // there URL where the review can be made
+    public $reviewUrl = '';
 }

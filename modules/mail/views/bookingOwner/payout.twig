@@ -1,7 +1,5 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-{{ void(textBlock.begin({fontSize: 18})) }}
-    <strong>Hej {{ vm.profileName }}</strong>
-{{ void(textBlock.end()) }}
+{{ greeter.widget({name: vm.profileName}) | raw }}
 {{ void(textBlock.begin()) }}
         Vi har sendt dig en udbetaling på {{ vm.totalAmount }} via
         bankoverførsel.
