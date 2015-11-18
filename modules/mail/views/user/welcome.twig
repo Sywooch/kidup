@@ -258,22 +258,10 @@
                                                         </td>
                                                     </tr>
                                                     <!-- /Spacing --><!-- content -->
-                                                    <tr>
-                                                        <td style="font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #000000; text-align:left; line-height: 24px;"
-                                                            class="padding-right15" st-content="text">
 
-                                                            <p class="BrdtekstA">
-                                                            <table class="button">
-                                                                <tr>
-                                                                    <td>
-                                                                        <a href="<?= $urls['verify'] ?>">Tilføj
-                                                                            verifikationer</a>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
+                                                    {# Verification button #}
+                                                    {{ button.widget({'content': 'Tilføj verifikationer', 'url': vm.verifyUrl, 'wide': false}) | raw }}
+
                                                     <!-- end of content -->
                                                     </tbody>
                                                 </table>
@@ -403,22 +391,10 @@
                                                         </td>
                                                     </tr>
                                                     <!-- /Spacing --><!-- content -->
-                                                    <tr>
-                                                        <td style="font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #000000; text-align:left; line-height: 24px;"
-                                                            class="padding-right15" st-content="text">
 
-                                                            <p class="BrdtekstA">
-                                                            <table class="button">
-                                                                <tr>
-                                                                    <td>
-                                                                        <a href="<?= $urls['search'] ?>">Gå på
-                                                                            opdagelse</a>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
+                                                    {# Search button #}
+                                                    {{ button.widget({'content': 'Gå på opdagelse', 'url': vm.searchUrl, 'wide': false}) | raw }}
+
                                                     <!-- end of content -->
                                                     <!-- end of content -->
                                                     </tbody>
