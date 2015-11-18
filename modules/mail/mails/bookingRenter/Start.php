@@ -15,7 +15,8 @@ class Start extends Mail {
     public $profileName;
     public $renterName;
     public $ownerName;
-    public $phone;
+    public $ownerPhone;
+    public $ownerLocation;
     public $itemName;
     public $itemAmount;
 

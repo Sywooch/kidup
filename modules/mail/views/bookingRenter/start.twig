@@ -1,66 +1,86 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-
     {{ greeter.widget({name: vm.profileName}) | raw }}
 
     {{ void(textBlock.begin()) }}
-                Dette er en p&aring;mindelse om, at {{ vm.renterName }} har en reservation
-                hos dig i perioden <span style="font-weight: 700;">{{ timestampToDate(vm.startDate) }}
-                    - {{ timestampToDate(vm.endDate) }}</span> af {{ vm.itemName }}.
+        Dette er en p&aring;mindelse om, at du har en kommende reservation. Vi
+        anbefaler, at du verificerer den eksakte adresse og telefonnummer,
+        direkte med v&aelig;rten.
     {{ void(textBlock.end()) }}
 
-    {{ space.widget({height: 15}) | raw }}
+    {{ space.widget({height:15}) | raw }}
 
-    {{ void(textBlock.begin()) }}
-                Du kan kontakt brugeren via telefon p&aring; {{ vm.phone }} eller via
-                e-mail.
-    {{ void(textBlock.end()) }}
-
-    {{ space.widget({height: 15}) | raw }}
 {{ void(table.end()) }}
+
 
 {{ void(table.begin({bgColor: '#FFFFFF'})) }}
 <table width="100%">
     <tr>
         {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
-            Udleje starter<br />
-            <strong>{{ timestampToDate(vm.startDate) }}</strong>
+        Udleje starter<br />
+        <strong>{{ timestampToDate(vm.startDate) }}</strong>
         {{ void(textBlock.end()) }}
 
         {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
-            Udleje slutter<br />
-            <strong>{{ timestampToDate(vm.endDate) }}</strong>
+        Udleje slutter<br />
+        <strong>{{ timestampToDate(vm.endDate) }}</strong>
         {{ void(textBlock.end()) }}
     </tr>
 </table>
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-{{ space.widget({height: 15}) | raw }}
-{{ void(textBlock.begin()) }}
-    {{ vm.renterName }} har allerede betalt {{ vm.itemAmount }} +
-    servicegebyr til KidUp. Pengene (fratrukket udlejningsgebyr) bliver
-    overf&oslash;rt til dig dagen efter, at g&aelig;sten har modtaget dit udstyr.
-{{ void(textBlock.end()) }}
-{{ space.widget({height: 15}) | raw }}
+    {{ void(textBlock.begin()) }}
+    <table width="100%">
+        <tr>
+            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            Udstyrets detaljer
+            {{ void(textBlock.end()) }}
+            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.itemName }}
+            {{ void(textBlock.end()) }}
+        </tr>
+    </table>
+    {{ void(textBlock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF'})) }}
-{{ space.widget({height: 20}) | raw }}
-{{ void(textBlock.begin()) }}
-    Udlejnings-tjekliste
-    <ol>
-        <li>Kontakt lejeren via e-mail eller telefon for at bekr&aelig;fte udvekslingstidspunkt.</li>
-        <li>Udstyret er rengjort</li>
-        <li>Udstyret er gennemtjekket og fyldt funktionsdygtigt.</li>
-        <li>Udskriv din udlejnings bekr&aelig;ftelse, s&aring; du har lejerens e-mail og telefonnummer ved h&aring;nden.</li>
-        <li>Find nyttige oplysninger i vores hj&aelig;lpecenter.</li>
-    </ol>
-{{ void(textBlock.end()) }}
-{{ space.widget({height: 15}) | raw }}
-{{ void(textBlock.begin()) }}
-    Du kan kontakt brugeren via telefon p&aring; {{ vm.phone }} eller via
-    e-mail.
-{{ void(textBlock.end()) }}
-{{ space.widget({height: 15}) | raw }}
+    {{ void(textBlock.begin()) }}
+    <table width="100%">
+        <tr>
+            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            Udlejer
+            {{ void(textBlock.end()) }}
+            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerName }}
+            {{ void(textBlock.end()) }}
+            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerLocation | raw }}
+            {{ void(textBlock.end()) }}
+            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerPhone }}
+            {{ void(textBlock.end()) }}
+        </tr>
+    </table>
+    {{ void(textBlock.end()) }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+    {{ void(textBlock.begin()) }}
+        F&oslash;r du afhenter, er det en god ide at genneml&aelig;se tjeklisten for
+        udstyret:
+        <ol>
+            <li><a href="{{ vm.bookingUrl }}">Udskriv og medbring din booking
+            bekr&aelig;ftelse</a>, herunder v&aelig;rtens
+            adresse og telefonnummer.</li>
+            <li><a href="{{ vm.chatUrl }}">Kontakt v&aelig;rten</a> f&oslash;r udveksling
+            af udstyret for at f&aring;
+            k&oslash;rselsvejledninger, bekr&aelig;fte dit afhentningstidspunkt, og
+            verificere v&aelig;rtens kontaktoplysninger.</li>
+            <li>Hvis du p&aring; noget tidspunkt har brug for assistance under din
+            lejeperiode, kan du bes&oslash;ge vores <a href="{{ vm.helpUrl }}">hj&aelig;lpecenter</a>.</li>
+        </ol>
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
 
 {{ void(table.end()) }}

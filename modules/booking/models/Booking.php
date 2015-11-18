@@ -137,11 +137,18 @@ class Booking extends base\Booking
         return $conv->id;
     }
 
+    public function getLocation($HTMLNewLines = false) {
+        $newLine = PHP_EOL;
+        if ($HTMLNewLines) $newLine = '<br />';
+        return $this->item->location->street_name . ' ' . $this->item->location->street_number . ',' . $newLine .
+            $this->item->location->zip_code . ' ' . $this->item->location->city . $newLine . ', ' . $newLine .
+            $this->item->location->country0->name;
+    }
+
     /**
      * Get the number of days of this booking.
      *
      * @return int The number of days this booking lasts.
-     * @todo PLEASE REMOVE THIS FUNCTIONALITY IN ITEM!
      */
     public function getNumberOfDays() {
         $to = $this->time_to;

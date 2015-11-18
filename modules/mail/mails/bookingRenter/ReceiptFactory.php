@@ -21,9 +21,7 @@ class ReceiptFactory
         $e->endDate = $booking->time_to;
         $e->bookingId = $booking->id;
         $e->profileName = $booking->renter->profile->first_name . ' ' . $booking->renter->profile->last_name;
-        $e->bookingLocation = $booking->item->location->street_name . ' ' . $booking->item->location->street_number . ',' . PHP_EOL .
-            $booking->item->location->zip_code . ' ' . $booking->item->location->city . PHP_EOL . ', ' . PHP_EOL .
-            $booking->item->location->country0->name;
+        $e->bookingLocation = $booking->getLocation(true);
         $e->itemName = $booking->item->name;
         $e->rentingDays = $booking->getNumberOfDays();
         if (is_object($booking->payin)) {
