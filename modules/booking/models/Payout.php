@@ -87,7 +87,7 @@ class Payout extends \booking\models\base\Payout
         $field[13] = "J"; // todo check
 
         $field[24] = "KidUp-Payout-" . (string)$this->id;
-        $field[83] = "Tnx for using KidUp!";
+        $field[83] = "Tak fordi du brugte Kidup!";
         // to account, this needs to be processed by externall process.php (in veracrypt container)
         $field[84] = Encrypter::decrypt($payoutMethod->identifier_1_encrypted,$key);
         $field[85] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted, $key); // to account

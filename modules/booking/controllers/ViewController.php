@@ -78,24 +78,26 @@ class ViewController extends Controller
      * @param $id
      * @return string
      */
-    public function actionInvoice($id, $pdf = false)
+    public function actionInvoice($id, $pdf = false, $adminType = false)
     {
         $booking = $this->load($id);
 
-        if ($booking->renter_id == \Yii::$app->user->id) {
+        if ($booking->renter_id == \Yii::$app->user->id || ($adminType == 'renter' && \Yii::$app->user->identity->isAdmin())) {
             $viewFile = '/renter/invoice';
             if ($booking->payin->invoice_id == null) {
                 \Yii::$app->session->addFlash('error',
                     \Yii::t('booking.flash.invoice_available_after_accept', 'Invoice is available after the owner accepted the booking.'));
                 return $this->redirect('@web/booking/' . $booking->id);
             }
-        } else {
+        } else if($booking->item->owner_id == \Yii::$app->user->id || ($adminType == 'owner' && \Yii::$app->user->identity->isAdmin())){
             $viewFile = '/owner/invoice';
             if (is_null($booking->payout) || $booking->payout->invoice_id == null) {
                 \Yii::$app->session->addFlash('error',
                     \Yii::t('booking.flash.invoice_available_24h_after_booking_start', 'Invoice is available 24h after the booking started.'));
                 return $this->redirect('@web/booking/' . $booking->id);
             }
+        }else{
+            throw new ForbiddenHttpException("This booking does not belong to you");
         }
 
         $invoice = $booking->payin->invoice;
