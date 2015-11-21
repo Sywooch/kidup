@@ -16,10 +16,10 @@ class ItemController extends Controller
 
     public function behaviors()
     {
-        ArrayHelper::merge(parent::behaviors(), [
-            [
+        return ArrayHelper::merge(parent::behaviors(), [
+            'cache' => [
                 'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
+                'only' => ['search'],
                 'duration' => 60 * 20,
                 'enabled' => YII_CACHE,
                 'variations' => [
