@@ -15,7 +15,7 @@ class MessageController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => [],
+            'guest' => ['options'],
             'user' => ['create', 'view']
         ];
     }
@@ -26,27 +26,19 @@ class MessageController extends Controller
         unset($actions['view']);
         unset($actions['index']);
         unset($actions['update']);
+        unset($actions['create']);
         return $actions;
-    }
-
-    public function actionView($id){
-        // todo: security check
-        return new ActiveDataProvider([
-            'query' => Message::find()
-                ->where(['conversation_id' => $id])
-                ->orderBy('message.created_at DESC')
-        ]);
     }
 
     public function actionCreate(){
         // todo: security check
-        $params = \Yii::$app->request->post();
+        $params = \Yii::$app->request->getBodyParams();
         /**
          * @var Conversation $c
          */
         $c = Conversation::findOne(['id' => $params['conversation_id']]);
         $m = new Message();
-        $m->receiver_user_id = $c->otherUser->user_id;
+        $m->receiver_user_id = $c->otherUser->id;
         $m->read_by_receiver = 0;
         $m->sender_user_id = \Yii::$app->user->id;
         $m->message = $params['message'];

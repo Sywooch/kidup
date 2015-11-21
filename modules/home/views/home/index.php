@@ -10,6 +10,7 @@ use images\components\ImageHelper;
  * @var \item\models\Location $location
  * @var \home\forms\Search $searchModel
  * @var bool $show_modal
+ * @var string $rotatingImage
  */
 $this->assetPackage = \app\assets\Package::HOME;
 $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff'));
@@ -17,7 +18,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
 ?>
 <div id="home">
     <div class="cover-home"
-         style="<?= ImageHelper::bgImg('kidup/home/header2.jpg', ['q' => 70, 'w' => 2000]) ?>; "></div>
+         style="<?= ImageHelper::bgImg($rotatingImage, ['q' => 70, 'w' => 2000]) ?>; "></div>
     <!--Area for background-image, tag-line and sign-up -->
     <div id="header-home">
         <div class="header-content">
@@ -30,10 +31,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                         <br/>
                         <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
                     </h1>
-                    <h4>
-                        <?= \Yii::t("home.kidup_is_marketplace", 'KidUp is your online parent-to-parent marketplace.') ?>
-                    </h4>
-
+                    <br><br><br>
                     <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button"
                          data-toggle="modal"
                          data-target="#signup-conversion-modal"
@@ -45,19 +43,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <?= \app\widgets\SignupModal::widget([
                         'autoOpen' => false
                     ]) ?>
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="btn btn-default hidden-xs hidden-sm pull-right" id="how-it-works-btn">-->
-<!--                                --><?//= Yii::t("home.subheader_how_it_works", "How it Works") ?>
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-6">-->
-<!--                            -->
-<!--                        </div>-->
-<!--                    </div>-->
-
-
-
+                    <br>
+                    <div class="btn btn-default hidden-xs hidden-sm" id="how-it-works-btn" style="margin-top:10px;">
+                        <?= Yii::t("home.subheader_how_it_works", "How it Works") ?>
+                    </div>
 
                     <?php $this->registerJs("$('#how-it-works-btn').click(function() {
                         $('html, body').animate({
@@ -91,14 +80,18 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
             </div>
         </div>
     </div>
+    <?= $this->render('grid', [
+        'categories' => $categories
+    ]);
+    ?>
+
 
     <?= $this->render('search', [
         'model' => $searchModel,
         'defaultCategory' => $categories['Baby Toys']
     ]); ?>
 
-    <?= $this->render('grid', [
-        'categories' => $categories,
+    <?= $this->render('items', [
         'items' => $items,
     ]);
     ?>

@@ -149,12 +149,12 @@ class ImageHelper extends BaseHtml
     public static function urlSet($filename, $isMobile = false){
         $m = 1;
         if($isMobile){
-            $m = 0.7;
+            $m = 1;
         }
         return [
-            'original' => self::url($filename),
+            'original' => self::url($filename, ['w' => 600*$m, 'q' => 90]),
             'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
-            'medium' => self::url($filename, ['w' => 250*$m, 'q' => 90]),
+            'medium' => self::url($filename, ['w' => 300*$m, 'q' => 90]),
         ];
     }
 }

@@ -12,37 +12,42 @@ use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
-    public function init(){
+    public function init()
+    {
         $this->modelClass = Item::className();
         parent::init();
     }
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [
-            'guest' => ['index', 'view', 'search', 'recommended', 'related'],
-            'user' => []
+            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews', 'options'],
+            'user' => ['update', 'create']
         ];
     }
 
-    public function actions(){
+    public function actions()
+    {
         $actions = parent::actions();
         unset($actions['delete']);
-        unset($actions['create']);
+//        unset($actions['create']);
         unset($actions['index']);
-        unset($actions['update']);
+//        unset($actions['update']);
         unset($actions['view']);
         return $actions;
     }
 
     // default action, does not need documentation
-    public function actionIndex(){
+    public function actionIndex()
+    {
         return new ActiveDataProvider([
             'query' => Item::find()->where(['is_available' => 1])
         ]);
     }
 
     // default action, does not need documentation
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
@@ -59,12 +64,16 @@ class ItemController extends Controller
      * @apiParam {Number}       item_id           The item_id of the item to find related items for.
      * @apiSuccess {Object[]}   related_items     A list of related items.
      */
-    public function actionRelated() {
+    public function actionRelated()
+    {
         $params = \Yii::$app->request->get();
         if (!array_key_exists('item_id', $params)) {
             throw new NotAcceptableHttpException('No item_id is given.');
         }
         $itemId = $params['item_id'];
+        /**
+         * @var Item $item
+         */
         $item = Item::find()->where(['is_available' => 1, 'id' => $itemId])->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
@@ -83,12 +92,23 @@ class ItemController extends Controller
      *
      * @apiSuccess {Object[]}   recommended_items     A list of recommended items.
      */
-    public function actionRecommended() {
-        return Item::getRecommended(4);
+    public function actionRecommended()
+    {
+        // todo this is rather ugly, but an activedataprovider needs to be returned for consitency
+        $items = Item::getRecommended(4);
+
+
+        $res = [];
+        foreach ($items as $item) {
+            $res[] = $item->id;
+        }
+        return new ActiveDataProvider([
+            'query' => Item::find()->where(['IN', 'id', $res])
+        ]);
     }
 
     /**
-     * @api {post} items/search
+     * @api {get} items/search
      * @apiName         searchItem
      * @apiGroup        Item
      * @apiDescription  Search for items.
@@ -120,17 +140,16 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
-    public function actionSearch() {
-        // load the page number
-        $page = \Yii::$app->request->post('page', 0);
-
+    public function actionSearch($page = 0)
+    {
         // load the other parameters
-        $params = \Yii::$app->request->post();
+        $params = \Yii::$app->request->get();
 
         // set some read-only parameters
         $pageSize = 12;
 
         $model = new Filter();
+        $model->_query = Item::find();
         $model->page = $page;
         $model->pageSize = $pageSize;
 
@@ -170,14 +189,26 @@ class ItemController extends Controller
         $query = $model->getQuery(true);
 
         // and give back the results
-        return [
-            'num_pages' => ceil($model->estimatedResultCount / $pageSize),
-            'num_items' => $model->estimatedResultCount,
-            'results' => $query->all()
-        ];
+//        return [
+//            'items' => $model->findItems(),
+//            'filters' => $model->featureFilters,
+//            // todo make this real
+//            '_meta' => [
+//                'currentPage' => 0,
+//                'pageCount' => 1,
+//                'perPage' => 20,
+//                'totalCount' => 100
+//            ]
+//        ];
+
+        return new ActiveDataProvider([
+            'query' => $model->getQuery()
+        ]);
     }
 
-    public function actionReview($id){
+    public function actionReviews($id)
+    {
+        $this->modelClass = Review::className();
         return new ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);

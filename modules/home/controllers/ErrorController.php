@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
 use yii\web\HttpException;
+use yii\web\Response;
 
 class ErrorController extends Controller
 {
@@ -40,6 +41,16 @@ class ErrorController extends Controller
             }
             $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error',
                 'An internal server error occurred.');
+        }
+        
+        $route = @\Yii::$app->request->getUrl();
+        if(strpos($route, '/api') === 0){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'name' => $name,
+                'message' => $message,
+                'exception' => $exception,
+            ];
         }
 
         return $this->render('error', [

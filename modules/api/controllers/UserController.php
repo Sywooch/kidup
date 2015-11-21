@@ -20,7 +20,7 @@ class UserController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'create', 'review'],
+            'guest' => ['index', 'view', 'create', 'reviews'],
             'user' => ['update', 'me']
         ];
     }
@@ -32,6 +32,7 @@ class UserController extends Controller
         unset($actions['delete']);
         unset($actions['create']);
         unset($actions['update']);
+        unset($actions['view']);
         return $actions;
     }
 
@@ -67,7 +68,11 @@ class UserController extends Controller
         return $user;
     }
 
-    public function actionReview($id){
+    public function actionView($id){
+        return User::findOne($id);
+    }
+
+    public function actionReviews($id){
         return new ActiveDataProvider([
             'query' => Review::find()->where(['reviewed_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);
