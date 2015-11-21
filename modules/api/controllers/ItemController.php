@@ -204,7 +204,7 @@ class ItemController extends Controller
         }
 
         return new ActiveDataProvider([
-            'query' => $model->getQuery(true)
+            'query' => $model->getQuery()
         ]);
     }
 
