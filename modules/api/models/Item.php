@@ -31,6 +31,11 @@ class Item extends \item\models\Item
             return $res;
         };
 
+        $fields['price_day'] = $this->getDailyPrice();
+        $fields['price_week'] = $this->getWeeklyPrice();
+        $fields['price_month'] = $this->getMonthlyPrice();
+        $fields['price_year'] = $this->getYearlyPrice();
+
         return $fields;
     }
 
