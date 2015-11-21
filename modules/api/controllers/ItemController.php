@@ -6,12 +6,30 @@ use item\controllers\ViewController;
 use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 
 class ItemController extends Controller
 {
+
+    public function behaviors()
+    {
+        ArrayHelper::merge(parent::behaviors(), [
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 60 * 20,
+                'enabled' => YII_CACHE,
+                'variations' => [
+                    \Yii::$app->language,
+                    \Yii::$app->request->get()
+                ],
+            ],
+        ]);
+    }
+
     public function init()
     {
         $this->modelClass = Item::className();
@@ -185,24 +203,8 @@ class ItemController extends Controller
             $model->categories = $params['category'];
         }
 
-        // now get the query
-        $query = $model->getQuery(true);
-
-        // and give back the results
-//        return [
-//            'items' => $model->findItems(),
-//            'filters' => $model->featureFilters,
-//            // todo make this real
-//            '_meta' => [
-//                'currentPage' => 0,
-//                'pageCount' => 1,
-//                'perPage' => 20,
-//                'totalCount' => 100
-//            ]
-//        ];
-
         return new ActiveDataProvider([
-            'query' => $model->getQuery()
+            'query' => $model->getQuery(true)
         ]);
     }
 
