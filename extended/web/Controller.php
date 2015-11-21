@@ -26,6 +26,7 @@ class Controller extends \yii\web\Controller
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
+//            \yii\helpers\VarDumper::dump(\Yii::$app->language,10,true); exit();
         } else {
             if (!\Yii::$app->user->isGuest) {
                 $p = Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();

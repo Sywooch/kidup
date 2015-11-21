@@ -18,7 +18,7 @@ $production = server('production', '54.93.103.33', 22)
 //    ->env('branch', 'master')
 //    ->user('ubuntu')
 //    ->stage('production');
-$test = server('test', '178.62.234.114', 22)
+$test = server('test', '31.187.70.130', 22)
     ->env('deploy_path', '/var/www')
     ->env('branch', 'develop')
     ->user('root')

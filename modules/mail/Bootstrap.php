@@ -3,6 +3,7 @@
 namespace mail;
 
 use app\helpers\Event;
+use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
 use item\models\Item;
@@ -27,10 +28,15 @@ class Bootstrap implements BootstrapInterface
 
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
-
+            new SlackJob([
+                'message' => "New user registered"
+            ]);
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
         Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
+            new SlackJob([
+                'message' => "New user registered"
+            ]);
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
 
