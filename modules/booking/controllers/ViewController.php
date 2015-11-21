@@ -80,7 +80,11 @@ class ViewController extends Controller
      */
     public function actionInvoice($id, $pdf = false, $adminType = false)
     {
-        $booking = $this->load($id);
+        if(($adminType !== false && \Yii::$app->user->identity->isAdmin())){
+            $booking = Booking::findOne($id);
+        }else{
+            $booking = $this->load($id);
+        }
 
         if ($booking->renter_id == \Yii::$app->user->id || ($adminType == 'renter' && \Yii::$app->user->identity->isAdmin())) {
             $viewFile = '/renter/invoice';
