@@ -13,6 +13,7 @@ use user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
+use yii\helpers\Url;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -29,13 +30,13 @@ class Bootstrap implements BootstrapInterface
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
             new SlackJob([
-                'message' => "New user registered"
+                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
             ]);
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
         Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
             new SlackJob([
-                'message' => "New user registered"
+                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
             ]);
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
