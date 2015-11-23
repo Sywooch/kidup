@@ -346,7 +346,7 @@ class User extends base\User implements IdentityInterface
 
             $this->confirmed_at = time();
 
-            \Yii::$app->user->login($this);
+            \Yii::$app->user->login($this, $this->module->rememberFor);
 
             if ($this->save(false)) {
                 $p = Profile::findOne(['user_id' => \Yii::$app->user->id]);
@@ -428,6 +428,14 @@ class User extends base\User implements IdentityInterface
             if ($this->id !== 1) {
                 $this->setNewUserDefaults($lang);
             }
+
+
+            $cookie = \Yii::$app->getRequest()->getCookies()->getValue('kidup_referral');
+            if($cookie){
+                (new UserReferredUser())->userIsReferredByUser($this, $cookie);
+                \Yii::$app->getResponse()->getCookies()->remove(\Yii::$app->getRequest()->getCookies()->get('kidup_referral'));
+            }
+
         }
 
         parent::afterSave($insert, $changedAttributes);
@@ -441,6 +449,9 @@ class User extends base\User implements IdentityInterface
      */
     private function setNewUserDefaults($lang)
     {
+        // todo check that unique?
+        $this->referral_code = \Yii::$app->security->generateRandomString(8);
+        $this->save();
         $profile = \Yii::createObject([
             'class' => Profile::className(),
             'user_id' => $this->id,

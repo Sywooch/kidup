@@ -17,8 +17,7 @@ class MenuSearch extends Widget
 
     public function run()
     {
-        $url = @\Yii::$app->request->getUrl();
-        $showMenu = ($url == '/' || $url == '/home');
+        $showMenu = \Yii::$app->urlHelper->isHome();
         if ($showMenu) {
             return false;
         }
