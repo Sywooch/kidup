@@ -107,6 +107,7 @@ class User extends base\User implements IdentityInterface
         ];
     }
 
+
     /**
      * @return bool Whether the user is confirmed or not.
      */

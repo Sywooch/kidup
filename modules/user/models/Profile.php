@@ -73,6 +73,14 @@ class Profile extends base\Profile
         return $this->phone_country . ' ' . $this->phone_number;
     }
 
+    public function getName(){
+        if(isset($this->first_name)){
+            return $this->first_name;
+        }else{
+            return false;
+        }
+    }
+
     public function isValidPhoneNumber()
     {
         if (empty($this->phone_number)) {

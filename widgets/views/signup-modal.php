@@ -3,10 +3,14 @@ use yii\bootstrap\Modal;
 
 /**
  * @var \app\extended\web\View $this
+ * @var \false|string $referral_user
  */
 
 Modal::begin([
-    'header' => '<h2>' . \Yii::t('search.signup-modal.title', "Sign Up, Get Involved, Win!") . '</h2>',
+    'header' => $referral_user ? '<h2>' . \Yii::t('search.signup-modal.title_with_referral_user',
+            "Join KidUp with {referral_user}!",
+            ['referral_user' => $referral_user]) . '</h2>' : '<h2>' . \Yii::t('search.signup-modal.title',
+            "Sign Up, Get Involved, Win!") . '</h2>',
     'toggleButton' => false,
     'id' => 'signup-conversion-modal',
 ]);
