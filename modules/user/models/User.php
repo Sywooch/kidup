@@ -431,12 +431,13 @@ class User extends base\User implements IdentityInterface
             }
 
 
-            $cookie = \Yii::$app->getRequest()->getCookies()->getValue('kidup_referral');
-            if($cookie){
-                (new UserReferredUser())->userIsReferredByUser($this, $cookie);
-                \Yii::$app->getResponse()->getCookies()->remove(\Yii::$app->getRequest()->getCookies()->get('kidup_referral'));
+            if(!YII_CONSOLE){
+                $cookie = \Yii::$app->getRequest()->getCookies()->getValue('kidup_referral');
+                if($cookie){
+                    (new UserReferredUser())->userIsReferredByUser($this, $cookie);
+                    \Yii::$app->getResponse()->getCookies()->remove(\Yii::$app->getRequest()->getCookies()->get('kidup_referral'));
+                }
             }
-
         }
 
         parent::afterSave($insert, $changedAttributes);
