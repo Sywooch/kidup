@@ -20,10 +20,12 @@ class SignupModal extends \yii\bootstrap\Widget
     {
         $forceOpen = false;
         $referralUser = false;
+        $referralUserImage = false;
         if (\Yii::$app->request->get("ref") !== null) {
             $this->autoOpen = true;
             $referralUser = User::find()->where(['referral_code' => \Yii::$app->request->get("ref")])->one();
             if ($referralUser !== null) {
+                $referralUserImage = $referralUser->profile->getAttribute("img");
                 $referralUser = $referralUser->profile->getName();
                 $forceOpen = true;
             }
@@ -49,6 +51,10 @@ class SignupModal extends \yii\bootstrap\Widget
             }
         }
 
-        return $this->render('signup-modal', ['autoOpen' => $this->autoOpen, 'referral_user' => $referralUser]);
+        return $this->render('signup-modal', [
+            'autoOpen' => $this->autoOpen,
+            'referral_user' => $referralUser,
+            'referral_user_image' => $referralUserImage
+        ]);
     }
 }

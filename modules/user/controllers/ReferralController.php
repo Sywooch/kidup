@@ -24,6 +24,7 @@ use user\forms\Verification;
 use user\models\Account;
 use user\models\Profile;
 use user\models\User;
+use user\models\UserReferredUser;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -69,12 +70,12 @@ class ReferralController extends Controller
     {
         $referralLink = Url::to('@web/?ref=' . \Yii::$app->user->identity->referral_code, true);
 
-        $sundayTimestamp = new Carbon("last sunday");
+        $topList = (new UserReferredUser())->topList();
 
         return $this->render('index.twig', [
             'referralLink' => $referralLink,
-            'count_since_sunday' => \Yii::$app->user->identity->getReferredUserCount($sundayTimestamp),
             'count_total' => \Yii::$app->user->identity->getReferredUserCount(),
+            'top_list' => $topList,
         ]);
     }
 }

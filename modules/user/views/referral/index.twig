@@ -29,15 +29,21 @@
 
 </div>
 <div class="container">
-    <div class="col-md-6 col-md-offset-3" style="text-align: center;">
-        <h3>
-            {{ t('referral_page.count_total', "You referred {count} people to KidUp", {count: count_total}) }}
-            <br>
-            <small>
-                {{ t('referral_page.since_sunday_count', "And {count} since Sunday", {count: count_since_sunday}) }}
-            </small>
-        </h3>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="text-align: center;">
+            <h3>
+                {{ t('referral_page.count_total', "You referred {count} people to KidUp", {count: count_total}) }}
+            </h3>
+        </div>
     </div>
+
+    <hr>
+    <h4>
+        {{ t('referral_page.top_list_header','Kiduppers with most Referrals') }}
+    </h4>
+    {% for user in top_list %}
+        {{ user.user.profile.first_name }} {{ user.count }}
+    {% endfor %}
 </div>
 
 <script type="application/javascript">

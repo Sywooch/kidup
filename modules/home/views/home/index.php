@@ -101,7 +101,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
     ]);
     ?>
 
-
     <?= $this->render('search', [
         'model' => $searchModel,
         'defaultCategory' => $categories['Baby Toys']
