@@ -34,16 +34,26 @@
             <h3>
                 {{ t('referral_page.count_total', "You referred {count} people to KidUp", {count: count_total}) }}
             </h3>
+            <hr>
+            <h4>
+                {{ t('referral_page.top_list_header','Kiduppers with most Referrals') }}
+            </h4>
+            {% for user in top_list %}
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right">
+                        <img src="{{ imageUrl(user.user.profile.getAttribute('img'), {w: 40}) }}" alt="" width="40px" class="img-circle">
+                    </div>
+                    <div class="col-md-6" style="text-align: left;">
+                        <h5>
+                            {{ user.user.profile.first_name }} {{ user.count }}
+                        </h5>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
-    <hr>
-    <h4>
-        {{ t('referral_page.top_list_header','Kiduppers with most Referrals') }}
-    </h4>
-    {% for user in top_list %}
-        {{ user.user.profile.first_name }} {{ user.count }}
-    {% endfor %}
+
 </div>
 
 <script type="application/javascript">

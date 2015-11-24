@@ -31,7 +31,11 @@ class SignupModal extends \yii\bootstrap\Widget
             }
         }
         if ($this->autoOpen == false) {
-            return $this->render('signup-modal', ['autoOpen' => $this->autoOpen, 'referral_user' => $referralUser]);
+            return $this->render('signup-modal', [
+                'autoOpen' => $this->autoOpen,
+                'referral_user' => $referralUser,
+                'referral_user_image' => $referralUserImage
+            ]);
         }
 
         if (!\Yii::$app->user->isGuest) {
