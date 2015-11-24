@@ -431,7 +431,7 @@ class User extends base\User implements IdentityInterface
             }
 
 
-            if(\Yii::$app->getRequest() && !YII_CONSOLE){
+            if(!\Yii::$app->request->isConsoleRequest){
                 $cookie = \Yii::$app->getRequest()->getCookies()->getValue('kidup_referral');
                 if($cookie){
                     (new UserReferredUser())->userIsReferredByUser($this, $cookie);
