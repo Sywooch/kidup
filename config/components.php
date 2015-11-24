@@ -191,6 +191,7 @@ $components = [
                 'extraPatterns' => [
                     'costs' => 'costs',
                     'GET payment-token' => 'payment-token',
+                    'GET <id>/reviews' => 'reviews',
                 ]
             ],
             [

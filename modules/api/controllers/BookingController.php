@@ -4,13 +4,17 @@ namespace api\controllers;
 use api\models\Booking;
 use api\models\Currency;
 use api\models\Item;
+use api\models\Review;
 use booking\forms\Confirm;
 use booking\models\BrainTree;
 use item\forms\CreateBooking;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class BookingController extends Controller
 {
@@ -23,7 +27,7 @@ class BookingController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['payment-token', 'costs', 'options'],
+            'guest' => ['payment-token', 'costs', 'options', 'reviews '],
             'user' => ['create', 'view', 'index']
         ];
     }
@@ -36,6 +40,7 @@ class BookingController extends Controller
         unset($actions['create']);
         unset($actions['costs']);
         unset($actions['index']);
+        unset($actions['view']);
 
         return $actions;
     }
@@ -47,6 +52,21 @@ class BookingController extends Controller
                 'renter_id' => \Yii::$app->user->id
             ])
         ]);
+    }
+
+    function actionView($id){
+        $b = Booking::find()->where(['id' => $id])->one();
+        if($b === null) {
+            throw new NotFoundHttpException;
+        }
+        /**
+         * @var Booking $b
+         */
+        if($b->canBeAccessedByUser(\Yii::$app->user->identity)){
+            return $b;
+        }else{
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -194,6 +214,12 @@ class BookingController extends Controller
         return [
             'token' => (new BrainTree())->getClientToken()
         ];
+    }
+
+    public function actionReviews($id){
+        return new ActiveDataProvider([
+            'query' => Review::find()->where(['reviewed_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
+        ]);
     }
 
 }
