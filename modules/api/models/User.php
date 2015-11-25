@@ -42,6 +42,9 @@ class User extends \user\models\User
             },
             'review_score' => function () {
                 return 5;
+            },
+            'created_at' => function(){
+                return $this->created_at;
             }
         ];
 
