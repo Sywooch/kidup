@@ -121,7 +121,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                 <li>
                                     <a href="<?= Url::to('@web/user/referral/index') ?>">
                                         <i class="fa fa-users menu-icon"></i>
-                                        <?= Yii::t("app.menu.settings", "Referrals") ?>
+                                        <?= Yii::t("app.menu.referrals", "Referrals") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
