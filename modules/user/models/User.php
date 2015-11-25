@@ -30,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property integer $blocked_at
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $auth_key
  * @property integer $flags
  *
  * Defined relations:
@@ -208,7 +209,7 @@ class User extends base\User implements IdentityInterface
     /** @inheritdoc */
     public function validateAuthKey($authKey)
     {
-        return false;
+        return User::find()->where(['auth_key' => $authKey])->count() > 0;
     }
 
     /**
@@ -407,6 +408,7 @@ class User extends base\User implements IdentityInterface
             if (\Yii::$app instanceof \yii\web\Application) {
                 $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
             }
+            $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
         }
 
         if (!empty($this->password)) {
@@ -512,7 +514,7 @@ class User extends base\User implements IdentityInterface
 
     public function getAuthKey()
     {
-        return false;
+        return $this->auth_key;
     }
 
     /**
