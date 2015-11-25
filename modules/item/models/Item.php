@@ -314,7 +314,7 @@ class Item extends \item\models\base\Item
      */
     public function getMonthlyPrice(){
         if(isset($this->price_month)) return $this->price_month;
-        return $this->price_month * 2.5;
+        return $this->price_week * 2.5;
     }
 
     /**
