@@ -3,6 +3,7 @@
 namespace api\models;
 
 use images\components\ImageHelper;
+use review\models\Review;
 
 /**
  * This is the model class for table "item".
@@ -34,14 +35,14 @@ class User extends \user\models\User
             'email' => function ($model) {
                 return $model->email;
             },
-            'phone_number' => function ($model) {
+            'phone_number' => function () {
                 return $this->profile->getPhoneNumber();
             },
-            'language' => function ($model) {
+            'language' => function () {
                 return $this->profile->language;
             },
             'review_score' => function () {
-                return 5;
+                return (new Review())->computeOverallUserScore($this);
             },
             'created_at' => function(){
                 return $this->created_at;
