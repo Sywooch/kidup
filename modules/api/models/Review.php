@@ -49,4 +49,9 @@ class Review extends \review\models\Review
     {
         return $this->hasOne(User::className(), ['id' => 'reviewed_id']);
     }
+
+    public function getReviewer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'reviewer_id']);
+    }
 }

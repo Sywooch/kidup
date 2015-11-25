@@ -6,6 +6,7 @@ use search\models\IpLocation;
 use user\models\Profile;
 use Yii;
 use yii\helpers\Url;
+use yii\web\Cookie;
 
 class Controller extends \yii\web\Controller
 {
@@ -47,6 +48,16 @@ class Controller extends \yii\web\Controller
                 Yii::$app->session->set('lang', Yii::$app->language);
             }
         }
+
+        if (\Yii::$app->request->get("ref") !== null) {
+            $cookie = new Cookie([
+                'name' => 'kidup_referral',
+                'value' => \Yii::$app->request->get("ref"),
+                'expire' => time() + 30*24*60*60,
+            ]);
+            \Yii::$app->getResponse()->getCookies()->add($cookie);
+        }
+
         // set the locale for Carbon
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));

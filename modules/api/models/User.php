@@ -35,7 +35,7 @@ class User extends \user\models\User
                 return $model->email;
             },
             'phone_number' => function ($model) {
-                return "+" . $this->profile->phone_country . " " . $this->profile->phone_number;
+                return $this->profile->getPhoneNumber();
             },
             'language' => function ($model) {
                 return $this->profile->language;
@@ -45,7 +45,7 @@ class User extends \user\models\User
             }
         ];
 
-        if (\Yii::$app->user->isGuest || $this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity)) {
+        if (\Yii::$app->user->isGuest || ($this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity))) {
             foreach (['email', 'phone_number', 'language'] as $item) {
                 unset($fields[$item]);
             }

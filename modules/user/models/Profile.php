@@ -67,10 +67,18 @@ class Profile extends base\Profile
 
     public function getPhoneNumber()
     {
-        if ($this->phone_number == null) {
+        if ($this->phone_number == null || $this->phone_country == null) {
             return false;
         }
-        return $this->phone_country . ' ' . $this->phone_number;
+        return "+" . $this->phone_country . ' ' . $this->phone_number;
+    }
+
+    public function getName(){
+        if(isset($this->first_name)){
+            return $this->first_name;
+        }else{
+            return false;
+        }
     }
 
     public function isValidPhoneNumber()
