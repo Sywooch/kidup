@@ -45,6 +45,9 @@ class Controller extends \yii\rest\ActiveController
             // access-token is set, but not used by yii because it's a publicly available api point
             \Yii::$app->language = \Yii::$app->request->get('lang');
         }
+        if(!\Yii::$app->user->isGuest && \Yii::$app->user->identity->profile->language !== null){
+            \Yii::$app->language = \Yii::$app->user->identity->profile->language;
+        }
         \Yii::$app->response->format = Response::FORMAT_JSON;
         return parent::afterAction($action, $result);
     }
