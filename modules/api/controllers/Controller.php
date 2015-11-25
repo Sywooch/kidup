@@ -58,6 +58,9 @@ class Controller extends \yii\rest\ActiveController
         if (!isset($res['user'])) {
             throw new ServerErrorHttpException("Access control for user should be defined!");
         }
+        if(!in_array('options', $res['guest'])){
+            $res['guest'][] = 'options';
+        }
 
         return ArrayHelper::merge(parent::behaviors(), [
             'cors' => [
