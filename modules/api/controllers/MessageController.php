@@ -3,8 +3,6 @@ namespace api\controllers;
 
 use api\models\Conversation;
 use api\models\Message;
-use yii\data\ActiveDataProvider;
-use yii\web\ServerErrorHttpException;
 
 class MessageController extends Controller
 {
@@ -15,16 +13,16 @@ class MessageController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => ['options'],
-            'user' => ['create', 'view']
+            'guest' => [],
+            'user' => ['create', 'view', 'index', 'options']
         ];
     }
 
     public function actions(){
         $actions = parent::actions();
         unset($actions['delete']);
-        unset($actions['view']);
-        unset($actions['index']);
+//        unset($actions['view']);
+//        unset($actions['index']);
         unset($actions['update']);
         unset($actions['create']);
         return $actions;
@@ -32,7 +30,7 @@ class MessageController extends Controller
 
     public function actionCreate(){
         // todo: security check
-        $params = \Yii::$app->request->getBodyParams();
+        $params = \Yii::$app->getRequest()->getBodyParams();
         /**
          * @var Conversation $c
          */
@@ -47,7 +45,7 @@ class MessageController extends Controller
             return $m;
         }
 
-        throw new ServerErrorHttpException("Could not be saved");
+        return ("Could not be saved");
 
     }
 }

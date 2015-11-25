@@ -105,7 +105,8 @@ $components = [
         'enableCookieValidation' => true,
         'parsers' => [
             'application/json' => 'yii\web\JsonParser',
-        ]
+        ],
+        'class' => '\yii\web\Request',
     ],
     'cache' => [
         'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
