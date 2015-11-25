@@ -67,14 +67,17 @@ $components = [
                     'Image' => 'app/modules/images/widgets/Image'
                 ],
                 'functions' => [
-                    't' => function ($cat, $default) {
-                        return \Yii::t($cat, $default);
+                    't' => function ($cat, $default, $params = []) {
+                        return \Yii::t($cat, $default, $params);
                     },
                     'image' => function ($file, $options, $htmlOptions) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
-                    'imageUrl' => function ($file, $options) {
+                    'imageUrl' => function ($file, $options = []) {
                         return \images\components\ImageHelper::url($file, $options);
+                    },
+                    'bgImage' => function ($file, $options = []) {
+                        return \images\components\ImageHelper::bgCoverImg($file, $options);
                     }
                 ]
             ],
@@ -102,7 +105,8 @@ $components = [
         'enableCookieValidation' => true,
         'parsers' => [
             'application/json' => 'yii\web\JsonParser',
-        ]
+        ],
+        'class' => '\yii\web\Request',
     ],
     'cache' => [
         'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
@@ -191,6 +195,7 @@ $components = [
                 'extraPatterns' => [
                     'costs' => 'costs',
                     'GET payment-token' => 'payment-token',
+                    'GET <id>/reviews' => 'reviews',
                 ]
             ],
             [
@@ -253,6 +258,7 @@ $components = [
         'enableAutoLogin' => true,
     ],
     'keyStore' => ['class' => 'app\components\KeyStore'],
+    'urlHelper' => ['class' => 'app\components\UrlHelper'],
     'geolocation' => [
         'class' => 'rodzadra\geolocation\Geolocation',
         'config' => [

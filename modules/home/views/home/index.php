@@ -27,23 +27,37 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <h1>
                         <?= \Yii::t("home.share", 'Share'); ?>
                         <strong id="typist-element"
-                                data-typist="<?= Yii::t("home.scrolling_header_share_items", "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item", 'a trolley') ?></strong>
+                                data-typist="<?= Yii::t("home.scrolling_header_share_items",
+                                    "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item",
+                                'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
                     </h1>
                     <br><br><br>
-                    <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button"
-                         data-toggle="modal"
-                         data-target="#signup-conversion-modal"
-                        <?= ViewHelper::trackClick('home.click_signup') ?>
+                    <?php if (\Yii::$app->user->isGuest): ?>
+                        <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button"
+                             data-toggle="modal"
+                             data-target="#signup-conversion-modal"
+                            <?= ViewHelper::trackClick('home.click_signup') ?>
                         >
-                        <?= Yii::t("home.signup_call_to_action", "Sign up for free and win a family trip to legoland!") ?>
-                        &nbsp;<i class="fa fa-angle-right"></i>
-                    </div>
-                    <?= \app\widgets\SignupModal::widget([
-                        'autoOpen' => false
-                    ]) ?>
+                            <?= Yii::t("home.signup_call_to_action",
+                                "Sign up for free and win a family trip to legoland!") ?>
+                            &nbsp;<i class="fa fa-angle-right"></i>
+                        </div>
+                        <?= \app\widgets\SignupModal::widget([
+                            'autoOpen' => false
+                        ]) ?>
+                    <?php else: ?>
+                        <a href="<?= \yii\helpers\Url::to("@web/item/create") ?>">
+                            <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button">
+                                <?= Yii::t("home.create_item_call_to_action", "Upload a product and earn money!") ?>
+                                &nbsp;<i class="fa fa-angle-right"></i>
+                            </div>
+                        </a>
+                    <?php endif; ?>
+
                     <br>
+
                     <div class="btn btn-default hidden-xs hidden-sm" id="how-it-works-btn" style="margin-top:10px;">
                         <?= Yii::t("home.subheader_how_it_works", "How it Works") ?>
                     </div>
@@ -56,7 +70,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <div class="row mobile-search visible-xs visible-sm">
                         <div class="col-xs-8 col-xs-offset-1">
                             <input class="form-control"
-                                   placeholder="<?= Yii::t("home.mobile_what_looking_for", "What are you looking for?") ?>"
+                                   placeholder="<?= Yii::t("home.mobile_what_looking_for",
+                                       "What are you looking for?") ?>"
                                    data-toggle="modal"
                                    data-target="#searchModal">
                         </div>
@@ -69,7 +84,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
 
                         <br>
 
-                        <div class="btn btn-fill btn-primary signup-button" data-toggle="modal" data-target="#signup-conversion-modal"
+                        <div class="btn btn-fill btn-primary signup-button" data-toggle="modal"
+                             data-target="#signup-conversion-modal"
                             <?= ViewHelper::trackClick('home.click_signup') ?>>
                             <?= Yii::t("home.signup_call_to_action_mobile", "Sign up for free") ?>
                             &nbsp;<i class="fa fa-angle-right"></i>
@@ -84,7 +100,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
         'categories' => $categories
     ]);
     ?>
-
 
     <?= $this->render('search', [
         'model' => $searchModel,
@@ -114,7 +129,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <h4><?= \Yii::t("home.seek_and_find", 'Seek and Find') ?></h4>
 
                     <p><?= \Yii::t("home.seek_and_find_text",
-                        'With KidUp you can easily seek and find the products to help your family.') ?></p>
+                            'With KidUp you can easily seek and find the products to help your family.') ?></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <?= ImageHelper::img('kidup/graphics/pickup.png', ['q' => 90, 'w' => 130],
@@ -176,7 +191,8 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                     <div class="row values">
                         <div class="col-xs-8 col-xs-offset-2 text-center">
                             <h1><?= Yii::t("home.slider.share_the_world", "Share the world") ?></h1>
-                            <h4><?= \Yii::t("home.slider.share_the_world_text", 'Together we can teach our children to share and reuse.') ?>
+                            <h4><?= \Yii::t("home.slider.share_the_world_text",
+                                    'Together we can teach our children to share and reuse.') ?>
                             </h4>
                         </div>
                     </div>

@@ -38,7 +38,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         }
 
         $config = array_merge([
-            'translator' => 'Yii::t',
+            'translator' => ['Yii::t', 't'],
             'overwrite' => false,
             'removeUnused' => false,
             'markUnused' => false,
@@ -201,4 +201,157 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         return $res;
     }
 
+
+    /**
+     * Extracts messages from a file
+     * Customized is the twig part, which enables twig files to be parsed
+     * @return array
+     */
+    protected function extractMessages($fileName, $translator, $ignoreCategories = [])
+    {
+        $coloredFileName = Console::ansiFormat($fileName, [Console::FG_CYAN]);
+        $this->stdout("Extracting messages from $coloredFileName...\n");
+
+        $subject = file_get_contents($fileName);
+        $messages = [];
+
+        if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
+            $expl = explode("{{ t(", $subject);
+            unset($expl[0]);
+            $messages = [];
+            foreach ($expl as $item) {
+                $arg1 = false;
+                $arg2 = false;
+                // basically find the first ) which is not enclosed by '' or ""
+                $isEnclosed = false;
+                $string = '';
+                foreach (str_split($item) as $char) {
+                    if (in_array($char, ['"', "'"])) {
+                        if (!$isEnclosed) {
+                            continue;
+                        }
+                        $isEnclosed = !$isEnclosed;
+                    }
+                    if ($char == "," && !$isEnclosed) {
+                        if ($arg1 == false) {
+                            $arg1 = $string;
+                        } elseif ($arg2 == false) {
+                            $arg2 = $string;
+                        }
+                        $string = '';
+                    }
+                    if ($char == ")" && !$isEnclosed) {
+                        if ($arg2 == false) {
+                            $arg2 = $string;
+                        }
+                        if (strpos($arg2, ', ') == 0) {
+                            $arg2 = substr($arg2, 1);
+                        }
+                        if (strpos($arg2, ',') == 0) {
+                            $arg2 = substr($arg2, 0);
+                        }
+                        // function ends
+                        $messages[$arg1][] = $arg2;
+                        break;
+                    }
+                    $string .= $char;
+                }
+            }
+        } else {
+            foreach ((array)$translator as $currentTranslator) {
+                $translatorTokens = token_get_all('<?php ' . $currentTranslator);
+
+                array_shift($translatorTokens);
+                $tokens = token_get_all($subject);
+                $messages = array_merge_recursive($messages,
+                    $this->extractMessagesFromTokens($tokens, $translatorTokens, $ignoreCategories));
+            }
+        }
+
+
+        $this->stdout("\n");
+
+        return $messages;
+    }
+
+    /**
+     * Extracts messages from a parsed PHP tokens list.
+     * @param array $tokens tokens to be processed.
+     * @param array $translatorTokens translator tokens.
+     * @param array $ignoreCategories message categories to ignore.
+     * @return array messages.
+     */
+    private function extractMessagesFromTokens(array $tokens, array $translatorTokens, array $ignoreCategories)
+    {
+        $messages = [];
+        $translatorTokensCount = count($translatorTokens);
+        $matchedTokensCount = 0;
+        $buffer = [];
+        $pendingParenthesisCount = 0;
+
+        foreach ($tokens as $token) {
+            // finding out translator call
+            if ($matchedTokensCount < $translatorTokensCount) {
+                if ($this->tokensEqual($token, $translatorTokens[$matchedTokensCount])) {
+                    $matchedTokensCount++;
+                } else {
+                    $matchedTokensCount = 0;
+                }
+            } elseif ($matchedTokensCount === $translatorTokensCount) {
+                // translator found
+
+                // end of function call
+                if ($this->tokensEqual(')', $token)) {
+                    $pendingParenthesisCount--;
+
+                    if ($pendingParenthesisCount === 0) {
+                        // end of translator call or end of something that we can't extract
+                        if (isset($buffer[0][0], $buffer[1], $buffer[2][0]) && $buffer[0][0] === T_CONSTANT_ENCAPSED_STRING && $buffer[1] === ',' && $buffer[2][0] === T_CONSTANT_ENCAPSED_STRING) {
+                            // is valid call we can extract
+                            $category = stripcslashes($buffer[0][1]);
+                            $category = mb_substr($category, 1, mb_strlen($category) - 2);
+
+                            if (!in_array($category, $ignoreCategories, true)) {
+                                $message = stripcslashes($buffer[2][1]);
+                                $message = mb_substr($message, 1, mb_strlen($message) - 2);
+
+                                $messages[$category][] = $message;
+                            }
+
+                            $nestedTokens = array_slice($buffer, 3);
+                            if (count($nestedTokens) > $translatorTokensCount) {
+                                // search for possible nested translator calls
+                                $messages = array_merge_recursive($messages,
+                                    $this->extractMessagesFromTokens($nestedTokens, $translatorTokens,
+                                        $ignoreCategories));
+                            }
+                        } else {
+                            // invalid call or dynamic call we can't extract
+                            $line = Console::ansiFormat($this->getLine($buffer), [Console::FG_CYAN]);
+                            $skipping = Console::ansiFormat('Skipping line', [Console::FG_YELLOW]);
+                            $this->stdout("$skipping $line. Make sure both category and message are static strings.\n");
+                        }
+
+                        // prepare for the next match
+                        $matchedTokensCount = 0;
+                        $pendingParenthesisCount = 0;
+                        $buffer = [];
+                    } else {
+                        $buffer[] = $token;
+                    }
+                } elseif ($this->tokensEqual('(', $token)) {
+                    // count beginning of function call, skipping translator beginning
+                    if ($pendingParenthesisCount > 0) {
+                        $buffer[] = $token;
+                    }
+                    $pendingParenthesisCount++;
+                } elseif (isset($token[0]) && !in_array($token[0], [T_WHITESPACE, T_COMMENT])) {
+                    // ignore comments and whitespaces
+                    $buffer[] = $token;
+                }
+            }
+        }
+
+        return $messages;
+    }
 }

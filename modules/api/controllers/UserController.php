@@ -6,6 +6,7 @@ use api\models\User;
 use user\forms\Registration;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'create', 'reviews'],
+            'guest' => ['index', 'view', 'create', 'reviews', 'options'],
             'user' => ['update', 'me']
         ];
     }
@@ -49,7 +50,12 @@ class UserController extends Controller
         $registration->email = $params['email'];
         $registration->password = $params['password'];
         if ($registration->register()) {
-            return User::findOne(['email' => $params['email']]);
+            $user = User::findOne(['email' => $params['email']]);
+            // should have worked
+            $user->profile->first_name = $params['first_name'];
+            $user->profile->last_name = $params['last_name'];
+            $user->profile->save();
+            return $user;
         }
         return [
             'success' => false,
@@ -57,6 +63,25 @@ class UserController extends Controller
         ];
     }
 
+    public function actionUpdate($id){
+        $user = User::findOne($id);
+        if($user === null) throw new NotFoundHttpException();
+        if($id != \Yii::$app->user->id) throw new ForbiddenHttpException(\Yii::$app->user->id);
+        /**
+         * @var User $user
+         */
+        $user->load(\Yii::$app->request->getBodyParams());
+        $profileParams = [
+            'language' => \Yii::$app->request->getBodyParam('language'),
+            'first_name' => \Yii::$app->request->getBodyParam('first_name'),
+            'last_name' => \Yii::$app->request->getBodyParam('last_name'),
+            'description' => \Yii::$app->request->getBodyParam('description'),
+        ];
+        $user->profile->setAttributes($profileParams);
+        $user->profile->save();
+        $user->save();
+        return $user;
+    }
     /**
      * Returns the object of the logged in user
      */

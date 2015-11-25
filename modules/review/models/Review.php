@@ -6,6 +6,7 @@ use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\Booking;
 use Carbon\Carbon;
+use user\models\User;
 use Yii;
 
 /**
@@ -72,6 +73,9 @@ class Review extends base\Review
             // make them all public
             $reviews = array_merge($reviewsOwner, $reviewsRenter);
             foreach ($reviews as $review) {
+                /**
+                 * @var $review Review
+                 */
                 $review->is_public = 1;
                 $review->save();
             }
@@ -98,5 +102,19 @@ class Review extends base\Review
             new SlackJob(['message' => "User $this->reviewer_id had kidup feedback on booking $this->booking_id : '$this->value'"]);
         }
         return parent::afterSave($insert, $changedAttrs);
+    }
+
+    public function computeOverallUserScore(User $user){
+        $reviews = Review::find()->where(['reviewed_id' => $user->id])->all();
+        $avgs = [];
+        foreach ($reviews as $review) {
+            if($review->value == (int)$review->value){
+                $avgs[] = $review->value;
+            }
+        }
+        if(count($avgs) > 0){
+            return round(array_sum($avgs)/count($avgs),1);
+        }
+        return false;
     }
 }

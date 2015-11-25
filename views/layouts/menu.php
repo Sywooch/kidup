@@ -8,8 +8,7 @@ use app\helpers\ViewHelper;
  * @var \yii\web\View $this
  */
 // create the navbar
-$url = @Yii::$app->request->getUrl();
-$transparent = ($url == '/' || $url == '/home');
+$transparent = \Yii::$app->urlHelper->isHome();
 $class = 'navbar navbar-default ';
 $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
@@ -117,6 +116,12 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                                     <a href="<?= Url::to('@web/user/settings/profile') ?>">
                                         <i class="fa fa-gears menu-icon"></i>
                                         <?= Yii::t("app.menu.settings", "Settings") ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::to('@web/user/referral/index') ?>">
+                                        <i class="fa fa-users menu-icon"></i>
+                                        <?= Yii::t("app.menu.referrals", "Referrals") ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>

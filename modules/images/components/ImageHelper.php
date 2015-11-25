@@ -155,6 +155,7 @@ class ImageHelper extends BaseHtml
             'original' => self::url($filename, ['w' => 600*$m, 'q' => 90]),
             'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
             'medium' => self::url($filename, ['w' => 300*$m, 'q' => 90]),
+            '_base' => self::url($filename, [])
         ];
     }
 }
