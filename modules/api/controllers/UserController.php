@@ -50,7 +50,12 @@ class UserController extends Controller
         $registration->email = $params['email'];
         $registration->password = $params['password'];
         if ($registration->register()) {
-            return User::findOne(['email' => $params['email']]);
+            $user = User::findOne(['email' => $params['email']]);
+            // should have worked
+            $user->profile->first_name = $params['first_name'];
+            $user->profile->last_name = $params['last_name'];
+            $user->profile->save();
+            return $user;
         }
         return [
             'success' => false,
@@ -69,7 +74,8 @@ class UserController extends Controller
         $profileParams = [
             'language' => \Yii::$app->request->getBodyParam('language'),
             'first_name' => \Yii::$app->request->getBodyParam('first_name'),
-            'last_name' => \Yii::$app->request->getBodyParam('last_name')
+            'last_name' => \Yii::$app->request->getBodyParam('last_name'),
+            'description' => \Yii::$app->request->getBodyParam('description'),
         ];
         $user->profile->setAttributes($profileParams);
         $user->profile->save();
