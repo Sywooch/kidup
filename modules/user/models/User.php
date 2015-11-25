@@ -431,9 +431,9 @@ class User extends base\User implements IdentityInterface
             }
 
 
-            if(!\Yii::$app->request->isConsoleRequest){
+            if (!\Yii::$app->request->isConsoleRequest) {
                 $cookie = \Yii::$app->getRequest()->getCookies()->getValue('kidup_referral');
-                if($cookie){
+                if ($cookie) {
                     (new UserReferredUser())->userIsReferredByUser($this, $cookie);
                     \Yii::$app->getResponse()->getCookies()->remove(\Yii::$app->getRequest()->getCookies()->get('kidup_referral'));
                 }
@@ -520,8 +520,13 @@ class User extends base\User implements IdentityInterface
      * @param User $user
      * @return bool
      */
-    public function allowPrivateAttributes(User $user){
-        $c = Booking::find()->orWhere(['item.owner_id' => $user->id, 'renter_id' => $user->id])->innerJoinWith('item')->count();
+    public function allowPrivateAttributes(User $user)
+    {
+        $c = Booking::find()
+            ->orWhere(['item.owner_id' => $user->id])
+            ->orWhere(['renter_id' => $user->id])
+            ->innerJoinWith('item')
+            ->count();
         return $c > 0;
     }
 
