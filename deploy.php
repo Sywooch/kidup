@@ -92,7 +92,7 @@ task('deploy', [
     'deploy:release',
     'deploy:update_code',
     'deploy:shared',
-//    'deploy:writable',
+    'deploy:writable',
     'deploy:vendors',
     'deploy:minify_assets',
     'deploy:run_migrations',
