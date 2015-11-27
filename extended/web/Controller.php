@@ -18,6 +18,9 @@ class Controller extends \yii\web\Controller
 
     public function __construct($id, $controller)
     {
+        // potential fix for cloudflare user IP adress
+        $_SERVER['REMOTE_ADDR'] = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
+
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }
