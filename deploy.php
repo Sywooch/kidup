@@ -89,6 +89,10 @@ task('cleanup', function () {
     run("cd {{deploy_path}} && if [ -e release ]; then rm release; fi");
     run("cd {{deploy_path}} && if [ -h release ]; then rm release; fi");
 
+    if (env('branch') !== 'master') {
+        run('sudo chmod 777 /var/www');
+    }
+
 })->desc('Cleaning up old releases');
 
 task('deploy', [
