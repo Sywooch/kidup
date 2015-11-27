@@ -19,7 +19,14 @@ class Controller extends \yii\web\Controller
     public function __construct($id, $controller)
     {
         // potential fix for cloudflare user IP adress
-        $_SERVER['REMOTE_ADDR'] = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
+        if (YII_ENV !== 'test' && !YII_CONSOLE) {
+            if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            }
+            if (isset($_SERVER["REMOTE_ADDR"])) {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER["REMOTE_ADDR"];
+            }
+        }
 
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
@@ -56,7 +63,7 @@ class Controller extends \yii\web\Controller
             $cookie = new Cookie([
                 'name' => 'kidup_referral',
                 'value' => \Yii::$app->request->get("ref"),
-                'expire' => time() + 30*24*60*60,
+                'expire' => time() + 30 * 24 * 60 * 60,
             ]);
             \Yii::$app->getResponse()->getCookies()->add($cookie);
         }
