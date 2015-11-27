@@ -3,7 +3,7 @@
   sudo: true
   vars:
     web_server: apachephp
-    servername: 178.62.234.114 test.kidup.dk
+    servername: 31.187.70.130 test.kidup.dk hacker.kidup.dk
     timezone: Europe/Amsterdam
     hostname: test.kidup.dk
     doc_root: /var/www/current
