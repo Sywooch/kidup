@@ -148,7 +148,7 @@ class ItemController extends Controller
      * @apiParam {Number}       location_by_geo.longitude   The longitude of the location.
      * @apiParam {Number}       location_by_geo.latitude    The latitude of the location.
      *
-     * @apiParam {Number[]}     category                    A list of all categories (specified by their category_id) that are enabled (optional).
+     * @apiParam {Number[]}     category                    A list of all comma seperated category ids that are enabled (optional).
      *
      * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
      * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
@@ -200,7 +200,7 @@ class ItemController extends Controller
 
         // load the categories
         if (isset($params['category'])) {
-            $model->categories = $params['category'];
+            $model->categories = explode(",", $params['category']);
         }
 
         return new ActiveDataProvider([

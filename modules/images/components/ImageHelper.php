@@ -97,6 +97,8 @@ class ImageHelper extends BaseHtml
                 $isStaticFile = true;
             }
 
+            // todo change this to a cronjob
+
 //            $server = (new ImageManager())->getServer($isStaticFile);
 
             $folders = explode("/", $filename);
@@ -132,13 +134,13 @@ class ImageHelper extends BaseHtml
 //                            $options);
 //                }
 //            } else {
-                $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
-                    true);
+            $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
+                true);
 //            }
 
             return $url;
         };
-        return Cache::build('image-url')->variations([$filename, $options])->variations(24*60*60)->data($function);
+        return Cache::build('image-url')->variations([$filename, $options])->variations(24 * 60 * 60)->data($function);
     }
 
     /**
@@ -146,15 +148,16 @@ class ImageHelper extends BaseHtml
      * @param $filename
      * @bool $isMobile
      */
-    public static function urlSet($filename, $isMobile = false){
+    public static function urlSet($filename, $isMobile = false)
+    {
         $m = 1;
-        if($isMobile){
+        if ($isMobile) {
             $m = 1;
         }
         return [
-            'original' => self::url($filename, ['w' => 600*$m, 'q' => 90]),
-            'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
-            'medium' => self::url($filename, ['w' => 300*$m, 'q' => 90]),
+            'original' => self::url($filename, ['w' => 600 * $m, 'q' => 90]),
+            'thumb' => self::url($filename, ['w' => 60 * $m, 'q' => 70]),
+            'medium' => self::url($filename, ['w' => 300 * $m, 'q' => 90]),
             '_base' => self::url($filename, [])
         ];
     }
