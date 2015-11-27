@@ -83,7 +83,7 @@ $config = [
     ],
 ];
 
-//if (YII_ENV == 'dev') {
+if (YII_ENV == 'dev') {
     // configuration adjustments for 'dev' environment
 
     if(YII_DEBUG && !YII_CACHE){
@@ -101,7 +101,7 @@ $config = [
         $config['modules']['gii']['generators'] = [
             'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
         ];
-//    }
+    }
 }
 
 return $config;
