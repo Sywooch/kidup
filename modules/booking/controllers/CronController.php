@@ -18,12 +18,14 @@ class CronController extends Model
     public function minute()
     {
         // see if the booking expired (owner did not respond)
-        $payins = Payin::findAll(['status' => Payin::STATUS_PENDING]);
+        $payins = Payin::find()->where(['status' => Payin::STATUS_PENDING])->all();
         foreach ($payins as $payin) {
             /**
              * @var $payin \booking\models\Payin
              */
-            $payin->booking->updateStatus();
+            if(!is_null($payin->booking)){
+                $payin->booking->updateStatus();
+            }
         }
 
         $payins = Payin::findAll(['status' => Payin::STATUS_SETTLING]);
