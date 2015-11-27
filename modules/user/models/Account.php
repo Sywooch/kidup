@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property \user\Module $module
  *
  */
-class Account extends ActiveRecord
+class Account extends SocialAccount
 {
     /** @var \user\Module */
     protected $module;
