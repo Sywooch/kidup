@@ -133,20 +133,17 @@ class ItemController extends Controller
      *
      * @apiParam {Number}       page                        The page to load (optional, default: 0).
      *
-     * @apiParam {Object[]}     price                       The specification of the price filter (optional).
-     * @apiParam {String}       price.price_unit            The price unit, which is one of the following:
+     * @apiParam {String}       price_unit            The price unit, which is one of the following:
      *                                                          "price_day"    Price per day
      *                                                          "price_week"   Price per week
      *                                                          "price_month"  Price per month
-     * @apiParam {Number}       price.price_min             The minimum price to search for.
-     * @apiParam {Number}       price.price_max             The maximum price to search for.
+     * @apiParam {Number}       price_min             The minimum price to search for.
+     * @apiParam {Number}       price_max             The maximum price to search for.
      *
-     * @apiParam {Object[]}     location_by_name            The specification of the location by name filter (optional).
-     * @apiParam {String}       location_by_name.location   The name of the location (e.g. a city or a place).
+     * @apiParam {String}       location_name   The name of the location (e.g. a city or a place).
      *
-     * @apiParam {Object[]}     location_by_geo             The specification of the geo-location filter (optional).
-     * @apiParam {Number}       location_by_geo.longitude   The longitude of the location.
-     * @apiParam {Number}       location_by_geo.latitude    The latitude of the location.
+     * @apiParam {Number}       longitude   The longitude of the location.
+     * @apiParam {Number}       latitude    The latitude of the location.
      *
      * @apiParam {Number[]}     category                    A list of all comma seperated category ids that are enabled (optional).
      *
@@ -158,11 +155,16 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
      */
-    public function actionSearch($page = 0)
-    {
-        // load the other parameters
-        $params = \Yii::$app->request->get();
-
+    public function actionSearch(
+        $page = 0,
+        $price_min = 0,
+        $price_max = 9999,
+        $price_unit = 'price_week',
+        $location_name = false,
+        $longitude = false,
+        $latitude = false,
+        $category = false
+    ) {
         // set some read-only parameters
         $pageSize = 12;
 
@@ -171,40 +173,25 @@ class ItemController extends Controller
         $model->page = $page;
         $model->pageSize = $pageSize;
 
-        // load the pricing
-        if (isset($params['price_unit'])) {
-            $model->priceUnit = $params['price_unit'];
-            if (isset($params['price_min'])) {
-                $model->priceMin = $params['price_min'];
-            }
-            if (isset($params['price_max'])) {
-                $model->priceMax = $params['price_max'];
-            }
-        }
-
+        $model->priceUnit = $price_unit;
+        $model->priceMax = (int)$price_max;
+        $model->priceMin = (int)$price_min;
+        
         // load location
-        if (isset($params['location_by_name'])) {
-            if (isset($params['location_by_name']['location'])) {
-                $model->location = $params['location_by_name']['location'];
-            }
+        if ($location_name) {
+            $model->location = $location_name;
+        } elseif (isset($longitude) && isset($latitude)) {
+            $model->longitude = $longitude;
+            $model->latitude = $latitude;
         }
-
-        // load location based on longitude and latitude
-        if (isset($params['location_by_geo'])) {
-            $locationByGeo = $params['location_by_geo'];
-            if (isset($locationByGeo['longitude']) && isset($locationByGeo['latitude'])) {
-                $model->longitude = $locationByGeo['longitude'];
-                $model->latitude = $locationByGeo['latitude'];
-            }
-        }
-
+        
         // load the categories
-        if (isset($params['category'])) {
-            $model->categories = explode(",", $params['category']);
+        if ($category) {
+            $model->categories = explode(",", $category);
         }
-
+        
         return new ActiveDataProvider([
-            'query' => $model->getQuery()
+            'query' => $model->getQuery(true)
         ]);
     }
 
