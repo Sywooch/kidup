@@ -97,7 +97,9 @@ class ImageHelper extends BaseHtml
                 $isStaticFile = true;
             }
 
-            $server = (new ImageManager())->getServer($isStaticFile);
+            // todo change this to a cronjob
+
+//            $server = (new ImageManager())->getServer($isStaticFile);
 
             $folders = explode("/", $filename);
 
@@ -106,39 +108,39 @@ class ImageHelper extends BaseHtml
                     // remove the kidup/ from the filename in prod/staging
                     $filename = substr($filename, 6);
                 }
-            } else {
-                if (YII_ENV == 'dev') {
-                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
-                } else {
-                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
-                }
+//            } else {
+//                if (YII_ENV == 'dev') {
+//                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
+//                } else {
+//                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
+//                }
             }
 
             // settings for image
             if (isset($options['q'])) {
                 $options['fm'] = 'pjpg';
             }
-            if (YII_ENV != 'dev') {
-                if (!$server->cacheFileExists($filename, $options)) {
-                    try {
-                        $server->makeImage($filename, $options);
-                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
-                                $options);
-                    } catch (FileNotFoundException $e) {
-                        $url = 'http://placehold.it/300x300';
-                    }
-                } else {
-                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
-                            $options);
-                }
-            } else {
-                $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
-                    true);
-            }
+//            if (YII_ENV != 'dev') {
+//                if (!$server->cacheFileExists($filename, $options)) {
+//                    try {
+//                        $server->makeImage($filename, $options);
+//                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
+//                                $options);
+//                    } catch (FileNotFoundException $e) {
+//                        $url = 'http://placehold.it/300x300';
+//                    }
+//                } else {
+//                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
+//                            $options);
+//                }
+//            } else {
+            $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
+                true);
+//            }
 
             return $url;
         };
-        return Cache::build('image-url')->variations([$filename, $options])->variations(24*60*60)->data($function);
+        return Cache::build('image-url')->variations([$filename, $options])->variations(24 * 60 * 60)->data($function);
     }
 
     /**
@@ -146,15 +148,16 @@ class ImageHelper extends BaseHtml
      * @param $filename
      * @bool $isMobile
      */
-    public static function urlSet($filename, $isMobile = false){
+    public static function urlSet($filename, $isMobile = false)
+    {
         $m = 1;
-        if($isMobile){
+        if ($isMobile) {
             $m = 1;
         }
         return [
-            'original' => self::url($filename, ['w' => 600*$m, 'q' => 90]),
-            'thumb' => self::url($filename, ['w' => 60*$m, 'q' => 70]),
-            'medium' => self::url($filename, ['w' => 300*$m, 'q' => 90]),
+            'original' => self::url($filename, ['w' => 600 * $m, 'q' => 90]),
+            'thumb' => self::url($filename, ['w' => 60 * $m, 'q' => 70]),
+            'medium' => self::url($filename, ['w' => 300 * $m, 'q' => 90]),
             '_base' => self::url($filename, [])
         ];
     }

@@ -222,7 +222,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
-                    '<id>/reviews' => 'reviews'
+                    '<id>/reviews' => 'reviews',
                 ]
             ],
             [
@@ -231,6 +231,7 @@ $components = [
                 'extraPatterns' => [
                     'token' => 'token',
                     'refresh' => 'refresh',
+                    'facebook-login' => 'facebook-login'
                 ]
             ],
             'api/v1/pages/<page>' => 'api/pages/view'

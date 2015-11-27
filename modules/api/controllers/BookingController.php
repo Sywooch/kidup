@@ -149,7 +149,7 @@ class BookingController extends Controller
                 // booking is made and payed!
                 return $bookingObject;
             } else {
-                throw new BadRequestHttpException('Payment failed - no idea why');
+                throw new BadRequestHttpException('Payment failed '.json_encode($model->getErrors()));
             }
         }
         throw new BadRequestHttpException('Booking failed');

@@ -3,7 +3,9 @@ namespace api\controllers;
 
 use api\models\Review;
 use api\models\User;
+use user\controllers\RegistrationController;
 use user\forms\Registration;
+use user\models\Account;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
@@ -102,4 +104,6 @@ class UserController extends Controller
             'query' => Review::find()->where(['reviewed_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);
     }
+
+
 }

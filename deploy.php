@@ -86,7 +86,6 @@ task('cleanup', function () {
 
 })->desc('Cleaning up old releases');
 
-
 task('deploy', [
     'deploy:prepare',
     'deploy:release',
