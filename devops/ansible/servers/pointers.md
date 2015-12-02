@@ -4,6 +4,8 @@ ssh-add /vagrant/devops/.private/ssh/id_rsa
 ssh-add *.pem
 ssh ...
 
+--ask-pass parameter asks the password, and allows for password instead of keyfile login
+
 ansible-playbook -i ansible/servers/hosts  ansible/servers.yml
 
 # Ubuntu

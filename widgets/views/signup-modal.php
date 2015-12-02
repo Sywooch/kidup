@@ -18,8 +18,16 @@ Modal::begin([
 
 ?>
     <div class="modalSignupText">
-        <?= Yii::t("search.signup-modal.why_signup_text",
-            "Share the products loved by your children and discover new ones! Join KidUp today and win a trip to legoland for the whole family every month!") ?>
+        <?php if (!$referral_user): ?>
+            <?= Yii::t("search.signup-modal.why_signup_text",
+                "Share the products loved by your children and discover new ones! Join KidUp today and win a trip to legoland for the whole family every month!") ?>
+        <?php else: ?>
+            <?= Yii::t("search.signup-modal-referral.why_signup_text",
+                "Join KidUp together with {referral_user} and many others, and win a trip to legoland for the whole family every month!",
+                [
+                    'referral_user' => $referral_user
+                ]) ?>
+        <?php endif; ?>
     </div>
 <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
     'baseAuthUrl' => ['/user/security/auth'],

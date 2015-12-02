@@ -32,9 +32,14 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
     $test->identityFile('/vagrant/devops/.private/ssh/id_rsa.pub', '/vagrant/devops/.private/ssh/id_rsa');
 }
 
-set('shared_dirs', ['runtime', 'web/release-assets/js', 'web/release-assets/css']);
-set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
-set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets', 'web/packages']);
+task('deploy:set_dirs', function () {
+    // test server cannot make writable dirs for some reason, but has 777, so this should work
+    set('shared_dirs', ['runtime', 'web/release-assets/js', 'web/release-assets/css']);
+    set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
+    if (env('branch') == 'master') {
+        set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets', 'web/packages']);
+    }
+});
 
 //$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
 $repo_password = 'd9c7b5bea7deb271c5d3c00376acbd18891c49cd';
@@ -55,7 +60,7 @@ task('deploy:minify_assets', function () {
 
 task('deploy:enable_ssl', function () {
     // only do this for production
-    if(env('branch') == 'master'){
+    if (env('branch') == 'master') {
         run('sudo mv -f {{release_path}}/web/ssl.htaccess {{release_path}}/web/.htaccess');
     }
 })->desc('Enabling ssl');
@@ -84,12 +89,17 @@ task('cleanup', function () {
     run("cd {{deploy_path}} && if [ -e release ]; then rm release; fi");
     run("cd {{deploy_path}} && if [ -h release ]; then rm release; fi");
 
+    if (env('branch') !== 'master') {
+        run('sudo chmod 777 /var/www');
+    }
+
 })->desc('Cleaning up old releases');
 
 task('deploy', [
     'deploy:prepare',
     'deploy:release',
     'deploy:update_code',
+    'deploy:set_dirs',
     'deploy:shared',
     'deploy:writable',
     'deploy:vendors',

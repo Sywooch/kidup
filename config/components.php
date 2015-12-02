@@ -250,7 +250,8 @@ $components = [
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
                 'enableCaching' => YII_CACHE,
-                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0
+                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0,
+                'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation']
             ],
         ],
     ],
