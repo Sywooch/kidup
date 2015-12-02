@@ -27,6 +27,7 @@ Modal::begin([
                 [
                     'referral_user' => $referral_user
                 ]) ?>
+            <br><br><br>
         <?php endif; ?>
     </div>
 <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
