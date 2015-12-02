@@ -52,7 +52,7 @@ abstract class Mail extends Object
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $sender = (new MailUserFactory())->create('info@kidup.dk', 'KidUp');
+        $sender = (new \mail\components\MailUserFactory())->create('info@kidup.dk', 'KidUp');
         $this->setSender($sender);
         $this->viewPath = '@app/modules/mail/views';
         $this->mailId = MailLog::getUniqueId();
@@ -77,7 +77,7 @@ abstract class Mail extends Object
     }
 
     public static function getType() {
-        return \mail\mails\MailFactory::TYPE_NOT_DEFINED;
+        return \mail\components\MailType::TYPE_NOT_DEFINED;
     }
 
     /**
@@ -126,9 +126,9 @@ abstract class Mail extends Object
     /**
      * Set the receiver of the e-mail.
      *
-     * @param MailUser $receiver
+     * @param \mail\components\MailUser $receiver
      */
-    public function setReceiver(MailUser $receiver)
+    public function setReceiver(\mail\components\MailUser $receiver)
     {
         $this->emailAddress = $receiver->email;
         $this->userName = $receiver->name;
@@ -157,9 +157,9 @@ abstract class Mail extends Object
     /**
      * Set the sender of the e-mail.
      *
-     * @param MailUser $sender
+     * @param \mail\components\MailUser $sender
      */
-    public function setSender(MailUser $sender)
+    public function setSender(\mail\components\MailUser $sender)
     {
         $this->sender = $sender->email;
         $this->senderName = $sender->name;

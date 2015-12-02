@@ -1,5 +1,5 @@
 <?php
-namespace mail\mails;
+namespace mail\components;
 
 use mail\models\base\MailTemplate;
 use mail\models\UrlFactory;
@@ -16,7 +16,7 @@ class MailRenderer
 {
     private $mail;
 
-    public function __construct(Mail $mail)
+    public function __construct(\mail\mails\Mail $mail)
     {
         $this->mail = $mail;
     }

@@ -1,5 +1,5 @@
 <?php
-namespace mail\mails;
+namespace mail\components;
 
 /**
  * A mail user object.

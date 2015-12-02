@@ -1,11 +1,13 @@
 <?php
 namespace codecept\functional\user;
 
+use League\FactoryMuffin\Faker as Faker;
 use user\models\User;
 use user\models\Profile;
 use FunctionalTester;
 use League\FactoryMuffin;
 use codecept\_support\MuffinHelper;
+
 /**
  * functional test for the login.
  *
@@ -27,7 +29,8 @@ class RegistrationCest
 
     public function checkRegister(FunctionalTester $I)
     {
-        $email = uniqid('registration') . '@email.com';
+        $faker = \Faker\Factory::create();
+        $email = $faker->safeEmail;
         $I->wantTo('ensure that I can register');
         $I->amOnPage('/user/register');
         $I->canSeeElement('#register-form-email');
@@ -45,7 +48,8 @@ class RegistrationCest
         $this->checkPostRegistration($I);
     }
 
-    private function checkPostRegistration(FunctionalTester $I){
+    private function checkPostRegistration(FunctionalTester $I)
+    {
         $I->amOnPage('/user/registration/post-registration');
         $I->see("We'd like to get to know you!");
         $I->seeElement('#post-registration-form-firstname');

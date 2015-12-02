@@ -1,5 +1,5 @@
 <?php
-namespace mail\mails;
+namespace mail\components;
 
 use mail\components\MailUrl;
 use mail\models\MailLog;

@@ -1,5 +1,5 @@
 <?php
-namespace mail\mails;
+namespace mail\components;
 
 class MailType {
 
@@ -32,29 +32,29 @@ class MailType {
 
     public static function getBindings() {
         return [
-            bookingRenter\Confirmation::class => self::BOOKING_RENTER_CONFIRMATION,
-            bookingRenter\Decline::class => self::BOOKING_RENTER_DECLINE,
-            bookingRenter\Failed::class => self::BOOKING_RENTER_PAYMENT_FAILED,
-            bookingRenter\Receipt::class => self::BOOKING_RENTER_RECEIPT,
-            bookingRenter\Request::class => self::BOOKING_RENTER_REQUEST,
-            bookingRenter\Start::class => self::BOOKING_RENTER_STARTS,
+            \mail\mails\bookingRenter\Confirmation::class => self::BOOKING_RENTER_CONFIRMATION,
+            \mail\mails\bookingRenter\Decline::class => self::BOOKING_RENTER_DECLINE,
+            \mail\mails\bookingRenter\Failed::class => self::BOOKING_RENTER_PAYMENT_FAILED,
+            \mail\mails\bookingRenter\Receipt::class => self::BOOKING_RENTER_RECEIPT,
+            \mail\mails\bookingRenter\Request::class => self::BOOKING_RENTER_REQUEST,
+            \mail\mails\bookingRenter\Start::class => self::BOOKING_RENTER_STARTS,
 
-            bookingOwner\Confirmation::class => self::BOOKING_OWNER_CONFIRMATION,
-            bookingOwner\Failed::class => self::BOOKING_OWNER_PAYMENT_FAILED,
-            bookingOwner\Payout::class => self::BOOKING_OWNER_PAYOUT,
-            bookingOwner\Request::class => self::BOOKING_OWNER_REQUEST,
-            bookingOwner\Start::class => self::BOOKING_OWNER_STARTS,
+            \mail\mails\bookingOwner\Confirmation::class => self::BOOKING_OWNER_CONFIRMATION,
+            \mail\mails\bookingOwner\Failed::class => self::BOOKING_OWNER_PAYMENT_FAILED,
+            \mail\mails\bookingOwner\Payout::class => self::BOOKING_OWNER_PAYOUT,
+            \mail\mails\bookingOwner\Request::class => self::BOOKING_OWNER_REQUEST,
+            \mail\mails\bookingOwner\Start::class => self::BOOKING_OWNER_STARTS,
 
-            conversation\NewMessage::class => self::MESSAGE,
-            item\UnfinishedReminder::class => self::ITEM_UNPUBLISHED_REMINDER,
+            \mail\mails\conversation\NewMessage::class => self::MESSAGE,
+            \mail\mails\item\UnfinishedReminder::class => self::ITEM_UNPUBLISHED_REMINDER,
 
-            review\Publish::class => self::REVIEW_PUBLIC,
-            review\Reminder::class => self::REVIEW_REMINDER,
-            review\Request::class => self::REVIEW_REQUEST,
+            \mail\mails\review\Publish::class => self::REVIEW_PUBLIC,
+            \mail\mails\review\Reminder::class => self::REVIEW_REMINDER,
+            \mail\mails\review\Request::class => self::REVIEW_REQUEST,
 
-            user\Reconfirm::class => self::USER_RECONFIRM,
-            user\Recovery::class => self::USER_RECOVERY,
-            user\Welcome::class => self::USER_WELCOME,
+            \mail\mails\user\Reconfirm::class => self::USER_RECONFIRM,
+            \mail\mails\user\Recovery::class => self::USER_RECOVERY,
+            \mail\mails\user\Welcome::class => self::USER_WELCOME,
         ];
     }
 

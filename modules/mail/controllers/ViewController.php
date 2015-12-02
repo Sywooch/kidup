@@ -9,8 +9,8 @@ use mail\mails\conversation\NewMessageFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmInterface;
-use \mail\models\Mailer;
-use \mail\models\MailLog;
+use mail\components;
+use mail\models\MailLog;
 use mail\widgets\Button;
 use message\models\Message;
 use user\models\User;
@@ -55,9 +55,11 @@ class ViewController extends Controller
         $message = Message::find()->one();
 
         $mail = $factory->create($message);
-        $mail->setReceiver((new \mail\mails\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
-        $sender = new MailSender($mail);
-        $sender->send();
+        $mail->setReceiver((new \mail\components\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
+        $renderer = new \mail\components\MailRenderer($mail);
+        echo $renderer->render();
+        //$sender = new \mail\components\MailSender($mail);
+        //$sender->send();
 
         //return new MailRenderer($mail);
     }

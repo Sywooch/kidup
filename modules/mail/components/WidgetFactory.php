@@ -1,5 +1,5 @@
 <?php
-namespace mail\mails;
+namespace mail\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;

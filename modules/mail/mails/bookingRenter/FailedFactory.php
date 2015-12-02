@@ -1,7 +1,7 @@
 <?php
 namespace mail\mails\bookingRenter;
 
-use mail\mails\MailUserFactory;
+use mail\components\MailUserFactory;
 use mail\models\UrlFactory;
 use yii\helpers\Url;
 
