@@ -32,7 +32,7 @@ $components = [
             'port' => '25',
 //            'encryption' => 'tls',
         ],
-        'useFileTransport' => false,//YII_ENV == 'dev' ? true : false,
+        'useFileTransport' => YII_ENV == 'dev' ? true : false,
         'viewPath' => '@app/modules/mail/views',
     ],
     'authClientCollection' => [
