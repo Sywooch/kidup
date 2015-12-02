@@ -12,6 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
+use app\helpers\Event;
 use user\Finder;
 use user\forms\PostRegistrationProfile;
 use user\forms\Registration;
@@ -140,6 +141,7 @@ class RegistrationController extends Controller
                 $socialAccount = SocialAccount::findOne($account_id);
                 if ($socialAccount !== null) {
                     $socialAccount->fillUserDetails($user);
+                    Event::trigger($user, User::EVENT_USER_REGISTER_DONE);
                 }
                 \Yii::$app->user->login($user, $this->module->rememberFor);
                 return $this->redirect(User::afterLoginUrl('connect_new'));

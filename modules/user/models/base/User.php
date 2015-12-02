@@ -3,6 +3,7 @@
 namespace user\models\base;
 
 use \api\models\oauth\OauthAccessToken;
+use user\models\UserReferredUser;
 use Yii;
 
 /**
@@ -20,6 +21,7 @@ use Yii;
  * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $referral_code
  *
  * @property \booking\models\Booking[] $bookings
  * @property \user\models\Child[] $children
@@ -59,9 +61,10 @@ class User extends \yii\db\ActiveRecord
         return [
             [['email', 'password_hash', 'status', 'role', 'created_at', 'updated_at'], 'required'],
             [['confirmed_at', 'blocked_at', 'flags', 'status', 'role', 'created_at', 'updated_at'], 'integer'],
-            [['email', 'unconfirmed_email'], 'string', 'max' => 255],
+            [['email', 'unconfirmed_email', 'referral_code'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
-            [['registration_ip'], 'string', 'max' => 45]
+            [['registration_ip'], 'string', 'max' => 45],
+            [['referral_code'], 'unique']
         ];
     }
 
@@ -223,10 +226,26 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
+     * Returns the number of users that this user referred
+     * @param int $since timestamp since when count should count
+     * @return int|string
+     */
+    public function getReferredUserCount($since = false)
+    {
+        $q = $this->hasMany(UserReferredUser::className(), ['referring_user_id' => 'id']);
+        if ($since !== false) {
+            $q->andWhere('user_referred_user.created_at >= :t')->addParams([':t' => $since]);
+        }
+
+        return $q->count();
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getValidOauthAccessTokens()
     {
-        return $this->hasMany(OauthAccessToken::className(), ['user_id' => 'id'])->andWhere('expires >= :t')->params([':t' => time()]);
+        return $this->hasMany(OauthAccessToken::className(),
+            ['user_id' => 'id'])->andWhere('expires >= :t')->params([':t' => time()]);
     }
 }

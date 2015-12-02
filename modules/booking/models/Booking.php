@@ -5,6 +5,7 @@ namespace booking\models;
 use app\helpers\Event;
 use Carbon\Carbon;
 use message\models\Conversation;
+use user\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -69,6 +70,16 @@ class Booking extends base\Booking
             return true; // dont create payout yet, only when payin is successfull
         }
 
+        return false;
+    }
+
+    public function canBeAccessedByUser(User $user){
+        if($user->id == $this->renter_id){
+            return true;
+        }
+        if($user == $this->item->owner){
+            return true;
+        }
         return false;
     }
 

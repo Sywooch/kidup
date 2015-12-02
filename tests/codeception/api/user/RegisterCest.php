@@ -29,7 +29,9 @@ class RegisterCest
         $I->wantTo('register via the api');
         $I->sendPOST('users', [
             'email' => $email,
-            'password' => $faker->password(6)
+            'password' => $faker->password(6),
+            'first_name' => $faker->firstName,
+            'last_name' => $faker->lastName,
         ]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -38,11 +40,14 @@ class RegisterCest
 
     public function checkNoDoubeleEmailRegister(ApiTester $I)
     {
+        $faker = \Faker\Factory::create();
         $user = $this->fm->create(User::className());
         $I->wantTo('not register with an existing email');
         $I->sendPOST('users', [
             'email' => $user->email,
-            'password' => 'testestast'
+            'password' => 'testestast',
+            'first_name' => $faker->firstName,
+            'last_name' => $faker->lastName,
         ]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();

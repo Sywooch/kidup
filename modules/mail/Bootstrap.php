@@ -3,6 +3,13 @@
 namespace mail;
 
 use app\helpers\Event;
+use app\jobs\SlackJob;
+use booking\models\Booking;
+use booking\models\Payin;
+use item\models\Item;
+use mail\models\Mailer;
+use message\models\Message;
+use user\models\User;
 use \booking\models\Booking;
 use \booking\models\Payin;
 use \item\models\Item;
@@ -14,6 +21,7 @@ use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -30,11 +38,17 @@ class Bootstrap implements BootstrapInterface
 
         // user
         Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
+            new SlackJob([
+                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
+            ]);
             MailSender::send((new ReconfirmFactory())->create($event->sender));
 
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
         Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
+            new SlackJob([
+                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
+            ]);
             Mailer::send(Mailer::USER_WELCOME, $event->sender);
         });
 

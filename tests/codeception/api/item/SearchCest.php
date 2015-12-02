@@ -40,9 +40,7 @@ class SearchCest
         $this->fm->seed($n, Item::className());
 
         $I->wantTo("perform a simple search with {$n} items");
-        $I->sendPOST('items/search', [
-            'page' => 0
-        ]);
+        $I->sendGET('items/search');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse(), true);

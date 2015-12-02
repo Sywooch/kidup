@@ -3,6 +3,7 @@
 namespace api\models;
 
 use images\components\ImageHelper;
+use review\models\Review;
 
 /**
  * This is the model class for table "item".
@@ -34,18 +35,21 @@ class User extends \user\models\User
             'email' => function ($model) {
                 return $model->email;
             },
-            'phone_number' => function ($model) {
-                return "+".$this->profile->phone_country . " " . $this->profile->phone_number;
+            'phone_number' => function () {
+                return $this->profile->getPhoneNumber();
             },
-            'language' => function ($model) {
+            'language' => function () {
                 return $this->profile->language;
             },
-            'review_score' => function(){
-                return 5;
+            'review_score' => function () {
+                return (new Review())->computeOverallUserScore($this);
+            },
+            'created_at' => function(){
+                return $this->created_at;
             }
         ];
 
-        if($this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity)){
+        if (\Yii::$app->user->isGuest || ($this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity))) {
             foreach (['email', 'phone_number', 'language'] as $item) {
                 unset($fields[$item]);
             }

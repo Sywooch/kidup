@@ -187,6 +187,9 @@ class Location extends base\Location
      */
     public function canUserAccessDetails(User $user = null)
     {
+        if(\Yii::$app->user->isGuest){
+            return false;
+        }
         if ($user == null) {
             $user = \Yii::$app->user->identity;
         }
