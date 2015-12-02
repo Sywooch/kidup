@@ -30,11 +30,10 @@ class ViewController extends Controller
             throw new NotFoundHttpException("Email not found");
         }
 
-        $view = '/' . Mailer::getView($mailLog->type);
-        $this->layout = '@mail/views/layouts/html';
-        \Yii::$app->params['tmp_email_params'] = Json::decode($mailLog->data);
-
-        return $this->render($view, Json::decode($mailLog->data));
+        $mail = \mail\mails\MailType::getModel($mailLog->type);
+        $mail->loadData($mailLog->data);
+        $renderer = new MailRenderer($mail);
+        $renderer->render();
     }
 
     public function actionLink($url, $mailId)
@@ -56,7 +55,11 @@ class ViewController extends Controller
         $message = Message::find()->one();
 
         $mail = $factory->create($message);
-        return new MailRenderer($mail);
+        $mail->setReceiver((new \mail\mails\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
+        $sender = new MailSender($mail);
+        $sender->send();
+
+        //return new MailRenderer($mail);
     }
 
 }

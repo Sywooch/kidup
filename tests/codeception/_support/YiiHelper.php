@@ -1,8 +1,6 @@
 <?php
 
 namespace codecept\_support;
-use AcceptanceTester;
-use app\modules\user\models\User;
 use FunctionalTester;
 use Yii;
 

@@ -42,7 +42,7 @@ class UrlFactory
 
     public static function seeInBrowser($id)
     {
-        return self::url("view/" . $id);
+        return self::url("mail/" . $id);
     }
 
     public static function changeSettings()

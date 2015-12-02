@@ -2,7 +2,7 @@
 namespace mail\mails;
 
 use mail\models\base\MailTemplate;
-use mail\models\Mailer;
+use mail\models\UrlFactory;
 use Yii;
 use yii\helpers\Json;
 
@@ -42,6 +42,8 @@ class MailRenderer
         $mailer = \Yii::$app->mailer;
         $mailer->viewPath = $this->mail->getViewPath();
         $viewModel = Json::decode(Json::encode($this->mail));
+        $viewModel['seeInBrowserUrl'] = UrlFactory::seeInBrowser($this->mail->mailId);
+        $viewModel['changeSettingsUrl'] = UrlFactory::changeSettings();
         $mailer->htmlLayout = '@mail/views/layouts/html.twig';
         if ($this->mail->getTemplateId()) {
             // this is hacky, save tmp to the file system for yii to be able to render it
@@ -55,7 +57,7 @@ class MailRenderer
                 ['vm' => $viewModel]);
         }
         $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig',
-            ['content' => $renderedTemplate]);
+            ['content' => $renderedTemplate, 'vm' => $viewModel]);
         return $renderedLayout;
     }
 

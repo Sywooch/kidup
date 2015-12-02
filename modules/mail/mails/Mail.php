@@ -76,6 +76,10 @@ abstract class Mail extends Object
         return strtolower($templatePath . ".twig");
     }
 
+    public static function getType() {
+        return \mail\mails\MailFactory::TYPE_NOT_DEFINED;
+    }
+
     /**
      * Get the sender e-mail address.
      *
@@ -131,6 +135,26 @@ abstract class Mail extends Object
     }
 
     /**
+     * Get the name of the receiver of the e-mail.
+     *
+     * @return str Name of the receiver.
+     */
+    public function getReceiverName()
+    {
+        return $this->userName;
+    }
+
+    /**
+     * Get the e-mail address of the receiver of the e-mail.
+     *
+     * @return str E-mail address of the receiver.
+     */
+    public function getReceiverEmail()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
      * Set the sender of the e-mail.
      *
      * @param MailUser $sender
@@ -139,6 +163,37 @@ abstract class Mail extends Object
     {
         $this->sender = $sender->email;
         $this->senderName = $sender->name;
+    }
+
+    /**
+     * Subject getter.
+     *
+     * @return str The subject.
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * Subject setter.
+     *
+     * @param str $subject The subject.
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+    }
+
+    public function getData() {
+        return json::encode($this);
+    }
+
+    public function loadData($data) {
+        $decoded = json::decode($data);
+        foreach ($decoded as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
 }

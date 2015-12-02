@@ -7,7 +7,6 @@ use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
 use item\models\Item;
-use mail\models\Mailer;
 use message\models\Message;
 use user\models\User;
 use mail\mails\user\ReconfirmFactory;
