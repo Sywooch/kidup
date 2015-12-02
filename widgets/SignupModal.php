@@ -28,6 +28,7 @@ class SignupModal extends \yii\bootstrap\Widget
                 $referralUserImage = $referralUser->profile->getAttribute("img");
                 $referralUser = $referralUser->profile->getName();
                 $forceOpen = true;
+                \Yii::$app->session->set('after_login_url', Url::to('@web/user/referral/index'));
             }
         }
         if ($this->autoOpen == false) {
