@@ -4,19 +4,11 @@ namespace mail\controllers;
 
 use app\extended\web\Controller;
 use booking\models\Booking;
-use mail\mails\bookingRenter\DeclineFactory;
 use mail\mails\bookingRenter\PayoutFactory;
-use mail\mails\bookingRenter\ReceiptFactory;
-use mail\mails\bookingRenter\RequestFactory;
-use mail\mails\bookingRenter\StartFactory;
-use mail\mails\bookingRenter\FailedFactory;
-use mail\mails\bookingRenter\ConfirmationFactory;;
 use mail\mails\conversation\NewMessageFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
-use mail\mails\user\ReconfirmFactory;
 use mail\mails\user\ReconfirmInterface;
-use mail\mails\user\WelcomeFactory;
 use \mail\models\Mailer;
 use \mail\models\MailLog;
 use mail\widgets\Button;
@@ -35,8 +27,8 @@ class ViewController extends Controller
     {
         $mailLog = MailLog::findOne($id);
         if ($mailLog == null) {
-        throw new NotFoundHttpException("Email not found");
-    }
+            throw new NotFoundHttpException("Email not found");
+        }
 
         $view = '/' . Mailer::getView($mailLog->type);
         $this->layout = '@mail/views/layouts/html';
