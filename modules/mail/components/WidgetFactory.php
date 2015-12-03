@@ -28,7 +28,7 @@ class WidgetFactory
             }
 
             if (is_dir($path . '/' . $result)) {
-                $globals[$result] = "mail\\widgets\\" . $result . "\\" . ucfirst($result);
+                $globals[$result] = "mail\\widgets\\" . strtolower($result) . "\\" . ucfirst($result);
             }
         }
 

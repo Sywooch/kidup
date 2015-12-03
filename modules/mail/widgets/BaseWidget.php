@@ -19,6 +19,6 @@ class BaseWidget extends Widget
         $path = strtolower(str_replace("views", "", $this->getViewPath()));
         $fileName = explode("/", $path);
         $fileName = $fileName[count($fileName) - 2];
-        return $this->renderFile($path . $fileName . '.twig', $vars);
+        return $this->renderFile($path . strtolower($fileName) . '.twig', $vars);
     }
 }
