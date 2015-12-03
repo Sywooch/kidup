@@ -45,19 +45,9 @@ class MailRenderer
         $viewModel['seeInBrowserUrl'] = UrlFactory::seeInBrowser($this->mail->mailId);
         $viewModel['changeSettingsUrl'] = UrlFactory::changeSettings();
         $mailer->htmlLayout = '@mail/views/layouts/html.twig';
-        if ($this->mail->getTemplateId()) {
-            // this is hacky, save tmp to the file system for yii to be able to render it
-            $fileName = Yii::$aliases['@runtime'] . '/tmp-email-' . \Yii::$app->security->generateRandomString() . '.twig';
-            $template = MailTemplate::findOne($this->mail->getTemplateId());
-            file_put_contents($fileName, $template->template);
-            $renderedTemplate = \Yii::$app->view->renderFile($fileName);
-            unlink($fileName);
-        } else {
-            $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
-                ['vm' => $viewModel]);
-        }
+        $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
+            ['vm' => $viewModel]);
         $params = ['content' => $renderedTemplate, 'vm' => $viewModel];
-        $params = ['content' => $this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(), 'vm' => $viewModel];
         $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig', $params);
         return $renderedLayout;
     }
