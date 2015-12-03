@@ -60,6 +60,25 @@ abstract class Mail extends Object
         $this->changeSettingsUrl = UrlFactory::changeSettings();
     }
 
+    private function decamelize($word)
+    {
+        if (strpos($word, '\\') !== false) {
+            $wordParts = explode('\\', $word);
+            $result = [];
+            foreach ($wordParts as $part) {
+                $result[] = $this->decamelize($part);
+            }
+            return join('\\', $result);
+        }
+        return strtolower(
+            preg_replace(
+                ["/([A-Z]+)/", "/_([A-Z]+)([A-Z][a-z])/"],
+                ["_$1", "_$1_$2"],
+                lcfirst($word)
+            )
+        );
+    }
+
     /**
      * Find the template path of  mail.
      *
@@ -72,11 +91,13 @@ abstract class Mail extends Object
         }
         $className = $this->className();
         $templatePath = str_replace("mail\\mails\\", '', $className);
+        $templatePath = $this->decamelize($templatePath);
         $templatePath = str_replace("\\", '/', $templatePath);
         return strtolower($templatePath . ".twig");
     }
 
-    public static function getType() {
+    public static function getType()
+    {
         return \mail\components\MailType::TYPE_NOT_DEFINED;
     }
 
@@ -185,11 +206,13 @@ abstract class Mail extends Object
         $this->subject = $subject;
     }
 
-    public function getData() {
+    public function getData()
+    {
         return json::encode($this);
     }
 
-    public function loadData($data) {
+    public function loadData($data)
+    {
         $decoded = json::decode($data);
         foreach ($decoded as $key => $value) {
             $this->$key = $value;
