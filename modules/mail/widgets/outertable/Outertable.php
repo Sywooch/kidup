@@ -5,9 +5,9 @@ use mail\widgets\BaseWidget;
 
 /**
  * A OuterTable widget which wraps content in an outer table. Usage:
- * {{ void(OuterTable.begin()) }}
+ * {{ void(outertable.begin()) }}
  * My content
- * {{ void(OuterTable.end()) }}
+ * {{ void(outertable.end()) }}
  *
  * @package mail\widgets\textBlock
  */

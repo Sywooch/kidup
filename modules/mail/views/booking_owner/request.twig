@@ -2,7 +2,7 @@
 
     {{ greeter.widget({name: vm.profileName}) | raw }}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         {{ vm.renterName }} har sendt dig en henvendelse om {{ vm.itemName }}.
         Svare, forhåndsgodkend eller afvis inden <strong>{{ timestampToDate(vm.startDate) }}</strong>
         den <strong>{{ timestampToDate(vm.endDate) }}</strong>. Baseret
@@ -10,13 +10,13 @@
         Døgn samt de tilhørende gebyrer er din potentielle udbetaling for
         denne reservation <strong>{{ vm.payout }}</strong>.
 
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 15}) | raw }}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         <i>{{ vm.message }}</i>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 20}) | raw }}
 

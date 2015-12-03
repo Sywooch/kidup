@@ -8,7 +8,7 @@ use mail\widgets\BaseWidget;
  * in a Twig template as follows:
  * {{ void(textBlock.begin()) }}
  * My content
- * {{ void(textBlock.end()) }}
+ * {{ void(textblock.end()) }}
  *
  * Options:
  *      fontSize    int     The font-size in pixels (optional).

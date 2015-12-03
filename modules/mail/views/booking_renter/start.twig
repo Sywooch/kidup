@@ -1,11 +1,11 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
     {{ greeter.widget({name: vm.profileName}) | raw }}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         Dette er en p&aring;mindelse om, at du har en kommende reservation. Vi
         anbefaler, at du verificerer den eksakte adresse og telefonnummer,
         direkte med v&aelig;rten.
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height:15}) | raw }}
 
@@ -15,57 +15,57 @@
 {{ void(table.begin({bgColor: '#FFFFFF'})) }}
 <table width="100%">
     <tr>
-        {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+        {{ void(textblock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
         Udleje starter<br />
         <strong>{{ timestampToDate(vm.startDate) }}</strong>
-        {{ void(textBlock.end()) }}
+        {{ void(textblock.end()) }}
 
-        {{ void(textBlock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+        {{ void(textblock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
         Udleje slutter<br />
         <strong>{{ timestampToDate(vm.endDate) }}</strong>
-        {{ void(textBlock.end()) }}
+        {{ void(textblock.end()) }}
     </tr>
 </table>
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Udstyrets detaljer
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.itemName }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF'})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Udlejer
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.ownerName }}
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.ownerLocation | raw }}
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.ownerPhone }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         F&oslash;r du afhenter, er det en god ide at genneml&aelig;se tjeklisten for
         udstyret:
         <ol>
@@ -79,7 +79,7 @@
             <li>Hvis du p&aring; noget tidspunkt har brug for assistance under din
             lejeperiode, kan du bes&oslash;ge vores <a href="{{ vm.helpUrl }}">hj&aelig;lpecenter</a>.</li>
         </ol>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height:15}) | raw }}
 

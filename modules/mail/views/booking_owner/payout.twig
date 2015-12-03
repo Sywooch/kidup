@@ -1,11 +1,11 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
 {{ greeter.widget({name: vm.profileName}) | raw }}
-{{ void(textBlock.begin()) }}
+{{ void(textblock.begin()) }}
         Vi har sendt dig en udbetaling på {{ vm.totalAmount }} via
         bankoverførsel.
         Denne udbetaling skulle være på din konto inden for 5 dage, når
         weekender
         og helligdage medregnes.
         <a href="{{ vm.viewReceiptUrl }}">receipt</a>
-{{ void(textBlock.end()) }}
+{{ void(textblock.end()) }}
 {{ void(table.end()) }}

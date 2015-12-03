@@ -33,8 +33,8 @@ class RenderCest
 
     public function testPartialRender(FunctionalTester $I)
     {
-        $booking = $this->fm->create(Booking::class);
-        $mail = (new \mail\mails\bookingOwner\ConfirmationFactory())->create($booking);
+        $user = $this->fm->create(User::class);
+        $mail = (new \mail\mails\user\WelcomeFactory())->create($user);
         $renderer = new MailRenderer($mail);
         $I->assertTrue(strlen($renderer->renderPartial()) > 0);
     }

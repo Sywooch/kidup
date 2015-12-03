@@ -11,6 +11,7 @@ use yii\helpers\Url;
  */
 class WidgetFactory
 {
+
     /**
      * Load all widgets.
      */

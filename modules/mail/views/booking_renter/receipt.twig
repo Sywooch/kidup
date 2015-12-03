@@ -1,174 +1,174 @@
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         <strong>Kundekvittering</strong>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 15}) | raw}}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         Bekæftelseskode: <a href="{{ vm.receiptUrl }}">{{ vm.bookingId }}</a>
-    {{ void(textBlock.end()) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.end()) }}
+    {{ void(textblock.begin()) }}
         {{ now() }}
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 20}) | raw }}
 
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         <table width="100%">
             <tr>
-                {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+                {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
                 Lejer
-                {{ void(textBlock.end()) }}
-                {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+                {{ void(textblock.end()) }}
+                {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
                 {{ vm.profileName }}
-                {{ void(textBlock.end()) }}
+                {{ void(textblock.end()) }}
             </tr>
         </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         <table width="100%">
             <tr>
-                {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+                {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
                 Udlejers adresse
-                {{ void(textBlock.end()) }}
-                {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+                {{ void(textblock.end()) }}
+                {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
                 {{ vm.bookingLocation }}
-                {{ void(textBlock.end()) }}
+                {{ void(textblock.end()) }}
             </tr>
         </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Udstyr
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.itemName }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: true})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Længe på lejeperiode
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.rentingDays }} døgn
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ space.widget({height: 15}) | raw }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row: false, width: '50%', align: 'center'})) }}
+            {{ void(textblock.begin({row: false, width: '50%', align: 'center'})) }}
             Afhentnings tidspunkt<br />
             <strong>{{ timestampToDate(vm.startDate) }}</strong>
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
 
-            {{ void(textBlock.begin({row: false, width: '50%', align: 'center'})) }}
+            {{ void(textblock.begin({row: false, width: '50%', align: 'center'})) }}
             Tilbageleverings tidspunkt<br />
             <strong>{{ timestampToDate(vm.endDate) }}</strong>
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#EEEEEE'})) }}
     {{ space.widget({height: 15}) | raw }}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <strong>Betalingsoplysninger</strong>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 15}) | raw }}
 
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
         Betaling modtaget tor, {{ vm.payinDate }}
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 
     {{ space.widget({height: 20}) | raw }}
 
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             {{ vm.amountPerDay }} * {{ vm.rentingDays }} døgn
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.profileName }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             KidUp servicegebyr (inkl. moms)
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.amountServiceFee }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: false})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Total
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.amountTotal }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
 
 {{ void(table.begin({bgColor: '#FFFFFF', borderSize: 1, borderBottom: true})) }}
-    {{ void(textBlock.begin()) }}
+    {{ void(textblock.begin()) }}
     <table width="100%">
         <tr>
-            {{ void(textBlock.begin({row:false, width:'auto', align:'left'})) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
             Balance
-            {{ void(textBlock.end()) }}
-            {{ void(textBlock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
             {{ vm.amountBalance }}
-            {{ void(textBlock.end()) }}
+            {{ void(textblock.end()) }}
         </tr>
     </table>
-    {{ void(textBlock.end()) }}
+    {{ void(textblock.end()) }}
 {{ void(table.end()) }}
