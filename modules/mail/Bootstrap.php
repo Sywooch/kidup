@@ -70,20 +70,16 @@ class Bootstrap implements BootstrapInterface
 
         // booking owner
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\DeclineFactory())->create($event->sender));
+            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_NO_RESPONSE, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\DeclineFactory())->create($event->sender));
-        });
-
-        Event::register(Booking::className(), Booking::EVENT_BOOKING_CANCELLED_BY_RENTER, function ($event) {
-            // @todo
+            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
         });
 
         Event::register(Booking::className(), Booking::EVENT_BOOKING_ALMOST_START, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\StartFactory())->create($event->sender));
-            MailSender::send((new \mail\mails\bookingRenter\StartFactory())->create($event->sender));
+            MailSender::send((new \mail\mails\bookingOwner\StartFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingRenter\StartFactory())->create($event->sender->booking));
         });
 
         Event::register(Payin::className(), Payin::EVENT_FAILED, function ($event) {
