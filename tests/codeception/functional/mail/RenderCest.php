@@ -35,7 +35,7 @@ class RenderCest
     {
         $booking = $this->fm->create(Booking::class);
         $mail = (new \mail\mails\bookingOwner\ConfirmationFactory())->create($booking);
-        $renderer = MailRenderer($mail);
+        $renderer = new MailRenderer($mail);
         $I->assertTrue(strlen($renderer->renderPartial()) > 0);
     }
 
