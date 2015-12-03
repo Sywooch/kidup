@@ -65,6 +65,7 @@ class MailType {
                 return new $className();
             }
         }
+        return false;
     }
 
     public static function getType($model) {
@@ -74,6 +75,7 @@ class MailType {
                 return $classType;
             }
         }
+        return false;
     }
 
 }

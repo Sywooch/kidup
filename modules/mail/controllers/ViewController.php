@@ -58,8 +58,7 @@ class ViewController extends Controller
         $mail->setReceiver((new \mail\components\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
         $renderer = new \mail\components\MailRenderer($mail);
         echo $renderer->render();
-        //$sender = new \mail\components\MailSender($mail);
-        //$sender->send();
+        //\mail\components\MailSender()::send($mail);
 
         //return new MailRenderer($mail);
     }

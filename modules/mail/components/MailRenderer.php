@@ -1,7 +1,6 @@
 <?php
 namespace mail\components;
 
-use mail\models\base\MailTemplate;
 use mail\models\UrlFactory;
 use Yii;
 use yii\helpers\Json;
@@ -14,8 +13,15 @@ use yii\helpers\Json;
  */
 class MailRenderer
 {
+
+    /** @var \mail\mails\Mail */
     private $mail;
 
+    /**
+     * MailRenderer constructor.
+     *
+     * @param \mail\mails\Mail $mail Mail to render.
+     */
     public function __construct(\mail\mails\Mail $mail)
     {
         $this->mail = $mail;
