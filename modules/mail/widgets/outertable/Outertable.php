@@ -1,5 +1,5 @@
 <?php
-namespace mail\widgets\outerTable;
+namespace mail\widgets\outertable;
 
 use mail\widgets\BaseWidget;
 
