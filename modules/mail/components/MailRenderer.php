@@ -56,8 +56,8 @@ class MailRenderer
             $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
                 ['vm' => $viewModel]);
         }
-        $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig',
-            ['content' => $renderedTemplate, 'vm' => $viewModel]);
+        $params = ['content' => $renderedTemplate, 'vm' => $viewModel];
+        $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig', $params);
         return $renderedLayout;
     }
 
