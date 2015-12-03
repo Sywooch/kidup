@@ -1,0 +1,32 @@
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Du har nu tilkendegivet overfor {{ vm.ownerName }}, at du gerne vil
+        leje {{ vm.itemName }} i perioden {{ timestampToDate(vm.startDate) }}
+        - {{ timestampToDate(vm.endDate) }}, og vi har nu sendt din anmodning til
+        udlejeren {{ vm.ownerName }}
+        <a href="{{ vm.bookingUrl }}">her</a>. Har du rettelser til din
+        booking, kan du stadig nå at lave det om. Har du
+        spørgsmål til udlejeren kan du chatte med {{ vm.ownerName }} <a
+        href="{{ vm.chatUrl }}">her</a>.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Vi vil gøre dig opmærksom på, at dette ikke er en
+        bekræftelsesmail. {{ vm.ownerName }} har nu 48 timer til at
+        accepterer din forespørgsel og udleje sin {{ vm.itemName }}.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Vi har autoriseret betalingen, så skulle det mod forventning ikke
+        blive accepteret, bliver dine penge ikke trukket.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+{{ void(table.end()) }}

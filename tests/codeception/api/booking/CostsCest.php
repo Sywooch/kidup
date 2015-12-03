@@ -2,6 +2,7 @@
 
 namespace codecept\api\booking;
 
+use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\User;
@@ -40,17 +41,17 @@ class CostsCest
         $item->is_available = true;
         $item->price_day = 1;
         $item->save();
-        $I->wantTo("see the costs of a simple booking");
-        $I->sendPOST('bookings/costs?access-token=' . $accessToken, array_merge([
+        $I->wantTo("see the costs of a booking");
+        $I->sendGET('bookings/costs?access-token=' . $accessToken, array_merge([
             'item_id' => $item->id,
-            'date_from' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 3, date('Y'))),
-            'date_to' => date('d-m-Y', mktime(12, 0, 0, date('m'), date('N') + 5, date('Y'))),
+            'time_from' =>  Carbon::now()->addDays(3)->timestamp,
+            'time_to' =>  Carbon::now()->addDays(5)->timestamp,
         ]));
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = $I->grabResponse();
         $response = json_decode($response, true);
-        $I->assertTrue(array_key_exists('tableData', $response));
+        $I->assertTrue(array_key_exists('fee', $response));
     }
 
 }

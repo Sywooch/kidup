@@ -9,6 +9,7 @@ use item\models\Item;
 use Yii;
 use yii\caching\TagDependency;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Json;
 
 class HomeController extends Controller
@@ -34,7 +35,9 @@ class HomeController extends Controller
                 'enabled' => YII_CACHE,
                 'variations' => [
                     \Yii::$app->language,
-                    \Yii::$app->session->getAllFlashes()
+                    \Yii::$app->session->getAllFlashes(),
+                    \Yii::$app->user->isGuest,
+                    \Yii::$app->request->get('ref')
                 ],
             ],
         ];
@@ -48,7 +51,7 @@ class HomeController extends Controller
     {
         $this->transparentNav = true;
         $this->noContainer = true;
-        
+
         $searchModel = new Search();
 
         $categories = Yii::$app->db->cache(function () {
@@ -58,10 +61,15 @@ class HomeController extends Controller
             return Item::getRecommended(4);
         }, 6 * 3600);
 
+        $rotationImage = rand(1, 2);
+        $fileName = "kidup/home/rotating-headers/header-{$rotationImage}.jpg";
+
         $res = $this->render('index', [
             'categories' => $categories,
             'items' => $items,
-            'searchModel' => $searchModel
+            'searchModel' => $searchModel,
+            'image' => $rotationImage,
+            'rotatingImage' => $fileName
         ]);
 
         return $res;
@@ -78,13 +86,17 @@ class HomeController extends Controller
                 $u->save();
             }
             Yii::$app->session->set('lang', $lang);
-            Yii::$app->session->close(); // forces a write to the db, not done by default because it returns a redirect, not a page
+//            Yii::$app->session->close(); // forces a write to the db, not done by default because it returns a redirect, not a page
         } else {
             Yii::error('Language undefined: ' . $lang);
         }
 
         if (isset($_SERVER["HTTP_REFERER"])) {
-            return $this->redirect($_SERVER["HTTP_REFERER"]);
+            return "<script>window.location='{$_SERVER['HTTP_REFERER']}';</script>" . \Yii::t("kidup.change_language.redirect_text",
+                "Redirecting you to previous page. Troubles loading? {link}click here{linkOut}", [
+                    'link' => Html::beginTag("a", ['href' => $_SERVER["HTTP_REFERER"]]),
+                    'linkOut' => '</a>'
+                ]);
         } else {
             return $this->goHome();
         }

@@ -11,18 +11,18 @@ class RequestFactory
 {
     public function create(Booking $booking, $isOwner)
     {
-        $mail = new Request();
-        $mail->reviewUrl = UrlFactory::review($booking);
+        $e = new Request();
+        $e->reviewUrl = UrlFactory::review($booking);
         if (!$isOwner) {
-            $mail->emailAddress = $booking->renter->email;
-            $mail->otherName = $booking->item->owner->profile->getFullName();
+            $e->emailAddress = $booking->renter->email;
+            $e->otherName = $booking->item->owner->profile->getFullName();
         } else {
-            $mail->emailAddress = $booking->item->owner->email;
-            $mail->otherName = $booking->renter->profile->getFullName();
+            $e->emailAddress = $booking->item->owner->email;
+            $e->otherName = $booking->renter->profile->getFullName();
         }
-        $mail->subject = \Yii::t("mail.review_request.header", "Write a review for {userName}",[
-            'userName' => $mail->otherName
+        $e->subject = \Yii::t("mail.review_request.header", "Write a review for {userName}", [
+            'userName' => $e->otherName
         ]);
-        return $mail;
+        return $e;
     }
 }

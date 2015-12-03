@@ -4,7 +4,7 @@ namespace mail\mails\user;
 use mail\mails\Mail;
 
 /**
- * Recovery email
+ * Welcome email
  */
 class Welcome extends Mail
 {

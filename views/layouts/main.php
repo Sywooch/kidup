@@ -35,9 +35,8 @@ AppAsset::register($this);
         <!--Facebook meta tags - Important for sharing links-->
         <?= \app\widgets\FacebookPreviewImage::widget() ?>
 
-        <meta property="og:title" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
-        <meta property="og:site_name" content="KidUp | Din online forældre-til-forældre markedsplads for børneudstyr."/>
-        <meta property="og:url" content="http://kidup.dk"/>
+
+        <meta property="og:url" content="https://www.kidup.dk"/>
 
     </head>
     <body>

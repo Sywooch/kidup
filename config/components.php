@@ -32,7 +32,7 @@ $components = [
             'port' => '25',
 //            'encryption' => 'tls',
         ],
-        'useFileTransport' => YII_ENV == 'dev' ? true : false,
+        'useFileTransport' => false,//YII_ENV == 'dev' ? true : false,
         'viewPath' => '@app/modules/mail/views',
     ],
     'authClientCollection' => [
@@ -67,18 +67,24 @@ $components = [
                     'Image' => 'app/modules/images/widgets/Image'
                 ],
                 'functions' => [
-                    't' => function ($cat, $default) {
-                        return \Yii::t($cat, $default);
+                    't' => function ($cat, $default, $params = []) {
+                        return \Yii::t($cat, $default, $params);
                     },
-                    'image' => function ($file, $options, $htmlOptions) {
+                    'image' => function ($file, $options = [], $htmlOptions = []) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
-                    'imageUrl' => function ($file, $options) {
+                    'imageUrl' => function ($file, $options = []) {
                         return \images\components\ImageHelper::url($file, $options);
+                    },
+                    'bgImage' => function ($file, $options = []) {
+                        return \images\components\ImageHelper::bgCoverImg($file, $options);
                     },
                     'timestampToDate' => function ($timestamp) {
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
+                    },
+                    'now' => function() {
+                        return date('d-m-y H:i');
                     }
                 ]
             ],
@@ -104,6 +110,10 @@ $components = [
         'enableCsrfValidation' => true,
         'csrfCookie' => ['httpOnly' => true],
         'enableCookieValidation' => true,
+        'parsers' => [
+            'application/json' => 'yii\web\JsonParser',
+        ],
+        'class' => '\yii\web\Request',
     ],
     'cache' => [
         'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
@@ -183,7 +193,7 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',
-                    '<id>/reviews' => 'review'
+                    '<id>/reviews' => 'reviews'
                 ]
             ],
             [
@@ -192,11 +202,23 @@ $components = [
                 'extraPatterns' => [
                     'costs' => 'costs',
                     'GET payment-token' => 'payment-token',
+                    'GET <id>/reviews' => 'reviews',
                 ]
             ],
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/conversations' => 'api/conversation'],
+                'extraPatterns' => [
+                    '<id>/messages' => 'messages'
+                ]
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/locations' => 'api/location'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/categories' => 'api/category'],
             ],
             [
                 'class' => 'yii\rest\UrlRule',
@@ -207,7 +229,7 @@ $components = [
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
-                    '<id>/reviews' => 'reviews'
+                    '<id>/reviews' => 'reviews',
                 ]
             ],
             [
@@ -216,13 +238,10 @@ $components = [
                 'extraPatterns' => [
                     'token' => 'token',
                     'refresh' => 'refresh',
+                    'facebook-login' => 'facebook-login'
                 ]
             ],
-//            [
-//                'pattern' => 'api/v1/<base>/<id>/<relation1>/<relation1Id>',
-//                'route' => 'api/relation/index',
-//                'defaults' => ['relation1Id' => null]
-//            ]
+            'api/v1/pages/<page>' => 'api/pages/view'
         ],
     ],
 //    'redis' => [
@@ -238,7 +257,8 @@ $components = [
                 'sourceMessageTable' => 'i18n_source',
                 'messageTable' => 'i18n_message',
                 'enableCaching' => YII_CACHE,
-                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0
+                'cachingDuration' => YII_CACHE ? 24 * 60 * 60 : 0,
+                'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation']
             ],
         ],
     ],
@@ -247,6 +267,7 @@ $components = [
         'enableAutoLogin' => true,
     ],
     'keyStore' => ['class' => 'app\components\KeyStore'],
+    'urlHelper' => ['class' => 'app\components\UrlHelper'],
     'geolocation' => [
         'class' => 'rodzadra\geolocation\Geolocation',
         'config' => [

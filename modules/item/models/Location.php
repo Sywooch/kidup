@@ -2,7 +2,9 @@
 
 namespace item\models;
 
+use booking\models\Booking;
 use Carbon\Carbon;
+use user\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -12,7 +14,7 @@ use yii\db\ActiveRecord;
  */
 class Location extends base\Location
 {
-
+    public $estimationRadius = 0;
     const TYPE_MAIN = 1;
     const TYPE_ITEM = 2;
 
@@ -94,7 +96,7 @@ class Location extends base\Location
             $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
         }
         $this->updated_at = time();
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->created_at = time();
         }
         return parent::beforeValidate();
@@ -104,7 +106,9 @@ class Location extends base\Location
     {
         $request_url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
         $xml = simplexml_load_file($request_url);
-        if ($xml === false) return false;
+        if ($xml === false) {
+            return false;
+        }
         $status = $xml->status;
         if ($status == "OK") {
             $lat = $xml->result->geometry->location->lat;
@@ -141,15 +145,16 @@ class Location extends base\Location
      *          metro_code          Metro code (if detected)
      *          continent_code      Continent code (if detected)
      */
-    public static function getByIP($ip) {
+    public static function getByIP($ip)
+    {
         if (strpos($ip, '.') !== false) {
             // its an v4 address
-            $gi = geoip_open(Yii::$aliases['@item']."/data/GeoLiteCity.dat",GEOIP_STANDARD);
+            $gi = geoip_open(Yii::$aliases['@item'] . "/data/GeoLiteCity.dat", GEOIP_STANDARD);
             $record = GeoIP_record_by_addr($gi, $ip);
             geoip_close($gi);
         } else {
             // its an v6 address
-            $gi = geoip_open(Yii::$aliases['@item']."/data/GeoLiteCityv6.dat",GEOIP_STANDARD);
+            $gi = geoip_open(Yii::$aliases['@item'] . "/data/GeoLiteCityv6.dat", GEOIP_STANDARD);
             $record = GeoIP_record_by_addr_v6($gi, $ip);
             geoip_close($gi);
         }
@@ -159,7 +164,8 @@ class Location extends base\Location
         return $record;
     }
 
-    public function setStreetNameAndNumber($name){
+    public function setStreetNameAndNumber($name)
+    {
         $this->street_name = substr($name, 0, strcspn($name, '1234567890')); // gives foo
         $this->street_number = str_replace($this->street_name, '', $name);
         return $this;
@@ -171,5 +177,39 @@ class Location extends base\Location
             return true;
         }
         return false;
+    }
+
+    /**
+     * Whether use can access details of a location
+     * @param Location $location
+     * @param User|null $user
+     * @return bool
+     */
+    public function canUserAccessDetails(User $user = null)
+    {
+        if(\Yii::$app->user->isGuest){
+            return false;
+        }
+        if ($user == null) {
+            $user = \Yii::$app->user->identity;
+        }
+        if ($this->user_id == $user->id) {
+            return true;
+        }
+        // see if the user rented
+        $booking = Booking::find()->where(['user_id' => $user->id, 'location.id' => $this->id])
+            ->innerJoinWith('item.location')->count();
+        return $booking > 0;
+    }
+
+    /**
+     * Returns radius in which location is located
+     * @return array
+     */
+    public function setLocationEstimation()
+    {
+        $this->longitude = $this->longitude * 1 + rand(-10, 10) / 10000;
+        $this->latitude = $this->latitude * 1 + rand(-10, 10) / 10000;
+        $this->estimationRadius = 0.01;
     }
 }

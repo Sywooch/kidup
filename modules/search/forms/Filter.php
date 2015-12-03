@@ -23,7 +23,7 @@ class Filter extends Model
     /**
      * @var ActiveQuery $_query
      */
-    private $_query;
+    public $_query = false;
     public $categories;
     public $location;
     public $longitude;
@@ -66,7 +66,9 @@ class Filter extends Model
         $this->queryExtraction();
         $this->findFeatureFilters();
         // initialize the query
-        $this->_query = Item::find();
+        if($this->_query === false){
+            $this->_query = Item::find();
+        }
 
         // apply filters
         $this->filterCategories();

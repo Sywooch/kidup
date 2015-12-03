@@ -29,10 +29,10 @@ class Item extends \item\models\base\Item
      */
     public static function getRecommended($numItems)
     {
-        $items = Item::find()->limit($numItems)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
+        $items = self::find()->limit($numItems)->orderBy('RAND()')->where(['is_available' => 1])->innerJoinWith('reviews')->all();
         if (count($items) < $numItems) {
             $items = ArrayHelper::merge($items,
-                Item::find()->limit($numItems - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
+                self::find()->limit($numItems - count($items))->orderBy('RAND()')->where(['is_available' => 1])->all());
         }
         return $items;
     }
@@ -289,5 +289,41 @@ class Item extends \item\models\base\Item
         }
 
         return $res;
+    }
+
+    /**
+     * Returns the daily price for this item
+     * @return double
+     */
+    public function getDailyPrice(){
+        if(isset($this->price_day)) return $this->price_day;
+        return $this->price_week  / 3;
+    }
+
+    /**
+     * Returns the daily price for this item
+     * @return double
+     */
+    public function getWeeklyPrice(){
+        return $this->price_week;
+    }
+
+    /**
+     * Returns the daily price for this item
+     * @return double
+     */
+    public function getMonthlyPrice(){
+        if(isset($this->price_month)) return $this->price_month;
+        return $this->price_week * 2.5;
+    }
+
+    /**
+     * Returns the daily price for this item
+     * @return double
+     */
+    public function getYearlyPrice(){
+        if(isset($this->price_year)) return $this->price_year;
+        if(isset($this->price_month)) return $this->price_month * 3.5;
+        return $this->price_week * 2.5 * 3.5;
     }
 }

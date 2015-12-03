@@ -1,7 +1,6 @@
 <?php
 namespace mail\mails\item;
 
-use booking\models\Booking;
 use item\models\Item;
 use mail\models\UrlFactory;
 

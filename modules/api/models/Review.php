@@ -14,4 +14,39 @@ class Review extends \review\models\Review
         }
         return parent::fields();
     }
+
+    public function extraFields()
+    {
+        return ['reviewer', 'booking', 'item', 'reviewed'];
+    }
+
+
+    public function getBooking()
+    {
+        return $this->hasOne(Booking::className(), ['id' => 'booking_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviewer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'reviewer_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviewed()
+    {
+        return $this->hasOne(User::className(), ['id' => 'reviewed_id']);
+    }
 }

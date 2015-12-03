@@ -3,22 +3,16 @@
 namespace api\models;
 
 use images\components\ImageHelper;
+use review\models\Review;
 
 /**
  * This is the model class for table "item".
  */
 class User extends \user\models\User
 {
-    public function isUser($model, $prop){
-        if($model->id === \Yii::$app->user->id){
-            return $model->profile->{$prop};
-        }
-        return '';
-    }
-
     public function fields()
     {
-        return [
+        $fields = [
             'id',
             'description' => function ($model) {
                 return $model->profile->description;
@@ -39,17 +33,27 @@ class User extends \user\models\User
                 return ImageHelper::urlSet($model->profile->getAttribute('img'), true);
             },
             'email' => function ($model) {
-                return $model->id === \Yii::$app->user->id ? $model->email : '';
+                return $model->email;
             },
-            'phone_country' => function ($model) {
-                return $this->isUser($model, 'phone_country');
+            'phone_number' => function () {
+                return $this->profile->getPhoneNumber();
             },
-            'phone_number' => function ($model) {
-                return $this->isUser($model, 'phone_number');
+            'language' => function () {
+                return $this->profile->language;
             },
-            'language' => function ($model) {
-                return $this->isUser($model, 'language');
+            'review_score' => function () {
+                return (new Review())->computeOverallUserScore($this);
+            },
+            'created_at' => function(){
+                return $this->created_at;
             }
         ];
+
+        if (\Yii::$app->user->isGuest || ($this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity))) {
+            foreach (['email', 'phone_number', 'language'] as $item) {
+                unset($fields[$item]);
+            }
+        }
+        return $fields;
     }
 }

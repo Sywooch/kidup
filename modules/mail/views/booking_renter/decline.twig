@@ -1,0 +1,40 @@
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Vi må desværre meddele dig, at udlejeren af {{ vm.itemName }}
+        har afvist din reservationsanmodning.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Udlejere kan have mange grunde til at afvise en booking inklusive
+        uoverensstemmende anmodninger på dine lejedatoer og manglende
+        tid mellem reservationer.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Vi ved, at denne specifikke reservation ikke lykkedes,
+        men der er masser af andre opslag. Og vi opfordrer dig til
+        at blive ved med at lede! Vi har fjernet den <b>midlertidige
+            autorisation</b>
+        på din betalingsmetode, så du kan booke nyt udstyr.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        De er både tæt på dig, og har fået gode anmeldelse af tidligere
+        lejere,
+        så vi håber på, at det lige er noget for dig.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+{{ void(table.end()) }}

@@ -38,13 +38,8 @@ class Encrypter
      * @param int $key
      * @return bool|string
      */
-    public static function decrypt($cryptoText, $key = self::SIZE_1024){
-        $keyName = \Yii::$aliases['@app']."/devops/keys/private/kidup_private_".$key.'.key';
-        if(!is_file($keyName)){
-            return false;
-        }
-        $file = file_get_contents($keyName);
-        openssl_private_decrypt(base64_decode($cryptoText),$decrypt,$file);
+    public static function decrypt($cryptoText, $key){
+        openssl_private_decrypt(base64_decode($cryptoText),$decrypt,$key);
         return $decrypt;
     }
 }

@@ -1,0 +1,37 @@
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        {{ vm.renterName }} har sendt dig en henvendelse om {{ vm.itemName }}.
+        Svare, forhåndsgodkend eller afvis inden <strong>{{ timestampToDate(vm.startDate) }}</strong>
+        den <strong>{{ timestampToDate(vm.endDate) }}</strong>. Baseret
+        på din pris på <strong>{{ vm.dayPrice }}</strong> pr.
+        Døgn samt de tilhørende gebyrer er din potentielle udbetaling for
+        denne reservation <strong>{{ vm.payout }}</strong>.
+
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        <i>{{ vm.message }}</i>
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height: 20}) | raw }}
+
+    {{ button.widget({
+        content: "Svar",
+        url: vm.chatUrl,
+        wide: false
+    }) | raw }}
+
+    {{ space.widget({height: 15}) | raw }}
+
+    {{ button.widget({
+        content: "Forhåndsgodkend / Afvis",
+        url: vm.responseUrl,
+        wide: false
+    }) | raw }}
+
+{{ void(table.end()) }}

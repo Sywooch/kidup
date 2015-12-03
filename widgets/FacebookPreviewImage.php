@@ -15,6 +15,7 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
     public function run()
     {
         $route = @\Yii::$app->controller->getRoute();
+        $name = "KidUp | Din online forældre-til-forældre markedsplads for børneudstyr.";
         $image =  ImageHelper::url('kidup/facebook-kidupdk.jpg', ['w' => 600]);
         if ($route == 'item/view/index') {
             $id = @\Yii::$app->controller->actionParams['id'];
@@ -29,6 +30,19 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
                 }
             }
         }
+        if(\Yii::$app->request->get("ref") !== null){
+            $image = ImageHelper::url("kidup/facebook-referral.jpg", ['w' => 600]);
+            $name = "KidUp | Vind en tur for hele familien til Lalandia!";
+        }
+
+        $this->view->registerMetaTag([
+            'property' => "og:title",
+            'content' => $name
+        ]);
+        $this->view->registerMetaTag([
+            'property' => "og:site_name",
+            'content' => $name
+        ]);
         $this->view->registerMetaTag([
             'property' => "og:image",
             'content' => $image

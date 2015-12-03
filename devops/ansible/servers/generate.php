@@ -1,7 +1,7 @@
 <?php
 
 echo json_encode([
-   'production' => ['ubuntu@52.29.41.0'],
+   'staging' => ['root@31.187.70.130'],
     // 'production' => ['root@kidup.dk']
 ]);
 

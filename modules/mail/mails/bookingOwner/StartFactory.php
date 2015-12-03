@@ -1,7 +1,8 @@
 <?php
 namespace mail\mails\bookingOwner;
 
-use mail\mails\MailUserFactory;
+use mail\components\MailUserFactory;
+use mail\models\UrlFactory;
 use yii\helpers\Url;
 
 /**
@@ -19,8 +20,11 @@ class StartFactory
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;
         $e->renterName = $booking->renter->profile->getFullName();
+        $e->profileName = $booking->item->owner->profile->first_name;
         $e->itemName = $booking->item->name;
-        $e->helpUrl = Url::to('@web/contact', true);
+        $e->phone = $booking->renter->profile->phone_number;
+        $e->itemAmount = round($booking->amount_item);
+        $e->helpUrl = UrlFactory::help();
 
         return $e;
     }

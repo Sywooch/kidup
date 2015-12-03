@@ -1,0 +1,28 @@
+{{ void(table.begin({bgColor:'#FFFFFF'})) }}
+
+    {{ space.widget({height:20}) | raw }}
+
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Betaling for leje af {{ vm.itemName }} i perioden {{ timestampToDate(vm.startDate) }}
+        - {{ timestampToDate(vm.endDate) }} til {{ vm.renterName }} mislykkedes og bookingen er
+        derfor blevet annulleret. Vi har informeret {{ vm.renterName }} om
+        denne mislykket betaling da dette kan være en teknisk fejl,
+        kan {{ vm.renterName }} stadig være interesseret i at
+        leje {{ vm.itemName }}. Såfremt {{ vm.renterName }} stadig er
+        interesseret i at leje {{ vm.itemName }} vil du modtage en ny booking
+        anmodning.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        Har du spørgsmål angående betaling kan du læse mere <a
+        href="{{ vm.helpUrl }}">her</a>
+        eller kontakte os direkte på <a href="mailto:{{ vm.kidUpEmail }}">mail</a>.
+    {{ void(textBlock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+{{ void(table.end()) }}

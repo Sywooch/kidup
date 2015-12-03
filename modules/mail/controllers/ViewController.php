@@ -4,16 +4,15 @@ namespace mail\controllers;
 
 use app\extended\web\Controller;
 use booking\models\Booking;
-use mail\mails\bookingOwner\RequestFactory;
-use mail\mails\bookingOwner\StartFactory;
+use mail\mails\bookingRenter\PayoutFactory;
+use mail\mails\conversation\NewMessageFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
-use mail\mails\user\ReconfirmFactory;
 use mail\mails\user\ReconfirmInterface;
-use mail\mails\user\WelcomeFactory;
-use \mail\models\Mailer;
-use \mail\models\MailLog;
+use mail\components;
+use mail\models\MailLog;
 use mail\widgets\Button;
+use message\models\Message;
 use user\models\User;
 use Yii;
 use yii\helpers\Html;
@@ -28,14 +27,13 @@ class ViewController extends Controller
     {
         $mailLog = MailLog::findOne($id);
         if ($mailLog == null) {
-        throw new NotFoundHttpException("Email not found");
-    }
+            throw new NotFoundHttpException("Email not found");
+        }
 
-        $view = '/' . Mailer::getView($mailLog->type);
-        $this->layout = '@mail/views/layouts/html';
-        \Yii::$app->params['tmp_email_params'] = Json::decode($mailLog->data);
-
-        return $this->render($view, Json::decode($mailLog->data));
+        $mail = \mail\mails\MailType::getModel($mailLog->type);
+        $mail->loadData($mailLog->data);
+        $renderer = new MailRenderer($mail);
+        $renderer->render();
     }
 
     public function actionLink($url, $mailId)
@@ -49,14 +47,20 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        $factory = new WelcomeFactory();
+        $factory = new NewMessageFactory();
 
         // define many objects to play with
         $user = User::find()->one();
         $booking = Booking::find()->one();
+        $message = Message::find()->one();
 
-        $mail = $factory->create($user);
-        return new MailRenderer($mail);
+        $mail = $factory->create($message);
+        $mail->setReceiver((new \mail\components\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
+        $renderer = new \mail\components\MailRenderer($mail);
+        echo $renderer->render();
+        //\mail\components\MailSender()::send($mail);
+
+        //return new MailRenderer($mail);
     }
 
 }

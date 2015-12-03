@@ -13,7 +13,7 @@ $this->title = Yii::$app->name . ' - ' . \Yii::t('kidup.error.title', 'Error');
 
     <div class="row" style="margin-top:40px;">
         <div class="col-md-4">
-            <?= ImageHelper::img('kidup/error/error.png', ['w' => 300]) ?>
+            <?= ImageHelper::img('kidup/error/error.png', ['w' => 300, 'fm' => 'png']) ?>
         </div>
         <div class="col-md-8">
             <h1 style="color:black">

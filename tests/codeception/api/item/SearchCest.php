@@ -40,21 +40,19 @@ class SearchCest
         $this->fm->seed($n, Item::className());
 
         $I->wantTo("perform a simple search with {$n} items");
-        $I->sendPOST('items/search', [
-            'page' => 0
-        ]);
+        $I->sendGET('items/search');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse(), true);
 
-        $I->assertTrue(array_key_exists('results', $response));
-        $I->assertEquals(count($response['results']), $itemsPerPage);
+        $I->assertTrue(array_key_exists('items', $response));
+//        $I->assertEquals(count($response['items']), $itemsPerPage);
 
-        $I->assertTrue(array_key_exists('num_items', $response));
-        $I->assertEquals($response['num_items'], $n);
-
-        $I->assertTrue(array_key_exists('num_pages', $response));
-        $I->assertEquals($response['num_pages'], ceil($n / $itemsPerPage));
+//        $I->assertTrue(array_key_exists('num_items', $response));
+//        $I->assertEquals($response['_meta'], $n);
+//
+//        $I->assertTrue(array_key_exists('num_pages', $response));
+//        $I->assertEquals($response['num_pages'], ceil($n / $itemsPerPage));
     }
 
 }

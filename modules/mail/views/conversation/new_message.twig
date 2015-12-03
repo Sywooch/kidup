@@ -1,0 +1,20 @@
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textBlock.begin()) }}
+        {{ vm.senderName }} sende dig en besked. Besvar {{ vm.senderName }} ved at svare direkte på denne e-mail
+    {{ void(textBlock.end()) }}
+
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+    {{ void(textBlock.begin()) }}
+        <i>{{ vm.message }}</i>
+
+        {{ button.widget({
+            content: 'Gå til samtale',
+            url: chatUrl,
+            wide: false
+        }) | raw }}
+    {{ void(textBlock.end()) }}
+{{ void(table.end()) }}
