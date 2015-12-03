@@ -18,7 +18,7 @@ class WelcomeFactory
      * @param \user\models\User $user User to send the e-mail to.
      * @return Mail E-mail.
      */
-    public static function create($user)
+    public function create($user)
     {
         $e = new Welcome();
 

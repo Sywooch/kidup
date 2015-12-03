@@ -60,6 +60,10 @@ abstract class Mail extends Object
         $this->changeSettingsUrl = UrlFactory::changeSettings();
     }
 
+    public function getMailId() {
+        return $this->mailId;
+    }
+
     private function decamelize($word)
     {
         if (strpos($word, '\\') !== false) {

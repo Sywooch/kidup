@@ -24,7 +24,7 @@ class StartFactory
         $e->profileName = $booking->renter->profile->first_name;
         $e->itemName = $booking->item->name;
         $e->ownerPhone = $booking->renter->profile->phone_number;
-        $e->ownerLocation= $booking->getLocation(true);
+        $e->ownerLocation = $booking->getLocation(true);
         $e->itemAmount = round($booking->amount_item);
         $e->helpUrl = UrlFactory::help();
 

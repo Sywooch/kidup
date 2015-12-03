@@ -15,7 +15,7 @@ class RecoveryFactory
      * @param \user\models\User $user User to send the e-mail to.
      * @return Mail Recovery.
      */
-    public static function create($user)
+    public function create($user)
     {
         $e = new Recovery();
 

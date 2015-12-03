@@ -4,6 +4,7 @@ namespace mail\mails\bookingRenter;
 use mail\components\MailUserFactory;
 use mail\models\UrlFactory;
 use yii\helpers\Url;
+use Carbon\Carbon;
 
 /**
  * Renter booking receipt.
