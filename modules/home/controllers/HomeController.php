@@ -35,7 +35,9 @@ class HomeController extends Controller
                 'enabled' => YII_CACHE,
                 'variations' => [
                     \Yii::$app->language,
-                    \Yii::$app->session->getAllFlashes()
+                    \Yii::$app->session->getAllFlashes(),
+                    \Yii::$app->user->isGuest,
+                    \Yii::$app->request->get('ref')
                 ],
             ],
         ];
