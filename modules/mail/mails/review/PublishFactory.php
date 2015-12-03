@@ -21,7 +21,7 @@ class PublishFactory
             $mail->profileUrl = UrlFactory::profile($booking->item->owner);
             $mail->otherName = $booking->renter->profile->getFullName();
         }
-        $mail->subject = \Yii::t("mail.review_publish.header", "{userName} has reviewed you!",[
+        $mail->subject = \Yii::t("mail.review_publish.header", "{userName} has reviewed you!", [
             'userName' => $mail->otherName
         ]);
         return $mail;

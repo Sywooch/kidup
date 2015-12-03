@@ -6,7 +6,8 @@ use mail\mails\Mail;
 /**
  * Owner booking confirmation.
  */
-class Confirmation extends Mail {
+class Confirmation extends Mail
+{
 
     public $startDate;
     public $endDate;

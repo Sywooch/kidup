@@ -7,7 +7,8 @@ use mail\mails\Mail;
 /**
  * Owner booking failed
  */
-class Failed extends Mail {
+class Failed extends Mail
+{
 
     public $startDate;
     public $endDate;

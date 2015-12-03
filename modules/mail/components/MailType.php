@@ -1,7 +1,8 @@
 <?php
 namespace mail\components;
 
-class MailType {
+class MailType
+{
 
     const BOOKING_RENTER_CONFIRMATION = 'BookingRenter.confirmation';
     const BOOKING_RENTER_DECLINE = 'BookingRenter.decline';
@@ -30,7 +31,8 @@ class MailType {
 
     const TYPE_NOT_DEFINED = 'Undefined';
 
-    public static function getBindings() {
+    public static function getBindings()
+    {
         return [
             \mail\mails\bookingRenter\Confirmation::class => self::BOOKING_RENTER_CONFIRMATION,
             \mail\mails\bookingRenter\Decline::class => self::BOOKING_RENTER_DECLINE,
@@ -58,7 +60,14 @@ class MailType {
         ];
     }
 
-    public static function getModel($type) {
+    /**
+     * Create a model instance based on the given type.
+     *
+     * @param $type Type.
+     * @return bool|object False if there was no model found of the given type, an instance of the model otherwise.
+     */
+    public static function getModel($type)
+    {
         $bindings = self::getBindings();
         foreach ($bindings as $className => $classType) {
             if ($type == $classType) {
@@ -68,7 +77,14 @@ class MailType {
         return false;
     }
 
-    public static function getType($model) {
+    /**
+     * Get the type of a model.
+     *
+     * @param object $model Model to find the type of.
+     * @return bool|string False if no type could be found, the type otherwise..
+     */
+    public static function getType($model)
+    {
         $bindings = self::getBindings();
         foreach ($bindings as $className => $classType) {
             if (get_class($model) == $className) {

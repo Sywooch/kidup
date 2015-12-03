@@ -8,7 +8,7 @@ use yii\base\Object;
 use yii\helpers\Json;
 
 /**
- * An abstract mail class, which can be extended. This defined how a mail should look like and which data a mail should
+ * An abstract mail class, which should be extended. This defined how a mail should look like and which data a mail should
  * contain.
  *
  * @package mail\mails
@@ -49,6 +49,11 @@ abstract class Mail extends Object
     // The path to the views of all the mails
     private $viewPath;
 
+    /**
+     * Mail constructor.
+     *
+     * @param array $config
+     */
     public function __construct($config = [])
     {
         parent::__construct($config);
@@ -60,10 +65,22 @@ abstract class Mail extends Object
         $this->changeSettingsUrl = UrlFactory::changeSettings();
     }
 
-    public function getMailId() {
+    /**
+     * Get the mail identifier.
+     *
+     * @return string Identifier of the mail.
+     */
+    public function getMailId()
+    {
         return $this->mailId;
     }
 
+    /**
+     * Decameliza a word.
+     *
+     * @param $word Word in CamelCase.
+     * @return string Decamelized word (camel_case).
+     */
     private function decamelize($word)
     {
         if (strpos($word, '\\') !== false) {
@@ -98,11 +115,6 @@ abstract class Mail extends Object
         $templatePath = $this->decamelize($templatePath);
         $templatePath = str_replace("\\", '/', $templatePath);
         return strtolower($templatePath . ".twig");
-    }
-
-    public static function getType()
-    {
-        return \mail\components\MailType::TYPE_NOT_DEFINED;
     }
 
     /**
@@ -210,11 +222,21 @@ abstract class Mail extends Object
         $this->subject = $subject;
     }
 
+    /**
+     * Encode the object into a string.
+     *
+     * @return string String representation of the Mail object.
+     */
     public function getData()
     {
         return json::encode($this);
     }
 
+    /**
+     * Load a string representation of a Mail.
+     *
+     * @param string $data String representation of a Mail.
+     */
     public function loadData($data)
     {
         $decoded = json::decode($data);

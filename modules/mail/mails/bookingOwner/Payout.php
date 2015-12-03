@@ -6,7 +6,8 @@ use mail\mails\Mail;
 /**
  * Owner booking payout.
  */
-class Payout extends Mail {
+class Payout extends Mail
+{
 
     public $startDate;
     public $endDate;

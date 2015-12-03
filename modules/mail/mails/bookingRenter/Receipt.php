@@ -6,7 +6,8 @@ use mail\mails\Mail;
 /**
  * Renter booking receipt.
  */
-class Receipt extends Mail {
+class Receipt extends Mail
+{
 
     public $bookingId;
     public $profileName;

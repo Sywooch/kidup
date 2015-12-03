@@ -22,7 +22,7 @@ class ReminderFactory
             $mail->otherName = $booking->renter->profile->getFullName();
         }
         $mail->reviewUrl = UrlFactory::review($booking);
-        $mail->subject = \Yii::t("mail.review_reminder.header", "Reminder: review {userName}",[
+        $mail->subject = \Yii::t("mail.review_reminder.header", "Reminder: review {userName}", [
             'userName' => $mail->otherName
         ]);
         return $mail;

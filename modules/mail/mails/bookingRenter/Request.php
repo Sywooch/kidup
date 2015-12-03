@@ -6,7 +6,8 @@ use mail\mails\Mail;
 /**
  * Renter booking request.
  */
-class Request extends Mail {
+class Request extends Mail
+{
 
     public $startDate;
     public $endDate;

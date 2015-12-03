@@ -20,7 +20,7 @@ class RequestFactory
             $e->emailAddress = $booking->item->owner->email;
             $e->otherName = $booking->renter->profile->getFullName();
         }
-        $e->subject = \Yii::t("mail.review_request.header", "Write a review for {userName}",[
+        $e->subject = \Yii::t("mail.review_request.header", "Write a review for {userName}", [
             'userName' => $e->otherName
         ]);
         return $e;

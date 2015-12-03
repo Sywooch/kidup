@@ -6,7 +6,8 @@ use mail\mails\Mail;
 /**
  * New message confirmation.
  */
-class NewMessage extends Mail {
+class NewMessage extends Mail
+{
 
 
     public $message;

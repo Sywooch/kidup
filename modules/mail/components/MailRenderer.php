@@ -47,15 +47,35 @@ class MailRenderer
         WidgetFactory::registerWidgets();
         $mailer = \Yii::$app->mailer;
         $mailer->viewPath = $this->mail->getViewPath();
-        $viewModel = Json::decode(Json::encode($this->mail));
-        $viewModel['seeInBrowserUrl'] = UrlFactory::seeInBrowser($this->mail->mailId);
-        $viewModel['changeSettingsUrl'] = UrlFactory::changeSettings();
+        $viewModel = $this->getViewModel();
         $mailer->htmlLayout = '@mail/views/layouts/html.twig';
-        $renderedTemplate = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
-            ['vm' => $viewModel]);
+        $renderedTemplate = $this->renderPartial();
         $params = ['content' => $renderedTemplate, 'vm' => $viewModel];
         $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig', $params);
         return $renderedLayout;
+    }
+
+    /**
+     * Render the mail without the main layout.
+     *
+     * @return string HTML output.
+     */
+    public function renderPartial() {
+        $viewModel = $this->getViewModel();
+        return \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
+            ['vm' => $viewModel]);
+    }
+
+    /**
+     * Get the view model representation of the mail.
+     *
+     * @return mixed View model representation.
+     */
+    private function getViewModel() {
+        $viewModel = Json::decode(Json::encode($this->mail));
+        $viewModel['seeInBrowserUrl'] = UrlFactory::seeInBrowser($this->mail->mailId);
+        $viewModel['changeSettingsUrl'] = UrlFactory::changeSettings();
+        return $viewModel;
     }
 
 }

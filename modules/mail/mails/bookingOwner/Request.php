@@ -8,7 +8,8 @@ use mail\mails\Mail;
  * @param \booking\models\Booking $booking
  * @return bool
  */
-class Request extends Mail {
+class Request extends Mail
+{
 
     public $startDate;
     public $endDate;
