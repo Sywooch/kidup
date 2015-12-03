@@ -27,7 +27,7 @@ class RequestFactory
         $e->dayPrice = $booking->getDayPrice();
         $e->responseUrl = Url::to('@web/booking/' . $booking->id . '/request', true);
         if (is_object($booking->conversation)) {
-            $e->message = $booking->conversation->messages[0];
+            $e->message = $booking->conversation->messages[0]->message;
             $e->chatUrl = UrlFactory::chat($booking->conversation);
         }
 

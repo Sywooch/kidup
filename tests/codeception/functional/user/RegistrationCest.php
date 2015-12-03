@@ -30,7 +30,7 @@ class RegistrationCest
     public function checkRegister(FunctionalTester $I)
     {
         $faker = \Faker\Factory::create();
-        $email = $faker->safeEmail;
+        $email = $faker->freeEmail;
         $I->wantTo('ensure that I can register');
         $I->amOnPage('/user/register');
         $I->canSeeElement('#register-form-email');

@@ -8,7 +8,7 @@ class User extends \user\models\User
     public function definitions()
     {
         // Make it through RFC 2822
-        $fakeEmail = Faker::safeEmail();
+        $fakeEmail = Faker::freeEmail();
         return [
             'email' => $fakeEmail,
             // generating random stuff here every time would be pretty expensive

@@ -52,7 +52,7 @@ abstract class Mail extends Object
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $sender = (new \mail\components\MailUserFactory())->create('info@kidup.dk', 'KidUp');
+        $sender = (new \mail\components\MailUserFactory())->create('KidUp', 'info@kidup.dk');
         $this->setSender($sender);
         $this->viewPath = '@app/modules/mail/views';
         $this->mailId = MailLog::getUniqueId();
