@@ -16,7 +16,7 @@ class Booking extends \booking\models\Booking
             'currency_id' => 'factory|'.Currency::class,
             'refund_status' => '1',
             'time_from' => $faker->dateTimeBetween('+30 days', '+40 days')->getTimestamp(),
-            'time_to' => $faker->dateTimeBetween('+41 days', '+50 days')->getTimestamp(),
+            'time_to' => $faker->dateTimeBetween('+40 days', '+50 days')->getTimestamp(),
             'item_backup' => '',
             'updated_at' => $faker->dateTimeBetween('-5 days', '-1 days')->getTimestamp(),
             'created_at' => $faker->dateTimeBetween('-10 days', '-5 days')->getTimestamp(),
