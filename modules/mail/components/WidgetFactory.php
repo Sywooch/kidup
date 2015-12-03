@@ -11,6 +11,12 @@ use yii\helpers\Url;
  */
 class WidgetFactory
 {
+
+    public static function camelize($word)
+    {
+        return lcfirst(implode('', array_map('ucfirst', array_map('strtolower', explode('_', $word)))));
+    }
+
     /**
      * Load all widgets.
      */
@@ -28,7 +34,7 @@ class WidgetFactory
             }
 
             if (is_dir($path . '/' . $result)) {
-                $globals[$result] = "mail\\widgets\\" . strtolower($result) . "\\" . ucfirst($result);
+                $globals[$result] = "mail\\widgets\\" . strtolower($result) . "\\" . self::camelize($result);
             }
         }
 
