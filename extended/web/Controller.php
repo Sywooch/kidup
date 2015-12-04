@@ -48,13 +48,14 @@ class Controller extends \yii\web\Controller
                 }
             } else {
                 $location = IpLocation::get(\Yii::$app->request->getUserIP());
-                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
-                    (YII_ENV == 'dev' || YII_ENV == 'test')
-                ) {
-                    Yii::$app->language = 'en-US';
-                } else {
-                    Yii::$app->language = 'da-DK';
-                }
+//                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
+//                    (YII_ENV == 'dev' || YII_ENV == 'test')
+//                ) {
+//                    Yii::$app->language = 'en-US';
+//                } else {
+//                    Yii::$app->language = 'da-DK';
+//                }
+                Yii::$app->language = 'da-DK';
                 Yii::$app->session->set('lang', Yii::$app->language);
             }
         }

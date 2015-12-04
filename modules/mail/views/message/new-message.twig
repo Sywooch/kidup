@@ -1,0 +1,21 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textBlock.begin()) }}
+<p style="text-align: center;">
+    {{ t("mail.message.message_by_x","Hi {1}, {0} sent you a message.", [
+    userName,
+    otherUserName
+    ]) }}
+</p>
+<p style="text-align: left;">
+    {{ message }}
+</p>
+{{ void(textBlock.end()) }}
+
+{{ void(table.end()) }}
+
+{{ button.widget({
+    content: t("mail.message.to_conversation_link",  "Go to conversation"),
+    url: vm.conversationUrl,
+    wide: true
+}) | raw }}

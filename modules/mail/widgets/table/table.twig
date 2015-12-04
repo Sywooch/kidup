@@ -1,0 +1,29 @@
+{% if outerTable %}
+{{ void(outertable.begin()) }}
+{% endif %}
+<table width="560" cellpadding="0" cellspacing="0" align="center"
+       class="devicewidthinner" bgcolor="{{ bgColor }}" style="border: {{ borderColor }} {{ borderSize }}px solid;
+        border-bottom-width: {%  if borderBottom and borderSize > 0 %}1px{% else %}0px{% endif %};
+        border-top-width: {%  if borderTop and borderSize > 0 %}1px{% else %}0px{% endif %};
+        border-left-width: {%  if borderLeft and borderSize > 0 %}1px{% else %}0px{% endif %};
+        border-right-width: {%  if borderRight and borderSize > 0 %}1px{% else %}0px{% endif %};">
+    <tbody>
+    <tr>
+        <td>
+            <table width="520" cellpadding="0" cellspacing="0" border="0" align="center"
+                   class="devicewidthinner" bgcolor="{{ bgColor }}">
+                <tbody>
+                {{ space.widget() | raw }}
+
+                {{ content | raw }}
+
+                {{ space.widget() | raw }}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% if outerTable %}
+    {{ void(outertable.end()) }}
+{% endif %}

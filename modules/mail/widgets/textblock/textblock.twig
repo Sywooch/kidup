@@ -1,0 +1,9 @@
+{% if row %}
+<tr>
+{% endif %}
+    <td width="{{ width }}" style="font-family: Helvetica, arial, sans-serif; font-size: {{ fontSize }}px; color: #000000; text-align:{{ align }}; line-height: 24px;">
+        {{ content | raw }}
+    </td>
+{% if row %}
+</tr>
+{% endif %}

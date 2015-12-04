@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Conversation extends \message\models\base\Conversation
+class Conversation extends \message\models\Conversation
 {
 
     public function definitions()
