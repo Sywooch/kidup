@@ -70,6 +70,9 @@ $components = [
                     't' => function ($cat, $default, $params = []) {
                         return \Yii::t($cat, $default, $params);
                     },
+                    'userIsGuest' => function () {
+                        return \Yii::$app->user->isGuest;
+                    },
                     'image' => function ($file, $options, $htmlOptions) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
