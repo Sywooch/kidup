@@ -1,7 +1,7 @@
 <div style="{{ bgImage("kidup/common/christmas-package.jpg") }};margin-top:10px;margin-bottom:-90px;height:100%;min-height:100vh;">
     <div class="container">
         <h1 style="padding-top:12vh;text-align: center;color: white">
-            {{ t("referral_page.header", "Tell your friends have much you love KidUp") }}
+            {{ t("referral_page.header", "Tell your friends how much you love KidUp") }}
             <br>
             <small style="color:white;">
                 <b>
@@ -10,30 +10,36 @@
             </small>
             <br>
 
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input id="copy" value="{{ referralLink }}"
-                                   style="color:black;font-size: 0.3em;padding:15px;width:100%;">
-                        </div>
-                        <div class="col-md-2">
-                            <div class="btn btn-danger btn-fill btn-lg"
-                                 style="border-radius: 0;margin-top:15px;height:54px;" data-clipboard-target="#copy"
-                                 id="copyButton">
-                                {{ t("referral_page.link_copy_button", "Copy") }}
+            {% if userIsGuest() %}
+                <br>
+                <button class="btn btn-simple btn-danger btn-fill btn-lg" style="border-radius: 1px;" data-toggle="modal" data-target="#loginModal" id="login">
+                    {{ t("referral_page.login_button", "Login or Register and compete!") }}
+                </button>
+                <br>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input id="copy" value="{{ referralLink }}"
+                                       style="color:black;font-size: 0.3em;padding:15px;width:100%;">
+                            </div>
+                            <div class="col-md-2">
+                                <div class="btn btn-danger btn-fill btn-lg"
+                                     style="border-radius: 0;margin-top:15px;height:54px;" data-clipboard-target="#copy"
+                                     id="copyButton">
+                                    {{ t("referral_page.link_copy_button", "Copy") }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
             <br>
 
             <div class="row" style="font-size: 0.35em;">
                 <div class="col-md-6 col-md-offset-3" style="background-color: rgba(0,0,0,0.4);padding: 25px;">
-                    {{ t("referral_page.explanation","Every Sunday of December we award the 3 users with the most referred friends them
-                    with a christmas gift. Will it be you?
-                    Copy your link and post it on Facebook, Email it to your friends or share it at your childcare!") }}
+                    {{ t("referral_page.explanation","Every Sunday of December we award the 3 users with the most referred friends them with a christmas gift. Will it be you? Copy your link and post it on Facebook, Email it to your friends or share it at your childcare!") }}
                     <br>
 
                     <h3>
