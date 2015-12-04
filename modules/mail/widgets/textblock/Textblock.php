@@ -1,5 +1,5 @@
 <?php
-namespace mail\widgets\textBlock;
+namespace mail\widgets\textblock;
 
 use mail\widgets\BaseWidget;
 
@@ -18,7 +18,7 @@ use mail\widgets\BaseWidget;
  *
  * @package mail\widgets\textBlock
  */
-class TextBlock extends BaseWidget
+class Textblock extends BaseWidget
 {
 
     public $fontSize = 16;

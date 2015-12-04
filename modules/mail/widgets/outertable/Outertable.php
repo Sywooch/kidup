@@ -1,5 +1,5 @@
 <?php
-namespace mail\widgets\outerTable;
+namespace mail\widgets\outertable;
 
 use mail\widgets\BaseWidget;
 
@@ -11,7 +11,7 @@ use mail\widgets\BaseWidget;
  *
  * @package mail\widgets\textBlock
  */
-class OuterTable extends BaseWidget
+class Outertable extends BaseWidget
 {
 
     public function init()
