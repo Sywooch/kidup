@@ -7,6 +7,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.4.0",
+    "algolia/algoliasearch-client-php": "1.5.*",
     "2amigos/yii2-file-upload-widget": "*",
     "2amigos/yii2-leaflet-extension": "*",
     "alexandernst/yii2-device-detect": "0.0.9",

@@ -17,9 +17,8 @@ class MenuSearchModal extends Widget
 
     public function run()
     {
-        $model = new Filter([]);
         return $this->render('menu_search_modal', [
-            'model' => $model
+            'model' => []
         ]);
     }
 }

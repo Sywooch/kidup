@@ -2,16 +2,15 @@
 namespace search\controllers;
 
 use app\extended\web\Controller;
-use search\forms\Filter;
+use search\models\ItemSearch;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
+use yii\helpers\Json;
 
 /**
  * The item controller of the search module is used for handling actions related to searching items.
  */
-class SearchController extends Controller
+class AutoCompleteController extends Controller
 {
 
     /**
@@ -24,16 +23,17 @@ class SearchController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'results'],
+                'only' => ['index'],
                 'rules' => [
                     [
                         // all users
                         'allow' => true,
-                        'actions' => ['index', 'results'],
+                        'actions' => ['index'],
                         'roles' => ['?', '@'],
                     ],
                 ],
             ],
+
         ];
     }
 
@@ -42,15 +42,10 @@ class SearchController extends Controller
      *
      * @return string
      */
-    public function actionIndex($query = '')
+    public function actionIndex($q = '')
     {
-        // make sure that there is no footer and there is no container
-        $this->noFooter = true;
-        $this->noContainer = true;
-
-        Url::remember();
-        // render the index
-        return $this->render('index', [
-        ]);
+        return Json::encode(
+            (new ItemSearch())->getSuggestions($q)
+        );
     }
 }

@@ -1,113 +1,201 @@
 <?php
-use yii\widgets\Pjax;
 
 /**
  * @var \app\extended\web\View $this
- * @var \search\forms\Filter $model
- * @var \yii\data\ActiveDataProvider $results
  */
 
-\search\assets\ItemSearchAsset::register($this);
 \app\assets\LodashAsset::register($this);
 \app\assets\JQueryTextRangeAsset::register($this);
 \app\assets\FullModalAsset::register($this);
 
 $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Search KidStuff'));
 
-$this->assetPackage = \app\assets\Package::SEARCH;
-?>
-
-<?php Pjax::begin([
-    'id' => 'pjax-search',
-    'timeout' => 1000000
+$this->registerCssFile("//cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css");
+$this->registerJsFile("//cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js", [
+    'position' => \yii\web\View::POS_BEGIN
 ]);
 ?>
+
+    <script>
+        setTimeout(function () {
+            var search = instantsearch({
+                appId: '8M1ZPTMQEW',
+                apiKey: 'c2e21bc85e28c4f8af28ade68186fa2c',
+                indexName: 'items',
+                urlSync: true
+            });
+            search.addWidget(
+                instantsearch.widgets.searchBox({
+                    container: '#search-box',
+                    placeholder: 'Search for products...'
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.pagination({
+                    container: '#pagination-container'
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.hits({
+                    container: '#hits-container',
+                    templates: {
+                        empty: 'No results',
+                        item:  document.getElementById("item-template").outerHTML
+                    },
+                    hitsPerPage: 6
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.refinementList({
+                    container: '#brands',
+                    attributeName: 'categories',
+                    operator: 'or',
+                    limit: 10,
+                    templates: {
+                        header: 'Brands'
+                    }
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.rangeSlider({
+                    container: '#price',
+                    attributeName: 'price_week',
+                    templates: {
+                        header: 'Price'
+                    },
+                    tooltips: {
+                        format: function(formattedValue) {
+                            return '$' + formattedValue;
+                        }
+                    }
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.clearAll({
+                    container: '#clear-all',
+                    templates: {
+                        link: 'Reset everything'
+                    },
+                    autoHideContainer: false
+                })
+            );
+
+            search.addWidget(
+                instantsearch.widgets.sortBySelector({
+                    container: '#sort-by-container',
+                    indices: [
+                        {name: 'instant_search', label: 'Most relevant'},
+                        {name: 'instant_search_price_asc', label: 'Lowest price'},
+                        {name: 'instant_search_price_desc', label: 'Highest price'}
+                    ]
+                })
+            );
+
+            search.start();
+        }, 10);
+    </script>
     <div id="search">
-        <div ng-controller="SearchCtrl as searchCtrl">
-            <section class="section" id="search-cards">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3" id="search-sidebar">
-                            <div class="card card-refine hidden-sm hidden-xs">
-                                <div class="header">
-                                    <h4 class="title">
-                                        <?= Yii::t("search.header_filter", "Filter") ?>
-                                        <button class="btn btn-danger btn-xs pull-right"
-                                                ng-click="searchCtrl.removeAllActiveFilters()">
-                                            <i class="fa fa-close"></i><?= Yii::t("search.filter_clear", "Clear") ?>
-                                        </button>
-                                    </h4>
-                                </div>
-                                <div class="content">
-                                    <?= $this->render('filters', [
-                                        'model' => $model,
-                                        'mobile' => false
-                                    ]) ?>
-                                </div>
+        <section class="section" id="search-cards">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3" id="search-sidebar">
+                        <div class="card card-refine hidden-sm hidden-xs">
+                            <div class="header">
+                                <h4 class="title">
+                                    <?= Yii::t("search.header_filter", "Filter") ?>
+                                </h4>
                             </div>
-                            <!-- end card -->
+
+                            <input type="text" id="search-box"/>
+                            <div id="brands"></div>
+                            <div id="clear-all"></div>
+                            <div id="price"></div>
+                            <div id="sort-by-container"></div>
                         </div>
-                        <div class="col-md-9 col-log-10">
-                            <div class="loader" ng-show="searchCtrl.loading">
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="visible-xs visible-sm" style="margin-top:40px;">
-
-                                    </div>
-                                    <?php
-                                    // render the results
-                                    echo $this->render('results', [
-                                        'dataProvider' => $dataProvider,
-                                        'model' => $model
-                                    ]);
-                                    ?>
-                                    <div class="overlay" style="display: none;">
-                                        <img alt=""
-                                             src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNDE0MjE7IiB4PSIwcHgiIHk9IjBweCI+CiAgICA8ZGVmcz4KICAgICAgICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwogICAgICAgICAgICBALXdlYmtpdC1rZXlmcmFtZXMgc3BpbiB7CiAgICAgICAgICAgICAgZnJvbSB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIC13ZWJraXQtdHJhbnNmb3JtOiByb3RhdGUoLTM1OWRlZykKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgQGtleWZyYW1lcyBzcGluIHsKICAgICAgICAgICAgICBmcm9tIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKC0zNTlkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIHN2ZyB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybS1vcmlnaW46IDUwJSA1MCU7CiAgICAgICAgICAgICAgICAtd2Via2l0LWFuaW1hdGlvbjogc3BpbiAxLjVzIGxpbmVhciBpbmZpbml0ZTsKICAgICAgICAgICAgICAgIC13ZWJraXQtYmFja2ZhY2UtdmlzaWJpbGl0eTogaGlkZGVuOwogICAgICAgICAgICAgICAgYW5pbWF0aW9uOiBzcGluIDEuNXMgbGluZWFyIGluZmluaXRlOwogICAgICAgICAgICB9CiAgICAgICAgXV0+PC9zdHlsZT4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJvdXRlciI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwwQzIyLjIwNTgsMCAyMy45OTM5LDEuNzg4MTMgMjMuOTkzOSwzLjk5MzlDMjMuOTkzOSw2LjE5OTY4IDIyLjIwNTgsNy45ODc4MSAyMCw3Ljk4NzgxQzE3Ljc5NDIsNy45ODc4MSAxNi4wMDYxLDYuMTk5NjggMTYuMDA2MSwzLjk5MzlDMTYuMDA2MSwxLjc4ODEzIDE3Ljc5NDIsMCAyMCwwWiIgc3R5bGU9ImZpbGw6YmxhY2s7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNNS44NTc4Niw1Ljg1Nzg2QzcuNDE3NTgsNC4yOTgxNSA5Ljk0NjM4LDQuMjk4MTUgMTEuNTA2MSw1Ljg1Nzg2QzEzLjA2NTgsNy40MTc1OCAxMy4wNjU4LDkuOTQ2MzggMTEuNTA2MSwxMS41MDYxQzkuOTQ2MzgsMTMuMDY1OCA3LjQxNzU4LDEzLjA2NTggNS44NTc4NiwxMS41MDYxQzQuMjk4MTUsOS45NDYzOCA0LjI5ODE1LDcuNDE3NTggNS44NTc4Niw1Ljg1Nzg2WiIgc3R5bGU9ImZpbGw6cmdiKDIxMCwyMTAsMjEwKTsiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwzMi4wMTIyQzIyLjIwNTgsMzIuMDEyMiAyMy45OTM5LDMzLjgwMDMgMjMuOTkzOSwzNi4wMDYxQzIzLjk5MzksMzguMjExOSAyMi4yMDU4LDQwIDIwLDQwQzE3Ljc5NDIsNDAgMTYuMDA2MSwzOC4yMTE5IDE2LjAwNjEsMzYuMDA2MUMxNi4wMDYxLDMzLjgwMDMgMTcuNzk0MiwzMi4wMTIyIDIwLDMyLjAxMjJaIiBzdHlsZT0iZmlsbDpyZ2IoMTMwLDEzMCwxMzApOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksMjguNDkzOUMzMC4wNTM2LDI2LjkzNDIgMzIuNTgyNCwyNi45MzQyIDM0LjE0MjEsMjguNDkzOUMzNS43MDE5LDMwLjA1MzYgMzUuNzAxOSwzMi41ODI0IDM0LjE0MjEsMzQuMTQyMUMzMi41ODI0LDM1LjcwMTkgMzAuMDUzNiwzNS43MDE5IDI4LjQ5MzksMzQuMTQyMUMyNi45MzQyLDMyLjU4MjQgMjYuOTM0MiwzMC4wNTM2IDI4LjQ5MzksMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxMDEsMTAxLDEwMSk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMy45OTM5LDE2LjAwNjFDNi4xOTk2OCwxNi4wMDYxIDcuOTg3ODEsMTcuNzk0MiA3Ljk4NzgxLDIwQzcuOTg3ODEsMjIuMjA1OCA2LjE5OTY4LDIzLjk5MzkgMy45OTM5LDIzLjk5MzlDMS43ODgxMywyMy45OTM5IDAsMjIuMjA1OCAwLDIwQzAsMTcuNzk0MiAxLjc4ODEzLDE2LjAwNjEgMy45OTM5LDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoMTg3LDE4NywxODcpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTUuODU3ODYsMjguNDkzOUM3LjQxNzU4LDI2LjkzNDIgOS45NDYzOCwyNi45MzQyIDExLjUwNjEsMjguNDkzOUMxMy4wNjU4LDMwLjA1MzYgMTMuMDY1OCwzMi41ODI0IDExLjUwNjEsMzQuMTQyMUM5Ljk0NjM4LDM1LjcwMTkgNy40MTc1OCwzNS43MDE5IDUuODU3ODYsMzQuMTQyMUM0LjI5ODE1LDMyLjU4MjQgNC4yOTgxNSwzMC4wNTM2IDUuODU3ODYsMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxNjQsMTY0LDE2NCk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMzYuMDA2MSwxNi4wMDYxQzM4LjIxMTksMTYuMDA2MSA0MCwxNy43OTQyIDQwLDIwQzQwLDIyLjIwNTggMzguMjExOSwyMy45OTM5IDM2LjAwNjEsMjMuOTkzOUMzMy44MDAzLDIzLjk5MzkgMzIuMDEyMiwyMi4yMDU4IDMyLjAxMjIsMjBDMzIuMDEyMiwxNy43OTQyIDMzLjgwMDMsMTYuMDA2MSAzNi4wMDYxLDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoNzQsNzQsNzQpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksNS44NTc4NkMzMC4wNTM2LDQuMjk4MTUgMzIuNTgyNCw0LjI5ODE1IDM0LjE0MjEsNS44NTc4NkMzNS43MDE5LDcuNDE3NTggMzUuNzAxOSw5Ljk0NjM4IDM0LjE0MjEsMTEuNTA2MUMzMi41ODI0LDEzLjA2NTggMzAuMDUzNiwxMy4wNjU4IDI4LjQ5MzksMTEuNTA2MUMyNi45MzQyLDkuOTQ2MzggMjYuOTM0Miw3LjQxNzU4IDI4LjQ5MzksNS44NTc4NloiIHN0eWxlPSJmaWxsOnJnYig1MCw1MCw1MCk7Ii8+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" style="position: absolute;top:20vh;left: 35vw;"/>
-                                    </div>
-                                </div>
+                        <!-- end card -->
+                    </div>
+                    <div class="col-md-9 col-log-10">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div id="hits-container"></div>
+                                <div id="pagination-container"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- mobile filters -->
-
-            <div class="buttonContainer" style="z-index:10;">
-                <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
-                        data-target="#mobileFiltersModal" id="filter-button" style="z-index:10;">
-                    <?= Yii::t("saerch.filters_header", "Filters") ?>
-                </button>
             </div>
+        </section>
 
-            <?php
-            \yii\bootstrap\Modal::begin([
-                'options' => [
-                    'class' => 'modal modal-fullscreen force-fullscreen',
-                    'id' => 'mobileFiltersModal'
-                ],
-                'closeButton' => false,
-                'header' => "<b>".\Yii::t('search.mobile_search_filters', 'Search Filters')."</b>"
-            ])
-            ?>
+        <div class="item-card card-width col-xs-12 col-sm-6 col-md-3 col-lg-3" id="item-template">
+            <a href="<?= \yii\helpers\Url::to('@web/item') ?>/{{objectID}}" data-pjax="0">
+                <div class="card">
+                    <div class="image"
+                         style="background-size: cover; background-position: 50% 50%;">
+                        <div class="price-badge">
+                    <span class="time">
+                        <?= Yii::t("item.card.from", "from") ?>
+                    </span>
+                            <span class="currency">kr.</span>
+                    <span class="price">
+                        {{price_week}}
+                    </span>
+                        </div>
+                        <div class="author">
+                            img
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title" style="height:20px;">
+                           {{title}}
+                        </h3>
 
+                        <div class="category">
+                            {{test}}
+                        </div>
 
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                <i class="fa fa-close"></i>
-            </button>
-
-
-            <?= $this->render('filters', [
-                'model' => $model,
-                'mobile' => true
-            ]) ?>
-
-            <?php \yii\bootstrap\Modal::end() ?>
+                        <div class="footer-divs">
+                            <div class="reviews">
+                                {{score}}
+                            </div>
+                            <div class="location">
+                                <i class="fa fa-map-marker"></i>
+                                {{dist}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
+        <!-- mobile filters -->
+
+        <div class="buttonContainer" style="z-index:10;">
+            <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
+                    data-target="#mobileFiltersModal" id="filter-button" style="z-index:10;">
+                <?= Yii::t("saerch.filters_header", "Filters") ?>
+            </button>
+        </div>
+
+        <?php
+        \yii\bootstrap\Modal::begin([
+            'options' => [
+                'class' => 'modal modal-fullscreen force-fullscreen',
+                'id' => 'mobileFiltersModal'
+            ],
+            'closeButton' => false,
+            'header' => "<b>" . \Yii::t('search.mobile_search_filters', 'Search Filters') . "</b>"
+        ])
+        ?>
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-close"></i>
+        </button>
+
+        <?php \yii\bootstrap\Modal::end() ?>
     </div>
-<?php Pjax::end(); ?>
 
 <?= \app\widgets\SignupModal::widget() ?>
