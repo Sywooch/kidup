@@ -70,6 +70,9 @@ $components = [
                     't' => function ($cat, $default, $params = []) {
                         return \Yii::t($cat, $default, $params);
                     },
+                    'userIsGuest' => function () {
+                        return \Yii::$app->user->isGuest;
+                    },
                     'image' => function ($file, $options, $htmlOptions) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
@@ -78,6 +81,13 @@ $components = [
                     },
                     'bgImage' => function ($file, $options = []) {
                         return \images\components\ImageHelper::bgCoverImg($file, $options);
+                    },
+                    'timestampToDate' => function ($timestamp) {
+                        Carbon\Carbon::setToStringFormat("d-m-y");
+                        return Carbon\Carbon::createFromTimestamp($timestamp);
+                    },
+                    'now' => function() {
+                        return date('d-m-y H:i');
                     }
                 ]
             ],

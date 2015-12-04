@@ -3,10 +3,17 @@
 namespace mail\controllers;
 
 use app\extended\web\Controller;
-use app\helpers\Event;
-use booking\models\Payin;
-use mail\models\Mailer;
+use booking\models\Booking;
+use mail\mails\bookingRenter\PayoutFactory;
+use mail\mails\conversation\NewMessageFactory;
+use mail\mails\MailRenderer;
+use mail\mails\MailSender;
+use mail\mails\user\ReconfirmInterface;
+use mail\components;
 use mail\models\MailLog;
+use mail\widgets\Button;
+use message\models\Message;
+use user\models\User;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -23,11 +30,10 @@ class ViewController extends Controller
             throw new NotFoundHttpException("Email not found");
         }
 
-        $view = '/' . Mailer::getView($mailLog->type);
-        $this->layout = '@mail/views/layouts/html';
-        \Yii::$app->params['tmp_email_params'] = Json::decode($mailLog->data);
-
-        return $this->render($view, Json::decode($mailLog->data));
+        $mail = \mail\mails\MailType::getModel($mailLog->type);
+        $mail->loadData($mailLog->data);
+        $renderer = new MailRenderer($mail);
+        $renderer->render();
     }
 
     public function actionLink($url, $mailId)
@@ -41,35 +47,21 @@ class ViewController extends Controller
 
     public function actionTest()
     {
-        // item reminder
-//        $u = Item::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, Item::EVENT_UNFINISHED_REMINDER);
-//
-//        // user login
-//         $u = User::find()->orderBy('id DESC')->one();
-//         Event::trigger($u, User::EVENT_USER_REGISTER_DONE);
-//
-//        // booking confirm
-//         $u = Payin::find()->orderBy('id DESC')->one();
-//         Event::trigger($u, Payin::EVENT_AUTHORIZATION_CONFIRMED);
-//
-//        // new message
-//        $u = Message::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, Message::EVENT_NEW_MESSAGE);
-//
-//        // about to start
-//        $u = \booking\models\Booking::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, \booking\models\Booking::EVENT_BOOKING_ALMOST_START);
-//
-//        // confirmations, renter receipt
-//        $u = Payin::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, Payin::EVENT_PAYIN_CONFIRMED);
-//        $m = (new MailMessage())->parseInbox();
-//
-//        $u = \booking\models\Booking::find()->orderBy('id DESC')->one();
-//        Event::trigger($u, \booking\models\Booking::EVENT_REVIEWS_PUBLIC);
-        $u = Payin::find()->orderBy('id DESC')->one();
-        Event::trigger($u, Payin::EVENT_FAILED);
+        $factory = new NewMessageFactory();
+
+        // define many objects to play with
+        $user = User::find()->one();
+        $booking = Booking::find()->one();
+        $message = Message::find()->one();
+
+        $mail = $factory->create($message);
+        $mail->setReceiver((new \mail\components\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
+        $renderer = new \mail\components\MailRenderer($mail);
+        echo $renderer->render();
+        //\mail\components\MailSender()::send($mail);
+
+        //return new MailRenderer($mail);
     }
+
 }
 

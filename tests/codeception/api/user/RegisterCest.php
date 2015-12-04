@@ -25,7 +25,7 @@ class RegisterCest
     public function checkRegister(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
-        $email = $faker->email;
+        $email = $faker->freeEmail;
         $I->wantTo('register via the api');
         $I->sendPOST('users', [
             'email' => $email,

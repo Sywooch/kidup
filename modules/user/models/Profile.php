@@ -81,6 +81,10 @@ class Profile extends base\Profile
         }
     }
 
+    public function getFullName(){
+        return $this->first_name.' '.$this->last_name;
+    }
+
     public function isValidPhoneNumber()
     {
         if (empty($this->phone_number)) {

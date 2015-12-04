@@ -1,0 +1,21 @@
+{{ void(table.begin({bgColor: 'white'})) }}
+
+{{ void(textblock.begin()) }}
+<p style="text-align: left; font-size: 20px;font-weight: 700;">
+    Hej {{ vm.userName }}
+</p>
+{{ space.widget() }}
+<p style="text-align: left;">
+    Nu da {{ vm.otherName }} har skrevet en omtale om dig,
+    kan i begge læse din feedback fra dette lejemål. Disse omtaler er
+    offentlige, så andre lejere og udlejere også kan se dem.
+</p>
+{{ void(textblock.end()) }}
+
+{{ void(table.end()) }}
+
+{{ button.widget({
+    content: t("mail.recovery.link", "View review on your profile"),
+    url: vm.profileUrl,
+    wide: true
+}) | raw }}

@@ -55,7 +55,7 @@ class ReferralController extends Controller
                         'actions' => [
                             'index',
                         ],
-                        'roles' => ['@']
+                        'roles' => ['@', '?']
                     ],
                 ]
             ],
@@ -68,13 +68,15 @@ class ReferralController extends Controller
      */
     public function actionIndex()
     {
-        $referralLink = Url::to('@web/?ref=' . \Yii::$app->user->identity->referral_code, true);
+        $referralLink = !\Yii::$app->user->isGuest ? Url::to('@web/?ref=' . \Yii::$app->user->identity->referral_code, true) : '';
 
         $topList = (new UserReferredUser())->topList();
 
+        $referralCount = !\Yii::$app->user->isGuest ? \Yii::$app->user->identity->getReferredUserCount() : 0;
+
         return $this->render('index.twig', [
             'referralLink' => $referralLink,
-            'count_total' => \Yii::$app->user->identity->getReferredUserCount(),
+            'count_total' => $referralCount,
             'top_list' => $topList,
         ]);
     }

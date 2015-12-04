@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Message extends \message\models\base\Message
+class Message extends \message\models\Message
 {
 
     public function definitions()

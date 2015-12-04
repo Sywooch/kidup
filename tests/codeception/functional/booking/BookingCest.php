@@ -9,7 +9,6 @@ use codecept\muffins\User;
 use booking\models\Payin;
 use functionalTester;
 use Faker\Factory as Faker;
-use item\controllers\CronController;
 use League\FactoryMuffin\FactoryMuffin;
 use message\models\Message;
 use Yii;

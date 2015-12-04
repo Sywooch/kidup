@@ -1,0 +1,82 @@
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+
+    {{ space.widget({height: 20}) | raw }}
+
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textblock.begin()) }}
+        Vi er glade for at kunne fortælle dig, at en forælder har
+        booket {{ vm.itemName }}!
+        For at gøre udvekslingen af udstyret problemfri foreslår vi, at
+        du fortsætter samtalen
+        med {{ vm.renterName }} Via KidUp’s meddelelsessystem for at
+        bekræfte jeres
+        udvekslingstidspunkt, stille eventuelle spørgsmål og hjælpe dem
+        med at finde ud af,
+        hvordan man nemmest kommer frem til din adresse.
+        {{ void(textblock.end()) }}
+        {{ space.widget({height: 15}) | raw }}
+        {{ void(textblock.begin()) }}
+        Tak fordi du deler dit udstyr via KidUp
+    {{ void(textblock.end()) }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+    {{ void(textblock.begin()) }}
+    Udstyrsudleje
+    {{ void(textblock.end()) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+    {{ void(textblock.begin()) }}
+    Bekræftelseskode: {{ vm.payinId }}
+    {{ void(textblock.end()) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+    {{ void(textblock.begin()) }}
+    Udstyr: {{ vm.itemName }}
+    {{ void(textblock.end()) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+
+    {{ space.widget({height: 10}) | raw }}
+
+    <table width="100%">
+        <tr>
+            {{ void(textblock.begin({row: false, width: '50%', align: 'center'})) }}
+            Udleje starter<br />
+            <strong>{{ timestampToDate(vm.startDate) }}</strong>
+            {{ void(textblock.end()) }}
+
+            {{ void(textblock.begin({row: false, width: '50%', align: 'center'})) }}
+            Udleje slutter<br />
+            <strong>{{ timestampToDate(vm.endDate) }}</strong>
+            {{ void(textblock.end()) }}
+        </tr>
+    </table>
+
+    {{ space.widget({height: 10}) | raw }}
+
+{{ void(table.end()) }}
+
+{{ button.widget({content: "Se udstyrudleje", url: vm.bookingUrl}) | raw }}
