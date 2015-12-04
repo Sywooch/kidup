@@ -114,8 +114,6 @@ class View extends \yii\web\View
         }
 
         $this->processPackageFiles();
-        (new AssetManager())->registerOriginalsWatcher();
-        
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
