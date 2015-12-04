@@ -251,7 +251,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                             $arg2 = substr($arg2, 0);
                         }
                         // function ends
-                        $messages[$arg1][] = $arg2;
+                        $messages[$arg1][] = trim($arg2);
                         break;
                     }
                     $string .= $char;

@@ -32,7 +32,7 @@ $components = [
             'port' => '25',
 //            'encryption' => 'tls',
         ],
-        'useFileTransport' => false,//YII_ENV == 'dev' ? true : false,
+        'useFileTransport' => YII_ENV == 'dev' ? true : false,
         'viewPath' => '@app/modules/mail/views',
     ],
     'authClientCollection' => [
@@ -70,7 +70,10 @@ $components = [
                     't' => function ($cat, $default, $params = []) {
                         return \Yii::t($cat, $default, $params);
                     },
-                    'image' => function ($file, $options = [], $htmlOptions = []) {
+                    'userIsGuest' => function () {
+                        return \Yii::$app->user->isGuest;
+                    },
+                    'image' => function ($file, $options, $htmlOptions) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
                     'imageUrl' => function ($file, $options = []) {
