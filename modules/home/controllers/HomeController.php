@@ -57,9 +57,7 @@ class HomeController extends Controller
         $categories = Yii::$app->db->cache(function () {
             return Category::find()->indexBy('name')->all();
         }, 24 * 3600);
-        $items = Yii::$app->db->cache(function () {
-            return Item::getRecommended(4);
-        }, 6 * 3600);
+        $items = Item::getRecommended(4);
 
         $rotationImage = rand(1, 2);
         $fileName = "kidup/home/rotating-headers/header-{$rotationImage}.jpg";

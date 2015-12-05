@@ -26,10 +26,11 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
                         <?= \Yii::t("home.share", 'Share'); ?>
-                        <strong id="typist-element"
-                                data-typist="<?= Yii::t("home.scrolling_header_share_items",
-                                    "a stroller,a toy,a bike") ?>"><?= \Yii::t("home.scrolling_header_share_default_item",
-                                'a trolley') ?></strong>
+<!--                        <strong id="typist-element"-->
+<!--                                data-typist="--><?//= Yii::t("home.scrolling_header_share_items",
+//                                    "a stroller,a toy,a bike") ?><!--">--><?//= \Yii::t("home.scrolling_header_share_default_item",
+//                                'a trolley') ?><!--</strong>-->
+                        <strong><?= \Yii::t("home.scrolling_header_share_default_item", 'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
                     </h1>
@@ -96,11 +97,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
             </div>
         </div>
     </div>
-    <?= $this->render('grid', [
-        'categories' => $categories
-    ]);
-    ?>
-
     <?= $this->render('search', [
         'model' => $searchModel,
         'defaultCategory' => $categories['Baby Toys']
@@ -111,6 +107,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
     ]);
     ?>
 
+    <?= $this->render('grid', [
+        'categories' => $categories
+    ]);
+    ?>
     <!-- Steps explanation area-->
     <div id="content-home-steps">
         <div class="divider">

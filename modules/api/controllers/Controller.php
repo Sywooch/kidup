@@ -64,6 +64,9 @@ class Controller extends \yii\rest\ActiveController
         if(!in_array('options', $res['guest'])){
             $res['guest'][] = 'options';
         }
+        if(!in_array('options', $res['user'])){
+            $res['user'][] = 'options';
+        }
 
         return ArrayHelper::merge(parent::behaviors(), [
             'cors' => [
