@@ -64,15 +64,15 @@ class View extends \yii\web\View
         $lines = [];
 
         // todo ugly fix to prevent the all package from being loaded after ready
-        if(isset($this->jsFiles[self::POS_READY])){
+        if (isset($this->jsFiles[self::POS_READY])) {
             foreach ($this->jsFiles[self::POS_READY] as $file => $str) {
-                if(strpos($file, "release-assets/js/common") === 1){
+                if (strpos($file, "release-assets/js/common") === 1) {
                     $this->jsFiles[self::POS_END] = ArrayHelper::merge([$file => $str], $this->jsFiles[self::POS_END]);
                     unset($this->jsFiles[self::POS_READY][$file]);
                 }
             }
         }
-        
+
         if (!empty($this->jsFiles[self::POS_END])) {
             $lines[] = implode("\n", $this->jsFiles[self::POS_END]);
         }
@@ -113,44 +113,12 @@ class View extends \yii\web\View
             }
         }
 
-        $this->processPackageFiles();
         (new AssetManager())->registerOriginalsWatcher();
-        
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
 
-    protected function processPackageFiles()
-    {
-        $commonPath = 'watch.json';
-
-        $adapter = new \League\Flysystem\Adapter\Local(Yii::$aliases['@app'] . '/web/packages/');
-        $filesystem = new Filesystem($adapter);
-
-        if (!$filesystem->has($commonPath)) {
-            $filesystem->write($commonPath, Json::encode(['css' => [], 'js' => []]));
-        }
-        $origFile = $filesystem->read($commonPath);
-        $commonAssets = Json::decode($origFile);
-        foreach ($this->webpackCssFiles as $file => $html) {
-            if (strpos($file, 'http') === 0) {
-                continue;
-            }
-            $commonAssets['css'][] = str_replace(".css", ".less", 'web' . $file);
-        }
-        foreach ($this->webpackJsFiles as $file => $html) {
-            $commonAssets['js'][] = 'web' . $file;
-        }
-
-        $commonAssets['js'] = array_values(array_unique($commonAssets['js']));
-        $commonAssets['css'] = array_values(array_unique($commonAssets['css']));
-
-        if ($origFile !== Json::encode($origFile)) {
-            $filesystem->update($commonPath, Json::encode($commonAssets));
-        }
-    }
-
-    /**
+    /*
      * Reigsters js variables into the scope
      * @param $array
      */
@@ -178,5 +146,14 @@ JS;
             $js = \JShrink\Minifier::minify($js);
         }
         return $js;
+    }
+
+    public function renderTwig($path)
+    {
+        $loader = new \Twig_Loader_Filesystem(\Yii::$aliases['@mail'] . '/widgets/button');
+        $twig = new \Twig_Environment($loader, [
+            'cache' => \Yii::$aliases['@runtime'] . '/twig'
+        ]);
+        return $twig->render($path . '.twig', ['x' => 9, 'this' => \Yii::$app->view]);
     }
 }

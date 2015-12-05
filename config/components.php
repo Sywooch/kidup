@@ -81,6 +81,13 @@ $components = [
                     },
                     'bgImage' => function ($file, $options = []) {
                         return \images\components\ImageHelper::bgCoverImg($file, $options);
+                    },
+                    'timestampToDate' => function ($timestamp) {
+                        Carbon\Carbon::setToStringFormat("d-m-y");
+                        return Carbon\Carbon::createFromTimestamp($timestamp);
+                    },
+                    'now' => function () {
+                        return date('d-m-y H:i');
                     }
                 ]
             ],
@@ -237,7 +244,8 @@ $components = [
                     'facebook-login' => 'facebook-login'
                 ]
             ],
-            'api/v1/pages/<page>' => 'api/pages/view'
+            'api/v1/pages/<page>' => 'api/pages/view',
+            'api/v1/event' => 'api/event/index'
         ],
     ],
 //    'redis' => [
@@ -246,6 +254,15 @@ $components = [
 //        'port' => 6379,
 //        'database' => 0,
 //    ],
+    'response' => [
+        'class' => 'yii\web\Response',
+        'on beforeSend' => function ($event) {
+            // auto adds access control if an api request
+            if (strpos("/api/",\Yii::$app->request->url) == 0) {
+                \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
+            }
+        },
+    ],
     'i18n' => [
         'translations' => [
             '*' => [

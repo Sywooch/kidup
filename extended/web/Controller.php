@@ -5,6 +5,8 @@ use admin\models\TrackingEvent;
 use search\models\IpLocation;
 use user\models\Profile;
 use Yii;
+use yii\filters\Cors;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Cookie;
 
@@ -14,7 +16,6 @@ class Controller extends \yii\web\Controller
     public $noContainer;
     public $noHeaderSpace;
     public $noFooter;
-
 
     public function __construct($id, $controller)
     {
@@ -48,13 +49,14 @@ class Controller extends \yii\web\Controller
                 }
             } else {
                 $location = IpLocation::get(\Yii::$app->request->getUserIP());
-                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
-                    (YII_ENV == 'dev' || YII_ENV == 'test')
-                ) {
-                    Yii::$app->language = 'en-US';
-                } else {
-                    Yii::$app->language = 'da-DK';
-                }
+//                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
+//                    (YII_ENV == 'dev' || YII_ENV == 'test')
+//                ) {
+//                    Yii::$app->language = 'en-US';
+//                } else {
+//                    Yii::$app->language = 'da-DK';
+//                }
+                Yii::$app->language = 'da-DK';
                 Yii::$app->session->set('lang', Yii::$app->language);
             }
         }

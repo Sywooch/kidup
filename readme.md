@@ -1,3 +1,5 @@
+[![Build Status](https://circleci.com/gh/esquire900/kidup/tree/develop.png)](https://circleci.com/gh/esquire900/kidup/tree/develop)
+
 # Kidup repository
 
 ## Install dev environment

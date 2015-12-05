@@ -20,19 +20,19 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
 ?>
 
 <!--Area for all categories-->
-<Section id="categories" style="margin-top:-140px">
+<Section id="categories">
     <div class="container">
-<!--        <div class="row">-->
-<!--            <div class="col-sm-12 text-center">-->
-<!--                <h2>--><?//= Yii::t("home.grid.header", "Find Kids stuff") ?><!--</h2>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2><?= Yii::t("home.grid.header", "Find Kids stuff") ?></h2>
+            </div>
+        </div>
         <!--new row with stuff-->
         <?php
         $category = function ($category, $image) { ?>
             <div class="col-md-2 category">
                 <a href="<?= Url::to('@web/search/' . $category) ?>" <?= ViewHelper::trackClick("home.click_category", $image) ?>>
-                    <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200, 'h' => 200]) ?>
+                    <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200]) ?>
                     <div class="text-center">
                         <h4><?= $category ?></h4>
                     </div>

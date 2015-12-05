@@ -1,0 +1,86 @@
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+    {{ greeter.widget({name: vm.profileName}) | raw }}
+
+    {{ void(textblock.begin()) }}
+        Dette er en p&aring;mindelse om, at du har en kommende reservation. Vi
+        anbefaler, at du verificerer den eksakte adresse og telefonnummer,
+        direkte med v&aelig;rten.
+    {{ void(textblock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+{{ void(table.end()) }}
+
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+<table width="100%">
+    <tr>
+        {{ void(textblock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+        Udleje starter<br />
+        <strong>{{ timestampToDate(vm.startDate) }}</strong>
+        {{ void(textblock.end()) }}
+
+        {{ void(textblock.begin({fontSize: 18, row: false, width: '50%', align: 'center'})) }}
+        Udleje slutter<br />
+        <strong>{{ timestampToDate(vm.endDate) }}</strong>
+        {{ void(textblock.end()) }}
+    </tr>
+</table>
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+    {{ void(textblock.begin()) }}
+    <table width="100%">
+        <tr>
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
+            Udstyrets detaljer
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.itemName }}
+            {{ void(textblock.end()) }}
+        </tr>
+    </table>
+    {{ void(textblock.end()) }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#FFFFFF'})) }}
+    {{ void(textblock.begin()) }}
+    <table width="100%">
+        <tr>
+            {{ void(textblock.begin({row:false, width:'auto', align:'left'})) }}
+            Udlejer
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerName }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerLocation | raw }}
+            {{ void(textblock.end()) }}
+            {{ void(textblock.begin({row:false, width:'auto', align:'right'})) }}
+            {{ vm.ownerPhone }}
+            {{ void(textblock.end()) }}
+        </tr>
+    </table>
+    {{ void(textblock.end()) }}
+{{ void(table.end()) }}
+
+{{ void(table.begin({bgColor: '#EEEEEE'})) }}
+    {{ void(textblock.begin()) }}
+        F&oslash;r du afhenter, er det en god ide at genneml&aelig;se tjeklisten for
+        udstyret:
+        <ol>
+            <li><a href="{{ vm.bookingUrl }}">Udskriv og medbring din booking
+            bekr&aelig;ftelse</a>, herunder v&aelig;rtens
+            adresse og telefonnummer.</li>
+            <li><a href="{{ vm.chatUrl }}">Kontakt v&aelig;rten</a> f&oslash;r udveksling
+            af udstyret for at f&aring;
+            k&oslash;rselsvejledninger, bekr&aelig;fte dit afhentningstidspunkt, og
+            verificere v&aelig;rtens kontaktoplysninger.</li>
+            <li>Hvis du p&aring; noget tidspunkt har brug for assistance under din
+            lejeperiode, kan du bes&oslash;ge vores <a href="{{ vm.helpUrl }}">hj&aelig;lpecenter</a>.</li>
+        </ol>
+    {{ void(textblock.end()) }}
+
+    {{ space.widget({height:15}) | raw }}
+
+{{ void(table.end()) }}

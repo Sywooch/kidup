@@ -15,7 +15,7 @@ class MailLog extends base\MailLog
         $log->id = $id;
         $log->type = $type;
         $log->email = $email;
-        $log->data = Json::encode($data);
+        $log->data = $data;
         $log->created_at = time();
         $log->save();
         return $log;
