@@ -33,6 +33,8 @@ class TrackingEvent extends \yii\db\ActiveRecord
         'item.click_book_now',          // click the request to book button on an item page
         'item.click_short_bookwidget',  // click the short term pricing info in the booking widget of an item page
         'item.click_long_bookwidget',   // click the long term pricing info in the booking widget of an item page
+        'init',                         // provides initial information on a session, such as user agent, screen size etc.
+        'ping',                         // a page ping - a user that is still on a page. Done in intervals, with some info (scroll, second of ping, if page is in focus)
     ];
 
     public static function tableName()
@@ -56,20 +58,22 @@ class TrackingEvent extends \yii\db\ActiveRecord
     {
         return [
             [['type'], 'required'],
-            [['session', 'type', 'data', 'country', 'city'], 'string'],
-            [['id','created_at','user_id', 'device', 'timestamp'], 'integer'],
-            [['session', 'type','data'], 'string', 'max' => 255],
+            [['session', 'type', 'data', 'country', 'city', 'language'], 'string'],
+            [['id','created_at','user_id', 'timestamp', 'source'], 'integer'],
+            [['session', 'type'], 'string', 'max' => 255],
         ];
     }
 
-    public static function track($type, $data = null, $country = null, $city = null, $device = null, $t = null){
+    public static function track($type, $data = null, $country = null, $city = null, $is_mobile = null, $t = null, $language = null, $source = null){
         $event = new TrackingEvent([
             'type' => $type,
             'data' => $data,
             'city' => $city,
             'country' => $country,
-            'device' => $device,
+            'is_mobile' => $is_mobile,
             'timestamp' => $t,
+            'language' => $language,
+            'source' => $source
         ]);
         $event->save();
     }

@@ -13,20 +13,11 @@ class ViewHelper
 
     public static function trackPageView()
     {
-        $action = @\Yii::$app->controller->getRoute();
+        $action = @\Yii::$app->request->getUrl();
         if (!$action) {
             return '';
         }
-        $action = str_replace("/", "-", $action);
-        $params = @\Yii::$app->controller->actionParams;
-        $ps = [];
-        foreach ($params as $id => $param) {
-            if (strpos($id, '[') === false) {
-                $ps[] = $id . "-" . $param;
-            }
-        }
-
-        $action .= "." . implode("|", $ps);
+        $action = urlencode($action);
         return "<script>kidupTracker('page_view', '{$action}')</script>";
     }
 
