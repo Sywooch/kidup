@@ -86,7 +86,7 @@ $components = [
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
                     },
-                    'now' => function() {
+                    'now' => function () {
                         return date('d-m-y H:i');
                     }
                 ]
@@ -254,6 +254,15 @@ $components = [
 //        'port' => 6379,
 //        'database' => 0,
 //    ],
+    'response' => [
+        'class' => 'yii\web\Response',
+        'on beforeSend' => function ($event) {
+            // auto adds access control if an api request
+            if (strpos("/api/",\Yii::$app->request->url) == 0) {
+                \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
+            }
+        },
+    ],
     'i18n' => [
         'translations' => [
             '*' => [

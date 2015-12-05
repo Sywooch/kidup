@@ -26,6 +26,6 @@ class EventController extends Controller
             $city = $location->city;
         }
         TrackingEvent::track($type, $data, $country, $city, $m, $t, $l, $s, \Yii::$app->request->getUserIP());
-        exit();
+        return '';
     }
 }

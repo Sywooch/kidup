@@ -71,7 +71,6 @@ class Oauth2Controller extends Controller
             throw new NotFoundHttpException("Refresh token not found.");
         }
 
-
         $token = OauthAccessToken::make($oldRefreshToken->user, $oldRefreshToken->client);
         $refreshToken = OauthRefreshToken::make($oldRefreshToken->user, $oldRefreshToken->client);
         $oldRefreshToken->delete();
