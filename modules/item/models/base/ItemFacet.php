@@ -13,22 +13,21 @@ use Yii;
  * @property string $description
  * @property integer $is_required
  *
- * @property CategoryHasFeature[] $categoryHasFeatures
+ * @property CategoryHasItemFacet[] $categoryHasItemFacets
  * @property Category[] $categories
- * @property FeatureValue[] $featureValues
- * @property ItemHasFeature[] $itemHasFeatures
+ * @property ItemFacetValue[] $featureValues
+ * @property ItemHasItemFacet[] $itemHasFacets
  * @property Item[] $items
- * @property ItemHasFeatureSingular[] $itemHasFeatureSingulars
  * @property Item[] $items0
  */
-class Feature extends \yii\db\ActiveRecord
+class ItemFacet extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'feature';
+        return 'item_facet';
     }
 
     /**
@@ -61,9 +60,9 @@ class Feature extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoryHasFeatures()
+    public function getCategoryHasItemFacets()
     {
-        return $this->hasMany(CategoryHasFeature::className(), ['feature_id' => 'id']);
+        return $this->hasMany(CategoryHasItemFacet::className(), ['feature_id' => 'id']);
     }
 
     /**
@@ -77,17 +76,17 @@ class Feature extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeatureValues()
+    public function getItemFacetValues()
     {
-        return $this->hasMany(FeatureValue::className(), ['feature_id' => 'id']);
+        return $this->hasMany(ItemFacetValue::className(), ['feature_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItemHasFeatures()
+    public function getItemHasItemFacets()
     {
-        return $this->hasMany(ItemHasFeature::className(), ['feature_id' => 'id']);
+        return $this->hasMany(ItemHasItemFacet::className(), ['feature_id' => 'id']);
     }
 
     /**
@@ -96,14 +95,6 @@ class Feature extends \yii\db\ActiveRecord
     public function getItems()
     {
         return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_feature', ['feature_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemHasFeatureSingulars()
-    {
-        return $this->hasMany(ItemHasFeatureSingular::className(), ['feature_id' => 'id']);
     }
 
     /**

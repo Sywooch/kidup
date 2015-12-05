@@ -60,6 +60,10 @@ class ItemSearchDb
         ];
         $obj['img'] = \images\components\ImageHelper::url($item->getImageName(0), ['w' => 500]);
 
+        foreach ($item->itemFacets as $itemFacet) {
+            
+        }
+
         return $obj;
     }
 }

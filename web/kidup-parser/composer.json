@@ -1,0 +1,10 @@
+{
+    "name": "simon/kidup-parser",
+    "authors": [
+        {
+            "name": "Simon Nouwens",
+            "email": "simonnouwens@gmail.com"
+        }
+    ],
+    "require": {}
+}
