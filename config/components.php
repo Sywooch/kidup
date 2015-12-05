@@ -244,7 +244,8 @@ $components = [
                     'facebook-login' => 'facebook-login'
                 ]
             ],
-            'api/v1/pages/<page>' => 'api/pages/view'
+            'api/v1/pages/<page>' => 'api/pages/view',
+            'api/v1/event' => 'api/event/index'
         ],
     ],
 //    'redis' => [

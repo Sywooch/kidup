@@ -91,7 +91,7 @@
 
     window.scrollTop = function(){
         return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    }
+    };
 
     setTimeout(function () {
         var scrollTop = window.scrollTop();

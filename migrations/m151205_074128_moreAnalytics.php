@@ -9,6 +9,7 @@ class m151205_074128_moreAnalytics extends Migration
     {
         $this->addColumn("tracking_event", "language", Schema::TYPE_STRING);
         $this->addColumn("tracking_event", "source", Schema::TYPE_SMALLINT);
+        $this->addColumn("tracking_event", "ip", Schema::TYPE_STRING);
         $this->addColumn("tracking_event", "is_mobile", Schema::TYPE_BOOLEAN);
         $this->dropColumn("tracking_event", 'device');
         $this->alterColumn("tracking_event", "data", Schema::TYPE_TEXT);
