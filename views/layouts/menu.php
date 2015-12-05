@@ -1,14 +1,15 @@
 <?php
-use \images\components\ImageHelper;
-use \message\models\Message;
-use yii\helpers\Url;
-use app\components\Cache;
 use app\helpers\ViewHelper;
+use images\components\ImageHelper;
+use message\models\Message;
+use yii\helpers\Url;
+
 /**
  * @var \yii\web\View $this
  */
 // create the navbar
 $transparent = \Yii::$app->urlHelper->isHome();
+$search = \Yii::$app->urlHelper->isSearch();
 $class = 'navbar navbar-default ';
 $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
@@ -30,10 +31,16 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
-                    <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
-                        ['h' => 53], ['style' => 'padding-top:5px;'])
-                        : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53]) ?>
+                <a class="navbar-brand" href="<?= Url::to(['/home']) ?>" style="width:18vw;">
+                    <?php if ($search): ?>
+                        <?= ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
+                            ['style' => 'margin-left:auto;margin-right:auto;']) ?>
+                    <?php else: ?>
+                        <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
+                            ['h' => 40], ['style' => 'padding-top:5px;'])
+                            : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
+                                ['style' => 'margin-left:auto;margin-right:auto;']) ?>
+                    <?php endif; ?>
                 </a>
             </div>
 
@@ -44,13 +51,13 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <!--Not logged in-->
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#loginModal" id="login"
-                                <?= ViewHelper::trackClick('menu.click_login')?>>
+                                <?= ViewHelper::trackClick('menu.click_login') ?>>
                                 <?= Yii::t("app.menu.login", "Login") ?>
                             </button>
                         </li>
                         <li class="hidden-xs">
                             <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal"
-                                <?= ViewHelper::trackClick('menu.click_register')?>>
+                                <?= ViewHelper::trackClick('menu.click_register') ?>>
                                 <?= Yii::t("app.menu.register", "Register") ?>
                             </button>
                         </li>
@@ -159,14 +166,14 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="<?= Url::to('@web/home/home/change-language?lang=da-DK') ?>"
-                                    <?= ViewHelper::trackClick('menu.switch_to_dk')?>>
+                                    <?= ViewHelper::trackClick('menu.switch_to_dk') ?>>
                                     <?= ImageHelper::image('kidup/common/flags/denmark.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.danish", "Danish") ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="<?= Url::to('@web/home/home/change-language?lang=en-US') ?>"
-                                    <?= ViewHelper::trackClick('menu.switch_to_en')?>>
+                                    <?= ViewHelper::trackClick('menu.switch_to_en') ?>>
                                     <?= ImageHelper::image('kidup/common/flags/uk.png', ['w' => 25]) ?>
                                     <?= Yii::t("menu.languages.english", "English") ?>
                                 </a>
@@ -248,7 +255,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         </a>
                     </li>
                 </ul>
-                <?php endif; ?>
+            <?php endif; ?>
             </div>
         </div>
     </nav>

@@ -2,6 +2,8 @@
 
 namespace search\components;
 
+use review\models\Review;
+
 class ItemSearchDb
 {
     private $client;
@@ -54,16 +56,33 @@ class ItemSearchDb
             'lat' => $item->location->latitude,
             'lng' => $item->location->longitude
         ];
-        $obj['categories'] = [
-            $item->category->getTranslatedName(),
-            $item->category->parent->getTranslatedName(),
-        ];
+        $obj['location']['city'] = $item->location->city;
+        $obj['location']['country'] = $item->location->country;
+        $obj['hierarchicalCategories_en'] = $this->hierarchicalCat($item, 'en-US');
+        $obj['hierarchicalCategories_da'] = $this->hierarchicalCat($item, 'da-DK');
         $obj['img'] = \images\components\ImageHelper::url($item->getImageName(0), ['w' => 500]);
+        $obj['review_score'] = (new Review())->computeOverallItemScore($item);
+        $obj['owner'] = [
+            'id' => $item->owner_id,
+            'name' => $item->owner->profile->getName(),
+            'img' => $item->owner->profile->getImgUrl()
+        ];
 
-        foreach ($item->itemFacets as $itemFacet) {
-            
+        foreach ($item->itemHasItemFacets as $itemHasItemFacet) {
+            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_en'][] =
+                $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
+            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_da'][] =
+                $itemHasItemFacet->itemFacetValue->getTranslatedName('da-DK');
         }
 
         return $obj;
+    }
+
+    private function hierarchicalCat(\item\models\Item $item, $lang)
+    {
+        return [
+            'lvl0' => $item->category->parent->getTranslatedName($lang),
+            'lvl1' => $item->category->parent->getTranslatedName($lang) . " > " . $item->category->getTranslatedName($lang)
+        ];
     }
 }

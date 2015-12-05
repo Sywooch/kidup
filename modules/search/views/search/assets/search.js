@@ -1,9 +1,9 @@
-(function(){
-    setTimeout(function(){
+(function () {
+    setTimeout(function () {
         initSearch()
-    },10);
+    }, 10);
 
-    function initSearch(){
+    function initSearch() {
         var search = instantsearch({
             appId: '8M1ZPTMQEW',
             apiKey: 'c2e21bc85e28c4f8af28ade68186fa2c',
@@ -19,7 +19,11 @@
 
         search.addWidget(
             instantsearch.widgets.pagination({
-                container: '#pagination-container'
+                container: '#pagination-container',
+                cssClasses: {
+                    root: 'pagination',
+                    active: 'active'
+                }
             })
         );
         search.addWidget(
@@ -29,18 +33,16 @@
                     empty: 'No results',
                     item: document.getElementById("item-template").innerHTML
                 },
-                hitsPerPage: 16
+                hitsPerPage: 20
             })
         );
 
         search.addWidget(
-            instantsearch.widgets.refinementList({
-                container: '#brands',
-                attributeName: 'categories',
-                operator: 'or',
-                limit: 8,
+            instantsearch.widgets.hierarchicalMenu({
+                container: '#categories',
+                attributes: ['hierarchicalCategories_da.lvl0', 'hierarchicalCategories_da.lvl1'],
                 templates: {
-                    header: '<h6>Categories</h6>'
+                    header: 'Categories'
                 }
             })
         );
@@ -53,7 +55,7 @@
                     header: 'Price'
                 },
                 tooltips: {
-                    format: function(formattedValue) {
+                    format: function (formattedValue) {
                         return 'kr.' + Math.round(formattedValue);
                     }
                 }
@@ -77,16 +79,31 @@
             })
         );
 
-            //search.addWidget(
-            //    instantsearch.widgets.sortBySelector({
-            //        container: '#sort-by-container',
-            //        indices: [
-            //            {name: 'instant_search', label: 'Most relevant'},
-            //            {name: 'instant_search_price_asc', label: 'Lowest price'},
-            //            {name: 'instant_search_price_desc', label: 'Highest price'}
-            //        ]
-            //    })
-            //);
+        search.addWidget(
+            instantsearch.widgets.refinementList({
+                container: '#conditions',
+                attributeName: 'facet_condition_da',
+                operator: 'or',
+                limit: 10,
+                templates: {
+                    header: 'Condition'
+                }
+            })
+        );
+
+        search.addWidget(
+            instantsearch.widgets.stats({
+                container: '#stats-container'
+            })
+        );
+
+        search.templatesConfig.helpers.location = function (/*text, render*/) {
+            var location = this.city + ", " + this.country;
+            if (typeof this._rankingInfo.geoDistance !== "undefined") {
+                location = Math.round(this._rankingInfo.geoDistance / 100) / 10 + " km";
+            }
+            return location;
+        };
 
         search.start();
     }

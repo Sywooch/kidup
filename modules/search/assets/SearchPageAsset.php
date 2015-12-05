@@ -32,6 +32,7 @@ class SearchPageAsset extends AssetBundle
         '\app\assets\AppAsset',
         '\yii\web\JqueryAsset',
         '\yii\jui\JuiAsset',
+        '\item\assets\ItemAsset'
     ];
 
 }

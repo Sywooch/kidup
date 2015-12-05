@@ -12,14 +12,16 @@ $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Se
         <section class="section" id="search-cards">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3 col-lg-3" id="search-sidebar">
+                    <div class="col-md-3 col-lg-2" id="search-sidebar" style="min-width:20%;">
                         <div class="card card-refine hidden-sm hidden-xs">
                             <div class="header">
                                 <h4 class="title">
                                     <?= Yii::t("search.header_filter", "Filter") ?>
+                                    <div class="pull-right">
+                                        <div id="clear-all">Clear all</div>
+                                    </div>
                                 </h4>
                             </div>
-                            <div id="clear-all">Clear all</div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h6 class="panel-title">
@@ -42,7 +44,14 @@ $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Se
                             <div class="panel panel-default">
                                 <div id="refine-location" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <div id="brands"></div>
+                                        <div id="categories"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div id="refine-location" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div id="conditions"></div>
                                     </div>
                                 </div>
                             </div>
@@ -51,14 +60,17 @@ $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Se
                         </div>
                         <!-- end card -->
                     </div>
-                    <div class="col-md-9 col-log-10">
+                    <div class="col-md-9 col-lg-10" style="max-width: 80%;">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="searchResults" id="results">
                                     <div class="row">
+                                        <div style="padding:4px;">
+                                            <i id="stats-container"></i>
+                                        </div>
                                         <div id="hits-container"></div>
                                         <br>
-                                        <div id="pagination-container"></div>
+                                        <nav id="pagination-container"></nav>
                                     </div>
                                 </div>
                             </div>

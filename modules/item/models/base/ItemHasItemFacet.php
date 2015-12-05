@@ -11,8 +11,8 @@ use Yii;
  * @property integer $item_facet_id
  * @property integer $item_facet_value_id
  *
- * @property ItemFacetValue $item_facetValue
- * @property ItemFacet $item_facet
+ * @property ItemFacetValue $itemFacetValue
+ * @property ItemFacet $itemfacet
  * @property Item $item
  */
 class ItemHasItemFacet extends \yii\db\ActiveRecord

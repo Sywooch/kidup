@@ -11,4 +11,10 @@ class UrlHelper extends Component
         $url = @explode("?", @\Yii::$app->request->getUrl())[0];
         return ($url == '/' || $url == '/home');
     }
+
+    public function isSearch()
+    {
+        $url = @explode("?", @\Yii::$app->request->getUrl())[0];
+        return ($url == '/search');
+    }
 }

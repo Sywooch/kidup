@@ -11,7 +11,7 @@ use Yii;
  * @property integer $item_facet_id
  * @property string $name
  *
- * @property ItemFacet $item_facet
+ * @property ItemFacet $itemFacet
  * @property ItemHasItemFacet[] $itemHasItemFacets
  */
 class ItemFacetValue extends \yii\db\ActiveRecord
@@ -73,11 +73,11 @@ class ItemFacetValue extends \yii\db\ActiveRecord
         return $this->hasMany(ItemHasItemFacet::className(), ['item_facet_values_id' => 'id']);
     }
 
-    public function getTranslatedName()
+    public function getTranslatedName($lang = false)
     {
         $lower = str_replace(" ", '_', strtolower($this->itemFacet->name));
         $val = str_replace(" ", '_', strtolower($this->name));
         return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_value_' . $val, $this->name, [],
-            \Yii::$app->language);
+            $lang ? $lang : \Yii::$app->language);
     }
 }
