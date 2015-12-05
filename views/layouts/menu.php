@@ -38,10 +38,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
             </div>
 
             <div class="collapse navbar-collapse">
-                <!--menu for larger then mobile-->
-                <ul class="nav navbar-nav navbar-left ">
-                    <?= \item\widgets\MenuSearch::widget() ?>
-                </ul>
+                <?= \search\widgets\menu\MenuSearch::widget() ?>
                 <ul class="nav navbar-nav navbar-right ">
                     <?php if (\Yii::$app->user->isGuest): ?>
                         <!--Not logged in-->

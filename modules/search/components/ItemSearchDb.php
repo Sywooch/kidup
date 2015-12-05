@@ -1,28 +1,32 @@
 <?php
 
-class ItemSearchDb{
+namespace search\components;
+
+class ItemSearchDb
+{
     private $client;
     private $index;
 
     public function __construct()
     {
         $this->client = new \AlgoliaSearch\Client('8M1ZPTMQEW', 'd6e8cc41e0764b2708e9998afd5a139e');
-        if(YII_ENV == 'prod'){
-            $this->index = $this->client->initIndex('items');
-        }
-        if(YII_ENV == 'dev'){
-            $this->index = $this->client->initIndex('items_dev');
-        }
-        if(YII_ENV == 'test'){
-            $this->index = $this->client->initIndex('items_test');
-        }
+        $this->index = $this->client->initIndex('items');
+//        if (YII_ENV == 'prod') {
+//        }
+//        if (YII_ENV == 'dev') {
+//            $this->index = $this->client->initIndex('items_dev');
+//        }
+//        if (YII_ENV == 'test') {
+//            $this->index = $this->client->initIndex('items_test');
+//        }
     }
 
     /**
      * Syncs items with the search database
      * @param $items \item\models\Item[]
      */
-    public function sync($items){
+    public function sync($items)
+    {
         $batch = [];
         foreach ($items as $item) {
             $batch[] = $this->constructItem($item);
@@ -35,7 +39,8 @@ class ItemSearchDb{
      * @param \item\models\Item $item
      * @return array
      */
-    private function constructItem(\item\models\Item $item){
+    private function constructItem(\item\models\Item $item)
+    {
         $obj = [];
 
         $obj['objectID'] = $item->id;
@@ -45,10 +50,10 @@ class ItemSearchDb{
         $obj['price_day'] = $item->price_day;
         $obj['price_week'] = $item->price_week;
         $obj['price_year'] = $item->price_year;
-        $obj['_geo'] = [
-            'latitude' => $item->location->latitude,
-            'longitude' => $item->location->longitude
-            ];
+        $obj['_geoloc'] = [
+            'lat' => $item->location->latitude,
+            'lng' => $item->location->longitude
+        ];
         $obj['categories'] = [
             $item->category->getTranslatedName(),
             $item->category->parent->getTranslatedName(),

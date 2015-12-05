@@ -42,7 +42,7 @@ class SearchController extends Controller
      *
      * @return string
      */
-    public function actionIndex($query = '')
+    public function actionIndex()
     {
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
@@ -52,5 +52,10 @@ class SearchController extends Controller
         // render the index
         return $this->render('index', [
         ]);
+    }
+
+    public function actionTest(){
+        $items = \item\models\Item::find()->where(['is_available' => 1])->all();
+        (new \search\components\ItemSearchDb())->sync($items);
     }
 }

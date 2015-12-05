@@ -86,6 +86,9 @@ $components = [
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
                     },
+                    'url' => function($url){
+                        return \yii\helpers\Url::to("@web/".$url);
+                    },
                     'now' => function() {
                         return date('d-m-y H:i');
                     }
