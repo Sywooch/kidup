@@ -96,11 +96,6 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
             </div>
         </div>
     </div>
-    <?= $this->render('grid', [
-        'categories' => $categories
-    ]);
-    ?>
-
     <?= $this->render('search', [
         'model' => $searchModel,
         'defaultCategory' => $categories['Baby Toys']
@@ -111,6 +106,10 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
     ]);
     ?>
 
+    <?= $this->render('grid', [
+        'categories' => $categories
+    ]);
+    ?>
     <!-- Steps explanation area-->
     <div id="content-home-steps">
         <div class="divider">
