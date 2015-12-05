@@ -29,7 +29,7 @@
                     empty: 'No results',
                     item: document.getElementById("item-template").innerHTML
                 },
-                hitsPerPage: 6
+                hitsPerPage: 16
             })
         );
 
@@ -38,9 +38,9 @@
                 container: '#brands',
                 attributeName: 'categories',
                 operator: 'or',
-                limit: 10,
+                limit: 8,
                 templates: {
-                    header: '<h6>Brands</h6>'
+                    header: '<h6>Categories</h6>'
                 }
             })
         );

@@ -35,24 +35,18 @@ $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Se
                             <div class="panel panel-default">
                                 <div id="refine-location" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <div id="brands"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div id="refine-location" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <div id="brands"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div id="refine-location" class="panel-collapse collapse in">
-                                    <div class="panel-body">
                                         <div id="price"></div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div id="refine-location" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div id="brands"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div id="sort-by-container"></div>
                         </div>
                         <!-- end card -->

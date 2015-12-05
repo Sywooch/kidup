@@ -8,6 +8,7 @@ class m151204_133439_itemFacets extends Migration
     public function up()
     {
         $this->dropTable("item_search");
+        $this->dropTable("item_has_category");
         $this->dropTable("user_has_promotion_code");
         $this->dropTable("promotion_code");
         $this->renameTable("category_has_feature", "category_has_item_facet");

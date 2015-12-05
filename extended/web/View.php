@@ -113,8 +113,6 @@ class View extends \yii\web\View
             }
         }
 
-        (new AssetManager())->registerOriginalsWatcher();
-
         return empty($lines) ? '' : implode("\n", $lines);
     }
 
