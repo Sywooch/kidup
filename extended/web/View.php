@@ -113,44 +113,12 @@ class View extends \yii\web\View
             }
         }
 
-        $this->processPackageFiles();
         (new AssetManager())->registerOriginalsWatcher();
-
 
         return empty($lines) ? '' : implode("\n", $lines);
     }
 
-    protected function processPackageFiles()
-    {
-        $commonPath = 'watch.json';
-
-        $adapter = new \League\Flysystem\Adapter\Local(Yii::$aliases['@app'] . '/web/packages/');
-        $filesystem = new Filesystem($adapter);
-
-        if (!$filesystem->has($commonPath)) {
-            $filesystem->write($commonPath, Json::encode(['css' => [], 'js' => []]));
-        }
-        $origFile = $filesystem->read($commonPath);
-        $commonAssets = Json::decode($origFile);
-        foreach ($this->webpackCssFiles as $file => $html) {
-            if (strpos($file, 'http') === 0) {
-                continue;
-            }
-            $commonAssets['css'][] = str_replace(".css", ".less", 'web' . $file);
-        }
-        foreach ($this->webpackJsFiles as $file => $html) {
-            $commonAssets['js'][] = 'web' . $file;
-        }
-
-        $commonAssets['js'] = array_values(array_unique($commonAssets['js']));
-        $commonAssets['css'] = array_values(array_unique($commonAssets['css']));
-
-        if ($origFile !== Json::encode($origFile)) {
-            $filesystem->update($commonPath, Json::encode($commonAssets));
-        }
-    }
-
-    /**
+    /*
      * Reigsters js variables into the scope
      * @param $array
      */

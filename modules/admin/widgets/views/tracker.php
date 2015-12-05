@@ -95,14 +95,6 @@
 
     setTimeout(function () {
         var scrollTop = window.scrollTop();
-        window.kidupTracker('ping', {focus: window.isInFocus, t: 5, scroll: scrollTop});
-    }, 5 * 1000);
-    setTimeout(function () {
-        var scrollTop = window.scrollTop();
-        window.kidupTracker('ping', {focus: window.isInFocus, t: 15, scroll: scrollTop});
-    }, 15 * 1000);
-    setTimeout(function () {
-        var scrollTop = window.scrollTop();
         window.kidupTracker('ping', {focus: window.isInFocus, t: 30, scroll: scrollTop});
     }, 30 * 1000);
     setTimeout(function () {
