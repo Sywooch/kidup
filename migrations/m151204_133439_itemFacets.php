@@ -7,8 +7,6 @@ class m151204_133439_itemFacets extends Migration
 {
     public function up()
     {
-        $this->dropTable("item_search");
-        $this->dropTable("item_has_category");
         $this->dropTable("user_has_promotion_code");
         $this->dropTable("promotion_code");
         $this->renameTable("category_has_feature", "category_has_item_facet");
@@ -30,6 +28,8 @@ class m151204_133439_itemFacets extends Migration
         $this->renameColumn("item_has_item_facet", "feature_id", "item_facet_id");
         $this->renameColumn("item_has_item_facet", "feature_value_id", "item_facet_value_id");
         $this->renameColumn("item_facet_value", "feature_id", "item_facet_id");
+        $this->renameColumn("item_facet", "is_singular", "allow_multiple");
+        $this->alterColumn("item_facet", "allow_multiple", Schema::TYPE_BOOLEAN);
         $this->addColumn("item_has_item_facet", "created_at", Schema::TYPE_INTEGER);
         $this->addColumn("item_has_item_facet", "updated_at", Schema::TYPE_INTEGER);
 
@@ -57,15 +57,4 @@ class m151204_133439_itemFacets extends Migration
 
         return false;
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

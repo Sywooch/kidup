@@ -2,9 +2,8 @@
 
 namespace item\forms;
 
-use item\models\base\FeatureValue;
-use item\models\base\ItemHasFeature;
-use item\models\base\ItemHasFeatureSingular;
+use item\models\base\ItemFacetValue;
+use item\models\base\ItemHasItemFacet;
 use item\models\Category;
 use item\models\Item;
 use Yii;
@@ -29,8 +28,8 @@ class Edit extends Model
     public $is_available;
     public $category_id;
     public $photos;
-    public $singularFeatures;
-    public $features;
+    public $singularItemFacets;
+    public $item_facets;
 
     public $categoryData;
 
@@ -54,12 +53,8 @@ class Edit extends Model
 
         $this->images = $item->media;
 
-        foreach ($this->item->itemHasFeatureSingulars as $id) {
-            $this->singularFeatures[$id->feature_id] = 1;
-        }
-
-        foreach ($this->item->itemHasFeatures as $ihf) {
-            $this->features[$ihf->feature_id] = $ihf->feature_value_id;
+        foreach ($this->item->itemHasItemFacets as $ihf) {
+            $this->item_facets[$ihf->item_facet_id] = $ihf->item_facet_value_id;
         }
 
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
@@ -116,37 +111,24 @@ class Edit extends Model
     }
 
     /**
-     * Loads and saves the relational features
+     * Loads and saves the relational item_facets
      */
-    public function loadAndSaveFeatures()
+    public function loadAndSaveFacets()
     {
         $data = \Yii::$app->request->post();
-        if (isset($data[$this->formName()]['singularFeatures'])) {
-            $this->singularFeatures = $data[$this->formName()]['singularFeatures'];
-            ItemHasFeatureSingular::deleteAll(['item_id' => $this->item->id]);
-            foreach ($this->singularFeatures as $id => $val) {
-                if ($val == 0) {
-                    continue;
-                }
-                $f = new ItemHasFeatureSingular();
-                $f->feature_id = $id;
-                $f->item_id = $this->item->id;
-                $f->save();
-            }
-        }
-        if (isset($data[$this->formName()]['features'])) {
-            $this->features = $data[$this->formName()]['features'];
-            ItemHasFeature::deleteAll(['item_id' => $this->item->id]);
-            foreach ($this->features as $id => $val) {
-                $featureVal = FeatureValue::findOne($val);
-                if($featureVal !== null){
-                    $f = new ItemHasFeature();
-                    $f->feature_id = $id;
+        if (isset($data[$this->formName()]['item_facets'])) {
+            $this->item_facets = $data[$this->formName()]['item_facets'];
+            ItemHasItemFacet::deleteAll(['item_id' => $this->item->id]);
+            foreach ($this->item_facets as $id => $val) {
+                $itemFacetValue = ItemFacetValue::find()->where(['id' => $val])->one();
+                if($itemFacetValue !== null){
+                    $f = new ItemHasItemFacet();
+                    $f->item_facet_id = $id;
                     $f->item_id = $this->item->id;
-                    $f->feature_value_id = $featureVal->id;
+                    $f->item_facet_value_id = $itemFacetValue->id;
                     $f->save();
                 }else{
-                    Yii::warning("Feature ID {$val} not found");
+                    Yii::warning("ItemFacet ID {$val} not found");
                 }
             }
         }

@@ -5,18 +5,18 @@ namespace item\models\base;
 use Yii;
 
 /**
- * This is the base-model class for table "feature".
+ * This is the base-model class for table "item_facet".
  *
  * @property integer $id
- * @property integer $is_singular
+ * @property integer $allow_multiple
  * @property string $name
  * @property string $description
  * @property integer $is_required
  *
  * @property CategoryHasItemFacet[] $categoryHasItemFacets
  * @property Category[] $categories
- * @property ItemFacetValue[] $featureValues
- * @property ItemHasItemFacet[] $itemHasFacets
+ * @property ItemFacetValue[] $itemFacetValues
+ * @property ItemHasItemFacet[] $itemHasItemFacets
  * @property Item[] $items
  * @property Item[] $items0
  */
@@ -36,8 +36,9 @@ class ItemFacet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['is_singular', 'name'], 'required'],
-            [['is_singular', 'is_required'], 'integer'],
+            [['allow_multiple', 'name'], 'required'],
+            [['is_required'], 'integer'],
+            [['allow_multiple'], 'boolean'],
             [['name'], 'string', 'max' => 45],
             [['description'], 'string', 'max' => 256]
         ];
@@ -50,7 +51,7 @@ class ItemFacet extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'is_singular' => 'Is Singular',
+            'allow_multiple' => 'Allow Multiple Values',
             'name' => 'Name',
             'description' => 'Description',
             'is_required' => 'Is Required',
@@ -62,7 +63,7 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getCategoryHasItemFacets()
     {
-        return $this->hasMany(CategoryHasItemFacet::className(), ['feature_id' => 'id']);
+        return $this->hasMany(CategoryHasItemFacet::className(), ['item_facet_id' => 'id']);
     }
 
     /**
@@ -70,7 +71,8 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(Category::className(), ['id' => 'category_id'])->viaTable('category_has_feature', ['feature_id' => 'id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])->viaTable('category_has_item_facet',
+            ['item_facet_id' => 'id']);
     }
 
     /**
@@ -78,7 +80,7 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getItemFacetValues()
     {
-        return $this->hasMany(ItemFacetValue::className(), ['feature_id' => 'id']);
+        return $this->hasMany(ItemFacetValue::className(), ['item_facet_id' => 'id']);
     }
 
     /**
@@ -86,7 +88,7 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getItemHasItemFacets()
     {
-        return $this->hasMany(ItemHasItemFacet::className(), ['feature_id' => 'id']);
+        return $this->hasMany(ItemHasItemFacet::className(), ['item_facet_id' => 'id']);
     }
 
     /**
@@ -94,7 +96,8 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_feature', ['feature_id' => 'id']);
+        return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_item_facet',
+            ['item_facet_id' => 'id']);
     }
 
     /**
@@ -102,16 +105,21 @@ class ItemFacet extends \yii\db\ActiveRecord
      */
     public function getItems0()
     {
-        return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_feature_singular', ['feature_id' => 'id']);
+        return $this->hasMany(Item::className(), ['id' => 'item_id'])->viaTable('item_has_item_facet_singular',
+            ['item_facet_id' => 'id']);
     }
 
-    public function getTranslatedName(){
+    public function getTranslatedName()
+    {
         $lower = str_replace(" ", "_", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_name', $this->name, [], \Yii::$app->language);
+        return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_name', $this->name, [],
+            \Yii::$app->language);
     }
 
-    public function getTranslatedDescription(){
+    public function getTranslatedDescription()
+    {
         $lower = str_replace(" ", "_", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_description', $this->name, [], \Yii::$app->language);
+        return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_description', $this->name, [],
+            \Yii::$app->language);
     }
 }

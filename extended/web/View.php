@@ -1,9 +1,6 @@
 <?php
 namespace app\extended\web;
 
-use app\assets\Package;
-use app\components\Cache;
-use League\Flysystem\Filesystem;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -17,7 +14,6 @@ use yii\helpers\Json;
  */
 class View extends \yii\web\View
 {
-
     public $assetPackage = false;
 
     private $webpackCssFiles = [];

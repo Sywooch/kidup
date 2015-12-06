@@ -154,26 +154,14 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                 </div>
                                 <div class="col-sm-6">
                                     <table class="table">
-                                        <tr>
-                                            <td>
-                                                <?= Yii::t("item.view.features", "Features") ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                foreach ($model->singularFeatures as $feature) {
-                                                    echo $feature->getTranslatedName() . "<br>";
-                                                }
-                                                ?>
-                                            </td>
-                                        </tr>
-                                        <?php foreach ($model->itemHasFeatures as $ihf): ?>
+                                        <?php foreach ($model->itemHasItemFacets as $ihf): ?>
                                             <tr>
                                                 <td>
-                                                    <?= $ihf->feature->getTranslatedName() ?>
+                                                    <?= $ihf->itemFacet->getTranslatedName() ?>
                                                 </td>
                                                 <td>
                                                     <b>
-                                                        <?= $ihf->featureValue->getTranslatedName() ?>
+                                                        <?= $ihf->itemFacetValue->getTranslatedName() ?>
                                                     </b>
                                                 </td>
                                             </tr>

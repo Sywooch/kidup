@@ -220,7 +220,7 @@ class CreateController extends Controller
         if (\Yii::$app->request->isPost) {
 
             $model->load(\Yii::$app->request->post());
-            $model->loadAndSaveFeatures();
+            $model->loadAndSaveFacets();
             $model->save(); // this does all the validation and redirecting
 
             $pageOrder = ['basics', 'description', 'location', 'photos', 'pricing', 'publish'];

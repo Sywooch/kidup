@@ -37,7 +37,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                             ['style' => 'margin-left:auto;margin-right:auto;']) ?>
                     <?php else: ?>
                         <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
-                            ['h' => 40], ['style' => 'padding-top:5px;'])
+                            ['h' => 53], ['style' => 'margin-left:auto;margin-right:auto;padding-top:5px;'])
                             : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
                                 ['style' => 'margin-left:auto;margin-right:auto;']) ?>
                     <?php endif; ?>

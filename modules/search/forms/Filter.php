@@ -32,7 +32,6 @@ class Filter extends Model
     public $priceMin = 0;
     public $priceMax = 499;
     public $priceUnit = 'week';
-    public $singularFeatures;
     public $page;
     public $pageSize = 12;
 

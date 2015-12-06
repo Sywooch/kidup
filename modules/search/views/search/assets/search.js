@@ -98,11 +98,24 @@
         );
 
         search.templatesConfig.helpers.location = function (/*text, render*/) {
-            var location = this.city + ", " + this.country;
-            if (typeof this._rankingInfo.geoDistance !== "undefined") {
-                location = Math.round(this._rankingInfo.geoDistance / 100) / 10 + " km";
+            var location = this.location.city;
+
+            if(typeof this._rankingInfo != "undefined" ){
+                if (typeof this._rankingInfo.geoDistance !== "undefined") {
+                    var dist = Math.round(this._rankingInfo.geoDistance / 100) / 10;
+                    if(dist < 1){
+                        location = dist * 1000 + ' m';
+                    }else{
+                        location = Math.round(this._rankingInfo.geoDistance / 100) / 10 + " km";
+                    }
+                }
             }
+
             return location;
+        };
+
+        search.templatesConfig.helpers.subCategory = function (/*text, render*/) {
+            return this.hierarchicalCategories_da.lvl1.split(" > ")[1];
         };
 
         search.start();

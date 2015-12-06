@@ -14,8 +14,8 @@
                     </span>
                     </div>
                     <div class="author">
-                        <!--                    <img src="{{img}}" alt="">-->
-                    </div>
+                        <img class="avatar img-circle" src="{{owner.img}}" width="50" height="50" alt=""
+                             style="width:50px;height:50px;"></div>
                 </div>
                 <div class="content">
                     <h3 class="title" style="height:20px;">
@@ -23,16 +23,16 @@
                     </h3>
 
                     <div class="category">
-                        {{hierarchicalCategories_da.lvl1}}
+                        {{#helpers.subCategory}}{{/helpers.subCategory}}
                     </div>
 
                     <div class="footer-divs">
                         <div class="reviews">
-                            {{score}}
+                            {{review_score}}
                         </div>
                         <div class="location">
                             <i class="fa fa-map-marker"></i>
-                            {{location}}
+                            {{#helpers.location}}{{/helpers.location}}
                         </div>
                     </div>
                 </div>

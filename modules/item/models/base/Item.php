@@ -229,7 +229,7 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'feature_id'])->viaTable('item_has_feature',
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('item_has_item_facet',
             ['item_id' => 'id']);
     }
 
@@ -238,8 +238,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
-            ['item_id' => 'id'])->where(['feature.is_singular' => 1]);
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
+            ['item_id' => 'id'])->where(['item_facet.is_singular' => 1]);
     }
 
     /**
@@ -247,8 +247,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getNonSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'feature_id'])->viaTable('item_has_feature_singular',
-            ['item_id' => 'id'])->where(['feature.is_singular' => 0]);
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
+            ['item_id' => 'id'])->where(['item_facet.is_singular' => 0]);
     }
 
 

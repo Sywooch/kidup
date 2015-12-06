@@ -64,7 +64,8 @@ $components = [
                     'auto_reload' => true,
                 ],
                 'globals' => [
-                    'Image' => 'app/modules/images/widgets/Image'
+                    'Image' => 'app/modules/images/widgets/Image',
+                    'urlHelper' => 'app/components/UrlHelper'
                 ],
                 'functions' => [
                     't' => function ($cat, $default, $params = []) {
@@ -86,11 +87,14 @@ $components = [
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
                     },
-                    'url' => function($url){
-                        return \yii\helpers\Url::to("@web/".$url);
+                    'url' => function ($url) {
+                        return \yii\helpers\Url::to("@web/" . $url);
                     },
                     'now' => function () {
                         return date('d-m-y H:i');
+                    },
+                    'setTitle' => function ($viewModel, $title) {
+                        return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
                     }
                 ]
             ],
@@ -255,7 +259,7 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-            if (strpos("/api/",\Yii::$app->request->url) == 0) {
+            if (strpos("/api/", \Yii::$app->request->url) == 0) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
             }
         },

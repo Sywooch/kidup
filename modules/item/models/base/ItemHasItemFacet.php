@@ -12,7 +12,7 @@ use Yii;
  * @property integer $item_facet_value_id
  *
  * @property ItemFacetValue $itemFacetValue
- * @property ItemFacet $itemfacet
+ * @property ItemFacet $itemFacet
  * @property Item $item
  */
 class ItemHasItemFacet extends \yii\db\ActiveRecord

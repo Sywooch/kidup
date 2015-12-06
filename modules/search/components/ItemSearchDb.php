@@ -57,7 +57,7 @@ class ItemSearchDb
             'lng' => $item->location->longitude
         ];
         $obj['location']['city'] = $item->location->city;
-        $obj['location']['country'] = $item->location->country;
+        $obj['location']['country'] = $item->location->country0->name;
         $obj['hierarchicalCategories_en'] = $this->hierarchicalCat($item, 'en-US');
         $obj['hierarchicalCategories_da'] = $this->hierarchicalCat($item, 'da-DK');
         $obj['img'] = \images\components\ImageHelper::url($item->getImageName(0), ['w' => 500]);

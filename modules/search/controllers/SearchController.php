@@ -50,8 +50,7 @@ class SearchController extends Controller
 
         Url::remember();
         // render the index
-        return $this->render('index', [
-        ]);
+        return $this->render('index.twig');
     }
 
     public function actionTest(){

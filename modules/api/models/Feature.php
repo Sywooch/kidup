@@ -5,7 +5,7 @@ namespace api\models;
 /**
  * This is the model class for table "item".
  */
-class  Feature extends \item\models\base\Feature
+class ItemFacet extends \item\models\base\ItemFacet
 {
     public function fields()
     {

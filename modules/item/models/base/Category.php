@@ -14,10 +14,8 @@ use Yii;
  *
  * @property \item\models\Category $parent
  * @property \item\models\Category[] $children
- * @property CategoryHasFeature[] $categoryHasFeatures
- * @property Feature[] $features
- * @property Feature[] $singularFeatures
- * @property Feature[] $nonSingularFeatures
+ * @property CategoryHasItemFacet[] $categoryHasItemFacets
+ * @property ItemFacet[] $itemFacets
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -97,37 +95,37 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoryHasFeatures()
+    public function getCategoryHasItemFacets()
     {
-        return $this->hasMany(CategoryHasFeature::className(), ['category_id' => 'id']);
+        return $this->hasMany(CategoryHasItemFacet::className(), ['category_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeatures()
+    public function getItemFacets()
     {
-        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
             ['category_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNonSingularFeatures()
+    public function getNonSingularItemFacets()
     {
-        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
-            ['category_id' => 'id'])->where(['feature.is_singular' => 0]);
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
+            ['category_id' => 'id'])->where(['item_facet.is_singular' => 0]);
     }
 
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSingularFeatures()
+    public function getSingularItemFacets()
     {
-        return $this->hasMany(Feature::className(), ['id' => 'feature_id'])->viaTable('category_has_feature',
-            ['category_id' => 'id'])->where(['feature.is_singular' => 1]);
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
+            ['category_id' => 'id'])->where(['item_facet.is_singular' => 1]);
     }
 
 }

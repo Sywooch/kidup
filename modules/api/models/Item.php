@@ -16,17 +16,12 @@ class Item extends \item\models\Item
         // remove fields that contain sensitive information
         unset($fields['updated_at'], $fields['min_renting_days']);
 
-        $fields['features'] = function ($model) {
+        $fields['item_facets'] = function ($model) {
             $res = [];
-            $features = $this->itemHasFeatures;
-            foreach ($features as $feature) {
-                $f = Json::decode(Json::encode($feature->feature));
-                $res[] = array_merge($f, ['value' => $feature->featureValue->getTranslatedName()]);
-            }
-            $features = $this->itemHasFeatureSingulars;
-            foreach ($features as $feature) {
-                $f = Json::decode(Json::encode($feature->feature));
-                $res[] = array_merge($f, ['value' => true]);
+            $itemFacets = $this->itemHasItemFacets;
+            foreach ($itemFacets as $itemFacet) {
+                $f = Json::decode(Json::encode($itemFacet->itemFacet));
+                $res[] = array_merge($f, ['value' => $itemFacet->itemFacetValue->getTranslatedName()]);
             }
             return $res;
         };
