@@ -18,7 +18,7 @@ $this->title = \app\helpers\ViewHelper::getPageTitle(\Yii::t('search.title', 'Se
                                 <h4 class="title">
                                     <?= Yii::t("search.header_filter", "Filter") ?>
                                     <div class="pull-right">
-                                        <div id="clear-all">Clear all</div>
+                                        <small id="clear-all">Clear all</small>
                                     </div>
                                 </h4>
                             </div>

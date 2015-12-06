@@ -21,7 +21,6 @@ class HomeAsset extends AssetBundle
     public function __construct($config = []){
         $this->depends = [
             AppAsset::className(),
-            'search\assets\SearchWidgetAsset'
         ];
         parent::__construct($config);
     }
