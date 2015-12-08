@@ -86,8 +86,14 @@ $components = [
                         Carbon\Carbon::setToStringFormat("d-m-y");
                         return Carbon\Carbon::createFromTimestamp($timestamp);
                     },
+                    'url' => function ($url) {
+                        return \yii\helpers\Url::to("@web/" . $url, true);
+                    },
                     'now' => function () {
                         return date('d-m-y H:i');
+                    },
+                    'setTitle' => function ($viewModel, $title) {
+                        return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
                     }
                 ]
             ],
