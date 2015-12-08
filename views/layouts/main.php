@@ -34,10 +34,6 @@ AppAsset::register($this);
 
         <!--Facebook meta tags - Important for sharing links-->
         <?= \app\widgets\FacebookPreviewImage::widget() ?>
-
-
-        <meta property="og:url" content="https://www.kidup.dk"/>
-
     </head>
     <body>
     <?php

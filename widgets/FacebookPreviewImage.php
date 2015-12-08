@@ -51,5 +51,13 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
             'property' => "og:image:secure_url",
             'content' => $image
         ]);
+        $this->view->registerMetaTag([
+            'property' => "og:url",
+            'content' => Url::to('@web', true)
+        ]);
+        $this->view->registerMetaTag([
+            'property' => "fb:app_id",
+            'content' => "966242223397117"
+        ]);
     }
 }
