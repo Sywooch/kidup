@@ -74,7 +74,7 @@ class ReferralController extends Controller
 
         $referralCount = !\Yii::$app->user->isGuest ? \Yii::$app->user->identity->getReferredUserCount() : 0;
 
-        \Yii::$app->session->get('after_login_url', Url::to('@web/user/referral/index', true));
+        \Yii::$app->session->set('after_login_url', Url::to('@web/user/referral/index', true));
 
         return $this->render('index.twig', [
             'referralLink' => $referralLink,
