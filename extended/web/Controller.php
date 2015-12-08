@@ -68,6 +68,7 @@ class Controller extends \yii\web\Controller
                 'expire' => time() + 30 * 24 * 60 * 60,
             ]);
             \Yii::$app->getResponse()->getCookies()->add($cookie);
+            \Yii::$app->session->set('after_login_url', Url::to('@web/user/referral/index', true));
         }
 
         // set the locale for Carbon
