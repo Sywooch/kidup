@@ -30,7 +30,7 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
                 }
             }
         }
-        if(\Yii::$app->request->get("ref") !== null){
+        if(\Yii::$app->request->get("ref") !== null || $route == 'user/referral/index'){
             $image = ImageHelper::url("kidup/facebook-referral.jpg", ['w' => 600]);
             $name = "KidUp | Vind en tur for hele familien til Lalandia!";
         }

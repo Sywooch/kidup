@@ -44,7 +44,7 @@ class UserReferredUser extends \user\models\base\UserReferredUser
             ->select('referring_user_id, count(1) as cnt')
             ->orderBy("cnt DESC")
             ->asArray()
-            ->limit(10)
+            ->limit(5)
             ->innerJoinWith('referringUser');
         if ($since) {
             $topReferrers->andWhere('created_at > :t');
