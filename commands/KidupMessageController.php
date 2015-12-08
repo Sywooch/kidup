@@ -180,23 +180,23 @@ class KidupMessageController extends \yii\console\controllers\MessageController
             }
         }
 
-        $features = Feature::find()->all();
-        foreach ($features as $feature) {
-            $lower = str_replace(" ", '_', strtolower($feature->name));
-            if ($lower == 'size') {
-                // baby and children cloth sizes
-                $lower = 'size_' . strtolower(explode(" ", $feature->description)[0]);
-            }
-            $res['item.feature.' . $lower . '_name'][] = $feature->name;
-            $res['item.feature.' . $lower . '_description'][] = $feature->description;
-        }
-
-        $featureValue = FeatureValue::find()->all();
-        foreach ($featureValue as $featureVal) {
-            $lower = str_replace(" ", '_', strtolower($featureVal->feature->name));
-            $val = str_replace(" ", '_', strtolower($featureVal->name));
-            $res['item.feature.' . $lower . '_value_' . $val][] = $featureVal->name;
-        }
+//        $features = Feature::find()->all();
+//        foreach ($features as $feature) {
+//            $lower = str_replace(" ", '_', strtolower($feature->name));
+//            if ($lower == 'size') {
+//                // baby and children cloth sizes
+//                $lower = 'size_' . strtolower(explode(" ", $feature->description)[0]);
+//            }
+//            $res['item.feature.' . $lower . '_name'][] = $feature->name;
+//            $res['item.feature.' . $lower . '_description'][] = $feature->description;
+//        }
+//
+//        $featureValue = FeatureValue::find()->all();
+//        foreach ($featureValue as $featureVal) {
+//            $lower = str_replace(" ", '_', strtolower($featureVal->feature->name));
+//            $val = str_replace(" ", '_', strtolower($featureVal->name));
+//            $res['item.feature.' . $lower . '_value_' . $val][] = $featureVal->name;
+//        }
 
         return $res;
     }
