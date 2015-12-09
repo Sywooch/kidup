@@ -16,6 +16,7 @@ class FailedFactory
         $receiver = (new MailUserFactory())->createForUser($booking->item->owner);
 
         $e = new Failed();
+        $e->setSubject('Booking failed');
         $e->setReceiver($receiver);
         $e->itemName = $booking->item->name;
         $e->profileName = $booking->item->owner->profile->first_name;

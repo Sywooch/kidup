@@ -17,6 +17,7 @@ class ReceiptFactory
         $receiver = (new MailUserFactory())->createForUser($booking->renter);
 
         $e = new Receipt();
+        $e->setSubject('Booking receipt');
         $e->setReceiver($receiver);
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;
