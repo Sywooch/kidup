@@ -1,4 +1,4 @@
-[![Build Status](https://circleci.com/gh/esquire900/kidup/tree/develop.png)](https://circleci.com/gh/esquire900/kidup/tree/develop)
+[![Build Status](https://circleci.com/gh/esquire900/kidup.png?style=shield)](https://circleci.com/gh/esquire900/kidup)
 
 # Kidup repository
 
