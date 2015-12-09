@@ -19,6 +19,9 @@ class ReconfirmFactory
     public function create($user)
     {
         $e = new Reconfirm();
+        $e->setSubject('Reconfirm');
+        $receiver = (new \mail\components\MailUserFactory())->create($user->profile->getFullName(), $user->email);
+        $e->setReceiver($receiver);
 
         $token = TokenFactory::create($user, Token::TYPE_CONFIRMATION);
 

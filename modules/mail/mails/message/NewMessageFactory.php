@@ -13,7 +13,7 @@ class NewMessageFactory
     public function create(Message $message)
     {
         $mail = new NewMessage();
-
+        $mail->setSubject('New message');
         $mail->conversationUrl = UrlFactory::conversation($message->conversation);
 
         $mail->emailAddress = $message->receiverUser->email;

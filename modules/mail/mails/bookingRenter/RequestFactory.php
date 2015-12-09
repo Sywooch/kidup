@@ -16,6 +16,7 @@ class RequestFactory
         $receiver = (new MailUserFactory())->createForUser($booking->renter);
 
         $e = new Request();
+        $e->setSubject('Booking request');
         $e->setReceiver($receiver);
         $e->startDate = $booking->time_from;
         $e->endDate = $booking->time_to;

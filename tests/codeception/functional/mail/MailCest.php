@@ -13,12 +13,12 @@ use mail\models\UrlFactory;
 use Yii;
 
 /**
- * Functional test for mail views.
+ * Functional test for mails.
  *
- * Class ViewCest
+ * Class MailCest
  * @package codecept\functional\mail
  */
-class ViewCest
+class MailCest
 {
 
     /**
@@ -113,7 +113,8 @@ class ViewCest
         $this->checkMail($I, $mail);
     }
 
-    public function testUser(FunctionalTester $I) {
+    public function testUser(FunctionalTester $I)
+    {
         $user = $this->fm->create(User::class);
 
         $mail = (new \mail\mails\user\ReconfirmFactory())->create($user);
@@ -132,7 +133,8 @@ class ViewCest
      * @param Mail $mail Mail to render.
      * @return string HTML output.
      */
-    private function renderMail($mail) {
+    private function renderMail($mail)
+    {
         $renderer = new MailRenderer($mail);
         return $renderer->render();
     }
@@ -143,7 +145,13 @@ class ViewCest
      * @param functionalTester $I
      * @param Mail $mail Mail to check.
      */
-    private function checkMail(FunctionalTester $I, $mail) {
+    private function checkMail(FunctionalTester $I, $mail)
+    {
+        $I->assertTrue(strlen($mail->subject) > 0, 'Has subject');
+        $I->assertTrue(strlen($mail->getReceiverName()) > 0, 'Has receiver name');
+        $I->assertTrue(strlen($mail->getSenderName()) > 0, 'Has sender name');
+        $I->assertTrue(strlen($mail->getReceiverEmail()) > 0, 'Has receiver e-mail address');
+        $I->assertTrue(strlen($mail->getSenderEmail()) > 0, 'Has sender e-mail address');
         $this->checkLinks($I, $mail);
     }
 
@@ -153,7 +161,8 @@ class ViewCest
      * @param functionalTester $I
      * @param Mail $mail The mail to check.
      */
-    private function checkLinks(FunctionalTester $I, $mail) {
+    private function checkLinks(FunctionalTester $I, $mail)
+    {
         $renderOutput = $this->renderMail($mail);
         $viewInBrowserUrl = UrlFactory::seeInBrowser($mail->getMailId());
         $changeSettingsUrl = UrlFactory::changeSettings();

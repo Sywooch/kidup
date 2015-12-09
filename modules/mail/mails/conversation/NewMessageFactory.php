@@ -17,6 +17,7 @@ class NewMessageFactory
         $sender = (new MailUserFactory())->createForUser($message->senderUser);
 
         $e = new NewMessage();
+        $e->setSubject('New message');
         $e->setReceiver($receiver);
         $e->setSender($sender);
         $e->senderName = $message->senderUser->profile->first_name;

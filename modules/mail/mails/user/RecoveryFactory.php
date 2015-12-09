@@ -18,6 +18,9 @@ class RecoveryFactory
     public function create($user)
     {
         $e = new Recovery();
+        $e->setSubject('Recovery');
+        $receiver = (new \mail\components\MailUserFactory())->create($user->profile->getFullName(), $user->email);
+        $e->setReceiver($receiver);
 
         $token = new Token();
         $token->setAttributes([

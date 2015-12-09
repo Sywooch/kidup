@@ -12,6 +12,7 @@ class RequestFactory
     public function create(Booking $booking, $isOwner)
     {
         $e = new Request();
+        $e->setSubject('Review request');
         $e->reviewUrl = UrlFactory::review($booking);
         if (!$isOwner) {
             $e->emailAddress = $booking->renter->email;
@@ -20,6 +21,8 @@ class RequestFactory
             $e->emailAddress = $booking->item->owner->email;
             $e->otherName = $booking->renter->profile->getFullName();
         }
+        $receiver = (new \mail\components\MailUserFactory())->create($e->otherName, $e->emailAddress);
+        $e->setReceiver($receiver);
         $e->subject = \Yii::t("mail.review_request.header", "Write a review for {userName}", [
             'userName' => $e->otherName
         ]);
