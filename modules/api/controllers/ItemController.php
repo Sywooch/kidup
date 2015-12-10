@@ -49,7 +49,7 @@ class ItemController extends Controller
         unset($actions['delete']);
         unset($actions['create']);
         unset($actions['index']);
-//        unset($actions['update']);
+        unset($actions['update']);
         unset($actions['view']);
         return $actions;
     }
@@ -224,7 +224,8 @@ class ItemController extends Controller
      * @api (post)                      items/create
      * @apiName                         createItem
      * @apiGroup                        Item
-     * @apiDescription                  Create an item record.
+     * @apiDescription                  Create an item record. It provides a minimal interface for creating an item.
+     *                                  For modifying parts of the item, use the update functionality.
      *
      * @apiParam (String)  name         The name of the item.
      * @apiParam (String)  description  The description of the item.
@@ -282,6 +283,63 @@ class ItemController extends Controller
         $items = Item::find()->where(['id' => $id]);
         return [
             'success' => ($items->count() > 0 ? $items->one()->delete() : false)
+        ];
+    }
+
+    /**
+     * @api (put)                       items/:id
+     * @apiName                         updateItem
+     * @apiGroup                        Item
+     * @apiDescription                  Update an item record.
+     *
+     * @apiParam (Number)  id           The identifier of the item to update.
+     * @apiParam (String)  name         The name of the item.
+     * @apiParam (String)  description  The description of the item.
+     * @apiParam (Number)  price_week   The weekly price for the item.
+     * @apiParam (Number)  min_renting_days
+     *                                  The minimal number of days this item can be rented.
+     * @apiParam (Number)  category_id  The identifier of the category for the item.
+     * @apiParam (String)  longitude    The longitude of the location.
+     * @apiParam (String)  latitude     The latitude of the location.
+     *
+     * @apiSuccess (Object[])           Array containing a key success which is true when the record was updated
+     *                                  successfully, false otherwise.
+     *                                  The element with key errors is a list of all errors found during the update.
+     * @param $id
+     * @return int
+     */
+    public function actionUpdate($id) {
+        $items = Item::find()->where(['id' => $id]);
+        if ($items->count() == 0) return ['success' => false, 'errors' => []];
+        $item = $items->one();
+
+        $name = \Yii::$app->request->post('name', null);
+        if ($name !== null) $item->name = $name;
+
+        $description = \Yii::$app->request->post('description', null);
+        if ($description !== null) $item->description = $description;
+
+        $price_week = \Yii::$app->request->post('price_week', null);
+        if ($price_week !== null) $item->price_week = $price_week;
+
+        $min_renting_days = \Yii::$app->request->post('min_renting_days', null);
+        if ($min_renting_days !== null) $item->min_renting_days = $min_renting_days;
+
+        $category_id = \Yii::$app->request->post('category_id', null);
+        if ($category_id !== null) $item->category_id = $category_id;
+
+        $longitude = \Yii::$app->request->post('longitude', null);
+        if ($longitude !== null) $item->location->longitude = $longitude;
+
+        $latitude = \Yii::$app->request->post('latitude', null);
+        if ($latitude !== null) $item->location->latitude = $latitude;
+
+        // Try to save the item
+        $item->save();
+
+        return [
+            'success' => count($item->getErrors()) == 0,
+            'errors' => $item->getErrors()
         ];
     }
 
