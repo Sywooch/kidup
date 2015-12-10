@@ -199,9 +199,6 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/items' => 'api/item'],
                 'extraPatterns' => [
-                    'POST create' => 'create',
-                    'PUT update' => 'update',
-                    'DELETE <id>' => 'delete',
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',

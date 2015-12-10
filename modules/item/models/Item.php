@@ -39,22 +39,43 @@ class Item extends \item\models\base\Item
 
     public function beforeSave($insert)
     {
+        if (!$insert && !$this->hasModifyRights()) {
+            return false;
+        }
         if ($insert == true) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->currency_id = 1;
-            if (YII_ENV !== 'test') {
-                $this->owner_id = Yii::$app->user->id;
-            }
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
 
         return parent::beforeSave($insert);
     }
 
+    public function beforeDelete()
+    {
+        if (!$this->hasModifyRights()) return false;
+        return parent::beforeDelete();
+    }
+
+    /**
+     * Whether or not the current logged in user has the rights to modify this item.
+     *
+     * @return bool  True if modifications by the logged in user are allowed, false otherwise.
+     */
+    public function hasModifyRights() {
+        if ($this->isOwner()) {
+            return true;
+        }
+        return false;
+    }
+
     public function beforeValidate()
     {
         $this->name = \yii\helpers\HtmlPurifier::process($this->name);
         $this->description = \yii\helpers\HtmlPurifier::process($this->description);
+        if (!isset($this->owner_id) && $this->isNewRecord) {
+            $this->owner_id = Yii::$app->user->id;
+        }
         return parent::beforeValidate();
     }
 
@@ -134,7 +155,7 @@ class Item extends \item\models\base\Item
             'day' => $this->price_day,
             'week' => $this->price_week / 7,
             'month' => $this->price_month / 30,
-            'year' => $this->price_year / 356 ,
+            'year' => $this->price_year / 356,
         ];
 
         // assume that only weekly price is set for sure
@@ -295,16 +316,20 @@ class Item extends \item\models\base\Item
      * Returns the daily price for this item
      * @return double
      */
-    public function getDailyPrice(){
-        if(isset($this->price_day)) return $this->price_day;
-        return $this->price_week  / 3;
+    public function getDailyPrice()
+    {
+        if (isset($this->price_day)) {
+            return $this->price_day;
+        }
+        return $this->price_week / 3;
     }
 
     /**
      * Returns the daily price for this item
      * @return double
      */
-    public function getWeeklyPrice(){
+    public function getWeeklyPrice()
+    {
         return $this->price_week;
     }
 
@@ -312,8 +337,11 @@ class Item extends \item\models\base\Item
      * Returns the daily price for this item
      * @return double
      */
-    public function getMonthlyPrice(){
-        if(isset($this->price_month)) return $this->price_month;
+    public function getMonthlyPrice()
+    {
+        if (isset($this->price_month)) {
+            return $this->price_month;
+        }
         return $this->price_week * 2.5;
     }
 
@@ -321,9 +349,14 @@ class Item extends \item\models\base\Item
      * Returns the daily price for this item
      * @return double
      */
-    public function getYearlyPrice(){
-        if(isset($this->price_year)) return $this->price_year;
-        if(isset($this->price_month)) return $this->price_month * 3.5;
+    public function getYearlyPrice()
+    {
+        if (isset($this->price_year)) {
+            return $this->price_year;
+        }
+        if (isset($this->price_month)) {
+            return $this->price_month * 3.5;
+        }
         return $this->price_week * 2.5 * 3.5;
     }
 }
