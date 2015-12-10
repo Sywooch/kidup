@@ -2,7 +2,6 @@
 namespace api\controllers;
 
 use api\models\Item;
-use item\controllers\ViewController;
 use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
@@ -39,8 +38,8 @@ class ItemController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews', 'options'],
-            'user' => ['update', 'create']
+            'guest' => ['index', 'search', 'recommended', 'related', 'reviews', 'options', 'view'],
+            'user' => ['update', 'create', 'delete']
         ];
     }
 
@@ -48,7 +47,7 @@ class ItemController extends Controller
     {
         $actions = parent::actions();
         unset($actions['delete']);
-//        unset($actions['create']);
+        unset($actions['create']);
         unset($actions['index']);
 //        unset($actions['update']);
         unset($actions['view']);
@@ -112,9 +111,7 @@ class ItemController extends Controller
      */
     public function actionRecommended()
     {
-        // todo this is rather ugly, but an activedataprovider needs to be returned for consitency
         $items = Item::getRecommended(4);
-
 
         $res = [];
         foreach ($items as $item) {
@@ -154,6 +151,15 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_pages                   The total number of pages.
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
+     * @param int $page
+     * @param int $price_min
+     * @param int $price_max
+     * @param string $price_unit
+     * @param bool $location_name
+     * @param bool $longitude
+     * @param bool $latitude
+     * @param bool $category
+     * @return ActiveDataProvider
      */
     public function actionSearch(
         $page = 0,
@@ -176,7 +182,7 @@ class ItemController extends Controller
         $model->priceUnit = $price_unit;
         $model->priceMax = (int)$price_max;
         $model->priceMin = (int)$price_min;
-        
+
         // load location
         if ($location_name) {
             $model->location = $location_name;
@@ -184,23 +190,99 @@ class ItemController extends Controller
             $model->longitude = $longitude;
             $model->latitude = $latitude;
         }
-        
+
         // load the categories
         if ($category) {
             $model->categories = explode(",", $category);
         }
-        
+
         return new ActiveDataProvider([
             'query' => $model->getQuery(true)
         ]);
     }
 
+    /**
+     * @api {get}                   items/reviews/:id
+     * @apiName                     reviewsItem
+     * @apiGroup                    Item
+     * @apiDescription              Get reviews belonging to an item.
+     *
+     * @apiSuccess {Object[]}       recommended_items     A list of recommended items.
+     * @apiParam (Number)           id                    Item id.
+     * @param $id                   Item id.
+     * @return ActiveDataProvider   List of all reviews.
+     */
     public function actionReviews($id)
     {
         $this->modelClass = Review::className();
         return new ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);
+    }
+
+    /**
+     * @api (post)                      items/create
+     * @apiName                         createItem
+     * @apiGroup                        Item
+     * @apiDescription                  Create an item record.
+     *
+     * @apiParam (String)  name         The name of the item.
+     * @apiParam (String)  description  The description of the item.
+     * @apiParam (Number)  price_week   The weekly price for the item.
+     * @apiParam (Number)  min_renting_days
+     *                                  The minimal number of days this item can be rented.
+     * @apiParam (Number)  category_id  The identifier of the category for the item.
+     *
+     * @apiSuccess (Object[])           Array containing a key item_id which value is the identifier of the newly
+     *                                  created item. It also contains a key errors which contains a list of all found
+     *                                  errors during creation.
+     */
+    public function actionCreate() {
+        // Parameter checking
+        $required_params = ['name', 'description', 'price_week', 'min_renting_days'];
+        $params = \Yii::$app->request->post();
+        foreach ($required_params as $required_param) {
+            if (!array_key_exists($required_param, $params)) {
+                throw new NotAcceptableHttpException('No ' . $required_param . ' is given.');
+            }
+        }
+
+        // Item creation (validation is done in the item model)
+        $item = new Item();
+        $item->name = \Yii::$app->request->post('name');
+        $item->description = \Yii::$app->request->post('description');
+        $item->price_week = \Yii::$app->request->post('price_week');
+        $item->min_renting_days = \Yii::$app->request->post('min_renting_days');
+        $item->category_id = \Yii::$app->request->post('category_id');
+        $item->owner_id = \Yii::$app->user->id;
+        $item->save();
+
+        // Give back result
+        $item_id = $item->id;
+        return [
+            'item_id' => $item_id,
+            'errors' => $item->getErrors()
+        ];
+    }
+
+    /**
+     * @api (delete)                    items/:id
+     * @apiName                         deleteItem
+     * @apiGroup                        Item
+     * @apiDescription                  Delete an item record.
+     *
+     * @apiParam (Number)  id           The identifier of the item to delete.
+     *
+     * @apiSuccess (Object[])           Array containing a key success which is true when the record was deleted
+     *                                  successfully, false otherwise.
+     * @param $id
+     * @return int
+     */
+    public function actionDelete($id) {
+        $items = Item::find()->where(['id' => $id]);
+        return [
+            'success' => ($items->count() > 0 ? $items->one()->delete() : false)
+        ];
     }
 
 }
