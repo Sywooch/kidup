@@ -138,7 +138,8 @@ class Item extends \yii\db\ActiveRecord
                 'price_week',
                 'owner_id',
                 'currency_id',
-                'min_renting_days'
+                'min_renting_days',
+                'category_id'
             ],
             'location' => ['location_id']
         ];
