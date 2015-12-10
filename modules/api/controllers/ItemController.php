@@ -2,7 +2,6 @@
 namespace api\controllers;
 
 use api\models\Item;
-use item\controllers\ViewController;
 use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
@@ -39,18 +38,15 @@ class ItemController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'search', 'recommended', 'related', 'reviews', 'options'],
-            'user' => ['update', 'create']
+            'guest' => ['index', 'search', 'recommended', 'related', 'reviews', 'options', 'view'],
+            'user' => ['update', 'create', 'delete']
         ];
     }
 
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['delete']);
-//        unset($actions['create']);
         unset($actions['index']);
-//        unset($actions['update']);
         unset($actions['view']);
         return $actions;
     }
@@ -112,9 +108,7 @@ class ItemController extends Controller
      */
     public function actionRecommended()
     {
-        // todo this is rather ugly, but an activedataprovider needs to be returned for consitency
         $items = Item::getRecommended(4);
-
 
         $res = [];
         foreach ($items as $item) {
@@ -154,6 +148,15 @@ class ItemController extends Controller
      * @apiSuccess {Number}     num_pages                   The total number of pages.
      * @apiSuccess {Number}     num_items                   The total number of items.
      * @apiSuccess {Object[]}   results                     A list of items found by the search system.
+     * @param int $page
+     * @param int $price_min
+     * @param int $price_max
+     * @param string $price_unit
+     * @param bool $location_name
+     * @param bool $longitude
+     * @param bool $latitude
+     * @param bool $category
+     * @return ActiveDataProvider
      */
     public function actionSearch(
         $page = 0,
@@ -176,7 +179,7 @@ class ItemController extends Controller
         $model->priceUnit = $price_unit;
         $model->priceMax = (int)$price_max;
         $model->priceMin = (int)$price_min;
-        
+
         // load location
         if ($location_name) {
             $model->location = $location_name;
@@ -184,17 +187,28 @@ class ItemController extends Controller
             $model->longitude = $longitude;
             $model->latitude = $latitude;
         }
-        
+
         // load the categories
         if ($category) {
             $model->categories = explode(",", $category);
         }
-        
+
         return new ActiveDataProvider([
             'query' => $model->getQuery(true)
         ]);
     }
 
+    /**
+     * @api {get}                   items/reviews/:id
+     * @apiName                     reviewsItem
+     * @apiGroup                    Item
+     * @apiDescription              Get reviews belonging to an item.
+     *
+     * @apiSuccess {Object[]}       recommended_items     A list of recommended items.
+     * @apiParam (Number)           id                    Item id.
+     * @param $id                   Item id.
+     * @return ActiveDataProvider   List of all reviews.
+     */
     public function actionReviews($id)
     {
         $this->modelClass = Review::className();
