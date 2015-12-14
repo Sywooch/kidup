@@ -100,18 +100,37 @@
         search.templatesConfig.helpers.location = function (/*text, render*/) {
             var location = this.location.city;
 
-            if(typeof this._rankingInfo != "undefined" ){
+            if (typeof this._rankingInfo != "undefined") {
                 if (typeof this._rankingInfo.geoDistance !== "undefined") {
                     var dist = Math.round(this._rankingInfo.geoDistance / 100) / 10;
-                    if(dist < 1){
+                    if (dist < 1) {
                         location = dist * 1000 + ' m';
-                    }else{
+                    } else {
                         location = Math.round(this._rankingInfo.geoDistance / 100) / 10 + " km";
                     }
                 }
             }
 
             return location;
+        };
+
+        search.templatesConfig.helpers.reviews = function (/*text, render*/) {
+            var starCount = this.review_score;
+
+            if (starCount == false) {
+                stars = 'No reviews yet';
+            } else {
+                stars = '<div class="user-review-stars">';
+                for (var i = starCount; i > 0; i--) {
+                    stars += '<i class="fa fa-star"></i>';
+                }
+                for (i = starCount-1; i < 5; i++) {
+                    stars += '<i class="fa fa-star-o"></i>';
+                }
+                stars += '</div>';
+            }
+
+            return stars;
         };
 
         search.templatesConfig.helpers.subCategory = function (/*text, render*/) {

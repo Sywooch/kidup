@@ -28,7 +28,7 @@
 
                     <div class="footer-divs">
                         <div class="reviews">
-                            {{review_score}}
+                            {{#helpers.reviews}}{{/helpers.reviews}}
                         </div>
                         <div class="location">
                             <i class="fa fa-map-marker"></i>

@@ -31,7 +31,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Url::to(['/home']) ?>" style="width:18vw;">
+                <a class="navbar-brand" href="<?= Url::to(['/home']) ?>">
                     <?php if ($search): ?>
                         <?= ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
                             ['style' => 'margin-left:auto;margin-right:auto;']) ?>
