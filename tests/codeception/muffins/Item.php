@@ -6,6 +6,7 @@ use Faker\Factory as Faker;
 
 class Item extends \item\models\Item
 {
+
     public function definitions()
     {
         $faker = Faker::create();

@@ -197,7 +197,7 @@ class Location extends base\Location
             return true;
         }
         // see if the user rented
-        $booking = Booking::find()->where(['user_id' => $user->id, 'location.id' => $this->id])
+        $booking = Booking::find()->where(['renter_id' => $user->id, 'location.id' => $this->id])
             ->innerJoinWith('item.location')->count();
         return $booking > 0;
     }

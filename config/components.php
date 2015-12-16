@@ -73,7 +73,7 @@ $components = [
                     'userIsGuest' => function () {
                         return \Yii::$app->user->isGuest;
                     },
-                    'image' => function ($file, $options, $htmlOptions) {
+                    'image' => function ($file, $options, $htmlOptions = []) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
                     'imageUrl' => function ($file, $options = []) {

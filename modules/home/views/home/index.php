@@ -48,6 +48,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                         <?= \app\widgets\SignupModal::widget([
                             'autoOpen' => false
                         ]) ?>
+                        <?= \home\widgets\ReferralModal::widget() ?>
                     <?php else: ?>
                         <a href="<?= \yii\helpers\Url::to("@web/item/create") ?>">
                             <div class="btn btn-fill btn-primary hidden-xs hidden-sm signup-button">
