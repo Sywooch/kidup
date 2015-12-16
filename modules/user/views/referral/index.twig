@@ -1,98 +1,155 @@
-<div style="{{ bgImage("kidup/common/christmas-package.jpg") }};margin-top:10px;margin-bottom:-90px;height:100%;min-height:100vh;">
+<div style="{{ bgImage("kidup/user/referral/lalandia.png", {w: 2002, q: 90}) }};margin-top:10px;min-height:30vh;height:100%;font-weight: bold;">
     <div class="container">
         <h1 style="padding-top:12vh;text-align: center;color: white">
-            {{ t("referral_page.header", "Tell your friends how much you love KidUp") }}
-            <br>
-            <small style="color:white;">
-                <b>
-                    {{ t("referral_page.sub_header", "... & win christmas presents for the family!") }}
-                </b>
-            </small>
-            <br>
+            {{ t("referral_page.header", "Win a Trip to Lalandia") }}
+        </h1>
+        <div class="row" style="text-align: center;color:white;font-size: 18px;">
+            <div class="col-md-4">
+                {{ image("kidup/user/referral/1.png", {w: 100}) | raw }}
+                <br>
+                {{ t("referral_page.step_1", "Invite your friends with the link below") }}
 
-            {% if userIsGuest() %}
+            </div>
+            <div class="col-md-4">
+                {{ image("kidup/user/referral/2.png", {w: 100}) | raw }}
                 <br>
-                <button class="btn btn-simple btn-danger btn-fill btn-lg" style="border-radius: 1px;" data-toggle="modal" data-target="#loginModal" id="login">
-                    {{ t("referral_page.login_button", "Login or Register and compete!") }}
-                </button>
+                {{ t("referral_page.step_2", "When a friend signs up you earn 50 kr. to use on KidUp") }}
+
+            </div>
+            <div class="col-md-4">
+                {{ image("kidup/user/referral/3.png", {w: 100}) | raw }}
                 <br>
-            {% else %}
+                {{ t("referral_page.step_3", "And you earn one point - getting you close to Lalandia") }}
+            </div>
+        </div>
+        <br><br>
+    </div>
+</div>
+
+<div class="container" style="text-align: center;">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>{{ t("referral_page.middle_section.header", "Win a trip to Lalandia for the entire family (4000 kr.) and earn 50 kr!") }}</h2>
+            <p>
+                {{ t("referral_page.middle_section.body", "We love KidUp, and love to tell all our friends about it. If you would like to help us, you can do so by copying the link below and spread it amongst your friends. For each friend you invite you'll gain 50 kr. which can bee spend on KidUp, and it brings you one step closer to winning a trip to Lalandia.") }}
+            </p>
+        </div>
+    </div>
+
+    {% if userIsGuest() %}
+        <br>
+        <button class="btn btn-simple btn-danger btn-fill btn-lg" style="border-radius: 1px;"
+                data-toggle="modal" data-target="#loginModal" id="login">
+            {{ t("referral_page.login_button", "Login or Register and compete!") }}
+        </button>
+        <br>
+    {% else %}
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <input id="copy" value="{{ referralLink }}"
-                                       style="color:black;font-size: 0.3em;padding:15px;width:100%;">
-                            </div>
-                            <div class="col-md-2">
-                                <div class="btn btn-danger btn-fill btn-lg"
-                                     style="border-radius: 0;margin-top:15px;height:54px;" data-clipboard-target="#copy"
-                                     id="copyButton">
-                                    {{ t("referral_page.link_copy_button", "Copy") }}
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="btn btn-danger btn-fill btn-lg"
-                                     style="border-radius: 0;margin-top:15px;height:54px;" onclick="FB.ui({
-  method: 'share',
-  href: '{{ referralLink }}',
-}, function(response){});">
-                                    <script>
-                                        {# yes shit is ugly, no we dont care #}
-                                        window.fbAsyncInit = function() {
-                                            FB.init({
-                                                appId      : '1515825585365803',
-                                                xfbml      : true,
-                                                version    : 'v2.5'
-                                            });
-                                        };
+                    <div class="col-md-8">
+                        <input id="copy" value="{{ referralLink }}"
+                               style="color:black;font-size: 0.3em;padding:15px;width:100%;">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn btn-danger btn-fill btn-lg"
+                             style="border-radius: 0;margin-top:15px;height:54px;" data-clipboard-target="#copy"
+                             id="copyButton">
+                            {{ t("referral_page.link_copy_button", "Copy") }}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn btn-danger btn-fill btn-lg"
+                             style="border-radius: 0;margin-top:15px;height:54px;" onclick="FB.ui({
+                                method: 'share',
+                                href: '{{ referralLink }}',
+                                }, function(response){});">
+                            <script>
+                                {# yes shit is ugly, no we dont care #}
+                                window.fbAsyncInit = function () {
+                                    FB.init({
+                                        appId: '1515825585365803',
+                                        xfbml: true,
+                                        version: 'v2.5'
+                                    });
+                                };
 
-                                        (function(d, s, id){
-                                            var js, fjs = d.getElementsByTagName(s)[0];
-                                            if (d.getElementById(id)) {return;}
-                                            js = d.createElement(s); js.id = id;
-                                            js.src = "//connect.facebook.net/en_US/sdk.js";
-                                            fjs.parentNode.insertBefore(js, fjs);
-                                        }(document, 'script', 'facebook-jssdk'));
-                                    </script>
-                                    {{ t("referral_page.link_share_button", "Share") }}
-                                </div>
-                            </div>
+                                (function (d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) {
+                                        return;
+                                    }
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                            </script>
+                            {{ t("referral_page.link_share_button", "Share") }}
                         </div>
                     </div>
                 </div>
-            {% endif %}
-            <br>
-
-            <div class="row" style="font-size: 0.35em;">
-                <div class="col-md-6 col-md-offset-3" style="background-color: rgba(0,0,0,0.4);padding: 25px;">
-                    {{ t("referral_page.explanation","Every Sunday of December we award the 3 users with the most referred friends them with a christmas gift. Will it be you? Copy your link and post it on Facebook, Email it to your friends or share it at your childcare!") }}
-                    <br>
-
-                    <h3>
-                        {{ t('referral_page.count_total', "You referred {count} people to KidUp", {count: count_total}) }}
-                    </h3>
-                    <hr>
-                    <h4>
-                        {{ t('referral_page.top_list_header','Kiduppers with most Referrals') }}
-                    </h4>
-                    {% for user in top_list %}
-                        <div class="row">
-                            <div class="col-xs-6" style="text-align: right">
-                                <img src="{{ imageUrl(user.user.profile.getAttribute('img'), {w: 40}) }}" alt=""
-                                     width="40px" class="img-circle">
-                            </div>
-                            <div class="col-xs-6" style="text-align: left;">
-                                <h5>
-                                    {{ user.user.profile.first_name }} {{ user.count }}
-                                </h5>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
             </div>
-        </h1>
+        </div>
+    {% endif %}
+</div>
+
+<br>
+<div style="{{ bgImage("kidup/user/referral/baby-bg.png", {w: 2000, q:90}) }};margin-top:10px;min-height:30vh;width:100%;text-align: center;" class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="padding: 25px;">
+            {% if(userIsGuest() == false) %}
+                <h3>
+                    {{ t('referral_page.count_total', "You referred {count} people to KidUp, and earned {rewardAmount} DKK with it!", {
+                        count: count_total,
+                        rewardAmount: count_total*50,
+                    }) }}
+                </h3>
+            {% endif %}
+
+            <small>
+                {{ t('referral_page.small_text_below_user_stats', "") }}
+            </small>
+            <hr>
+            <h4>
+                {{ t('referral_page.top_list_header','Kiduppers with most Referrals') }}
+            </h4>
+            {% for user in top_list %}
+                <div class="row">
+                    <div class="col-xs-6" style="text-align: right">
+                        <img src="{{ imageUrl(user.user.profile.getAttribute('img'), {w: 40}) }}" alt=""
+                             width="40px" class="img-circle">
+                    </div>
+                    <div class="col-xs-6" style="text-align: left;">
+                        <h5>
+                            {{ user.user.profile.first_name }} {{ user.count }}
+                        </h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row" style="font-size:16px;">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>
+                {{ t("referral_page.bottom_explanation.header", "Worth Knowing") }}
+            </h2>
+            {{ t("referral_page.bottom_explanation.details_1", "We would never share your information with anything or anyone, so do not worry, it's free both in regards to the economy and worries to sign up at KidUp.") }}
+            <br>
+            <br>
+            {{ t("referral_page.bottom_explanation.details_2", "The Lalandia competition runs until the 24th of December at 14:00, but afterwards you still earn 50kr. per friend you invite.") }}
+            <br>
+            <br>
+            {{ t("referral_page.bottom_explanation.details_3", "You can gain a maximum of 250kr. in total, if you invite 5 friends to KidUp.") }}
+            <br>
+            <br>
+            {{ t("referral_page.bottom_explanation.details_4", "We with you a happy competition and an even better Christmas.") }}
+        </div>
     </div>
 </div>
 
