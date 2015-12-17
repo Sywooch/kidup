@@ -24,7 +24,9 @@ class Pages extends Component
             62 => 'how-to-rent',
             68 => 'why-rent',
             26 => 'guide',
-            245 => 'cookies'
+            245 => 'cookies',
+            259 => 'konkurrencebetingelser',
+
         ];
         return parent::__construct();
     }
