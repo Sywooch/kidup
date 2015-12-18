@@ -13,7 +13,6 @@
         search.addWidget(
             instantsearch.widgets.searchBox({
                 container: '#menu-search-input',
-                placeholder: 'Search for products...'
             })
         );
 
@@ -42,7 +41,7 @@
                 container: '#categories',
                 attributes: ['hierarchicalCategories_da.lvl0', 'hierarchicalCategories_da.lvl1'],
                 templates: {
-                    header: 'Categories'
+                    header: i18n.categories
                 }
             })
         );
@@ -52,7 +51,7 @@
                 container: '#price',
                 attributeName: 'price_week',
                 templates: {
-                    header: 'Price'
+                    header: i18n.price
                 },
                 tooltips: {
                     format: function (formattedValue) {
@@ -66,7 +65,7 @@
             instantsearch.widgets.clearAll({
                 container: '#clear-all',
                 templates: {
-                    link: 'Reset everything'
+                    link: i18n.reset
                 },
                 autoHideContainer: false
             })
@@ -86,7 +85,7 @@
                 operator: 'or',
                 limit: 10,
                 templates: {
-                    header: 'Condition'
+                    header: i18n.container
                 }
             })
         );
@@ -118,7 +117,7 @@
             var starCount = this.review_score;
 
             if (starCount == false) {
-                stars = 'No reviews yet';
+                stars = i18n.no_reviews;
             } else {
                 stars = '<div class="user-review-stars">';
                 for (var i = starCount; i > 0; i--) {

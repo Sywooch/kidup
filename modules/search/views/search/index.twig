@@ -1,5 +1,12 @@
 {{ register_asset_bundle("search/assets/SearchPageAsset") }}
 {{ void(setTitle(this, t("search.title", "Search Kid Stuff"))) }}
+{{ void(this.registerJsVariables({
+    reset: t("search_page.filter.reset_filter", "Reset Filter"),
+    price: t("search_page.filter.header_price", "Price"),
+    categories: t("search_page.filter.header_categories", "Categories"),
+    condition: t("search_page.filter.header_condition", "Condition"),
+    no_reviews: t("search_page.item_no_reviews", "Not reviewed"),
+}, 'i18n')) }}
 <div id="search">
     <section class="section" id="search-cards">
         <div class="container-fluid">
@@ -10,7 +17,7 @@
                             <h4 class="title">
                                 {{ t("search.header_filter", "Filter") }}
                                 <span class="pull-right">
-                                    <small id="clear-all">Clear all</small>
+                                    <small id="clear-all"></small>
                                 </span>
                             </h4>
                         </div>
@@ -22,7 +29,9 @@
                             </div>
                             <div id="refine-location" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    <input type="text" class="form-control" placeholder="Location" id="location">
+                                    <input type="text" class="form-control"
+                                           placeholder="{{ t("search_page.filter.location_input_placeholder", "Location") }}"
+                                           id="location">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +61,7 @@
                     </div>
                     <!-- end card -->
                 </div>
-                <div class="col-md-9 col-lg-10" style="max-width: 80%;">
+                <div class="col-md-9 col-lg-10 searchResultsWrapper">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="searchResults" id="results">
@@ -61,10 +70,9 @@
                                         <i id="stats-container"></i>
                                     </div>
                                     <div id="hits-container"></div>
-                                    <br>
-                                    <nav id="pagination-container"></nav>
                                 </div>
                             </div>
+                            <nav id="pagination-container" style="margin: auto;width: 400px;"></nav>
                         </div>
                     </div>
                 </div>
