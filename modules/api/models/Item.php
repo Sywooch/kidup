@@ -20,6 +20,8 @@ class Item extends \item\models\Item
             $res = [];
             $itemFacets = $this->itemHasItemFacets;
             foreach ($itemFacets as $itemFacet) {
+                $itemFacet->itemFacet->name = $itemFacet->itemFacet->getTranslatedName();
+                $itemFacet->itemFacet->description = $itemFacet->itemFacet->getTranslatedDescription();
                 $f = Json::decode(Json::encode($itemFacet->itemFacet));
                 $res[] = array_merge($f, ['value' => $itemFacet->itemFacetValue->getTranslatedName()]);
             }

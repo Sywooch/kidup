@@ -112,14 +112,14 @@ class ItemFacet extends \yii\db\ActiveRecord
     public function getTranslatedName()
     {
         $lower = str_replace(" ", "_", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_name', $this->name, [],
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_name', $this->name, [],
             \Yii::$app->language);
     }
 
     public function getTranslatedDescription()
     {
         $lower = str_replace(" ", "_", strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_description', $this->name, [],
+        return \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_description', $this->name, [],
             \Yii::$app->language);
     }
 }

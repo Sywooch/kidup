@@ -30,8 +30,8 @@ $(document).ready(function () {
     window.autoSelectedCategory = false;
 
     // initialize the home search
-    initializeSearchWidget($("#search-home-query"), $("#search-home-location"), $('#main-search .btn'));
+    //initializeSearchWidget($("#search-home-query"), $("#search-home-location"), $('#main-search .btn'));
 
     // initialize the modal search
-    initializeSearchWidget($("#search-filter-query"), $("#search-modal-location"), $('#menu-search-submit-button'));
+    //initializeSearchWidget($("#search-filter-query"), $("#search-modal-location"), $('#menu-search-submit-button'));
 });

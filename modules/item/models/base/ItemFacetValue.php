@@ -77,7 +77,7 @@ class ItemFacetValue extends \yii\db\ActiveRecord
     {
         $lower = str_replace(" ", '_', strtolower($this->itemFacet->name));
         $val = str_replace(" ", '_', strtolower($this->name));
-        return \Yii::$app->getI18n()->translate('item.item_facet.' . $lower . '_value_' . $val, $this->name, [],
+        $i18n = \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_value_' . $val, $this->name, [],
             $lang ? $lang : \Yii::$app->language);
     }
 }
