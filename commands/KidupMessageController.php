@@ -232,7 +232,8 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                         }
                         $isEnclosed = !$isEnclosed;
                     }
-                    if ($char == "," && !$isEnclosed) {
+
+                    if ($char == "," && !$isEnclosed && $arg1 == false) {
                         if ($arg1 == false) {
                             $arg1 = $string;
                         } elseif ($arg2 == false) {
@@ -251,7 +252,8 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                             $arg2 = substr($arg2, 0);
                         }
                         // function ends
-                        $messages[$arg1][] = trim($arg2);
+                        $str = str_replace("    ", "", trim(preg_replace('/\s+/', ' ',$arg2)));
+                        $messages[$arg1][] = $str;
                         break;
                     }
                     $string .= $char;

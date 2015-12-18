@@ -5,17 +5,17 @@ namespace item\models\base;
 use Yii;
 
 /**
- * This is the base-model class for table "item_has_feature".
+ * This is the base-model class for table "item_has_item_facet".
  *
  * @property integer $item_id
- * @property integer $feature_id
- * @property integer $feature_value_id
+ * @property integer $item_facet_id
+ * @property integer $item_facet_value_id
  *
- * @property FeatureValue $featureValue
- * @property Feature $feature
+ * @property ItemFacetValue $itemFacetValue
+ * @property ItemFacet $itemFacet
  * @property Item $item
  */
-class ItemHasFeature extends \yii\db\ActiveRecord
+class ItemHasItemFacet extends \yii\db\ActiveRecord
 {
 
     /**
@@ -23,7 +23,7 @@ class ItemHasFeature extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'item_has_feature';
+        return 'item_has_item_facet';
     }
 
     /**
@@ -32,21 +32,21 @@ class ItemHasFeature extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['feature_id', 'feature_value_id'], 'required'],
-            [['feature_id', 'feature_value_id'], 'integer'],
+            [['item_facet_id', 'item_facet_value_id'], 'required'],
+            [['item_facet_id', 'item_facet_value_id'], 'integer'],
             [
-                ['feature_value_id'],
+                ['item_facet_value_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => FeatureValue::className(),
-                'targetAttribute' => ['feature_value_id' => 'id']
+                'targetClass' => ItemFacetValue::className(),
+                'targetAttribute' => ['item_facet_value_id' => 'id']
             ],
             [
-                ['feature_id'],
+                ['item_facet_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Feature::className(),
-                'targetAttribute' => ['feature_id' => 'id']
+                'targetClass' => ItemFacet::className(),
+                'targetAttribute' => ['item_facet_id' => 'id']
             ],
             [
                 ['item_id'],
@@ -65,25 +65,25 @@ class ItemHasFeature extends \yii\db\ActiveRecord
     {
         return [
             'item_id' => 'Item ID',
-            'feature_id' => 'Feature ID',
-            'feature_value_id' => 'Feature Values ID',
+            'item_facet_id' => 'ItemFacet ID',
+            'item_facet_value_id' => 'ItemFacet Values ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeatureValue()
+    public function getItemFacetValue()
     {
-        return $this->hasOne(FeatureValue::className(), ['id' => 'feature_value_id']);
+        return $this->hasOne(ItemFacetValue::className(), ['id' => 'item_facet_value_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFeature()
+    public function getItemFacet()
     {
-        return $this->hasOne(Feature::className(), ['id' => 'feature_id']);
+        return $this->hasOne(ItemFacet::className(), ['id' => 'item_facet_id']);
     }
 
     /**

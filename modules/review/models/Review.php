@@ -2,6 +2,7 @@
 
 namespace review\models;
 
+use api\models\Item;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\Booking;
@@ -106,6 +107,20 @@ class Review extends base\Review
 
     public function computeOverallUserScore(User $user){
         $reviews = Review::find()->where(['reviewed_id' => $user->id])->all();
+        $avgs = [];
+        foreach ($reviews as $review) {
+            if($review->value == (int)$review->value){
+                $avgs[] = $review->value;
+            }
+        }
+        if(count($avgs) > 0){
+            return round(array_sum($avgs)/count($avgs),1);
+        }
+        return false;
+    }
+
+    public function computeOverallItemScore(\item\models\Item $item){
+        $reviews = Review::find()->where(['item_id' => $item->id])->all();
         $avgs = [];
         foreach ($reviews as $review) {
             if($review->value == (int)$review->value){

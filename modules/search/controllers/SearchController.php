@@ -42,46 +42,19 @@ class SearchController extends Controller
      *
      * @return string
      */
-    public function actionIndex($query = '')
+    public function actionIndex()
     {
         // make sure that there is no footer and there is no container
         $this->noFooter = true;
         $this->noContainer = true;
 
         Url::remember();
-
-        $model = new Filter();
-
-        $model->load(\Yii::$app->request->get(), $model->formName());
-
-        if(isset(\Yii::$app->request->get()[$model->formName()])){
-            if(isset(\Yii::$app->request->get()[$model->formName()]['features']) || isset(\Yii::$app->request->get()[$model->formName()]['singleFeatures'])){
-                $model->loadQueriedFeatures(\Yii::$app->request->get()[$model->formName()]);
-            }
-        }
-
-        $model->query = $query;
-        $model->setLocation();
-
-        // create the data provider
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model->getQuery(),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-        if (Yii::$app->request->isPjax || Yii::$app->request->isPost) {
-            return $this->renderAjax('index', [
-                'model' => $model,
-                'dataProvider' => $dataProvider
-            ]);
-        }
-
         // render the index
-        return $this->render('index', [
-            'model' => $model,
-            'dataProvider' => $dataProvider
-        ]);
+        return $this->render('index.twig');
+    }
+
+    public function actionTest(){
+        $items = \item\models\Item::find()->where(['is_available' => 1])->all();
+        (new \search\components\ItemSearchDb())->sync($items);
     }
 }

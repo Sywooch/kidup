@@ -141,9 +141,6 @@ class ItemController extends Controller
      *
      * @apiParam {Number[]}     category                    A list of all comma seperated category ids that are enabled (optional).
      *
-     * @apiParam {Object[]}     feature                     The specification of the feature filter (optional).
-     * @apiParam {Number}       feature[].name              The feature_id of the feature that is used.
-     * @apiParam {Number[]}     feature[].value[]           A list of feature_value_id which are used.
      *
      * @apiSuccess {Number}     num_pages                   The total number of pages.
      * @apiSuccess {Number}     num_items                   The total number of items.

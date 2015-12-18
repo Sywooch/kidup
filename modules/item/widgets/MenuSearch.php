@@ -21,9 +21,8 @@ class MenuSearch extends Widget
         if ($showMenu) {
             return false;
         }
-        $model = new Filter([]);
         return $this->render('menu_search', [
-            'model' => $model
+            'model' => []
         ]);
     }
 }

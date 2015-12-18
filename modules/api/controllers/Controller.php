@@ -34,6 +34,7 @@ class Controller extends \yii\rest\ActiveController
         if (\Yii::$app->request->get('access-token')) {
             \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
         }
+        \Yii::$app->language = 'da-DK';
         if (\Yii::$app->request->get('lang')) {
             // access-token is set, but not used by yii because it's a publicly available api point
             \Yii::$app->language = \Yii::$app->request->get('lang');

@@ -72,14 +72,13 @@ class ItemCreateCest
         $I->see('Help parents find the right product');
         $I->see('Category');
         $I->see($this->item->category->name);
-        $I->selectOption("#edit-item-features-4", 29); // new condition
-        $I->checkOption("#edit-item-singularfeatures-8"); // smoke free
+//        $I->selectOption("#edit-item-item_facets-4", 29); // new condition
         $I->see("Next");
         $I->dontSee("Back");
         $I->click("Next");
-        $I->seeRecord(ItemHasFeatureSingular::className(), ['item_id' => $this->item->id, 'feature_id' => 8]);
-        $I->seeRecord(ItemHasFeature::className(),
-            ['item_id' => $this->item->id, 'feature_id' => 4, 'feature_value_id' => 29]);
+//        $I->seeRecord(ItemHasFeatureSingular::className(), ['item_id' => $this->item->id, 'feature_id' => 8]);
+//        $I->seeRecord(ItemHasFeature::className(),
+//            ['item_id' => $this->item->id, 'feature_id' => 4, 'feature_value_id' => 29]);
     }
 
     private function checkDescription(FunctionalTester $I)

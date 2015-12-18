@@ -64,7 +64,8 @@ $components = [
                     'auto_reload' => true,
                 ],
                 'globals' => [
-                    'Image' => 'app/modules/images/widgets/Image'
+                    'Image' => 'app/modules/images/widgets/Image',
+                    'urlHelper' => 'app/components/UrlHelper'
                 ],
                 'functions' => [
                     't' => function ($cat, $default, $params = []) {
@@ -254,12 +255,6 @@ $components = [
             'api/v1/event' => 'api/event/index'
         ],
     ],
-//    'redis' => [
-//        'class' => 'yii\redis\Connection',
-//        'hostname' => 'localhost',
-//        'port' => 6379,
-//        'database' => 0,
-//    ],
     'response' => [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {

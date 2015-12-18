@@ -5,53 +5,53 @@
  */
 ?>
 
-    <h4>
-        <?= Yii::t("item.create.basics.header", "Help parents find the right product") ?>
-    </h4>
+<h4>
+    <?= Yii::t("item.create.basics.header", "Help parents find the right product") ?>
+</h4>
 <?= Yii::t("item.create.basics.help_text",
     "Help parents by selecting the right properties for your product: this makes it easier for them to find their needs.") ?>
-    <hr>
+<hr>
 
-    <div class="form-group">
-        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item.create.basics.category", "Category") ?></label>
-        <br>
-        <?= $model->item->category->parent->getTranslatedName(); ?> - <?= $model->item->category->getTranslatedName(); ?>
-        <?= \yii\helpers\Html::a(\Yii::t('item.create.basics.change_category_link', '(change)'), '#', ['id' => 'showCategoryChange']) ?>
+<div class="form-group">
+    <label class="control-label"><?= Yii::t("item.create.basics.category",
+            "Category") ?></label>
+    <br>
+    <?= $model->item->category->parent->getTranslatedName(); ?> - <?= $model->item->category->getTranslatedName(); ?>
+    <?= \yii\helpers\Html::a(\Yii::t('item.create.basics.change_category_link', '(change)'), '#',
+        ['id' => 'showCategoryChange']) ?>
 
-        <?= $this->registerJs('$("#showCategoryChange").click(function(){$("#categoryChange").show();});') ?>
-        <div style="display: none;" id="categoryChange">
-            <?= $form->field($model, 'category_id')->widget(\kartik\select2\Select2::className(), [
-                'data' => $model->categoryData,
-                'options' => ['placeholder' => \Yii::t('item.create.basics.find_category', 'Find a category')],
-            ])->label(false) ?>
-        </div>
+    <?= $this->registerJs('$("#showCategoryChange").click(function(){$("#categoryChange").show();});') ?>
+    <div style="display: none;" id="categoryChange">
+        <?= $form->field($model, 'category_id')->widget(\kartik\select2\Select2::className(), [
+            'data' => $model->categoryData,
+            'options' => ['placeholder' => \Yii::t('item.create.basics.find_category', 'Find a category')],
+        ])->label(false) ?>
     </div>
+</div>
 
 <?php
-foreach ($model->item->category->nonSingularFeatures as $feature) {
+foreach ($model->item->category->itemFacets as $facet) {
     /**
-     * @var \item\models\base\Feature $feature
+     * @var \item\models\base\ItemFacet $facet
      */
     $dropDownItems = [];
-    foreach ($feature->featureValues as $f) {
-        $dropDownItems[$f->id] = $f->getTranslatedName();
+
+    $isRequiredText = ($facet->is_required == 1) ? \Yii::t('item.create.basics.required',
+        '(required)') : \Yii::t('item.create.basics.optional', '(optional)');
+    if($facet->allow_multiple == false){
+        foreach ($facet->itemFacetValues as $f) {
+            $dropDownItems[$f->id] = $f->getTranslatedName();
+        }
+        echo $form->field($model, "item_facets[{$facet->id}]")->widget(\kartik\select2\Select2::className(), [
+            'data' => $dropDownItems,
+            'options' => [
+                'placeholder' => $facet->getTranslatedName() . ' ' . $isRequiredText
+            ]
+        ])->label($facet->getTranslatedName());
+    }else{
+        foreach ($facet->itemFacetValues as $f) {
+            echo $form->field($model, "item_facets[{$facet->id}][{$f->id}]")->checkbox()->label($f->getTranslatedName());
+        }
     }
-    $isRequiredText = ($feature->is_required == 1) ? \Yii::t('item.create.basics.required', '(required)') : \Yii::t('item.create.basics.optional', '(optional)');
-    echo $form->field($model, "features[{$feature->id}]")->widget(\kartik\select2\Select2::className(), [
-        'data' => $dropDownItems,
-        'options' => [
-            'placeholder' => $feature->getTranslatedName() . ' ' . $isRequiredText
-        ]
-    ])->label($feature->getTranslatedName());
-}
-?>
-    <div class="form-group">
-        <label class="control-label" for="edit-item-features-4"><?= Yii::t("item.create.basic.features", "Features") ?></label>
-    </div>
-<?php
-foreach ($model->item->category->singularFeatures as $feature) {
-    echo $form->field($model, "singularFeatures[{$feature->id}]")->checkbox([
-        'label' => $feature->getTranslatedName()
-    ])->label(false);
 }
 ?>

@@ -32,9 +32,6 @@ class Filter extends Model
     public $priceMin = 0;
     public $priceMax = 499;
     public $priceUnit = 'week';
-    public $featureFilters;
-    public $features;
-    public $singularFeatures;
     public $page;
     public $pageSize = 12;
 
@@ -64,7 +61,6 @@ class Filter extends Model
      */
     public function getQuery($isAPICall = false) {
         $this->queryExtraction();
-        $this->findFeatureFilters();
         // initialize the query
         if($this->_query === false){
             $this->_query = Item::find();
@@ -73,7 +69,6 @@ class Filter extends Model
         // apply filters
         $this->filterCategories();
         $this->filterPrice();
-        $this->filterFeatures();
         $this->_query->andWhere(['is_available' => 1]);
 
         // count before limiting the query
@@ -156,79 +151,6 @@ class Filter extends Model
                     $this->categories[] = $r['component_id'];
                 }
             }
-        }
-    }
-
-    private function findFeatureFilters()
-    {
-        $features = Feature::find()->where([
-            'IN',
-            'name',
-            ['Condition', 'Exchange', 'Smoke Free', 'Pet Free']
-        ])->indexBy('id')->all();
-        if (is_array($this->categories) && count($this->categories) == 1) {
-            $chts = CategoryHasFeature::findAll([
-                'category_id' => $this->categories[0]
-            ]);
-            foreach ($chts as $cht) {
-                $feature[$cht->feature->id] = $cht->feature;
-            }
-        }
-        $this->featureFilters = $features;
-    }
-
-    public function loadQueriedFeatures($array)
-    {
-        if (isset($array['features'])) {
-            $this->features = $array['features'];
-        }
-        if (isset($array['singularFeatures'])) {
-            $this->singularFeatures = $array['singularFeatures'];
-        }
-    }
-
-    public function filterFeatures()
-    {
-        if (!is_null($this->singularFeatures)) {
-            $singleFeatureIds = [];
-            foreach ($this->singularFeatures as $id => $val) {
-                if ($val == 0) {
-                    continue;
-                }
-                $singleFeatureIds[] = (int)$id;
-            }
-            if (count($singleFeatureIds) > 0) {
-                $this->_query->innerJoinWith([
-                    'itemHasFeatureSingulars' => function ($query) use ($singleFeatureIds) {
-                        /**
-                         * @var ActiveQuery $query
-                         */
-                        $query->where(['IN', 'item_has_feature_singular.feature_id', $singleFeatureIds]);
-                    }
-                ]);
-            }
-        }
-
-
-        if (!is_null($this->features)) {
-            $this->_query->innerJoinWith([
-                'itemHasFeatures' => function ($query) {
-                    foreach ($this->features as $featureId => $val) {
-                        foreach ($val as $valId => $bool) {
-                            if ($bool == 0) {
-                                continue;
-                            }
-                            /**
-                             * @var ActiveQuery $query
-                             */
-                            $query->orWhere([
-                                'item_has_feature.feature_id' => $featureId,
-                                'item_has_feature.feature_value_id' => $valId
-                            ]);
-                        }
-                    }
-                }
-            ]);
         }
     }
 

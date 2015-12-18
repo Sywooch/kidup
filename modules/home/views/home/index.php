@@ -26,10 +26,12 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
                 <div class=" col-xs-12 col-sm-12 title text-center">
                     <h1>
                         <?= \Yii::t("home.share", 'Share'); ?>
-<!--                        <strong id="typist-element"-->
-<!--                                data-typist="--><?//= Yii::t("home.scrolling_header_share_items",
-//                                    "a stroller,a toy,a bike") ?><!--">--><?//= \Yii::t("home.scrolling_header_share_default_item",
-//                                'a trolley') ?><!--</strong>-->
+                        <!--                        <strong id="typist-element"-->
+                        <!--                                data-typist="-->
+                        <? //= Yii::t("home.scrolling_header_share_items",
+                        //                                    "a stroller,a toy,a bike") ?><!--">-->
+                        <? //= \Yii::t("home.scrolling_header_share_default_item",
+                        //                                'a trolley') ?><!--</strong>-->
                         <strong><?= \Yii::t("home.scrolling_header_share_default_item", 'a trolley') ?></strong>
                         <br/>
                         <?= \Yii::t("home.header_with_a_family", 'With a family near you') ?>
@@ -86,12 +88,24 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
 
                         <br>
 
-                        <div class="btn btn-fill btn-primary signup-button" data-toggle="modal"
-                             data-target="#signup-conversion-modal"
-                            <?= ViewHelper::trackClick('home.click_signup') ?>>
-                            <?= Yii::t("home.signup_call_to_action_mobile", "Sign up for free") ?>
-                            &nbsp;<i class="fa fa-angle-right"></i>
-                        </div>
+                        <?php if (\Yii::$app->user->isGuest): ?>
+                            <div class="btn btn-fill btn-primary signup-button" data-toggle="modal"
+                                 data-target="#signup-conversion-modal"
+                                <?= ViewHelper::trackClick('home.click_signup') ?>>
+                                <?= Yii::t("home.signup_call_to_action_mobile", "Sign up for free") ?>
+                                &nbsp;<i class="fa fa-angle-right"></i>
+                            </div>
+                        <?php else: ?>
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="https://geo.itunes.apple.com/dk/app/kidup/id1066928173?mt=8"
+                                       style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat;width:165px;height:40px;"
+                                        <?= ViewHelper::trackClick('home.click_signup') ?>></a>
+                                </div>
+                            </div>
+
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -117,6 +131,33 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
         <div class="divider">
             <?= ImageHelper::img('kidup/logo/balloon.png', ['w' => 40, 'h' => 40]) ?>
         </div>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 text-center">
+                    <img src="<?= ImageHelper::url("kidup/home/mom-with-phone.png", ['w' => 500]) ?>" alt="" style="width: 100%">
+                </div>
+                <div class="col-md-6" style="font-size: 16px;">
+                    <div class="text-center">
+                        <h2><?= \Yii::t("home.kidup_in_appstore", 'KidUp on your phone!') ?></h2>
+                    </div>
+                    <?= Yii::t("home.kidup_app.text", "With the brand new KidUp app you can view, search and book products on the couch, in the supermarket or in Lalandia!") ?>
+                    <br><br>
+                    <div class="row text-center">
+                        <a href="https://geo.itunes.apple.com/dk/app/kidup/id1066928173?mt=8">
+                            <div class="btn btn-danger btn-fill btn-lg" style="border-radius: 2px;">
+                                <?= Yii::t("home.app_download_ios", "Download for iOS") ?>
+                            </div>
+                        </a>
+                        <br>
+                        <small><?= Yii::t("home.app_android_soon", "Android comming soon") ?></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
 
         <div class="container" id="how-it-works">
             <div class="row">
@@ -151,6 +192,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
             </div>
         </div>
     </div>
+
 
     <!--Owl area-->
     <div id="owl-kidup" class="owl-carousel hidden-xs">
