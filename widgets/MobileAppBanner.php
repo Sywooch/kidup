@@ -17,12 +17,12 @@ class MobileAppBanner extends \yii\bootstrap\Widget
         ]);
         $this->view->registerMetaTag([
             'name' => 'apple-itunes-app',
-            'content' => "app-id=544007664"
+            'content' => "app-id=1066928173"
         ]);
-        $this->view->registerMetaTag([
-            'name' => 'google-play-app',
-            'content' => "dk.kidup.app"
-        ]);
+//        $this->view->registerMetaTag([
+//            'name' => 'google-play-app',
+//            'content' => "dk.kidup.app"
+//        ]);
     }
 }
 
