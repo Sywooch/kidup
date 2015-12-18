@@ -136,7 +136,7 @@ $this->title = ViewHelper::getPageTitle(\Yii::t('home.title', 'Share Kid Stuff')
             <div class="row">
 
                 <div class="col-sm-6 text-center">
-                    <img src="<?= ImageHelper::url("kidup/home/mom-with-phone.png", ['w' => 500]) ?>" alt="">
+                    <img src="<?= ImageHelper::url("kidup/home/mom-with-phone.png", ['w' => 500]) ?>" alt="" style="width: 100%">
                 </div>
                 <div class="col-md-6" style="font-size: 16px;">
                     <div class="text-center">
