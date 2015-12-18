@@ -42,6 +42,7 @@ AppAsset::register($this);
     echo \app\helpers\ViewHelper::trackPageView();
     echo \app\widgets\FacebookTracker::widget();
     echo \app\widgets\GoogleTagManager::widget();
+    echo \app\widgets\MobileAppBanner::widget();
 
     echo $this->renderDynamic('return \Yii::$app->view->render("@app/views/layouts/menu");');
     ?>

@@ -30,9 +30,11 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
         <!--new row with stuff-->
         <?php
         $category = function ($category, $image) { ?>
-            <div class="col-md-2 category">
-                <a href="<?= Url::to('@web/search/' . $category) ?>" <?= ViewHelper::trackClick("home.click_category", $image) ?>>
-                    <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200]) ?>
+            <div class="col-md-2 col-xs-6 category" style="text-align: center">
+                <a href="<?= Url::to('@web/search/' . $category) ?>" <?= ViewHelper::trackClick("home.click_category",
+                    $image) ?>>
+                    <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200],
+                        ['style' => 'max-width:100%;']) ?>
                     <div class="text-center">
                         <h4><?= $category ?></h4>
                     </div>
@@ -40,9 +42,9 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
             </div>
         <?php } ?>
         <div class="row">
+            <div class="col-md-1"></div>
             <?= $category($toysOutside, 'toys-outside') ?>
             <?= $category($onTheRoad, 'on-the-road') ?>
-            <?= $category($babyClothes, 'baby-clothes') ?>
             <?= $category($furniture, 'furniture') ?>
             <?= $category($toys, 'toys') ?>
             <?= $category($baby, 'baby-stuff') ?>

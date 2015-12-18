@@ -88,28 +88,28 @@
 
     <!-- mobile filters -->
 
-    <div class="buttonContainer" style="z-index:10;">
-        <button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"
-                data-target="#mobileFiltersModal" id="filter-button" style="z-index:10;">
-            {{ t("search.filters_header", "Filters") }}
-        </button>
-    </div>
+    {#<div class="buttonContainer" style="z-index:10;">#}
+        {#<button type="button" class="btn btn-danger btn-md visible-xs visible-sm btn-fill" data-toggle="modal"#}
+                {#data-target="#mobileFiltersModal" id="filter-button" style="z-index:10;">#}
+            {#{{ t("search.filters_header", "Filters") }}#}
+        {#</button>#}
+    {#</div>#}
 
-    {{ use("yii/bootstrap") }}
-    {{ void(modal_begin({
-        'options' : {
-            'class' : 'modal modal-fullscreen force-fullscreen',
-            'id' : 'mobileFiltersModal'
-        },
-        'closeButton' : false,
-        'header' : t("search.mobile_search_filters", "Search Filters")
-    })) }}
+    {#{{ use("yii/bootstrap") }}#}
+    {#{{ void(modal_begin({#}
+        {#'options' : {#}
+            {#'class' : 'modal modal-fullscreen force-fullscreen',#}
+            {#'id' : 'mobileFiltersModal'#}
+        {#},#}
+        {#'closeButton' : false,#}
+        {#'header' : t("search.mobile_search_filters", "Search Filters")#}
+    {#})) }}#}
 
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-        <i class="fa fa-close"></i>
-    </button>
+    {#<button type="button" class="close" data-dismiss="modal" aria-hidden="true">#}
+        {#<i class="fa fa-close"></i>#}
+    {#</button>#}
 
-    {{ void(modal_end()) }}
+    {#{{ void(modal_end()) }}#}
 </div>
 
 {{ use("app/widgets/SignupModal") }}

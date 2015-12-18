@@ -36,10 +36,16 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                         <?= ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
                             ['style' => 'margin-left:auto;margin-right:auto;']) ?>
                     <?php else: ?>
-                        <?= $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
-                            ['h' => 53], ['style' => 'margin-left:auto;margin-right:auto;padding-top:5px;'])
+                        <?php $img = $transparent ? ImageHelper::img('kidup/logo/horizontal-white.png',
+                            ['h' => 53], ['style' => 'padding-top:5px;'])
                             : ImageHelper::img('kidup/logo/horizontal.png', ['h' => 53],
                                 ['style' => 'margin-left:auto;margin-right:auto;']) ?>
+                        <div class="hidden-xs" style="padding-top: 5px;padding-left:15px;">
+                            <?= $img ?>
+                        </div>
+                        <div class="visible-xs">
+                            <?= $img ?>
+                        </div>
                     <?php endif; ?>
                 </a>
             </div>
