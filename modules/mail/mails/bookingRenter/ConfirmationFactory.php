@@ -16,6 +16,7 @@ class ConfirmationFactory
         $receiver = (new MailUserFactory())->createForUser($booking->renter);
 
         $e = new Confirmation();
+        $e->setSubject('Booking confirmation');
         $e->setReceiver($receiver);
         $e->itemName = $booking->item->name;
         $e->profileName = $booking->renter->profile->first_name;

@@ -16,6 +16,7 @@ class DeclineFactory
         $receiver = (new MailUserFactory())->createForUser($booking->renter);
 
         $e = new Decline();
+        $e->setSubject('Booking declined');
         $e->setReceiver($receiver);
         $e->websiteUrl = UrlFactory::website();
         $e->itemName = $booking->item->name;

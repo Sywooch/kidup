@@ -2,6 +2,7 @@
 namespace mail\mails\review;
 
 use booking\models\Booking;
+use mail\components\MailUserFactory;
 use mail\models\UrlFactory;
 
 /**
@@ -21,6 +22,8 @@ class PublishFactory
             $mail->profileUrl = UrlFactory::profile($booking->item->owner);
             $mail->otherName = $booking->renter->profile->getFullName();
         }
+        $receiver = (new \mail\components\MailUserFactory())->create($mail->otherName, $mail->emailAddress);
+        $mail->setReceiver($receiver);
         $mail->subject = \Yii::t("mail.review_publish.header", "{userName} has reviewed you!", [
             'userName' => $mail->otherName
         ]);

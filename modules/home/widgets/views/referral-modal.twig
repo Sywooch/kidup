@@ -1,0 +1,43 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="referralModal">
+    <div class="modal-dialog">
+        <div class="modal-content"
+             style="{{ bgImage("kidup/common/christmas-package-dark.png", {w: 500}) }}; color:white;">
+            <div style="padding:10px;">
+                <div class="modal-header">
+                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close" style="color:white;"><span
+                                aria-hidden="true">&times;</span></button>
+                    <br>
+                    <h4 class="modal-title" style="color:white;font-weight: 900;">
+                        {{ t("home.referral_modal.title", "Refer friends to KidUp and rent for free") }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p style="color:white;">
+                        {{ t("home.referral_modal.body_1", "Refer friends to KidUp and rent for free, we give away 50 DKK of booking credit for every friend that registers on KidUp trough your special link.") }}
+                    </p>
+                    <br>
+                    <p style="color:white;">
+                        {{ t("home.referral_modal.body_2", "We also give away 2 tickets to Lalandia for the KidUpper that referrs most friends in December, so get your unique link, invite your friends and win!") }}
+                    </p>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <a href="{{ url("user/referral") }}">
+                                <div class="btn btn-primary btn-fill" style="width:100%;border-radius: 2px;">
+                                    {{ t("home.referral_modal.login_button", "Go to Referral campaign!") }}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    window.setTimeout(function () {
+        $('#referralModal').modal({});
+    }, 15 * 1000);
+</script>

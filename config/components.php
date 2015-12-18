@@ -74,7 +74,7 @@ $components = [
                     'userIsGuest' => function () {
                         return \Yii::$app->user->isGuest;
                     },
-                    'image' => function ($file, $options, $htmlOptions) {
+                    'image' => function ($file, $options, $htmlOptions = []) {
                         return \images\components\ImageHelper::image($file, $options, $htmlOptions);
                     },
                     'imageUrl' => function ($file, $options = []) {
@@ -88,7 +88,7 @@ $components = [
                         return Carbon\Carbon::createFromTimestamp($timestamp);
                     },
                     'url' => function ($url) {
-                        return \yii\helpers\Url::to("@web/" . $url);
+                        return \yii\helpers\Url::to("@web/" . $url, true);
                     },
                     'now' => function () {
                         return date('d-m-y H:i');
@@ -259,7 +259,7 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-            if (strpos("/api/", \Yii::$app->request->url) == 0) {
+            if (strpos("/api/",\Yii::$app->request->url) == 0) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
             }
         },

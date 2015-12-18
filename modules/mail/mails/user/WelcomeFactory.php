@@ -21,6 +21,9 @@ class WelcomeFactory
     public function create($user)
     {
         $e = new Welcome();
+        $e->setSubject('Welcome');
+        $receiver = (new \mail\components\MailUserFactory())->create($user->profile->getFullName(), $user->email);
+        $e->setReceiver($receiver);
 
         $token = TokenFactory::create($user, Token::TYPE_CONFIRMATION);
         $e->verifyUrl = $token->getUrl();

@@ -16,6 +16,7 @@ class PayoutFactory
         $receiver = (new MailUserFactory())->createForUser($booking->item->owner);
 
         $e = new Payout();
+        $e->setSubject('Booking payout');
         $e->setReceiver($receiver);
         $e->profileName = $booking->item->owner->profile->first_name;
         $e->itemName = $booking->item->name;

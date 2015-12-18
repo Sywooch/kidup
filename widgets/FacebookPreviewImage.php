@@ -30,7 +30,7 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
                 }
             }
         }
-        if(\Yii::$app->request->get("ref") !== null){
+        if(\Yii::$app->request->get("ref") !== null || $route == 'user/referral/index'){
             $image = ImageHelper::url("kidup/facebook-referral.jpg", ['w' => 600]);
             $name = "KidUp | Vind en tur for hele familien til Lalandia!";
         }
@@ -50,6 +50,14 @@ class FacebookPreviewImage extends \yii\bootstrap\Widget
         $this->view->registerMetaTag([
             'property' => "og:image:secure_url",
             'content' => $image
+        ]);
+        $this->view->registerMetaTag([
+            'property' => "og:url",
+            'content' => Url::to('@web', true)
+        ]);
+        $this->view->registerMetaTag([
+            'property' => "fb:app_id",
+            'content' => "966242223397117"
         ]);
     }
 }

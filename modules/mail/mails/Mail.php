@@ -215,7 +215,7 @@ abstract class Mail extends Object
     /**
      * Subject setter.
      *
-     * @param str $subject The subject.
+     * @param string $subject The subject.
      */
     public function setSubject($subject)
     {
