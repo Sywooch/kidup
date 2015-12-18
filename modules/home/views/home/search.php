@@ -31,7 +31,7 @@ $this->registerJsVariables([
                     ]);
                     ?>
                     <div class="col-sm-9 col-md-6 col-md-offset-2">
-                        <input type="text" class="form-control" name="q"
+                        <input type="text" class="form-control" name="q" id="search-home-query"
                                placeholder="<?= \Yii::t("home.search.placeholder_suggestion", 'e.g. {0}', [
                                    $emptySearch
                                ]) ?>">
