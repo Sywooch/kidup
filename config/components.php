@@ -237,6 +237,10 @@ $components = [
             ],
             [
                 'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/media' => 'api/media'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/users' => 'api/user'],
                 'extraPatterns' => [
                     'me' => 'me',
