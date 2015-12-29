@@ -73,7 +73,7 @@ class Item extends \yii\db\ActiveRecord
                 ],
                 'integer'
             ],
-            [['created_at', 'updated_at', 'category_id', 'name', 'description', 'price_week', 'min_renting_days', 'owner_id'], 'required'],
+            [['created_at', 'updated_at', 'category_id', 'name', 'description', 'price_week', 'owner_id', 'location_id'], 'required'],
             [['name'], 'string', 'max' => 140],
             [
                 ['category_id'],
@@ -92,7 +92,7 @@ class Item extends \yii\db\ActiveRecord
             [
                 ['location_id'],
                 'exist',
-                'skipOnError' => true,
+//                'skipOnError' => true,
                 'targetClass' => Location::className(),
                 'targetAttribute' => ['location_id' => 'id']
             ],
@@ -129,15 +129,15 @@ class Item extends \yii\db\ActiveRecord
     public function scenarios()
     {
         return [
-            'create' => ['owner_id', 'is_available', 'min_renting_days', 'category_id'],
+            'create' => ['owner_id', 'is_available', 'category_id'],
             'default' => [
                 'name',
                 'description',
                 'price_week',
                 'owner_id',
                 'currency_id',
-                'min_renting_days',
-                'category_id'
+                'category_id',
+                'location_id'
             ],
             'location' => ['location_id']
         ];

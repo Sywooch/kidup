@@ -6,6 +6,7 @@ use api\models\Review;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
@@ -38,8 +39,8 @@ class ItemController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'search', 'recommended', 'related', 'reviews', 'options', 'view'],
-            'user' => ['update', 'create', 'delete']
+            'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
+            'user' => ['update', 'create', 'delete', 'index', 'publish']
         ];
     }
 
@@ -51,11 +52,11 @@ class ItemController extends Controller
         return $actions;
     }
 
-    // default action, does not need documentation
+    // returns all the items from a user
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => Item::find()->where(['is_available' => 1])
+            'query' => Item::find()->where(['is_available' => 1, 'owner_id' => \Yii::$app->user->id])
         ]);
     }
 
@@ -212,6 +213,42 @@ class ItemController extends Controller
         return new ActiveDataProvider([
             'query' => Review::find()->where(['item_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);
+    }
+
+    /**
+     * @api {post}                  items/:id/post
+     * @apiName                     publishItem
+     * @apiGroup                    Item
+     * @apiDescription              Published an item
+     *
+     * @apiSuccess {Item}           item     The published item.
+     * @apiParam (Number)           id                    Item id.
+     * @param $id                   Item id.
+     * @return ActiveDataProvider   List of all reviews.
+     */
+    public function actionPublish($id)
+    {
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+        $item->setScenario("default");$item->validate();
+        if(!$item->validate()){
+            return [
+                'success' => false,
+                'reason' => "Item not complete yet",
+                'errors' => $item->getErrors()
+            ];
+        }
+        $item->is_available = 1;
+        $item->save(false);
+        return $item;
     }
 
 }

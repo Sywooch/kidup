@@ -7,7 +7,7 @@
         var search = instantsearch({
             appId: '8M1ZPTMQEW',
             apiKey: 'c2e21bc85e28c4f8af28ade68186fa2c',
-            indexName: 'items',
+            indexName: window.algoliaItemIndex,
             urlSync: true
         });
         search.addWidget(

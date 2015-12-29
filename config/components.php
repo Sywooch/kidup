@@ -203,6 +203,7 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',
+                    '<id>/publish' => 'publish',
                     '<id>/reviews' => 'reviews'
                 ]
             ],
@@ -233,6 +234,10 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/messages' => 'api/message'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/media' => 'api/media'],
             ],
             [
                 'class' => 'yii\rest\UrlRule',
