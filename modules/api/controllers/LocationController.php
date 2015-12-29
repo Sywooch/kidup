@@ -2,6 +2,7 @@
 namespace api\controllers;
 
 use api\models\Location;
+use yii\data\ActiveDataProvider;
 
 class LocationController extends Controller
 {
@@ -13,7 +14,7 @@ class LocationController extends Controller
     public function accessControl(){
         return [
             'guest' => ['view'],
-            'user' => ['create', 'update']
+            'user' => ['create', 'update', 'index']
         ];
     }
 
@@ -21,9 +22,15 @@ class LocationController extends Controller
         $actions = parent::actions();
 //        unset($actions['delete']);
 //        unset($actions['view']);
-//        unset($actions['index']);
+        unset($actions['index']);
 //        unset($actions['update']);
 //        unset($actions['create']);
         return $actions;
+    }
+
+    public function actionIndex(){
+        return new ActiveDataProvider([
+            'query' => Location::find()->where(['user_id' => \Yii::$app->user->id])
+        ]);
     }
 }

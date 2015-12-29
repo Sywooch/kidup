@@ -12,15 +12,15 @@ class ItemSearchDb
     public function __construct()
     {
         $this->client = new \AlgoliaSearch\Client('8M1ZPTMQEW', 'd6e8cc41e0764b2708e9998afd5a139e');
-        $this->index = $this->client->initIndex('items');
-//        if (YII_ENV == 'prod') {
-//        }
-//        if (YII_ENV == 'dev') {
-//            $this->index = $this->client->initIndex('items_dev');
-//        }
-//        if (YII_ENV == 'test') {
-//            $this->index = $this->client->initIndex('items_test');
-//        }
+        if (YII_ENV == 'prod') {
+            $this->index = $this->client->initIndex('items');
+        }
+        if (YII_ENV == 'dev') {
+            $this->index = $this->client->initIndex('items_dev');
+        }
+        if (YII_ENV == 'test') {
+            $this->index = $this->client->initIndex('items_test');
+        }
     }
 
     /**

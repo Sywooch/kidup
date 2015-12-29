@@ -203,6 +203,7 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',
+                    '<id>/publish' => 'publish',
                     '<id>/reviews' => 'reviews'
                 ]
             ],
