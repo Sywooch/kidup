@@ -26,7 +26,7 @@ class DefaultController extends Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['confirm', 'request'],
+                'only' => ['confirm', 'request', 'error'],
                 'rules' => [
                     // allow authenticated users
                     [
@@ -85,8 +85,8 @@ class DefaultController extends Controller
                 return $this->redirect(['/booking/' . $booking->id]);
             } elseif ($item->min_renting_days == 666) {
                 // fake product booking
-                new SlackJob("Fake booking made on " . $this->booking->item_id);
-                return $this->redirect("booking/default/error?item_id=".$this->booking->item_id);
+                new SlackJob(['message' => "Fake booking made on " . $booking->item_id]);
+                return $this->redirect("@web/booking/default/error?item_id=".$booking->item_id);
             }
         }
 
