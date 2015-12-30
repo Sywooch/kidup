@@ -34,8 +34,8 @@ class ItemSearchDb
     public function sync($items)
     {
         $batch = [];
-
         $batchFake = [];
+
         foreach ($items as $item) {
             if ($item->min_renting_days == 666 && YII_ENV == 'prod') {
                 $batchFake[] = $this->constructItem($item);
@@ -47,7 +47,7 @@ class ItemSearchDb
             $this->client->initIndex('items')->saveObjects($batch);
             $this->client->initIndex('items_fake')->saveObjects($batchFake);
         }else{
-            $this->index->saveObject($batch);
+            $this->index->saveObjects($batch);
         }
     }
 
