@@ -68,10 +68,10 @@ class DefaultController extends Controller
         $model = new Confirm($booking);
 
         if ($model->load(\Yii::$app->request->post())) {
-            if(isset(\Yii::$app->request->post()['payment_method_nonce'])){
+            if (isset(\Yii::$app->request->post()['payment_method_nonce'])) {
                 $model->nonce = \Yii::$app->request->post()['payment_method_nonce'];
             }
-            if(\Yii::$app->request->isAjax){
+            if (\Yii::$app->request->isAjax) {
                 return \yii\helpers\Json::encode($model->validate());
             }
             if ($model->save()) {
@@ -83,6 +83,10 @@ class DefaultController extends Controller
                     ]);
                 }
                 return $this->redirect(['/booking/' . $booking->id]);
+            } elseif ($item->min_renting_days == 666) {
+                // fake product booking
+                new SlackJob("Fake booking made on " . $this->booking->item_id);
+                return $this->redirect("booking/default/error?item_id=".$this->booking->item_id);
             }
         }
 
@@ -108,7 +112,8 @@ class DefaultController extends Controller
         }
 
         if ($booking->status !== Booking::PENDING) {
-            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_already_confirmed', "Booking already seems to be confirmed"));
+            \Yii::$app->session->addFlash('info',
+                \Yii::t('booking.flash.booking_already_confirmed', "Booking already seems to be confirmed"));
             return $this->redirect('@web/booking/' . $id);
         }
 
@@ -116,10 +121,11 @@ class DefaultController extends Controller
         if ($payoutMethod == 0) {
             $link = Url::to('@web/user/settings/payout-preference');
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking.flash.add_payment_method', "Please add a {href}payment method{endHref} so we know where we can pay you.", [
-                    'href' => "<a href='{$link}'>",
-                    'endHref' => "</a>",
-                ]));
+                \Yii::t('booking.flash.add_payment_method',
+                    "Please add a {href}payment method{endHref} so we know where we can pay you.", [
+                        'href' => "<a href='{$link}'>",
+                        'endHref' => "</a>",
+                    ]));
             return $this->redirect('@web/item/list');
         }
 
@@ -134,20 +140,23 @@ class DefaultController extends Controller
 
         if ($booking->request_expires_at < time()) {
             \Yii::$app->session->addFlash('info',
-                \Yii::t('booking.request_no_respondse_removed_flash', 'This booking had no response for more then 48 hours, so is removed.'));
+                \Yii::t('booking.request_no_respondse_removed_flash',
+                    'This booking had no response for more then 48 hours, so is removed.'));
             return $this->goHome();
         }
 
         // todo make this POST (safer)
         if ($response == 'accept') {
             $res = $booking->ownerAccepts();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_accepted', 'Booking has been successfully accepted'));
+            \Yii::$app->session->addFlash('info',
+                \Yii::t('booking.flash.booking_accepted', 'Booking has been successfully accepted'));
             return $this->redirect('@web/booking/' . $id);
         }
 
         if ($response == 'decline') {
             $res = $booking->ownerDeclines();
-            \Yii::$app->session->addFlash('info', \Yii::t('booking.flash.booking_declined', 'Booking has been successfully declined'));
+            \Yii::$app->session->addFlash('info',
+                \Yii::t('booking.flash.booking_declined', 'Booking has been successfully declined'));
             return $this->redirect('@web/booking/by-item/' . $booking->item_id);
         }
 
@@ -169,6 +178,15 @@ class DefaultController extends Controller
         if (isset($booking->conversations[0])) {
             return $this->redirect(['@web/messages/' . $booking->conversations[0]->id]);
         }
+        return false;
+    }
+
+    /**
+     * Error action for after confirmation of fake products
+     * @param $item_id
+     */
+    public function actionError($item_id = null){
+        return $this->render('fake-product-error.twig');
     }
 
     private function find($id)

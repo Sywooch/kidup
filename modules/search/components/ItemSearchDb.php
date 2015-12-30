@@ -13,7 +13,11 @@ class ItemSearchDb
     {
         $this->client = new \AlgoliaSearch\Client('8M1ZPTMQEW', 'd6e8cc41e0764b2708e9998afd5a139e');
         if (YII_ENV == 'prod') {
-            $this->index = $this->client->initIndex('items');
+            if (\Yii::$app->keyStore->fake_products) {
+                $this->index = $this->client->initIndex('items');
+            } else {
+                $this->index = $this->client->initIndex('items_fake');
+            }
         }
         if (YII_ENV == 'dev') {
             $this->index = $this->client->initIndex('items_dev');
@@ -30,10 +34,21 @@ class ItemSearchDb
     public function sync($items)
     {
         $batch = [];
+
+        $batchFake = [];
         foreach ($items as $item) {
-            $batch[] = $this->constructItem($item);
+            if ($item->min_renting_days == 666 && YII_ENV == 'prod') {
+                $batchFake[] = $this->constructItem($item);
+            } else {
+                $batch[] = $this->constructItem($item);
+            }
         }
-        $this->index->saveObjects($batch);
+        if (\Yii::$app->keyStore->fake_products) {
+            $this->client->initIndex('items')->saveObjects($batch);
+            $this->client->initIndex('items_fake')->saveObjects($batchFake);
+        }else{
+            $this->index->saveObject($batch);
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ class KeyStore extends Component
 
     public $enable_analytics = false;
     public $yii_cache = false;
+    public $fake_products = false;
 
     public function __construct()
     {
