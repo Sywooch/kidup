@@ -18,6 +18,7 @@ class ReferralModal extends \yii\bootstrap\Widget
 
     public function run()
     {
+        return false;
         if (\Yii::$app->request->get("ref") == null && \Yii::$app->user->isGuest) {
             return $this->render('referral-modal.twig');
         }
