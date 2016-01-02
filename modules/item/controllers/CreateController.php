@@ -20,6 +20,7 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -260,6 +261,9 @@ class CreateController extends Controller
         $item = $this->getItem($item_id);
 
         $image = UploadedFile::getInstanceByName('file');
+        if($image == null){
+            throw new HttpException("No file uploaded: uploaded file should have index 'file'");
+        }
         if (!in_array($image->extension, ['png', 'jpg', 'pjpg'])) {
             throw new BadRequestHttpException("File format not allowed");
         }

@@ -45,7 +45,7 @@ class ItemSearchDb
         }
         if (\Yii::$app->keyStore->fake_products) {
             $this->client->initIndex('items')->saveObjects($batch);
-            $this->client->initIndex('items_fake')->saveObjects($batchFake);
+            $this->client->initIndex('items_fake')->saveObjects(array_merge($batchFake, $batch));
         }else{
             $this->index->saveObjects($batch);
         }

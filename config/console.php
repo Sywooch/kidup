@@ -21,6 +21,7 @@ return [
         'home\\Bootstrap',
         'pages\\Bootstrap',
         'admin\\Bootstrap',
+        'api\\Bootstrap',
     ],
     'controllerNamespace' => 'app\commands',
 
@@ -35,8 +36,22 @@ return [
         'pages' =>        ['class' => '\pages\Module'],
         'review' =>        ['class' => '\review\Module'],
         'admin' =>        ['class' => '\admin\Module'],
+        'api' =>        ['class' => '\api\Module'],
+        'user' => [
+            'class' => '\user\Module',
+            'enableUnconfirmedLogin' => true,
+            'confirmWithin' => 365 * 24 * 60 * 60,
+            'cost' => 13,
+            'admins' => ['admin'],
+            'enableConfirmation' => true,
+            'enableFlashMessages' => false,
+        ],
     ],
+
     'components' => [
+        'user' => [
+            'class' => 'user\models\User', // User must implement the IdentityInterface
+        ],
         'cache' => [
             'class' => 'yii\caching\ApcCache',
         ],
@@ -82,6 +97,7 @@ return [
         '@review' => '@app/modules/review',
         '@admin' => '@app/modules/admin',
         '@search' => '@app/modules/search',
+        '@api' => '@app/modules/api',
     ],
     'params' => $params,
 ];

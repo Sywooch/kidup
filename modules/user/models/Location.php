@@ -19,7 +19,7 @@ class Location extends \item\models\base\Location
             $this->isAttributeChanged('street_number') ||
             $this->isAttributeChanged('city') ||
             $this->isAttributeChanged('zip_code') ||
-            $this->isAttributeChanged('country')
+            $this->isAttributeChanged('country') && $this->street_name != 'fake_street'
         ) {
             $buzz = new \Buzz\Browser(new \Buzz\Client\Curl());
             $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
