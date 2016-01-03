@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
  */
 class LodashAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/lodash';
+    public $sourcePath = '@bower/lodash/dist';
     public $js = [
         'lodash.js',
     ];
