@@ -53,6 +53,7 @@ class ProductController extends Controller
     public function actionUsers()
     {
         \Yii::$app->mailer->useFileTransport = true;
+        $descriptions = json_decode(file_get_contents(Yii::$aliases['@app'] . '/devops/fake-products/philip-data.json'), true)['descriptions'];
         $names = json_decode(file_get_contents(Yii::$aliases['@app'] . '/devops/fake-products/names.json'), true);
         foreach ($names['males'] as $male) {
             $registration = new Registration();
@@ -62,11 +63,15 @@ class ProductController extends Controller
                 $user = User::findOne(['email' => $registration->email]);
                 $user->role = 666;
                 $user->flags = 1;
-                $user->created_at = time() - rand(0, 100098451);
+                $user->created_at = time() - rand(0, 10098451);
                 $user->save();
                 // should have worked
                 $user->profile->first_name = explode(" ", $male)[0];
                 $user->profile->last_name = explode(" ", $male)[1];
+
+                if(rand(0,10) <= 5){
+                    $user->profile->description = $descriptions[rand(0, count($descriptions) -1)];
+                }
                 $user->profile->save();
             }
         }
@@ -79,11 +84,14 @@ class ProductController extends Controller
                 $user = User::findOne(['email' => $registration->email]);
                 $user->role = 666;
                 $user->flags = 2;
-                $user->created_at = time() - rand(0, 100098451);
+                $user->created_at = time() - rand(0, 10098451);
                 $user->save();
                 // should have worked
                 $user->profile->first_name = explode(" ", $female)[0];
                 $user->profile->last_name = explode(" ", $female)[1];
+                if(rand(0,10) <= 5){
+                    $user->profile->description = $descriptions[rand(0, count($descriptions) -1)];
+                }
                 $user->profile->save();
             }
         }
@@ -93,18 +101,15 @@ class ProductController extends Controller
     {
         $dir = scandir(Yii::$aliases['@runtime'] . '/correct');
 
-        $items = [];
         foreach ($dir as $i => $d) {
             if (strpos($d, ".json") == false) {
                 continue;
             }
 
             $product = json_decode(file_get_contents(Yii::$aliases['@runtime'] . '/correct/' . $d), true);
-
             if (isset($product['kidup_id'])) {
                 continue;
             }
-
             $owner = User::find()->where(['role' => 666])->orderBy("RAND()")->one();
 
             if ($owner->locations[0]->latitude == 0 || $owner->locations[0]->latitude == 1) {
@@ -113,7 +118,7 @@ class ProductController extends Controller
                 $location = $owner->locations[0];
                 $location->setAttributes([
                     'country' => 1,
-                    'city' => 'fAarhus',
+                    'city' => '',
                     'zip_code' => "8000",
                     'street_name' => 'fake_street',
                     'street_number' => "1",
@@ -152,16 +157,18 @@ class ProductController extends Controller
                 $item->created_at = time() - rand(0, 60098451);
                 $item->save();
             }
+
+            exit();
         }
     }
 
-    public function actionSync()
+    public function actionSyncDb()
     {
         $items = Item::find()->all();
         (new ItemSearchDb())->sync($items);
     }
 
-    public function actionSyncImages()
+    public function actionSyncProductImages()
     {
         $dir = scandir(Yii::$aliases['@runtime'] . '/correct');
 
@@ -195,9 +202,65 @@ class ProductController extends Controller
         }
     }
 
+    public function actionSyncProfileImages()
+    {
+        $oauthClient = \api\models\oauth\OauthClient::find()->one();
+        $dir = scandir(Yii::$aliases['@runtime'] . '/images/boys');
+
+        foreach ($dir as $i => $d) {
+            if (strpos($d, ".jpg") == false) {
+                continue;
+            }
+
+            $guys = User::find()
+                ->where(['role' => 666, 'flags' => 1, 'profile.img' => 'kidup/user/default-face.jpg'])
+                ->innerJoinWith('profile')
+                ->orderBy('rand()')
+                ->limit(1)
+                ->all();
+
+            foreach ($guys as $guy) {
+                if (count($guy->validOauthAccessTokens) == 0) {
+                    $token = OauthAccessToken::make($guy, $oauthClient);
+                } else {
+                    $token = $guy->validOauthAccessTokens[0];
+                }
+                $r = $this->uploadFile(Yii::$aliases['@runtime'] . '/images/boys/'.$d, false, $token->access_token);
+            }
+        }
+
+        $dir = scandir(Yii::$aliases['@runtime'] . '/images/girls');
+
+        foreach ($dir as $i => $d) {
+            if (strpos($d, ".jpg") == false) {
+                continue;
+            }
+
+            $guys = User::find()
+                ->where(['role' => 666, 'flags' => 2, 'profile.img' => 'kidup/user/default-face.jpg'])
+                ->innerJoinWith('profile')
+                ->orderBy('rand()')
+                ->limit(1)
+                ->all();
+
+            foreach ($guys as $guy) {
+                if (count($guy->validOauthAccessTokens) == 0) {
+                    $token = OauthAccessToken::make($guy, $oauthClient);
+                } else {
+                    $token = $guy->validOauthAccessTokens[0];
+                }
+                $this->uploadFile(Yii::$aliases['@runtime'] . '/images/girls/'.$d, false, $token->access_token);
+            }
+        }
+    }
+
     private function uploadFile($file, $itemId, $accessToken)
     {
-        $target_url = 'http://192.168.33.99/api/v1/media?access-token=' . $accessToken . '&item_id=' . $itemId;
+        if($itemId){
+            $target_url = 'https://www.kidup.dk/api/v1/media?access-token=' . $accessToken . '&item_id=' . $itemId;
+        }else{
+            $target_url = 'https://www.kidup.dk/api/v1/media?access-token=' . $accessToken . '&profile_pic=true';
+        }
         //This needs to be the full path to the file you want to send.
         /* curl will accept an array here too.
          * Many examples I found showed a url-encoded string instead.
@@ -216,12 +279,14 @@ class ProductController extends Controller
         curl_close($ch);
         try{
             $res = json_decode($result);
-            if(is_int($res->id)){
+            if(is_int($res->id) || $res == true){
                 return true;
+            }else{
+
             }
         }catch(\yii\base\ErrorException $e){
 
         }
-        return false;
+        return $result;
     }
 }

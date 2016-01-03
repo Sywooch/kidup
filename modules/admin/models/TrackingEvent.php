@@ -49,6 +49,8 @@ class TrackingEvent extends \yii\db\ActiveRecord
         // click the long term pricing info in the booking widget of an item page
         'init',
         // provides initial information on a session, such as user agent, screen size etc.
+        'item.view_thumb',
+        // provides initial information on a session, such as user agent, screen size etc.
         'ping',
         // a page ping - a user that is still on a page. Done in intervals, with some info (scroll, second of ping, if page is in focus)
     ];

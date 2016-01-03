@@ -9,12 +9,11 @@ use yii\helpers\Url;
  * @var \item\models\Item $model
  * @var string $rowClass
  */
-
+$page = @\Yii::$app->request->getUrl();
 \item\assets\ItemAsset::register($this);
-
+$this->registerJs('window.trackItemCardView($("#item-id-' . $model->id . '"), {"item_id":' . $model->id . ',"page":"' . $page . '"});');
 ?>
-
-<div class="<?= $rowClass ?>">
+<div class="<?= $rowClass ?>" id="item-id-<?= $model->id ?>">
     <a href="<?= Url::to('@web/item/' . $model->id) ?>" data-pjax="0">
         <div class="card">
             <div class="image"
