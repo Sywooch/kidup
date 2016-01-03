@@ -174,6 +174,7 @@ class ProductController extends Controller
 
     public function actionSyncDb()
     {
+        define(YII_ENV, 'prod');
         $items = Item::find()->all();
         (new ItemSearchDb())->sync($items);
     }
@@ -194,10 +195,13 @@ class ProductController extends Controller
                 continue;
             }
 
+            if (isset($product['images_uploaded'])) {
+                continue;
+            }
+
             foreach ($product['image_links'] as $imgLink) {
                 $f = Yii::$aliases['@runtime'] . "/parsed-images/" . md5($imgLink) . ".jpg";
                 $owner = Item::findOne(['id' => $product['kidup_id']])->owner;
-                var_dump($f);
 
                 if (is_file($f)) {
 
@@ -206,9 +210,13 @@ class ProductController extends Controller
                     } else {
                         $token = $owner->validOauthAccessTokens[0];
                     }
-                    $r = $this->uploadFile($f, $product['kidup_id'], $token->access_token);
+                    $this->uploadFile($f, $product['kidup_id'], $token->access_token);
                 }
             }
+
+
+            $product['images_uploaded'] = true;
+            file_put_contents(Yii::$aliases['@runtime'] . '/correct/' . $d, json_encode($product));
         }
     }
 
