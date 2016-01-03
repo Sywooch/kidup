@@ -1,6 +1,8 @@
 <?php \yii\widgets\Spaceless::begin(); ?>
     <script>
-        window.trackItemCardView($("[item-id={{objectID}}]"), {"item_id": ' {{objectID}} ', "page": "search"});
+        window.setTimeout(function(){
+            window.trackItemCardView($("[item-id={{objectID}}]"), {"item_id": ' {{objectID}} ', "page": "search"});
+        },250);
     </script>
     <div class="item-card card-width col-xs-12 col-sm-6 col-md-3 col-lg-3" id="item-template" style="padding:4px;" item-id="{{objectID}}">
         <a href="<?= \yii\helpers\Url::to('@web/item') ?>/{{objectID}}" data-pjax="0">
