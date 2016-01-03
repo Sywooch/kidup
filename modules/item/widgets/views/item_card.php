@@ -9,7 +9,15 @@ use yii\helpers\Url;
  * @var \item\models\Item $model
  * @var string $rowClass
  */
-$page = @\Yii::$app->request->getUrl();
+try{
+    if(\Yii::$app->request->isConsoleRequest){
+        $page = '';
+    }else{
+        $page = @\Yii::$app->request->getUrl();
+    }
+}catch(\ErrorException $e){
+    $page = '';
+}
 \item\assets\ItemAsset::register($this);
 $this->registerJs('window.trackItemCardView($("#item-id-' . $model->id . '"), {"item_id":' . $model->id . ',"page":"' . $page . '"});');
 ?>

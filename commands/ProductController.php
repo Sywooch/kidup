@@ -53,7 +53,8 @@ class ProductController extends Controller
     public function actionUsers()
     {
         \Yii::$app->mailer->useFileTransport = true;
-        $descriptions = json_decode(file_get_contents(Yii::$aliases['@app'] . '/devops/fake-products/philip-data.json'), true)['descriptions'];
+        $descriptions = json_decode(file_get_contents(Yii::$aliases['@app'] . '/devops/fake-products/philip-data.json'),
+            true)['descriptions'];
         $names = json_decode(file_get_contents(Yii::$aliases['@app'] . '/devops/fake-products/names.json'), true);
         foreach ($names['males'] as $male) {
             $registration = new Registration();
@@ -69,8 +70,8 @@ class ProductController extends Controller
                 $user->profile->first_name = explode(" ", $male)[0];
                 $user->profile->last_name = explode(" ", $male)[1];
 
-                if(rand(0,10) <= 5){
-                    $user->profile->description = $descriptions[rand(0, count($descriptions) -1)];
+                if (rand(0, 10) <= 5) {
+                    $user->profile->description = $descriptions[rand(0, count($descriptions) - 1)];
                 }
                 $user->profile->save();
             }
@@ -89,8 +90,8 @@ class ProductController extends Controller
                 // should have worked
                 $user->profile->first_name = explode(" ", $female)[0];
                 $user->profile->last_name = explode(" ", $female)[1];
-                if(rand(0,10) <= 5){
-                    $user->profile->description = $descriptions[rand(0, count($descriptions) -1)];
+                if (rand(0, 10) <= 5) {
+                    $user->profile->description = $descriptions[rand(0, count($descriptions) - 1)];
                 }
                 $user->profile->save();
             }
@@ -108,6 +109,8 @@ class ProductController extends Controller
 
             $product = json_decode(file_get_contents(Yii::$aliases['@runtime'] . '/correct/' . $d), true);
             if (isset($product['kidup_id'])) {
+//                unset($product['kidup_id']);
+//                file_put_contents(Yii::$aliases['@runtime'] . '/correct/' . $d, json_encode($product));
                 continue;
             }
             $owner = User::find()->where(['role' => 666])->orderBy("RAND()")->one();
@@ -118,12 +121,12 @@ class ProductController extends Controller
                 $location = $owner->locations[0];
                 $location->setAttributes([
                     'country' => 1,
-                    'city' => '',
-                    'zip_code' => "8000",
+                    'city' => $fakeLoc->city,
+                    'zip_code' => $fakeLoc->zip_code,
                     'street_name' => 'fake_street',
                     'street_number' => "1",
-                    'longitude' => $fakeLoc->longitude * (1 + rand(-1, 1) / 1000),
-                    'latitude' => $fakeLoc->latitude * (1 + rand(-1, 1) / 1000),
+                    'longitude' => $fakeLoc->longitude * (1 + rand(-0.5, 0.5) / 1000),
+                    'latitude' => $fakeLoc->latitude * (1 + rand(-0.5, 0.5) / 1000),
                     'user_id' => $owner->id
                 ]);
                 $location->save(false);
@@ -131,9 +134,17 @@ class ProductController extends Controller
 
             $item = new Item();
             $name = trim(explode("-", $product['title_name'])[0]);
+            $name = trim(explode("®", $name)[0]);
             if (rand(0, 10) > 5) {
                 $name = ucfirst(strtolower($name));
             }
+            $min = 0;
+            if (rand(0, 10) > 4) {
+                $min = -1;
+            }
+
+            $basePrice = max(round(0.01 * $product['reg_price']), rand(10, 50));
+
             $item->setAttributes([
                 'name' => $name,
                 'description' => $product['description'],
@@ -142,10 +153,10 @@ class ProductController extends Controller
                 'min_renting_days' => 666,
                 'is_available' => 0,
                 'currency_id' => 1,
-                'price_day' => max(round(0.01 * $product['reg_price']), rand(4, 8)),
-                'price_week' => max(round(0.03 * $product['reg_price']), rand(8, 35)),
-                'price_month' => max(round(0.06 * $product['reg_price']), rand(25, 60)),
-                'price_year' => max(round(0.15 * $product['reg_price']), rand(60, 150)),
+                'price_day' => round($basePrice / 5) * 5 + $min,
+                'price_week' => round($basePrice*3/ 10) * 10 + $min,
+                'price_month' => round($basePrice * 6 / 25) * 25 + $min,
+                'price_year' => round($basePrice * 15 / 50)*50 + $min,
                 'location_id' => $owner->locations[0]->id,
                 'created_at' => time() - rand(0, 10000000),
                 'updated_at' => time()
@@ -154,11 +165,10 @@ class ProductController extends Controller
             if ($item->save()) {
                 $product['kidup_id'] = $item->id;
                 file_put_contents(Yii::$aliases['@runtime'] . '/correct/' . $d, json_encode($product));
-                $item->created_at = time() - rand(0, 60098451);
-                $item->save();
+                $item = Item::findOne($item->id);
+                $item->created_at = $item->created_at - rand(0, 10098451);
+                $item->save(false);
             }
-
-            exit();
         }
     }
 
@@ -225,7 +235,7 @@ class ProductController extends Controller
                 } else {
                     $token = $guy->validOauthAccessTokens[0];
                 }
-                $r = $this->uploadFile(Yii::$aliases['@runtime'] . '/images/boys/'.$d, false, $token->access_token);
+                $r = $this->uploadFile(Yii::$aliases['@runtime'] . '/images/boys/' . $d, false, $token->access_token);
             }
         }
 
@@ -249,16 +259,16 @@ class ProductController extends Controller
                 } else {
                     $token = $guy->validOauthAccessTokens[0];
                 }
-                $this->uploadFile(Yii::$aliases['@runtime'] . '/images/girls/'.$d, false, $token->access_token);
+                $this->uploadFile(Yii::$aliases['@runtime'] . '/images/girls/' . $d, false, $token->access_token);
             }
         }
     }
 
     private function uploadFile($file, $itemId, $accessToken)
     {
-        if($itemId){
+        if ($itemId) {
             $target_url = 'https://www.kidup.dk/api/v1/media?access-token=' . $accessToken . '&item_id=' . $itemId;
-        }else{
+        } else {
             $target_url = 'https://www.kidup.dk/api/v1/media?access-token=' . $accessToken . '&profile_pic=true';
         }
         //This needs to be the full path to the file you want to send.
@@ -277,14 +287,14 @@ class ProductController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec($ch);
         curl_close($ch);
-        try{
+        try {
             $res = json_decode($result);
-            if(is_int($res->id) || $res == true){
+            if (is_int($res->id) || $res == true) {
                 return true;
-            }else{
+            } else {
 
             }
-        }catch(\yii\base\ErrorException $e){
+        } catch (\yii\base\ErrorException $e) {
 
         }
         return $result;
