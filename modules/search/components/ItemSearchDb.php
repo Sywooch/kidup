@@ -42,6 +42,7 @@ class ItemSearchDb
             } else {
                 $batch[] = $this->constructItem($item);
             }
+            echo 1;
         }
         if (\Yii::$app->keyStore->fake_products) {
             $this->client->initIndex('items')->saveObjects($batch);
@@ -60,6 +61,9 @@ class ItemSearchDb
     {
         $obj = [];
 
+        if(!$item->is_available){
+            return [];
+        }
         $obj['objectID'] = $item->id;
         $obj['title'] = $item->name;
         $obj['description'] = $item->description;

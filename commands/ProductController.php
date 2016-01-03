@@ -175,7 +175,9 @@ class ProductController extends Controller
     public function actionSyncDb()
     {
         define(YII_ENV, 'prod');
-        $items = Item::find()->all();
+        $items = Item::find()->where(['is_available' => 1])
+            ->orWhere(['min_renting_days' => 666])
+            ->all();
         (new ItemSearchDb())->sync($items);
     }
 
