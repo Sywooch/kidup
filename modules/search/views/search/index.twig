@@ -9,11 +9,11 @@
 }, 'i18n')) }}
 <script>
     {% if(YII_ENV == 'dev') %}
-    window.algoliaItemIndex = 'index_dev';
+    window.algoliaItemIndex = 'items_dev';
     {% elseif(YII_ENV == 'test') %}
-    window.algoliaItemIndex = 'index_test';
+    window.algoliaItemIndex = 'items_test';
     {% else %}
-    window.algoliaItemIndex = 'index';
+    window.algoliaItemIndex = 'items';
     {% endif %}
 </script>
 <div id="search">

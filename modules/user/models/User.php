@@ -264,7 +264,11 @@ class User extends base\User implements IdentityInterface
         Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
 
         if ($this->save()) {
-            Event::trigger($this, self::EVENT_USER_REGISTER_DONE);
+            try{
+                Event::trigger($this, self::EVENT_USER_REGISTER_DONE);
+            }catch(\yii\base\UnknownMethodException $e){
+                return true;
+            }
 
             return true;
         }

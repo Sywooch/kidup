@@ -2,6 +2,7 @@
 
 namespace booking\forms;
 
+use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
 use yii\base\Model;
@@ -61,9 +62,15 @@ class Confirm extends Model
         if (YII_ENV == 'test') {
             $this->nonce = 'fake-valid-nonce';
         }
+
         if (!$this->validate()) {
             return false;
         };
+
+        if($this->booking->item->min_renting_days == 666){
+            // fake product booking
+            return false;
+        }
 
         $payin = new Payin();
         $payin->nonce = $this->nonce;

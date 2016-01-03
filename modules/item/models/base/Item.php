@@ -8,6 +8,7 @@ use review\models\Review;
 use user\models\base\Currency;
 use user\models\User;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the base-model class for table "item".
@@ -128,7 +129,7 @@ class Item extends \yii\db\ActiveRecord
 
     public function scenarios()
     {
-        return [
+        return ArrayHelper::merge(parent::scenarios(),[
             'create' => ['owner_id', 'is_available', 'category_id'],
             'default' => [
                 'name',
@@ -140,7 +141,7 @@ class Item extends \yii\db\ActiveRecord
                 'location_id'
             ],
             'location' => ['location_id']
-        ];
+        ]);
     }
 
     /**

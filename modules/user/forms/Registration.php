@@ -89,7 +89,11 @@ class Registration extends Model
 
         if ($reg = $this->user->register()) {
             $u = User::find()->where(['email' => $this->email])->one();
-            return \Yii::$app->user->login($u, $this->module->rememberFor);
+            if(!YII_CONSOLE){
+                return \Yii::$app->user->login($u, $this->module->rememberFor);
+            }else{
+                return true;
+            }
         } else {
             return $reg;
         }

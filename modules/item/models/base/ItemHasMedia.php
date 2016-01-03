@@ -47,6 +47,17 @@ class ItemHasMedia extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        while (ItemHasMedia::find()->where([
+                'item_id' => $this->item_id,
+                'order' => $this->order
+            ])->andWhere('media_id != :mId')->addParams([':mId' => $this->media_id])->count() > 0) {
+            $this->order++;
+        }
+        return parent::beforeSave($insert);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

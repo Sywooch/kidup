@@ -2,20 +2,68 @@
     (function () {
 
         function detectmob() {
-            if( navigator.userAgent.match(/Android/i)
+            if (navigator.userAgent.match(/Android/i)
                 || navigator.userAgent.match(/webOS/i)
                 || navigator.userAgent.match(/iPhone/i)
                 || navigator.userAgent.match(/iPad/i)
                 || navigator.userAgent.match(/iPod/i)
                 || navigator.userAgent.match(/BlackBerry/i)
                 || navigator.userAgent.match(/Windows Phone/i)
-            ){
+            ) {
                 return true;
             }
             else {
                 return false;
             }
         }
+
+        function isElementInViewport(el) {
+
+            //special bonus for those using jQuery
+            if (typeof jQuery === "function" && el instanceof jQuery) {
+                el = el[0];
+            }
+
+            var rect = el.getBoundingClientRect();
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom - (rect.bottom - rect.top) * 0.5 <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+            );
+        }
+
+        window.trackItemCardView = function (el, item_id) {
+
+            var elementWasShown = false;
+            
+            console.log(12);
+            
+
+            if (isElementInViewport(el) && !elementWasShown) {
+                console.log(16);
+                
+                elementWasShown = true;
+                window.kidupTracker("item.view_thumb", item_id);
+            }
+
+            $(window).on("resize scroll", function (e) {
+                if (isElementInViewport(el) && !elementWasShown) {
+                    elementWasShown = true;
+                    window.kidupTracker("item.view_thumb", item_id);
+                }
+            });
+
+            window.setInterval(function(){
+                if(!elementWasShown){
+                    if (isElementInViewport(el)) {
+                        elementWasShown = true;
+                        window.kidupTracker("item.view_thumb", item_id);
+                    }
+                }
+            },100);
+        };
 
         window.kidupTracker = function (type, data) {
             if (type == 'page_view' && document.referrer.indexOf(location.protocol + "//" + location.host) !== 0) {
@@ -94,11 +142,12 @@
                         }
                     })();
                 }
-                if(typeof data === "object"){
+                if (typeof data === "object") {
                     data = JSON.stringify(data);
                 }
 
-                xmlhttp.open("get", "<?= \yii\helpers\Url::to('@web/api/event', true) ?>?type=" + type + "&data=" + data + "&t=" + new Date().getTime() + "&s=1&l=" + l + "&m=" + m, true);
+                xmlhttp.open("get", "<?= \yii\helpers\Url::to('@web/api/event',
+                        true) ?>?type=" + type + "&data=" + data + "&t=" + new Date().getTime() + "&s=1&l=" + l + "&m=" + m, true);
                 xmlhttp.send();
             }, 10);
 
@@ -106,7 +155,7 @@
         }
     })();
 
-    window.scrollTop = function(){
+    window.scrollTop = function () {
         return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     };
 

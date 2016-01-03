@@ -8,6 +8,7 @@ use images\components\ImageManager;
 use item\controllers\CreateController;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
@@ -50,31 +51,35 @@ class MediaController extends Controller
     // returns all the medias from a user
     public function actionCreate($item_id = null, $profile_pic = false)
     {
-        if($profile_pic !== false){
-            $img = UploadedFile::getInstanceByName('file');
-            $p = \Yii::$app->user->identity->profile;
-            $p->setAttribute('img', (new ImageManager())->upload($img));
-            if($p->save()){
-                return true;
-            }else{
-                return $p->getErrors();
-            }
-        }else if($item_id !== null){
+        if ($item_id !== null) {
             $item = Item::find()->where(['id' => $item_id])->one();
-            if($item == null){
+            if ($item == null) {
                 throw new NotFoundHttpException("Item not found");
             }
             /*
              * @var $item Item
              */
-            if(!$item->hasModifyRights()){
+            if (!$item->hasModifyRights()) {
                 throw new ForbiddenHttpException();
             }
-            if(\Yii::$app->runAction('item/create/upload',['item_id' => $item_id]) == true){
+            if (\Yii::$app->runAction('item/create/upload', ['item_id' => $item_id]) == true) {
                 $media = Media::find()->where(['user_id' => \Yii::$app->user->id])->orderBy('created_at DESC')->one();
                 return $media;
             }
+            throw new BadRequestHttpException("Error occured during uploading the image.");
+        } else {
+            $img = UploadedFile::getInstanceByName('file');
+            $p = \Yii::$app->user->identity->profile;
+            $imgUrl =  (new ImageManager())->upload($img);
+            if ($profile_pic !== false) {
+                $p->setAttribute('img', $imgUrl);
+                if ($p->save()) {
+                    return true;
+                } else {
+                    return $p->getErrors();
+                }
+            }
+            return $imgUrl;
         }
-        return false;
     }
 }
