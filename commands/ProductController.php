@@ -172,13 +172,27 @@ class ProductController extends Controller
         }
     }
 
+    public function actionWarmCache(){
+        $items = Item::find()->where(['min_renting_days' => 666])
+            ->all();
+        foreach ($items as $item) {
+            file_get_contents("https://www.kidup.dk/item/".$item->id);
+            var_dump($item->id);
+        }
+    }
+
     public function actionSyncDb()
     {
         define(YII_ENV, 'prod');
-        $items = Item::find()->where(['is_available' => 1])
+        $batches = Item::find()
+//            ->where(['is_available' => 1])
             ->orWhere(['min_renting_days' => 666])
-            ->all();
-        (new ItemSearchDb())->sync($items);
+            ->offset(50)
+            ->batch(10);
+
+        foreach ($batches as $batch) {
+            (new ItemSearchDb())->sync($batch);
+        }
     }
 
     public function actionSyncProductImages()

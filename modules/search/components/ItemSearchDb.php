@@ -37,6 +37,10 @@ class ItemSearchDb
         $batchFake = [];
 
         foreach ($items as $item) {
+            $constructed = $this->constructItem($item);
+            if(!$constructed){
+                continue;
+            }
             if ($item->min_renting_days == 666 && YII_ENV == 'prod') {
                 $batchFake[] = $this->constructItem($item);
             } else {
@@ -46,7 +50,8 @@ class ItemSearchDb
         }
         if (\Yii::$app->keyStore->fake_products) {
             $this->client->initIndex('items')->saveObjects($batch);
-            $this->client->initIndex('items_fake')->saveObjects(array_merge($batchFake, $batch));
+            $this->client->initIndex('items_fake')->saveObjects($batchFake);
+            $this->client->initIndex('items_fake')->saveObjects($batch);
         }else{
             $this->index->saveObjects($batch);
         }
@@ -61,9 +66,9 @@ class ItemSearchDb
     {
         $obj = [];
 
-        if(!$item->is_available){
-            return [];
-        }
+//        if(!$item->is_available){
+//            return false;
+//        }
         $obj['objectID'] = $item->id;
         $obj['title'] = $item->name;
         $obj['description'] = $item->description;

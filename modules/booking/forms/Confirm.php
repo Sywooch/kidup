@@ -2,6 +2,7 @@
 
 namespace booking\forms;
 
+use admin\models\TrackingEvent;
 use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
@@ -68,6 +69,13 @@ class Confirm extends Model
         };
 
         if($this->booking->item->min_renting_days == 666){
+            TrackingEvent::track("booking.fake_item", json_encode([
+                'item' => $this->booking->item,
+                'user' => \Yii::$app->user->identity,
+                'ip' => \Yii::$app->request->getUserIP(),
+                'timestamp' => time(),
+                'booking' => $this->booking
+            ]));
             // fake product booking
             return false;
         }
