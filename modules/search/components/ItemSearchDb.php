@@ -48,7 +48,7 @@ class ItemSearchDb
             }
             echo 1;
         }
-        if (\Yii::$app->keyStore->fake_products) {
+        if (\Yii::$app->keyStore->fake_products && YII_ENV == 'prod') {
             $this->client->initIndex('items')->saveObjects($batch);
             $this->client->initIndex('items_fake')->saveObjects($batchFake);
             $this->client->initIndex('items_fake')->saveObjects($batch);
