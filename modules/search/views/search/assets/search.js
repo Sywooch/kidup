@@ -120,7 +120,7 @@
                 stars = i18n.no_reviews;
             } else {
                 stars = '<div class="user-review-stars">';
-                for (var i = starCount; i > 0; i--) {
+                for (var i = starCount; i > 1; i--) {
                     stars += '<i class="fa fa-star"></i>';
                 }
                 for (i = starCount-1; i < 5; i++) {

@@ -13,7 +13,7 @@ class ItemSearchDb
     {
         $this->client = new \AlgoliaSearch\Client('8M1ZPTMQEW', 'd6e8cc41e0764b2708e9998afd5a139e');
         if (YII_ENV == 'prod') {
-            if (\Yii::$app->keyStore->fake_products) {
+            if (!\Yii::$app->keyStore->fake_products) {
                 $this->index = $this->client->initIndex('items');
             } else {
                 $this->index = $this->client->initIndex('items_fake');
