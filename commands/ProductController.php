@@ -186,8 +186,8 @@ class ProductController extends Controller
         define(YII_ENV, 'prod');
         $batches = Item::find()
             ->where(['is_available' => 1])
-//            ->orWhere(['min_renting_days' => 666])
-            ->offset(50)
+            ->andWhere(['min_renting_days' => 666])
+            ->offset(220)
             ->batch(10);
 
         foreach ($batches as $batch) {
@@ -196,10 +196,11 @@ class ProductController extends Controller
     }
 
     public function actionEnable(){
-        $items = Item::find()->where(['min_renting_days' => 666])->all();
+        $items = Item::find()->where(['min_renting_days' => 666, 'is_available' => 0])->all();
         foreach ($items as $item) {
             $item->is_available = 1;
-            $item->save();
+            $item->save(false);
+            echo 1;
         }
     }
 
