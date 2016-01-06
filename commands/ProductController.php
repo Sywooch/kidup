@@ -195,6 +195,14 @@ class ProductController extends Controller
         }
     }
 
+    public function actionEnable(){
+        $items = Item::find()->where(['min_renting_days' => 666])->all();
+        foreach ($items as $item) {
+            $item->is_available = 1;
+            $item->save();
+        }
+    }
+
     public function actionSyncProductImages()
     {
         $dir = scandir(Yii::$aliases['@runtime'] . '/correct');

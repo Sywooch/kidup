@@ -22,7 +22,7 @@ class SearchPageAsset extends AssetBundle
 
     public $js = [
         '//cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js',
-        'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places',
+        'https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places',
         'search.js',
         'instantsearch-location.js',
         'jquery.geocomplete.min.js'

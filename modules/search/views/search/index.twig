@@ -8,13 +8,7 @@
     no_reviews: t("search_page.item_no_reviews", "Not reviewed"),
 }, 'i18n')) }}
 <script>
-    {% if(YII_ENV == 'dev') %}
-    window.algoliaItemIndex = 'items_dev';
-    {% elseif(YII_ENV == 'test') %}
-    window.algoliaItemIndex = 'items_test';
-    {% else %}
-    window.algoliaItemIndex = 'items';
-    {% endif %}
+    window.algoliaItemIndex = '{{ index }}';
 </script>
 <div id="search">
     <section class="section" id="search-cards">
