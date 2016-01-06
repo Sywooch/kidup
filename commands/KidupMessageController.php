@@ -169,7 +169,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
     public function getDbCategories()
     {
         $currentLang = \Yii::$app->language;
-
+        \Yii::$app->language = 'en-US';
         $res = [];
 
         $cats = Category::find()->asArray()->all();
