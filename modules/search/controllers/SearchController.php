@@ -48,9 +48,16 @@ class SearchController extends Controller
         $this->noFooter = true;
         $this->noContainer = true;
 
+        $index = 'items';
+        if(\Yii::$app->keyStore->fake_products){
+            $index = 'items_fake';
+        }
+
         Url::remember();
         // render the index
-        return $this->render('index.twig');
+        return $this->render('index.twig', [
+            'index' => $index
+        ]);
     }
 
     public function actionTest(){

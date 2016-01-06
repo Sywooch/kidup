@@ -75,10 +75,13 @@ class ItemFacetValue extends \yii\db\ActiveRecord
 
     public function getTranslatedName($lang = false)
     {
+        $currentLang = \Yii::$app->language;
+        \Yii::$app->language = 'en-US';
         $lower = str_replace(" ", '_', strtolower($this->itemFacet->name));
         $val = str_replace(" ", '_', strtolower($this->name));
         $i18n = \Yii::$app->getI18n()->translate('item.feature.' . $lower . '_value_' . $val, $this->name, [],
-            $lang ? $lang : \Yii::$app->language);
+            $lang ? $lang : $currentLang);
+        \Yii::$app->language = $currentLang;
         return $i18n;
     }
 }
