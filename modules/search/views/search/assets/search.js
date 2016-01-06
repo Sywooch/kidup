@@ -78,17 +78,17 @@
             })
         );
 
-        search.addWidget(
-            instantsearch.widgets.refinementList({
-                container: '#conditions',
-                attributeName: 'facet_condition_da',
-                operator: 'or',
-                limit: 10,
-                templates: {
-                    header: i18n.container
-                }
-            })
-        );
+        //search.addWidget(
+        //    instantsearch.widgets.refinementList({
+        //        container: '#conditions',
+        //        attributeName: 'facet_condition_da',
+        //        operator: 'or',
+        //        limit: 10,
+        //        templates: {
+        //            header: i18n.container
+        //        }
+        //    })
+        //);
 
         search.addWidget(
             instantsearch.widgets.stats({
@@ -98,6 +98,22 @@
 
         search.templatesConfig.helpers.location = function (/*text, render*/) {
             var location = this.location.city;
+
+            if( typeof (window.trackingSearchPageItems) === "undefined"){
+                window.trackingSearchPageItems = {}
+            }
+
+            if( typeof (window.trackingSearchPageItems[this.objectID]) === "undefined"){
+
+                window.trackingSearchPageItems[this.objectID] = true;
+
+                (function(id){
+                    window.setTimeout(function(){
+                        window.trackItemCardView(document.querySelector("[item-id='"+id+"']"), {"item_id": id, "page": "search"});
+                    },1000);
+                })(this.objectID);
+
+            }
 
             if (typeof this._rankingInfo != "undefined") {
                 if (typeof this._rankingInfo.geoDistance !== "undefined") {
