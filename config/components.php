@@ -213,6 +213,7 @@ $components = [
                 'extraPatterns' => [
                     'costs' => 'costs',
                     'GET payment-token' => 'payment-token',
+                    'GET as-owner' => 'as-owner',
                     'GET <id>/reviews' => 'reviews',
                 ]
             ],

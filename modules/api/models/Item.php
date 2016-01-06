@@ -9,6 +9,14 @@ use yii\helpers\Json;
  */
 class Item extends \item\models\Item
 {
+
+    public function scenarios()
+    {
+        return array_merge(parent::scenarios(), [
+            'default' => ['category_id']
+        ]);
+    }
+
     public function fields()
     {
         $fields = parent::fields();

@@ -12,7 +12,7 @@
         });
         search.addWidget(
             instantsearch.widgets.searchBox({
-                container: '#menu-search-input',
+                container: '#menu-search-input'
             })
         );
 
@@ -36,15 +36,15 @@
             })
         );
 
-        search.addWidget(
-            instantsearch.widgets.hierarchicalMenu({
-                container: '#categories',
-                attributes: ['hierarchicalCategories_da.lvl0', 'hierarchicalCategories_da.lvl1'],
-                templates: {
-                    header: i18n.categories
-                }
-            })
-        );
+        //search.addWidget(
+        //    instantsearch.widgets.hierarchicalMenu({
+        //        container: '#categories',
+        //        attributes: ['hierarchicalCategories_da.lvl0', 'hierarchicalCategories_da.lvl1'],
+        //        templates: {
+        //            header: i18n.categories
+        //        }
+        //    })
+        //);
 
         search.addWidget(
             instantsearch.widgets.rangeSlider({
