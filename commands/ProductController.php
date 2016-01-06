@@ -187,7 +187,7 @@ class ProductController extends Controller
         $batches = Item::find()
             ->where(['is_available' => 1])
             ->andWhere(['min_renting_days' => 666])
-//            ->offset(50)
+            ->offset(220)
             ->batch(10);
 
         foreach ($batches as $batch) {

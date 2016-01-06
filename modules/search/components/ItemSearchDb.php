@@ -41,14 +41,14 @@ class ItemSearchDb
             if(!$constructed){
                 continue;
             }
-            if ($item->min_renting_days == 666 && YII_ENV == 'prod') {
+            if ($item->min_renting_days == 666 ) {
                 $batchFake[] = $this->constructItem($item);
             } else {
                 $batch[] = $this->constructItem($item);
             }
             echo 1;
         }
-        if (\Yii::$app->keyStore->fake_products && YII_ENV == 'prod') {
+        if (\Yii::$app->keyStore->fake_products ) {
             $this->client->initIndex('items')->saveObjects($batch);
             $this->client->initIndex('items_fake')->saveObjects($batchFake);
             $this->client->initIndex('items_fake')->saveObjects($batch);
