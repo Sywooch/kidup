@@ -29,9 +29,9 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
         </div>
         <!--new row with stuff-->
         <?php
-        $category = function ($category, $image) { ?>
+        $category = function ($category, $image, $name) { ?>
             <div class="col-md-2 col-xs-6 category" style="text-align: center">
-                <a href="<?= Url::to('@web/search/' . $category) ?>" <?= ViewHelper::trackClick("home.click_category",
+                <a href="<?= Url::to('@web/search?hFR[hierarchicalCategories_da.lvl0][0]=' . $name) ?>" <?= ViewHelper::trackClick("home.click_category",
                     $image) ?>>
                     <?= ImageHelper::image('kidup/categories/icons/' . $image . '.png', ['f' => 'png', 'w' => 200],
                         ['style' => 'max-width:100%;']) ?>
@@ -43,11 +43,11 @@ $furniture = $categories["Children's Furniture"]->getTranslatedName();
         <?php } ?>
         <div class="row">
             <div class="col-md-1"></div>
-            <?= $category($toysOutside, 'toys-outside') ?>
-            <?= $category($onTheRoad, 'on-the-road') ?>
-            <?= $category($furniture, 'furniture') ?>
-            <?= $category($toys, 'toys') ?>
-            <?= $category($baby, 'baby-stuff') ?>
+            <?= $category($toysOutside, 'toys-outside', "Toys%20Outside") ?>
+            <?= $category($onTheRoad, 'on-the-road', "On%20the%20Road") ?>
+            <?= $category($furniture, 'furniture', "Children%27s%20Furniture") ?>
+            <?= $category($toys, 'toys', "Toys") ?>
+            <?= $category($baby, 'baby-stuff', "Baby%20Necessities") ?>
         </div>
     </div>
 </Section>
