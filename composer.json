@@ -11,7 +11,7 @@
     "2amigos/yii2-file-upload-widget": "*",
     "2amigos/yii2-leaflet-extension": "*",
     "alexandernst/yii2-device-detect": "0.0.9",
-    "aws/aws-sdk-php": "3.2.2",
+    "aws/aws-sdk-php": "^3.13",
     "bower-asset/angular": "1.4.3",
     "bower-asset/bootstrap-modal-carousel": "^2.0@dev",
     "bower-asset/dropzone": "4.0.1",
@@ -61,7 +61,8 @@
     "yiisoft/yii2-twig": "^2.0@dev",
     "eold/yii2-apidoc-generator": "^1.0.",
     "flow/jsonpath": "dev-master",
-    "trntv/yii2-aceeditor": "*"
+    "trntv/yii2-aceeditor": "*",
+    "fedemotta/yii2-aws-sdk": "*"
   },
   "require-dev": {
     "codeception/codeception": "2.0.15",

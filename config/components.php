@@ -140,6 +140,12 @@ $components = [
             ],
         ],
     ],
+    'awssdk' => [
+        'class' => 'fedemotta/awssdk/AwsSdk',
+        'key' => AWS_ACCESS_KEY_ID,
+        'secret' => AWS_SECRET_ACCESS_KEY,
+        'region' => 'eu-central-1',
+    ],
     'db' => [
         'class' => 'yii\db\Connection',
         'dsn' => 'mysql:host=localhost;dbname=kidup',
@@ -239,6 +245,13 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/media' => 'api/media'],
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/notification' => 'api/notification'],
+                'extraPatterns' => [
+                    'register/<id>' => 'register'
+                ]
             ],
             [
                 'class' => 'yii\rest\UrlRule',
