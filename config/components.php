@@ -205,6 +205,7 @@ $components = [
                     'related' => 'related',
                     '<id>/publish' => 'publish',
                     '<id>/reviews' => 'reviews',
+                    'POST <id>/set-facet-value' => 'set-facet-value'
                 ]
             ],
             [
@@ -247,7 +248,8 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/item-facets' => 'api/item-facet'],
                 'extraPatterns' => [
-                    'available-for-item/<id>' => 'available-for-item'
+                    'available-for-item/<id>' => 'available-for-item',
+
                 ]
             ],
             [

@@ -4,6 +4,9 @@ namespace api\controllers;
 use api\models\Item;
 use api\models\Review;
 use item\models\base\CategoryHasItemFacet;
+use item\models\base\ItemFacet;
+use item\models\base\ItemFacetValue;
+use item\models\base\ItemHasItemFacet;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -41,7 +44,7 @@ class ItemController extends Controller
     {
         return [
             'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
-            'user' => ['update', 'create', 'delete', 'index', 'publish', 'available-facets']
+            'user' => ['update', 'create', 'delete', 'index', 'publish', 'available-facets', 'set-facet-value']
         ];
     }
 
@@ -277,6 +280,62 @@ class ItemController extends Controller
             ->all();
 
         return $itemFacets;
+    }
+
+    public function actionSetFacetValue($id){
+
+
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+        $data = \Yii::$app->request->getBodyParams();
+        $facet_id = $data['facet_id'];
+
+        $f = ItemFacet::find()->where(['id' => $facet_id])->count();
+        if($f == 0){
+            throw new ForbiddenHttpException("Item facet is not found");
+        }
+
+        if(isset($data['value_id'])){
+            $f = ItemFacetValue::find()->where(['id' => $data['value_id']])->count();
+            if($f == 0){
+                throw new ForbiddenHttpException("Item facet value is not found");
+            }
+            $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
+            if($itemHIF == null){
+                $itemHIF = new ItemHasItemFacet();
+                $itemHIF->item_id = $item->id;
+                $itemHIF->item_facet_id = $facet_id;
+            }
+            $itemHIF->item_facet_value_id = $data['value_id'];
+            $itemHIF->save();
+            return 1;
+        }else if(isset($data['value'])){
+            $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
+            if($data['value'] == 1){
+                if($itemHIF !== null){
+                    return 1;
+                }
+                $itemHIF = new ItemHasItemFacet();
+                $itemHIF->item_id = $item->id;
+                $itemHIF->item_facet_id = $facet_id;
+                $itemHIF->save();
+                return 1;
+            }else{
+                $itemHIF->delete();
+                return 1;
+            }
+        }else{
+            throw new ForbiddenHttpException("Either a value (boolean) or a value_id should be defined");
+        }
     }
 
 }

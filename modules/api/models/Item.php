@@ -31,7 +31,9 @@ class Item extends \item\models\Item
                 $itemFacet->itemFacet->name = $itemFacet->itemFacet->getTranslatedName();
                 $itemFacet->itemFacet->description = $itemFacet->itemFacet->getTranslatedDescription();
                 $f = Json::decode(Json::encode($itemFacet->itemFacet));
-                $res[] = array_merge($f, ['value' => $itemFacet->itemFacetValue->getTranslatedName()]);
+                if(count($itemFacet->itemFacetValue) > 0){
+                    $res[] = array_merge($f, ['value' => $itemFacet->itemFacetValue->getTranslatedName()]);
+                }
             }
             return $res;
         };
