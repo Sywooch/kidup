@@ -35,9 +35,9 @@
         }
 
         window.trackItemCardView = function (el, item_id) {
-            
+
             var elementWasShown = false;
-            
+
             if (isElementInViewport(el) && !elementWasShown) {
                 elementWasShown = true;
                 window.kidupTracker("item.view_thumb", item_id);

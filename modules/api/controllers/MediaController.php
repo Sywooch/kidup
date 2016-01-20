@@ -27,7 +27,7 @@ class MediaController extends Controller
     {
         return [
             'guest' => ['view'],
-            'user' => ['create', 'delete', 'index']
+            'user' => ['create', 'delete', 'index', 'image-sort']
         ];
     }
 
@@ -81,5 +81,10 @@ class MediaController extends Controller
             }
             return $imgUrl;
         }
+    }
+
+    public function actionImageSort($item_id){
+        $action = \Yii::$app->runAction('item/create/image-sort', ['item_id' => $item_id]);
+        return $action;
     }
 }

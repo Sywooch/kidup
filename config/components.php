@@ -204,7 +204,7 @@ $components = [
                     'recommended' => 'recommended',
                     'related' => 'related',
                     '<id>/publish' => 'publish',
-                    '<id>/reviews' => 'reviews'
+                    '<id>/reviews' => 'reviews',
                 ]
             ],
             [
@@ -239,6 +239,16 @@ $components = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/media' => 'api/media'],
+                'extraPatterns' => [
+                    '<id>/image-sort' => 'image-sort'
+                ]
+            ],
+            [
+                'class' => 'yii\rest\UrlRule',
+                'controller' => ['api/v1/item-facets' => 'api/item-facet'],
+                'extraPatterns' => [
+                    'available-for-item/<id>' => 'available-for-item'
+                ]
             ],
             [
                 'class' => 'yii\rest\UrlRule',

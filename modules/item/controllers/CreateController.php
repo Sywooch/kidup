@@ -336,7 +336,6 @@ class CreateController extends Controller
         if (!\Yii::$app->request->isPost) {
             throw new ForbiddenHttpException();
         }
-        $item = $this->getItem($item_id);
 
         $input = \Yii::$app->request->post('order');
         if (is_array($input)) {

@@ -3,6 +3,7 @@ namespace api\controllers;
 
 use api\models\Item;
 use api\models\Review;
+use item\models\base\CategoryHasItemFacet;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -40,7 +41,7 @@ class ItemController extends Controller
     {
         return [
             'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
-            'user' => ['update', 'create', 'delete', 'index', 'publish']
+            'user' => ['update', 'create', 'delete', 'index', 'publish', 'available-facets']
         ];
     }
 
@@ -53,17 +54,22 @@ class ItemController extends Controller
     }
 
     // returns all the items from a user
-    public function actionIndex()
+    public function actionIndex($is_available = false)
     {
+        $where = [ 'owner_id' => \Yii::$app->user->id];
+        if($is_available){
+            $where['is_available'] = 1;
+        }
         return new ActiveDataProvider([
-            'query' => Item::find()->where(['is_available' => 1, 'owner_id' => \Yii::$app->user->id])
+            'query' => Item::find()->where($where)
         ]);
     }
 
     // default action, does not need documentation
     public function actionView($id)
     {
-        $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
+        $where = ['id' => $id];
+        $item = Item::find()->where($where)->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
         }
@@ -249,6 +255,28 @@ class ItemController extends Controller
         $item->is_available = 1;
         $item->save(false);
         return $item;
+    }
+
+    /**
+     * @api {get}                   items/:id/available-facets
+     * @apiName                     publishItem
+     * @apiGroup                    Item
+     * @apiDescription              Get all the possible features + possible values
+     */
+    public function actionAvailableFacets($id)
+    {
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+
+        $itemFacets = CategoryHasItemFacet::find()
+            ->where(['IN', 'category_id', [$item->category_id, $item->category->parent_id]])
+            ->innerJoinWith("itemFacet.itemFacetValues")
+            ->asArray()
+            ->all();
+
+        return $itemFacets;
     }
 
 }

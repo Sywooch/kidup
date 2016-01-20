@@ -115,7 +115,7 @@ class IndexController extends \app\extended\web\Controller
         try{
             $server->outputImage($filename, $options);
         }catch (\League\Glide\Filesystem\FileNotFoundException $e){
-            echo '';
+            echo file_get_contents("http://placehold.it/100x100");
         }
         exit();
     }
