@@ -30,7 +30,9 @@ class LocationController extends Controller
 
     public function actionIndex(){
         return new ActiveDataProvider([
-            'query' => Location::find()->where(['user_id' => \Yii::$app->user->id])
+            'query' => Location::find()
+                ->where(['user_id' => \Yii::$app->user->id])
+                ->andWhere('longitude != 0')
         ]);
     }
 }

@@ -3,6 +3,10 @@ namespace api\controllers;
 
 use api\models\Item;
 use api\models\Review;
+use item\models\base\CategoryHasItemFacet;
+use item\models\base\ItemFacet;
+use item\models\base\ItemFacetValue;
+use item\models\base\ItemHasItemFacet;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -40,7 +44,7 @@ class ItemController extends Controller
     {
         return [
             'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
-            'user' => ['update', 'create', 'delete', 'index', 'publish']
+            'user' => ['update', 'create', 'delete', 'index', 'publish', 'available-facets', 'set-facet-value']
         ];
     }
 
@@ -49,25 +53,56 @@ class ItemController extends Controller
         $actions = parent::actions();
         unset($actions['index']);
         unset($actions['view']);
+        unset($actions['update']);
         return $actions;
     }
 
     // returns all the items from a user
-    public function actionIndex()
+    public function actionIndex($is_available = false)
     {
+        $where = [ 'owner_id' => \Yii::$app->user->id];
+        if($is_available){
+            $where['is_available'] = 1;
+        }
         return new ActiveDataProvider([
-            'query' => Item::find()->where(['is_available' => 1, 'owner_id' => \Yii::$app->user->id])
+            'query' => Item::find()->where($where)
         ]);
     }
 
     // default action, does not need documentation
     public function actionView($id)
     {
-        $item = Item::find()->where(['is_available' => 1, 'id' => $id])->one();
+        $where = ['id' => $id];
+        $item = Item::find()->where($where)->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
         }
         return $item;
+    }
+
+    public function actionUpdate($id){
+        $where = ['id' => $id];
+        $item = Item::find()->where($where)->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
+        }
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+        $d = \Yii::$app->request->getBodyParams();
+        $item->setScenario('validate');
+        foreach(['location_id', 'name', 'description', 'price_day', 'price_week', 'price_month', 'price_year', 'category_id'] as $i){
+            if(isset($d[$i])){
+                $item->{$i} = $d[$i];
+            }
+        }
+        if($item->save(false)){
+            return $item;
+        }
+        return $item->getErrors();
     }
 
     /**
@@ -249,6 +284,84 @@ class ItemController extends Controller
         $item->is_available = 1;
         $item->save(false);
         return $item;
+    }
+
+    /**
+     * @api {get}                   items/:id/available-facets
+     * @apiName                     publishItem
+     * @apiGroup                    Item
+     * @apiDescription              Get all the possible features + possible values
+     */
+    public function actionAvailableFacets($id)
+    {
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+
+        $itemFacets = CategoryHasItemFacet::find()
+            ->where(['IN', 'category_id', [$item->category_id, $item->category->parent_id]])
+            ->innerJoinWith("itemFacet.itemFacetValues")
+            ->asArray()
+            ->all();
+
+        return $itemFacets;
+    }
+
+    public function actionSetFacetValue($id){
+
+
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+        $data = \Yii::$app->request->getBodyParams();
+        $facet_id = $data['facet_id'];
+
+        $f = ItemFacet::find()->where(['id' => $facet_id])->count();
+        if($f == 0){
+            throw new ForbiddenHttpException("Item facet is not found");
+        }
+
+        if(isset($data['value_id'])){
+            $f = ItemFacetValue::find()->where(['id' => $data['value_id']])->count();
+            if($f == 0){
+                throw new ForbiddenHttpException("Item facet value is not found");
+            }
+            $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
+            if($itemHIF == null){
+                $itemHIF = new ItemHasItemFacet();
+                $itemHIF->item_id = $item->id;
+                $itemHIF->item_facet_id = $facet_id;
+            }
+            $itemHIF->item_facet_value_id = $data['value_id'];
+            $itemHIF->save();
+            return 1;
+        }else if(isset($data['value'])){
+            $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
+            if($data['value'] == 1){
+                if($itemHIF !== null){
+                    return 1;
+                }
+                $itemHIF = new ItemHasItemFacet();
+                $itemHIF->item_id = $item->id;
+                $itemHIF->item_facet_id = $facet_id;
+                $itemHIF->save();
+                return 1;
+            }else{
+                $itemHIF->delete();
+                return 1;
+            }
+        }else{
+            throw new ForbiddenHttpException("Either a value (boolean) or a value_id should be defined");
+        }
     }
 
 }

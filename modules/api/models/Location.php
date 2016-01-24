@@ -25,4 +25,11 @@ class Location extends \item\models\Location
 
         return $fields;
     }
+    public function beforeValidate()
+    {
+        if($this->isNewRecord){
+            $this->user_id = \Yii::$app->user->id;
+        }
+        return parent::beforeValidate();
+    }
 }

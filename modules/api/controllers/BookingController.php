@@ -28,7 +28,7 @@ class BookingController extends Controller
     {
         return [
             'guest' => ['payment-token', 'costs', 'options', 'reviews '],
-            'user' => ['create', 'view', 'index']
+            'user' => ['create', 'view', 'index', 'as-owner']
         ];
     }
 
@@ -51,6 +51,15 @@ class BookingController extends Controller
             'query' => Booking::find()->where([
                 'renter_id' => \Yii::$app->user->id
             ])
+        ]);
+    }
+
+    function actionAsOwner()
+    {
+        return new ActiveDataProvider([
+            'query' => Booking::find()->where([
+                'item.owner_id' => \Yii::$app->user->id
+            ])->innerJoinWith("item")
         ]);
     }
 

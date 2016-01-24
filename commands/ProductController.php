@@ -186,8 +186,6 @@ class ProductController extends Controller
         define(YII_ENV, 'prod');
         $batches = Item::find()
             ->where(['is_available' => 1])
-            ->andWhere(['min_renting_days' => 666])
-            ->offset(220)
             ->batch(10);
 
         foreach ($batches as $batch) {

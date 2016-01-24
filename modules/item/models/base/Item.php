@@ -140,6 +140,15 @@ class Item extends \yii\db\ActiveRecord
                 'category_id',
                 'location_id'
             ],
+            'validate' => [
+                'name',
+                'description',
+                'price_week',
+                'owner_id',
+                'currency_id',
+                'category_id',
+                'location_id'
+            ],
             'location' => ['location_id']
         ]);
     }
