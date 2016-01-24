@@ -13,11 +13,7 @@ class ItemSearchDb
     {
         $this->client = new \AlgoliaSearch\Client('8M1ZPTMQEW', 'd6e8cc41e0764b2708e9998afd5a139e');
         if (YII_ENV == 'prod') {
-            if (!\Yii::$app->keyStore->fake_products) {
-                $this->index = $this->client->initIndex('items');
-            } else {
-                $this->index = $this->client->initIndex('items_fake');
-            }
+            $this->index = $this->client->initIndex('items');
         }
         if (YII_ENV == 'dev') {
             $this->index = $this->client->initIndex('items_dev');
@@ -34,27 +30,16 @@ class ItemSearchDb
     public function sync($items)
     {
         $batch = [];
-        $batchFake = [];
 
         foreach ($items as $item) {
             $constructed = $this->constructItem($item);
-            if(!$constructed){
+            if (!$constructed) {
                 continue;
             }
-            if ($item->min_renting_days == 666 ) {
-                $batchFake[] = $this->constructItem($item);
-            } else {
-                $batch[] = $this->constructItem($item);
-            }
+            $batch[] = $this->constructItem($item);
             echo 1;
         }
-        if (\Yii::$app->keyStore->fake_products ) {
-            $this->client->initIndex('items')->saveObjects($batch);
-            $this->client->initIndex('items_fake')->saveObjects($batchFake);
-            $this->client->initIndex('items_fake')->saveObjects($batch);
-        }else{
-            $this->index->saveObjects($batch);
-        }
+        $this->index->saveObjects($batch);
     }
 
     /**

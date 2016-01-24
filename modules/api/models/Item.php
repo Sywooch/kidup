@@ -13,7 +13,7 @@ class Item extends \item\models\Item
     public function scenarios()
     {
         return array_merge(parent::scenarios(), [
-            'default' => ['name']
+            'default' => ['category_id']
         ]);
     }
 
