@@ -31,23 +31,27 @@ class Item extends \item\models\Item
                 $itemFacet->itemFacet->name = $itemFacet->itemFacet->getTranslatedName();
                 $itemFacet->itemFacet->description = $itemFacet->itemFacet->getTranslatedDescription();
                 $f = Json::decode(Json::encode($itemFacet->itemFacet));
-                if(count($itemFacet->itemFacetValue) > 0){
-                    $res[] = array_merge($f, ['value' => $itemFacet->itemFacetValue->getTranslatedName()]);
+                if (count($itemFacet->itemFacetValue) > 0) {
+                    $f = array_merge($f, [
+                        'value' => $itemFacet->itemFacetValue->getTranslatedName(),
+                        'value_id' => $itemFacet->item_facet_value_id
+                    ]);
                 }
+                $res[] = $f;
             }
             return $res;
         };
 
-        $fields['price_day'] = function(){
+        $fields['price_day'] = function () {
             return round($this->getDailyPrice());
         };
-        $fields['price_week'] = function(){
+        $fields['price_week'] = function () {
             return round($this->getWeeklyPrice());
         };
-        $fields['price_month'] = function(){
+        $fields['price_month'] = function () {
             return round($this->getMonthlyPrice());
         };
-        $fields['price_year']  = function(){
+        $fields['price_year'] = function () {
             return round($this->getYearlyPrice());
         };
 

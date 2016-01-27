@@ -20,7 +20,7 @@ class HomeController extends Controller
             // access control, everybody can view this
             [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index', 'fake-home'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -41,6 +41,10 @@ class HomeController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionFakeHome(){
+        return $this->render("fake-home");
     }
 
     /**

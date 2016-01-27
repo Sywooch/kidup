@@ -13,6 +13,10 @@ $search = \Yii::$app->urlHelper->isSearch();
 $class = 'navbar navbar-default ';
 $class .= $transparent ? 'navbar-product' : 'navbar-navbar-product';
 
+if($transparent){
+    return false;
+}
+
 $logoUrl = Url::to('@web/img/logo/horizontal.png');
 
 ?>
