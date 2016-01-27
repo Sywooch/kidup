@@ -204,7 +204,8 @@ $components = [
                     'search' => 'search',
                     'recommended' => 'recommended',
                     'related' => 'related',
-                    '<id>/publish' => 'publish',
+                    'POST <id>/publish' => 'publish',
+                    'POST <id>/unpublish' => 'unpublish',
                     '<id>/reviews' => 'reviews',
                     'POST <id>/set-facet-value' => 'set-facet-value'
                 ]

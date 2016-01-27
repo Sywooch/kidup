@@ -198,7 +198,6 @@ class ProductController extends Controller
         foreach ($items as $item) {
             $item->is_available = 1;
             $item->save(false);
-            echo 1;
         }
     }
 

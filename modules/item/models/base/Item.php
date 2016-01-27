@@ -74,7 +74,7 @@ class Item extends \yii\db\ActiveRecord
                 ],
                 'integer'
             ],
-            [['created_at', 'updated_at', 'category_id', 'name', 'description', 'price_week', 'owner_id', 'location_id'], 'required'],
+            [['created_at', 'updated_at', 'owner_id', 'location_id'], 'required'],
             [['name'], 'string', 'max' => 140],
             [
                 ['category_id'],
@@ -93,7 +93,6 @@ class Item extends \yii\db\ActiveRecord
             [
                 ['location_id'],
                 'exist',
-//                'skipOnError' => true,
                 'targetClass' => Location::className(),
                 'targetAttribute' => ['location_id' => 'id']
             ],
@@ -129,7 +128,7 @@ class Item extends \yii\db\ActiveRecord
 
     public function scenarios()
     {
-        return ArrayHelper::merge(parent::scenarios(),[
+        return ArrayHelper::merge(parent::scenarios(), [
             'create' => ['owner_id', 'is_available', 'category_id'],
             'default' => [
                 'name',
@@ -249,7 +248,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
+        return $this->hasMany(ItemFacet::className(),
+            ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
             ['item_id' => 'id'])->where(['item_facet.is_singular' => 1]);
     }
 
@@ -258,7 +258,8 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getNonSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
+        return $this->hasMany(ItemFacet::className(),
+            ['id' => 'item_facet_id'])->viaTable('item_has_item_facet_singular',
             ['item_id' => 'id'])->where(['item_facet.is_singular' => 0]);
     }
 

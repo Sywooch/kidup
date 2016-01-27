@@ -37,7 +37,6 @@ class ItemSearchDb
                 continue;
             }
             $batch[] = $this->constructItem($item);
-            echo 1;
         }
         $this->index->saveObjects($batch);
     }
