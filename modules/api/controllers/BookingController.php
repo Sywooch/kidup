@@ -59,7 +59,7 @@ class BookingController extends Controller
         return new ActiveDataProvider([
             'query' => Booking::find()->where([
                 'item.owner_id' => \Yii::$app->user->id
-            ])
+            ])->innerJoinWith("item")
         ]);
     }
 
