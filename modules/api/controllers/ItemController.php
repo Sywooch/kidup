@@ -44,7 +44,7 @@ class ItemController extends Controller
     {
         return [
             'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
-            'user' => ['update', 'create', 'delete', 'index', 'publish', 'available-facets', 'set-facet-value']
+            'user' => ['update', 'create', 'delete', 'index', 'publish', 'unpublish', 'available-facets', 'set-facet-value']
         ];
     }
 
@@ -273,7 +273,8 @@ class ItemController extends Controller
         if(!$item->hasModifyRights()){
             throw new ForbiddenHttpException("Item not yours");
         }
-        $item->setScenario("default");$item->validate();
+        $item->setScenario("default");
+        $item->validate();
         if(!$item->validate()){
             return [
                 'success' => false,
@@ -282,6 +283,24 @@ class ItemController extends Controller
             ];
         }
         $item->is_available = 1;
+        $item->save(false);
+        return $item;
+    }
+
+    public function actionUnpublish($id)
+    {
+        $item = Item::find()->where(['id' => $id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found");
+        }
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+        $item->setScenario("default");
+        $item->is_available = 0;
         $item->save(false);
         return $item;
     }

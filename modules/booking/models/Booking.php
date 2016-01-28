@@ -77,7 +77,7 @@ class Booking extends base\Booking
         if($user->id == $this->renter_id){
             return true;
         }
-        if($user == $this->item->owner){
+        if($user->id == $this->item->owner_id){
             return true;
         }
         return false;
