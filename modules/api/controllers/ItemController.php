@@ -23,7 +23,7 @@ class ItemController extends Controller
         return ArrayHelper::merge(parent::behaviors(), [
             'cache' => [
                 'class' => 'yii\filters\PageCache',
-                'only' => ['search', 'view'],
+                'only' => ['search'],
                 'duration' => 60 * 20,
                 'enabled' => YII_CACHE,
                 'variations' => [

@@ -50,6 +50,10 @@ class Location extends base\Location
 
     public function beforeValidate()
     {
+        $this->updated_at = time();
+        if($this->isNewRecord){
+            $this->created_at = time();
+        }
         if ($this->isAttributeChanged('street_name') ||
             $this->isAttributeChanged('street_number') ||
             $this->isAttributeChanged('city') ||
