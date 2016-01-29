@@ -88,9 +88,17 @@ class ItemSearchDb
 
     private function hierarchicalCat(\item\models\Item $item, $lang)
     {
+        if($item->category_id == 44){
+            return [];
+        }
+        if(!is_null($item->category->parent_id)){
+            return [
+                'lvl0' => $item->category->parent->getTranslatedName($lang),
+                'lvl1' => $item->category->parent->getTranslatedName($lang) . " > " . $item->category->getTranslatedName($lang)
+            ];
+        }
         return [
-            'lvl0' => $item->category->parent->getTranslatedName($lang),
-            'lvl1' => $item->category->parent->getTranslatedName($lang) . " > " . $item->category->getTranslatedName($lang)
+            'lvl0' => $item->category->getTranslatedName($lang)
         ];
     }
 }
