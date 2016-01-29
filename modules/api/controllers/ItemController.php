@@ -115,6 +115,7 @@ class ItemController extends Controller
                 $item->{$i} = $d[$i];
             }
         }
+        $item->user_id = \Yii::$app->user->id;
         if($item->save(false)){
             return $item;
         }
