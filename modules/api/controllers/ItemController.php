@@ -54,6 +54,7 @@ class ItemController extends Controller
         unset($actions['index']);
         unset($actions['view']);
         unset($actions['update']);
+        unset($actions['create']);
         return $actions;
     }
 
@@ -99,6 +100,22 @@ class ItemController extends Controller
                 $item->{$i} = $d[$i];
             }
         }
+        if($item->save(false)){
+            return $item;
+        }
+        return $item->getErrors();
+    }
+
+    public function actionCreate(){
+        $item = new Item();
+        $d = \Yii::$app->request->getBodyParams();
+        $item->setScenario('validate');
+        foreach(['location_id', 'name', 'description', 'price_day', 'price_week', 'price_month', 'price_year', 'category_id'] as $i){
+            if(isset($d[$i])){
+                $item->{$i} = $d[$i];
+            }
+        }
+        $item->user_id = \Yii::$app->user->id;
         if($item->save(false)){
             return $item;
         }

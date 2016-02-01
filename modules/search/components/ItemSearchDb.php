@@ -77,10 +77,15 @@ class ItemSearchDb
         ];
 
         foreach ($item->itemHasItemFacets as $itemHasItemFacet) {
-            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_en'][] =
-                $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
-            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_da'][] =
-                $itemHasItemFacet->itemFacetValue->getTranslatedName('da-DK');
+            if(!is_null($itemHasItemFacet->item_facet_value_id)){
+                $en = $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
+                $dk = $itemHasItemFacet->itemFacetValue->getTranslatedName('da-DK');
+            }else{
+                $en = 1;
+                $dk = 1;
+            }
+            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_en'][] = $en;
+            $obj['facet_' . strtolower($itemHasItemFacet->itemFacet->name) . '_da'][] = $dk;
         }
 
         return $obj;
@@ -88,9 +93,17 @@ class ItemSearchDb
 
     private function hierarchicalCat(\item\models\Item $item, $lang)
     {
+        if($item->category_id == 44){
+            return [];
+        }
+        if(!is_null($item->category->parent_id)){
+            return [
+                'lvl0' => $item->category->parent->getTranslatedName($lang),
+                'lvl1' => $item->category->parent->getTranslatedName($lang) . " > " . $item->category->getTranslatedName($lang)
+            ];
+        }
         return [
-            'lvl0' => $item->category->parent->getTranslatedName($lang),
-            'lvl1' => $item->category->parent->getTranslatedName($lang) . " > " . $item->category->getTranslatedName($lang)
+            'lvl0' => $item->category->getTranslatedName($lang)
         ];
     }
 }
