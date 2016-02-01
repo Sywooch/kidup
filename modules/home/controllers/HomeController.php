@@ -44,7 +44,8 @@ class HomeController extends Controller
     }
 
     public function actionFakeHome(){
-        return $this->render("fake-home");
+        //return $this->render("fake-home");
+        actionIndex();
     }
 
     /**
