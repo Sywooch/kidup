@@ -45,7 +45,7 @@ class ViewController extends Controller
         return $this->redirect($url);
     }
 
-    public function actionTest()
+    public function actionTest($mail)
     {
         $factory = new NewMessageFactory();
 

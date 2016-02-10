@@ -190,6 +190,7 @@ $components = [
             'booking/<id:\d+>/request' => 'booking/default/request',
             'booking/<id:\d+>/conversation' => 'booking/default/conversation',
             'mail/click' => 'mail/view/link',
+            'mail/test/<mail>' => 'mail/view/test',
             'mail/<id>' => 'mail/view/index',
             'sendgrid/webhook-apqcbec' => 'mail/sendgrid/webhook-apqcbec', // sendgrid incomming webhook
             'review/create/<bookingId:\d+>' => 'review/create/index',
