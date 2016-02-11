@@ -30,7 +30,10 @@ class NotificationController extends Controller
     }
 
     public function actionRegister($id) {
-        (new MobilePush())->registerDevice($id);
+        //(new MobilePush())->registerDevice($id);
+        $aws = Yii::$app->awssdk->getAwsSdk();
+        $s3 = $aws->createS3();
+        echo 'test123';
     }
 
 }
