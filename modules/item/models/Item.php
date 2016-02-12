@@ -31,9 +31,6 @@ class Item extends \item\models\base\Item
     public static function getRecommended($numItems)
     {
         $condition = 'is_available = 1';
-        if(!\Yii::$app->keyStore->fake_products){
-            $condition .= " and min_renting_days != 666";
-        }
         $items = self::find()->limit($numItems)->orderBy('RAND()')->where($condition)->all();
         if (count($items) < $numItems) {
             $items = ArrayHelper::merge($items,

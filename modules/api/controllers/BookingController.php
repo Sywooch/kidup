@@ -27,8 +27,8 @@ class BookingController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['payment-token', 'costs', 'options', 'reviews '],
-            'user' => ['create', 'view', 'index', 'as-owner']
+            'guest' => ['payment-token', 'costs', 'options', 'reviews'],
+            'user' => ['create', 'view', 'index', 'as-owner', 'accept', 'decline']
         ];
     }
 
@@ -232,4 +232,32 @@ class BookingController extends Controller
         ]);
     }
 
+    public function actionDecline($id){
+        $booking = Booking::find()->where(['id' => $id])->one();
+        if($booking === null) {
+            throw new NotFoundHttpException;
+        }
+        /**
+         * @var Booking $booking
+         */
+        if($booking->item->owner_id !== \Yii::$app->user->id){
+            throw new ForbiddenHttpException("You are not the owner of this item");
+        }
+
+        $booking->ownerDeclines();
+    }
+
+    public function actionAccept($id){
+        $booking = Booking::find()->where(['id' => $id])->one();
+        if($booking === null) {
+            throw new NotFoundHttpException;
+        }
+        /**
+         * @var Booking $booking
+         */
+        if($booking->item->owner_id !== \Yii::$app->user->id){
+            throw new ForbiddenHttpException("You are not the owner of this item");
+        }
+        $booking->ownerAccepts();
+    }
 }

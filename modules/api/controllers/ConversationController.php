@@ -8,28 +8,31 @@ use yii\web\BadRequestHttpException;
 
 class ConversationController extends Controller
 {
-    public function init(){
+    public function init()
+    {
         $this->modelClass = Conversation::className();
         parent::init();
     }
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [
             'guest' => [''],
-            'user' => ['index', 'view', 'messages']
+            'user' => ['index', 'view', 'messages', 'create']
         ];
     }
 
-    public function actions(){
+    public function actions()
+    {
         $actions = parent::actions();
         unset($actions['delete']);
         unset($actions['update']);
-        unset($actions['create']);
         unset($actions['index']);
         return $actions;
     }
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
         return new ActiveDataProvider([
             'query' => Conversation::find()->where(['target_user_id' => \Yii::$app->user->id])
                 ->orWhere(['initiater_user_id' => \Yii::$app->user->id])
@@ -38,14 +41,15 @@ class ConversationController extends Controller
         ]);
     }
 
-    public function actionMessages($id){
-        if((int)$id != $id){
+    public function actionMessages($id)
+    {
+        if ((int)$id != $id) {
             throw new BadRequestHttpException("Id should be an integer!");
         }
         return new ActiveDataProvider([
             'query' => Message::find()
                 ->where(['conversation_id' => $id])
-                ->orWhere(['sender_user_id' => \Yii::$app->user->id,'receiver_user_id' => \Yii::$app->user->id])
+                ->orWhere(['sender_user_id' => \Yii::$app->user->id, 'receiver_user_id' => \Yii::$app->user->id])
                 ->orderBy('created_at ASC')
         ]);
     }

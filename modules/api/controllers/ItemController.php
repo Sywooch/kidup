@@ -161,7 +161,7 @@ class ItemController extends Controller
      */
     public function actionRecommended()
     {
-        $items = Item::getRecommended(4);
+        $items = Item::getRecommended(24);
 
         $res = [];
         foreach ($items as $item) {

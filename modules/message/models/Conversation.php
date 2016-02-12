@@ -15,13 +15,13 @@ use yii\web\ServerErrorHttpException;
  */
 class Conversation extends base\Conversation
 {
-    public function beforeSave($insert)
+    public function beforeValidate()
     {
-        if ($insert == true) {
+        if ($this->isNewRecord) {
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        return parent::beforeSave($insert);
+        return parent::beforeValidate();
     }
 
     public function afterSave($insert, $ca)

@@ -42,4 +42,14 @@ class PayoutMethod extends \booking\models\base\PayoutMethod
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         return parent::beforeValidate();
     }
+
+    public function userHasAccess($user = false){
+        if($user == false){
+            $user = \Yii::$app->user;
+        }
+        if($user->id !== $this->user_id){
+            return false;
+        }
+        return true;
+    }
 }
