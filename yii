@@ -36,7 +36,7 @@ if(\Yii::$app->keyStore->get('environment') == 'dev'){
     \Yii::$app->urlManager->setHostInfo('http://192.168.33.99');
     \Yii::setAlias('@web', Yii::$app->urlManager->getHostInfo().'/web');
 }else{
-    \Yii::$app->urlManager->setHostInfo('http://beta.kidup.dk');
+    \Yii::$app->urlManager->setHostInfo('https://www.kidup.dk');
     \Yii::setAlias('@web', Yii::$app->urlManager->getHostInfo());
 }
 Yii::setAlias('@assets', Yii::getAlias('@web').'/assets_web');
