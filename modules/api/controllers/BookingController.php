@@ -27,7 +27,7 @@ class BookingController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['payment-token', 'costs', 'options', 'reviews '],
+            'guest' => ['payment-token', 'costs', 'options', 'reviews'],
             'user' => ['create', 'view', 'index', 'as-owner']
         ];
     }
