@@ -61,6 +61,8 @@ $urls = [
             'costs' => 'costs',
             'GET payment-token' => 'payment-token',
             'GET as-owner' => 'as-owner',
+            'GET accept' => 'accept',
+            'GET decline' => 'decline',
             'GET <id>/reviews' => 'reviews',
         ]
     ],
