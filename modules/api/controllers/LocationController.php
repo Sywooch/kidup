@@ -18,7 +18,7 @@ class LocationController extends Controller
     {
         return [
             'guest' => ['view'],
-            'user' => ['create', 'update', 'index', 'get-by-ip']
+            'user' => ['create', 'update', 'index', 'get-by-ip', 'get-by-lng-lat']
         ];
     }
 
@@ -49,7 +49,7 @@ class LocationController extends Controller
         if($ipLoc == false){
             throw new BadRequestHttpException("Ip not found");
         }
-        if ($ipLoc->country_code !== 'DK') {
+        if ($ipLoc->country_code !== 'DK' && $ipLoc->country_code !== 'NL') {
             throw new BadRequestHttpException("We currently only accept danish locations");
         }
         $userLoc = Location::find()->where([
@@ -74,5 +74,9 @@ class LocationController extends Controller
             return $location;
         }
         throw new BadRequestHttpException("Location could not be saved");
+    }
+
+    public function actionGetByLngLat($lng, $lat){
+        return (new Location())->createByLatLong($lat, $lng);
     }
 }
