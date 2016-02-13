@@ -51,7 +51,7 @@ class Location extends base\Location
     public function beforeValidate()
     {
         $this->updated_at = time();
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->created_at = time();
         }
         if ($this->isAttributeChanged('street_name') ||
@@ -130,6 +130,55 @@ class Location extends base\Location
         }
     }
 
+    public static function createByLatLong($latitude, $longitude)
+    {
+        $latitude = round($latitude, 5);
+        $longitude = round($longitude, 5);
+        $loc = Location::find()->where([
+            'user_id' => \Yii::$app->user->id,
+            'latitude' => $latitude,
+            'longitude' => $longitude
+        ])->one();
+        if ($loc !== null) {
+            return $loc;
+        }
+        $request_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latitude
+            . ',' . $longitude . "&sensor=true";
+        $json = json_decode(file_get_contents($request_url), true);
+        if (count($json['results']) == 0) {
+            return false;
+        }
+        // assume the first is the best?
+        $address = $json['results'][0];
+        $location = (new Location())->googleAddressComponentsToLocation($address['address_components']);
+        $location->country = 1;
+        $location->latitude = $latitude;
+        $location->longitude = $longitude;
+        $location->user_id = \Yii::$app->user->id;
+        $location->save();
+        return $location;
+    }
+
+    public function googleAddressComponentsToLocation($components)
+    {
+        $location = new Location();
+        foreach ($components as $component) {
+            if (in_array("postal_code", $component['types'])) {
+                $location->zip_code = $component['long_name'];
+            }
+            if (in_array("locality", $component['types'])) {
+                $location->city = $component['long_name'];
+            }
+            if (in_array("route", $component['types'])) {
+                $location->street_name = $component['long_name'];
+            }
+            if (in_array("street_number", $component['types'])) {
+                $location->street_number = $component['long_name'];
+            }
+        }
+        return $location;
+    }
+
     /**
      * A method which works offline and does not depend on external connection for fetching a location based
      * on an IP address.
@@ -191,7 +240,7 @@ class Location extends base\Location
      */
     public function canUserAccessDetails(User $user = null)
     {
-        if(\Yii::$app->user->isGuest){
+        if (\Yii::$app->user->isGuest) {
             return false;
         }
         if ($user == null) {

@@ -77,7 +77,8 @@ $urls = [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/locations' => 'api/location'],
         'extraPatterns' => [
-            'get-by-ip' => 'get-by-ip'
+            'get-by-ip' => 'get-by-ip',
+            'get-by-lng-lat' => 'get-by-lng-lat'
         ]
     ],
     [
