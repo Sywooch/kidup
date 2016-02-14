@@ -43,7 +43,7 @@ class ItemController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view'],
+            'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view', 'search-suggestions'],
             'user' => ['update', 'create', 'delete', 'index', 'publish', 'unpublish', 'available-facets', 'set-facet-value']
         ];
     }
@@ -398,6 +398,16 @@ class ItemController extends Controller
         }else{
             throw new ForbiddenHttpException("Either a value (boolean) or a value_id should be defined");
         }
+    }
+
+    public function actionSearchSuggestions(){
+        return [
+            \Yii::t('item_api.search_suggestion.stroller', 'Stroller'),
+            \Yii::t('item_api.search_suggestion.trampolin', 'Trampolin'),
+            \Yii::t('item_api.search_suggestion.lego', 'Lego'),
+            \Yii::t('item_api.search_suggestion.crib', 'Crib'),
+            \Yii::t('item_api.search_suggestion.bike', 'Bike'),
+        ];
     }
 
 }

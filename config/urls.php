@@ -47,6 +47,7 @@ $urls = [
         'extraPatterns' => [
             'search' => 'search',
             'recommended' => 'recommended',
+            'search-suggestions' => 'search-suggestions',
             'related' => 'related',
             'POST <id>/publish' => 'publish',
             'POST <id>/unpublish' => 'unpublish',

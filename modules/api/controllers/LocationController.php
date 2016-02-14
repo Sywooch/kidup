@@ -17,8 +17,8 @@ class LocationController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['view'],
-            'user' => ['create', 'update', 'index', 'get-by-ip', 'get-by-lng-lat']
+            'guest' => ['view', 'get-by-ip'],
+            'user' => ['create', 'update', 'index', 'get-by-lng-lat']
         ];
     }
 
@@ -42,22 +42,35 @@ class LocationController extends Controller
         ]);
     }
 
-    public function actionGetByIp()
+    public function actionGetByIp($save = true)
     {
         $userIp = \Yii::$app->request->getUserIP();
+//        $userIp = '83.82.175.173';
         $ipLoc = Location::getByIP($userIp);
-        if($ipLoc == false){
+
+        if ($ipLoc == false) {
             throw new BadRequestHttpException("Ip not found");
         }
-        if ($ipLoc->country_code !== 'DK' && $ipLoc->country_code !== 'NL') {
-            throw new BadRequestHttpException("We currently only accept danish locations");
+//        if ($ipLoc->country_code !== 'DK' && $ipLoc->country_code !== 'NL') {
+//            throw new BadRequestHttpException("We currently only accept danish locations");
+//        }
+        if($save !== true){
+            $location = new Location();
+            $location->latitude = $ipLoc->latitude;
+            $location->longitude = $ipLoc->longitude;
+            $location->city = $ipLoc->city;
+            $location->zip_code = $ipLoc->postal_code;
+            $location->country = 1;
+            $location->street_name = '';
+            $location->street_number = '';
+            return $location;
         }
         $userLoc = Location::find()->where([
             'user_id' => \Yii::$app->user->id,
             'longitude' => $ipLoc->longitude,
             'latitude' => $ipLoc->latitude,
         ])->one();
-        if(count($userLoc) > 0){
+        if (count($userLoc) > 0) {
             return $userLoc;
         }
         $location = new Location();
@@ -70,13 +83,14 @@ class LocationController extends Controller
         $location->street_name = '';
         $location->street_number = '';
         $location->user_id = \Yii::$app->user->id;
-        if($location->save()){
+        if ($location->save()) {
             return $location;
         }
         throw new BadRequestHttpException("Location could not be saved");
     }
 
-    public function actionGetByLngLat($lng, $lat){
+    public function actionGetByLngLat($lng, $lat)
+    {
         return (new Location())->createByLatLong($lat, $lng);
     }
 }
