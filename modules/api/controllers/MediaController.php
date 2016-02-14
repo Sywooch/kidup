@@ -6,6 +6,7 @@ use api\models\Media;
 use api\models\Review;
 use images\components\ImageManager;
 use item\controllers\CreateController;
+use item\models\ItemHasMedia;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
@@ -84,7 +85,40 @@ class MediaController extends Controller
     }
 
     public function actionImageSort($item_id){
-        $action = \Yii::$app->runAction('item/create/image-sort', ['item_id' => $item_id]);
-        return $action;
+        $item = Item::find()->where(['owner_id' => \Yii::$app->user->id])->one();
+        if($item == null){
+            throw new NotFoundHttpException("Item not found, or not yours.");
+        }
+
+        $input = explode(",",\Yii::$app->request->post('order'));
+        if (is_array($input)) {
+            foreach ($input as $index => $mediaId) {
+                $ihm = ItemHasMedia::find()->where([
+                    'item_id' => $item_id,
+                    'media_id' => $mediaId
+                ])->one();
+                if($ihm == null){
+                    throw new BadRequestHttpException("Media / item combination not found.");
+                }
+                $ihm->order = $index+1;
+                $ihm->save();
+            }
+
+            // @todo there is a weird bug here that requires it to be run twice, otherwise the order becomes (n,n+1....)
+            // with n being number of items the first time it is changed instead of (1,2,3...). Should be debugged at
+            // some point but this was quicker
+            foreach ($input as $index => $mediaId) {
+                $ihm = ItemHasMedia::find()->where([
+                    'item_id' => $item_id,
+                    'media_id' => $mediaId
+                ])->one();
+                if($ihm == null){
+                    throw new BadRequestHttpException("Media / item combination not found.");
+                }
+                $ihm->order = $index+1;
+                $ihm->save();
+            }
+        }
+        return ['success' => true];
     }
 }
