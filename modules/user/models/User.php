@@ -4,6 +4,7 @@ namespace user\models;
 
 use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
+use api\models\PayoutMethod;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\Location;
@@ -288,16 +289,25 @@ class User extends base\User implements IdentityInterface
 
     public function canMakeBooking()
     {
-        /**
-         * @var $location \item\models\Location
-         */
-//        $location = Location::findOne($this->locations[0]->id);
-//        && $location->isValid()
         if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0) {
             return true;
         }
 
         return false;
+    }
+
+    public function canAcceptBooking()
+    {
+        if (strlen($this->profile->first_name) == 0 || strlen($this->profile->last_name) == 0) {
+            return false;
+        }
+
+        $payoutMethod = PayoutMethod::find()->where(['user_id' => \Yii::$app->user->id])->count();
+        if($payoutMethod == 0){
+            return false;
+        }
+
+        return true;
     }
 
     /**

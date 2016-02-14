@@ -38,11 +38,9 @@ class PayoutMethodController extends Controller
 
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => PayoutMethod::find()->where([
-                'user_id' => \Yii::$app->user->id
-            ])
-        ]);
+        return PayoutMethod::find()->where([
+            'user_id' => \Yii::$app->user->id
+        ])->one();
     }
 
     public function actionView($id)

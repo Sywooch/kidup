@@ -46,11 +46,20 @@ class User extends \user\models\User
             },
             'created_at' => function(){
                 return $this->created_at;
+            },
+            'can_accept_booking' => function(){
+                return $this->canAcceptBooking();
             }
         ];
 
         if (\Yii::$app->user->isGuest || ($this->id !== \Yii::$app->user->id && !$this->allowPrivateAttributes(\Yii::$app->user->identity))) {
             foreach (['email', 'phone_number', 'language'] as $item) {
+                unset($fields[$item]);
+            }
+        }
+
+        if($this->id !== \Yii::$app->user->id){
+            foreach (['can_accept_booking'] as $item) {
                 unset($fields[$item]);
             }
         }

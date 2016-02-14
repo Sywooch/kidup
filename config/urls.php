@@ -114,6 +114,7 @@ $urls = [
         'extraPatterns' => [
             'me' => 'me',
             '<id>/reviews' => 'reviews',
+            'verify-phone-number' => 'verify-phone-number',
         ]
     ],
     [
