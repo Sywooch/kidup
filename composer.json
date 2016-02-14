@@ -61,8 +61,7 @@
     "yiisoft/yii2-twig": "^2.0@dev",
     "eold/yii2-apidoc-generator": "^1.0.",
     "flow/jsonpath": "dev-master",
-    "trntv/yii2-aceeditor": "*",
-    "fedemotta/yii2-aws-sdk": "*"
+    "trntv/yii2-aceeditor": "*"
   },
   "require-dev": {
     "codeception/codeception": "2.0.15",

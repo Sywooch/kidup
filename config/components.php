@@ -140,12 +140,6 @@ $components = [
             ],
         ],
     ],
-    'awssdk' => [
-        'class' => 'fedemotta/awssdk/AwsSdk',
-        'key' => AWS_ACCESS_KEY_ID,
-        'secret' => AWS_SECRET_ACCESS_KEY,
-        'region' => 'eu-central-1',
-    ],
     'db' => [
         'class' => 'yii\db\Connection',
         'dsn' => 'mysql:host=localhost;dbname=kidup',
@@ -251,7 +245,9 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/notification' => 'api/notification'],
                 'extraPatterns' => [
-                    'register/<id>' => 'register'
+                    'register' => 'register',
+                    'POST topics' => 'subscribe-to-topics',
+                    'GET topics' => 'list-topics'
                 ]
             ],
             [
@@ -324,7 +320,7 @@ $components = [
 ];
 
 if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {
-    // solving too many mysql connectsions errors bug during testing
+    // solving too many mysql connections errors bug during testing
     //https://github.com/Codeception/Codeception/issues/1363
     $components['db']['attributes'] = [
         PDO::ATTR_PERSISTENT => true
