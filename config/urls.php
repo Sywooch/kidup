@@ -97,7 +97,7 @@ $urls = [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/media' => 'api/media'],
         'extraPatterns' => [
-            '<id>/image-sort' => 'image-sort'
+            'image-sort' => 'image-sort'
         ]
     ],
     [
