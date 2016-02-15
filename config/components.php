@@ -246,7 +246,8 @@ $components = [
                 'controller' => ['api/v1/notification' => 'api/notification'],
                 'extraPatterns' => [
                     'POST register' => 'register',
-                    'POST unregister' => 'unregister',
+                    'POST subscribe' => 'subscribe',
+                    'POST unsubscribe' => 'unsubscribe',
                     'POST set-user' => 'set-user',
                     'GET test' => 'test'
                 ]

@@ -39,28 +39,38 @@ class MobilePush {
      * Register a device.
      */
     public function registerDevice($device_id, $token, $platform) {
-        if (!array_key_exists($platform, $this->arns)) return false;
-        $result = $this->sns->createPlatformEndpoint(array(
-            // PlatformApplicationArn is required
-            'PlatformApplicationArn' => $this->arns[$platform],
-            // Token is required
-            'Token' => $token
-        ));
+        if (!array_key_exists($platform, $this->arns)) {
+            $endpointArn = 'unknown_platform';
+        } else {
+            $result = $this->sns->createPlatformEndpoint(array(
+                // PlatformApplicationArn is required
+                'PlatformApplicationArn' => $this->arns[$platform],
+                // Token is required
+                'Token' => $token
+            ));
+            $endpointArn = $result['EndpointArn'];
+        }
 
         $device = new MobileDevices();
         $device->token = $token;
         $device->platform = $platform;
         $device->device_id = $device_id;
         $device->is_subscribed = true;
-        $device->endpoint_arn = $result['EndpointArn'];
-        $device->save();
+        $device->endpoint_arn = $endpointArn;
+        return $device->save();
     }
 
     /**
      * Send a message to a device.
      */
-    public function sendMessage() {
-        $this->platform->sendMessage();
+    public function sendMessage($arn, $message, $title='KidUp app') {
+        echo $arn;
+        $result = $this->sns->publish([
+            'TargetArn' => $arn,
+            'MessageStructure' => 'string',
+            'Message' => 'Hi'
+        ]);
+        print_r($result);
     }
 
     public function getTopics() {
