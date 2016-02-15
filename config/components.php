@@ -245,9 +245,10 @@ $components = [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => ['api/v1/notification' => 'api/notification'],
                 'extraPatterns' => [
-                    'register' => 'register',
-                    'POST topics' => 'subscribe-to-topics',
-                    'GET topics' => 'list-topics'
+                    'POST register' => 'register',
+                    'POST unregister' => 'unregister',
+                    'POST set-user' => 'set-user',
+                    'GET test' => 'test'
                 ]
             ],
             [

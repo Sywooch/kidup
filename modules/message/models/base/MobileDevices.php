@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $token
  * @property string $meta_information
  * @property string $user_id
- * @property bool $is_active
+ * @property bool $is_subscribed
  * @property string $endpoint_arn
  * @property integer $last_activity_at
  * @property integer $created_at
@@ -53,7 +53,7 @@ class MobileDevices extends \yii\db\ActiveRecord
             'platform' => 'Device platform',
             'user_id' => 'User ID',
             'meta_information' => 'Meta information',
-            'is_active' => 'Active',
+            'is_subscribed' => 'Subscribed',
             'endpoint_arn' => 'Amazon AWS Endpoint ARN',
             'last_activity_at' => 'Last activity At',
             'created_at' => 'Created At',

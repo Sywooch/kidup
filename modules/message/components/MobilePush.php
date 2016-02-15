@@ -51,7 +51,7 @@ class MobilePush {
         $device->token = $token;
         $device->platform = $platform;
         $device->device_id = $device_id;
-        $device->is_active = true;
+        $device->is_subscribed = true;
         $device->endpoint_arn = $result['EndpointArn'];
         $device->save();
     }
