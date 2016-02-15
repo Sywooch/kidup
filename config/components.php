@@ -1,7 +1,6 @@
 <?php
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
-$urls = require(__DIR__ . '/urls.php');
 include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
 // if (YII_ENV == 'test') {
@@ -208,7 +207,7 @@ $components = [
 ];
 
 if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {
-    // solving too many mysql connectsions errors bug during testing
+    // solving too many mysql connections errors bug during testing
     //https://github.com/Codeception/Codeception/issues/1363
     $components['db']['attributes'] = [
         PDO::ATTR_PERSISTENT => true
