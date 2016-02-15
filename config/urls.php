@@ -127,6 +127,17 @@ $urls = [
             'facebook-login' => 'facebook-login'
         ]
     ],
+    [
+        'class' => 'yii\rest\UrlRule',
+        'controller' => ['api/v1/notifications' => 'api/notification'],
+        'extraPatterns' => [
+            'POST register' => 'register',
+            'POST subscribe' => 'subscribe',
+            'POST unsubscribe' => 'unsubscribe',
+            'POST set-user' => 'set-user',
+            'GET test' => 'test'
+        ]
+    ],
     'api/v1/pages/<page>' => 'api/pages/view',
     'api/v1/event' => 'api/event/index'
 ];
