@@ -1,6 +1,7 @@
 <?php
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
+$urls = require(__DIR__ . '/urls.php');
 include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
 // if (YII_ENV == 'test') {
