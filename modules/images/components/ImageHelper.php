@@ -120,12 +120,14 @@ class ImageHelper extends BaseHtml
             if (isset($options['q'])) {
                 $options['fm'] = 'pjpg';
             }
-            if (YII_ENV != 'dev' && $isStaticFile) {
+            if (YII_ENV != 'dev') {
                 if (!$server->cacheFileExists($filename, $options)) {
                     try {
                         $server->makeImage($filename, $options);
                         $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
                                 $options);
+//                        $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
+//                            true);
                     } catch (FileNotFoundException $e) {
                         $url = 'http://placehold.it/300x300';
                     }

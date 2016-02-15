@@ -69,7 +69,8 @@ class TrackingEvent extends \yii\db\ActiveRecord
         $t = null,
         $language = null,
         $source = null,
-        $ip = null
+        $ip = null,
+        $session = null
     ) {
         $event = new TrackingEvent([
             'type' => $type,
@@ -80,7 +81,8 @@ class TrackingEvent extends \yii\db\ActiveRecord
             'timestamp' => $t,
             'language' => $language,
             'source' => $source,
-            'ip' => $ip
+            'ip' => $ip,
+            'session' => $session
         ]);
         $event->save();
     }
@@ -99,7 +101,7 @@ class TrackingEvent extends \yii\db\ActiveRecord
         if ($insert) {
             $this->created_at = time();
             $this->user_id = \Yii::$app->user->isGuest ? null : \Yii::$app->user->id;
-            $this->session = \Yii::$app->session->hasSessionId ? \Yii::$app->session->id : null;
+            $this->session = \Yii::$app->session->hasSessionId ? \Yii::$app->session->id : $this->session;
         }
         return parent::beforeSave($insert);
     }

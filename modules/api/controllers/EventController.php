@@ -8,7 +8,7 @@ use Yii;
 
 class EventController extends Controller
 {
-    public function actionIndex($type, $data = null, $t = null, $s = null, $l = null, $m = null)
+    public function actionIndex($type, $data = null, $t = null, $s = null, $l = null, $m = null, $uuid = null)
     {
         $detect = new \Mobile_Detect();
         // not sure why this is here
@@ -25,7 +25,7 @@ class EventController extends Controller
             $country = $location->country_code;
             $city = $location->city;
         }
-        TrackingEvent::track($type, $data, $country, $city, $m, $t, $l, $s, \Yii::$app->request->getUserIP());
+        TrackingEvent::track($type, $data, $country, $city, $m, $t, $l, $s, \Yii::$app->request->getUserIP(), $uuid);
         return '';
     }
 }
