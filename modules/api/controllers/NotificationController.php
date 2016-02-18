@@ -5,6 +5,7 @@ use api\models\Message;
 use message\components\MobilePush;
 use Aws;
 use message\models\base\MobileDevices;
+use yii\web\NotFoundHttpException;
 
 class NotificationController extends Controller
 {
@@ -57,6 +58,9 @@ class NotificationController extends Controller
         $userId = \Yii::$app->getUser()->id;
         $deviceId = $params['device_id'];
         $device = MobileDevices::find()->where(['device_id' => $deviceId])->one();
+        if($device == null){
+            throw new NotFoundHttpException("Device not found");
+        }
         $device->user_id = $userId;
         return $device->save();
     }

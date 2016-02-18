@@ -44,6 +44,15 @@ class LocationController extends Controller
 
     public function actionGetByIp($save = true)
     {
+        // potential fix for cloudflare user IP adress
+        if (YII_ENV !== 'test' && !YII_CONSOLE) {
+            if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            }
+            if (isset($_SERVER["REMOTE_ADDR"])) {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER["REMOTE_ADDR"];
+            }
+        }
         $userIp = \Yii::$app->request->getUserIP();
 //        $userIp = '83.82.175.173';
         $ipLoc = Location::getByIP($userIp);
