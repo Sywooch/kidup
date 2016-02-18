@@ -191,7 +191,7 @@ class BookingController extends Controller
 
         // check whether the item is found
         if ($item->count() != 1) {
-            throw(new Exception("Item not found."));
+            throw(new NotFoundHttpException("Item not found."));
         }
 
         // set the item as the found item

@@ -53,6 +53,8 @@ class TrackingEvent extends \yii\db\ActiveRecord
         // provides initial information on a session, such as user agent, screen size etc.
         'ping',
         // a page ping - a user that is still on a page. Done in intervals, with some info (scroll, second of ping, if page is in focus)
+        'mobile_error_js',
+        'mobile_error',
     ];
 
     public static function tableName()
