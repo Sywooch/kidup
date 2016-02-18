@@ -7,6 +7,7 @@ use item\models\base\CategoryHasItemFacet;
 use item\models\base\ItemFacet;
 use item\models\base\ItemFacetValue;
 use item\models\base\ItemHasItemFacet;
+use search\components\ItemSearchDb;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -55,6 +56,7 @@ class ItemController extends Controller
         unset($actions['view']);
         unset($actions['update']);
         unset($actions['create']);
+        unset($actions['delete']);
         return $actions;
     }
 
@@ -79,6 +81,22 @@ class ItemController extends Controller
             throw new NotFoundHttpException('Item not found');
         }
         return $item;
+    }
+
+    public function actionDelete($id){
+        $item = Item::find()->where(['id' => $id])->one();
+        if ($item === null) {
+            throw new NotFoundHttpException('Item not found');
+        }
+        /**
+         * @var $item Item
+         */
+        if(!$item->hasModifyRights()){
+            throw new ForbiddenHttpException("Item not yours");
+        }
+
+        (new ItemSearchDb())->removeItem($item);
+        return $item->delete();
     }
 
     public function actionUpdate($id){
@@ -319,6 +337,9 @@ class ItemController extends Controller
         $item->setScenario("default");
         $item->is_available = 0;
         $item->save(false);
+
+        (new ItemSearchDb())->removeItem($item);
+
         return $item;
     }
 

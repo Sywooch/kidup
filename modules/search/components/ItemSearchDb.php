@@ -2,6 +2,7 @@
 
 namespace search\components;
 
+use item\models\Item;
 use review\models\Review;
 
 class ItemSearchDb
@@ -39,6 +40,15 @@ class ItemSearchDb
             $batch[] = $this->constructItem($item);
         }
         $this->index->saveObjects($batch);
+    }
+
+    /**
+     * Removes an item from the search db
+     * @param Item $item
+     * @throws \Exception
+     */
+    public function removeItem($item){
+        $this->index->deleteObject($item->id);
     }
 
     /**
