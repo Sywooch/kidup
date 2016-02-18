@@ -134,9 +134,13 @@ class Location extends base\Location
     {
         $latitude = round($latitude, 5);
         $longitude = round($longitude, 5);
+        // find an approximately same location
         $loc = Location::find()->where([
             'user_id' => \Yii::$app->user->id,
-            'latitude' => $latitude,
+            [">=", 'latitude', $latitude-0.0035],
+            ["<=", 'latitude', $latitude+0.0035],
+            [">=", 'longitude', $longitude-0.0035],
+            ["<=", 'longitude', $longitude+0.0035],
             'longitude' => $longitude
         ])->one();
         if ($loc !== null) {
