@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
     public function accessControl(){
         return [
-            'guest' => ['register', 'subscribe', 'unsubscribe', 'test'],
+            'guest' => ['register', 'subscribe', 'unsubscribe', 'is-subscribed', 'test'],
             'user' => ['set-user']
         ];
     }
@@ -65,6 +65,16 @@ class NotificationController extends Controller
         return $device->save();
     }
 
+    public function actionIsSubscribed() {
+        $params = \Yii::$app->getRequest()->getBodyParams();
+        $deviceId = $params['device_id'];
+        $devices = MobileDevices::find()->where(['device_id' => $deviceId])->all();
+        if (count($devices) == 0) return ['is_subscribed' => false];
+        foreach ($devices as $device) {
+            return ['is_subscribed' => $device['is_subscribed']];
+        }
+    }
+
     public function actionTest() {
         $parameters = [
             'state' => 'app.create-booking',
@@ -72,9 +82,12 @@ class NotificationController extends Controller
                 'itemId' => 6
             ]
         ];
+        $parameters = [
+            'state' => 'app.location'
+        ];
 
         // Send a message to user with user Id 2
-        $devices = MobileDevices::find()->where(['user_id' => 5609, 'is_subscribed' => true])->all();
+        $devices = MobileDevices::find()->where(['user_id' => 5610, 'is_subscribed' => true])->all();
         foreach ($devices as $device) {
             $arn = $device->endpoint_arn;
             (new MobilePush())->sendMessage($arn, 'Hello world 2', $parameters);

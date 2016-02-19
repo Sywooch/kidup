@@ -135,6 +135,7 @@ $urls = [
             'POST subscribe' => 'subscribe',
             'POST unsubscribe' => 'unsubscribe',
             'POST set-user' => 'set-user',
+            'POST is-subscribed' => 'is-subscribed',
             'GET test' => 'test'
         ]
     ],
