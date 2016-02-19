@@ -16,6 +16,9 @@ class Media extends \item\models\Media
             'img' => function ($model) {
                 return ImageHelper::urlSet($model->file_name, true);
             },
+            'img_url' => function ($model) {
+                return ImageHelper::url($model->file_name);
+            },
             'order' => function($model){
                 $ihm = $model->itemHasMedia;
                 if(count($ihm) > 0){
