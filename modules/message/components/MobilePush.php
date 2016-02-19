@@ -63,12 +63,25 @@ class MobilePush {
     /**
      * Send a message to a device.
      */
-    public function sendMessage($arn, $message, $title='KidUp app') {
-        echo $arn;
+    public function sendMessage($arn, $message, $parameters = [], $title='KidUp app') {
         $result = $this->sns->publish([
             'TargetArn' => $arn,
-            'MessageStructure' => 'string',
-            'Message' => 'Hi'
+            'MessageStructure' => 'json',
+            'Message' => json_encode([
+                'default' => $message,
+                'APNS' => json_encode([
+                    'aps' => array_merge([
+                        'alert' => $message,
+                        'sound' => 'default',
+                    ], $parameters)
+                ]),
+                'GCM' => json_encode([
+                    'data' => array_merge([
+                        'title' => $title,
+                        'message' => $message,
+                    ], $parameters)
+                ]),
+            ])
         ]);
         print_r($result);
     }

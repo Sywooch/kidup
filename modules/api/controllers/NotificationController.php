@@ -66,10 +66,19 @@ class NotificationController extends Controller
     }
 
     public function actionTest() {
+        $parameters = [
+            'state' => 'app.create-booking',
+            'params' => [
+                'itemId' => 6
+            ]
+        ];
+
         // Send a message to user with user Id 2
-        $device = MobileDevices::find()->where(['user_id' => 2, 'is_subscribed' => true])->one();
-        $arn = $device->endpoint_arn;
-        (new MobilePush())->sendMessage($arn, 'Hello world');
+        $devices = MobileDevices::find()->where(['user_id' => 5609, 'is_subscribed' => true])->all();
+        foreach ($devices as $device) {
+            $arn = $device->endpoint_arn;
+            (new MobilePush())->sendMessage($arn, 'Hello world 2', $parameters);
+        }
     }
 
 }
