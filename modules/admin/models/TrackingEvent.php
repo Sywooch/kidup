@@ -55,6 +55,7 @@ class TrackingEvent extends \yii\db\ActiveRecord
         // a page ping - a user that is still on a page. Done in intervals, with some info (scroll, second of ping, if page is in focus)
         'mobile.error', // error from frontend
         'mobile.request_dates_booking', // request info for dates on a booking
+        'push_notification.received', // whether a push notification has been received by a device
     ];
 
     public static function tableName()
