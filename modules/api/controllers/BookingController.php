@@ -51,6 +51,7 @@ class BookingController extends Controller
             'query' => Booking::find()->where([
                 'renter_id' => \Yii::$app->user->id
             ])
+                ->orderBy('updated_at DESC')
         ]);
     }
 
@@ -60,20 +61,22 @@ class BookingController extends Controller
             'query' => Booking::find()->where([
                 'item.owner_id' => \Yii::$app->user->id
             ])->innerJoinWith("item")
+                ->orderBy('updated_at DESC')
         ]);
     }
 
-    function actionView($id){
+    function actionView($id)
+    {
         $b = Booking::find()->where(['id' => $id])->one();
-        if($b === null) {
+        if ($b === null) {
             throw new NotFoundHttpException;
         }
         /**
          * @var Booking $b
          */
-        if($b->canBeAccessedByUser(\Yii::$app->user->identity)){
+        if ($b->canBeAccessedByUser(\Yii::$app->user->identity)) {
             return $b;
-        }else{
+        } else {
             throw new ForbiddenHttpException;
         }
     }
@@ -159,7 +162,7 @@ class BookingController extends Controller
                 return $bookingObject;
             } else {
                 $bookingObject->delete(); // this is ugly
-                throw new BadRequestHttpException('Payment failed '.json_encode($model->getErrors()));
+                throw new BadRequestHttpException('Payment failed ' . json_encode($model->getErrors()));
             }
         }
         throw new BadRequestHttpException('Booking failed');
@@ -226,36 +229,39 @@ class BookingController extends Controller
         ];
     }
 
-    public function actionReviews($id){
+    public function actionReviews($id)
+    {
         return new ActiveDataProvider([
             'query' => Review::find()->where(['reviewed_id' => $id, 'type' => Review::TYPE_USER_PUBLIC])
         ]);
     }
 
-    public function actionDecline($id){
+    public function actionDecline($id)
+    {
         $booking = Booking::find()->where(['id' => $id])->one();
-        if($booking === null) {
+        if ($booking === null) {
             throw new NotFoundHttpException;
         }
         /**
          * @var Booking $booking
          */
-        if($booking->item->owner_id !== \Yii::$app->user->id){
+        if ($booking->item->owner_id !== \Yii::$app->user->id) {
             throw new ForbiddenHttpException("You are not the owner of this item");
         }
 
         $booking->ownerDeclines();
     }
 
-    public function actionAccept($id){
+    public function actionAccept($id)
+    {
         $booking = Booking::find()->where(['id' => $id])->one();
-        if($booking === null) {
+        if ($booking === null) {
             throw new NotFoundHttpException;
         }
         /**
          * @var Booking $booking
          */
-        if($booking->item->owner_id !== \Yii::$app->user->id){
+        if ($booking->item->owner_id !== \Yii::$app->user->id) {
             throw new ForbiddenHttpException("You are not the owner of this item");
         }
         $booking->ownerAccepts();
