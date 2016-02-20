@@ -60,9 +60,9 @@ class ItemSearchDb
     {
         $obj = [];
 
-//        if(!$item->is_available){
-//            return false;
-//        }
+        if($item->is_available == 0){
+            return false;
+        }
         $obj['objectID'] = $item->id;
         $obj['title'] = $item->name;
         $obj['description'] = $item->description;
@@ -78,7 +78,7 @@ class ItemSearchDb
         $obj['location']['country'] = $item->location->country0->name;
         $obj['hierarchicalCategories_en'] = $this->hierarchicalCat($item, 'en-US');
         $obj['hierarchicalCategories_da'] = $this->hierarchicalCat($item, 'da-DK');
-        $obj['img'] = \images\components\ImageHelper::url($item->getImageName(0), ['w' => 500]);
+        $obj['img'] = \images\components\ImageHelper::url($item->getImageName(0), []);
         $obj['review_score'] = (new Review())->computeOverallItemScore($item);
         $obj['owner'] = [
             'id' => $item->owner_id,
