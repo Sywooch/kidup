@@ -85,7 +85,7 @@ class ItemSearchDb
             'name' => $item->owner->profile->getName(),
             'img' => $item->owner->profile->getImgUrl()
         ];
-
+        $obj['created_at'] = $item->created_at;
         foreach ($item->itemHasItemFacets as $itemHasItemFacet) {
             if(!is_null($itemHasItemFacet->item_facet_value_id)){
                 $en = $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
