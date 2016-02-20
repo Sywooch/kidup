@@ -93,7 +93,12 @@ class Payin extends base\Payin
             }
             if ($this->status == self::STATUS_AUTHORIZED) {
 
-                if ($this->booking->conversation == null) {
+
+                if (!isset($this->booking)) {
+                    $this->status = self::STATUS_PENDING;
+                    return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
+                }
+                if (!isset($this->booking->conversation)) {
                     $this->status = self::STATUS_PENDING;
                     return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
                 }

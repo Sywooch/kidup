@@ -177,9 +177,10 @@ class BookingController extends Controller
                 $booking->status = Booking::PENDING;
                 $booking->request_expires_at = time() + 48 * 60 * 60;
                 $booking->save();
+                $payin->status = Payin::STATUS_AUTHORIZED;
                 $payin->save();
-                $booking->startConversation($this->message);
-                return true;
+                $booking->startConversation($params['message']);
+                return $booking;
             } else {
                 return [
                     'success' => false,
