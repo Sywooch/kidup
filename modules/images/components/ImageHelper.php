@@ -83,75 +83,25 @@ class ImageHelper extends BaseHtml
      */
     public static function url($filename, $options = [])
     {
-        $function = function () use ($filename, $options) {
+        if (YII_ENV == 'test') {
+            return "https://placehold.it/2x2";
+        }
+        $isStaticFile = false;
+        $folders = explode("/", $filename);
+        if ($folders[0] == 'kidup') {
+            $isStaticFile = true;
+        }
 
-//            if ($filename == false || !is_string($filename)) {
-//                return '';
-//            }
-            if (YII_ENV == 'test') {
-                return "https://placehold.it/2x2";
-            }
-            $isStaticFile = false;
-            $folders = explode("/", $filename);
-            if ($folders[0] == 'kidup') {
-                $isStaticFile = true;
-            }
-//
-//            // todo change this to a cronjob
-//
-//            $server = (new ImageManager())->getServer($isStaticFile);
-//
-//            $folders = explode("/", $filename);
-//
-//            if ($folders[0] == 'kidup') {
-//                if (YII_ENV !== 'dev') {
-//                    // remove the kidup/ from the filename in prod/staging
-//                    $filename = substr($filename, 6);
-//                }
-//            } else {
-//                if (YII_ENV == 'dev') {
-//                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
-//                } else {
-//                    $server->setSourcePathPrefix(ImageManager::createSubFolders($filename));
-//                }
-//            }
-//
-//            // settings for image
-//            if (isset($options['q'])) {
-//                $options['fm'] = 'pjpg';
-//            }
-//            if (YII_ENV != 'dev') {
-//                if (!$server->cacheFileExists($filename, $options)) {
-//                    try {
-//                        $server->makeImage($filename, $options);
-//                        $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
-//                                $options);
-////                        $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
-////                            true);
-//                    } catch (FileNotFoundException $e) {
-//                        $url = 'http://placehold.it/300x300';
-//                    }
-//                } else {
-//                    $url = 'https://s3.eu-central-1.amazonaws.com/kidup-cache/' . $server->getCachePath($filename,
-//                            $options);
-//                }
-//            } else {
-//                $url = Url::to(\Yii::$aliases['@web'] . '/images/' . $filename . '?' . http_build_query($options),
-//                    true);
-//            }
-
-            if ($isStaticFile) {
-                $url = 'http://kidup.imgix.net/' . $filename . '?' . http_build_query($options);
-            } else {
-                $url = 'http://kidup.imgix.net/' . substr($filename, 0, 1) . '/' .
-                    substr($filename, 1, 1) . '/' .
-                    substr($filename, 2, 1) . '/' .
-                    $filename . '?' .
-                    http_build_query($options);
-            }
-            return $url;
-        };
-        return Cache::build('image-url')->variations([$filename, $options])->variations(24 * 60 * 60)->data($function);
+        if ($isStaticFile) {
+            $url = 'https://www.kidup.dk/images/' . $filename . '?' . http_build_query($options);
+        } else {
+            $url = 'http://kidup.imgix.net/' . substr($filename, 0, 1) . '/' .
+                substr($filename, 1, 1) . '/' .
+                substr($filename, 2, 1) . '/' .
+                $filename . '?' .
+                http_build_query($options);
+        }
+        return $url;
     }
 
     /**

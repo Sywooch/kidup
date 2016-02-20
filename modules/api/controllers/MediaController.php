@@ -7,6 +7,7 @@ use api\models\Review;
 use images\components\ImageManager;
 use item\controllers\CreateController;
 use item\models\ItemHasMedia;
+use search\components\ItemSearchDb;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
@@ -117,6 +118,10 @@ class MediaController extends Controller
                 }
                 $ihm->order = $index+1;
                 $ihm->save();
+            }
+
+            if($item->is_available == 1){
+                (new ItemSearchDb())->sync([$item]);
             }
         }
         return ['success' => true];

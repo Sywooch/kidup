@@ -119,7 +119,7 @@ class Profile extends base\Profile
 
     public function getImgUrl()
     {
-        return ImageHelper::url($this->getAttribute('img'), ['q' => 90, 'w' => 300]);
+        return ImageHelper::url($this->getAttribute('img'), ['q' => 90]);
     }
 
     public function beforeSave($insert)
