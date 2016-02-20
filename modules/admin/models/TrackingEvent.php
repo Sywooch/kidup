@@ -73,7 +73,7 @@ class TrackingEvent extends \yii\db\ActiveRecord
         $language = null,
         $source = null,
         $ip = null,
-        $session = null
+        $uuid = null
     ) {
         $event = new TrackingEvent([
             'type' => $type,
@@ -85,7 +85,7 @@ class TrackingEvent extends \yii\db\ActiveRecord
             'language' => $language,
             'source' => $source,
             'ip' => $ip,
-            'session' => $session
+            'device_uuid' => $uuid
         ]);
         $event->save();
     }
