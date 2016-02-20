@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m160212_143903_allowBookingLessConversations extends Migration
+class m160220_143903_addDeviceIdTrackingEvent extends Migration
 {
     public function up()
     {
