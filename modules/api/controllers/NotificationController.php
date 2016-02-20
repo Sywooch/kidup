@@ -41,6 +41,9 @@ class NotificationController extends Controller
         $params = \Yii::$app->getRequest()->getBodyParams();
         $deviceId = $params['device_id'];
         $device = MobileDevices::find()->where(['device_id' => $deviceId])->one();
+        if($device == null){
+            throw new NotFoundHttpException("Device not found");
+        }
         $device->is_subscribed = true;
         return $device->save();
     }
@@ -49,6 +52,9 @@ class NotificationController extends Controller
         $params = \Yii::$app->getRequest()->getBodyParams();
         $deviceId = $params['device_id'];
         $device = MobileDevices::find()->where(['device_id' => $deviceId])->one();
+        if($device == null){
+            throw new NotFoundHttpException("Device not found");
+        }
         $device->is_subscribed = false;
         return $device->save();
     }
