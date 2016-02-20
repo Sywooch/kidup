@@ -7,6 +7,7 @@ use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
 use yii\base\Model;
+use yii\web\BadRequestHttpException;
 
 class Confirm extends Model
 {
@@ -68,18 +69,6 @@ class Confirm extends Model
             return false;
         };
 
-        if($this->booking->item->min_renting_days == 666){
-            TrackingEvent::track("booking.fake_item", json_encode([
-                'item' => $this->booking->item,
-                'user' => \Yii::$app->user->identity,
-                'ip' => \Yii::$app->request->getUserIP(),
-                'timestamp' => time(),
-                'booking' => $this->booking
-            ]));
-            // fake product booking
-            return false;
-        }
-
         $payin = new Payin();
         $payin->nonce = $this->nonce;
         $payin->status = Payin::STATUS_INIT;
@@ -88,13 +77,14 @@ class Confirm extends Model
         $payin->amount = $this->booking->amount_payin;
 
         if ($payin->save()) {
-            $this->booking->save();
-            // need to set this beore authorize function
-            $this->booking->payin_id = $payin->id;
-            $this->booking->startConversation($this->message);
-            $this->booking->save();
-
             if ($payin->authorize()) {
+
+                $this->booking->save();
+                // need to set this beore authorize function
+                $this->booking->payin_id = $payin->id;
+                $this->booking->startConversation($this->message);
+                $this->booking->save();
+
                 $this->booking->status = Booking::PENDING;
                 $this->booking->request_expires_at = time() + 48 * 60 * 60;
 
@@ -103,6 +93,8 @@ class Confirm extends Model
                         \Yii::t('booking.flash.successfully_created', "You're booking has been made!"));
                     return true;
                 }
+            }else{
+                throw new BadRequestHttpException("Payment failed: ");
             }
         }
         return false;

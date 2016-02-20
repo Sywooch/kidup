@@ -49,13 +49,11 @@ class BrainTree extends Model
             'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
         if ($transaction->success === false) {
-            if ($transaction->_attributes['message'] == 'Cannot use a payment_method_nonce more than once.') {
-                \Yii::$app->session->addFlash('error', \Yii::t('booking.flash.double_transaction_error', 'A double transaction occurred.'));
-                return false;
-            } else {
-                \Yii::$app->session->addFlash('error', $transaction->_attributes['message']);
-                return false;
-            }
+            return [
+                'paymentFailed' => true,
+                'message' => $transaction->_attributes['message'],
+                'transaction' => $transaction
+            ];
         } else {
             return $transaction->transaction->_attributes;
         }
