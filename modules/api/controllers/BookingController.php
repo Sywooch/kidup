@@ -7,6 +7,7 @@ use api\models\Item;
 use api\models\Review;
 use booking\forms\Confirm;
 use booking\models\BrainTree;
+use booking\models\Payin;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\base\Exception;
@@ -129,43 +130,66 @@ class BookingController extends Controller
 
         // check whether the item is found
         if ($item === null) {
-            throw(new Exception("Item not found."));
+            throw new NotFoundHttpException("Item not found.");
         }
 
         // grab the currency of the user
         $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
 
         // create a new booking
-        $booking = new CreateBooking($item, $currency);
-        $booking->dateFrom = date("d-m-Y", round($params['time_from']));
-        $booking->dateTo = date("d-m-Y", round($params['time_to']));
+        $bookingForm = new CreateBooking($item, $currency);
+        $bookingForm->dateFrom = date("d-m-Y", round($params['time_from']));
+        $bookingForm->dateTo = date("d-m-Y", round($params['time_to']));
 
         // save the booking
-        $bookingObject = null;
-        if ($booking->validateDates()) {
-            if ($booking->save(false)) {
-                $bookingObject = $booking->booking;
+        if ($bookingForm->validateDates()) {
+
+            $booking = new Booking();
+            $booking->setScenario('init');
+            $booking->time_from = strtotime($bookingForm->dateFrom);
+            $booking->time_to = strtotime($bookingForm->dateTo);
+            $booking->item_id = $item->id;
+            $booking->renter_id = \Yii::$app->user->id;
+            $booking->currency_id = $currency->id;
+            $booking->status = Booking::AWAITING_PAYMENT;
+            $booking->setPayinPrices();
+
+            $payin = new Payin();
+            $payin->nonce = $params['payment_nonce'];
+            $payin->status = Payin::STATUS_INIT;
+            $payin->currency_id = 1;
+            $payin->user_id = \Yii::$app->user->id;
+            $payin->amount = $booking->amount_payin;
+            
+            $payinAuth = $payin->authorize();
+            if ($payinAuth == false) {
+                throw new BadRequestHttpException('Error while saving payin');
+            }
+            if (isset($payinAuth['paymentFailed'])) {
+                return [
+                    'success' => false,
+                    'error' => "Payment failed",
+                    "message" => $payinAuth['message']
+                ];
+            }
+            if ($payinAuth) {
+                $booking->payin_id = $payin->id;
+                $booking->status = Booking::PENDING;
+                $booking->request_expires_at = time() + 48 * 60 * 60;
+                $booking->save();
+                $payin->status = Payin::STATUS_AUTHORIZED;
+                $payin->save();
+                $booking->startConversation($params['message']);
+                return $booking;
             } else {
-                throw new BadRequestHttpException('Booking object couldnt validate');
+                return [
+                    'success' => false,
+                    'error' => "Payment failed",
+                ];
             }
         } else {
             throw new BadRequestHttpException('Dates are invalid');
         }
-        if (is_object($bookingObject) && isset($bookingObject->id) && is_numeric($bookingObject->id) && $bookingObject->id > 0) {
-            // do the actual payment
-            $model = new Confirm($bookingObject);
-            $model->message = $message;
-            $model->nonce = $nonce;
-            $model->rules = 1;
-            if ($model->save()) {
-                // booking is made and payed!
-                return $bookingObject;
-            } else {
-                $bookingObject->delete(); // this is ugly
-                throw new BadRequestHttpException('Payment failed ' . json_encode($model->getErrors()));
-            }
-        }
-        throw new BadRequestHttpException('Booking failed');
     }
 
     /**
