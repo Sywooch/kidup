@@ -1,5 +1,5 @@
 <?php
-namespace codecept\functional\booking;
+namespace codecept\functional\mail;
 
 use mail\components\MailRenderer;
 use functionalTester;
