@@ -19,7 +19,6 @@ use codecept\muffins\Token;
 use codecept\muffins\User;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
-use League\FactoryMuffin\Stores\ModelStore;
 
 /**
  * Class FactoryMuffin
@@ -28,6 +27,7 @@ use League\FactoryMuffin\Stores\ModelStore;
  */
 class MuffinHelper extends Module
 {
+    public static $factory;
 
     /**
      * Get a list with all muffin classes.
@@ -60,21 +60,21 @@ class MuffinHelper extends Module
      * to use in acceptance and functional tests.
      * @return FactoryMuffin
      */
-    public function getFactory()
+    public function init()
     {
-        $factory = new FactoryMuffin();
+        static::$factory = new FactoryMuffin();
         foreach (self::getClasses() as $model) {
             $defs = $model::definitions();
             if (method_exists($model, 'callback')) {
-                $factory->define($model)->setDefinitions($defs)->setCallback(function ($object, $saved) use ($model) {
+                static::$factory->define($model)->setDefinitions($defs)->setCallback(function ($object, $saved) use ($model) {
                     return $model::callback($object, $saved);
                 });
             } else {
-                $factory->define($model)->setDefinitions($defs);
+                static::$factory->define($model)->setDefinitions($defs);
             }
         }
-        $factory = new FactoryMuffin(new ModelStore('save', 'delete'));
-        return $factory;
+        static::$factory->setSaveMethod('save')->setDeleteMethod('delete');
+        return self::$factory;
     }
 
     /**
