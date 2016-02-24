@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FCFCFC;
+    font-family: 'Gotham Rounded', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #393939;
+}
+@font-face {
+    font-family: ‘Gotham Rounded';
+    src: url(fonts/GothamRnd-Bold.otf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: ‘Gotham Rounded';
+    src: url(fonts/GothamRnd-Light.otf);
+    font-weight: normal;
+}
+p {
+    font-size: 14px;
+    line-height: 1.8em;
+    color: #969696;
+    font-weight: 100;
+}
+#container tr td {
+    padding: 0px 20px;
+}
+.button {
+    margin: 10px 0;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s all ease;
+    text-decoration: none;
+}
+.button:hover {
+    opacity: 0.9;
+}
+.button--green {
+    background-color: #75E691;
+}
+.button--blue {
+    background-color: #62A8DF;
+}
+.button--outline {
+    border: 1px solid #fff;
+}
+#header, #image-left, #image-right, #logo-blue, #action-module {
+    text-align: center;
+    vertical-align: middle;
+}
+#header {
+    height: 270px;
+    background-color: #72CEF9;
+    color: #fff;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+#header p.subtitles { color: #fff; }
+#image-left, #image-right {
+    background-color: #fff;
+    padding: 40px 40px;
+}
+#action-module {
+    height: 175px;
+    vertical-align: middle;
+    background-image: url('images/pattern.png');
+    background-size: 50%;
+    background-color: #88E7FB;
+    color: #fff;
+}
+#logo-blue {
+    height: 210px;
+    vertical-align: middle;
+    padding: 20px 0;
+    background-color: #378292;
+}
+#follow-us {
+    background: #fff;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    text-align: center;
+    border-radius: 4px;
+    min-height: 100px;
+}
+#follow-us a {
+    text-decoration: none;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: 24px 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.button .icon { margin-right: 15px; }
+.icon--share {
+    background-image: url('images/share.png');
+}
+.icon--forward {
+    background-image: url('images/forward.png');
+}
+#copyrights {
+    text-align: center;
+    margin: 10px 0;
+}
+#copyrights p {
+    font-size: 11px;
+    color: #656565;
+}
+
+.image-left__content {
+    text-align: left;
+}
+.image-right__content {
+    text-align: left;
+}
