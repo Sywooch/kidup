@@ -77,8 +77,7 @@
     "yiisoft/yii2-debug": "*",
     "yiisoft/yii2-faker": "2.0.3",
     "yiisoft/yii2-gii": "*",
-    "schmunk42/yii2-giiant": "*",
-    "phpunit/phpunit": "5.*"
+    "schmunk42/yii2-giiant": "*"
   },
   "config": {
     "process-timeout": 1800
