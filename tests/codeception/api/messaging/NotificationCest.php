@@ -16,6 +16,8 @@ use message\models\base\MobileDevices;
  */
 class NotificationCest
 {
+    protected $fmInjector = null;
+
     /**
      * @var FactoryMuffin
      */
@@ -23,9 +25,13 @@ class NotificationCest
 
     public function _before()
     {
-        $this->fm = (new MuffinHelper())->init();
-
+        $this->fm = $this->fmInjector->getFactory();
         $this->cleanUp();
+    }
+
+    public function _inject(MuffinHelper $fm)
+    {
+        $this->fmInjector = $fm;
     }
 
     private function cleanUp() {
@@ -55,6 +61,13 @@ class NotificationCest
 
         $response = $I->grabResponse();
         $I->assertEquals("true", $response);
+
+        echo MobileDevices::find()->count() . '---';
+        foreach (MobileDevices::find()->all() as $device) {
+            echo $device->token . ' ' . $device->platform . "\n";
+        }
+
+        die();
 
         // Check the records
         $results = MobileDevices::find()->where([
@@ -176,8 +189,7 @@ class NotificationCest
         $I->seeResponseCodeIs(200);
 
         // Create a user
-        $fm = (new MuffinHelper())->init();
-        $user = $fm->create(User::class);
+        $user = $this->fm->create(User::class);
 
         // And link it to the device
         $accessToken = UserHelper::apiLogin($user)['access-token'];
