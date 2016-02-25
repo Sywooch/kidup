@@ -3,7 +3,7 @@
 namespace admin\jobs;
 
 use app\extended\job\Job;
-use mail\models\Token;
+use notifications\models\Token;
 
 class TestJob extends Job{
 

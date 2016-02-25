@@ -144,7 +144,7 @@ JS;
 
     public function renderTwig($path)
     {
-        $loader = new \Twig_Loader_Filesystem(\Yii::$aliases['@mail'] . '/widgets/button');
+        $loader = new \Twig_Loader_Filesystem(\Yii::$aliases['@notification'] . '/widgets/button');
         $twig = new \Twig_Environment($loader, [
             'cache' => \Yii::$aliases['@runtime'] . '/twig'
         ]);

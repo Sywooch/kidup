@@ -1,15 +1,14 @@
 <?php
-
 namespace admin\controllers;
 
+use notification\components\MailTemplates;
+use notification\components\PushTemplates;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use mail\components\MailTemplates;
 
 /**
- * MailTemplateController implements the CRUD actions for MailTemplate model.
+ * MailController.
  */
 class MailController extends Controller
 {
@@ -30,14 +29,14 @@ class MailController extends Controller
      */
     public function actionIndex()
     {
-        $templates = MailTemplates::$mails;
+        $templates = MailTemplates::$templates;
 
         $data = [];
-        foreach ($templates as $template => $variables) {
-            $data[] = [
-                'template' => $template,
-                'variables' => $variables
-            ];
+        foreach ($templates as $template => $information) {
+            $data[] = array_merge(
+                ['template' => $template],
+                $information
+            );
         }
 
         $searchModel = [
@@ -60,14 +59,26 @@ class MailController extends Controller
     }
 
     public function actionView($id) {
-        MailTemplates::loadAliases();
-        $templates = MailTemplates::$mails;
+        // @todo make mail renderer
+        $templates = MailTemplates::$templates;
         if (array_key_exists($id, $templates)) {
             $vars = [];
-            foreach ($templates[$id] as $var) {
+            foreach ($templates[$id]['variables'] as $var) {
                 $vars[$var] = '<b style="color: red;">[' . $var .']</b>';
             }
-            echo \Yii::$app->view->renderFile('@mail-layouts/' . $id . '.twig', $vars);
+            return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
+        } else {
+            // It could be a push fallback
+            $pushTemplates = PushTemplates::$templates;
+            foreach ($pushTemplates as $template => $information) {
+                if ($information['fallback'] == $id) {
+                    $vars = [];
+                    foreach ($pushTemplates[$template]['variables'] as $var) {
+                        $vars[$var] = '<b style="color: red;">[' . $var .']</b>';
+                    }
+                    return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
+                }
+            }
         }
     }
 

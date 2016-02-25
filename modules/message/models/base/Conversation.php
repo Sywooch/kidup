@@ -3,7 +3,7 @@
 namespace message\models\base;
 
 use booking\models\Booking;
-use mail\models\MailAccount;
+use notifications\models\MailAccount;
 use user\models\User;
 use Yii;
 

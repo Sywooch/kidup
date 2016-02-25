@@ -12,7 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use mail\models\Token;
+use notifications\models\Token;
 use user\Finder;
 use user\forms\Recovery;
 use yii\base\Model;

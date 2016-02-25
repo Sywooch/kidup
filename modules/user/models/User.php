@@ -8,7 +8,7 @@ use api\models\PayoutMethod;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\Location;
-use mail\models\Token;
+use notifications\models\Token;
 use user\Finder;
 use user\helpers\Password;
 use yii\base\NotSupportedException;

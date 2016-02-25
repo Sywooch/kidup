@@ -15,7 +15,7 @@ use app\extended\web\Controller;
 use app\helpers\Event;
 use app\helpers\SelectData;
 use images\components\ImageManager;
-use mail\models\Token;
+use notifications\models\Token;
 use user\Finder;
 use user\forms\LocationForm;
 use user\forms\Settings;

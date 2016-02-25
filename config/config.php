@@ -12,7 +12,7 @@ $config = [
     'bootstrap' => [
         'log',
         'user\\Bootstrap',
-        'mail\\Bootstrap',
+        'notification\\Bootstrap',
         'message\\Bootstrap',
         'item\\Bootstrap',
         'images\\Bootstrap',
@@ -43,7 +43,7 @@ $config = [
         'images' =>         ['class' => '\images\Module'],
         'message' =>        ['class' => '\message\Module'],
         'booking' =>        ['class' => '\booking\Module'],
-        'mail' =>           ['class' => '\mail\Module'],
+        'notification' =>   ['class' => '\notification\Module'],
         'pages' =>          ['class' => '\pages\Module'],
         'review' =>         ['class' => '\review\Module'],
         'admin' =>          ['class' => '\admin\Module'],
@@ -69,7 +69,7 @@ $config = [
     'aliases' => [
         '@pages' => '@app/modules/pages',
         '@user' => '@app/modules/user',
-        '@mail' => '@app/modules/mail',
+        '@notification' => '@app/modules/notification',
         '@home' => '@app/modules/home',
         '@item' => '@app/modules/item',
         '@message' => '@app/modules/message',

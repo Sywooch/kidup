@@ -1,7 +1,7 @@
 <?php
 namespace codecept\functional\mail;
 
-use mail\components\MailRenderer;
+use notifications\components\MailRenderer;
 use functionalTester;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\Booking;
@@ -9,7 +9,7 @@ use codecept\muffins\Item;
 use codecept\muffins\User;
 use codecept\muffins\Message;
 use League\FactoryMuffin\FactoryMuffin;
-use mail\models\UrlFactory;
+use notifications\models\UrlFactory;
 use Yii;
 
 /**

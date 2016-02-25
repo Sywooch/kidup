@@ -88,7 +88,7 @@ return [
     'aliases' => [
         '@pages' => '@app/modules/pages',
         '@user' => '@app/modules/user',
-        '@mail' => '@app/modules/mail',
+        '@notification' => '@app/modules/notification',
         '@home' => '@app/modules/home',
         '@item' => '@app/modules/item',
         '@message' => '@app/modules/message',
