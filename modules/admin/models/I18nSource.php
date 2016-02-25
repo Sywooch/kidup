@@ -39,11 +39,4 @@ class I18nSource extends \yii\db\ActiveRecord
         return $this->hasMany(I18nMessage::className(), ['id' => 'id']);
     }
 
-    public static function getDb(){
-        if(YII_CONSOLE){
-            return Yii::$app->dbaws;
-        }else{
-            return Yii::$app->db;
-        }
-    }
 }
