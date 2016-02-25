@@ -90,12 +90,13 @@ class ImageHelper extends BaseHtml
         $folders = explode("/", $filename);
         if ($folders[0] == 'kidup') {
             $isStaticFile = true;
+            $filename = str_replace("kidup/", '', $filename);
         }
 
         if ($isStaticFile) {
-            $url = 'https://www.kidup.dk/images/' . $filename . '?' . http_build_query($options);
+            $url = 'https://kidup-static.imgix.net/' . $filename . '?' . http_build_query($options);
         } else {
-            $url = 'http://kidup.imgix.net/' . substr($filename, 0, 1) . '/' .
+            $url = 'https://kidup.imgix.net/' . substr($filename, 0, 1) . '/' .
                 substr($filename, 1, 1) . '/' .
                 substr($filename, 2, 1) . '/' .
                 $filename . '?' .

@@ -53,7 +53,7 @@ return [
             'class' => 'user\models\User', // User must implement the IdentityInterface
         ],
         'cache' => [
-            'class' => 'yii\caching\ApcCache',
+            'class' => 'yii\caching\DummyCache',
         ],
         'log' => [
             'targets' => [

@@ -2,6 +2,7 @@
 
 namespace item\models;
 
+use admin\models\I18nMessage;
 use Yii;
 
 /**
@@ -15,11 +16,24 @@ class Category extends \item\models\base\Category
         if($lang == null){
             $lang = \Yii::$app->language;
         }
+
         $lower = str_replace(" ", "_", strtolower($this->name));
         if($this->parent_id === null){
-            return \Yii::$app->getI18n()->translate('item.category.main_' . $lower, $this->name, [], $lang);
+            $index_name = 'item.category.main_' . $lower;
         }else{
-            return \Yii::$app->getI18n()->translate('item.category.sub_category_' . $lower, $this->name, [], $lang);
+            $index_name = 'item.category.sub_category_' . $lower;
         }
+
+        $i18n = I18nMessage::find()->where([
+            'i18n_source.category' => $index_name,
+            'i18n_source.message' => $this->name,
+            'language' => $lang
+        ])->innerJoinWith('i18nSource')->one();
+        if($i18n == null || $i18n->translation == null){
+            $i18n = \Yii::$app->getI18n()->translate($index_name, $this->name, [], $lang);
+        }else{
+            $i18n = $i18n->translation;
+        }
+        return $i18n;
     }
 }

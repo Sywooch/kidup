@@ -49,6 +49,7 @@ class Bootstrap implements BootstrapInterface
             ]);
             MailSender::send((new \mail\mails\user\WelcomeFactory())->create($event->sender));
         });
+
         Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
             new SlackJob([
                 'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)

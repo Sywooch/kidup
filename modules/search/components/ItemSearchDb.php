@@ -88,8 +88,8 @@ class ItemSearchDb
         $obj['created_at'] = $item->created_at;
         foreach ($item->itemHasItemFacets as $itemHasItemFacet) {
             if(!is_null($itemHasItemFacet->item_facet_value_id)){
-                $en = $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
                 $dk = $itemHasItemFacet->itemFacetValue->getTranslatedName('da-DK');
+                $en = $itemHasItemFacet->itemFacetValue->getTranslatedName('en-US');
             }else{
                 $en = 1;
                 $dk = 1;

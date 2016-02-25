@@ -1,8 +1,8 @@
 <?php
 
 $urls = [
-    '/' => 'home/home',
-//            '/' => 'home/home/fake-home',
+//    '/' => 'home/home',
+    '/' => 'home/home/fake-home',
     'home' => 'home/home',
     'change-language' => 'home/change-language',
     'super-secret-cache-flush' => 'home/super-secret-cache-flush',

@@ -160,7 +160,7 @@ class BookingController extends Controller
             $payin->currency_id = 1;
             $payin->user_id = \Yii::$app->user->id;
             $payin->amount = $booking->amount_payin;
-            
+
             $payinAuth = $payin->authorize();
             if ($payinAuth == false) {
                 throw new BadRequestHttpException('Error while saving payin');
@@ -287,6 +287,9 @@ class BookingController extends Controller
          */
         if ($booking->item->owner_id !== \Yii::$app->user->id) {
             throw new ForbiddenHttpException("You are not the owner of this item");
+        }
+        if(!\Yii::$app->user->hasValidPayoutMethod()){
+            throw new BadRequestHttpException("There is no valid payout method set.");
         }
         $booking->ownerAccepts();
     }
