@@ -5,16 +5,6 @@ body {
     font-family: 'Gotham Rounded', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #393939;
 }
-@font-face {
-    font-family: ‘Gotham Rounded';
-    src: url(fonts/GothamRnd-Bold.otf);
-    font-weight: bold;
-}
-@font-face {
-    font-family: ‘Gotham Rounded';
-    src: url(fonts/GothamRnd-Light.otf);
-    font-weight: normal;
-}
 p {
     font-size: 14px;
     line-height: 1.8em;
@@ -67,7 +57,6 @@ p {
 #action-module {
     height: 175px;
     vertical-align: middle;
-    background-image: url('images/pattern.png');
     background-size: 50%;
     background-color: #88E7FB;
     color: #fff;
@@ -97,12 +86,8 @@ p {
     vertical-align: middle;
     margin-right: 5px;
 }
-.button .icon { margin-right: 15px; }
-.icon--share {
-    background-image: url('images/share.png');
-}
-.icon--forward {
-    background-image: url('images/forward.png');
+.button .icon {
+    margin-right: 15px;
 }
 #copyrights {
     text-align: center;
@@ -118,4 +103,7 @@ p {
 }
 .image-right__content {
     text-align: left;
+}
+img {
+    max-width: 150px;
 }

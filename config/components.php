@@ -96,6 +96,21 @@ $components = [
                     },
                     'setTitle' => function ($viewModel, $title) {
                         return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
+                    },
+                    'base64_image' => function($file) {
+                        $path = \Yii::getAlias($file);
+                        $data = \Yii::$app->view->renderFile($file);
+                        $type = pathinfo($path, PATHINFO_EXTENSION);
+                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                        return $base64;
+                    },
+                    'base64_font' => function($file) {
+                        $data = \Yii::$app->view->renderFile($file);
+                        return 'data:application/octet-stream;base64,' . base64_encode($data);
+                    },
+                    'load_file' => function($file) {
+                        $path = \Yii::getAlias($file);
+                        return \Yii::$app->view->renderFile($path);
                     }
                 ]
             ],

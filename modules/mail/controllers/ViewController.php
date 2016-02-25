@@ -1,28 +1,22 @@
 <?php
-
 namespace mail\controllers;
 
 use app\extended\web\Controller;
-use booking\models\Booking;
 use mail\mails\bookingRenter\PayoutFactory;
-use mail\mails\conversation\NewMessageFactory;
 use mail\mails\MailRenderer;
 use mail\mails\MailSender;
 use mail\mails\user\ReconfirmInterface;
 use mail\components;
 use mail\models\MailLog;
 use mail\widgets\Button;
-use message\models\Message;
-use user\models\User;
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
-use yii\web\ServerErrorHttpException;
-
 
 class ViewController extends Controller
 {
+
+    public $layout;
+
     public function actionIndex($id)
     {
         $mailLog = MailLog::findOne($id);
@@ -47,21 +41,46 @@ class ViewController extends Controller
 
     public function actionTest($mail)
     {
-        $factory = new NewMessageFactory();
+        \Yii::setAlias('@mail', '@app/modules/mail');
+        \Yii::setAlias('@mail-layouts', '@mail/views/layouts/');
+        \Yii::setAlias('@mail-assets', '@mail/assets/');
 
-        // define many objects to play with
-        $user = User::find()->one();
-        $booking = Booking::find()->one();
-        $message = Message::find()->one();
+        $mails = [
+            'booking_owner_confirmation' => ['user']
+        ];
 
-        $mail = $factory->create($message);
-        $mail->setReceiver((new \mail\components\MailUserFactory())->create('Kevin', 'kevin91nl@gmail.com'));
+        if (array_key_exists($mail, $mails)) {
+            $vars = [];
+            foreach ($mails[$mail] as $var) {
+                $vars[$var] = '<b style="color: red;">[' . $var .']</b>';
+            }
+            echo \Yii::$app->view->renderFile('@mail-layouts/' . $mail . '.twig', $vars);
+        } else {
+
+            /*echo \Yii::$app->view->renderFile('@mail/views/system/overview.twig', [
+                'mails' => $mails
+            ]);*/
+            return 123;
+        }
+    }
+
+    public function actionOverview() {
+        $this->layout = '@app/modules/admin/views/layouts/admin123';
+        return \Yii::$app->view->render('@mail/views/system/overview', [
+            'mails' => 123
+        ]);
+    }
+
+    /*
+     * $factory = new NewMessageFactory();
+
+        $mail->setReceiver((new \mail\components\MailUserFactory())->create('Example receiver', 'receiver@kidup.dk'));
         $renderer = new \mail\components\MailRenderer($mail);
         echo $renderer->render();
         //\mail\components\MailSender()::send($mail);
 
         //return new MailRenderer($mail);
-    }
+     */
 
 }
 
