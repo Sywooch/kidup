@@ -127,7 +127,7 @@ $components = [
         'class' => '\yii\web\Request',
     ],
     'cache' => [
-        'class' => (YII_CACHE) ? 'yii\caching\ApcCache' : 'yii\caching\DummyCache',
+        'class' => 'yii\caching\DummyCache',
     ],
     'errorHandler' => [
         'errorAction' => 'home/error/error',
