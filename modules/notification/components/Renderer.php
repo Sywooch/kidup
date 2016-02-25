@@ -3,10 +3,10 @@ namespace notification\components;
 
 use Yii;
 
-class MailRenderer extends Renderer
+class Renderer
 {
 
-    protected static $templateFolder = '@notification-mail';
+    protected static $templateFolder;
 
     public static function render($template) {
         echo $template;

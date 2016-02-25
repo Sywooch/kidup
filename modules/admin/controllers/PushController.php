@@ -39,7 +39,13 @@ class PushController extends Controller
                     $vars[$var] = '[' . $var . ']';
                 }
             }
-            $information['message'] = \Yii::$app->view->renderFile('@notification-push/' . $template . '.twig', $vars);
+            $file = '@notification-push/' . $template . '.twig';
+            $path = \Yii::getAlias($file);
+            if (file_exists($path)) {
+                $information['message'] = \Yii::$app->view->renderFile($file, $vars);
+            } else {
+                $information['message'] = '';
+            }
             $data[] = array_merge(
                 ['template' => $template],
                 $information

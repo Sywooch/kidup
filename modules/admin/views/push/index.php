@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'fallback',
                 'format' => 'raw',
                 'value' => function ($data) {
+                    if (!array_key_exists('fallback', $data)) return null;
                     if ($data['fallback'] == null) return null;
                     return '<a href="' . Url::to('admin/mail/view?id=' . $data['fallback'], true) . '" target="_blank">' . $data['fallback'] . '</a>';
                 }

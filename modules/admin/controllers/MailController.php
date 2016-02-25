@@ -68,6 +68,8 @@ class MailController extends Controller
                     $vars[$var] = '<b style="color: red;">[' . $var . ']</b>';
                 }
             }
+            MailRenderer::render($id, $vars);
+            die();
             return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
         } else {
             // It could be a push fallback
