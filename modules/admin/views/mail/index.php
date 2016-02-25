@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'variables',
                 'format' => 'raw',
                 'value' => function ($data) {
+                    if (!isset($data['variables'])) return null;
                     return join(', ', $data['variables']);
                 }
             ],

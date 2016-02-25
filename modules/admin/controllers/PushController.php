@@ -34,8 +34,10 @@ class PushController extends Controller
         $data = [];
         foreach ($templates as $template => $information) {
             $vars = [];
-            foreach ($information['variables'] as $var) {
-                $vars[$var] = '[' . $var .']';
+            if (array_key_exists('variables', $information)) {
+                foreach ($information['variables'] as $var) {
+                    $vars[$var] = '[' . $var . ']';
+                }
             }
             $information['message'] = \Yii::$app->view->renderFile('@notification-push/' . $template . '.twig', $vars);
             $data[] = array_merge(

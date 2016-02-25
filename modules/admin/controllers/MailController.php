@@ -63,8 +63,10 @@ class MailController extends Controller
         $templates = MailTemplates::$templates;
         if (array_key_exists($id, $templates)) {
             $vars = [];
-            foreach ($templates[$id]['variables'] as $var) {
-                $vars[$var] = '<b style="color: red;">[' . $var .']</b>';
+            if (array_key_exists('variables', $templates[$id])) {
+                foreach ($templates[$id]['variables'] as $var) {
+                    $vars[$var] = '<b style="color: red;">[' . $var . ']</b>';
+                }
             }
             return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
         } else {
@@ -73,8 +75,10 @@ class MailController extends Controller
             foreach ($pushTemplates as $template => $information) {
                 if ($information['fallback'] == $id) {
                     $vars = [];
-                    foreach ($pushTemplates[$template]['variables'] as $var) {
-                        $vars[$var] = '<b style="color: red;">[' . $var .']</b>';
+                    if (array_key_exists('variables', $pushTemplates[$template])) {
+                        foreach ($pushTemplates[$template]['variables'] as $var) {
+                            $vars[$var] = '<b style="color: red;">[' . $var . ']</b>';
+                        }
                     }
                     return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
                 }

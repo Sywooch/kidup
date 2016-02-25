@@ -7,14 +7,10 @@ class PushTemplates
 {
 
     public static $templates = [
-        'test_notification' => [
-            'variables' => ['user'],
-            'fallback' => 'fallback_test_notification'
+        // Message
+        'message_received' => [
+            'fallback' => 'fallback_message_received'
         ],
-        'test_notification2' => [
-            'variables' => ['user'],
-            'fallback' => null
-        ]
     ];
 
 }
