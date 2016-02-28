@@ -18,7 +18,7 @@ use Yii;
  * Class MailCest
  * @package codecept\functional\mail
  */
-class MailCest
+class MailCestOld
 {
 
     /**
