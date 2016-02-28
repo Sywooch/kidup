@@ -137,7 +137,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_OWNER, function ($event) {
-            // @todo
+            // @todocircle.yml
             //MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender->booking, true));
         });
         Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_RENTER, function ($event) {

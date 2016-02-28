@@ -20,7 +20,7 @@ $components = [
         'class' => 'bryglen\sendgrid\Mailer',
         'username' => $keys['sendgrid_user'],
         'password' => $keys['sendgrid_password'],
-        'viewPath' => '@app/modules/mail/views',
+        'viewPath' => '@app/modules/notifications/views',
         'useFileTransport' => YII_ENV == 'dev' ? true : false
     ],
     'mailer' => [
@@ -34,7 +34,7 @@ $components = [
 //            'encryption' => 'tls',
         ],
         'useFileTransport' => YII_ENV == 'dev' ? true : false,
-        'viewPath' => '@app/modules/mail/views',
+        'viewPath' => '@app/modules/notifications/views',
     ],
     'authClientCollection' => [
         'class' => 'yii\authclient\Collection',
