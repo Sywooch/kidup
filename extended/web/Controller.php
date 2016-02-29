@@ -48,7 +48,7 @@ class Controller extends \yii\web\Controller
                     Yii::$app->language = 'da-DK';
                 }
             } else {
-                $location = IpLocation::get(\Yii::$app->request->getUserIP());
+//                $location = IpLocation::get(\Yii::$app->request->getUserIP());
 //                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
 //                    (YII_ENV == 'dev' || YII_ENV == 'test')
 //                ) {
