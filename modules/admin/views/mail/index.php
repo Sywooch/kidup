@@ -23,15 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'variables',
-                'value' => 'variables',
-                'format' => 'raw',
-                'value' => function ($data) {
-                    if (!isset($data['variables'])) return null;
-                    return join(', ', $data['variables']);
-                }
-            ],
-            [
                 'class' => 'yii\grid\ActionColumn',
                 'buttons' => [
                     'update' => function() {

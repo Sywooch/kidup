@@ -39,13 +39,7 @@ class PushController extends Controller
                     $vars[$var] = '[' . $var . ']';
                 }
             }
-            $file = '@notification-push/' . $template . '.twig';
-            $path = \Yii::getAlias($file);
-            if (file_exists($path)) {
-                $information['message'] = \Yii::$app->view->renderFile($file, $vars);
-            } else {
-                $information['message'] = '';
-            }
+            $information['message'] = Yii::t('push.' . $template . '.message', $information['message'], $vars);
             $data[] = array_merge(
                 ['template' => $template],
                 $information
@@ -54,7 +48,6 @@ class PushController extends Controller
 
         $searchModel = [
             'template' => null,
-            'variables' => null,
             'fallback' => null,
             'message' => null
         ];

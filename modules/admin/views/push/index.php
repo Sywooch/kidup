@@ -35,14 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($data['fallback'] == null) return null;
                     return '<a href="' . Url::to('admin/mail/view?id=' . $data['fallback'], true) . '" target="_blank">' . $data['fallback'] . '</a>';
                 }
-            ],
-            [
-                'attribute' => 'variables',
-                'format' => 'raw',
-                'value' => function ($data) {
-                    if (!isset($data['variables'])) return null;
-                    return join(', ', $data['variables']);
-                }
             ]
         ]
     ]); ?>

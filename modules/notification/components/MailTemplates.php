@@ -25,7 +25,7 @@ class MailTemplates
         ],
         'user_welcome' => [
             'title' => 'Newest face on KidUp',
-            'variables' => ['rent_url', 'rent_out_url']
+            'variables' => ['rent_url', 'rent_out_url', 'profile_url', 'social_media_url', 'email_support', 'faq_url', 'app_url']
         ],
     ];
 

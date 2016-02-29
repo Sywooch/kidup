@@ -41,15 +41,14 @@ class MailController extends Controller
         }
 
         $searchModel = [
-            'template' => null,
-            'variables' => null
+            'template' => null
         ];
 
         $dataProvider = new ArrayDataProvider([
             'key'=>'template',
             'allModels' => $data,
             'sort' => [
-                'attributes' => ['template', 'variables'],
+                'attributes' => ['template'],
             ],
         ]);
 
