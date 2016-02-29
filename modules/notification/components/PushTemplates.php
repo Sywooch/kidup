@@ -23,9 +23,9 @@ class PushTemplates
         ],
         'booking_start_owner' => [
             'title' => 'Remember your rent! It is starting soon',
-            'message' => 'Remember you have a rent starting the {booking_date}. Contact {renter_username} here.',
+            'message' => 'Remember you have a rent starting the {booking_start_date}. Contact {renter_username} here.',
             'fallback' => 'booking_start_owner',
-            'variables' => ['renter_username', 'renter_name', 'booking_date', 'item_name', 'total_payout_amount', 'renter_phone_url', 'renter_email_url']
+            'variables' => ['renter_username', 'renter_name', 'booking_start_date', 'item_name', 'total_payout_amount', 'renter_phone_url', 'renter_email_url']
         ],
 
         // Booking renter
@@ -33,7 +33,7 @@ class PushTemplates
             'title' => 'The rent is confirmed - celebrate!',
             'message' => 'The rent has been accepted contact {owner_username} and plan the rest.',
             'fallback' => 'booking_confirmed_renter',
-            'variables' => ['booking_date', 'booking_start_date', 'booking_end_date', 'owner_username', 'owner_name', 'item_name', 'receipt', 'contact_owner_url', 'owner_phone_url', 'owner_email_url']
+            'variables' => ['booking_start_date', 'booking_end_date', 'owner_username', 'owner_name', 'item_name', 'contact_owner_url', 'owner_phone_url', 'owner_email_url']
         ],
         'booking_declined_renter' => [
             'title' => 'Your rent has been declined',
@@ -43,9 +43,9 @@ class PushTemplates
         ],
         'booking_start_renter' => [
             'title' => 'Remember your rent! It is starting soon',
-            'message' => 'Remember your rental starts the {booking_date}. Contact {owner_username} here.',
+            'message' => 'Remember your rental starts the {booking_start_date}. Contact {owner_username} here.',
             'fallback' => 'booking_start_renter',
-            'variables' => ['owner_username', 'owner_name', 'booking_date', 'owner_phone_url', 'owner_email_url', 'app_url']
+            'variables' => ['owner_username', 'owner_name', 'booking_start_date', 'owner_phone_url', 'owner_email_url', 'app_url']
         ],
 
         // Message
@@ -57,7 +57,7 @@ class PushTemplates
 
         // Item
         'item_unfinished_reminder' => [
-            'title' => 'Item unfinished',
+            'title' => 'You are 20 seconds away from putting your equipment online.',
             'message' => 'I saw you started to put up a product, want to finish it?',
             'fallback' => 'item_unfinished_reminder',
             'variables' => ['email_support', 'finish_product_url', 'faq_url']

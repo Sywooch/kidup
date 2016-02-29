@@ -61,6 +61,8 @@ class MailController extends Controller
     private function renderTemplate($information, $template) {
         $vars = [];
         $title = null;
+        $fill = true;
+        $renderer = new MailRenderer();
         if (array_key_exists('title', $information)) {
             $title = $information['title'];
         }
@@ -69,7 +71,10 @@ class MailController extends Controller
                 $vars[$var] = "<b style='color: red;'>[" . $var . ']</b>';
             }
         }
-        return MailRenderer::render($template, $title, $vars);
+        $renderer->setVariables($vars);
+        $renderer->setTitle($title);
+        $renderer->fillAutomatically();
+        return $renderer->render($template, $title);
     }
 
     public function actionView($id) {

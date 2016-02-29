@@ -1,11 +1,11 @@
 <?php
 namespace admin\controllers;
 
+use notification\components\MailTemplates;
 use notification\components\PushTemplates;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
-use notifications\components\MailTemplates;
 
 /**
  * PushController.
