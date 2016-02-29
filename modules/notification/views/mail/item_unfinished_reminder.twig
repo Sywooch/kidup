@@ -10,26 +10,52 @@
 
     {% block content %}
 
-        <p>
-            {{ t('mail.item_unfinished_reminder.p1',
-                'You are only a few steps away from finalizing your product. When you have finished it, and published it, you can rent out your children equipment and earn a little extra.'
-            ) | raw }}
-        </p>
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.item_unfinished_reminder.p1',
+                        'You are only a few steps away from finalizing your product. When you have finished it, and published it, you can rent out your children equipment and earn a little extra.'
+                        ) | raw }}
+                    </p>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.item_unfinished_reminder.p2',
-                'You do not have to worry, because KidUp is here to help. Do you have a question? Read our {faq_link} or {mail_link_support} to support. Did you know, that all equipment is protected by a guarantee of 25.000 DKK.', {
-                'mail_link_support': '<a href="mailto:' ~ email_support ~ '" target="_blank">' ~ t('mail.links.support', 'support') ~ '</a>',
-                'faq_link': '<a href="' ~ faq_url ~ '">' ~ t('mail.links.faq', 'FAQ') ~ '</a>'
-            }) | raw }}
-        </p>
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-gull.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.item_unfinished_reminder.p2',
+                        'You do not have to worry, because KidUp is here to help. Do you have a question? Read our {faq_link} or {mail_link_support} to support. Did you know, that all equipment is protected by a guarantee of 25.000 DKK.', {
+                            'mail_link_support': '<a href="mailto:' ~ email_support ~ '" target="_blank">' ~ t('mail.links.support', 'support') ~ '</a>',
+                            'faq_link': '<a href="' ~ faq_url ~ '">' ~ t('mail.links.faq', 'FAQ') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.item_unfinished_reminder.p3',
-            'Be ready to earn a little extra, right now, by {finish_product_link}.', {
-                'finish_product_link': '<a href="' ~ finish_product_url ~ '" target="_blank">' ~ t('mail.links.finish_product', 'finishing your product') ~ '</a>'
-            }) | raw }}
-        </p>
+        <table id="action-module" width="100%">
+            <tr>
+                <td>
+                    <h3>
+                        {{ t('mail.item_unfinished_reminder.p3',
+                        'Be ready to earn a little extra, right now.') }}
+                    </h3>
+
+                    <a href="{{ finish_product_url | raw }}" class="button--outline button" target="_blank">{{ t('mail.links.finish_product', 'Finish your product') }}</a>
+                </td>
+            </tr>
+        </table>
 
     {% endblock %}
 

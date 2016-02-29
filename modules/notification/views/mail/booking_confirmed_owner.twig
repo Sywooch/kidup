@@ -10,27 +10,45 @@
 
     {% block content %}
 
-        <p>
-            {{ t('mail.booking_confirmed_owner.p1',
-                'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s {messaging_link}.', {
-                'messaging_link': '<a href="' ~ contact_renter_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
-                'renter_name': renter_name
-            }) | raw }}
-        </p>
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-couple.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_confirmed_owner.p1',
+                        'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s {messaging_link}.', {
+                            'messaging_link': '<a href="' ~ contact_renter_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
+                            'renter_name': renter_name
+                        }) | raw }}
 
-        <p>
-            {{ t('mail.booking_confirmed_owner.p2',
-            'Or you can contact the user on the {phone_link} or {email_link}.', {
-                'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-            }) | raw }}
-        </p>
+                        {{ t('mail.booking_confirmed_owner.p2',
+                        'Or you can contact the user on the {phone_link} or {email_link}.', {
+                            'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                            'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.booking_confirmed_owner.p3',
-                'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'
-            ) | raw }}
-        </p>
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_confirmed_owner.p3',
+                        'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'
+                        ) | raw }}
+                    </p>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-yellow-girl.png') }}" alt="Image" width="100%">
+                </td>
+            </tr>
+        </table>
 
     {% endblock %}
 

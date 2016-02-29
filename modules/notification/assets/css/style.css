@@ -67,6 +67,9 @@ p {
     background-color: #88E7FB;
     color: #fff;
 }
+#action-module p {
+    color: #fff !important;
+}
 #logo-blue {
     height: 210px;
     vertical-align: middle;
@@ -116,4 +119,9 @@ img {
 p {
     color: #666666;
     font-size: 16px;
+}
+
+#text-center {
+    background-color: #fff;
+    padding: 40px 40px;
 }

@@ -10,37 +10,61 @@
 
     {% block content %}
 
-        <p>
-            {{ t('mail.booking_start_owner.p1',
-                'This is a reminder that your rent to {renter_name} is starting the date.', {
-                'renter_name': renter_name
-            }) | raw }}
-        </p>
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-green-stroller.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_start_owner.p1',
+                        'This is a reminder that your rent to {renter_name} is starting the date.', {
+                            'renter_name': renter_name
+                        }) | raw }}
 
-        <p>
-            {{ t('mail.booking_start_owner.p2',
-                'If you need to plan the last few things you could contact {renter_name} through the app. Or through the {phone_link} or {email_link}.', {
-                'renter_name': renter_name,
-                'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-            }) | raw }}
-        </p>
+                        {{ t('mail.booking_start_owner.p2',
+                        'If you need to plan the last few things you could contact {renter_name} through the app. Or through the {phone_link} or {email_link}.', {
+                            'renter_name': renter_name,
+                            'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                            'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.booking_start_owner.p3',
-                'Remember that KidUp is all about trust and being together about being a parent. Therefore you should help {renter_name}. Make sure the equipment is cleaned before handing it over. Make sure everything is intact and okay. Give {renter_name} a nice brief guide, so they know how to correctly operate the equipment.', {
-                'renter_name': renter_name
-            }) | raw }}
-        </p>
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_start_owner.p3',
+                        'Remember that KidUp is all about trust and being together about being a parent. Therefore you should help {renter_name}. Make sure the equipment is cleaned before handing it over. Make sure everything is intact and okay. Give {renter_name} a nice brief guide, so they know how to correctly operate the equipment.', {
+                            'renter_name': renter_name
+                        }) | raw }}
+                    </p>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-pink-speen.png') }}" alt="Image" width="100%">
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.booking_start_owner.p4',
-                'We will transfer the total rent, excluding a small fee, the day after {renter_name} picked up {item_name}. For this rent, it is {total_payout_amount}. Be aware that it can take up to 5 days excluding weekends and holidays.', {
-                'item_name': item_name,
-                'renter_name': renter_name,
-                'total_payout_amount': total_payout_amount
-            }) | raw }}
-        </p>
+        <table id="text-center" width="100%">
+            <tr>
+                <td>
+                    <p>
+                        {{ t('mail.booking_start_owner.p4',
+                            'We will transfer the total rent, excluding a small fee, the day after {renter_name} picked up {item_name}. For this rent, it is {total_payout_amount}. Be aware that it can take up to 5 days excluding weekends and holidays.', {
+                            'item_name': item_name,
+                            'renter_name': renter_name,
+                            'total_payout_amount': total_payout_amount
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
 
         <p></p>
 

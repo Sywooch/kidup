@@ -10,36 +10,52 @@
 
     {% block content %}
 
-        <p>
-            {{ t('mail.booking_start_renter.p1',
-                'This is a reminder that your renting {item_name} from {owner_name} from the date.', {
-                'item_name': item_name,
-                'owner_name': owner_name
-            }) | raw }}
-        </p>
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-green-girl.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_start_renter.p1',
+                            'This is a reminder that your renting {item_name} from {owner_name} from the date.', {
+                            'item_name': item_name,
+                            'owner_name': owner_name
+                        }) | raw }}
+                        {{ t('mail.booking_start_renter.p2',
+                        'If you need to plan the last few things you could contact {owner_name} through the {app_link}. Or through the {phone_link} or {email_link}.', {
+                            'owner_name': owner_name,
+                            'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
+                            'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                            'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
 
-        <p>
-            {{ t('mail.booking_start_renter.p2',
-                'If you need to plan the last few things you could contact {owner_name} through the {app_link}. Or through the {phone_link} or {email_link}.', {
-                'owner_name': owner_name,
-                'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
-                'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-            }) | raw }}
-        </p>
-
-        <p>
-            {{ t('mail.booking_start_renter.p3',
-                'Remember that KidUp is all about trust and being together about being a parent. So make sure you go through the equipment when you meet up, so that the expectations are aligned, before the handover.'
-            ) | raw }}
-        </p>
-
-        <p>
-            {{ t('mail.booking_start_renter.p4',
-                'You can see the full details of the rental in the {app_link}.', {
-                'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>'
-            }) | raw }}
-        </p>
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                    {{ t('mail.booking_start_renter.p3',
+                        'Remember that KidUp is all about trust and being together about being a parent. So make sure you go through the equipment when you meet up, so that the expectations are aligned, before the handover.'
+                    ) | raw }}
+                    </p>
+                    <p>
+                        {{ t('mail.booking_start_renter.p4',
+                            'You can see the full details of the rental in the {app_link}.', {
+                            'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-couple.png') }}" width="100%" alt="Image">
+                </td>
+            </tr>
+        </table>
 
     {% endblock %}
 

@@ -39,7 +39,7 @@ class PushController extends Controller
                     $vars[$var] = '[' . $var . ']';
                 }
             }
-            $information['message'] = Yii::t('push.' . $template . '.message', $information['message'], $vars);
+            $information['message'] = '';
             $data[] = array_merge(
                 ['template' => $template],
                 $information
