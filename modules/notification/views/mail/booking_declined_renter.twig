@@ -10,10 +10,21 @@
 
     {% block content %}
 
-        <p>I am sorry to have to tell you, but {{ owner_name | raw }} has declined your rental proposal for {{ item_name | raw }}.
-        They probably had a good reason, you could ask <a href="#">here</a>. Maybe it can be sorted out?</p>
+        <p>
+            {{ t('mail.booking_declined_renter.p1',
+            'I am sorry to have to tell you, but {owner_name} has declined your rental proposal for {item_name}. They probably had a good reason, you could ask {contact_owner_link}. Maybe it can be sorted out?', {
+                'contact_owner_link': '<a href="' ~ contact_owner_url ~ '" target="_blank">' ~ t('mail.links.here', 'here') ~ '</a>',
+                'owner_name': owner_name,
+                'item_name': item_name
+            }) | raw }}
+        </p>
 
-        <p>Otherwise feel free to browse in the <a href="#">app</a>. To see if you can find another solution, that might fit your needs perfectly.</p>
+        <p>
+            {{ t('mail.booking_declined_renter.p2',
+            'Otherwise feel free to browse in the {app_link}. To see if you can find another solution, that might fit your needs perfectly.', {
+                'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>'
+            }) | raw }}
+        </p>
 
     {% endblock %}
 

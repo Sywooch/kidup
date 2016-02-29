@@ -10,9 +10,19 @@
 
     {% block content %}
 
-        <p>I hope you had a great experience from the rent with {{ owner_name | raw }}.</p>
+        <p>
+            {{ t('mail.review_reminder.p1',
+                'I hope you had a great experience from the rent with {owner_name}.', {
+                'owner_name': owner_name
+            }) | raw }}
+        </p>
 
-        <p>I am writing because, you have not yet completed the review. You could do it right now, it only takes 20 seconds! <a href="#">Click here</a>.</p>
+        <p>
+            {{ t('mail.review_reminder.p2',
+            'I am writing because, you have not yet completed the review. You could do it right now, it only takes 20 seconds! {review_link}.', {
+                'review_link': '<a href="' ~ review_url ~ '" target="_blank">' ~ t('mail.links.click_here', 'Click here') ~ '</a>'
+            }) | raw }}
+        </p>
 
     {% endblock %}
 

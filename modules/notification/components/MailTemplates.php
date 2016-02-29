@@ -11,21 +11,21 @@ class MailTemplates
         // Booking owner
         'booking_payout_owner' => [
             'title' => 'Here is the payout and a receipt',
-            'variables' => ['total_payout_amount', 'receipt']
+            'variables' => ['total_payout_amount', 'receipt', 'booking_start_date', 'booking_end_date', 'email_support']
         ],
 
         // User
         'user_reconfirm' => [
             'title' => 'Is this the real mail?',
-            'variables' => []
+            'variables' => ['confirm_url']
         ],
         'user_recovery' => [
             'title' => 'I got your password',
-            'variables' => []
+            'variables' => ['recovery_url']
         ],
         'user_welcome' => [
             'title' => 'Newest face on KidUp',
-            'variables' => []
+            'variables' => ['rent_url', 'rent_out_url']
         ],
     ];
 

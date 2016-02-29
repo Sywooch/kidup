@@ -10,9 +10,18 @@
 
     {% block content %}
 
-        <p>Did you ask for me to try to recover you password? I could not find it, but if you want a new one you can <a href="#">click this link</a>.</p>
+        <p>
+            {{ t('mail.user_recovery.p1',
+            'Did you ask for me to try to recover you password? I could not find it, but if you want a new one you can {recovery_link}.', {
+                'recovery_link': '<a href="' ~ recovery_url ~ '" target="_blank">' ~ t('mail.links.click_this_link', 'click this link') ~ '</a>'
+            }) | raw }}
+        </p>
 
-        <p>If this mail was not requested by you, then just ignore it.</p>
+        <p>
+            {{ t('mail.user_recovery.p2',
+                'If this mail was not requested by you, then just ignore it.'
+            ) | raw }}
+        </p>
 
     {% endblock %}
 

@@ -11,15 +11,24 @@
     {% block content %}
 
         <p>
-        I have sent you a payout on {{ total_payout_amount | raw }} by bank transfer.
-        The payout should arrive in 5 days, excluding weekends and holidays.
+            {{ t('mail.booking_payout_owner.p1',
+                'I have sent you a payout on {total_payout_amount} by bank transfer. The payout should arrive in 5 days, excluding weekends and holidays.', {
+                'total_payout_amount': total_payout_amount
+            }) | raw }}
         </p>
 
-        {{ receipt | raw }}
+        <p>
+            {% embed "modules/notification/views/widget/receipt.twig" %}
+                {% block booking_start_date %}{{ booking_start_date | raw }}{% endblock %}
+                {% block booking_end_date %}{{ booking_end_date | raw }}{% endblock %}
+            {% endembed %}
+        </p>
 
         <p>
-        I hope you have been happy with your rent on KidUp.
-        Feel free to share your experience, with our <a href="mailto:philip@kidup.dk">support</a>, if you have feedback or just had a lovely time. I like a good story!
+            {{ t('mail.booking_payout_owner.p2',
+                'I hope you have been happy with your rent on KidUp. Feel free to share your experience, with our {mail_link_support}, if you have feedback or just had a lovely time. I like a good story!', {
+                'mail_link_support': '<a href="mailto:' ~ email_support ~ '" target="_blank">' ~ t('mail.links.support', 'support') ~ '</a>'
+            }) | raw }}
         </p>
 
     {% endblock %}

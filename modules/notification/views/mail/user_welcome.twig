@@ -10,8 +10,14 @@
 
     {% block content %}
 
-        <p>Welcome to KidUp!
-            A world of knowledge, love and dozens of unused children equipment. <a href="#">Rent</a> something now or rent you <a href="#">equipment out</a>.</p>
+        <p>
+            {{ t('mail.welcome.p1',
+            'Welcome to KidUp!
+                A world of knowledge, love and dozens of unused children equipment. {rent_link} something now or rent you {rent_out_link}.', {
+                'rent_link': '<a href="' ~ rent_url ~ '" target="_blank">' ~ t('mail.links.rent_uppercase', 'Rent') ~ '</a>',
+                'rent_out_link': '<a href="' ~ rent_out_url ~ '" target="_blank">' ~ t('mail.links.equipment_out', 'equipment out') ~ '</a>'
+            }) | raw }}
+        </p>
 
         <p>Have you had the chance to fill out your <a href="#">profile</a> yet? If you do, other parents will have the chance to get to know you a little better, and it is easier to trust your KidUp-persona.</p>
 

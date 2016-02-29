@@ -10,9 +10,24 @@
 
     {% block content %}
 
-        <p>I am just sending you this email, to make sure it is the right email-address in the system.</p>
-        If you <a href="#">click this link</a> to confirm your email-address, that would help me so much.</p>
-        <p>Thanks for being a part of KidUp.</p>
+        <p>
+            {{ t('mail.user_reconfirm.p1',
+                'I am just sending you this email, to make sure it is the right email-address in the system.'
+            ) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.user_reconfirm.p2',
+                'If you {confirm_link} to confirm your email-address, that would help me so much.', {
+                'confirm_link': '<a href="' ~ confirm_url ~ '" target="_blank">' ~ t('mail.links.click_this_link', 'click this link') ~ '</a>'
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.user_reconfirm.p3',
+            'Thanks for being a part of KidUp.'
+            ) | raw }}
+        </p>
 
     {% endblock %}
 

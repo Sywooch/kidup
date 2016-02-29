@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
         v.customize [
             "modifyvm", :id,
             "--name", "default",
-            "--memory", 4048,
+            "--memory", 128,
             "--natdnshostresolver1", "on",
             "--cpus", 1,
         ]

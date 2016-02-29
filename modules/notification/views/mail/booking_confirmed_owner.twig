@@ -12,17 +12,17 @@
 
         <p>
             {{ t('mail.booking_confirmed_owner.p1',
-                'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s <a href="{contact_renter_url}">messaging</a> tab.', {
-                'renter_name': renter_name,
-                'contact_renter_url': contact_renter_url
+                'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s {messaging_link}.', {
+                'messaging_link': '<a href="' ~ contact_renter_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
+                'renter_name': renter_name
             }) | raw }}
         </p>
 
         <p>
             {{ t('mail.booking_confirmed_owner.p2',
-                'Or you can contact the user on the <a href="{phone_url}">phone</a> or <a href="{email_url}">email</a>.', {
-                'phone_url': renter_phone_url,
-                'email_url': renter_email_url
+            'Or you can contact the user on the {phone_link} or {email_link}.', {
+                'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
             }) | raw }}
         </p>
 
