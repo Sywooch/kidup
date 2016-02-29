@@ -3,7 +3,6 @@ require(__DIR__ . '/../../vendor/autoload.php');
 require 'recipe/common.php';
 date_default_timezone_set("Europe/Amsterdam");
 
-
 $keyFile = __DIR__ . '/config/keys/keys.env';
 $keys = (new \josegonzalez\Dotenv\Loader($keyFile))->parse()->toArray();
 

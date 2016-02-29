@@ -27,11 +27,11 @@ class Message extends base\Message
         return parent::beforeValidate();
     }
 
-    public function beforeSave($insert)
+    public function afterSave($insert, $changedVars)
     {
         if ($this->isNewRecord) {
             Event::trigger($this, self::EVENT_NEW_MESSAGE);
         }
-        return parent::beforeSave($insert);
+        return parent::afterSave($insert, $changedVars);
     }
 }
