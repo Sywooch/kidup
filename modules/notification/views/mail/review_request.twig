@@ -1,0 +1,20 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.review_request.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_5.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>Hurrah! I hope you had an awesome experience using KidUp.
+            Now you can make a <a href="#">review</a> of {{ owner_name | raw }}.</p>
+
+        <p>It only takes 20 seconds, and helps authenticate users, and highlight the good parents of KidUp. So help us help you, by making a <a href="#">review</a>.</p>
+
+    {% endblock %}
+
+{% endembed %}

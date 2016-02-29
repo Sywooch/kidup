@@ -1,0 +1,27 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_payout_owner.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_2.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>
+        I have sent you a payout on {{ total_payout_amount | raw }} by bank transfer.
+        The payout should arrive in 5 days, excluding weekends and holidays.
+        </p>
+
+        {{ receipt | raw }}
+
+        <p>
+        I hope you have been happy with your rent on KidUp.
+        Feel free to share your experience, with our <a href="mailto:philip@kidup.dk">support</a>, if you have feedback or just had a lovely time. I like a good story!
+        </p>
+
+    {% endblock %}
+
+{% endembed %}

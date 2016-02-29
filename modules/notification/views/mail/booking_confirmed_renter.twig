@@ -1,0 +1,57 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_confirmed_renter.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_3.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>
+            {{ t('mail.booking_confirmed_renter.p1',
+                'I am happy to tell you, that {owner_name} has accepted your request for item on the date.', {
+                'owner_name': owner_name
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_renter.p2',
+                'To make the exchange even easier, I suggest you continue the conversation with {owner_name} in the app’s <a href="{owner_contact_url}">messaging</a> tab.', {
+                'owner_name': owner_name,
+                'owner_contact_url': owner_contact_url
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_renter.p3',
+            'Or you can contact the user on the <a href="{phone_url}">phone</a> or <a href="{email_url}">email</a>.', {
+            'phone_url': owner_phone_url,
+            'email_url': owner_email_url
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_renter.p4',
+            'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'
+            ) | raw }}
+        </p>
+
+        <p>
+            {% embed "modules/notification/views/widget/receipt.twig" %}
+                {% block booking_start_date %}{{ booking_start_date | raw }}{% endblock %}
+                {% block booking_end_date %}{{ booking_end_date | raw }}{% endblock %}
+            {% endembed %}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_renter.p5',
+            'Thanks for using KidUp, and for sharing.'
+            ) | raw }}
+        </p>
+
+    {% endblock %}
+
+{% endembed %}

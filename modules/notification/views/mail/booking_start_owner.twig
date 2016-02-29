@@ -1,0 +1,29 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_start_owner.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_4.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>This is a reminder that your rent to {{ renter_name | raw }} is starting the date.</p>
+
+        <p>If you need to plan the last few things you could contact {{ renter_name | raw }} through the app. Or through the phone or email.</p>
+
+        <p>Remember that KidUp is all about trust and being together about being a parent.
+        Therefore you should help renterName.
+        Make sure the equipment is cleaned before handing it over
+        Make sure everything is intact and okay.
+        Give {{ renter_name | raw }} a nice brief guide, so they know how to correctly operate the equipment.
+        </p>
+
+        <p>We will transfer the total rent, excluding a small fee, the day after {{ renter_name | raw }} picked up {{ item_name | raw }}. For this rent, it is {{ total_payout_amount | raw }}.
+        Be aware that it can take up to 5 days excluding weekends and holidays.</p>
+
+    {% endblock %}
+
+{% endembed %}

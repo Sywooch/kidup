@@ -1,6 +1,7 @@
 <?php
 namespace admin\controllers;
 
+use notification\components\MailRenderer;
 use notification\components\MailTemplates;
 use notification\components\PushTemplates;
 use Yii;
@@ -58,31 +59,30 @@ class MailController extends Controller
         ]);
     }
 
+    private function renderTemplate($information, $template) {
+        $vars = [];
+        $title = null;
+        if (array_key_exists('title', $information)) {
+            $title = $information['title'];
+        }
+        if (array_key_exists('variables', $information)) {
+            foreach ($information['variables'] as $var) {
+                $vars[$var] = "<b style='color: red;'>[" . $var . ']</b>';
+            }
+        }
+        return MailRenderer::render($template, $title, $vars);
+    }
+
     public function actionView($id) {
-        // @todo make mail renderer
         $templates = MailTemplates::$templates;
         if (array_key_exists($id, $templates)) {
-            $vars = [];
-            if (array_key_exists('variables', $templates[$id])) {
-                foreach ($templates[$id]['variables'] as $var) {
-                    $vars[$var] = '<b style="color: red;">[' . $var . ']</b>';
-                }
-            }
-            MailRenderer::render($id, $vars);
-            die();
-            return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
+            return $this->renderTemplate($templates[$id], $id);
         } else {
             // It could be a push fallback
             $pushTemplates = PushTemplates::$templates;
             foreach ($pushTemplates as $template => $information) {
                 if ($information['fallback'] == $id) {
-                    $vars = [];
-                    if (array_key_exists('variables', $pushTemplates[$template])) {
-                        foreach ($pushTemplates[$template]['variables'] as $var) {
-                            $vars[$var] = '<b style="color: red;">[' . $var . ']</b>';
-                        }
-                    }
-                    return \Yii::$app->view->renderFile('@notification-mail/' . $id . '.twig', $vars);
+                    return $this->renderTemplate($pushTemplates[$template], $template);
                 }
             }
         }

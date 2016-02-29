@@ -1,0 +1,20 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ title | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_1.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>I am sorry to have to tell you, but {{ owner_name | raw }} has declined your rental proposal for {{ item_name | raw }}.
+        They probably had a good reason, you could ask <a href="#">here</a>. Maybe it can be sorted out?</p>
+
+        <p>Otherwise feel free to browse in the <a href="#">app</a>. To see if you can find another solution, that might fit your needs perfectly.</p>
+
+    {% endblock %}
+
+{% endembed %}

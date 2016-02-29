@@ -8,7 +8,7 @@ class PushRenderer extends Renderer
 
     protected $templateFolder = '@notification-push';
 
-    public function render($template) {
+    public static function render($template) {
         echo $template;
     }
 

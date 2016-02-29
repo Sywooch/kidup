@@ -1,0 +1,24 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_start_renter.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_2.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>This is a reminder that your renting {{ item_name | raw }} from {{ owner_name | raw }} from the date.</p>
+
+        <p>If you need to plan the last few things you could contact {{ owner_name | raw }} through the <a href="#">app</a>. Or through the phone or email.</p>
+
+        <p>Remember that KidUp is all about trust and being together about being a parent.
+            So make sure you go through the equipment when you meet up, so that the expectations are aligned, before the handover.</p>
+
+        <p>You can see the full details of the rental in the <a href="#">app</a>.</p>
+
+    {% endblock %}
+
+{% endembed %}

@@ -1,0 +1,30 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_request_owner.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_3.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>
+            {{ renter_name | raw }} have asked to rent item.
+            You can accept, decline or ask a couple of questions before {{ time_before | raw }}.
+            The total payout, which you will receive, for this rent is {{ total_payout_amount | raw }}.
+        </p>
+
+        <p>
+            <a href="#" class="button button--green">Accept</a>
+            <a href="#" class="button button--red">Decline</a>
+        </p>
+
+        <p>
+            I hope you choose to accept the rent, otherwise please let {{ renter_name | raw }} know. If it doesn’t fit your schedule, or you need the item that particular day.
+        </p>
+
+    {% endblock %}
+
+{% endembed %}

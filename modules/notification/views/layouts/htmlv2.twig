@@ -39,7 +39,7 @@
         <td>
             <!-- Header -->
             {% block header %}
-            <table id="header" width="100%" style="background-image: url({{ base64_image('@notification-assets/images/image-header.png') | raw }});">
+            <table id="header" width="100%" style="background-image: url({% block headerimage %}{{ base64_image('@notification-assets/images/image-header.png') | raw }}{% endblock %}); background-size: cover;">
                 <tr>
                     <td>
                         <h1>{{ block('title') }}</h1>
@@ -67,11 +67,8 @@
             <table id="follow-us" width="100%">
                 <tr width="100%">
                     <td colspan="2">
-                        <a href="" class="button button--blue">
+                        <a href="https://www.facebook.com/kidup.social" target="_blank" class="button button--blue">
                             <span class="icon icon--share"></span>Follow us on Facebook
-                        </a>
-                        <a href="" class="button button--blue">
-                            <span class="icon icon--share"></span>Follow us on Instagram
                         </a>
                     </td>
                 </tr>

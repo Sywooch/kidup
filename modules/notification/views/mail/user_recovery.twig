@@ -1,0 +1,19 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.user_recovery.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>Did you ask for me to try to recover you password? I could not find it, but if you want a new one you can <a href="#">click this link</a>.</p>
+
+        <p>If this mail was not requested by you, then just ignore it.</p>
+
+    {% endblock %}
+
+{% endembed %}

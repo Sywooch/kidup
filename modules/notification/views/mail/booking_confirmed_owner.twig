@@ -1,24 +1,37 @@
 {% embed "modules/notification/views/layouts/htmlv2.twig" %}
 
     {% block title %}
-        Booking - Confirmation
+        {{ t('mail.booking_confirmed_owner.title', title) | raw }}
     {% endblock %}
 
-    {% block subtitle %}
-        Optional subtitle
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_1.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
-        <table width="100%">
-            <tr>
-                <td>
-                    <h3>Booking owner confirmation</h3>
-                    <p>
-                        {{ user | raw }}Lorem ipsum bla bla.
-                    </p>
-                </td>
-            </tr>
-        </table>
+
+        <p>
+            {{ t('mail.booking_confirmed_owner.p1',
+                'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s <a href="{contact_renter_url}">messaging</a> tab.', {
+                'renter_name': renter_name,
+                'contact_renter_url': contact_renter_url
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_owner.p2',
+                'Or you can contact the user on the <a href="{phone_url}">phone</a> or <a href="{email_url}">email</a>.', {
+                'phone_url': renter_phone_url,
+                'email_url': renter_email_url
+            }) | raw }}
+        </p>
+
+        <p>
+            {{ t('mail.booking_confirmed_owner.p3',
+                'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'
+            ) | raw }}
+        </p>
+
     {% endblock %}
 
 {% endembed %}

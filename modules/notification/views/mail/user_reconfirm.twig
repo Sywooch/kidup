@@ -1,0 +1,19 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.user_reconfirm.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <p>I am just sending you this email, to make sure it is the right email-address in the system.</p>
+        If you <a href="#">click this link</a> to confirm your email-address, that would help me so much.</p>
+        <p>Thanks for being a part of KidUp.</p>
+
+    {% endblock %}
+
+{% endembed %}
