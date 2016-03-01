@@ -2,6 +2,7 @@
 namespace admin\controllers;
 
 use notification\components\MailTemplates;
+use notification\components\PushRenderer;
 use notification\components\PushTemplates;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -32,6 +33,7 @@ class PushController extends Controller
         $templates = PushTemplates::$templates;
 
         $data = [];
+        $renderer = new PushRenderer();
         foreach ($templates as $template => $information) {
             $vars = [];
             if (array_key_exists('variables', $information)) {
@@ -39,7 +41,8 @@ class PushController extends Controller
                     $vars[$var] = '[' . $var . ']';
                 }
             }
-            $information['message'] = '';
+            $renderer->setVariables($vars);
+            $information['message'] = $renderer->render($template);
             $data[] = array_merge(
                 ['template' => $template],
                 $information

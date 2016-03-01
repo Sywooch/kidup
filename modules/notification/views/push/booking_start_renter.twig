@@ -1,1 +1,4 @@
-Remember your rental starts the {booking_start_date}. Contact {owner_username} here.
+{{ t('notification.push.booking_start_renter', 'Remember your rental starts the {booking_start_date}. Contact {owner_username} here.', {
+    'booking_start_date': booking_start_date,
+    'owner_username': owner_username
+}) }}

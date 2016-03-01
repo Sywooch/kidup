@@ -74,7 +74,7 @@ class MailController extends Controller
         $renderer->setVariables($vars);
         $renderer->setTitle($title);
         $renderer->fillAutomatically();
-        return $renderer->render($template, $title);
+        return $renderer->render($template);
     }
 
     public function actionView($id) {
