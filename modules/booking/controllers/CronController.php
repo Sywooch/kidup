@@ -23,7 +23,7 @@ class CronController extends Model
             /**
              * @var $payin \booking\models\Payin
              */
-            if(!is_null($payin->booking)){
+            if (!is_null($payin->booking)) {
                 $payin->booking->updateStatus();
             }
         }
@@ -45,16 +45,17 @@ class CronController extends Model
     public function hour()
     {
         // see if the booking expired (owner did not respond)
-        $bookings = Booking::findAll(['status' => Booking::PENDING]);
+        $bookings = Booking::find()
+            ->where(['status' => Booking::PENDING])
+            ->andWhere('request_expires_at < :tstamp')
+            ->params([':tstamp' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp])
+            ->all();
 
         foreach ($bookings as $booking) {
-            if ($booking->request_expires_at < Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp) {
-                $booking->ownerFailsToRespond();
-            }
-
-            if ($booking->time_from < Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp) {
-                $booking->ownerFailsToRespond();
-            }
+            /**
+             * @var Booking $booking
+             */
+            $booking->ownerFailsToRespond();
         }
 
         // que the payout if booking has been on for 24 hours

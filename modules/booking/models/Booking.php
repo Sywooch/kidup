@@ -3,6 +3,7 @@
 namespace booking\models;
 
 use app\helpers\Event;
+use app\jobs\SlackJob;
 use Carbon\Carbon;
 use message\models\Conversation;
 use user\models\User;
@@ -109,6 +110,8 @@ class Booking extends base\Booking
             Event::trigger($this, self::EVENT_OWNER_NO_RESPONSE);
 
             return true;
+        }else{
+            new SlackJob(['message' => "Owner failed to respond: payin release failed ".$payin->id]);
         }
 
         return false;

@@ -71,16 +71,16 @@ class Bootstrap implements BootstrapInterface
 
         // booking owner
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
-            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender));
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_NO_RESPONSE, function ($event) {
-            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender));
         });
 
         Event::register(Booking::className(), Booking::EVENT_BOOKING_ALMOST_START, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\StartFactory())->create($event->sender->booking));
-            MailSender::send((new \mail\mails\bookingRenter\StartFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingOwner\StartFactory())->create($event->sender));
+            MailSender::send((new \mail\mails\bookingRenter\StartFactory())->create($event->sender));
         });
 
         Event::register(Payin::className(), Payin::EVENT_FAILED, function ($event) {
@@ -95,7 +95,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_CONFIRMATION_REMINDER, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\RequestFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingOwner\RequestFactory())->create($event->sender));
         });
 
         Event::register(Payin::className(), Payin::EVENT_PAYIN_CONFIRMED, function ($event) {
@@ -106,24 +106,24 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_INVOICE_READY, function ($event) {
-            MailSender::send((new \mail\mails\bookingOwner\PayoutFactory())->create($event->sender->booking));
+            MailSender::send((new \mail\mails\bookingOwner\PayoutFactory())->create($event->sender));
         });
 
         // reviews+
         Event::register(Booking::className(), Booking::EVENT_BOOKING_ENDED, function ($event) {
-            MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender->booking, true));
-            MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender->booking, false));
+            MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender, true));
+            MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender, false));
         });
 
         Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_OWNER, function ($event) {
-            MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender->booking, true));
+            MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender, true));
         });
         Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_RENTER, function ($event) {
-            MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender->booking, false));
+            MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender, false));
         });
 
         Event::register(Booking::className(), Booking::EVENT_REVIEWS_PUBLIC, function ($event) {
-            MailSender::send((new \mail\mails\review\PublishFactory())->create($event->sender->booking, true));
+            MailSender::send((new \mail\mails\review\PublishFactory())->create($event->sender, true));
         });
     }
 }
