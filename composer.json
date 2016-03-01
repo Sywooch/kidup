@@ -51,7 +51,7 @@
     "tedivm/jshrink": "~1.0",
     "willdurand/geocoder": "~2.8",
     "yii2mod/yii2-c3-chart": "*",
-    "yiisoft/yii2": "2.0.6",
+    "yiisoft/yii2": "2.0.7",
     "yiisoft/yii2-authclient": "*",
     "yiisoft/yii2-bootstrap": "*",
     "yiisoft/yii2-imagine": "*",
@@ -61,14 +61,15 @@
     "yiisoft/yii2-twig": "^2.0@dev",
     "eold/yii2-apidoc-generator": "^1.0.",
     "flow/jsonpath": "dev-master",
-    "trntv/yii2-aceeditor": "*"
+    "trntv/yii2-aceeditor": "*",
+    "guzzle/guzzle": "~3.7",
+    "guzzlehttp/guzzle": "~5.0"
   },
   "require-dev": {
-    "codeception/codeception": "2.0.15",
+    "codeception/codeception": "2.1",
     "codeception/specify": "0.4.1",
     "codeception/verify": "0.2.7",
-    "guzzle/guzzle": "~3.7",
-    "guzzlehttp/guzzle": "~5.0",
+
     "kriswallsmith/buzz": "~0.10",
     "league/factory-muffin": "~3.0",
     "league/factory-muffin-faker": "*",

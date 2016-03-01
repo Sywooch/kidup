@@ -47,7 +47,7 @@ set('repository', 'https://kevin91nl:' . $repo_password . '@github.com/esquire90
 
 task('deploy:vendors', function () use ($repo_password) {
     run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
-    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
+    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet --no-dev");
 })->desc('Installing vendors');
 
 task('deploy:run_migrations', function () {
@@ -71,6 +71,7 @@ task('deploy:cleanup', function () {
     if (env('branch') == 'master') {
         run('rm -f -R {{release_path}}/tests');
         run('rm -f -R {{release_path}}/devops');
+        run('rm -f -R {{release_path}}/.git');
     }
 })->desc("Cleaning cache");
 

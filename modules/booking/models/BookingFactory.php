@@ -43,7 +43,7 @@ class BookingFactory
         $this->booking->setScenario('init');
         $this->booking->item_id = $item->id;
         $this->booking->renter_id = \Yii::$app->user->id;
-        $this->booking->currency_id = Currency::getUserOrDefault();
+        $this->booking->currency_id = Currency::getUserOrDefault()->id;
         $this->booking->status = Booking::AWAITING_PAYMENT;
         $this->booking->setPayinPrices();
 
@@ -78,17 +78,26 @@ class BookingFactory
 
     private function setDatesAndValidate($from, $to)
     {
-        $this->booking->from = Carbon::createFromFormat('d-m-Y g:i:s', $from . ' 12:00:00')->timestamp;
-        $this->booking->to = Carbon::createFromFormat('d-m-Y g:i:s', $to . ' 12:00:00')->timestamp;
-        if ($this->booking->to <= $this->booking->from) {
+        if(is_numeric($from)){
+            $this->booking->time_from = $from;
+        }else{
+            $this->booking->time_from = Carbon::createFromFormat('d-m-Y g:i:s', $from . ' 12:00:00')->timestamp;
+        }
+
+        if(is_numeric($to)){
+            $this->booking->time_to = $to;
+        }else{
+            $this->booking->time_to = Carbon::createFromFormat('d-m-Y g:i:s', $to . ' 12:00:00')->timestamp;
+        }
+        if ($this->booking->time_to <= $this->booking->time_from) {
             throw new BookingInvalideDatesException("To date should be larger then from date");
         }
         // see if it clashes with another booking
         // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
         $overlapping = Booking::find()->where(':from < time_to and :to > time_from and item_id = :item_id and status = :status',
             [
-                ':from' => $this->booking->from,
-                ':to' => $this->booking->to,
+                ':from' => $this->booking->time_from,
+                ':to' => $this->booking->time_to,
                 ':item_id' => $this->item->id,
                 ':status' => Booking::ACCEPTED
             ])->count();

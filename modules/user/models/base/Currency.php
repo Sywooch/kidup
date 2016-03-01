@@ -2,7 +2,6 @@
 
 namespace user\models\base;
 
-use user\models\User;
 use Yii;
 
 /**
@@ -60,7 +59,7 @@ class Currency extends \yii\db\ActiveRecord
      * @return Currency|\yii\db\ActiveRecord
      */
     public static function getUserOrDefault(User $user = null){
-
+        $user = is_null($user) ? \Yii::$app->user->identity : $user;
         if($user->profile->currency){
             return $user->profile->currency;
         }
@@ -68,7 +67,7 @@ class Currency extends \yii\db\ActiveRecord
     }
 
     public static function getDefault(){
-        return Currency::findOne(['id' => 1]);
+        return Currency::find()->one();
     }
 
     /**

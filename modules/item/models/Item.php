@@ -159,10 +159,6 @@ class Item extends \item\models\base\Item
      */
     public function getPriceForPeriod($timestampFrom, $timestampTo, Currency $currency)
     {
-        if ($currency !== $this->currency) {
-            // todo convert the currency
-        }
-
         $days = floor(($timestampTo - $timestampFrom) / (60 * 60 * 24));
         $dailyPrices = [
             'day' => $this->price_day,
