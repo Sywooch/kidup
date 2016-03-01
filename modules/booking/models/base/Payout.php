@@ -96,4 +96,13 @@ class Payout extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooking()
+    {
+        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
+    }
 }

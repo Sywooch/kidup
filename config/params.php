@@ -21,5 +21,5 @@ return [
     'kidupAddressLine1' => 'Ceres Alle 1',
     'kidupAddressLine2' => '8000 Aarhus C, Denmark',
     'numberOfDaysForReview' => 14,
-    'icon-framework' => 'fa'
+    'icon-framework' => 'fa',
 ];

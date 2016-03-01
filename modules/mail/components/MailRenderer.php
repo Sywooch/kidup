@@ -1,6 +1,7 @@
 <?php
 namespace mail\components;
 
+use app\jobs\SlackJob;
 use mail\models\UrlFactory;
 use Yii;
 use yii\helpers\Json;
@@ -51,8 +52,12 @@ class MailRenderer
         $mailer->htmlLayout = '@mail/views/layouts/html.twig';
         $renderedTemplate = $this->renderPartial();
         $params = ['content' => $renderedTemplate, 'vm' => $viewModel];
-        $renderedLayout = \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig', $params);
-        return $renderedLayout;
+        try {
+            return \Yii::$app->view->renderFile($this->mail->getViewPath() . '/layouts/html.twig', $params);
+        }catch(\yii\base\InvalidConfigException $e){
+            new SlackJob(['message' => "Email render failed fully ".$mailer->viewPath]);
+            return false;
+        }
     }
 
     /**
@@ -60,10 +65,18 @@ class MailRenderer
      *
      * @return string HTML output.
      */
-    public function renderPartial() {
+    public function renderPartial()
+    {
         $viewModel = $this->getViewModel();
-        return \Yii::$app->view->renderFile($this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
-            ['vm' => $viewModel]);
+        try {
+            return \Yii::$app->view->renderFile(
+                $this->mail->getViewPath() . '/' . $this->mail->getTemplatePath(),
+                ['vm' => $viewModel]
+            );
+        }catch(\yii\base\InvalidConfigException $e){
+            new SlackJob(['message' => "Email render failed"]);
+            return false;
+        }
     }
 
     /**
@@ -71,7 +84,8 @@ class MailRenderer
      *
      * @return mixed View model representation.
      */
-    private function getViewModel() {
+    private function getViewModel()
+    {
         $viewModel = Json::decode(Json::encode($this->mail));
         $viewModel['seeInBrowserUrl'] = UrlFactory::seeInBrowser($this->mail->mailId);
         $viewModel['changeSettingsUrl'] = UrlFactory::changeSettings();

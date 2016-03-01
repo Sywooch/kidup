@@ -5,13 +5,14 @@ namespace booking\models;
 use app\helpers\Encrypter;
 use app\helpers\Event;
 use Carbon\Carbon;
+use user\models\base\Currency;
 use user\models\PayoutMethod;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "payin".
+ * This is the model class for table "payout".
  */
 class Payout extends \booking\models\base\Payout
 {
@@ -19,7 +20,6 @@ class Payout extends \booking\models\base\Payout
     const STATUS_TO_BE_PROCESSED = 'to_be_processed';
     const STATUS_PROCESSED = 'processed';
     const STATUS_CANCELLED = 'cancelled';
-
     const EVENT_PAYOUT_PROCESSED = 'event_payout_processed';
 
     public function behaviors()
@@ -44,7 +44,7 @@ class Payout extends \booking\models\base\Payout
         $payout->setAttributes([
             'status' => self::STATUS_WAITING_FOR_BOOKING_START,
             'amount' => $booking->amount_payout,
-            'currency_id' => 1,
+            'currency_id' => Currency::getUserOrDefault($booking->item->owner),
             'user_id' => $booking->item->owner_id,
             'created_at' => time(),
         ]);
@@ -105,11 +105,4 @@ class Payout extends \booking\models\base\Payout
         return $res;
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBooking()
-    {
-        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
-    }
 }

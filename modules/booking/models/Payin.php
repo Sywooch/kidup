@@ -12,23 +12,14 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
+class PayinException extends \yii\base\ErrorException
+{
+}
+
+;
+
 class Payin extends base\Payin
 {
-    // Transaction Status
-    const AUTHORIZATION_EXPIRED = 'authorization_expired';
-    const AUTHORIZING = 'authorizing';
-    const AUTHORIZED = 'authorized';
-    const GATEWAY_REJECTED = 'gateway_rejected';
-    const FAILED = 'failed';
-    const PROCESSOR_DECLINED = 'processor_declined';
-    const SETTLED = 'settled';
-    const SETTLING = 'settling';
-    const SUBMITTED_FOR_SETTLEMENT = 'submitted_for_settlement';
-    const VOIDED = 'voided';
-    const UNRECOGNIZED = 'unrecognized';
-    const SETTLEMENT_DECLINED = 'settlement_declined';
-    const SETTLEMENT_PENDING = 'settlement_pending';
-
     const STATUS_INIT = 'init';
     const STATUS_PENDING = 'status_pending';
     const STATUS_AUTHORIZED = 'status_authorized';
@@ -57,58 +48,60 @@ class Payin extends base\Payin
         ];
     }
 
+    /**
+     * Authorizes the payment
+     * @return BrainTreeError|bool|\Exception
+     */
     public function authorize()
     {
         $brainTree = new BrainTree($this);
-        $transaction = $brainTree->autorize($this);
-        if (isset($transaction['paymentFailed'])) {
-            return $transaction;
+        try {
+            $transaction = $brainTree->autorize();
+        } catch (BrainTreeError $e) {
+            throw new PayinException($e);
         }
         $this->status = $this->brainTreeToPayinStatus($transaction['status']);
         $this->braintree_backup = Json::encode($transaction);
         return $this->save();
     }
 
+    /**
+     * Updates the status of the payment
+     * @return bool
+     */
     public function updateStatus()
     {
         $status = new BrainTree($this);
-        $status = $this->brainTreeToPayinStatus($status->updateStatus());
-        if ($status !== $this->status) {
-            $this->status = $status;
-            $this->save();
-        }
+        $this->status = $this->brainTreeToPayinStatus($status->updateStatus());
+        return $this->save();
     }
 
     public function beforeSave($insert)
     {
         if ($this->isAttributeChanged('status')) {
-            if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null) {
-                $invoice = new Invoice();
-                $invoice = $invoice->create($this->booking);
-                $this->invoice_id = $invoice->id;
-                if ($this->save()) {
-                    Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);
-                }
-                (new Payout())->createFromBooking($this->booking);
-            }
-            if ($this->status == self::STATUS_AUTHORIZED) {
-
-
-                if (!isset($this->booking)) {
-                    $this->status = self::STATUS_PENDING;
-                    return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
-                }
-                if (!isset($this->booking->conversation)) {
-                    $this->status = self::STATUS_PENDING;
-                    return parent::beforeSave($insert); // the booking did not initiate yet, so let the cron take this one in one minute
-                }
-                Event::trigger($this, self::EVENT_AUTHORIZATION_CONFIRMED);
-            }
-            if ($this->status == self::STATUS_FAILED) {
-                Event::trigger($this, self::EVENT_FAILED);
-            }
+            $this->onStatusChange();
         }
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * Processes changes in status of the payin and triggers corresponding events
+     */
+    private function onStatusChange()
+    {
+        if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null) {
+            $this->invoice_id = (new InvoiceFactory)->createForBooking($this->booking)->id;
+            $this->save();
+            Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);
+            (new Payout())->createFromBooking($this->booking);
+        }
+
+        if ($this->status == self::STATUS_AUTHORIZED) {
+            Event::trigger($this, self::EVENT_AUTHORIZATION_CONFIRMED);
+        }
+        if ($this->status == self::STATUS_FAILED) {
+            Event::trigger($this, self::EVENT_FAILED);
+        }
     }
 
     /**
@@ -118,8 +111,7 @@ class Payin extends base\Payin
     {
         $brainTree = new BrainTree($this);
         $brainTree->capture();
-        $this->updateStatus();
-        return true;
+        return $this->updateStatus();
     }
 
     /**
@@ -129,35 +121,29 @@ class Payin extends base\Payin
     {
         $brainTree = new BrainTree($this);
         $brainTree->release();
-        $this->updateStatus();
-        return true;
+        return $this->updateStatus();
     }
 
+    /**
+     * Maps a status from braintree to a payin status
+     * @param $status
+     * @return bool|string
+     */
     private function brainTreeToPayinStatus($status)
     {
-        if (in_array($status, [self::AUTHORIZING])) {
-            return self::STATUS_PENDING;
-        }
-        if (in_array($status, [self::AUTHORIZED])) {
-            return self::STATUS_AUTHORIZED;
-        }
-        if (in_array($status, [self::GATEWAY_REJECTED, self::FAILED, self::SETTLEMENT_DECLINED])) {
-            return self::STATUS_FAILED;
-        }
-        if (in_array($status, [self::SETTLING, self::SUBMITTED_FOR_SETTLEMENT])) {
-            return self::STATUS_SETTLING;
-        }
-        if (in_array($status, [self::SETTLED])) {
-            return self::STATUS_ACCEPTED;
-        }
-        if (in_array($status, [self::VOIDED])) {
-            return self::STATUS_VOIDED;
-        }
-        return false;
+        $statusses = [
+            BrainTree::AUTHORIZING => self::STATUS_PENDING,
+            BrainTree::AUTHORIZED => self::STATUS_AUTHORIZED,
+            BrainTree::GATEWAY_REJECTED => self::STATUS_FAILED,
+            BrainTree::FAILED => self::STATUS_FAILED,
+            BrainTree::SETTLEMENT_DECLINED => self::STATUS_FAILED,
+            BrainTree::SETTLING => self::STATUS_SETTLING,
+            BrainTree::SUBMITTED_FOR_SETTLEMENT => self::STATUS_SETTLING,
+            BrainTree::SETTLED => self::STATUS_ACCEPTED,
+            BrainTree::VOIDED => self::STATUS_VOIDED
+        ];
+
+        return isset($status[$status]) ? $statusses[$status] : false;
     }
 
-    public function getBooking()
-    {
-        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
-    }
 }

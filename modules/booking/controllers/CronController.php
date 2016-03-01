@@ -6,6 +6,7 @@ use app\helpers\Event;
 use booking\models\Booking;
 use booking\models\BrainTree;
 use booking\models\Invoice;
+use booking\models\InvoiceFactory;
 use booking\models\Payin;
 use booking\models\Payout;
 use Carbon\Carbon;
@@ -72,11 +73,9 @@ class CronController extends Model
 
         foreach ($bookings as $booking) {
             if ($booking->payout->status == Payout::STATUS_WAITING_FOR_BOOKING_START) {
-                $invoice = new Invoice();
-                $invoice = $invoice->create($booking);
                 $payout = $booking->payout;
                 $payout->status = Payout::STATUS_TO_BE_PROCESSED;
-                $payout->invoice_id = $invoice->id;
+                $payout->invoice_id = (new InvoiceFactory())->createForBooking($booking);
                 $payout->save();
                 Event::trigger($booking, Booking::EVENT_OWNER_INVOICE_READY);
             }

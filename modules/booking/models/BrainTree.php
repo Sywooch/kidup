@@ -3,12 +3,31 @@
 namespace booking\models;
 
 use Yii;
+use yii\base\DynamicModel;
 use yii\base\Model;
 use yii\helpers\Json;
+
+class BrainTreeError extends \yii\base\Exception{};
+class BrainTreePaymentFailedException extends BrainTreeError{};
+class BrainTreePayinAmountNotCorrect extends BrainTreeError{};
 
 class BrainTree extends Model
 {
     public $payin;
+    // Transaction Status
+    const AUTHORIZATION_EXPIRED = 'authorization_expired';
+    const AUTHORIZING = 'authorizing';
+    const AUTHORIZED = 'authorized';
+    const GATEWAY_REJECTED = 'gateway_rejected';
+    const FAILED = 'failed';
+    const PROCESSOR_DECLINED = 'processor_declined';
+    const SETTLED = 'settled';
+    const SETTLING = 'settling';
+    const SUBMITTED_FOR_SETTLEMENT = 'submitted_for_settlement';
+    const VOIDED = 'voided';
+    const UNRECOGNIZED = 'unrecognized';
+    const SETTLEMENT_DECLINED = 'settlement_declined';
+    const SETTLEMENT_PENDING = 'settlement_pending';
 
     public function __construct(Payin $payin = null)
     {
@@ -26,20 +45,39 @@ class BrainTree extends Model
         return parent::init();
     }
 
+    /**
+     * Gets the braintree id of the braintree transaction
+     * @return false|int
+     */
     private function getBraintreeId()
     {
+        if($this->payin->braintree_backup == null){
+            return false;
+        }
         $b = Json::decode($this->payin->braintree_backup);
         return $b['id'];
     }
 
+    /**
+     * Generates a client token to be used in the frontend
+     * @return array
+     */
     public function getClientToken()
     {
-        $clientToken = \Braintree_ClientToken::generate();
-        return $clientToken;
+        return \Braintree_ClientToken::generate();
     }
 
+    /**
+     * Autorizes an braintree transaction
+     * @return mixed
+     * @throws BrainTreePayinAmountNotCorrect
+     * @throws BrainTreePaymentFailedException
+     */
     public function autorize()
     {
+        if(!is_float($this->payin->amount) && !is_int($this->payin->amount)){
+            throw new BrainTreePayinAmountNotCorrect();
+        }
         $transaction = \Braintree_Transaction::sale(array(
             'amount' => $this->payin->amount,
             'paymentMethodNonce' => $this->payin->nonce,
@@ -49,11 +87,7 @@ class BrainTree extends Model
             'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
         if ($transaction->success === false) {
-            return [
-                'paymentFailed' => true,
-                'message' => $transaction->_attributes['message'],
-                'transaction' => $transaction
-            ];
+            throw new BrainTreePaymentFailedException($transaction->_attributes['message']);
         } else {
             return $transaction->transaction->_attributes;
         }
@@ -66,6 +100,7 @@ class BrainTree extends Model
 
     /*
      * Release the autorized payment
+     * @return bool
      */
     public function release()
     {

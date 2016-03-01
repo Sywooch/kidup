@@ -106,4 +106,12 @@ class Payin extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooking()
+    {
+        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
+    }
 }

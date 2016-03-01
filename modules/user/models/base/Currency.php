@@ -2,6 +2,7 @@
 
 namespace user\models\base;
 
+use user\models\User;
 use Yii;
 
 /**
@@ -52,6 +53,22 @@ class Currency extends \yii\db\ActiveRecord
             'abbr' => 'Abbr',
             'forex_name' => 'Forex Name',
         ];
+    }
+
+    /**
+     * Gets the currency of a user, or the default if the user is guest or none is set
+     * @return Currency|\yii\db\ActiveRecord
+     */
+    public static function getUserOrDefault(User $user = null){
+
+        if($user->profile->currency){
+            return $user->profile->currency;
+        }
+        return self::getDefault();
+    }
+
+    public static function getDefault(){
+        return Currency::findOne(['id' => 1]);
     }
 
     /**

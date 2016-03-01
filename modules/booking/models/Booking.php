@@ -18,6 +18,10 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "Booking".
  */
+class BookingException extends \yii\base\ErrorException
+{
+}
+
 class Booking extends base\Booking
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
@@ -61,24 +65,26 @@ class Booking extends base\Booking
 
     public function ownerAccepts()
     {
-        $payin = Payin::findOne($this->payin_id);
+        /**
+         * @var Payin $payin
+         */
+        $payin = Payin::find()->where(['id' => $this->payin_id])->one();
         if ($payin->capture()) {
             $this->status = self::ACCEPTED;
             $this->save();
             Event::trigger($this, self::EVENT_OWNER_ACCEPTED);
-            $payout = new Payout();
-
             return true; // dont create payout yet, only when payin is successfull
         }
 
         return false;
     }
 
-    public function canBeAccessedByUser(User $user){
-        if($user->id == $this->renter_id){
+    public function canBeAccessedByUser(User $user)
+    {
+        if ($user->id == $this->renter_id) {
             return true;
         }
-        if($user->id == $this->item->owner_id){
+        if ($user->id == $this->item->owner_id) {
             return true;
         }
         return false;
@@ -86,6 +92,9 @@ class Booking extends base\Booking
 
     public function ownerDeclines()
     {
+        /**
+         * @var Payin $payin
+         */
         $payin = Payin::findOne($this->payin_id);
         if ($payin->release()) {
             $this->status = self::DECLINED;
@@ -110,35 +119,29 @@ class Booking extends base\Booking
             Event::trigger($this, self::EVENT_OWNER_NO_RESPONSE);
 
             return true;
-        }else{
-            new SlackJob(['message' => "Owner failed to respond: payin release failed ".$payin->id]);
+        } else {
+            new SlackJob(['message' => "Owner failed to respond: payin release failed " . $payin->id]);
         }
 
         return false;
     }
 
+    /**
+     * Get the name of the current booking status
+     * @return false|string
+     */
     public function getStatusName()
     {
-        if ($this->status == self::AWAITING_PAYMENT) {
-            return \Yii::t('booking.status.awaiting_payment', 'Awaiting payment');
-        }
-        if ($this->status == self::PENDING) {
-            return \Yii::t('booking.status.pending', 'Pending');
-        }
-        if ($this->status == self::NO_RESPONSE) {
-            return \Yii::t('booking.status.no_response', 'No responds by Owner');
-        }
-        if ($this->status == self::DECLINED) {
-            return \Yii::t('booking.status.refused', 'Refused');
-        }
-        if ($this->status == self::ACCEPTED) {
-            return \Yii::t('booking.status.accepted', 'Accepted');
-        }
-        if ($this->status == self::CANCELLED) {
-            return \Yii::t('booking.status.cancelled', 'Cancelled');
-        }
+        $statusses = [
+            self::AWAITING_PAYMENT => \Yii::t('booking.status.awaiting_payment', 'Awaiting payment'),
+            self::PENDING => \Yii::t('booking.status.pending', 'Pending'),
+            self::NO_RESPONSE => \Yii::t('booking.status.no_response', 'No responds by Owner'),
+            self::DECLINED => \Yii::t('booking.status.refused', 'Refused'),
+            self::ACCEPTED => \Yii::t('booking.status.accepted', 'Accepted'),
+            self::CANCELLED => \Yii::t('booking.status.cancelled', 'Cancelled')
+        ];
 
-        return false;
+        return isset($statusses[$this->status]) ? $statusses[$this->status] : false;
     }
 
 
@@ -151,12 +154,15 @@ class Booking extends base\Booking
         return $conv->id;
     }
 
-    public function getLocation($HTMLNewLines = false) {
+    public function getLocation($HTMLNewLines = false)
+    {
         $newLine = PHP_EOL;
-        if ($HTMLNewLines) $newLine = '<br />';
+        if ($HTMLNewLines) {
+            $newLine = '<br />';
+        }
         return $this->item->location->street_name . ' ' . $this->item->location->street_number . ',' . $newLine .
-            $this->item->location->zip_code . ' ' . $this->item->location->city . $newLine . ', ' . $newLine .
-            $this->item->location->country0->name;
+        $this->item->location->zip_code . ' ' . $this->item->location->city . $newLine . ', ' . $newLine .
+        $this->item->location->country0->name;
     }
 
     /**
@@ -164,7 +170,8 @@ class Booking extends base\Booking
      *
      * @return int The number of days this booking lasts.
      */
-    public function getNumberOfDays() {
+    public function getNumberOfDays()
+    {
         $to = $this->time_to;
         $from = $this->time_from;
         return floor(($to - $from) / (60 * 60 * 24));
@@ -175,7 +182,8 @@ class Booking extends base\Booking
      *
      * @return int The day price.
      */
-    public function getDayPrice() {
+    public function getDayPrice()
+    {
         return round($this->amount_item / $this->getNumberOfDays());
     }
 
@@ -194,10 +202,23 @@ class Booking extends base\Booking
         }
     }
 
+    public function setExpireDate()
+    {
+        $expireDate = time() + 6 * 24 * 60 * 60;
+        if ($this->time_to < $expireDate && $this->time_to > time() - 24 * 60 * 60) {
+            $expireDate = $this->time_to - 24 * 60 * 60;
+        } else {
+            if ($this->time_to < $expireDate) {
+                $expireDate = $this->time_to - 5 * 60; // 5 min
+            }
+        }
+        $this->request_expires_at = $expireDate;
+    }
+
     public function startConversation($message)
     {
-        if($this->conversation !== null){
-            if(count($this->conversation->messages) == 0){
+        if ($this->conversation !== null) {
+            if (count($this->conversation->messages) == 0) {
                 return $this->conversation->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
             }
             return true;
@@ -257,7 +278,6 @@ class Booking extends base\Booking
 
         return $this;
     }
-
 
 
     public function behaviors()
