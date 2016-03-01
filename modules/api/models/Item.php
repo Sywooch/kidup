@@ -36,7 +36,7 @@ class Item extends \item\models\Item
         $fields = parent::fields();
 
         // remove fields that contain sensitive information
-        unset($fields['updated_at'], $fields['min_renting_days']);
+        unset($fields['updated_at']);
 
         $fields['item_facets'] = function ($model) {
             $res = [];

@@ -18,7 +18,7 @@ class PayinException extends \yii\base\ErrorException
 
 ;
 
-class Payin extends base\Payin
+class Payin extends user\models\base\Payin
 {
     const STATUS_INIT = 'init';
     const STATUS_PENDING = 'status_pending';

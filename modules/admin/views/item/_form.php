@@ -38,10 +38,6 @@ use yii\helpers\Html;
             'location_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Location ID...']],
             'created_at' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Created At...']],
             'updated_at' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Updated At...']],
-            'min_renting_days' => [
-                'type' => Form::INPUT_TEXT,
-                'options' => ['placeholder' => 'Enter Min Renting Days...']
-            ],
             'category_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Category ID...']],
             'name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Name...', 'maxlength' => 140]],
 

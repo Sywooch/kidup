@@ -49,19 +49,11 @@ class SearchController extends Controller
         $this->noContainer = true;
 
         $index = 'items';
-        if(\Yii::$app->keyStore->fake_products){
-            $index = 'items_fake';
-        }
 
         Url::remember();
         // render the index
         return $this->render('index.twig', [
             'index' => $index
         ]);
-    }
-
-    public function actionTest(){
-        $items = \item\models\Item::find()->where(['is_available' => 1])->all();
-        (new \search\components\ItemSearchDb())->sync($items);
     }
 }

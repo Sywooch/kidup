@@ -11,8 +11,6 @@ class Media extends \item\models\Media
 
         return [
             'user_id' => 'factory|'.User::className(),
-            'storage' =>  Media::LOC_LOCAL,
-            'type' => Media::TYPE_IMG,
             'file_name' => 'placehold.it/3x3',
         ];
     }

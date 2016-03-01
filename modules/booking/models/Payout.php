@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "payout".
  */
-class Payout extends \booking\models\base\Payout
+class Payout extends \user\models\base\Payout
 {
     const STATUS_WAITING_FOR_BOOKING_START = 'waiting_for_start';
     const STATUS_TO_BE_PROCESSED = 'to_be_processed';

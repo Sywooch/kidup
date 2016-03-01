@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models\base;
+namespace user\models\base;
 
 use Yii;
 
@@ -59,7 +59,7 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\booking\models\base\Payin::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\user\models\base\Payin::className(), ['invoice_id' => 'id']);
     }
 
     /**
@@ -67,6 +67,6 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\booking\models\base\Payout::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(\user\models\base\Payout::className(), ['invoice_id' => 'id']);
     }
 }

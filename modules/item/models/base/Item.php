@@ -26,7 +26,6 @@ use yii\helpers\ArrayHelper;
  * @property integer $location_id
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $min_renting_days
  * @property integer $category_id
  *
  * @property Booking[] $bookings
@@ -69,7 +68,6 @@ class Item extends \yii\db\ActiveRecord
                     'location_id',
                     'created_at',
                     'updated_at',
-                    'min_renting_days',
                     'category_id'
                 ],
                 'integer'
@@ -121,7 +119,6 @@ class Item extends \yii\db\ActiveRecord
             'location_id' => Yii::t('item.attributes.location_id', 'Location'),
             'created_at' => Yii::t('item.attributes.created_at', 'Created At'),
             'updated_at' => Yii::t('item.attributes.updated_at', 'Updated At'),
-            'min_renting_days' => Yii::t('item.attributes.min_renting_days', 'Min Renting Days'),
             'category_id' => Yii::t('item.attributes.category_id', 'Category'),
         ];
     }

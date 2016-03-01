@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models\base;
+namespace user\models\base;
 
 use booking\models\Invoice;
 use user\models\base\Currency;
@@ -11,8 +11,6 @@ use Yii;
  * This is the base-model class for table "payin".
  *
  * @property integer $id
- * @property string $data
- * @property string $type
  * @property integer $user_id
  * @property string $status
  * @property integer $currency_id
@@ -44,11 +42,10 @@ class Payin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data', 'braintree_backup'], 'string'],
+            [['braintree_backup'], 'string'],
             [['user_id', 'currency_id'], 'required'],
             [['user_id', 'currency_id', 'created_at', 'updated_at', 'invoice_id'], 'integer'],
             [['amount'], 'number'],
-            [['type'], 'string', 'max' => 25],
             [['status'], 'string', 'max' => 45],
             [['nonce'], 'string', 'max' => 1024]
         ];
@@ -61,8 +58,6 @@ class Payin extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('payin.attributes.id', 'ID'),
-            'data' => Yii::t('payin.attributes.data', 'Data'),
-            'type' => Yii::t('payin.attributes.type', 'Type'),
             'user_id' => Yii::t('payin.attributes.user_id', 'User'),
             'status' => Yii::t('payin.attributes.status', 'Status'),
             'currency_id' => Yii::t('payin.attributes.currency', 'Currency'),

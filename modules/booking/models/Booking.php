@@ -22,7 +22,7 @@ class BookingException extends \yii\base\ErrorException
 {
 }
 
-class Booking extends base\Booking
+class Booking extends user\models\base\Booking
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
     const PENDING = 'pending_owner';

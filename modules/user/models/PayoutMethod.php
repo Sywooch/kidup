@@ -5,7 +5,7 @@ namespace user\models;
 use Carbon\Carbon;
 use Yii;
 
-class PayoutMethod extends \booking\models\base\PayoutMethod
+class PayoutMethod extends \user\models\base\PayoutMethod
 {
     const TYPE_DK_KONTO = 'dk-konto';
 
@@ -29,8 +29,8 @@ class PayoutMethod extends \booking\models\base\PayoutMethod
                 'required'
             ],
             [['country_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['address', 'type', 'identifier_1', 'identifier_2'], 'string', 'max' => 45],
-            [['bank_name', 'payee_name'], 'string', 'max' => 256]
+            [['type', 'identifier_1', 'identifier_2'], 'string', 'max' => 45],
+            [['payee_name'], 'string', 'max' => 256]
         ];
     }
 
@@ -44,12 +44,7 @@ class PayoutMethod extends \booking\models\base\PayoutMethod
     }
 
     public function userHasAccess($user = false){
-        if($user == false){
-            $user = \Yii::$app->user;
-        }
-        if($user->id !== $this->user_id){
-            return false;
-        }
-        return true;
+        $user = $user ? $user : \Yii::$app->user;
+        return $user->id === $this->user_id;
     }
 }

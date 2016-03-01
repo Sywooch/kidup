@@ -93,7 +93,6 @@ class Create extends Model
         $item->setAttributes([
             'is_available' => 0,
             'owner_id' => \Yii::$app->user->id,
-            'min_renting_days' => 1,
             'category_id' => (int) $this->category
         ]);
         

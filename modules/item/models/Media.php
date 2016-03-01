@@ -10,9 +10,6 @@ use Yii;
  */
 class Media extends \item\models\base\Media
 {
-    const TYPE_IMG = 'image';
-    const LOC_LOCAL = 'local';
-
     public function beforeValidate()
     {
         if ($this->isNewRecord) {

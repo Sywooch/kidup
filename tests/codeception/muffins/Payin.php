@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Payin extends \booking\models\base\Payin
+class Payin extends \user\models\base\Payin
 {
     public function definitions()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models\base;
+namespace user\models\base;
 
 use Yii;
 
@@ -8,8 +8,6 @@ use Yii;
  * This is the base-model class for table "payout_method".
  *
  * @property integer $id
- * @property string $address
- * @property string $bank_name
  * @property string $payee_name
  * @property integer $country_id
  * @property string $type
@@ -19,8 +17,8 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \app\models\User $user
- * @property \app\models\Country $country
+ * @property User $user
+ * @property Country $country
  */
 class PayoutMethod extends \yii\db\ActiveRecord
 {
@@ -38,10 +36,10 @@ class PayoutMethod extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bank_name', 'payee_name', 'country_id', 'type', 'user_id', 'identifier_1', 'identifier_2', 'created_at', 'updated_at'], 'required'],
+            [['payee_name', 'country_id', 'type', 'user_id', 'identifier_1', 'identifier_2', 'created_at', 'updated_at'], 'required'],
             [['country_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['address', 'type', 'identifier_1', 'identifier_2'], 'string', 'max' => 45],
-            [['bank_name', 'payee_name'], 'string', 'max' => 256]
+            [['type', 'identifier_1', 'identifier_2'], 'string', 'max' => 45],
+            [['payee_name'], 'string', 'max' => 256]
         ];
     }
 
@@ -52,8 +50,6 @@ class PayoutMethod extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('payout_method.attributes.id', 'ID'),
-            'address' => Yii::t('payout_method.attributes.address', 'Address'),
-            'bank_name' => Yii::t('payout_method.attributes.bank_name', 'Bank Name'),
             'payee_name' => Yii::t('payout_method.attributes.payee_name', 'Payee Name'),
             'country_id' => Yii::t('payout_method.attributes.country', 'Country'),
             'type' => Yii::t('payout_method.attributes.type', 'Type'),

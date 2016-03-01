@@ -83,10 +83,6 @@ class DefaultController extends Controller
                     ]);
                 }
                 return $this->redirect(['/booking/' . $booking->id]);
-            } elseif ($item->min_renting_days == 666) {
-                // fake product booking
-                new SlackJob(['message' => "Fake booking made on " . $booking->item_id]);
-                return $this->redirect("@web/booking/default/error?item_id=".$booking->item_id);
             }
         }
 

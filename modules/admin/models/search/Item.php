@@ -15,7 +15,7 @@ class Item extends ItemModel
     public function rules()
     {
         return [
-            [['id', 'price_day', 'price_week', 'price_month', 'owner_id', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'min_renting_days', 'category_id'], 'integer'],
+            [['id', 'price_day', 'price_week', 'price_month', 'owner_id', 'currency_id', 'is_available', 'location_id', 'created_at', 'updated_at', 'category_id'], 'integer'],
             [['name', 'description'], 'safe'],
         ];
     }
@@ -49,7 +49,6 @@ class Item extends ItemModel
             'location_id' => $this->location_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'min_renting_days' => $this->min_renting_days,
             'category_id' => $this->category_id,
         ]);
 

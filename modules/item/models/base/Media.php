@@ -9,8 +9,6 @@ use Yii;
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $storage
- * @property string $type
  * @property string $description
  * @property integer $created_at
  * @property integer $updated_at
@@ -36,11 +34,8 @@ class Media extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'storage', 'type', 'created_at', 'updated_at', 'file_name'], 'required'],
+            [['user_id', 'created_at', 'updated_at', 'file_name'], 'required'],
             [['user_id', 'created_at', 'updated_at'], 'integer'],
-            [['storage'], 'string', 'max' => 25],
-            [['type'], 'string', 'max' => 45],
-            [['description'], 'string', 'max' => 256],
             [['file_name'], 'string', 'max' => 128]
         ];
     }
@@ -53,9 +48,6 @@ class Media extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'storage' => 'Storage',
-            'type' => 'Type',
-            'description' => 'Description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'file_name' => 'File Name',
@@ -75,7 +67,8 @@ class Media extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\item\models\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media', ['media_id' => 'id']);
+        return $this->hasMany(\item\models\Item::className(), ['id' => 'item_id'])->viaTable('item_has_media',
+            ['media_id' => 'id']);
     }
 
     /**

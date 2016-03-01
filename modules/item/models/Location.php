@@ -60,53 +60,40 @@ class Location extends base\Location
             $this->isAttributeChanged('zip_code') ||
             $this->isAttributeChanged('country')
         ) {
-            $buzz = new \Buzz\Browser(new \Buzz\Client\Curl());
-            $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
-            $provider = new \Geocoder\Provider\YandexProvider($adapter);
-            $geocoder = new \Geocoder\Geocoder($provider);
-            if (empty($this->street_name) or
-                empty($this->city) or
-                empty($this->country)
-            ) {
-                return parent::beforeValidate();
-            }
-            $address = $this->street_name . " " .
-                $this->street_number . ", " .
-                $this->city . " " .
-                $this->zip_code . ", " .
-                $this->country0->name;
-            $res = Location::getByAddress($address);
-            if (!$res) {
-                $this->longitude = 1;
-                $this->latitude = 1;
-            } else {
-                $this->longitude = $res['longitude'];
-                $this->latitude = $res['latitude'];
-            }
+            $this->calculateLongitudeLatitude();
         }
-        if ($this->isAttributeChanged('city')) {
-            $this->city = \yii\helpers\HtmlPurifier::process($this->city);
-        }
-        if ($this->isAttributeChanged('zip_code')) {
-            $this->zip_code = \yii\helpers\HtmlPurifier::process($this->zip_code);
-        }
-        if ($this->isAttributeChanged('street_name')) {
-            $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
-        }
-        if ($this->isAttributeChanged('zip_code')) {
-            $this->zip_code = \yii\helpers\HtmlPurifier::process($this->zip_code);
-        }
-        if ($this->isAttributeChanged('street_name')) {
-            $this->street_name = \yii\helpers\HtmlPurifier::process($this->street_name);
-        }
-        $this->updated_at = time();
-        if ($this->isNewRecord) {
-            $this->created_at = time();
+        foreach (['city', 'zip_code', 'street_name', "zip_code", "street_name"] as $item) {
+            $this->purifyIfChanges($item);
         }
         return parent::beforeValidate();
     }
 
-    public static function getByAddress($address)
+    private function purifyIfChanges($attr)
+    {
+        if ($this->isAttributeChanged($attr)) {
+            $this->street_name = \yii\helpers\HtmlPurifier::process($this->{$attr});
+        }
+    }
+
+    private function calculateLongitudeLatitude()
+    {
+        $address = $this->getFormattedAddress();
+        $res = Location::addressToLngLat($address);
+        if (!$res) {
+            $this->longitude = 0;
+            $this->latitude = 0;
+        } else {
+            $this->longitude = $res['longitude'];
+            $this->latitude = $res['latitude'];
+        }
+    }
+
+    /**
+     * Converts a human readable $address string into a longtiude, latitude array
+     * @param string $address
+     * @return array|bool
+     */
+    public static function addressToLngLat($address)
     {
         $request_url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
         $xml = simplexml_load_file($request_url);
@@ -128,97 +115,6 @@ class Location extends base\Location
         } else {
             return false;
         }
-    }
-
-    public static function createByLatLong($latitude, $longitude)
-    {
-        $latitude = round($latitude, 5);
-        $longitude = round($longitude, 5);
-        // find an approximately same location
-        $loc = Location::find()->where([
-            'user_id' => \Yii::$app->user->id,
-            [">=", 'latitude', $latitude-0.0035],
-            ["<=", 'latitude', $latitude+0.0035],
-            [">=", 'longitude', $longitude-0.0035],
-            ["<=", 'longitude', $longitude+0.0035],
-            'longitude' => $longitude
-        ])->one();
-        if ($loc !== null) {
-            return $loc;
-        }
-        $request_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latitude
-            . ',' . $longitude . "&sensor=true";
-        $json = json_decode(file_get_contents($request_url), true);
-        if (count($json['results']) == 0) {
-            return false;
-        }
-        // assume the first is the best?
-        $address = $json['results'][0];
-        $location = (new Location())->googleAddressComponentsToLocation($address['address_components']);
-        $location->country = 1;
-        $location->latitude = $latitude;
-        $location->longitude = $longitude;
-        $location->user_id = \Yii::$app->user->id;
-        $location->save();
-        return $location;
-    }
-
-    public function googleAddressComponentsToLocation($components)
-    {
-        $location = new Location();
-        foreach ($components as $component) {
-            if (in_array("postal_code", $component['types'])) {
-                $location->zip_code = $component['long_name'];
-            }
-            if (in_array("locality", $component['types'])) {
-                $location->city = $component['long_name'];
-            }
-            if (in_array("route", $component['types'])) {
-                $location->street_name = $component['long_name'];
-            }
-            if (in_array("street_number", $component['types'])) {
-                $location->street_number = $component['long_name'];
-            }
-        }
-        return $location;
-    }
-
-    /**
-     * A method which works offline and does not depend on external connection for fetching a location based
-     * on an IP address.
-     *
-     * @param $ip string
-     * @return Object|Boolean false if no record could be found and otherwise an array with the following keys:
-     *          country_code        Country code (2 characters) (if detected)
-     *          country_code3       Country code (3 charachters) (if detected)
-     *          country_name        Country name (if detected)
-     *          region              Region (if detected)
-     *          city                City (if detected)
-     *          postal_code         Postal code (if detected)
-     *          latitude            Latitude (if detected)
-     *          longitude           Longitude (if detected)
-     *          area_code           Area code (if detected)
-     *          dma_code            DMA code (if detected)
-     *          metro_code          Metro code (if detected)
-     *          continent_code      Continent code (if detected)
-     */
-    public static function getByIP($ip)
-    {
-        if (strpos($ip, '.') !== false) {
-            // its an v4 address
-            $gi = geoip_open(Yii::$aliases['@item'] . "/data/GeoLiteCity.dat", GEOIP_STANDARD);
-            $record = GeoIP_record_by_addr($gi, $ip);
-            geoip_close($gi);
-        } else {
-            // its an v6 address
-            $gi = geoip_open(Yii::$aliases['@item'] . "/data/GeoLiteCityv6.dat", GEOIP_STANDARD);
-            $record = GeoIP_record_by_addr_v6($gi, $ip);
-            geoip_close($gi);
-        }
-        if ($record === null) {
-            return false;
-        }
-        return $record;
     }
 
     public function setStreetNameAndNumber($name)
@@ -247,15 +143,15 @@ class Location extends base\Location
         if (\Yii::$app->user->isGuest) {
             return false;
         }
-        if ($user == null) {
-            $user = \Yii::$app->user->identity;
-        }
+        $user = is_null($user) ? \Yii::$app->user->identity : $user;
         if ($this->user_id == $user->id) {
             return true;
         }
-        // see if the user rented
-        $booking = Booking::find()->where(['renter_id' => $user->id, 'location.id' => $this->id])
-            ->innerJoinWith('item.location')->count();
+        // see if the user rented this item
+        $booking = Booking::find()
+            ->where(['renter_id' => $user->id, 'location.id' => $this->id])
+            ->innerJoinWith('item.location')
+            ->count();
         return $booking > 0;
     }
 
@@ -268,5 +164,14 @@ class Location extends base\Location
         $this->longitude = $this->longitude * 1 + rand(-10, 10) / 10000;
         $this->latitude = $this->latitude * 1 + rand(-10, 10) / 10000;
         $this->estimationRadius = 0.01;
+    }
+
+    public function getFormattedAddress()
+    {
+        return $this->street_name . " " .
+        $this->street_number . ", " .
+        $this->city . " " .
+        $this->zip_code . ", " .
+        $this->country0->name;
     }
 }

@@ -126,7 +126,7 @@ class LocationForm extends Model
         $address = $this->street . " " .
             $this->city . " " .
             $this->zip_code . ", ";
-        $res = Location::getByAddress($address);
+        $res = Location::addressToLngLat($address);
         if ($res == false) {
             $this->addError('city', 'Address couldnt be found.');
             return false;

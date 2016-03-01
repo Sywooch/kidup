@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models\base;
+namespace user\models\base;
 
 use booking\models\Payin;
 use booking\models\Payout;

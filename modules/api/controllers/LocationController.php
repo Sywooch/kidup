@@ -2,6 +2,7 @@
 namespace api\controllers;
 
 use api\models\Location;
+use item\models\LocationFactory;
 use user\models\base\IpLocation;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
@@ -25,11 +26,7 @@ class LocationController extends Controller
     public function actions()
     {
         $actions = parent::actions();
-//        unset($actions['delete']);
-//        unset($actions['view']);
         unset($actions['index']);
-//        unset($actions['update']);
-//        unset($actions['create']);
         return $actions;
     }
 
@@ -54,43 +51,22 @@ class LocationController extends Controller
             }
         }
         $userIp = \Yii::$app->request->getUserIP();
-//        $userIp = '83.82.175.173';
-        $ipLoc = Location::getByIP($userIp);
+        $location = LocationFactory::createByIp($userIp);
 
-        if ($ipLoc == false) {
+        if ($location == false) {
             throw new BadRequestHttpException("Ip not found");
         }
-//        if ($ipLoc->country_code !== 'DK' && $ipLoc->country_code !== 'NL') {
-//            throw new BadRequestHttpException("We currently only accept danish locations");
-//        }
         if($save !== true){
-            $location = new Location();
-            $location->latitude = $ipLoc->latitude;
-            $location->longitude = $ipLoc->longitude;
-            $location->city = $ipLoc->city;
-            $location->zip_code = $ipLoc->postal_code;
-            $location->country = 1;
-            $location->street_name = '';
-            $location->street_number = '';
             return $location;
         }
         $userLoc = Location::find()->where([
             'user_id' => \Yii::$app->user->id,
-            'longitude' => $ipLoc->longitude,
-            'latitude' => $ipLoc->latitude,
+            'longitude' => $location->longitude,
+            'latitude' => $location->latitude,
         ])->one();
         if (count($userLoc) > 0) {
             return $userLoc;
         }
-        $location = new Location();
-
-        $location->latitude = $ipLoc->latitude;
-        $location->longitude = $ipLoc->longitude;
-        $location->city = $ipLoc->city;
-        $location->zip_code = $ipLoc->postal_code;
-        $location->country = 1;
-        $location->street_name = '';
-        $location->street_number = '';
         $location->user_id = \Yii::$app->user->id;
         if ($location->save()) {
             return $location;
@@ -100,6 +76,6 @@ class LocationController extends Controller
 
     public function actionGetByLngLat($lng, $lat)
     {
-        return (new Location())->createByLatLong($lat, $lng);
+        return LocationFactory::createByLatLong($lat, $lng);
     }
 }

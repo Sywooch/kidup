@@ -271,8 +271,6 @@ class CreateController extends Controller
         $i->setAttributes([
             'user_id' => \Yii::$app->user->id,
             'file_name' => (new ImageManager())->upload($image),
-            'type' => Media::TYPE_IMG,
-            'storage' => Media::LOC_LOCAL,
             'created_at' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp,
             'updated_at' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp,
         ]);
