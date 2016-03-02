@@ -1,0 +1,35 @@
+/* Large Devices, Wide Screens */
+
+@media only screen and (max-width: 1200px) {}
+
+/* Medium Devices, Desktops */
+
+@media only screen and (max-width: 992px) {}
+
+/* Small Devices, Tablets */
+
+@media only screen and (max-width: 768px) {
+    #container tr td {
+        padding: 0;
+    }
+    #header {
+        background-size: 70%;
+        height: 200px;
+    }
+    #image-left, #image-right {
+        padding: 40px 10px;
+    }
+    .image-left__content, .image-right__content {
+        padding: 20px !important;
+    }
+}
+
+/* Extra Small Devices, Phones */
+
+@media only screen and (max-width: 480px) {}
+
+/* Custom, iPhone Retina */
+
+@media only screen and (max-width: 320px) {
+
+}

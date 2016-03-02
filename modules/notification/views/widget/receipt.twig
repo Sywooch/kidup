@@ -1,0 +1,13 @@
+<table width="100%" id="text-center" style="margin: 20px 0px;">
+    <tr>
+        <td width="50%" style="text-align: center">
+            <h3>{{ t('mail.widget_receipt.booking_starts_on', 'Booking starts on') | raw }}</h3>
+            <strong>{% block booking_start_date %}{% endblock %}</strong>
+        </td>
+
+        <td width="50%" style="text-align: center">
+            <h3>{{ t('mail.widget_receipt.booking_ends_on', 'Booking ends on') | raw }}</h3>
+            <strong>{% block booking_end_date %}{% endblock %}</strong>
+        </td>
+    </tr>
+</table>

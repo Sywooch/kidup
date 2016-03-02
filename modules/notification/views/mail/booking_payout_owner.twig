@@ -1,0 +1,50 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_payout_owner.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_2.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-guy-green.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_payout_owner.p1',
+                        'I have sent you a payout on {total_payout_amount} by bank transfer. The payout should arrive in 5 days, excluding weekends and holidays.', {
+                            'total_payout_amount': total_payout_amount
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        {% embed "modules/notification/views/widget/receipt.twig" %}
+            {% block booking_start_date %}{{ booking_start_date | raw }}{% endblock %}
+            {% block booking_end_date %}{{ booking_end_date | raw }}{% endblock %}
+        {% endembed %}
+
+        <table id="text-center" width="100%">
+            <tr>
+                <td>
+                    <p>
+                        {{ t('mail.booking_payout_owner.p2',
+                            'I hope you have been happy with your rent on KidUp. Feel free to share your experience, with our {mail_link_support}, if you have feedback or just had a lovely time. I like a good story!', {
+                            'mail_link_support': '<a href="mailto:' ~ email_support ~ '" target="_blank">' ~ t('mail.links.support', 'support') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

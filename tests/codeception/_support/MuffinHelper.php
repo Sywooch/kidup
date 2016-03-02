@@ -19,6 +19,7 @@ use codecept\muffins\Token;
 use codecept\muffins\User;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
+use League\FactoryMuffin\Stores\ModelStore;
 
 /**
  * Class FactoryMuffin
@@ -62,7 +63,7 @@ class MuffinHelper extends Module
      */
     public function init()
     {
-        static::$factory = new FactoryMuffin();
+        static::$factory = new FactoryMuffin(new ModelStore('save', 'delete'));
         foreach (self::getClasses() as $model) {
             $defs = $model::definitions();
             if (method_exists($model, 'callback')) {
@@ -73,7 +74,6 @@ class MuffinHelper extends Module
                 static::$factory->define($model)->setDefinitions($defs);
             }
         }
-        static::$factory->setSaveMethod('save')->setDeleteMethod('delete');
         return self::$factory;
     }
 

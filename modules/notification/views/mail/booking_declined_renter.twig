@@ -1,0 +1,38 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ title | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_1.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table width="100%" id="text-center">
+            <tr>
+                <td>
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_declined_renter.p1',
+                        'I am sorry to have to tell you, but {owner_name} has declined your rental proposal for {item_name}. They probably had a good reason, you could ask {contact_owner_link}. Maybe it can be sorted out?', {
+                            'contact_owner_link': '<a href="' ~ contact_owner_url ~ '" target="_blank">' ~ t('mail.links.here', 'here') ~ '</a>',
+                            'owner_name': owner_name,
+                            'item_name': item_name
+                        }) | raw }}
+                    </p>
+
+                    <p>
+                        {{ t('mail.booking_declined_renter.p2',
+                        'Otherwise feel free to browse in the {app_link}. To see if you can find another solution, that might fit your needs perfectly.', {
+                            'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

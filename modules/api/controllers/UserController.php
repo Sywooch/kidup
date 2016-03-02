@@ -3,7 +3,7 @@ namespace api\controllers;
 
 use api\models\Review;
 use api\models\User;
-use mail\models\Token;
+use notifications\models\Token;
 use user\controllers\RegistrationController;
 use user\forms\Registration;
 use user\models\Account;

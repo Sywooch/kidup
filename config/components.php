@@ -20,7 +20,7 @@ $components = [
         'class' => 'bryglen\sendgrid\Mailer',
         'username' => $keys['sendgrid_user'],
         'password' => $keys['sendgrid_password'],
-        'viewPath' => '@app/modules/mail/views',
+        'viewPath' => '@app/modules/notifications/views',
         'useFileTransport' => YII_ENV == 'dev' ? true : false
     ],
     'mailer' => [
@@ -34,7 +34,7 @@ $components = [
 //            'encryption' => 'tls',
         ],
         'useFileTransport' => YII_ENV == 'dev' ? true : false,
-        'viewPath' => '@app/modules/mail/views',
+        'viewPath' => '@app/modules/notifications/views',
     ],
     'authClientCollection' => [
         'class' => 'yii\authclient\Collection',
@@ -96,6 +96,21 @@ $components = [
                     },
                     'setTitle' => function ($viewModel, $title) {
                         return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
+                    },
+                    'base64_image' => function($file) {
+                        $path = \Yii::getAlias($file);
+                        $data = file_get_contents($path);
+                        $type = pathinfo($path, PATHINFO_EXTENSION);
+                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                        return $base64;
+                    },
+                    'base64_font' => function($file) {
+                        $data = \Yii::$app->view->renderFile($file);
+                        return 'data:application/octet-stream;base64,' . base64_encode($data);
+                    },
+                    'load_file' => function($file) {
+                        $path = \Yii::getAlias($file);
+                        return \Yii::$app->view->renderFile($path);
                     }
                 ]
             ],

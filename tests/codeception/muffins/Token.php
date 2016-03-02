@@ -1,7 +1,7 @@
 <?php
 namespace codecept\muffins;
 
-class Token extends \mail\models\Token
+class Token extends \notification\models\Token
 {
     public function definitions()
     {

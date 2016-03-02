@@ -1,0 +1,39 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.user_reconfirm.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-right__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.user_reconfirm.p1',
+                        'I am just sending you this email, to make sure it is the right email-address in the system.'
+                        ) | raw }}
+                        {{ t('mail.user_reconfirm.p2',
+                        'If you {confirm_link} to confirm your email-address, that would help me so much.', {
+                            'confirm_link': '<a href="' ~ confirm_url ~ '" target="_blank">' ~ t('mail.links.click_this_link', 'click this link') ~ '</a>'
+                        }) | raw }}
+                        {{ t('mail.user_reconfirm.p3',
+                        'Thanks for being a part of KidUp.'
+                        ) | raw }}
+                    </p>
+                    <a class="button button--green" href="#">{{ t('mail.button.confirm_email', 'Confirm email') }}</a>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" alt="Image" width="100%">
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

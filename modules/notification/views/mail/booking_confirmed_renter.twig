@@ -1,0 +1,88 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_confirmed_renter.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_3.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+            <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_confirmed_renter.p1',
+                            'I am happy to tell you, that {owner_name} has accepted your request for item on the date.', {
+                            'owner_name': owner_name
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <table id="image-right" width="100%">
+            <tr>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_confirmed_renter.p2',
+                        'To make the exchange even easier, I suggest you continue the conversation with {owner_name} in the app’s {messaging_link}.', {
+                            'messaging_link': '<a href="' ~ contact_owner_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
+                            'owner_name': owner_name,
+                        }) | raw }}
+                        {{ t('mail.booking_confirmed_renter.p3',
+                        'Or you can contact the user on the {phone_link} or {email_link}.', {
+                            'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                            'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                        }) | raw }}
+                    </p>
+                </td>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-green-message.png') }}" width="100%" alt="Image">
+                </td>
+            </tr>
+        </table>
+
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-yellow-girl.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.booking_confirmed_renter.p4',
+                        'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'
+                        ) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        {% embed "modules/notification/views/widget/receipt.twig" %}
+            {% block booking_start_date %}{{ booking_start_date | raw }}{% endblock %}
+            {% block booking_end_date %}{{ booking_end_date | raw }}{% endblock %}
+        {% endembed %}
+
+        <table id="text-center" width="100%">
+            <tr>
+                <td>
+                    <p>
+                        {{ t('mail.booking_confirmed_renter.p5',
+                        'Thanks for using KidUp, and for sharing.'
+                        ) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}
