@@ -105,21 +105,18 @@ class Review extends base\Review
     }
 
     public function computeOverallUserScore(User $user){
-        $reviews = Review::find()->where(['reviewed_id' => $user->id])->all();
-        $avgs = [];
-        foreach ($reviews as $review) {
-            if($review->value == (int)$review->value){
-                $avgs[] = $review->value;
-            }
-        }
-        if(count($avgs) > 0){
-            return round(array_sum($avgs)/count($avgs),1);
-        }
-        return false;
+        return $this->averageOnReviews(Review::find()->where(['reviewed_id' => $user->id])->all());
     }
 
     public function computeOverallItemScore(\item\models\Item $item){
-        $reviews = Review::find()->where(['item_id' => $item->id])->all();
+        return $this->averageOnReviews(Review::find()->where(['item_id' => $item->id])->all());
+    }
+
+    /**
+     * Computes an average score for an array of reviews
+     * @param Review[] $reviews
+     */
+    private function averageOnReviews($reviews){
         $avgs = [];
         foreach ($reviews as $review) {
             if($review->value == (int)$review->value){

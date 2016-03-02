@@ -11,6 +11,7 @@ use search\components\ItemSearchDb;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
@@ -111,25 +112,20 @@ class ItemController extends Controller
             throw new ForbiddenHttpException("Item not yours");
         }
         $d = \Yii::$app->request->getBodyParams();
-        $item->setScenario('validate');
-        foreach(['location_id', 'name', 'description', 'price_day', 'price_week', 'price_month', 'price_year', 'category_id'] as $i){
-            if(isset($d[$i])){
-                $item->{$i} = $d[$i];
-            }
-        }
-        if($item->save(false)){
-            return $item;
-        }
-        return $item->getErrors();
+        return $this->processItemDataUpdate($item, $d);
     }
 
     public function actionCreate(){
         $item = new Item();
         $d = \Yii::$app->request->getBodyParams();
+        return $this->processItemDataUpdate($item, $d);
+    }
+
+    private function processItemDataUpdate(Item $item, $data){
         $item->setScenario('validate');
         foreach(['location_id', 'name', 'description', 'price_day', 'price_week', 'price_month', 'price_year', 'category_id'] as $i){
-            if(isset($d[$i])){
-                $item->{$i} = $d[$i];
+            if(isset($data[$i])){
+                $item->{$i} = $data[$i];
             }
         }
         $item->owner_id = \Yii::$app->user->id;

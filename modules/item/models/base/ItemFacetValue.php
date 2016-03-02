@@ -76,21 +76,9 @@ class ItemFacetValue extends \yii\db\ActiveRecord
 
     public function getTranslatedName($lang = false)
     {
-        $currentLang = \Yii::$app->language;
         $lower = str_replace(" ", '_', strtolower($this->itemFacet->name));
         $val = str_replace(" ", '_', strtolower($this->name));
         $index_name = 'item.feature.' . $lower . '_value_' . $val;
-        $translationLanguage =  $lang ? $lang : $currentLang;
-        $i18n = I18nMessage::find()->where([
-            'i18n_source.category' => $index_name,
-            'i18n_source.message' => $this->name,
-            'language' => $translationLanguage
-        ])->innerJoinWith('i18nSource')->one();
-        if($i18n == null || $i18n->translation == null){
-            $i18n = \Yii::$app->getI18n()->translate($index_name, $this->name, [], $translationLanguage);
-        }else{
-            $i18n = $i18n->translation;
-        }
-        return $i18n;
+        return I18nMessage::findCustomMessage($index_name, $this->name, $lang);
     }
 }

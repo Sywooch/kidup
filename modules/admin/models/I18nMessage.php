@@ -38,4 +38,20 @@ class I18nMessage extends \yii\db\ActiveRecord
         return $this->hasOne(I18nSource::className(), ['id' => 'id']);
     }
 
+    public static function findCustomMessage($index, $message, $lang){
+        if($lang == null){
+            $lang = \Yii::$app->language;
+        }
+        $i18n = I18nMessage::find()->where([
+            'i18n_source.category' => $index,
+            'i18n_source.message' => $message,
+            'language' => $lang
+        ])->innerJoinWith('i18nSource')->one();
+        if($i18n == null || $i18n->translation == null){
+            return \Yii::$app->getI18n()->translate($index, $message, [], $lang);
+        }else{
+            return $i18n->translation;
+        }
+    }
+
 }
