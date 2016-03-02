@@ -2,7 +2,7 @@
 namespace api\controllers;
 
 use app\extended\web\Controller;
-use pages\helpers\Pages;
+use pages\components\Pages;
 use yii\filters\ContentNegotiator;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;

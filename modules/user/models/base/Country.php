@@ -89,14 +89,6 @@ class Country extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPayoutMethods()
-    {
-        return $this->hasMany(\user\models\base\PayoutMethod::className(), ['country_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getProfiles()
     {
         return $this->hasMany(\user\models\Profile::className(), ['nationality' => 'id']);

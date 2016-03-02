@@ -17,13 +17,9 @@ class Message extends base\Message
 
     public function beforeValidate()
     {
-        if ($this->isNewRecord) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        }
         if ($this->isAttributeChanged('message')) {
             $this->message = \yii\helpers\HtmlPurifier::process($this->message);
         }
-        $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
         return parent::beforeValidate();
     }
 
@@ -32,6 +28,6 @@ class Message extends base\Message
         if ($this->isNewRecord) {
             Event::trigger($this, self::EVENT_NEW_MESSAGE);
         }
-        return parent::afterSave($insert, $changedVars);
+        parent::afterSave($insert, $changedVars);
     }
 }

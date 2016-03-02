@@ -1,6 +1,6 @@
 <?php
 
-namespace pages\helpers;
+namespace pages\components;
 
 use app\components\Cache;
 use GuzzleHttp\Client;

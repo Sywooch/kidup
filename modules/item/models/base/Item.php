@@ -4,6 +4,7 @@ namespace item\models\base;
 
 use booking\models\Booking;
 use item\models\Category;
+use item\models\ItemQuery;
 use review\models\Review;
 use user\models\base\Currency;
 use user\models\User;
@@ -121,6 +122,11 @@ class Item extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('item.attributes.updated_at', 'Updated At'),
             'category_id' => Yii::t('item.attributes.category_id', 'Category'),
         ];
+    }
+
+    public static function find()
+    {
+        return new ItemQuery(get_called_class());
     }
 
     public function scenarios()

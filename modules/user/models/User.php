@@ -131,7 +131,7 @@ class User extends base\User implements IdentityInterface
      */
     public function getIsAdmin()
     {
-        return false;
+        return $this->role == 9;
     }
 
     /**
@@ -289,11 +289,7 @@ class User extends base\User implements IdentityInterface
 
     public function canMakeBooking()
     {
-        if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public function canAcceptBooking()

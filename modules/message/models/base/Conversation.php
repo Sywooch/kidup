@@ -6,6 +6,7 @@ use booking\models\Booking;
 use notifications\models\MailAccount;
 use user\models\User;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the base-model class for table "conversation".
@@ -32,6 +33,22 @@ class Conversation extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'conversation';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -99,7 +116,7 @@ class Conversation extends \yii\db\ActiveRecord
      */
     public function getLastMessage()
     {
-        return $this->hasOne(\message\models\Message::className(), ['conversation_id' => 'id'])->orderBy('created_at DESC');
+        return $this->hasOne(\message\models\Message::className(), ['conversation_id' => 'id'])->orderBy('message.created_at DESC');
     }
 
     /**

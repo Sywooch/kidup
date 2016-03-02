@@ -39,7 +39,8 @@ class SocialAccount extends \yii\db\ActiveRecord
                 ['provider', 'client_id'],
                 'unique',
                 'targetAttribute' => ['provider', 'client_id'],
-                'message' => \Yii::t('social_account.error_already_used_combination', 'The combination of Provider and Client ID has already been taken.')
+                'message' => \Yii::t('social_account.error_already_used_combination',
+                    'The combination of Provider and Client ID has already been taken.')
             ]
         ];
     }

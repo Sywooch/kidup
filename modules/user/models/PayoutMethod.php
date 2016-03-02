@@ -34,15 +34,6 @@ class PayoutMethod extends \user\models\base\PayoutMethod
         ];
     }
 
-    public function beforeValidate()
-    {
-        if ($this->isNewRecord) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        }
-        $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        return parent::beforeValidate();
-    }
-
     public function userHasAccess($user = false){
         $user = $user ? $user : \Yii::$app->user;
         return $user->id === $this->user_id;

@@ -3,6 +3,7 @@
 namespace message\models\base;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the base-model class for table "message".
@@ -16,7 +17,7 @@ use Yii;
  * @property integer $updated_at
  * @property integer $created_at
  *
- * @property \mail\models\MailMessage[] $mailMessages
+ * @property \notification\models\MailMessage[] $mailMessages
  * @property \user\models\User $senderUser
  * @property \user\models\User $receiverUser
  * @property \message\models\Conversation $conversation
@@ -61,11 +62,28 @@ class Message extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getMailMessages()
     {
-        return $this->hasMany(\mail\models\MailMessage::className(), ['message_id' => 'id']);
+        return $this->hasMany(\notification\models\MailMessage::className(), ['message_id' => 'id']);
     }
 
     /**

@@ -24,12 +24,11 @@ use Yii;
  * @property string $referral_code
  *
  * @property \booking\models\Booking[] $bookings
- * @property \user\models\Child[] $children
  * @property \message\models\Conversation[] $conversations
  * @property \message\models\Conversation[] $conversations0
  * @property \item\models\Item[] $items
  * @property \item\models\Location[] $locations
- * @property \mail\models\MailAccount[] $mailAccounts
+ * @property \notification\models\MailAccount[] $mailAccounts
  * @property \item\models\Media[] $media
  * @property \message\models\Message[] $messages
  * @property \message\models\Message[] $messages0
@@ -134,7 +133,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\mail\models\MailAccount::className(), ['user_id' => 'id']);
+        return $this->hasMany(\notification\models\MailAccount::className(), ['user_id' => 'id']);
     }
 
     /**

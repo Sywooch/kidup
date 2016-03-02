@@ -126,10 +126,7 @@ class Location extends base\Location
 
     public function isValid()
     {
-        if ($this->longitude != 0 && $this->latitude != 0) {
-            return true;
-        }
-        return false;
+        return $this->longitude != 0 && $this->latitude != 0;
     }
 
     /**

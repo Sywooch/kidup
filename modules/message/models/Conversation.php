@@ -15,26 +15,12 @@ use yii\web\ServerErrorHttpException;
  */
 class Conversation extends base\Conversation
 {
-    public function beforeValidate()
-    {
-        if ($this->isNewRecord) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        }
-        $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-        return parent::beforeValidate();
-    }
-
     public function afterSave($insert, $ca)
     {
         if ($insert == true) {
             (new MailAccount())->createForConversation($this);
         }
         return parent::afterSave($insert, $ca);
-    }
-
-    public function getLastMessage()
-    {
-        return $this->hasOne(Message::className(), ['conversation_id' => 'id'])->orderBy('message.created_at DESC');
     }
 
     public function getOtherUser()
@@ -65,7 +51,7 @@ class Conversation extends base\Conversation
         return true;
     }
 
-    public function unreadMessages()
+    public function getUnreadMessageCount()
     {
         return Message::find()->where([
             'receiver_user_id' => \Yii::$app->user->id,
@@ -74,11 +60,5 @@ class Conversation extends base\Conversation
         ])->count();
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBooking()
-    {
-        return $this->hasOne(Booking::className(), ['id' => 'booking_id']);
-    }
+
 }

@@ -2,7 +2,7 @@
 namespace codecept\functional\pages;
 
 use FunctionalTester;
-use pages\helpers\Pages;
+use pages\components\Pages;
 
 /**
  * Functional test for the pages module.

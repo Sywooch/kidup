@@ -2,6 +2,7 @@
 
 namespace user\models\base;
 
+use item\models\Location;
 use Yii;
 
 /**
@@ -46,18 +47,66 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified'], 'required'],
-            [['user_id', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified', 'currency_id', 'birthday', 'nationality', 'location_id'], 'integer'],
+            [
+                [
+                    'user_id',
+                    'first_name',
+                    'last_name',
+                    'email_verified',
+                    'phone_verified',
+                    'identity_verified',
+                    'location_verified'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'user_id',
+                    'email_verified',
+                    'phone_verified',
+                    'identity_verified',
+                    'location_verified',
+                    'currency_id',
+                    'birthday',
+                    'nationality',
+                    'location_id'
+                ],
+                'integer'
+            ],
             [['description'], 'string'],
             [['first_name'], 'string', 'max' => 128],
             [['last_name', 'img'], 'string', 'max' => 256],
             [['phone_country'], 'string', 'max' => 5],
             [['phone_number'], 'string', 'max' => 50],
             [['language'], 'string', 'max' => 6],
-            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
-            [['nationality'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['nationality' => 'id']],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
+            [
+                ['location_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Location::className(),
+                'targetAttribute' => ['location_id' => 'id']
+            ],
+            [
+                ['nationality'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Country::className(),
+                'targetAttribute' => ['nationality' => 'id']
+            ],
+            [
+                ['currency_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Currency::className(),
+                'targetAttribute' => ['currency_id' => 'id']
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ]
         ];
     }
 
@@ -119,5 +168,4 @@ class Profile extends \yii\db\ActiveRecord
     }
 
 
-    
 }
