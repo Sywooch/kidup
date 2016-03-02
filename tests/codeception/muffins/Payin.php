@@ -1,6 +1,8 @@
 <?php
 namespace codecept\muffins;
 
+use booking\models\PayinException;
+use Codeception\Util\Debug;
 use Faker\Factory as Faker;
 
 class Payin extends \booking\models\Payin
@@ -17,5 +19,4 @@ class Payin extends \booking\models\Payin
             'amount' => $faker->numberBetween(10,10000)
         ];
     }
-
 }
