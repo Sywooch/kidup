@@ -19,7 +19,7 @@ use Yii;
  * @property \booking\models\Payout[] $payouts
  * @property \user\models\Profile[] $profiles
  */
-class Currency extends \yii\db\ActiveRecord
+class Currency extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

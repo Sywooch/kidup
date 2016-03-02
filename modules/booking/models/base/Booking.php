@@ -46,7 +46,7 @@ use Yii;
  * @property Review[] $reviews
  * @property Conversation $conversation
  */
-class Booking extends \yii\db\ActiveRecord
+class Booking extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

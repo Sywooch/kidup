@@ -21,7 +21,7 @@ use yii\db\ActiveRecord;
  * @property User $user
  * @property Country $country
  */
-class PayoutMethod extends \yii\db\ActiveRecord
+class PayoutMethod extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

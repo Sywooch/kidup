@@ -13,7 +13,7 @@ use Yii;
  * @property ItemFacet $item_facet
  * @property Category $category
  */
-class CategoryHasItemFacet extends \yii\db\ActiveRecord
+class CategoryHasItemFacet extends \app\models\BaseActiveRecord
 {
 
 

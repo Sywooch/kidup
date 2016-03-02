@@ -18,7 +18,7 @@ use Yii;
  * @property \mail\models\MailAccount $mailAccountName
  * @property \message\models\Message $message0
  */
-class MailMessage extends \yii\db\ActiveRecord
+class MailMessage extends \app\models\BaseActiveRecord
 {
 
     /**

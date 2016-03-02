@@ -26,7 +26,7 @@ use Yii;
  * @property User $reviewer
  * @property User $reviewed
  */
-class Review extends \yii\db\ActiveRecord
+class Review extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

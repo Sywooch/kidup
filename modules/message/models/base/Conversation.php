@@ -25,7 +25,7 @@ use yii\db\ActiveRecord;
  * @property \message\models\Message[] $messages
  * @property \message\models\Message $lastMessage
  */
-class Conversation extends \yii\db\ActiveRecord
+class Conversation extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

@@ -14,7 +14,7 @@ use Yii;
  *
  * @property \user\models\User $user
  */
-class Token extends \yii\db\ActiveRecord
+class Token extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

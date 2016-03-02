@@ -56,21 +56,6 @@ class ItemFacetController extends Controller
      */
     public function actionAvailableForItem($id)
     {
-//        $item = Item::find()->where(['id' => $id])->one();
-//        if($item == null){
-//            throw new NotFoundHttpException("Item not found");
-//        }
-//
-//        $itemFacets = CategoryHasItemFacet::find()
-//            ->where(['IN', 'category_id', [$item->category_id, $item->category->parent_id]])
-//            ->select('item_facet_id')
-//            ->asArray()
-//            ->all();
-//
-//        $res = [];
-//        foreach ($itemFacets as $itemFacet) {
-//            $res[] = $itemFacet['item_facet_id'];
-//        }
 
         return new ActiveDataProvider([
             'query' => ItemFacet::find()

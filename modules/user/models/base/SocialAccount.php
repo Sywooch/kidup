@@ -15,7 +15,7 @@ use Yii;
  *
  * @property \user\models\User $user
  */
-class SocialAccount extends \yii\db\ActiveRecord
+class SocialAccount extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

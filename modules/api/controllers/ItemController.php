@@ -75,12 +75,7 @@ class ItemController extends Controller
     // default action, does not need documentation
     public function actionView($id)
     {
-        $where = ['id' => $id];
-        $item = Item::find()->where($where)->one();
-        if ($item === null) {
-            throw new NotFoundHttpException('Item not found');
-        }
-        return $item;
+        return Item::findOneOr404($id);
     }
 
     public function actionDelete($id){

@@ -20,7 +20,7 @@ use Yii;
  * @property Item[] $items
  * @property Item[] $items0
  */
-class ItemFacet extends \yii\db\ActiveRecord
+class ItemFacet extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

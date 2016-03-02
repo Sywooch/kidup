@@ -30,7 +30,7 @@ use Yii;
  * @property \user\models\base\Currency $currency
  * @property \user\models\User $user
  */
-class Profile extends \yii\db\ActiveRecord
+class Profile extends \app\models\BaseActiveRecord
 {
 
     /**

@@ -15,7 +15,7 @@ use Yii;
  * @property ItemFacet $itemFacet
  * @property Item $item
  */
-class ItemHasItemFacet extends \yii\db\ActiveRecord
+class ItemHasItemFacet extends \app\models\BaseActiveRecord
 {
 
     /**

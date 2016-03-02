@@ -37,9 +37,9 @@ class PayoutMethodController extends Controller
 
     public function actionIndex()
     {
-        return PayoutMethod::find()->where([
+        return PayoutMethod::findOne([
             'user_id' => \Yii::$app->user->id
-        ])->one();
+        ]);
     }
 
     public function actionView($id)
@@ -60,13 +60,7 @@ class PayoutMethodController extends Controller
     }
 
     private function findAndCheck($id){
-        $payout = PayoutMethod::findOne($id);
-        /**
-         * @var PayoutMethod $payout
-         */
-        if($payout == null){
-            throw new NotFoundHttpException("PayoutMethod not found");
-        }
+        $payout = PayoutMethod::findOneOr404($id);
         if($payout->userHasAccess(\Yii::$app->user)){
             return $payout;
         }

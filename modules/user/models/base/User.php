@@ -42,7 +42,7 @@ use Yii;
  * @property \user\models\base\Token[] $tokens
  * @property \api\models\oauth\OauthAccessToken[] $validOauthAccessTokens
  */
-class User extends \yii\db\ActiveRecord
+class User extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

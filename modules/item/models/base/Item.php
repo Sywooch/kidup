@@ -43,7 +43,7 @@ use yii\helpers\ArrayHelper;
  * @property ItemSimilarity[] $itemSimilarities0
  * @property Review[] $reviews
  */
-class Item extends \yii\db\ActiveRecord
+class Item extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

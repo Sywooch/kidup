@@ -16,7 +16,7 @@ use Yii;
  *
  * @property \user\models\User $user
  */
-class Setting extends \yii\db\ActiveRecord
+class Setting extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
