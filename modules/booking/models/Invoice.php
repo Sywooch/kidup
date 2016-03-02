@@ -11,7 +11,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "Booking".
  */
-class Invoice extends user\models\base\Invoice
+class Invoice extends \booking\models\base\Invoice
 {
     public function behaviors()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace booking\models\base;
 
 use booking\models\Invoice;
 use user\models\base\Currency;

@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace booking\models\base;
 
 use booking\models\Payin;
 use booking\models\Payout;
@@ -97,7 +97,6 @@ class Booking extends \yii\db\ActiveRecord
             ],
             [['status'], 'string', 'max' => 50],
             [['refund_status'], 'string', 'max' => 20],
-            [['promotion_code_id'], 'string', 'max' => 255],
             [
                 ['currency_id'],
                 'exist',
@@ -158,7 +157,6 @@ class Booking extends \yii\db\ActiveRecord
             'amount_payout_fee' => Yii::t('booking.attributes.amount_payout_kidup_fee', 'Amount Payout Fee'),
             'amount_payout_fee_tax' => Yii::t('booking.attributes.amount_payout_fee_tex', 'Amount Payout Fee Tax'),
             'request_expires_at' => Yii::t('booking.attributes.request_expires_at', 'Request Expires At'),
-            'promotion_code_id' => Yii::t('booking.attributes.promotion_code', 'Promotion Code'),
         ];
     }
 

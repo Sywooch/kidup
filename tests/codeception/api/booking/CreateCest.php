@@ -1,6 +1,7 @@
 <?php
 namespace codecept\api\booking;
 
+use booking\models\Booking;
 use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
@@ -65,11 +66,14 @@ class CreateCest
             'time_from' => Carbon::now()->addDays(3)->timestamp,
             'time_to' => Carbon::now()->addDays(5)->timestamp,
             'message' => '',
-            'payment_nonce' => 'fake-nonce'
+            'payment_nonce' => 'fake-valid-nonce'
         ]));
-//        $I->seeResponseCodeIs(200);
-//        $I->seeResponseIsJson();
-//        $I->seeResponseContains('"item_id":');
+        $I->seeResponseCodeIs(200);
+        $res = json_decode($I->grabResponse(), true);
+        $I->assertEquals($item->id, $res['item_id']);
+        $I->assertEquals($this->user->id, $res['renter_id']);
+        $I->assertEquals(Booking::PENDING, $res['status']);
+        $I->assertEquals($item->getDailyPrice() * 2, $res['amount_item']);
     }
 
 }

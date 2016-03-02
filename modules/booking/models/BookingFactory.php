@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use item\models\Item;
 use user\models\base\Currency;
 use Yii;
+use yii\base\Model;
 
 /**
  * BookingFactory is responsible for the creation of bookings
@@ -15,6 +16,10 @@ class BookingDatesOverlapException extends BookingException
 }
 
 class BookingInvalideDatesException extends BookingException
+{
+}
+
+class BookingPaymentException extends BookingException
 {
 }
 
@@ -31,7 +36,7 @@ class BookingFactory
     private $payin;
     private $item;
 
-    public function __construct($from, $to, Item $item, $paymentNonce, $message)
+    public function create($from, $to, Item $item, $paymentNonce, $message)
     {
         $this->item = $item;
         $this->booking = new Booking();
@@ -52,8 +57,9 @@ class BookingFactory
         try {
             $this->payin->authorize();
         } catch (PayinException $e) {
-            return false;
+            throw new BookingPaymentException("Payment failed", null, $e->getPrevious());
         }
+
         $this->booking->payin_id = $this->payin->id;
         $this->booking->status = Booking::PENDING;
         $this->booking->setExpireDate();
@@ -62,7 +68,6 @@ class BookingFactory
         $this->payin->save();
         $this->booking->startConversation($message);
         return $this->booking;
-
     }
 
     private function createPayin($paymentNonce)
@@ -73,7 +78,7 @@ class BookingFactory
         $this->payin->currency_id = Currency::getUserOrDefault()->id;
         $this->payin->user_id = \Yii::$app->user->id;
         $this->payin->amount = $this->booking->amount_payin;
-        return true;
+        return $this->payin->save();
     }
 
     private function setDatesAndValidate($from, $to)

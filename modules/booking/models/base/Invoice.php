@@ -1,7 +1,8 @@
 <?php
 
-namespace user\models\base;
+namespace booking\models\base;
 
+use booking\models\Payout;
 use Yii;
 
 /**

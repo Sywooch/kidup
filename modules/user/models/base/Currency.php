@@ -58,8 +58,8 @@ class Currency extends \yii\db\ActiveRecord
      * Gets the currency of a user, or the default if the user is guest or none is set
      * @return Currency|\yii\db\ActiveRecord
      */
-    public static function getUserOrDefault(User $user = null){
-        $user = is_null($user) ? \Yii::$app->user->identity : $user;
+    public static function getUserOrDefault(\yii\web\User $user = null){
+        $user = is_null($user) || $user->isGuest ? \Yii::$app->user->identity : $user->identity;
         if($user->profile->currency){
             return $user->profile->currency;
         }

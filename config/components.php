@@ -97,18 +97,18 @@ $components = [
                     'setTitle' => function ($viewModel, $title) {
                         return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
                     },
-                    'base64_image' => function($file) {
+                    'base64_image' => function ($file) {
                         $path = \Yii::getAlias($file);
                         $data = file_get_contents($path);
                         $type = pathinfo($path, PATHINFO_EXTENSION);
                         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                         return $base64;
                     },
-                    'base64_font' => function($file) {
+                    'base64_font' => function ($file) {
                         $data = \Yii::$app->view->renderFile($file);
                         return 'data:application/octet-stream;base64,' . base64_encode($data);
                     },
-                    'load_file' => function($file) {
+                    'load_file' => function ($file) {
                         $path = \Yii::getAlias($file);
                         return \Yii::$app->view->renderFile($path);
                     }
@@ -178,8 +178,18 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-            if (strpos("/api/",\Yii::$app->request->url) == 0) {
+            if (strpos("/api/", \Yii::$app->request->url) == 0) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
+
+                // change all bad requests to success: false, data: details format
+                $response = $event->sender;
+
+                if ($response->statusCode >= 400) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+                }
             }
         },
     ],

@@ -1,0 +1,107 @@
+<?php
+
+namespace codecept\api\booking;
+
+use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
+use codecept\muffins\Booking;
+use codecept\muffins\PayoutMethod;
+use codecept\muffins\User;
+use codecept\muffins\Item;
+use League\FactoryMuffin\FactoryMuffin;
+use ApiTester;
+/**
+ * API test for checking the costs of a booking.
+ *
+ * Class CostsBookingCest
+ * @package codecept\api\booking
+ */
+class OwnerBookingRespondCest
+{
+    /**
+     * @var FactoryMuffin
+     */
+    protected $fm = null;
+    private $owner;
+    private $unknownUser;
+    private $item;
+    private $booking;
+
+    public function _before()
+    {
+        $this->fm = (new MuffinHelper())->init();
+        $this->owner = $this->fm->create(User::class);
+        $this->unknownUser = $this->fm->create(User::class);
+        $this->item = $this->fm->create(Item::class, [
+            'owner_id' => $this->owner->id
+        ]);
+        $this->booking = $this->fm->create(Booking::class,[
+            'item_id' => $this->item->id,
+        ]);
+        $payoutMethod = $this->fm->create(PayoutMethod::class, [
+            'user_id' => $this->owner->id
+        ]);
+    }
+
+    /**
+     * Check if I can retrieve expected costs of a booking.
+     *
+     * @param ApiTester $I
+     */
+    public function canAcceptBooking(ApiTester $I) {
+        $accessToken = UserHelper::apiLogin($this->owner)['access-token'];
+        $I->wantTo("an owner can accept a booking");
+        $this->booking->status = Booking::PENDING;
+        $this->booking->save();
+        $I->sendGET('bookings/accept',[
+            'access-token' => $accessToken,
+            'id' => $this->booking->id
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeRecord(Booking::className(), [
+            'id' => $this->booking->id,
+            'status' => Booking::ACCEPTED
+        ]);
+    }
+
+    /**
+     * Check if I can retrieve expected costs of a booking.
+     *
+     * @param ApiTester $I
+     */
+    public function canDeclineBooking(ApiTester $I) {
+        $accessToken = UserHelper::apiLogin($this->owner)['access-token'];
+        $I->wantTo("an owner can decline a booking");
+        $this->booking->status = Booking::PENDING;
+        $this->booking->save();
+        $I->sendGET('bookings/accept',[
+            'access-token' => $accessToken,
+            'id' => $this->booking->id
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeRecord(Booking::className(), [
+            'id' => $this->booking->id,
+            'status' => Booking::DECLINED
+        ]);
+    }
+
+    /**
+     * Check if I can retrieve expected costs of a booking.
+     *
+     * @param ApiTester $I
+     */
+    public function cantAcceptOrDeclineAsUnknownUser(ApiTester $I) {
+        $accessToken = UserHelper::apiLogin($this->unknownUser)['access-token'];
+        $I->wantTo("have no access as unknown user");
+        $I->sendGET('bookings/accept',[
+            'access-token' => $accessToken,
+            'id' => $this->booking->id
+        ]);
+        $I->seeResponseCodeIs(403);
+        $I->sendGET('bookings/decline',[
+            'access-token' => $accessToken,
+            'id' => $this->booking->id
+        ]);
+        $I->seeResponseCodeIs(403);
+    }
+}

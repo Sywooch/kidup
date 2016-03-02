@@ -92,7 +92,6 @@ return [
         '@home' => '@app/modules/home',
         '@item' => '@app/modules/item',
         '@message' => '@app/modules/message',
-        '@notification' => '@app/modules/notification',
         '@images' => '@app/modules/images',
         '@booking' => '@app/modules/booking',
         '@review' => '@app/modules/review',

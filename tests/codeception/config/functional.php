@@ -13,6 +13,7 @@ return yii\helpers\ArrayHelper::merge(
             'request' => [
                 // it's not recommended to run functional tests with CSRF validation enabled
                 'enableCsrfValidation' => false,
+                'class' => '\yii\web\Request',
                 // but if you absolutely need it set cookie domain to localhost
                 /*
                 'csrfCookie' => [

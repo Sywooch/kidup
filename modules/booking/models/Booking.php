@@ -18,11 +18,13 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "Booking".
  */
-class BookingException extends \yii\base\ErrorException
+class BookingException extends \yii\base\Exception
 {
 }
 
-class Booking extends user\models\base\Booking
+class NoAccessToBookingException extends BookingException{};
+
+class Booking extends \booking\models\base\Booking
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
     const PENDING = 'pending_owner';
@@ -58,13 +60,18 @@ class Booking extends user\models\base\Booking
                 'time_created',
                 'item_id',
                 'status',
-                'promotion_code_id'
             ],
         ]);
     }
 
     public function ownerAccepts()
     {
+        if ($this->item->owner_id != \Yii::$app->user->id) {
+            throw new ForbiddenHttpException("You are not the owner of this item");
+        }
+        if (!$this->item->owner->hasValidPayoutMethod()) {
+            throw new BadRequestHttpException("There is no valid payout method set.");
+        }
         /**
          * @var Payin $payin
          */
@@ -92,6 +99,10 @@ class Booking extends user\models\base\Booking
 
     public function ownerDeclines()
     {
+        if ($this->item->owner_id != \Yii::$app->user->id) {
+            throw new NoAccessToBookingException("You are not the owner of this item");
+        }
+
         /**
          * @var Payin $payin
          */

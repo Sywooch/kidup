@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Payin extends \user\models\base\Payin
+class Payin extends \booking\models\Payin
 {
     public function definitions()
     {
@@ -12,6 +12,9 @@ class Payin extends \user\models\base\Payin
             'user_id' => 'factory|'.User::class,
             'currency_id' => 'factory|'.Currency::class,
             'invoice_id' => 'factory|'.Invoice::class,
+            'status' => Payin::STATUS_AUTHORIZED,
+            'nonce' => 'fake-valid-nonce',
+            'amount' => $faker->numberBetween(10,10000)
         ];
     }
 

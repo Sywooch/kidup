@@ -32,6 +32,10 @@ class ItemSearchDb
     {
         $batch = [];
 
+        if(YII_ENV == 'test'){
+            return true;
+        }
+
         foreach ($items as $item) {
             $constructed = $this->constructItem($item);
             if (!$constructed) {

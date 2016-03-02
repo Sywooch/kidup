@@ -14,6 +14,7 @@ use codecept\muffins\OauthAccessToken;
 use codecept\muffins\OauthClient;
 use codecept\muffins\Payin;
 use codecept\muffins\Payout;
+use codecept\muffins\PayoutMethod;
 use codecept\muffins\Profile;
 use codecept\muffins\Token;
 use codecept\muffins\User;
@@ -26,7 +27,7 @@ use League\FactoryMuffin\Stores\ModelStore;
  * @var FactoryMuffin $factory
  * @package common\components
  */
-class MuffinHelper extends Module
+class MuffinHelper
 {
     public static $factory;
 
@@ -43,6 +44,7 @@ class MuffinHelper extends Module
             Invoice::class,
             Item::class,
             Payin::class,
+            PayoutMethod::class,
             Payout::class,
             Profile::class,
             Token::class,
@@ -75,14 +77,6 @@ class MuffinHelper extends Module
             }
         }
         return self::$factory;
-    }
-
-    /**
-     * Method is called after all suite tests run
-     */
-    public function _after(\Codeception\TestCase $test)
-    {
-        //static::$factory->deleteSaved();
     }
 
 }

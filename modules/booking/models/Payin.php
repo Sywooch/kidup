@@ -5,6 +5,7 @@ namespace booking\models;
 use app\helpers\Event;
 use Carbon\Carbon;
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Json;
@@ -12,13 +13,11 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
-class PayinException extends \yii\base\ErrorException
+class PayinException extends Exception
 {
 }
 
-;
-
-class Payin extends user\models\base\Payin
+class Payin extends \booking\models\base\Payin
 {
     const STATUS_INIT = 'init';
     const STATUS_PENDING = 'status_pending';
@@ -58,7 +57,7 @@ class Payin extends user\models\base\Payin
         try {
             $transaction = $brainTree->autorize();
         } catch (BrainTreeError $e) {
-            throw new PayinException($e);
+            throw new PayinException("Payin failed", null, $e->getPrevious());
         }
         $this->status = $this->brainTreeToPayinStatus($transaction['status']);
         $this->braintree_backup = Json::encode($transaction);
@@ -110,7 +109,11 @@ class Payin extends user\models\base\Payin
     public function capture()
     {
         $brainTree = new BrainTree($this);
-        $brainTree->capture();
+        if(YII_ENV == 'test'){
+            return $brainTree->sandboxSettlementAccept();
+        }else{
+            $brainTree->capture();
+        }
         return $this->updateStatus();
     }
 
@@ -120,7 +123,11 @@ class Payin extends user\models\base\Payin
     public function release()
     {
         $brainTree = new BrainTree($this);
-        $brainTree->release();
+        if(YII_ENV == 'test'){
+            return $brainTree->sandboxSettlementDecline();
+        }else{
+            $brainTree->release();
+        }
         return $this->updateStatus();
     }
 

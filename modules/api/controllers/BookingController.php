@@ -6,6 +6,7 @@ use api\models\Currency;
 use api\models\Item;
 use api\models\Review;
 use booking\forms\Confirm;
+use booking\models\BookingException;
 use booking\models\BookingFactory;
 use booking\models\BrainTree;
 use booking\models\Payin;
@@ -17,6 +18,7 @@ use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 class BookingController extends Controller
 {
@@ -78,7 +80,7 @@ class BookingController extends Controller
         if ($b->canBeAccessedByUser(\Yii::$app->user->identity)) {
             return $b;
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException();
         }
     }
 
@@ -128,8 +130,13 @@ class BookingController extends Controller
             throw new NotFoundHttpException("Item not found.");
         }
 
-        return new BookingFactory($params['time_from'], $params['time_to'], $item, $params['payment_nonce'],
-            $params['message']);
+        try {
+            return (new BookingFactory)->create($params['time_from'], $params['time_to'], $item,
+                $params['payment_nonce'],
+                $params['message']);
+        } catch (BookingException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
     }
 
     /**
@@ -154,18 +161,14 @@ class BookingController extends Controller
         $item = Item::find()->where([
             'id' => $item_id,
             'is_available' => 1
-        ]);
+        ])->one();
 
         // check whether the item is found
-        if ($item->count() != 1) {
+        if (count($item) == 0) {
             throw(new NotFoundHttpException("Item not found."));
         }
-
-        // set the item as the found item
-        $item = $item->one();
-
         // grab the currency of the user
-        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+        $currency = Currency::getUserOrDefault(\Yii::$app->user);
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
@@ -202,35 +205,29 @@ class BookingController extends Controller
 
     public function actionDecline($id)
     {
+        /**
+         * @var Booking $booking
+         */
         $booking = Booking::find()->where(['id' => $id])->one();
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
-        /**
-         * @var Booking $booking
-         */
-        if ($booking->item->owner_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException("You are not the owner of this item");
-        }
 
         $booking->ownerDeclines();
+            return $booking;
     }
 
     public function actionAccept($id)
     {
+        /**
+         * @var Booking $booking
+         */
         $booking = Booking::find()->where(['id' => $id])->one();
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
-        /**
-         * @var Booking $booking
-         */
-        if ($booking->item->owner_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException("You are not the owner of this item");
-        }
-        if (!\Yii::$app->user->hasValidPayoutMethod()) {
-            throw new BadRequestHttpException("There is no valid payout method set.");
-        }
+
         $booking->ownerAccepts();
+        return $booking;
     }
 }

@@ -7,9 +7,23 @@ use yii\base\DynamicModel;
 use yii\base\Model;
 use yii\helpers\Json;
 
-class BrainTreeError extends \yii\base\Exception{};
-class BrainTreePaymentFailedException extends BrainTreeError{};
-class BrainTreePayinAmountNotCorrect extends BrainTreeError{};
+class BrainTreeError extends \yii\base\Exception
+{
+}
+
+;
+
+class BrainTreePaymentFailedException extends BrainTreeError
+{
+}
+
+;
+
+class BrainTreePayinAmountNotCorrect extends BrainTreeError
+{
+}
+
+;
 
 class BrainTree extends Model
 {
@@ -51,7 +65,7 @@ class BrainTree extends Model
      */
     private function getBraintreeId()
     {
-        if($this->payin->braintree_backup == null){
+        if ($this->payin->braintree_backup == null) {
             return false;
         }
         $b = Json::decode($this->payin->braintree_backup);
@@ -75,7 +89,7 @@ class BrainTree extends Model
      */
     public function autorize()
     {
-        if(!is_float($this->payin->amount) && !is_int($this->payin->amount)){
+        if (!is_float($this->payin->amount) && !is_int($this->payin->amount)) {
             throw new BrainTreePayinAmountNotCorrect();
         }
         $transaction = \Braintree_Transaction::sale(array(
@@ -109,6 +123,9 @@ class BrainTree extends Model
 
     public function updateStatus()
     {
+        if (!$this->getBraintreeId() && YII_ENV == 'test') {
+            return false;
+        }
         $b = \Braintree_Transaction::find($this->getBraintreeId());
         $this->payin->braintree_backup = Json::encode($b->_attributes);
         $this->payin->save();
@@ -117,11 +134,21 @@ class BrainTree extends Model
 
     public function sandboxSettlementAccept()
     {
-        \Braintree_TestHelper::settle($this->getBraintreeId());
+        if ($this->getBraintreeId()) {
+            \Braintree_TestHelper::settle($this->getBraintreeId());
+        } else {
+            $this->payin->status = Payin::STATUS_ACCEPTED;
+            $this->payin->save();
+        }
     }
 
     public function sandboxSettlementDecline()
     {
-        \Braintree_TestHelper::settlementDecline($this->getBraintreeId());
+        if ($this->getBraintreeId()) {
+            \Braintree_TestHelper::settlementDecline($this->getBraintreeId());
+        } else {
+            $this->payin->status = Payin::STATUS_VOIDED;
+            $this->payin->save();
+        }
     }
 }

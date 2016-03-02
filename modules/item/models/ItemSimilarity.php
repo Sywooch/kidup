@@ -8,7 +8,7 @@ use yii\db\Query;
 /**
  * This is the base-model class for table "item_similarity".
  */
-class ItemSimilarity extends \item\models\base\ItemSimilarity
+class ItemSimilarity extends base\ItemSimilarity
 {
     public $item;
 
@@ -18,7 +18,7 @@ class ItemSimilarity extends \item\models\base\ItemSimilarity
      */
     public function compute(Item $item)
     {
-        if($item->is_available == 0){
+        if ($item->is_available == 0) {
             return false;
         }
         $this->item = $item;
