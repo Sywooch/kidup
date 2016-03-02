@@ -136,6 +136,16 @@ desired effect
                     </a>
                 </li>
                 <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/mail/index') ?>">
+                        <span>E-mail templates</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= \yii\helpers\Url::to('@web/admin/push/index') ?>">
+                        <span>Push notifications</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?= \yii\helpers\Url::to('@web/admin/category/index') ?>">
                         <span>Categories</span>
                     </a>

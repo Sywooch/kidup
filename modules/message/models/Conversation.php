@@ -4,7 +4,7 @@ namespace message\models;
 
 use booking\models\Booking;
 use Carbon\Carbon;
-use mail\models\MailAccount;
+use notifications\models\MailAccount;
 use user\models\base\Profile;
 use Yii;
 use yii\helpers\Json;

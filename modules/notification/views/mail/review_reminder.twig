@@ -1,0 +1,35 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.review_reminder.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/blue_4.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table id="image-left" width="100%">
+            <tr>
+                <td width="40%">
+                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                </td>
+                <td width="60%" class="image-left__content">
+                    <h3>Title h3</h3>
+                    <p>
+                        {{ t('mail.review_reminder.p1',
+                        'I hope you had a great experience from the rent with {owner_name}.', {
+                            'owner_name': owner_name
+                        }) | raw }}
+                        {{ t('mail.review_reminder.p2',
+                        'I am writing because, you have not yet completed the review. You could do it right now, it only takes 20 seconds!') | raw }}
+                    </p>
+                    <a class="button button--green" href="{{ review_url | raw }}" target="_blank">{{ t('mail.links.review_now', 'Review now') | raw }}</a>
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

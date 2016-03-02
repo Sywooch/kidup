@@ -4,9 +4,7 @@ namespace codecept\functional\user;
 use codecept\_support\MuffinHelper;
 use codecept\_support\MuffinTrait;
 use codecept\_support\UserHelper;
-use codecept\muffins\Item;
 use codecept\muffins\User;
-use Codeception\Util\Debug;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 

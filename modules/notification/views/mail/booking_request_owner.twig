@@ -1,0 +1,54 @@
+{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+
+    {% block title %}
+        {{ t('mail.booking_request_owner.title', title) | raw }}
+    {% endblock %}
+
+    {% block headerimage %}
+        {{ base64_image('@notification-assets/images/headers/green_3.jpg') | raw }}
+    {% endblock %}
+
+    {% block content %}
+
+        <table id="text-center" width="100%">
+            <tr>
+                <td colspan="2">
+                    <h3>{{ t('mail.booking_request_owner.t1', '{renter_name} have asked to rent item', {
+                            'renter_name': renter_name
+                    }) | raw }}</h3>
+                    <p>
+                        {{ t('mail.booking_request_owner.p1',
+                            'You can accept, decline or ask a couple of questions before {time_before}. The total payout, which you will receive, for this rent is {total_payout_amount}.', {
+                            'time_before': time_before,
+                            'total_payout_amount': total_payout_amount
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" style="text-align: center;">
+                    <p>
+                        <a href="{{ accept_url }}" target="_blank" class="button button--green">Accept</a>
+                    </p>
+                </td>
+                <td width="50%" style="text-align: center;">
+                    <p>
+                        <a href="{{ decline_url }}" target="_blank" class="button button--red">Decline</a>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>
+                        {{ t('mail.booking_request_owner.p2',
+                        'I hope you choose to accept the rent, otherwise please let {renter_name} know. If it doesn’t fit your schedule, or you need the item that particular day.', {
+                            'renter_name': renter_name
+                        }) | raw }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    {% endblock %}
+
+{% endembed %}
