@@ -1,17 +1,10 @@
 <?php
 namespace api\controllers;
 
-use api\models\Item;
 use api\models\ItemFacet;
-use api\models\Review;
-use item\models\base\CategoryHasItemFacet;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
-use yii\web\NotAcceptableHttpException;
-use yii\web\NotFoundHttpException;
 
 class ItemFacetController extends Controller
 {

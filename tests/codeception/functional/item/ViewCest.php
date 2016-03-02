@@ -1,10 +1,11 @@
 <?php
 namespace codecept\functional\item;
 
+use codecept\_support\MuffinHelper;
 use codecept\muffins\Item;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use codecept\_support\MuffinHelper;
+
 /**
  * functional test for the item module.
  *

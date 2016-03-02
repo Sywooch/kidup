@@ -3,7 +3,6 @@ namespace api\controllers;
 
 use admin\models\TrackingEvent;
 use app\extended\web\Controller;
-use item\models\Location;
 use item\models\LocationFactory;
 use Yii;
 

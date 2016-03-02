@@ -2,14 +2,15 @@
 
 namespace codecept\api\booking;
 
+use ApiTester;
 use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\User;
 use codecept\muffins\Item;
+use codecept\muffins\User;
 use Codeception\Util\Debug;
 use League\FactoryMuffin\FactoryMuffin;
-use ApiTester;
+
 /**
  * API test for checking the costs of a booking.
  *

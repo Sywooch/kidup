@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 class m160220_143903_addDeviceIdTrackingEvent extends Migration

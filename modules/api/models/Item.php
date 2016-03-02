@@ -3,7 +3,6 @@
 namespace api\models;
 
 use images\components\ImageHelper;
-use images\components\ImageManager;
 use item\models\ItemHasMedia;
 use yii\helpers\Json;
 

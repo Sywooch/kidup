@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use \yii\db\Schema;
+use yii\db\Schema;
 
 class m150910_195330_queue extends Migration
 {

@@ -1,14 +1,14 @@
 <?php
 namespace codecept\api\booking;
 
+use ApiTester;
 use booking\models\Booking;
 use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\User;
 use codecept\muffins\Item;
+use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
-use ApiTester;
 
 /**
  * API test for creating a booking.

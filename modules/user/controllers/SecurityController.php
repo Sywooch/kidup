@@ -12,7 +12,6 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use app\jobs\SlackJob;
 use user\Finder;
 use user\forms\Login;
 use user\models\Account;

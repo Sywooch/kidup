@@ -2,11 +2,7 @@
 
 namespace item\models;
 
-use booking\models\Booking;
-use Carbon\Carbon;
-use user\models\User;
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**

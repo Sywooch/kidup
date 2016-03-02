@@ -1,11 +1,11 @@
 <?php
 namespace codecept\api\messaging;
 
+use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
-use ApiTester;
 use message\models\base\MobileDevices;
 
 /**

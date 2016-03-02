@@ -1,6 +1,5 @@
 <?php
 use kartik\grid\GridView;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Push notifications';

@@ -14,8 +14,6 @@ namespace notification\models;
 use booking\models\Booking;
 use item\models\Item;
 use user\models\User;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**

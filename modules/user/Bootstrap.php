@@ -5,7 +5,6 @@ namespace user;
 use yii\authclient\Collection;
 use yii\base\BootstrapInterface;
 use yii\console\Application as ConsoleApplication;
-use yii\i18n\PhpMessageSource;
 use yii\web\GroupUrlRule;
 
 /**

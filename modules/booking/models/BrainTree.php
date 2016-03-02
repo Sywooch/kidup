@@ -3,7 +3,6 @@
 namespace booking\models;
 
 use Yii;
-use yii\base\DynamicModel;
 use yii\base\Model;
 use yii\helpers\Json;
 

@@ -4,7 +4,6 @@ namespace codecept\functional\item;
 use app\modules\booking\models\Booking;
 use app\modules\review\models\Review;
 use app\modules\user\codecept\codeception\_support\FixtureHelper;
-use codecept\_support\UserHelper;
 use functionalTester;
 use Yii;
 

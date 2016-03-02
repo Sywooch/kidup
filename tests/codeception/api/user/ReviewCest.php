@@ -1,6 +1,5 @@
 <?php
 use codecept\_support\MuffinHelper;
-use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**

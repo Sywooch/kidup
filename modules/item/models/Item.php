@@ -9,7 +9,6 @@ use search\components\ItemSearchDb;
 use user\models\base\Currency;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\helpers\Json;
 
 /**

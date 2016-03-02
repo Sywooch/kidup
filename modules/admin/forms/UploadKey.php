@@ -2,7 +2,6 @@
 
 namespace admin\forms;
 
-use admin\models\I18nMessage;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;

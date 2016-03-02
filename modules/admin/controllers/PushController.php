@@ -1,7 +1,6 @@
 <?php
 namespace admin\controllers;
 
-use notification\components\MailTemplates;
 use notification\components\PushRenderer;
 use notification\components\PushTemplates;
 use Yii;

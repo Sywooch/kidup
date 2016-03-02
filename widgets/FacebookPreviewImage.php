@@ -2,11 +2,11 @@
 
 namespace app\widgets;
 
-use app\components\Cache;
 use images\components\ImageHelper;
-use yii\helpers\Url;
-use Yii;
 use item\models\Item;
+use Yii;
+use yii\helpers\Url;
+
 /**
  * Registers Meta tags that are used by fb for preview images
  */

@@ -1,7 +1,6 @@
 <?php
 namespace codecept\muffins;
 
-use codecept\_support\MuffinHelper;
 use Faker\Factory as Faker;
 
 class Item extends \item\models\Item

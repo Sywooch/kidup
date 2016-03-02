@@ -2,11 +2,11 @@
 namespace notification\controllers;
 
 use app\extended\web\Controller;
+use notifications\components;
 use notifications\mails\bookingRenter\PayoutFactory;
 use notifications\mails\MailRenderer;
 use notifications\mails\MailSender;
 use notifications\mails\user\ReconfirmInterface;
-use notifications\components;
 use notifications\models\MailLog;
 use notifications\widgets\Button;
 use Yii;

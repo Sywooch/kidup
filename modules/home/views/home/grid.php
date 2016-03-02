@@ -2,7 +2,6 @@
 
 use app\helpers\ViewHelper;
 use images\components\ImageHelper;
-use item\widgets\ItemCard;
 use yii\helpers\Url;
 
 /**

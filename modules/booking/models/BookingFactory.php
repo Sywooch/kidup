@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use item\models\Item;
 use user\models\base\Currency;
 use Yii;
-use yii\base\Model;
 
 /**
  * BookingFactory is responsible for the creation of bookings

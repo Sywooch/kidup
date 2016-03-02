@@ -4,14 +4,10 @@ namespace api\controllers;
 use api\models\Review;
 use api\models\User;
 use notifications\models\Token;
-use user\controllers\RegistrationController;
 use user\forms\Registration;
-use user\models\Account;
 use yii\data\ActiveDataProvider;
-use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
 
 class UserController extends Controller
 {

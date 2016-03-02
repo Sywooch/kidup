@@ -1,7 +1,8 @@
 <?php
 
 use yii\db\Migration;
-use \yii\db\Schema;
+use yii\db\Schema;
+
 class m150910_141237_promotionCodes extends Migration
 {
     public function up()

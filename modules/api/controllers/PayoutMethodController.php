@@ -3,7 +3,6 @@ namespace api\controllers;
 
 use api\models\PayoutMethod;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
-use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 

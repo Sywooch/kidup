@@ -3,7 +3,6 @@
 namespace item\models;
 
 use Yii;
-use yii\db\Query;
 
 /**
  * This is the base-model class for table "item_similarity".

@@ -5,10 +5,10 @@
 // @codingStandardsIgnoreFile
 
 
-use Codeception\Module\Filesystem;
-use Codeception\Module\Yii2;
 use Codeception\Module\Asserts;
+use Codeception\Module\Filesystem;
 use Codeception\Module\REST;
+use Codeception\Module\Yii2;
 
 /**
  * Inherited Methods

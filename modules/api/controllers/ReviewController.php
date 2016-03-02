@@ -2,11 +2,6 @@
 namespace api\controllers;
 
 use api\models\Review;
-use api\models\User;
-use user\forms\Registration;
-use yii\web\BadRequestHttpException;
-use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
 
 class ReviewController extends Controller
 {

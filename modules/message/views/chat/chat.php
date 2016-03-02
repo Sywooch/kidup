@@ -2,7 +2,6 @@
 use Carbon\Carbon;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\ListView;
 
 /**
  * @var \message\models\Conversation $conversation

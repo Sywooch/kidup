@@ -4,7 +4,6 @@ namespace api\models;
 
 use images\components\ImageHelper;
 use review\models\Review;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "item".

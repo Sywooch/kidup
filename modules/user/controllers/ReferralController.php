@@ -12,29 +12,10 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use app\helpers\Event;
-use app\helpers\SelectData;
-use Carbon\Carbon;
-use images\components\ImageManager;
 use notifications\models\Token;
-use user\Finder;
-use user\forms\LocationForm;
-use user\forms\Settings;
-use user\forms\Verification;
-use user\models\Account;
-use user\models\Profile;
-use user\models\User;
 use user\models\UserReferredUser;
-use yii\authclient\ClientInterface;
-use yii\base\Model;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
-use yii\web\UploadedFile;
-use yii\widgets\ActiveForm;
 
 /**
  * SettingsController manages updating user settings (e.g. profile, email and password).

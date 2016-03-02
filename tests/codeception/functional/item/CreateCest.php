@@ -1,6 +1,7 @@
 <?php
 namespace codecept\functional\item;
 
+use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\Media;
 use codecept\muffins\User;
@@ -10,7 +11,6 @@ use item\models\base\ItemHasFeatureSingular;
 use item\models\base\ItemHasMedia;
 use item\models\Item;
 use League\FactoryMuffin\FactoryMuffin;
-use codecept\_support\MuffinHelper;
 
 /**
  * functional test for the item module.

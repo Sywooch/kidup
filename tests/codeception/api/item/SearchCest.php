@@ -1,10 +1,11 @@
 <?php
 
 namespace codecept\api\item;
-use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\Item;
+use League\FactoryMuffin\FactoryMuffin;
+
 /**
  * API test for the item search.
  *

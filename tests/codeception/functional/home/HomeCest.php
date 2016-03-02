@@ -1,9 +1,8 @@
 <?php
 namespace codecept\functional\home;
 
-use codecept\_support\MuffinHelper;
-use FunctionalTester;
 use codecept\_support\FixtureHelper;
+use FunctionalTester;
 
 /**
  * Functional test for the home module.

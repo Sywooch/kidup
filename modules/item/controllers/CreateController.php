@@ -16,7 +16,6 @@ use item\models\Media;
 use search\models\ItemSearch;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;

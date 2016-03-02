@@ -11,7 +11,6 @@ use item\models\Location;
 use notifications\models\Token;
 use user\Finder;
 use user\helpers\Password;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Json;
 use yii\helpers\Url;

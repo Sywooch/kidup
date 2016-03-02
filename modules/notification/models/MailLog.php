@@ -2,7 +2,6 @@
 namespace notification\models;
 
 use Yii;
-use yii\helpers\Json;
 
 /**
  * Login form

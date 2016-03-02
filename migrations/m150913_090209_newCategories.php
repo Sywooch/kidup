@@ -1,11 +1,10 @@
 <?php
 
-use yii\db\Migration;
 use item\models\base\Category;
-use item\models\base\FeatureValue;
-use item\models\base\Feature;
-use yii\helpers\ArrayHelper;
 use item\models\base\CategoryHasFeature;
+use item\models\base\Feature;
+use item\models\base\FeatureValue;
+use yii\db\Migration;
 
 class m150913_090209_newCategories extends Migration
 {

@@ -1,12 +1,9 @@
 <?php
 namespace app\extended\web;
 
-use admin\models\TrackingEvent;
 use search\models\IpLocation;
 use user\models\Profile;
 use Yii;
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Cookie;
 

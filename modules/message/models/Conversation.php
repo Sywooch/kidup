@@ -2,8 +2,6 @@
 
 namespace message\models;
 
-use booking\models\Booking;
-use Carbon\Carbon;
 use notification\models\MailAccount;
 use user\models\base\Profile;
 use Yii;

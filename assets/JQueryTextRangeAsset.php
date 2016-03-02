@@ -2,6 +2,7 @@
 
 namespace app\assets;
 use yii\web\AssetBundle;
+
 /**
  * Asset for the lodash library
  */

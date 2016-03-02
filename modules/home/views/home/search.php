@@ -1,7 +1,5 @@
 <?php
 use app\helpers\ViewHelper;
-use item\widgets\GoogleAutoComplete;
-use kartik\typeahead\Typeahead;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 

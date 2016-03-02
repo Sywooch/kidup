@@ -2,14 +2,8 @@
 
 namespace codecept\api\booking;
 
-use codecept\_support\MuffinHelper;
-use codecept\_support\UserHelper;
-use codecept\muffins\Booking;
-use codecept\muffins\PayoutMethod;
-use codecept\muffins\User;
-use codecept\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
-use ApiTester;
+
 /**
  * API test for checking the costs of a booking.
  *

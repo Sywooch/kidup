@@ -1,7 +1,6 @@
 <?php
 namespace codecept\muffins;
 
-use booking\models\PayinException;
 use Codeception\Util\Debug;
 use Faker\Factory as Faker;
 

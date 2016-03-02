@@ -7,20 +7,19 @@ use app\jobs\SlackJob;
 use booking\models\Booking;
 use booking\models\Payin;
 use item\models\Item;
+use message\models\Message;
+use notifications\components\MailSender;
 use notifications\mails\bookingOwner\StartFactory;
 use notifications\mails\bookingRenter\DeclineFactory;
 use notifications\mails\conversation\NewMessage;
 use notifications\mails\item\UnfinishedReminder;
+use notifications\mails\user\ReconfirmFactory;
 use notifications\mails\user\RecoveryFactory;
 use notifications\mails\user\WelcomeFactory;
-use message\models\Message;
 use user\models\User;
-use notifications\mails\user\ReconfirmFactory;
-use notifications\components\MailSender;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 class Bootstrap implements BootstrapInterface

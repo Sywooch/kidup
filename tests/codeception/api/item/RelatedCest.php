@@ -2,10 +2,10 @@
 
 namespace codecept\api\item;
 
+use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\Item;
 use League\FactoryMuffin\FactoryMuffin;
-use ApiTester;
 
 /**
  * API test for viewing related items of an item.

@@ -1,8 +1,8 @@
 <?php
 namespace message\components;
 
-use message\models\base\MobileDevices;
 use Aws;
+use message\models\base\MobileDevices;
 
 class MobilePush {
 

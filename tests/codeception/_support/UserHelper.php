@@ -5,8 +5,8 @@ namespace codecept\_support;
 use AcceptanceTester;
 use codecept\muffins\OauthAccessToken;
 use Codeception\Util\Debug;
-use \user\models\User;
 use FunctionalTester;
+use user\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 

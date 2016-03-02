@@ -5,7 +5,6 @@ namespace booking\controllers;
 use app\helpers\Event;
 use booking\models\Booking;
 use booking\models\BrainTree;
-use booking\models\Invoice;
 use booking\models\InvoiceFactory;
 use booking\models\Payin;
 use booking\models\Payout;

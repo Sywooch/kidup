@@ -1,14 +1,11 @@
 <?php
 namespace codecept\functional\booking;
 
-use notifications\components\MailRenderer;
-use functionalTester;
 use codecept\_support\MuffinHelper;
-use codecept\muffins\Booking;
-use codecept\muffins\Item;
 use codecept\muffins\User;
-use codecept\muffins\Message;
+use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
+use notifications\components\MailRenderer;
 use notifications\models\UrlFactory;
 use Yii;
 

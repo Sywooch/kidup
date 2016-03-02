@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "Booking".

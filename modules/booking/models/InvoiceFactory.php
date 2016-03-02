@@ -2,10 +2,7 @@
 
 namespace booking\models;
 
-use Carbon\Carbon;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\helpers\Json;
 
 /**

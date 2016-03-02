@@ -2,7 +2,6 @@
 
 namespace review\models;
 
-use api\models\Item;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\Booking;

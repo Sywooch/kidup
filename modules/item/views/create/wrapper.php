@@ -2,7 +2,6 @@
 
 use kartik\icons\Icon;
 use kartik\sidenav\SideNav;
-use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this

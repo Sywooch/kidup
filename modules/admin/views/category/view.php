@@ -1,7 +1,6 @@
 <?php
 
 use kartik\detail\DetailView;
-use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this

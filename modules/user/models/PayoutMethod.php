@@ -2,7 +2,6 @@
 
 namespace user\models;
 
-use Carbon\Carbon;
 use Yii;
 
 class PayoutMethod extends \user\models\base\PayoutMethod

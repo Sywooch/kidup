@@ -2,7 +2,7 @@
 
 namespace user\models\base;
 
-use \api\models\oauth\OauthAccessToken;
+use api\models\oauth\OauthAccessToken;
 use user\models\UserReferredUser;
 use Yii;
 

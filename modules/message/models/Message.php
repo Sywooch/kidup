@@ -3,7 +3,6 @@
 namespace message\models;
 
 use app\helpers\Event;
-use Carbon\Carbon;
 use Yii;
 
 /**

@@ -2,12 +2,12 @@
 
 namespace app\commands;
 
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 use app\jobs\SlackJob;
 use item\models\base\Category;
 use item\models\base\Feature;
 use item\models\base\FeatureValue;
-use admin\models\I18nMessage;
-use admin\models\I18nSource;
 use Yii;
 use yii\console\Exception;
 use yii\helpers\Console;

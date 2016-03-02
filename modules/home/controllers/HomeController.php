@@ -7,10 +7,7 @@ use home\forms\Search;
 use item\models\Category;
 use item\models\Item;
 use Yii;
-use yii\caching\TagDependency;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Json;
 
 class HomeController extends Controller
 {

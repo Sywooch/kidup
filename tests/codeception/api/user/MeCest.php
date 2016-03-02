@@ -1,8 +1,9 @@
 <?php
 use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
 use codecept\muffins\User;
 use League\FactoryMuffin\FactoryMuffin;
-use codecept\_support\UserHelper;
+
 /**
  * functional test for the /me api point.
  *

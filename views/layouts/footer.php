@@ -1,7 +1,6 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
 use images\components\ImageHelper;
+use yii\helpers\Html;
 
 \app\assets\FontAwesomeAsset::register($this);
 ?>

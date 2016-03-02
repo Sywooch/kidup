@@ -5,20 +5,15 @@ use api\models\Booking;
 use api\models\Currency;
 use api\models\Item;
 use api\models\Review;
-use booking\forms\Confirm;
 use booking\models\BookingException;
 use booking\models\BookingFactory;
 use booking\models\BrainTree;
-use booking\models\Payin;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
-use yii\base\Exception;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
 
 class BookingController extends Controller
 {
