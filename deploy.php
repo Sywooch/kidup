@@ -81,7 +81,7 @@ task('deploy:cleanup', function () {
 task('cleanup', function () {
     $releases = env('releases_list');
 
-    $keep = get('keep_releases');
+    $keep = 1; //get('keep_releases');
 
     while ($keep > 0) {
         array_shift($releases);

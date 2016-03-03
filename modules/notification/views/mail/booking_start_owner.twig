@@ -1,4 +1,4 @@
-{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+{% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
         {{ t('mail.booking_start_owner.title', title) | raw }}
@@ -23,12 +23,20 @@
                             'renter_name': renter_name
                         }) | raw }}
 
-                        {{ t('mail.booking_start_owner.p2',
-                        'If you need to plan the last few things you could contact {renter_name} through the app. Or through the {phone_link} or {email_link}.', {
-                            'renter_name': renter_name,
-                            'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                            'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-                        }) | raw }}
+                        {% if renter_phone_url == null %}
+                            {{ t('mail.booking_start_owner.p2_1',
+                            'If you need to plan the last few things you could contact {renter_name} through the app. Or through {email_link}.', {
+                                'renter_name': renter_name,
+                                'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% else %}
+                            {{ t('mail.booking_start_owner.p2_2',
+                            'If you need to plan the last few things you could contact {renter_name} through the app. Or through the {phone_link} or {email_link}.', {
+                                'renter_name': renter_name,
+                                'phone_link': '<a href="' ~ renter_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                                'email_link': '<a href="' ~ renter_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% endif %}
                     </p>
                 </td>
             </tr>

@@ -1,4 +1,4 @@
-{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+{% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
         {{ t('mail.booking_start_renter.title', title) | raw }}
@@ -23,13 +23,22 @@
                             'item_name': item_name,
                             'owner_name': owner_name
                         }) | raw }}
-                        {{ t('mail.booking_start_renter.p2',
-                        'If you need to plan the last few things you could contact {owner_name} through the {app_link}. Or through the {phone_link} or {email_link}.', {
-                            'owner_name': owner_name,
-                            'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
-                            'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                            'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-                        }) | raw }}
+                        {% if owner_phone_url == null %}
+                            {{ t('mail.booking_start_renter.p2_1',
+                            'If you need to plan the last few things you could contact {owner_name} through the {app_link}. Or through {email_link}.', {
+                                'owner_name': owner_name,
+                                'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
+                                'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% else %}
+                            {{ t('mail.booking_start_renter.p2_2',
+                            'If you need to plan the last few things you could contact {owner_name} through the {app_link}. Or through the {phone_link} or {email_link}.', {
+                                'owner_name': owner_name,
+                                'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
+                                'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                                'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% endif %}
                     </p>
                 </td>
             </tr>
