@@ -26,7 +26,7 @@ use League\FactoryMuffin\Stores\ModelStore;
  * @var FactoryMuffin $factory
  * @package common\components
  */
-class MuffinHelper extends Module
+class MuffinHelper
 {
     public static $factory;
 
@@ -75,14 +75,6 @@ class MuffinHelper extends Module
             }
         }
         return self::$factory;
-    }
-
-    /**
-     * Method is called after all suite tests run
-     */
-    public function _after(\Codeception\TestCase $test)
-    {
-        //static::$factory->deleteSaved();
     }
 
 }

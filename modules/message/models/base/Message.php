@@ -2,6 +2,7 @@
 
 namespace message\models\base;
 
+use message\models\MessageQuery;
 use Yii;
 
 /**
@@ -16,7 +17,7 @@ use Yii;
  * @property integer $updated_at
  * @property integer $created_at
  *
- * @property \mail\models\MailMessage[] $mailMessages
+ * @property \notification\models\MailMessage[] $mailMessages
  * @property \user\models\User $senderUser
  * @property \user\models\User $receiverUser
  * @property \message\models\Conversation $conversation
@@ -60,12 +61,16 @@ class Message extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function find(){
+        return new MessageQuery(get_called_class());
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMailMessages()
     {
-        return $this->hasMany(\mail\models\MailMessage::className(), ['message_id' => 'id']);
+        return $this->hasMany(\notification\models\MailMessage::className(), ['message_id' => 'id']);
     }
 
     /**

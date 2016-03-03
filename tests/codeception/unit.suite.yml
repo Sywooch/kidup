@@ -8,7 +8,6 @@ modules:
     enabled:
       - Filesystem
       - Yii2
-      - codecept\_support\MuffinHelper
       - Asserts
     config:
         Yii2:
