@@ -47,7 +47,7 @@ set('repository', 'https://kevin91nl:' . $repo_password . '@github.com/esquire90
 
 task('deploy:vendors', function () use ($repo_password) {
     run("cd {{release_path}} && composer config github-oauth.github.com " . $repo_password);
-    run("cd {{release_path}} && composer install --verbose --prefer-dist --optimize-autoloader --no-progress --quiet");
+    run("cd {{release_path}} && composer install --verbose --optimize-autoloader --no-progress --quiet");
 })->desc('Installing vendors');
 
 task('deploy:run_migrations', function () {
