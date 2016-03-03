@@ -12,24 +12,24 @@ class PushTemplates
         'booking_confirmed_owner' => [
             'title' => 'The rent is confirmed - celebrate!',
             'fallback' => 'booking_confirmed_owner',
-            'variables' => ['contact_renter_url', 'renter_username', 'renter_name', 'booking_id', 'renter_phone_url', 'renter_email_url']
+            'variables' => ['contact_renter_url', 'renter_name', 'booking_id', 'renter_phone_url', 'renter_email_url']
         ],
         'booking_request_owner' => [
             'title' => 'Do you want to rent out? Reply now',
             'fallback' => 'booking_request_owner',
-            'variables' => ['renter_username', 'renter_name', 'item_name', 'total_payout_amount', 'time_before', 'accept_url', 'decline_url']
+            'variables' => ['renter_name', 'item_name', 'total_payout_amount', 'time_before', 'accept_url', 'decline_url']
         ],
         'booking_start_owner' => [
             'title' => 'Remember your rent! It is starting soon',
             'fallback' => 'booking_start_owner',
-            'variables' => ['renter_username', 'renter_name', 'booking_start_date', 'item_name', 'total_payout_amount', 'renter_phone_url', 'renter_email_url']
+            'variables' => ['renter_name', 'booking_start_date', 'item_name', 'total_payout_amount', 'renter_phone_url', 'renter_email_url']
         ],
 
         // Booking renter
         'booking_confirmed_renter' => [
             'title' => 'The rent is confirmed - celebrate!',
             'fallback' => 'booking_confirmed_renter',
-            'variables' => ['booking_start_date', 'booking_end_date', 'owner_username', 'owner_name', 'item_name', 'contact_owner_url', 'owner_phone_url', 'owner_email_url']
+            'variables' => ['booking_start_date', 'booking_end_date', 'owner_name', 'item_name', 'contact_owner_url', 'owner_phone_url', 'owner_email_url']
         ],
         'booking_declined_renter' => [
             'title' => 'Your rent has been declined',
@@ -39,13 +39,13 @@ class PushTemplates
         'booking_start_renter' => [
             'title' => 'Remember your rent! It is starting soon',
             'fallback' => 'booking_start_renter',
-            'variables' => ['owner_username', 'owner_name', 'booking_start_date', 'owner_phone_url', 'owner_email_url', 'app_url']
+            'variables' => ['owner_name', 'booking_start_date', 'owner_phone_url', 'owner_email_url', 'app_url']
         ],
 
         // Message
         'conversation_message_received' => [
             'fallback' => null,
-            'variables' => ['sender_username']
+            'variables' => ['sender_name']
         ],
 
         // Item
@@ -58,7 +58,7 @@ class PushTemplates
         // Review
         'review_publish' => [
             'fallback' => null,
-            'variables' => ['reviewer_username', 'days_left']
+            'variables' => ['reviewer_name', 'days_left']
         ],
         'review_reminder' => [
             'title' => 'You forgot to star',
@@ -68,7 +68,7 @@ class PushTemplates
         'review_request' => [
             'title' => '3 or 5 stars, who knows?',
             'fallback' => 'review_request',
-            'variables' => ['owner_username', 'review_url']
+            'variables' => ['owner_name', 'review_url']
         ],
 
     ];
