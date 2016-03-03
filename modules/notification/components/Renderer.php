@@ -110,14 +110,16 @@ class Renderer
 
     public function loadPayout(Payout $payout) {
         // Payout
-        $this->total_payout_amount = $payout->amount;
+        /*$this->total_payout_amount = $payout->amount;
 
         // Booking
+        var_dump($payout->amount);
+        die();*/
     }
 
     public function fillAutomatically() {
-        $booking = Payout::find()->one();
-        $this->loadPayout($booking);
+        /*$payout = Payout::find()->one();
+        $this->loadPayout($payout);*/
     }
 
 }
