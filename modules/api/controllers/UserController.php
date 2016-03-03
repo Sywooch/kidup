@@ -3,9 +3,10 @@ namespace api\controllers;
 
 use api\models\Review;
 use api\models\User;
-use notifications\models\Token;
+use notification\models\Token;
 use user\forms\Registration;
 use yii\data\ActiveDataProvider;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -123,12 +124,12 @@ class UserController extends Controller
             if($profile->phone_verified){
                 return ['success' => false, 'message' => 'Already has valid phone number.'];
             }
-            $tokens = Token::find()->where([
+            $tokens = \notification\models\Token::find()->where([
                 'user_id' => \Yii::$app->user->id,
                 'type' => Token::TYPE_PHONE_CODE
-            ])->andWhere(['created_at' > time()-5*60])->count();
+            ])->andWhere('created_at > :time')->addParams([':time' => time()-5*60])->count();
             if($tokens > 0){
-                return ['success' => false, 'message' => 'Token was requested less then 5 minutes ago.'];
+                throw new BadRequestHttpException('Token was requested less then 5 minutes ago.');
             }
 
             Token::deleteAll([
@@ -144,7 +145,7 @@ class UserController extends Controller
             if ($profile->sendPhoneVerification($token)) {
                 return ['success' => true, 'message' => "Verification code send"];
             } else {
-                return ['success' => false];
+                throw new BadRequestHttpException();
             }
         } else {
             $token = Token::findOne([

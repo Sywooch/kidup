@@ -2,7 +2,6 @@
 namespace api\controllers;
 
 use api\models\ItemFacet;
-use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 

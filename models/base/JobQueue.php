@@ -2,7 +2,7 @@
 
 namespace app\models\base;
 
-use app\models\BaseAciveRecord;
+use app\models\BaseActiveRecord;
 use Yii;
 
 /**
@@ -16,7 +16,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $execution_time
  */
-class JobQueue extends BaseAciveRecord
+class JobQueue extends BaseActiveRecord
 {
     /**
      * @inheritdoc
