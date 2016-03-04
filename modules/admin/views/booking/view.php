@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var booking\models\Booking $model
+ * @var booking\models\payin\Booking $model
  */
 
 $this->title = $model->id;

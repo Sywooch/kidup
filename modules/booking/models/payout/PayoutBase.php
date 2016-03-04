@@ -1,7 +1,9 @@
 <?php
 
-namespace booking\models\base;
+namespace booking\models\payout;
 
+use booking\models\booking\Booking;
+use booking\models\booking\BookingBase;
 use user\models\base\Currency;
 use user\models\User;
 use Yii;
@@ -19,12 +21,12 @@ use Yii;
  * @property integer $updated_at
  * @property integer $invoice_id
  *
- * @property \booking\models\Booking[] $bookings
- * @property \booking\models\Invoice $invoice
+ * @property \booking\models\booking\Booking[] $bookings
+ * @property \booking\models\invoice\Invoice $invoice
  * @property Currency $currency
  * @property User $user
  */
-class Payout extends \app\models\BaseActiveRecord
+class PayoutBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -70,7 +72,7 @@ class Payout extends \app\models\BaseActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\booking\models\Booking::className(), ['payout_id' => 'id']);
+        return $this->hasMany(Booking::className(), ['payout_id' => 'id']);
     }
 
     /**
@@ -78,7 +80,7 @@ class Payout extends \app\models\BaseActiveRecord
      */
     public function getInvoice()
     {
-        return $this->hasOne(\booking\models\Invoice::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(\booking\models\invoice\Invoice::className(), ['id' => 'invoice_id']);
     }
 
     /**
@@ -103,6 +105,6 @@ class Payout extends \app\models\BaseActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
+        return $this->hasOne(BookingBase::className(), ['payin_id' => 'id']);
     }
 }

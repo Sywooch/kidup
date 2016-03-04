@@ -4,8 +4,8 @@ namespace notification;
 
 use app\helpers\Event;
 use app\jobs\SlackJob;
-use booking\models\Booking;
-use booking\models\Payin;
+use booking\models\booking\Booking;
+use booking\models\payin\Payin;
 use item\models\Item;
 use message\models\Message;
 use notifications\components\MailSender;

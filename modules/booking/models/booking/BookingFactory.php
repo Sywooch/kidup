@@ -1,11 +1,22 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: simon
+ * Date: 4-3-2016
+ * Time: 12:50
+ */
+namespace booking\models\booking;
 
-namespace booking\models;
-
+use booking\models\payin\Payin;
+use booking\models\payin\PayinException;
 use Carbon\Carbon;
 use item\models\Item;
 use user\models\base\Currency;
-use Yii;
+
+/**
+ * @property Item $item
+ * @property Booking $booking
+ */
 
 /**
  * BookingFactory is responsible for the creation of bookings
@@ -22,10 +33,6 @@ class BookingPaymentException extends BookingException
 {
 }
 
-/**
- * @property Item $item
- * @property Booking $booking
- */
 class BookingFactory
 {
     private $booking;
@@ -52,7 +59,6 @@ class BookingFactory
         $this->booking->setPayinPrices();
 
 
-
         $this->createPayin($paymentNonce);
 
         try {
@@ -60,7 +66,6 @@ class BookingFactory
         } catch (PayinException $e) {
             throw new BookingPaymentException("Payment failed", null, $e->getPrevious());
         }
-
 
 
         $this->booking->payin_id = $this->payin->id;
@@ -87,15 +92,15 @@ class BookingFactory
 
     private function setDatesAndValidate($from, $to)
     {
-        if(is_numeric($from)){
+        if (is_numeric($from)) {
             $this->booking->time_from = $from;
-        }else{
+        } else {
             $this->booking->time_from = Carbon::createFromFormat('d-m-Y g:i:s', $from . ' 12:00:00')->timestamp;
         }
 
-        if(is_numeric($to)){
+        if (is_numeric($to)) {
             $this->booking->time_to = $to;
-        }else{
+        } else {
             $this->booking->time_to = Carbon::createFromFormat('d-m-Y g:i:s', $to . ' 12:00:00')->timestamp;
         }
         if ($this->booking->time_to <= $this->booking->time_from) {

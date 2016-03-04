@@ -3,7 +3,7 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 use images\components\ImageManager;

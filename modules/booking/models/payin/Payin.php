@@ -1,8 +1,10 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\payin;
 
 use app\helpers\Event;
+use booking\models\invoice\InvoiceFactory;
+use booking\models\payout\PayoutFactory;
 use Carbon\Carbon;
 use Yii;
 use yii\base\Exception;
@@ -17,7 +19,7 @@ class PayinException extends Exception
 {
 }
 
-class Payin extends \booking\models\base\Payin
+class Payin extends PayinBase
 {
     const STATUS_INIT = 'init';
     const STATUS_PENDING = 'status_pending';
@@ -92,7 +94,7 @@ class Payin extends \booking\models\base\Payin
             $this->invoice_id = (new InvoiceFactory)->createForBooking($this->booking)->id;
             $this->save();
             Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);
-            (new Payout())->createFromBooking($this->booking);
+            (new PayoutFactory())->createFromBooking($this->booking);
         }
 
         if ($this->status == self::STATUS_AUTHORIZED) {

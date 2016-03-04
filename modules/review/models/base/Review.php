@@ -2,7 +2,7 @@
 
 namespace review\models\base;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use item\models\Item;
 use user\models\User;
 use Yii;
@@ -72,7 +72,7 @@ class Review extends \app\models\BaseActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(\booking\models\Booking::className(), ['id' => 'booking_id']);
+        return $this->hasOne(\booking\models\booking\Booking::className(), ['id' => 'booking_id']);
     }
 
     /**

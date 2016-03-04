@@ -2,7 +2,7 @@
 
 namespace admin\forms;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use item\models\Item;
 use user\models\User;
 use Yii;

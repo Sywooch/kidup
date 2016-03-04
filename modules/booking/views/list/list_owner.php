@@ -1,11 +1,11 @@
 <?php
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var \booking\models\Booking $model
+ * @var \booking\models\booking\Booking $model
  * @var \yii\data\ActiveDataProvider $provider
  */
 $this->assetPackage = \app\assets\Package::BOOKING;
@@ -22,7 +22,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                     'attribute' => \Yii::t('booking.list.label_status', 'status'),
                     'value' => function ($model, $key, $index, $widget) {
                         /**
-                         * @var \booking\models\Booking $model
+                         * @var \booking\models\booking\Booking $model
                          */
                         return $model->getStatusName();
                     },
@@ -54,7 +54,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                     'label' => \Yii::t('booking.list.label_options', 'Options'),
                     'value' => function ($model, $key, $index, $widget) {
                         /**
-                         * @var \booking\models\Booking $model
+                         * @var \booking\models\booking\Booking $model
                          */
                         $links = [];
 

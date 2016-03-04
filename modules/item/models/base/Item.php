@@ -2,7 +2,7 @@
 
 namespace item\models\base;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use item\models\Category;
 use item\models\ItemQuery;
 use review\models\Review;

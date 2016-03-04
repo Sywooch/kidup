@@ -1,11 +1,11 @@
 <?php
-use booking\models\Payin;
+use booking\models\payin\Payin;
 use Carbon\Carbon;
 use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var $booking \booking\models\Booking
+ * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\Item
  */
 \booking\assets\BookingViewsAsset::register($this);
@@ -54,7 +54,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                 <li>
                                     <?= Yii::t("booking.view.pickup_address", "Pickup Address") ?> <b
                                         class="pull-right">
-                                        <?php if ($booking->status !== \booking\models\Booking::PENDING): ?>
+                                        <?php if ($booking->status !== \booking\models\booking\Booking::PENDING): ?>
                                             <?= $item->location->street_name ?> <?= $item->location->street_number ?>
                                             , <?= $item->location->city ?>
                                         <?php else: ?>

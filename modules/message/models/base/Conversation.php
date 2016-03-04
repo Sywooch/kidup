@@ -2,7 +2,7 @@
 
 namespace message\models\base;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use notifications\models\MailAccount;
 use user\models\User;
 use Yii;

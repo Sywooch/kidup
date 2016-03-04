@@ -1,6 +1,7 @@
 <?php
 namespace codecept\muffins;
 
+use booking\models\booking\Booking;
 use Faker\Factory as Faker;
 
 class ConversationMuffin extends \message\models\Conversation

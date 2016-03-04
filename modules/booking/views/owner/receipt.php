@@ -1,10 +1,10 @@
 <?php
-use booking\models\Payout;
+use booking\models\payout\PayoutBase;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 
 /**
- * @var $booking \booking\models\Booking
+ * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\Item
  */
 \booking\assets\BookingViewsAsset::register($this);
@@ -100,14 +100,14 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                                 <li>
                                     <?= Yii::t("booking.receipt.total_received", "Total received") ?>
                                     <b class="pull-right">
-                                        <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? $booking->payout->amount : 0 ?>
+                                        <?= isset($booking->payout) && $booking->payout->status == PayoutBase::STATUS_PROCESSED ? $booking->payout->amount : 0 ?>
                                         DKK
                                     </b>
                                 </li>
                                 <li>
                                     <?= Yii::t("booking.receipt.balance", "Balance") ?>
                                     <b class="pull-right">
-                                        <?= isset($booking->payout) && $booking->payout->status == Payout::STATUS_PROCESSED ? 0 : $booking->amount_payout ?>
+                                        <?= isset($booking->payout) && $booking->payout->status == PayoutBase::STATUS_PROCESSED ? 0 : $booking->amount_payout ?>
                                         DKK
                                     </b>
                                 </li>

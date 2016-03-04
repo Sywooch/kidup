@@ -1,11 +1,11 @@
 <?php
-use booking\models\Payin;
+use booking\models\payin\Payin;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 
 /**
  * @var \app\extended\web\View $this
- * @var $booking \booking\models\Booking
+ * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\Item
  */
 \booking\assets\BookingViewsAsset::register($this);

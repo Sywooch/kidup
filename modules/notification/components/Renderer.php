@@ -1,8 +1,8 @@
 <?php
 namespace notification\components;
 
-use booking\models\Booking;
-use booking\models\Payout;
+use booking\models\booking\Booking;
+use booking\models\payout\PayoutBase;
 use Item\models\Item;
 use Carbon\Carbon;
 use Yii;
@@ -121,7 +121,7 @@ class Renderer
         $this->item_name = $item->name;
     }
 
-    public function loadPayout(Payout $payout) {
+    public function loadPayout(PayoutBase $payout) {
         // Payout
         $this->total_payout_amount = $payout->amount;
 
@@ -131,7 +131,7 @@ class Renderer
     }
 
     public function fillAutomatically() {
-        $payout = Payout::find()->one();
+        $payout = PayoutBase::find()->one();
         $this->loadPayout($payout);
     }
 

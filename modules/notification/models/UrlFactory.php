@@ -11,7 +11,7 @@
 
 namespace notification\models;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use item\models\Item;
 use user\models\User;
 use yii\helpers\Url;

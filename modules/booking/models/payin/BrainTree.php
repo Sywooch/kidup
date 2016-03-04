@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\payin;
 
 use Yii;
 use yii\base\Model;

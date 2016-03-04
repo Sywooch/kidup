@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var \booking\models\Booking $booking
+ * @var \booking\models\booking\Booking $booking
  * @var \item\models\Item $item
  * @var \user\models\Profile $profile
  * @var string $declineLink

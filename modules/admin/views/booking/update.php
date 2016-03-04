@@ -2,7 +2,7 @@
 
 /**
  * @var yii\web\View $this
- * @var booking\models\Booking $model
+ * @var booking\models\booking\Booking $model
  */
 
 $this->title = 'Update Booking: ' . ' ' . $model->id;

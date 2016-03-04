@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use admin\models\search\Booking as BookingSearch;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;

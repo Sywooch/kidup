@@ -1,9 +1,10 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\payout;
 
 use app\helpers\Encrypter;
 use app\helpers\Event;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
 use user\models\base\Currency;
 use user\models\PayoutMethod;
@@ -14,7 +15,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "payout".
  */
-class Payout extends \booking\models\base\Payout
+class Payout extends \booking\models\payout\PayoutBase
 {
     const STATUS_WAITING_FOR_BOOKING_START = 'waiting_for_start';
     const STATUS_TO_BE_PROCESSED = 'to_be_processed';
@@ -28,7 +29,7 @@ class Payout extends \booking\models\base\Payout
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 'value' => function () {
@@ -36,21 +37,6 @@ class Payout extends \booking\models\base\Payout
                 }
             ],
         ];
-    }
-
-    public function createFromBooking(Booking $booking)
-    {
-        $payout = new Payout();
-        $payout->setAttributes([
-            'status' => self::STATUS_WAITING_FOR_BOOKING_START,
-            'amount' => $booking->amount_payout,
-            'currency_id' => Currency::getUserOrDefault($booking->item->owner),
-            'user_id' => $booking->item->owner_id,
-            'created_at' => time(),
-        ]);
-        $payout->save();
-        $booking->payout_id = $payout->id;
-        return $booking->save();
     }
 
     public function markAsProcessed()

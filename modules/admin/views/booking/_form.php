@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var booking\models\Booking $model
+ * @var booking\models\booking\Booking $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

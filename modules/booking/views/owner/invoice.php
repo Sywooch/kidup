@@ -3,7 +3,7 @@ use Carbon\Carbon;
 use yii\helpers\Url;
 
 /**
- * @var $booking \booking\models\Booking
+ * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\Item
  */
 \booking\assets\BookingViewsAsset::register($this);

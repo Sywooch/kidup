@@ -1,9 +1,9 @@
 <?php
 
-namespace booking\models\base;
+namespace booking\models\booking;
 
-use booking\models\Payin;
-use booking\models\Payout;
+use booking\models\payin\Payin;
+use booking\models\payout\Payout;
 use item\models\Item;
 use message\models\Conversation;
 use review\models\Review;
@@ -46,7 +46,7 @@ use Yii;
  * @property Review[] $reviews
  * @property Conversation $conversation
  */
-class Booking extends \app\models\BaseActiveRecord
+class BookingBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

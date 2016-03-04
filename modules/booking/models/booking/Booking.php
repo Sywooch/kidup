@@ -1,9 +1,10 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\booking;
 
 use app\helpers\Event;
 use app\jobs\SlackJob;
+use booking\models\payin\Payin;
 use Carbon\Carbon;
 use message\models\Conversation;
 use user\models\User;
@@ -24,7 +25,7 @@ class BookingException extends \yii\base\Exception
 
 class NoAccessToBookingException extends BookingException{};
 
-class Booking extends \booking\models\base\Booking
+class Booking extends BookingBase
 {
     const AWAITING_PAYMENT = 'awaiting_payment';
     const PENDING = 'pending_owner';

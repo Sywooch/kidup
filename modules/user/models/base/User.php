@@ -23,7 +23,7 @@ use Yii;
  * @property integer $updated_at
  * @property string $referral_code
  *
- * @property \booking\models\Booking[] $bookings
+ * @property \booking\models\booking\Booking[] $bookings
  * @property \message\models\Conversation[] $conversations
  * @property \message\models\Conversation[] $conversations0
  * @property \item\models\Item[] $items
@@ -32,8 +32,8 @@ use Yii;
  * @property \item\models\Media[] $media
  * @property \message\models\Message[] $messages
  * @property \message\models\Message[] $messages0
- * @property \booking\models\Payin[] $payins
- * @property \booking\models\Payout[] $payouts
+ * @property \booking\models\payin\Payin[] $payins
+ * @property \booking\models\payout\PayoutBase[] $payouts
  * @property \user\models\Profile $profile
  * @property \review\models\Review[] $reviews
  * @property \review\models\Review[] $reviews0
@@ -93,7 +93,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\booking\models\Booking::className(), ['renter_id' => 'id']);
+        return $this->hasMany(\booking\models\booking\Booking::className(), ['renter_id' => 'id']);
     }
 
     /**
@@ -165,7 +165,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\booking\models\Payin::className(), ['user_id' => 'id']);
+        return $this->hasMany(\booking\models\payin\Payin::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -173,7 +173,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\booking\models\Payout::className(), ['user_id' => 'id']);
+        return $this->hasMany(\booking\models\payout\PayoutBase::className(), ['user_id' => 'id']);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\invoice;
 
 use Carbon\Carbon;
 use Yii;
@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "Booking".
  */
-class Invoice extends \booking\models\base\Invoice
+class Invoice extends InvoiceBase
 {
     public function behaviors()
     {

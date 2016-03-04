@@ -2,8 +2,8 @@
 
 namespace booking\forms;
 
-use booking\models\Booking;
-use booking\models\Payin;
+use booking\models\booking\Booking;
+use booking\models\payin\Payin;
 use yii\base\Model;
 use yii\web\BadRequestHttpException;
 

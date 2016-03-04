@@ -2,7 +2,7 @@
 
 namespace item\models;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
 use user\models\User;
 use Yii;

@@ -3,7 +3,7 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use item\models\Item;
 use Yii;
 use yii\data\ActiveDataProvider;

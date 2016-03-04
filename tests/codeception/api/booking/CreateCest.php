@@ -2,7 +2,7 @@
 namespace codecept\api\booking;
 
 use ApiTester;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;

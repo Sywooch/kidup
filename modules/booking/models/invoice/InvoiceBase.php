@@ -1,8 +1,9 @@
 <?php
 
-namespace booking\models\base;
+namespace booking\models\invoice;
 
-use booking\models\Payout;
+use booking\models\payin\Payin;
+use booking\models\payout\Payout;
 use Yii;
 
 /**
@@ -18,7 +19,8 @@ use Yii;
  * @property Payin[] $payins
  * @property Payout[] $payouts
  */
-class Invoice extends \app\models\BaseActiveRecord
+
+class InvoiceBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

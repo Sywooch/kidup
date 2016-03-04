@@ -29,7 +29,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                         <?php
                         if (isset($booking) && isset($booking->item)) {
                             if (\Yii::$app->user->id == $booking->item->owner_id
-                                && $booking->status == \booking\models\Booking::PENDING
+                                && $booking->status == \booking\models\booking\Booking::PENDING
                             ) {
                                 echo \yii\bootstrap\Alert::widget([
                                     'options' => [

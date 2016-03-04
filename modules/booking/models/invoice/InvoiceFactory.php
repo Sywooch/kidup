@@ -1,7 +1,8 @@
 <?php
 
-namespace booking\models;
+namespace booking\models\invoice;
 
+use booking\models\booking\Booking;
 use Yii;
 use yii\helpers\Json;
 
