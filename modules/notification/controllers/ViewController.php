@@ -37,6 +37,45 @@ class ViewController extends Controller
     }
 
     public function actionTest() {
+        echo '<pre>';
+        $subject = 'hello! {{ t("x.1", "hel\'lo" , [a:"{b}c", "d": "e{f}"] )}} {{ muhaha }} {{ t(\'x.2\', \'w,orld!\'  , {"C":"D"})}}';
+
+        preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[}]{2}/mu', $subject, $matches);
+        $translations = [];
+        echo $subject . "\n";
+        foreach ($matches[1] as $tString) {
+            $parts = explode(',', $tString);
+            $key = $parts[0];
+            $tail = array_slice($parts, 1);
+            $translation = join(',', $tail);
+
+            // Chop off the quotation characters
+            $key = trim($key);
+            $translation = trim($translation);
+            $firstChar = $key[0];
+
+
+            $key = trim($key, $firstChar);
+            $firstChar = $translation[0];
+            $lastChar = $translation[strlen($translation) - 1];
+            if ($firstChar == $lastChar) {
+                $translation = trim($translation, $firstChar);
+            } else {
+                preg_match_all('/(.*)\s*,\s*[\[]{1}(.*?)[\]]{1}$/', $translation, $matches);
+                $results = $matches[1];
+                if (count($results) == 0) {
+                    preg_match_all('/(.*)\s*,\s*[\{]{1}(.*?)[\}]{1}$/', $translation, $matches);
+                    $results = $matches[1];
+                }
+                $translation = $results[0];
+            }
+
+            $translations[$key] = $translation;
+        }
+
+        print_r($translations);
+
+        echo '</pre>';
         //$renderer = new UserWelcomeRenderer(User::find()->where(['email' => 'kevin91nl@gmail.com'])->one());
         //MailSender::send($renderer);
         //return $renderer->renderMail();

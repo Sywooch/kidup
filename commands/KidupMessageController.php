@@ -219,50 +219,35 @@ class KidupMessageController extends \yii\console\controllers\MessageController
 
         if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
             echo $fileName;
-            $expl = explode("{{ t(", $subject);
-            unset($expl[0]);
-            $messages = [];
-            foreach ($expl as $item) {
-                $arg1 = false;
-                $arg2 = false;
-                // basically find the first ) which is not enclosed by '' or ""
-                $isEnclosed = false;
-                $string = '';
-                foreach (str_split($item) as $char) {
-                    if (in_array($char, ['"', "'"])) {
-                        if (!$isEnclosed) {
-                            continue;
-                        }
-                        $isEnclosed = !$isEnclosed;
-                    }
+            preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[}]{2}/mu', $subject, $matches);
+            foreach ($matches[1] as $tString) {
+                $parts = explode(',', $tString);
+                $key = $parts[0];
+                $tail = array_slice($parts, 1);
+                $translation = join(',', $tail);
 
-                    if ($char == "," && !$isEnclosed && $arg1 == false) {
-                        if ($arg1 == false) {
-                            $arg1 = $string;
-                        } elseif ($arg2 == false) {
-                            $arg2 = $string;
-                        }
-                        $string = '';
+                // Chop off the quotation characters
+                $key = trim($key);
+                $translation = trim($translation);
+                $firstChar = $key[0];
+
+
+                $key = trim($key, $firstChar);
+                $firstChar = $translation[0];
+                $lastChar = $translation[strlen($translation) - 1];
+                if ($firstChar == $lastChar) {
+                    $translation = trim($translation, $firstChar);
+                } else {
+                    preg_match_all('/(.*)\s*,\s*[\[]{1}(.*?)[\]]{1}$/', $translation, $matches);
+                    $results = $matches[1];
+                    if (count($results) == 0) {
+                        preg_match_all('/(.*)\s*,\s*[\{]{1}(.*?)[\}]{1}$/', $translation, $matches);
+                        $results = $matches[1];
                     }
-                    if ($char == ")" && !$isEnclosed) {
-                        if ($arg2 == false) {
-                            $arg2 = $string;
-                        }
-                        if (strpos($arg2, ', ') == 0) {
-                            $arg2 = substr($arg2, 1);
-                        }
-                        if (strpos($arg2, ',') == 0) {
-                            $arg2 = substr($arg2, 0);
-                        }
-                        // function ends
-                        $str = str_replace("    ", "", trim(preg_replace('/\s+/', ' ',$arg2)));
-                        $str = ltrim($str, ", ");
-                        $messages[$arg1][] = $str;
-                        echo $str;
-                        break;
-                    }
-                    $string .= $char;
+                    $translation = $results[0];
                 }
+
+                $messages[$key][] = $translation;
             }
         } else {
             foreach ((array)$translator as $currentTranslator) {
