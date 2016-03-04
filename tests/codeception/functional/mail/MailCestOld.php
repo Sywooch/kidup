@@ -2,10 +2,10 @@
 namespace codecept\functional\mail;
 
 use codecept\_support\MuffinHelper;
-use codecept\muffins\Booking;
-use codecept\muffins\Item;
-use codecept\muffins\Message;
-use codecept\muffins\User;
+use codecept\muffins\BookingMuffin;
+use codecept\muffins\ItemMuffin;
+use codecept\muffins\MessageMuffin;
+use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 use notifications\components\MailRenderer;
@@ -33,7 +33,7 @@ class MailCestOld
 
     public function testBookingOwner(FunctionalTester $I)
     {
-        $booking = $this->fm->create(Booking::class);
+        $booking = $this->fm->create(BookingMuffin::class);
 
         $mail = (new \mail\mails\bookingOwner\ConfirmationFactory())->create($booking);
         $this->checkMail($I, $mail);
@@ -53,7 +53,7 @@ class MailCestOld
 
     public function testBookingRenter(FunctionalTester $I)
     {
-        $booking = $this->fm->create(Booking::class);
+        $booking = $this->fm->create(BookingMuffin::class);
 
         $mail = (new \mail\mails\bookingRenter\ConfirmationFactory())->create($booking);
         $this->checkMail($I, $mail);
@@ -76,7 +76,7 @@ class MailCestOld
 
     public function testConversation(FunctionalTester $I)
     {
-        $message = $this->fm->create(Message::class);
+        $message = $this->fm->create(MessageMuffin::class);
 
         $mail = (new \mail\mails\conversation\NewMessageFactory())->create($message);
         $this->checkMail($I, $mail);
@@ -84,7 +84,7 @@ class MailCestOld
 
     public function testItem(FunctionalTester $I)
     {
-        $item = $this->fm->create(Item::class);
+        $item = $this->fm->create(ItemMuffin::class);
 
         $mail = (new \mail\mails\item\UnfinishedReminderFactory())->create($item);
         $this->checkMail($I, $mail);
@@ -92,7 +92,7 @@ class MailCestOld
 
     public function testReview(FunctionalTester $I)
     {
-        $booking = $this->fm->create(Booking::class);
+        $booking = $this->fm->create(BookingMuffin::class);
 
         $mail = (new \mail\mails\review\PublishFactory())->create($booking, true);
         $this->checkMail($I, $mail);
@@ -115,7 +115,7 @@ class MailCestOld
 
     public function testUser(FunctionalTester $I)
     {
-        $user = $this->fm->create(User::class);
+        $user = $this->fm->create(UserMuffin::class);
 
         $mail = (new \mail\mails\user\ReconfirmFactory())->create($user);
         $this->checkMail($I, $mail);

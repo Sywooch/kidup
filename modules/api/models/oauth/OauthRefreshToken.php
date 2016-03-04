@@ -38,7 +38,6 @@ class OauthRefreshToken extends \app\models\BaseActiveRecord
             [['expires'], 'safe'],
             [['refresh_token'], 'string', 'max' => 40],
             [['client_id'], 'string', 'max' => 32],
-            [['scope'], 'string', 'max' => 2000]
         ];
     }
 
@@ -52,7 +51,6 @@ class OauthRefreshToken extends \app\models\BaseActiveRecord
             'client_id' => 'Client ID',
             'user_id' => 'User ID',
             'expires' => 'Expires',
-            'scope' => 'Scope',
         ];
     }
 

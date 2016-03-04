@@ -5,9 +5,9 @@ namespace codecept\api\booking;
 use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\Booking;
-use codecept\muffins\Item;
-use codecept\muffins\User;
+use codecept\muffins\BookingMuffin;
+use codecept\muffins\ItemMuffin;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -31,13 +31,13 @@ class ViewBookingCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        $this->renter = $this->fm->create(User::class);
-        $this->owner = $this->fm->create(User::class);
-        $this->unknownUser = $this->fm->create(User::class);
-        $this->item = $this->fm->create(Item::class, [
+        $this->renter = $this->fm->create(UserMuffin::class);
+        $this->owner = $this->fm->create(UserMuffin::class);
+        $this->unknownUser = $this->fm->create(UserMuffin::class);
+        $this->item = $this->fm->create(ItemMuffin::class, [
             'owner_id' => $this->owner->id
         ]);
-        $this->booking = $this->fm->create(Booking::class,[
+        $this->booking = $this->fm->create(BookingMuffin::class,[
             'item_id' => $this->item->id,
             'renter_id' => $this->renter->id
         ]);

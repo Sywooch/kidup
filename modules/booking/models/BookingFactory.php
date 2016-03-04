@@ -51,6 +51,8 @@ class BookingFactory
         $this->booking->status = Booking::AWAITING_PAYMENT;
         $this->booking->setPayinPrices();
 
+
+
         $this->createPayin($paymentNonce);
 
         try {
@@ -59,12 +61,15 @@ class BookingFactory
             throw new BookingPaymentException("Payment failed", null, $e->getPrevious());
         }
 
+
+
         $this->booking->payin_id = $this->payin->id;
         $this->booking->status = Booking::PENDING;
         $this->booking->setExpireDate();
         $this->booking->save();
         $this->payin->status = Payin::STATUS_AUTHORIZED;
         $this->payin->save();
+
         $this->booking->startConversation($message);
         return $this->booking;
     }

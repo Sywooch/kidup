@@ -3,8 +3,8 @@ namespace codecept\api\messaging;
 
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\Message;
-use codecept\muffins\User;
+use codecept\muffins\MessageMuffin;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
 

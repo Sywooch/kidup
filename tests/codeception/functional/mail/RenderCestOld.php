@@ -2,7 +2,7 @@
 namespace codecept\functional\booking;
 
 use codecept\_support\MuffinHelper;
-use codecept\muffins\User;
+use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 use notifications\components\MailRenderer;
@@ -30,7 +30,7 @@ class RenderCestOld
 
     public function testPartialRender(FunctionalTester $I)
     {
-        $user = $this->fm->create(User::class);
+        $user = $this->fm->create(UserMuffin::class);
         $mail = (new \mail\mails\user\WelcomeFactory())->create($user);
         $renderer = new MailRenderer($mail);
         $I->assertTrue(strlen($renderer->renderPartial()) > 0);

@@ -4,7 +4,7 @@ namespace codecept\api\item;
 
 use ApiTester;
 use codecept\_support\MuffinHelper;
-use codecept\muffins\Item;
+use codecept\muffins\ItemMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -38,12 +38,12 @@ class RelatedCest
         $I->wantTo("view related items");
 
         // create an item that is available
-        $item1 = $this->fm->create(Item::className());
+        $item1 = $this->fm->create(ItemMuffin::className());
         $item1->is_available = true;
         $item1->save();
 
         // and another 'related' one (since there are only two)
-        $item2 = $this->fm->create(Item::className());
+        $item2 = $this->fm->create(ItemMuffin::className());
         $item2->is_available = true;
         $item2->save();
 

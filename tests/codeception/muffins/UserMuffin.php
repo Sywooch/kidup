@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use League\FactoryMuffin\Faker\Facade as Faker;
 
-class User extends \user\models\User
+class UserMuffin extends \user\models\User
 {
     public function definitions()
     {

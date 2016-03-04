@@ -4,7 +4,7 @@ namespace codecept\functional\user;
 use codecept\_support\MuffinHelper;
 use codecept\_support\MuffinTrait;
 use codecept\_support\UserHelper;
-use codecept\muffins\User;
+use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 
@@ -24,7 +24,7 @@ class LoginCest
 
     public function _before() {
         $this->fm = (new MuffinHelper())->init();
-        $this->user = $this->fm->create(User::class, [
+        $this->user = $this->fm->create(UserMuffin::class, [
             'password_hash' => \Yii::$app->security->generatePasswordHash('testtest')
         ]);
     }

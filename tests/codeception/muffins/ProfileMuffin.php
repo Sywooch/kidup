@@ -4,13 +4,13 @@ namespace codecept\muffins;
 use Faker\Factory as Faker;
 use images\components\ImageHelper;
 
-class Profile extends \user\models\Profile
+class ProfileMuffin extends \user\models\Profile
 {
     public function definitions()
     {
         $faker = Faker::create();
         return [
-            'user_id' => 'factory|'.User::class,
+            'user_id' => 'factory|'.UserMuffin::class,
             'description' => $faker->text(200),
             'first_name' => $faker->firstName,
             'last_name' => $faker->lastName,
@@ -22,7 +22,7 @@ class Profile extends \user\models\Profile
             'language' => 'da-DK',
             'currency_id' => 1,
             'nationality' => '1',
-            'location_id' => 'factory|'.Location::class
+            'location_id' => 'factory|'.LocationMuffin::class
         ];
     }
 

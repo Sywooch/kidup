@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class OauthClient extends \api\models\oauth\OauthClient
+class OauthClientMuffin extends \api\models\oauth\OauthClient
 {
     public function definitions()
     {

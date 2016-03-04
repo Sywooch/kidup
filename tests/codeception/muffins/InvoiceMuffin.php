@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Invoice extends \booking\models\Invoice
+class InvoiceMuffin extends \booking\models\Invoice
 {
     public function definitions()
     {

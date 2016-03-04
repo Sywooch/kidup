@@ -69,7 +69,6 @@
     "codeception/codeception": "2.1",
     "codeception/specify": "0.4.1",
     "codeception/verify": "0.2.7",
-
     "kriswallsmith/buzz": "~0.10",
     "league/factory-muffin": "~3.0",
     "league/factory-muffin-faker": "*",

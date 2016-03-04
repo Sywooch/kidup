@@ -4,7 +4,7 @@ namespace codecept\api\messaging;
 use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\User;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 use message\models\base\MobileDevices;
 
@@ -176,7 +176,7 @@ class NotificationCest
 
         // Create a user
         $fm = (new MuffinHelper())->init();
-        $user = $fm->create(User::class);
+        $user = $fm->create(UserMuffin::class);
 
         // And link it to the device
         $accessToken = UserHelper::apiLogin($user)['access-token'];

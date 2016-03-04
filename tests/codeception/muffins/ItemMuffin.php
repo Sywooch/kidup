@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Item extends \item\models\Item
+class ItemMuffin extends \item\models\Item
 {
 
     public function definitions()
@@ -20,14 +20,13 @@ class Item extends \item\models\Item
             'price_week' => $priceWeek,
             'price_month' => $priceMonth,
             'price_year' => $priceYear,
-            'owner_id' => 'factory|'.User::className(),
+            'owner_id' => 'factory|'.UserMuffin::className(),
             'currency_id' => 1,
-            'location_id' => 'factory|'.Location::className(),
+            'location_id' => 'factory|'.LocationMuffin::className(),
             'is_available' => 1,
             'category_id' => $faker->numberBetween(2, 6),
             'created_at' => $faker->dateTimeBetween('- 20 days', '- 10 days')->getTimestamp(),
             'updated_at' => $faker->dateTimeBetween('- 10 days', 'now')->getTimestamp(),
-            'min_renting_days' => 0
         ];
     }
 

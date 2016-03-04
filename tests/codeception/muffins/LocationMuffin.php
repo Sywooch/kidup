@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class Location extends \item\models\base\Location
+class LocationMuffin extends \item\models\base\Location
 {
     public function definitions()
     {
@@ -18,7 +18,7 @@ class Location extends \item\models\base\Location
             'street_number' => $faker->numberBetween(1, 200) . '',
             'longitude' => $faker->numberBetween(-180 * $precision, 180 * $precision) / $precision,
             'latitude' => $faker->numberBetween(-90 * $precision, 90 * $precision) / $precision,
-            'user_id' => 'factory|'.User::class,
+            'user_id' => 'factory|'.UserMuffin::class,
             'created_at' => $faker->dateTimeBetween('-20 days', '-10 days')->getTimestamp(),
             'updated_at' => $faker->dateTimeBetween('-10 days', 'now')->getTimestamp(),
             'street_suffix' => ''

@@ -36,7 +36,6 @@ class Invoice extends \app\models\BaseActiveRecord
         return [
             [['invoice_number', 'created_at', 'updated_at'], 'integer'],
             [['data'], 'string'],
-            [['status'], 'string', 'max' => 45]
         ];
     }
 
@@ -51,7 +50,6 @@ class Invoice extends \app\models\BaseActiveRecord
             'data' => Yii::t('invoice.attributes.data', 'Data'),
             'created_at' => Yii::t('invoice.attributes.created_at', 'Created At'),
             'updated_at' => Yii::t('invoice.attributes.updated_at', 'Updated At'),
-            'status' => Yii::t('invoice.attributes.status', 'Status'),
         ];
     }
 
@@ -60,7 +58,7 @@ class Invoice extends \app\models\BaseActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\user\models\base\Payin::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(Payin::className(), ['invoice_id' => 'id']);
     }
 
     /**
@@ -68,6 +66,6 @@ class Invoice extends \app\models\BaseActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\user\models\base\Payout::className(), ['invoice_id' => 'id']);
+        return $this->hasMany(Payout::className(), ['invoice_id' => 'id']);
     }
 }

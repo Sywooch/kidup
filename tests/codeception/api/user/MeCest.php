@@ -1,7 +1,7 @@
 <?php
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\User;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -21,7 +21,7 @@ class MeCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        $this->user = $this->fm->create(User::class);
+        $this->user = $this->fm->create(UserMuffin::class);
     }
 
     public function getMe(ApiTester $I)

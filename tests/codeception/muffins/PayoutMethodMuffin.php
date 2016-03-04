@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class PayoutMethod extends \user\models\PayoutMethod
+class PayoutMethodMuffin extends \user\models\PayoutMethod
 {
     public function definitions()
     {
@@ -11,7 +11,7 @@ class PayoutMethod extends \user\models\PayoutMethod
         return [
             'payee_name' => $faker->name,
             'country_id' => 1,
-            'type' => PayoutMethod::TYPE_DK_KONTO,
+            'type' => PayoutMethodMuffin::TYPE_DK_KONTO,
             'identifier_1' => "*******1234",
             'identifier_2' => "**32",
             'created_at' => $faker->dateTimeBetween('-30 days', '-20 days')->getTimestamp(),

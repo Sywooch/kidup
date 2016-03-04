@@ -3,8 +3,8 @@ namespace codecept\functional\item;
 
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
-use codecept\muffins\Media;
-use codecept\muffins\User;
+use codecept\muffins\MediaMuffin;
+use codecept\muffins\UserMuffin;
 use functionalTester;
 use item\models\base\ItemHasFeature;
 use item\models\base\ItemHasFeatureSingular;
@@ -30,15 +30,15 @@ class ItemCreateCest
      */
     private $item;
 
-    public function _before()
+    private function _before()
     {
         $this->fm = (new MuffinHelper())->init();
     }
 
-    public function checkCreateNewItem(FunctionalTester $I)
+    private function checkCreateNewItem(FunctionalTester $I)
     {
         $I->wantTo('ensure that I can create a new item');
-        $owner = $this->fm->create(User::class);
+        $owner = $this->fm->create(UserMuffin::class);
         UserHelper::login($owner);
         $I->amOnPage('/item/create');
         $I->see('Upload your product');
@@ -99,7 +99,7 @@ class ItemCreateCest
     private function checkLocation(FunctionalTester $I)
     {
         $I->amGoingTo('add one of my locations to my item');
-        $location = $this->fm->create(\codecept\muffins\Location::class,
+        $location = $this->fm->create(\codecept\muffins\LocationMuffin::class,
             ['user_id' => $this->item->owner->id]);
         $I->see('Set your pickup location');
         $I->see('Add new location');
@@ -113,7 +113,7 @@ class ItemCreateCest
     {
         $I->amGoingTo('see if an added photo shows up');
         // fake an image upload
-        $media = $this->fm->create(Media::class);
+        $media = $this->fm->create(MediaMuffin::class);
         (new ItemHasMedia([
             'media_id' => $media->id,
             'item_id' => $this->item->id
