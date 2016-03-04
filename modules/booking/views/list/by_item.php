@@ -2,7 +2,7 @@
 
 /**
  * @var \app\extended\web\View $this
- * @var \item\models\Item $item
+ * @var \item\models\item\Item $item
  * @var \yii\data\ActiveDataProvider $provider
  */
 

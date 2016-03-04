@@ -2,7 +2,7 @@
 namespace api\controllers;
 
 use api\models\Location;
-use item\models\LocationFactory;
+use item\models\location\LocationFactory;
 use user\models\base\IpLocation;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;

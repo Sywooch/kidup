@@ -6,7 +6,7 @@ use images\components\ImageHelper;
 /**
  * @var \app\extended\web\View $this
  * @var $booking \booking\models\booking\Booking
- * @var $item \item\models\Item
+ * @var $item \item\models\item\Item
  */
 \booking\assets\BookingViewsAsset::register($this);
 $this->assetPackage = \app\assets\Package::BOOKING;

@@ -2,7 +2,7 @@
 
 namespace user\models\base;
 
-use item\models\Location;
+use item\models\location\Location;
 use Yii;
 
 /**
@@ -25,7 +25,7 @@ use Yii;
  * @property integer $nationality
  * @property integer $location_id
  *
- * @property \item\models\Location $location
+ * @property \item\models\location\Location $location
  * @property \user\models\Country $nationality0
  * @property \user\models\base\Currency $currency
  * @property \user\models\User $user
@@ -140,7 +140,7 @@ class Profile extends \app\models\BaseActiveRecord
      */
     public function getLocation()
     {
-        return $this->hasOne(\item\models\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(\item\models\location\Location::className(), ['id' => 'location_id']);
     }
 
     /**

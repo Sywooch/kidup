@@ -5,9 +5,9 @@ use images\components\ImageHelper;
 /**
  * @var \app\extended\web\View $this
  * @var array $images
- * @var \item\models\Item $model
- * @var \item\models\Category $categories
- * @var \item\models\Location $location
+ * @var \item\models\item\Item $model
+ * @var \item\models\category\Category $categories
+ * @var \item\models\location\Location $location
  * @var \home\forms\Search $searchModel
  * @var bool $show_modal
  * @var string $rotatingImage

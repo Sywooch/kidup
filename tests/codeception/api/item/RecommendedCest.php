@@ -24,7 +24,7 @@ class RecommendedCest
         $this->fm = (new MuffinHelper())->init();
 
         // remove all items
-        \item\models\Item::deleteAll();
+        \item\models\item\Item::deleteAll();
     }
 
     /**

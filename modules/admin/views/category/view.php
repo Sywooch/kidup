@@ -4,7 +4,7 @@ use kartik\detail\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var item\models\Category $model
+ * @var \item\models\category\Category $model
  */
 
 $this->title = $model->name;

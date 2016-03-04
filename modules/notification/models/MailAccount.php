@@ -2,7 +2,7 @@
 
 namespace notification\models;
 
-use message\models\Conversation;
+use message\models\conversation\Conversation;
 use Yii;
 
 /**

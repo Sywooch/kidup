@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
- * @var \message\models\Conversation $conversation
+ * @var \message\models\conversation\Conversation $conversation
  * @var \app\extended\web\View $this
  */
 

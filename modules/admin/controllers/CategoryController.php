@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use admin\models\search\CategorySearch;
-use item\models\Category;
+use item\models\category\Category;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -110,7 +110,7 @@ class CategoryController extends Controller
      * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return \item\models\category\Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

@@ -6,7 +6,7 @@ use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
-use message\models\base\MobileDevices;
+use notification\models\base\MobileDevices;
 
 /**
  * API test the notification endpoint.

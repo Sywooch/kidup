@@ -5,7 +5,7 @@ namespace api\models;
 /**
  * This is the model class for table "item".
  */
-class Location extends \item\models\Location
+class Location extends \item\models\location\Location
 {
 
     public function fields()

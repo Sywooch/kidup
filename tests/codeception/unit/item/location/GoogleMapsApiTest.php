@@ -3,7 +3,7 @@ namespace codecept\unit\item\location;
 
 use FunctionalTester;
 use Codeception\Specify;
-use item\models\Location;
+use item\models\location\Location;
 use yii\codeception\TestCase;
 
 /**

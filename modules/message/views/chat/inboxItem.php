@@ -3,7 +3,7 @@ use yii\helpers\Url;
 
 /**
  * @var \yii\web\View $this
- * @var \message\models\Conversation $model
+ * @var \message\models\conversation\Conversation $model
  */
 ?>
 <tr>

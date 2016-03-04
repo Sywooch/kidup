@@ -3,7 +3,7 @@ namespace review\controllers;
 
 use app\extended\web\Controller;
 use booking\models\booking\Booking;
-use item\models\Item;
+use item\models\item\Item;
 use review\forms\OwnerReview;
 use review\forms\RenterReview;
 use review\models\Review;

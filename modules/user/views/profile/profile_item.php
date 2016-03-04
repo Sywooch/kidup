@@ -2,7 +2,7 @@
 use item\widgets\ItemCard;
 
 /**
- * @var $model \item\models\Item
+ * @var $model \item\models\item\Item
  *
  */
 ?>

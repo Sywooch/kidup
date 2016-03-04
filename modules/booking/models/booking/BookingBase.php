@@ -4,8 +4,8 @@ namespace booking\models\booking;
 
 use booking\models\payin\Payin;
 use booking\models\payout\Payout;
-use item\models\Item;
-use message\models\Conversation;
+use item\models\item\Item;
+use message\models\conversation\Conversation;
 use review\models\Review;
 use user\models\base\Currency;
 use user\models\User;
@@ -39,12 +39,12 @@ use Yii;
  * @property string $promotion_code_id
  *
  * @property Currency $currency
- * @property Item $item
+ * @property \item\models\item\Item $item
  * @property Payin $payin
  * @property Payout $payout
  * @property User $renter
  * @property Review[] $reviews
- * @property Conversation $conversation
+ * @property \message\models\conversation\Conversation $conversation
  */
 class BookingBase extends \app\models\BaseActiveRecord
 {

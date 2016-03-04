@@ -27,7 +27,7 @@ class CreateCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        \item\models\Item::deleteAll();
+        \item\models\item\Item::deleteAll();
         $this->user = $this->fm->create(UserMuffin::class);
     }
 

@@ -108,7 +108,7 @@ class Review extends base\Review
         return $this->averageOnReviews(Review::find()->where(['reviewed_id' => $user->id])->all());
     }
 
-    public function computeOverallItemScore(\item\models\Item $item){
+    public function computeOverallItemScore(\item\models\item\Item $item){
         return $this->averageOnReviews(Review::find()->where(['item_id' => $item->id])->all());
     }
 

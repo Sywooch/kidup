@@ -4,8 +4,8 @@ namespace item\forms;
 
 use item\models\base\ItemFacetValue;
 use item\models\base\ItemHasItemFacet;
-use item\models\Category;
-use item\models\Item;
+use item\models\category\Category;
+use item\models\item\Item;
 use Yii;
 use yii\base\Model;
 

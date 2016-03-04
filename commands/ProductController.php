@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use item\models\Item;
+use item\models\item\Item;
 use search\components\ItemSearchDb;
 use Yii;
 use yii\console\Controller;

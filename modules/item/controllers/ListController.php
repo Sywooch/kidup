@@ -4,7 +4,7 @@ namespace item\controllers;
 
 use app\extended\web\Controller;
 use booking\models\booking\Booking;
-use item\models\Item;
+use item\models\item\Item;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

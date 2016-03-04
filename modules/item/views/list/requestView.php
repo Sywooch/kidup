@@ -8,7 +8,7 @@ use yii\helpers\Url;
  */
 \item\assets\ListAsset::register($this);
 
-$item = \item\models\Item::findOne($model->item_id);
+$item = \item\models\item\Item::findOne($model->item_id);
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;
 ?>
 

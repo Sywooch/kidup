@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
- * @var \item\models\Item $model
+ * @var \item\models\item\Item $model
  */
 
 \item\assets\ListAsset::register($this);

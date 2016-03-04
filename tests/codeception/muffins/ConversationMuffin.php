@@ -4,7 +4,7 @@ namespace codecept\muffins;
 use booking\models\booking\Booking;
 use Faker\Factory as Faker;
 
-class ConversationMuffin extends \message\models\Conversation
+class ConversationMuffin extends \message\models\conversation\Conversation
 {
 
     public function definitions()

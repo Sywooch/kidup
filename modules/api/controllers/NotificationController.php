@@ -4,7 +4,7 @@ namespace api\controllers;
 use api\models\Message;
 use Aws;
 use message\components\MobilePush;
-use message\models\base\MobileDevices;
+use notification\models\base\MobileDevices;
 use yii\web\NotFoundHttpException;
 
 class NotificationController extends Controller

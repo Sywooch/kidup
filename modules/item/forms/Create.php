@@ -2,8 +2,8 @@
 
 namespace item\forms;
 
-use item\models\Category;
-use item\models\Item;
+use item\models\category\Category;
+use item\models\item\Item;
 use item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;

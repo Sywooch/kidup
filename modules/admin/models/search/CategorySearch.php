@@ -2,13 +2,13 @@
 
 namespace admin\models\search;
 
-use item\models\Category;
+use item\models\category\Category;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CategorySearch represents the model behind the search form about `item\models\Category`.
+ * CategorySearch represents the model behind the search form about `item\models\category\Category`.
  */
 class CategorySearch extends Category
 {

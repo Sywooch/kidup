@@ -14,7 +14,7 @@ use Yii;
  *
  * @property \booking\models\booking\Booking[] $bookings
  * @property \user\models\Country[] $countries
- * @property \item\models\Item[] $items
+ * @property \item\models\item\Item[] $items
  * @property \booking\models\payin\Payin[] $payins
  * @property \booking\models\payout\PayoutBase[] $payouts
  * @property \user\models\Profile[] $profiles
@@ -91,7 +91,7 @@ class Currency extends \app\models\BaseActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\item\models\Item::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\item\models\item\Item::className(), ['currency_id' => 'id']);
     }
 
     /**

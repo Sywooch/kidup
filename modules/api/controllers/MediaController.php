@@ -4,7 +4,7 @@ namespace api\controllers;
 use api\models\Item;
 use api\models\Media;
 use images\components\ImageManager;
-use item\models\ItemHasMedia;
+use item\models\itemHasMedia\ItemHasMedia;
 use search\components\ItemSearchDb;
 use search\forms\Filter;
 use yii\data\ActiveDataProvider;

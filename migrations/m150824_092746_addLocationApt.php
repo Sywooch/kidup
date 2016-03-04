@@ -19,7 +19,7 @@ class m150824_092746_addLocationApt extends Migration
         // update all existing
         $users = user\models\User::find()->all();
         foreach ($users as $u) {
-            $location = item\models\Location::findOne(['user_id' => $u->id]);
+            $location = \item\models\location\Location::findOne(['user_id' => $u->id]);
             if($location == null) continue;
             $profile = $u->profile;
             $profile->location_id = $location->id;

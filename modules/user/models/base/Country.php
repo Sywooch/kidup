@@ -17,7 +17,7 @@ use Yii;
  *
  * @property \user\models\base\Currency $currency
  * @property \user\models\Language $mainLanguage
- * @property \item\models\Location[] $locations
+ * @property \item\models\location\Location[] $locations
  * @property \user\models\base\PayoutMethod[] $payoutMethods
  * @property \user\models\Profile[] $profiles
  */
@@ -83,7 +83,7 @@ class Country extends \app\models\BaseActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\item\models\Location::className(), ['country' => 'id']);
+        return $this->hasMany(\item\models\location\Location::className(), ['country' => 'id']);
     }
 
     /**

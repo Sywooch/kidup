@@ -11,7 +11,7 @@ use booking\models\payin\Payin;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 use item\forms\CreateBooking;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\PayoutMethod;
 use Yii;
 use yii\helpers\Url;

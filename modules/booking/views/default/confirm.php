@@ -11,7 +11,7 @@ use yii\helpers\Html;
  * @var \app\extended\web\View $this
  * @var \booking\models\booking\Booking $booking
  * @var \booking\forms\Confirm $model
- * @var \item\models\Item $item
+ * @var \item\models\item\Item $item
  * @var \user\models\Profile $profile
  * @var array $tableData
  */

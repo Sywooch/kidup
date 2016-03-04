@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class ItemMuffin extends \item\models\Item
+class ItemMuffin extends \item\models\item\Item
 {
 
     public function definitions()

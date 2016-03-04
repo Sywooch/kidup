@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class LocationMuffin extends \item\models\base\Location
+class LocationMuffin extends \item\models\location\Location
 {
     public function definitions()
     {

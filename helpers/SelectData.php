@@ -2,7 +2,7 @@
 
 namespace app\helpers;
 
-use item\models\Location;
+use item\models\location\Location;
 use user\models\base\Currency;
 use user\models\Country;
 use user\models\Language;
@@ -64,7 +64,7 @@ class SelectData extends Model
         $r = [];
         foreach($l as $loc){
             /**
-             * @var Location $loc
+             * @var \item\models\location\Location $loc
              */
             if(!$loc->isValid()) continue;
             $address = [$loc->street_name. ' '. $loc->street_number,];

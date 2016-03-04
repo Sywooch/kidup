@@ -2,7 +2,7 @@
 
 /**
  * @var yii\web\View $this
- * @var item\models\Category $model
+ * @var \item\models\category\Category $model
  */
 
 $this->title = 'Update Category: ' . ' ' . $model->name;

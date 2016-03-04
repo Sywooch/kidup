@@ -12,7 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use item\models\Item;
+use item\models\item\Item;
 use review\models\Review;
 use user\Finder;
 use user\models\Profile;

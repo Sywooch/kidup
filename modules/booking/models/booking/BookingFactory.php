@@ -10,7 +10,7 @@ namespace booking\models\booking;
 use booking\models\payin\Payin;
 use booking\models\payin\PayinException;
 use Carbon\Carbon;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\base\Currency;
 
 /**

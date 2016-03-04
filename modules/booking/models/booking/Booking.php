@@ -6,7 +6,7 @@ use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;
 use Carbon\Carbon;
-use message\models\Conversation;
+use message\models\conversation\Conversation;
 use user\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;

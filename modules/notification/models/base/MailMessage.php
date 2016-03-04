@@ -16,7 +16,7 @@ use Yii;
  * @property string $mail_account_name
  *
  * @property \mail\models\MailAccount $mailAccountName
- * @property \message\models\Message $message0
+ * @property \message\models\message\Message $message0
  */
 class MailMessage extends \app\models\BaseActiveRecord
 {
@@ -72,7 +72,7 @@ class MailMessage extends \app\models\BaseActiveRecord
      */
     public function getMessage0()
     {
-        return $this->hasOne(\message\models\Message::className(), ['id' => 'message_id']);
+        return $this->hasOne(\message\models\message\Message::className(), ['id' => 'message_id']);
     }
 
 

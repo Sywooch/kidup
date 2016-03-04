@@ -5,7 +5,7 @@ namespace api\models;
 /**
  * This is the model class for table "item".
  */
-class Category extends \item\models\Category
+class Category extends \item\models\category\Category
 {
     public function fields()
     {

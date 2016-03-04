@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class MediaMuffin extends \item\models\Media
+class MediaMuffin extends \item\models\media\Media
 {
     public function definitions()
     {

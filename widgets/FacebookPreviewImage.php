@@ -3,7 +3,7 @@
 namespace app\widgets;
 
 use images\components\ImageHelper;
-use item\models\Item;
+use item\models\item\Item;
 use Yii;
 use yii\helpers\Url;
 

@@ -4,7 +4,7 @@ namespace item\controllers;
 
 use app\extended\web\Controller;
 use item\forms\CreateBooking;
-use item\models\Item;
+use item\models\item\Item;
 use review\models\base\Review;
 use user\models\base\Currency;
 use Yii;
@@ -50,7 +50,7 @@ class ViewController extends Controller
     public function actionIndex($id, $new_publish = false)
     {
         /**
-         * @var $item \item\models\Item
+         * @var $item \item\models\item\Item
          */
         $item = Item::find()->where(['id' => $id])->with('location')->one();
 

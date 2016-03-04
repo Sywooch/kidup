@@ -3,8 +3,8 @@ namespace message\controllers;
 
 use app\extended\web\Controller;
 use message\forms\ChatMessage;
-use message\models\Conversation;
-use message\models\Message;
+use message\models\conversation\Conversation;
+use message\models\message\Message;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;

@@ -3,7 +3,7 @@
 namespace admin\forms;
 
 use booking\models\booking\Booking;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\User;
 use Yii;
 use yii\base\Model;

@@ -5,7 +5,7 @@ namespace api\models;
 /**
  * This is the model class for table "item".
  */
-class Conversation extends \message\models\Conversation
+class Conversation extends \message\models\conversation\Conversation
 {
     public function fields()
     {

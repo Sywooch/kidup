@@ -3,7 +3,7 @@
 namespace review\models\base;
 
 use booking\models\booking\Booking;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\User;
 use Yii;
 
@@ -22,7 +22,7 @@ use Yii;
  * @property integer $is_public
  *
  * @property Booking $booking
- * @property Item $item
+ * @property \item\models\item\Item $item
  * @property User $reviewer
  * @property User $reviewed
  */
@@ -80,7 +80,7 @@ class Review extends \app\models\BaseActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\item\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\item\models\item\Item::className(), ['id' => 'item_id']);
     }
 
     /**

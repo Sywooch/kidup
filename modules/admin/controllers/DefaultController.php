@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use admin\forms\Query;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\base\User;
 use Yii;
 

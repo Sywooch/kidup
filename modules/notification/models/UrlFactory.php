@@ -12,7 +12,7 @@
 namespace notification\models;
 
 use booking\models\booking\Booking;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\User;
 use yii\helpers\Url;
 
@@ -53,12 +53,12 @@ class UrlFactory
         return self::url('review/create/' . $booking->id);
     }
 
-    public static function itemCompletion(Item $item)
+    public static function itemCompletion(item\Item $item)
     {
         return self::url("item/edit-basics?id=" . $item->id);
     }
 
-    public static function chat(\message\models\Conversation $conversation) {
+    public static function chat(\message\models\conversation\Conversation $conversation) {
         return self::url('messages/' . $conversation->id);
     }
 

@@ -2,7 +2,7 @@
 
 namespace user\forms;
 
-use item\models\Location;
+use item\models\location\Location;
 use user\models\User;
 use user\Module;
 use yii\base\Model;

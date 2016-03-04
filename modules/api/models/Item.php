@@ -3,13 +3,13 @@
 namespace api\models;
 
 use images\components\ImageHelper;
-use item\models\ItemHasMedia;
+use item\models\itemHasMedia\ItemHasMedia;
 use yii\helpers\Json;
 
 /**
  * This is the model class for table "item".
  */
-class Item extends \item\models\Item
+class Item extends \item\models\item\Item
 {
 
     public function scenarios()

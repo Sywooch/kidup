@@ -4,8 +4,8 @@ namespace home\controllers;
 
 use app\extended\web\Controller;
 use home\forms\Search;
-use item\models\Category;
-use item\models\Item;
+use item\models\category\Category;
+use item\models\item\Item;
 use Yii;
 use yii\helpers\Html;
 

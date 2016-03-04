@@ -9,7 +9,7 @@ use functionalTester;
 use item\models\base\ItemHasFeature;
 use item\models\base\ItemHasFeatureSingular;
 use item\models\base\ItemHasMedia;
-use item\models\Item;
+use item\models\item\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -26,7 +26,7 @@ class ItemCreateCest
     protected $fm = null;
 
     /**
-     * @var Item
+     * @var \item\models\item\Item
      */
     private $item;
 

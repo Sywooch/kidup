@@ -24,14 +24,14 @@ use Yii;
  * @property string $referral_code
  *
  * @property \booking\models\booking\Booking[] $bookings
- * @property \message\models\Conversation[] $conversations
- * @property \message\models\Conversation[] $conversations0
- * @property \item\models\Item[] $items
- * @property \item\models\Location[] $locations
+ * @property \message\models\conversation\Conversation[] $conversations
+ * @property \message\models\conversation\Conversation[] $conversations0
+ * @property \item\models\item\Item[] $items
+ * @property \item\models\location\Location[] $locations
  * @property \notification\models\MailAccount[] $mailAccounts
- * @property \item\models\Media[] $media
- * @property \message\models\Message[] $messages
- * @property \message\models\Message[] $messages0
+ * @property \item\models\media\Media[] $media
+ * @property \message\models\message\Message[] $messages
+ * @property \message\models\message\Message[] $messages0
  * @property \booking\models\payin\Payin[] $payins
  * @property \booking\models\payout\PayoutBase[] $payouts
  * @property \user\models\Profile $profile
@@ -101,7 +101,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getConversations()
     {
-        return $this->hasMany(\message\models\Conversation::className(), ['initiater_user_id' => 'id']);
+        return $this->hasMany(\message\models\conversation\Conversation::className(), ['initiater_user_id' => 'id']);
     }
 
     /**
@@ -109,7 +109,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getConversations0()
     {
-        return $this->hasMany(\message\models\Conversation::className(), ['target_user_id' => 'id']);
+        return $this->hasMany(\message\models\conversation\Conversation::className(), ['target_user_id' => 'id']);
     }
 
     /**
@@ -117,7 +117,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\item\models\Item::className(), ['owner_id' => 'id']);
+        return $this->hasMany(\item\models\item\Item::className(), ['owner_id' => 'id']);
     }
 
     /**
@@ -125,7 +125,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\item\models\Location::className(), ['user_id' => 'id']);
+        return $this->hasMany(\item\models\location\Location::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -141,7 +141,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasMany(\item\models\Media::className(), ['user_id' => 'id']);
+        return $this->hasMany(\item\models\media\Media::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -149,7 +149,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getMessages()
     {
-        return $this->hasMany(\message\models\Message::className(), ['sender_user_id' => 'id']);
+        return $this->hasMany(\message\models\message\Message::className(), ['sender_user_id' => 'id']);
     }
 
     /**
@@ -157,7 +157,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getMessages0()
     {
-        return $this->hasMany(\message\models\Message::className(), ['receiver_user_id' => 'id']);
+        return $this->hasMany(\message\models\message\Message::className(), ['receiver_user_id' => 'id']);
     }
 
     /**
