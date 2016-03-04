@@ -13,7 +13,6 @@ use codecept\muffins\MessageMuffin;
 use codecept\muffins\OauthAccessTokenMuffin;
 use codecept\muffins\OauthClientMuffin;
 use codecept\muffins\PayinMuffin;
-use codecept\muffins\PayoutBaseMuffin;
 use codecept\muffins\PayoutMethodMuffin;
 use codecept\muffins\PayoutMuffin;
 use codecept\muffins\ProfileMuffin;

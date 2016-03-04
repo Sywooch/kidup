@@ -7,7 +7,7 @@ use api\models\Item;
 use api\models\Review;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
-use booking\models\payout\BrainTree;
+use booking\models\payin\BrainTree;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\data\ActiveDataProvider;

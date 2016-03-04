@@ -21,7 +21,7 @@ class BookingMuffin extends \booking\models\booking\Booking
             'updated_at' => $faker->dateTimeBetween('-5 days', '-1 days')->getTimestamp(),
             'created_at' => $faker->dateTimeBetween('-10 days', '-5 days')->getTimestamp(),
             'payin_id' => 'factory|'.PayinMuffin::class,
-            'payout_id' => 'factory|'.PayoutBaseMuffin::class,
+            'payout_id' => 'factory|'.PayoutMuffin::class,
             'amount_item' => $faker->numberBetween(1, 200),
             'amount_payin' => $faker->numberBetween(1, 5),
             'amount_payin_fee' => $faker->numberBetween(1, 5),
