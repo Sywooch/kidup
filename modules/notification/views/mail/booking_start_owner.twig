@@ -5,7 +5,7 @@
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/green_4.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/green_4.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,7 +13,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-green-stroller.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-green-stroller.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.booking_start_owner.t1', 'Do you have everything planned?') }}</h3>
@@ -54,7 +54,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-pink-speen.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-pink-speen.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>

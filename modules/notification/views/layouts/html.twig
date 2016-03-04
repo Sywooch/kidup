@@ -7,26 +7,26 @@
     <style>
         @font-face {
             font-family: "Gotham Rounded";
-            src: url({{ base64_font('@notification-assets/fonts/GothamRnd-Bold.otf') | raw }});
+            src: url(https://s3.eu-central-1.amazonaws.com/kidup-main-content/fonts/GothamRnd-Bold.otf);
             font-weight: bold;
         }
 
         @font-face {
             font-family: "Gotham Rounded";
-            src: url({{ base64_font('@notification-assets/fonts/GothamRnd-Light.otf') | raw }});
+            src: url(https://s3.eu-central-1.amazonaws.com/kidup-main-content/fonts/GothamRnd-Light.otf);
             font-weight: normal;
         }
 
         #action-module {
-            background-image: url({{ base64_image('@notification-assets/images/pattern.png') | raw }});
+            background-image: url({{ imageUrl('kidup/email/pattern.png') | raw }});
         }
 
         .icon--share {
-            background-image: url({{ base64_image('@notification-assets/images/share.png') | raw }});
+            background-image: url({{ imageUrl('kidup/email/share.png') | raw }});
         }
 
         .icon--forward {
-            background-image: url({{ base64_image('@notification-assets/images/forward.png') | raw }});
+            background-image: url({{ imageUrl('kidup/email/forward.png') | raw }});
         }
 
         {{ load_file('@notification-assets/css/style.css') | raw }}
@@ -40,7 +40,7 @@
             <td>
                 <!-- Header -->
                 {% block header %}
-                <table id="header" width="100%" style="background-image: url({% block headerimage %}{{ base64_image('@notification-assets/images/image-header.png') | raw }}{% endblock %}); background-size: cover;">
+                <table id="header" width="100%" style="background-image: url({% block headerimage %}{{ imageUrl('kidup/email/image-header.png') | raw }}{% endblock %}); background-size: cover;">
                     <tr>
                         <td>
                             <h1>{{ block('title') }}</h1>
@@ -58,7 +58,7 @@
                 <table id="logo-blue" width="100%">
                     <tr>
                         <td>
-                            <img src="{{ base64_image('@notification-assets/images/logo.png') | raw }}" alt="KidUp" width="30%">
+                            <img src="{{ imageUrl('kidup/email/logo.png') | raw }}" alt="KidUp" width="30%">
                         </td>
 
                     </tr>

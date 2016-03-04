@@ -9,7 +9,10 @@ class MailRenderer extends Renderer
     protected $templateFolder = '@notification-mail';
 
     public function render($template) {
-        return $this->renderFromFile($template);
+        $html = $this->renderFromFile($template);
+        $emogrifier = new \Pelago\Emogrifier();
+        $emogrifier->setHtml($html);
+        return $emogrifier->emogrify();
     }
 
 }

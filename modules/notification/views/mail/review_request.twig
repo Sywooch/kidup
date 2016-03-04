@@ -5,7 +5,7 @@
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_5.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_5.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -26,7 +26,7 @@
                     <a class="button button--green" href="{{ review_url | raw }}" target="_blank">{{ t('mail.links.review_now', 'Review now') | raw }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-couple.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-blue-couple.png') }}" width="100%" alt="Image">
                 </td>
             </tr>
         </table>

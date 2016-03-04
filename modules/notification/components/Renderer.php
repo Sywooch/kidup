@@ -90,7 +90,7 @@ class Renderer
         $this->payoutRenderer = new PayoutRenderer();
         $this->userRenderer = new UserRenderer();
         $this->setVariables([
-            'app_url' => 'kidup:///home',
+            'app_url' => self::inAppLink('/home'),
             'faq_url' => 'kidup:///home',
             'rent_url' => 'kidup:///home',
             'rent_out_url' => 'kidup:///home',
@@ -200,6 +200,17 @@ class Renderer
      */
     public static function displayDateTime($unixTimestamp) {
         return Carbon::createFromTimestamp($unixTimestamp)->format("d-m-y H:i");
+    }
+
+    /**
+     * Make an in-app link.
+     *
+     * @param $url In-app URL to go to.
+     * @return string HTTP link which opens the in-app URL.
+     */
+    public static function inAppLink($url) {
+        //return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
+        return 'http://test.kidup.dk/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url);
     }
 
 }

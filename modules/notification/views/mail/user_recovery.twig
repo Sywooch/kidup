@@ -5,7 +5,7 @@
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_6.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -26,7 +26,7 @@
                     <a class="button button--green" href="#">{{ t('mail.button.recover_password', 'Recover password') }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-gull.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-blue-gull.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>
