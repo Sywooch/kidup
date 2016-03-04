@@ -40,10 +40,23 @@ class ViewController extends Controller
         echo '<pre>';
         $subject = '{{ t(\'mail.booking_start_renter.p4\',
                             \'You can see the full details of the rental in the {app_link}.\', {
-                            \'app_link\': \'<a href="\' ~ app_url ~ \'" target="_blank">\' ~ t(\'mail.links.app\', \'app\') ~ \'</a>\'
+                            \'app_link\': \'<a href="\' ~ app_url ~ \'" target="_blank">\' ~ t("mail.links.app", \'app\') ~ \'</a>\'
                         }) | raw }}';
 
         $subject = str_replace("\n", '', $subject);
+        preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*\'(.*?)\'/', $subject, $matches1);
+        preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*"(.*?)"/', $subject, $matches2);
+        preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*\'(.*?)\'/', $subject, $matches3);
+        preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*"(.*?)"/', $subject, $matches4);
+        $keys = array_merge($matches1[1], $matches2[1], $matches3[1], $matches4[1]);
+        $translations = array_merge($matches1[2], $matches2[2], $matches3[2], $matches4[2]);
+        $t = [];
+        for ($i = 0; $i < count($keys); $i++) {
+            $t[$keys[$i]] = $translations[$i];
+        }
+        print_r($t);
+        die();
+
         preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[|]{1}(.*?)[}]{2}/mu', $subject, $matches);
         $translations = [];
         echo $subject . "\n";
