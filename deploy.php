@@ -81,7 +81,7 @@ task('deploy:cleanup', function () {
 task('cleanup', function () {
     $releases = env('releases_list');
 
-    $keep = get('keep_releases');
+    $keep = 1; //get('keep_releases');
 
     while ($keep > 0) {
         array_shift($releases);
@@ -95,8 +95,8 @@ task('cleanup', function () {
     run("cd {{deploy_path}} && if [ -e release ]; then rm release; fi");
     run("cd {{deploy_path}} && if [ -h release ]; then rm release; fi");
 
-    if (env('branch') !== 'master') {
-        run('sudo chmod 777 /var/www');
+    if (env('branch') != 'master') {
+        run('sudo chmod 777 -R /var/www/current/web');
     }
 
 })->desc('Cleaning up old releases');

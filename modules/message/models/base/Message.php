@@ -2,6 +2,7 @@
 
 namespace message\models\base;
 
+use message\models\MessageQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -59,6 +60,10 @@ class Message extends \app\models\BaseActiveRecord
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
         ];
+    }
+
+    public static function find(){
+        return new MessageQuery(get_called_class());
     }
 
     /**

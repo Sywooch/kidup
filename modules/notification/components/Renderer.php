@@ -3,6 +3,8 @@ namespace notification\components;
 
 use booking\models\Booking;
 use booking\models\Payout;
+use Item\models\Item;
+use Carbon\Carbon;
 use Yii;
 
 class Renderer
@@ -21,7 +23,6 @@ class Renderer
     public $contact_renter_url = null;
     public $renter_phone_url = null;
     public $renter_email_url = null;
-    public $renter_username = null;
     public $renter_name = null;
 
     // Booking
@@ -34,11 +35,9 @@ class Renderer
 
     // Item owner
     public $contact_owner_url;
-    public $owner_username = null;
+    public $owner_phone_url = null;
+    public $owner_email_url = null;
     public $owner_name = null;
-
-    // Conversation
-    public $sender_username = null;
 
     // Item
     public $finish_product_url = null;
@@ -49,7 +48,7 @@ class Renderer
     public $time_before = null;
 
     // Review
-    public $reviewer_username = null;
+    public $reviewer_name = null;
     public $days_left = null;
     public $review_url = null;
 
@@ -91,21 +90,35 @@ class Renderer
         $this->title = $title;
     }
 
+    public function displayDateTime($unixTimestamp) {
+        return Carbon::createFromTimestamp($unixTimestamp)->format("d-m-y H:i");
+    }
+
     public function loadBooking(Booking $booking) {
         // Renter
         $this->renter_name = $booking->renter->profile->getName();
-        //$this->renter_username = $booking->renter->username;
+        $this->renter_email_url = 'mailto:' . $booking->renter->email;
+        if (strlen($booking->renter->profile->phone_number) > 0) {
+            $this->renter_phone_url = 'tel:' . $booking->renter->profile->phone_number;
+        }
 
         // Owner
         $this->owner_name = $booking->item->owner->profile->getName();
-        //$this->owner_username = $booking->item->owner->username;
+        $this->owner_email_url = 'mailto:' . $booking->renter->email;
+        if (strlen($booking->renter->profile->phone_number) > 0) {
+            $this->owner_phone_url = 'tel:' . $booking->renter->profile->phone_number;
+        }
 
         // Booking
-        $this->booking_start_date = $booking->time_from;
-        $this->booking_end_date= $booking->time_to;
+        $this->booking_start_date = $this->displayDateTime($booking->time_from);
+        $this->booking_end_date= $this->displayDateTime($booking->time_to);
 
         // Item
-        $this->item_name = $booking->item->name;
+        $this->loadItem($booking->item);
+    }
+
+    public function loadItem(Item $item) {
+        $this->item_name = $item->name;
     }
 
     public function loadPayout(Payout $payout) {
@@ -113,11 +126,13 @@ class Renderer
         $this->total_payout_amount = $payout->amount;
 
         // Booking
+        $bookings = $payout->getBookings();
+        $this->loadBooking($bookings->one());
     }
 
     public function fillAutomatically() {
-        $booking = Payout::find()->one();
-        $this->loadPayout($booking);
+        $payout = Payout::find()->one();
+        $this->loadPayout($payout);
     }
 
 }

@@ -1,4 +1,4 @@
-{% embed "modules/notification/views/layouts/htmlv2.twig" %}
+{% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
         {{ t('mail.booking_confirmed_renter.title', title) | raw }}
@@ -37,11 +37,18 @@
                             'messaging_link': '<a href="' ~ contact_owner_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
                             'owner_name': owner_name,
                         }) | raw }}
-                        {{ t('mail.booking_confirmed_renter.p3',
-                        'Or you can contact the user on the {phone_link} or {email_link}.', {
-                            'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
-                            'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
-                        }) | raw }}
+                        {% if owner_phone_url == null %}
+                            {{ t('mail.booking_confirmed_renter.p3_1',
+                            'Or you can contact the user on {email_link}.', {
+                                'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% else %}
+                            {{ t('mail.booking_confirmed_renter.p3_2',
+                            'Or you can contact the user on the {phone_link} or {email_link}.', {
+                                'phone_link': '<a href="' ~ owner_phone_url ~ '" target="_blank">' ~ t('mail.links.phone', 'phone') ~ '</a>',
+                                'email_link': '<a href="' ~ owner_email_url ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>'
+                            }) | raw }}
+                        {% endif %}
                     </p>
                 </td>
                 <td width="40%">

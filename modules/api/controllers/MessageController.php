@@ -6,19 +6,22 @@ use api\models\Message;
 
 class MessageController extends Controller
 {
-    public function init(){
+    public function init()
+    {
         $this->modelClass = Message::className();
         parent::init();
     }
 
-    public function accessControl(){
+    public function accessControl()
+    {
         return [
             'guest' => [],
-            'user' => ['create', 'view', 'index', 'options']
+            'user' => ['create', 'view', 'index', 'options', 'unread-count']
         ];
     }
 
-    public function actions(){
+    public function actions()
+    {
         $actions = parent::actions();
         unset($actions['delete']);
 //        unset($actions['view']);
@@ -28,7 +31,8 @@ class MessageController extends Controller
         return $actions;
     }
 
-    public function actionCreate(){
+    public function actionCreate()
+    {
         // todo: security check
         $params = \Yii::$app->getRequest()->getBodyParams();
         /**
@@ -41,11 +45,16 @@ class MessageController extends Controller
         $m->sender_user_id = \Yii::$app->user->id;
         $m->message = $params['message'];
         $m->conversation_id = $c->id;
-        if($m->save()){
+        if ($m->save()) {
             return $m;
         }
 
         return ("Could not be saved");
 
+    }
+
+    public function actionUnreadCount()
+    {
+        return Message::find()->receiverUserId(\Yii::$app->user->id)->count();
     }
 }
