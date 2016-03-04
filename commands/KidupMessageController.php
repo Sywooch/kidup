@@ -215,11 +215,12 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $this->stdout("Extracting messages from $coloredFileName...\n");
 
         $subject = file_get_contents($fileName);
+        $subject = str_replace("\n", '', $subject);
         $messages = [];
 
         if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
             echo $fileName;
-            preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[}]{2}/mu', $subject, $matches);
+            preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[|]{1}(.*?)[}]{2}/mu', $subject, $matches);
             foreach ($matches[1] as $tString) {
                 $parts = explode(',', $tString);
                 $key = $parts[0];
@@ -230,7 +231,6 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                 $key = trim($key);
                 $translation = trim($translation);
                 $firstChar = $key[0];
-
 
                 $key = trim($key, $firstChar);
                 $firstChar = $translation[0];
@@ -244,7 +244,13 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                         preg_match_all('/(.*)\s*,\s*[\{]{1}(.*?)[\}]{1}$/', $translation, $matches);
                         $results = $matches[1];
                     }
-                    $translation = $results[0];
+                    if (count($results) > 0) {
+                        $translation = $results[0];
+                    } else {
+                        echo $key;
+                    }
+                    $firstChar = $translation[0];
+                    $translation = trim($translation, $firstChar);
                 }
 
                 $messages[$key][] = $translation;

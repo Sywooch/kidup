@@ -38,14 +38,19 @@ class ViewController extends Controller
 
     public function actionTest() {
         echo '<pre>';
-        $subject = 'hello! {{ t("x.1", "hel\'lo" , [a:"{b}c", "d": "e{f}"] )}} {{ muhaha }} {{ t(\'x.2\', \'w,orld!\'  , {"C":"D"})}}';
+        $subject = '{{ t(\'mail.booking_start_renter.p4\',
+                            \'You can see the full details of the rental in the {app_link}.\', {
+                            \'app_link\': \'<a href="\' ~ app_url ~ \'" target="_blank">\' ~ t(\'mail.links.app\', \'app\') ~ \'</a>\'
+                        }) | raw }}';
 
-        preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[}]{2}/mu', $subject, $matches);
+        $subject = str_replace("\n", '', $subject);
+        preg_match_all('/[{]{2}\s*t[(]{1}(.*?)[)]{1}\s*[|]{1}(.*?)[}]{2}/mu', $subject, $matches);
         $translations = [];
         echo $subject . "\n";
+        print_r($matches);
         foreach ($matches[1] as $tString) {
             $parts = explode(',', $tString);
-            $key = $parts[0];
+            $key = trim($parts[0]);
             $tail = array_slice($parts, 1);
             $translation = join(',', $tail);
 
