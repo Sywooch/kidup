@@ -29,21 +29,17 @@ class ViewController extends Controller
 
     public function actionLink($url, $mailId)
     {
-        $url = base64_decode($url);
-        return '<script>window.location = "' . $url . '";</script>';
-        die();
-        $url = base64_decode($url);
-        preg_match("/http:\/\/(.*).kidup.dk/", $url, $output_array); // check if actually a kidup URL
-        preg_match("/https:\/\/(.*).kidup.dk/", $url, $output_array_https); // check if actually a kidup URL
-
-        return $this->redirect($url);
+        return \Yii::$app->view->renderFile('@notification-layouts/link.twig', [
+            'url' => base64_decode($url),
+            'appstore_google_url' => Yii::$app->params['appstore-google'],
+            'appstore_ios_url' => Yii::$app->params['appstore-ios'],
+        ]);
     }
 
     public function actionTest() {
-        $renderer = new UserWelcomeRenderer(User::find()->one());
-        $view = $renderer->renderMail();
-        MailSender::send($renderer);
-        return $view;
+        //$renderer = new UserWelcomeRenderer(User::find()->where(['email' => 'kevin91nl@gmail.com'])->one());
+        //MailSender::send($renderer);
+        //return $renderer->renderMail();
     }
 
 }

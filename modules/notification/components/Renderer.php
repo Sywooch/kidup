@@ -95,7 +95,7 @@ class Renderer
             'rent_url' => 'kidup:///home',
             'rent_out_url' => 'kidup:///home',
             'social_media_url' => 'https://www.facebook.com/kidup.social',
-            'email_support' => 'mailto:philip@kidup.dk',
+            'email_support' => 'philip@kidup.dk',
         ]);
     }
 
@@ -110,6 +110,10 @@ class Renderer
 
     public function setVariables($vars) {
         $this->vars = array_merge($vars, $this->vars);
+    }
+
+    public function getReceiverEmail() {
+        return $this->vars['receiver_email'];
     }
 
     /**
@@ -209,8 +213,7 @@ class Renderer
      * @return string HTTP link which opens the in-app URL.
      */
     public static function inAppLink($url) {
-        //return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
-        return 'http://test.kidup.dk/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url);
+        return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
     }
 
 }

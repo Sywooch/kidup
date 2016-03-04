@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>KidUp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            {{ load_file('@notification-assets/css/style.css') | raw }}
+            {{ load_file('@notification-assets/css/responsive.css') | raw }}
+        </style>
+    </head>
+    <body style="padding: 20px 20px;">
+        <a class="button button--green" href="{{ url }}">{{ t('mail.link.button', 'Launch KidUp app') }}</a>
+
+        <br />
+        <h3 style="color: #666666;">{{ t('mail.link.noapp', 'Did you already download the KidUp app?') }}</h3>
+        <a href="{{ appstore_ios_url }}"><img src="{{ imageUrl('kidup/home/fake-home/appstore.png') }}" /></a>
+        <a href="{{ appstore_google_url }}"><img src="{{ imageUrl('kidup/home/fake-home/google.png') }}" /></a>
+
+        <script type="text/javascript">
+            var frame = document.createElement("iframe");
+            frame.src = "{{ url }}";
+            frame.style.display = "none";
+            document.body.appendChild(frame);
+            window.location = "{{ url }}";
+        </script>
+    </body>
+</html>

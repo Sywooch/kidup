@@ -19,11 +19,11 @@ class MailSender
 
         /** @var \yii\swiftmailer\Mailer $mailer */
         $mailer = \Yii::$app->mailer->compose();
-        echo $mailer
-            ->setTo('kevin91nl@gmail.com')
+        return $mailer
+            ->setTo($renderer->mailRenderer->getReceiverEmail())
             ->setReplyTo(['info@kidup.dk' => 'KidUp'])
             ->setFrom(['info@kidup.dk' => 'KidUp'])
-            ->setSubject('Subject')
+            ->setSubject('KidUp')
             ->setHtmlBody($view)
             ->send()
         ;

@@ -22,4 +22,6 @@ return [
     'kidupAddressLine2' => '8000 Aarhus C, Denmark',
     'numberOfDaysForReview' => 14,
     'icon-framework' => 'fa',
+    'appstore-google' => 'google',
+    'appstore-ios' => 'ios'
 ];

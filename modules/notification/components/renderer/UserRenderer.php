@@ -45,6 +45,7 @@ class UserRenderer
     public function loadUser(User $user) {
         $result = [];
         $result = array_merge($result, $this->loadProfileUrl($user));
+        $result = array_merge($result, $this->loadReceiver($user));
         return $result;
     }
 
@@ -82,13 +83,14 @@ class UserRenderer
     }
 
     /**
-     * Load retriever.
+     * Load receiver.
      *
      * @param User $user The retriever.
      * @return array All the render variables.
      */
-    public function loadRetriever(User $user) {
+    public function loadReceiver(User $user) {
         $result = [];
+        $result['receiver_email'] = $user->email;
         return $result;
     }
 

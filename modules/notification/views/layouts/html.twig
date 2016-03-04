@@ -40,7 +40,12 @@
             <td>
                 <!-- Header -->
                 {% block header %}
-                <table id="header" width="100%" style="background-image: url({% block headerimage %}{{ imageUrl('kidup/email/image-header.png') | raw }}{% endblock %}); background-size: cover;">
+                <style>
+                    #header {
+                        background-size: cover;
+                    }
+                </style>
+                <table id="header" width="100%" background="{% block headerimage %}{{ imageUrl('kidup/email/image-header.png') | raw }}{% endblock %}">
                     <tr>
                         <td>
                             <h1>{{ block('title') }}</h1>

@@ -5,9 +5,7 @@ namespace app\commands;
 use admin\models\I18nMessage;
 use admin\models\I18nSource;
 use app\jobs\SlackJob;
-use item\models\base\Category;
-use item\models\base\Feature;
-use item\models\base\FeatureValue;
+use item\models\category\Category;
 use Yii;
 use yii\console\Exception;
 use yii\helpers\Console;
@@ -220,6 +218,7 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $messages = [];
 
         if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
+            echo $fileName;
             $expl = explode("{{ t(", $subject);
             unset($expl[0]);
             $messages = [];
@@ -257,7 +256,9 @@ class KidupMessageController extends \yii\console\controllers\MessageController
                         }
                         // function ends
                         $str = str_replace("    ", "", trim(preg_replace('/\s+/', ' ',$arg2)));
+                        $str = ltrim($str, ", ");
                         $messages[$arg1][] = $str;
+                        echo $str;
                         break;
                     }
                     $string .= $char;
