@@ -65,8 +65,14 @@ task('deploy:enable_ssl', function () {
     }
 })->desc('Enabling ssl');
 
-task('deploy:cache-cleanup', function () {
+task('deploy:cleanup', function () {
+    // cleanup the cache
     run('php {{release_path}}/yii deploy/after-deploy');
+    if (env('branch') == 'master') {
+        run('rm -f -R {{release_path}}/tests');
+        run('rm -f -R {{release_path}}/devops');
+        run('rm -f -R {{release_path}}/.git');
+    }
 })->desc("Cleaning cache");
 
 /**
@@ -89,8 +95,8 @@ task('cleanup', function () {
     run("cd {{deploy_path}} && if [ -e release ]; then rm release; fi");
     run("cd {{deploy_path}} && if [ -h release ]; then rm release; fi");
 
-    if (env('branch') !== 'master') {
-        run('sudo chmod 777 /var/www');
+    if (env('branch') != 'master') {
+        run('sudo chmod 777 -R /var/www/current/web');
     }
 
 })->desc('Cleaning up old releases');
@@ -107,7 +113,7 @@ task('deploy', [
     'deploy:run_migrations',
     'deploy:enable_ssl',
     'deploy:symlink',
-    'deploy:cache-cleanup',
+    'deploy:cleanup',
     'cleanup',
 ])->desc('Deploy your project');
 
