@@ -51,15 +51,15 @@ class PushTemplates
         // Review
         'review_publish' => [
             'fallback' => null,
-            'variables' => ['reviewer_name', 'days_left']
+            'variables' => ['reviewer', 'days_left']
         ],
         'review_reminder' => [
             'fallback' => 'review_reminder',
-            'variables' => ['owner_name', 'review_url', 'days_left']
+            'variables' => ['reviewed_user', 'review_url', 'days_left']
         ],
         'review_request' => [
             'fallback' => 'review_request',
-            'variables' => ['owner_name', 'review_url']
+            'variables' => ['reviewed_user', 'review_url']
         ],
 
     ];

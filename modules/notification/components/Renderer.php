@@ -75,19 +75,29 @@ class Renderer
     public $social_media_url = null;
 
     // Reviewer name, depending on receiver/sender
-    public $name = null;
-
-    // General
-    public $app_url = null;
-    public $email_support = null;
-    public $faq_url = null;
-    public $title = null;
+    public $reviewer = null;
+    public $reviewed_user = null;
 
     // Variables
     public $vars = [];
 
     // Templating
     protected $templateFolder = null;
+
+    public function __construct() {
+        $this->bookingRenderer = new BookingRenderer();
+        $this->itemRenderer = new ItemRenderer();
+        $this->payoutRenderer = new PayoutRenderer();
+        $this->userRenderer = new UserRenderer();
+        $this->setVariables([
+            'app_url' => 'kidup:///home',
+            'faq_url' => 'kidup:///home',
+            'rent_url' => 'kidup:///home',
+            'rent_out_url' => 'kidup:///home',
+            'social_media_url' => 'https://www.facebook.com/kidup.social',
+            'email_support' => 'mailto:philip@kidup.dk',
+        ]);
+    }
 
     public function renderFromFile($template) {
         $vars = $this->getVariables();
@@ -100,15 +110,6 @@ class Renderer
 
     public function setVariables($vars) {
         $this->vars = array_merge($vars, $this->vars);
-    }
-
-    /**
-     * Set a title.
-     *
-     * @param $title
-     */
-    public function setTitle($title) {
-        $this->title = $title;
     }
 
     /**
@@ -138,6 +139,16 @@ class Renderer
      */
     public function loadItem(Item $item) {
         $vars = $this->itemRenderer->loadPayout($item);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the user.
+     *
+     * @param User $user
+     */
+    public function loadUser(User $user) {
+        $vars = $this->userRenderer->loadUser($user);
         $this->setVariables($vars);
     }
 

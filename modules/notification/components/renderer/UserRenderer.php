@@ -8,6 +8,46 @@ use user\models\User;
 class UserRenderer
 {
 
+    private function loadProfileUrl(User $user) {
+        return [
+            'profile_url' => 'kidup:///'
+        ];
+    }
+
+    /**
+     * Load a reviewer.
+     *
+     * @param User $user The reviewer.
+     * @return array All the render variables.
+     */
+    public function loadReviewer(User $user) {
+        $result = [];
+        return $result;
+    }
+
+    /**
+     * Load a reviewed user (or user to be reviewed).
+     *
+     * @param User $user The reviewed user.
+     * @return array All the render variables.
+     */
+    public function loadReviewed(User $user) {
+        $result = [];
+        return $result;
+    }
+
+    /**
+     * Load a user.
+     *
+     * @param User $user The user.
+     * @return array All the render variables.
+     */
+    public function loadUser(User $user) {
+        $result = [];
+        $result = array_merge($result, $this->loadProfileUrl($user));
+        return $result;
+    }
+
     /**
      * Load an owner.
      *
