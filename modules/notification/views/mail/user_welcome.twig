@@ -1,7 +1,7 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.user_welcome.title', title) | raw }}
+        {{ t('mail.user_welcome.title', 'Newest face on KidUp') | raw }}
     {% endblock %}
 
     {% block headerimage %}
@@ -16,7 +16,7 @@
                     <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.welcome.t1', 'Welcome, welcome!') }}</h3>
                     <p>
                         {{ t('mail.welcome.p1',
                         'Welcome to KidUp! A world of knowledge, love and dozens of unused children equipment. {rent_link} something now or rent you {rent_out_link}.', {
@@ -31,7 +31,7 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.welcome.t2', 'You could fill out the profile?') }}</h3>
                     <p>
                         {{ t('mail.welcome.p2',
                         'Have you had the chance to fill out your {profile_link} yet? If you do, other parents will have the chance to get to know you a little better, and it is easier to trust your KidUp-persona.', {
@@ -51,7 +51,7 @@
                     <img src="{{ base64_image('@notification-assets/images/image-blue-couple.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.welcome.t3', 'Or you could implement it with social media!') }}</h3>
                     <p>
                         {{ t('mail.welcome.p3',
                         'Have you had the chance to fill out your {social_media_link} yet? If you do, other parents will have the chance to get to know you a little better, and it is easier to trust your KidUp-persona.', {
@@ -65,7 +65,7 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.welcome.t4', 'Other I answer all your questions') }}</h3>
                     <p>
                         {{ t('mail.welcome.p4',
                             'If you have questions, feedback or just wants to chat feel free to contact me - Philip, in the {app_link}. Read the {faq_link} or send me an {mail_link_support}.', {

@@ -1,7 +1,7 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.review_request.title', title) | raw }}
+        {{ t('mail.review_request.title', '3 or 5 stars, who knows?') | raw }}
     {% endblock %}
 
     {% block headerimage %}
@@ -13,7 +13,7 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.review_request.t1', 'It is like a video game - stars matter!') }}</h3>
                     <p>
                         {{ t('mail.review_request.p1',
                         'Hurrah! I hope you had an awesome experience using KidUp. Now you can make a review of {owner_name}.', {

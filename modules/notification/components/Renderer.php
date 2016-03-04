@@ -1,14 +1,30 @@
 <?php
 namespace notification\components;
 
+// @todo: messaging tab = profielpagina van een persoon
+// mail for mail
 use booking\models\Booking;
 use booking\models\Payout;
 use Item\models\Item;
 use Carbon\Carbon;
+use notification\components\renderer\BookingRenderer;
+use notification\components\renderer\ItemRenderer;
+use notification\components\renderer\PayoutRenderer;
+use notification\components\renderer\UserRenderer;
+use user\models\User;
 use Yii;
 
 class Renderer
 {
+
+    /** @var BookingRenderer */
+    public $bookingRenderer;
+    /** @var PayoutRenderer */
+    public $payoutRenderer;
+    /** @var ItemRenderer */
+    public $itemRenderer;
+    /** @var UserRenderer */
+    public $userRenderer;
 
     // E-mail sender
     public $sender_name = null;
@@ -58,11 +74,17 @@ class Renderer
     public $profile_url = null;
     public $social_media_url = null;
 
+    // Reviewer name, depending on receiver/sender
+    public $name = null;
+
     // General
     public $app_url = null;
     public $email_support = null;
     public $faq_url = null;
     public $title = null;
+
+    // Variables
+    public $vars = [];
 
     // Templating
     protected $templateFolder = null;
@@ -73,66 +95,100 @@ class Renderer
     }
 
     public function getVariables() {
-        $vars = [];
-        foreach ($this as $key => $value) {
-            $vars[$key] = $value;
-        }
-        return $vars;
+        return $this->vars;
     }
 
     public function setVariables($vars) {
-        foreach ($vars as $key => $value) {
-            $this->$key = $value;
-        }
+        $this->vars = array_merge($vars, $this->vars);
     }
 
+    /**
+     * Set a title.
+     *
+     * @param $title
+     */
     public function setTitle($title) {
         $this->title = $title;
     }
 
-    public function displayDateTime($unixTimestamp) {
-        return Carbon::createFromTimestamp($unixTimestamp)->format("d-m-y H:i");
-    }
-
+    /**
+     * Load the booking.
+     *
+     * @param Booking $booking
+     */
     public function loadBooking(Booking $booking) {
-        // Renter
-        $this->renter_name = $booking->renter->profile->getName();
-        $this->renter_email_url = 'mailto:' . $booking->renter->email;
-        if (strlen($booking->renter->profile->phone_number) > 0) {
-            $this->renter_phone_url = 'tel:' . $booking->renter->profile->phone_number;
-        }
-
-        // Owner
-        $this->owner_name = $booking->item->owner->profile->getName();
-        $this->owner_email_url = 'mailto:' . $booking->renter->email;
-        if (strlen($booking->renter->profile->phone_number) > 0) {
-            $this->owner_phone_url = 'tel:' . $booking->renter->profile->phone_number;
-        }
-
-        // Booking
-        $this->booking_start_date = $this->displayDateTime($booking->time_from);
-        $this->booking_end_date= $this->displayDateTime($booking->time_to);
-
-        // Item
-        $this->loadItem($booking->item);
+        $vars = $this->bookingRenderer->loadBooking($booking);
+        $this->setVariables($vars);
     }
 
-    public function loadItem(Item $item) {
-        $this->item_name = $item->name;
-    }
-
+    /**
+     * Load the payout.
+     *
+     * @param Payout $payout
+     */
     public function loadPayout(Payout $payout) {
-        // Payout
-        $this->total_payout_amount = $payout->amount;
-
-        // Booking
-        $bookings = $payout->getBookings();
-        $this->loadBooking($bookings->one());
+        $vars = $this->payoutRenderer->loadPayout($payout);
+        $this->setVariables($vars);
     }
 
-    public function fillAutomatically() {
-        $payout = Payout::find()->one();
-        $this->loadPayout($payout);
+    /**
+     * Load the item.
+     *
+     * @param Item $item
+     */
+    public function loadItem(Item $item) {
+        $vars = $this->itemRenderer->loadPayout($item);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the renter.
+     *
+     * @param User $user
+     */
+    public function loadRenter(User $user) {
+        $vars = $this->userRenderer->loadRenter($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the owner.
+     *
+     * @param User $user
+     */
+    public function loadOwner(User $user) {
+        $vars = $this->userRenderer->loadOwner($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the sender.
+     *
+     * @param User $user
+     */
+    public function loadSender(User $user) {
+        $vars = $this->userRenderer->loadSender($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the retriever.
+     *
+     * @param User $user
+     */
+    public function loadRetriever(User $user) {
+        $vars = $this->userRenderer->loadR($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Display a UNIX timestamp in a conventional way.
+     *
+     * @param $unixTimestamp The UNIX timestamp.
+     * @return string The conventional display of the timestamp.
+     */
+    public static function displayDateTime($unixTimestamp) {
+        return Carbon::createFromTimestamp($unixTimestamp)->format("d-m-y H:i");
     }
 
 }
