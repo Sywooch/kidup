@@ -47,6 +47,7 @@ class Bootstrap implements BootstrapInterface
                 'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
             ]);
             // @todo
+
             //MailSender::send((new \mail\mails\user\WelcomeFactory())->create($event->sender));
         });
 

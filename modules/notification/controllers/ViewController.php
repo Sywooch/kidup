@@ -2,13 +2,10 @@
 namespace notification\controllers;
 
 use app\extended\web\Controller;
-use notifications\components;
-use notifications\mails\bookingRenter\PayoutFactory;
-use notifications\mails\MailRenderer;
-use notifications\mails\MailSender;
-use notifications\mails\user\ReconfirmInterface;
-use notifications\models\MailLog;
-use notifications\widgets\Button;
+use notification\components\MailRenderer;
+use notification\components\MailSender;
+use notification\models\template\UserWelcomeRenderer;
+use user\models\User;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -37,6 +34,11 @@ class ViewController extends Controller
         preg_match("/https:\/\/(.*).kidup.dk/", $url, $output_array_https); // check if actually a kidup URL
 
         return $this->redirect($url);
+    }
+
+    public function actionTest() {
+        $renderer = new UserWelcomeRenderer(User::find()->one());
+        MailSender::send($renderer);
     }
 
 }

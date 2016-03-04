@@ -1,24 +1,43 @@
 <?php
 namespace notification\components;
 
+use Swift_Message;
+use yii\swiftmailer\Mailer;
+
 class MailSender
 {
 
     /**
      * Send a mail.
      *
-     * @param \mail\mails\Mail $mail Mail to send.
+     * @param $renderer
      * @return bool Whether the mail was sent succesfully.
      */
-    public static function send($mail)
+    public static function send($renderer)
     {
-        $renderer = new \mail\components\MailRenderer($mail);
-        $view = $renderer->render();
+        $view = $renderer->renderMail();
+        $view = '123';
+
+        $message = Swift_Message::newInstance();
+        $message
+            ->setTo('kevin91nl@gmail.com')
+            ->setReplyTo(['info@kidup.dk' => 'KidUp'])
+            ->setFrom(['info@kidup.dk' => 'KidUp'])
+            ->setSubject('Subject')
+            ->setBody($view, 'text/html')
+        ;
+
         /** @var \yii\swiftmailer\Mailer $mailer */
+        $mailer = new Mailer();
+        $failures = [];
+        $result = $mailer->send($message, $failures);
+        var_dump($failures);
+
+        /*$view = $renderer->render();
         $mailer = \Yii::$app->mailer;
         $mailer->getView()->theme = \Yii::$app->view->theme;
 
-        $logEntry = \mail\models\MailLog::create(MailType::getType($mail), $mail->getReceiverEmail(),
+        $logEntry = MailLog::create(MailType::getType($mail), $mail->getReceiverEmail(),
             $mail->getData(), $mail->mailId);
 
         if ($logEntry !== false) {
@@ -33,6 +52,7 @@ class MailSender
             // No log entry was found
             return false;
         }
+        */
     }
 
 }

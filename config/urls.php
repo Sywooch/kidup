@@ -32,6 +32,7 @@ $urls = [
     'mail/overview' => 'mail/view/overview',
     'mail/click' => 'mail/view/link',
     'mail/<id>' => 'mail/view/index',
+    'mail/view/test' => 'notification/view/test',
     'sendgrid/webhook-apqcbec' => 'mail/sendgrid/webhook-apqcbec', // sendgrid incomming webhook
     'review/create/<bookingId:\d+>' => 'review/create/index',
     'inbox/<id:\d+>' => 'message/chat/conversation',

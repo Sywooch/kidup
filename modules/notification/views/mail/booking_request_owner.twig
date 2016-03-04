@@ -1,7 +1,7 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.booking_request_owner.title', title) | raw }}
+        {{ t('mail.booking_request_owner.title', 'Do you want to rent out? Reply now') | raw }}
     {% endblock %}
 
     {% block headerimage %}
@@ -28,12 +28,12 @@
             <tr>
                 <td width="50%" style="text-align: center;">
                     <p>
-                        <a href="{{ accept_url }}" target="_blank" class="button button--green">Accept</a>
+                        <a href="{{ decline_url }}" target="_blank" class="button button--red">Decline</a>
                     </p>
                 </td>
                 <td width="50%" style="text-align: center;">
                     <p>
-                        <a href="{{ decline_url }}" target="_blank" class="button button--red">Decline</a>
+                        <a href="{{ accept_url }}" target="_blank" class="button button--green">Accept</a>
                     </p>
                 </td>
             </tr>
