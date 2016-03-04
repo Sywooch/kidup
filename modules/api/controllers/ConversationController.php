@@ -18,7 +18,7 @@ class ConversationController extends Controller
     {
         return [
             'guest' => [''],
-            'user' => ['index', 'view', 'messages', 'create']
+            'user' => ['index', 'view', 'messages', 'create', 'unread-count']
         ];
     }
 
@@ -52,5 +52,11 @@ class ConversationController extends Controller
                 ->orWhere(['sender_user_id' => \Yii::$app->user->id, 'receiver_user_id' => \Yii::$app->user->id])
                 ->orderBy('created_at ASC')
         ]);
+    }
+
+
+    public function actionUnreadCount()
+    {
+        return Message::find()->receiverUserId(\Yii::$app->user->id)->groupBy('conversation_id')->count();
     }
 }
