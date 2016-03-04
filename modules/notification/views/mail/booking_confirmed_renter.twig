@@ -5,7 +5,7 @@
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_3.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_3.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,7 +13,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
             <h3>{{ t('mail.booking_confirmed_renter.t1', 'You have rented {item_name} - hurrah!', {
@@ -56,7 +56,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-green-message.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-green-message.png') }}" width="100%" alt="Image">
                 </td>
             </tr>
         </table>
@@ -64,7 +64,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-yellow-girl.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-yellow-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.booking_confirmed_renter.t3', 'So you can agree on a place to meet') }}</h3>

@@ -5,7 +5,7 @@
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_7.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_7.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,7 +13,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.welcome.t1', 'Welcome, welcome!') }}</h3>
@@ -40,7 +40,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-yellow-girl.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-yellow-girl.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>
@@ -48,7 +48,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-couple.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-blue-couple.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.welcome.t3', 'Or you could implement it with social media!') }}</h3>
@@ -76,7 +76,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-green-message.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-green-message.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>

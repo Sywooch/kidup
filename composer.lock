@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ae37f5ac328f1fde2dc02d021920cfb1",
-    "content-hash": "35b3ae7257e743b8dbe4988162b9e8a3",
+    "hash": "3f8712a96f8c0e3ac3ff1c719cbe308f",
+    "content-hash": "2519ee9d31ece4a876119c02149191bd",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1287,7 +1287,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cinghie/yii2-cookie-consent/zipball/f2a20eddb60636b9175dede48e8da814c7746da7",
+                "url": "https://api.github.com/repos/cinghie/yii2-cookie-consent/zipball/83025c404b62b83b8643c5737e08af8968c0d082",
                 "reference": "f2a20eddb60636b9175dede48e8da814c7746da7",
                 "shasum": ""
             },
@@ -1595,7 +1595,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/f002be142b81e862f583a0f90cb6e6319bb9fee6",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/4e563ec44532b260418bd6db3905e2d476e3f24b",
                 "reference": "f002be142b81e862f583a0f90cb6e6319bb9fee6",
                 "shasum": ""
             },
@@ -1710,7 +1710,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/dc03e97371e37172ff94547980f898659de76ffc",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/976e0f50981f845dcee1c25bfcac2304a7bb5583",
                 "reference": "dc03e97371e37172ff94547980f898659de76ffc",
                 "shasum": ""
             },
@@ -1977,7 +1977,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/86dfe2f2a95aa9eed58faf1cc1dae6534a6ce931",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/e368d262887dbb2fdfaf710880571ede51e9c0e6",
                 "reference": "86dfe2f2a95aa9eed58faf1cc1dae6534a6ce931",
                 "shasum": ""
             },
@@ -2181,7 +2181,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/ae7308c54034c3815f82e8395f171fa13a1c5e70",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/32b0ccb2562b9c83f12222ddd1406986a45450d1",
                 "reference": "ae7308c54034c3815f82e8395f171fa13a1c5e70",
                 "shasum": ""
             },
@@ -2278,7 +2278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/2151616c30e568a889a0fbf3c8a669527719cb00",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/9a9c2befce0c76db975a6a8d28073efa7b4922b3",
                 "reference": "2151616c30e568a889a0fbf3c8a669527719cb00",
                 "shasum": ""
             },
@@ -2552,7 +2552,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/574c0e310bda692253c1ba0eac9a94c699b299d5",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/55b44279762534e1307739157f8eb801731fb4e6",
                 "reference": "574c0e310bda692253c1ba0eac9a94c699b299d5",
                 "shasum": ""
             },
@@ -3087,7 +3087,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/6038daa7d4e61175fdda85a71cb2a6a94d4868c1",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/bc22b97c342f9cbea25e5eee6ce7312ed0561cbd",
                 "reference": "6038daa7d4e61175fdda85a71cb2a6a94d4868c1",
                 "shasum": ""
             },
@@ -4244,7 +4244,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/1e393f150cea960d59d9f3ed42c22ceec6531e65",
+                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/72fad9c0329bd2cbbabb97eabf586fcf72df2e20",
                 "reference": "1e393f150cea960d59d9f3ed42c22ceec6531e65",
                 "shasum": ""
             },
@@ -4351,7 +4351,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fb314292abcbfb61782e065fb9b13d5302ecc9e3",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/e19b764b5c855580e8ffa7e615f72c10fd2f99cc",
                 "reference": "fb314292abcbfb61782e065fb9b13d5302ecc9e3",
                 "shasum": ""
             },
@@ -4611,6 +4611,67 @@
                 "yii"
             ],
             "time": "2015-09-27 18:46:32"
+        },
+        {
+            "name": "pelago/emogrifier",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jjriv/emogrifier.git",
+                "reference": "7b00580315c80793e4cbfe0b1f689b311ceb46f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jjriv/emogrifier/zipball/7b00580315c80793e4cbfe0b1f689b311ceb46f9",
+                "reference": "7b00580315c80793e4cbfe0b1f689b311ceb46f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.11",
+                "squizlabs/php_codesniffer": "2.3.4",
+                "typo3-ci/typo3sniffpool": "2.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pelago\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Reeve",
+                    "email": "jreeve@pelagodesign.com"
+                },
+                {
+                    "name": "Cameron Brooks"
+                },
+                {
+                    "name": "Jaime Prado"
+                },
+                {
+                    "name": "Oliver Klee",
+                    "email": "typo3-coding@oliverklee.de"
+                },
+                {
+                    "name": "Roman Ožana",
+                    "email": "ozana@omdesign.cz"
+                }
+            ],
+            "description": "Converts CSS styles into inline style attributes in your HTML code",
+            "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/",
+            "time": "2016-01-28 19:06:55"
         },
         {
             "name": "psr/http-message",
@@ -5410,7 +5471,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/bd5b5a5040927d9cd0820ee963ac0d23df55e1e1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/f946784cc1edb5ca128bce1dc5e9ff77e4194e70",
                 "reference": "bd5b5a5040927d9cd0820ee963ac0d23df55e1e1",
                 "shasum": ""
             },
@@ -5458,7 +5519,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ef941bc83ea63326e44769b922476dc1035ea551",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/4133d6b26f48615de38ea1ec04eb00c4b7057bc9",
                 "reference": "ef941bc83ea63326e44769b922476dc1035ea551",
                 "shasum": ""
             },
@@ -5975,7 +6036,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/535b8f365ac7b341de1e225de23b5945cf736424",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/f91430c5a8db6d3791024f0c803b81c1e4cdc821",
                 "reference": "535b8f365ac7b341de1e225de23b5945cf736424",
                 "shasum": ""
             },
@@ -6193,7 +6254,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/260e2151492183c3aab94dc3023fc6777c27f244",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/adcbe8eddad1b3423c38489708f7ff2707afa94c",
                 "reference": "260e2151492183c3aab94dc3023fc6777c27f244",
                 "shasum": ""
             },
@@ -7342,7 +7403,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/52a4b095b3897ca2fbe43ec6b94c59978d68adf6",
+                "url": "https://api.github.com/repos/schmunk42/yii2-giiant/zipball/6d09be19cd5caa48850a3f473e85f60949e05dd8",
                 "reference": "52a4b095b3897ca2fbe43ec6b94c59978d68adf6",
                 "shasum": ""
             },
@@ -7513,7 +7574,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e7133793a8e5a5714a551a8324337374be209df",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
                 "reference": "6e7133793a8e5a5714a551a8324337374be209df",
                 "shasum": ""
             },
@@ -7769,7 +7830,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/6b2085020b4e86fcb7ae44c3ab8ddb91774b33d2",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/745c19467255cf32eaf311f000eecafd83ca5586",
                 "reference": "6b2085020b4e86fcb7ae44c3ab8ddb91774b33d2",
                 "shasum": ""
             },
@@ -7826,7 +7887,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/fa1df6d8b7dea4a86b5297ba68fbbbb67343d2cc",
+                "url": "https://api.github.com/repos/symfony/console/zipball/79e3a4fd9006cd6d6b9ced7fd9d42c4c31d9b8f6",
                 "reference": "fa1df6d8b7dea4a86b5297ba68fbbbb67343d2cc",
                 "shasum": ""
             },
@@ -7886,7 +7947,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/8d83ff9777cdbd83e7f90d9c48f4729823791a5e",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/07b7ced3ae0c12918477c095453ea8595000810e",
                 "reference": "8d83ff9777cdbd83e7f90d9c48f4729823791a5e",
                 "shasum": ""
             },
@@ -7939,7 +8000,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/5fe22f3502fff9f7014cc53510da9fdad6878400",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/9219710760689d51ec880a89e30f733191b92e15",
                 "reference": "5fe22f3502fff9f7014cc53510da9fdad6878400",
                 "shasum": ""
             },
@@ -8104,7 +8165,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/584e52cb8f788a887553ba82db6caacb1d6260bb",
                 "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
                 "shasum": ""
             },
@@ -8238,7 +8299,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e9a3f9dfdbaba482e958a9ef81c72a3dbb1ae419",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0",
                 "reference": "e9a3f9dfdbaba482e958a9ef81c72a3dbb1ae419",
                 "shasum": ""
             },
@@ -8393,6 +8454,7 @@
         "yiisoft/yii2-jui": 20,
         "yiisoft/yii2-twig": 20,
         "flow/jsonpath": 20,
+        "pelago/emogrifier": 20,
         "warrence/yii2-kartikgii": 20
     },
     "prefer-stable": false,

@@ -16,22 +16,17 @@ class MailSender
     public static function send($renderer)
     {
         $view = $renderer->renderMail();
-        $view = '123';
 
-        $message = Swift_Message::newInstance();
-        $message
+        /** @var \yii\swiftmailer\Mailer $mailer */
+        $mailer = \Yii::$app->mailer->compose();
+        echo $mailer
             ->setTo('kevin91nl@gmail.com')
             ->setReplyTo(['info@kidup.dk' => 'KidUp'])
             ->setFrom(['info@kidup.dk' => 'KidUp'])
             ->setSubject('Subject')
-            ->setBody($view, 'text/html')
+            ->setHtmlBody($view)
+            ->send()
         ;
-
-        /** @var \yii\swiftmailer\Mailer $mailer */
-        $mailer = new Mailer();
-        $failures = [];
-        $result = $mailer->send($message, $failures);
-        var_dump($failures);
 
         /*$view = $renderer->render();
         $mailer = \Yii::$app->mailer;

@@ -61,9 +61,10 @@
     "yiisoft/yii2-twig": "^2.0@dev",
     "eold/yii2-apidoc-generator": "^1.0.",
     "flow/jsonpath": "dev-master",
-    "trntv/yii2-aceeditor": "*",
     "guzzle/guzzle": "~3.7",
     "guzzlehttp/guzzle": "~5.0"
+    "trntv/yii2-aceeditor": "*",
+    "pelago/emogrifier": "@dev"
   },
   "require-dev": {
     "codeception/codeception": "2.1",

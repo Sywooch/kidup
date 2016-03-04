@@ -30,6 +30,9 @@ class ViewController extends Controller
     public function actionLink($url, $mailId)
     {
         $url = base64_decode($url);
+        return '<script>window.location = "' . $url . '";</script>';
+        die();
+        $url = base64_decode($url);
         preg_match("/http:\/\/(.*).kidup.dk/", $url, $output_array); // check if actually a kidup URL
         preg_match("/https:\/\/(.*).kidup.dk/", $url, $output_array_https); // check if actually a kidup URL
 
@@ -38,7 +41,9 @@ class ViewController extends Controller
 
     public function actionTest() {
         $renderer = new UserWelcomeRenderer(User::find()->one());
+        $view = $renderer->renderMail();
         MailSender::send($renderer);
+        return $view;
     }
 
 }
