@@ -238,7 +238,7 @@ $logoUrl = Url::to('@web/img/logo/horizontal.png');
                             <?= Yii::t("app.menu.inbox", "Inbox") ?>
                             <div class="badge"><?=
                                 // todo make this more pretty
-                                \message\models\base\MessageBase::find()->where([
+                                \message\models\message\Message::find()->where([
                                     'receiver_user_id' => \Yii::$app->user->id,
                                     'read_by_receiver' => 0
                                 ])->count(); ?></div>
