@@ -37,24 +37,19 @@ class NotificationDistributer
         if ($this->userAllowsPush) {
             if (!$isMailTemplate) {
                 if ($isPushTemplate) {
-                    echo 'push';exit();
                     return new PushRenderer($template);
                 } else {
-                    echo 'mail';exit();
                     return new MailRenderer($template);
                 }
             } else {
-                echo 'mail';exit();
                 return new MailRenderer($template);
             }
         } else {
             // User does not allow push
             if ($isPushTemplate) {
                 // Too bad
-                echo 'bad';exit();
             } else {
                 // It is a mail template
-                echo 'mail';exit();
                 return new MailRenderer($template);
             }
         }
