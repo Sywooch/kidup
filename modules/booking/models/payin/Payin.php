@@ -15,7 +15,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
-class PayinException extends Exception
+class PayinException extends \app\extended\Exception
 {
 }
 
