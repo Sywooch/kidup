@@ -6,6 +6,8 @@ use item\models\location\Location;
 use Yii;
 use yii\db\ActiveRecord;
 
+
+class LocationError extends \app\extended\base\Exception{};
 /**
  * This is the model class for table "location".
  */
@@ -22,14 +24,15 @@ class LocationFactory
         $latitude = round($latitude, 5);
         $longitude = round($longitude, 5);
         // find an approximately same location
-        $loc = Location::find()->where([
-            'user_id' => \Yii::$app->user->id,
-            [">=", 'latitude', $latitude - 0.0035],
-            ["<=", 'latitude', $latitude + 0.0035],
-            [">=", 'longitude', $longitude - 0.0035],
-            ["<=", 'longitude', $longitude + 0.0035],
-            'longitude' => $longitude
-        ])->one();
+        $loc = Location::find()->where(['user_id' => \Yii::$app->user->id])
+            ->andWhere("latitude >= :latLower and latitude <= :latUpper and longitude >= :lngLower and longitude <= :lngUpper")
+            ->addParams([
+                ':latLower' => $latitude - 0.0035,
+                ':latUpper' => $latitude + 0.0035,
+                ':lngLower' => $longitude - 0.0035,
+                ':lngUpper' => $longitude + 0.0035
+            ])
+            ->one();
         if ($loc !== null) {
             return $loc;
         }
@@ -37,7 +40,7 @@ class LocationFactory
             . ',' . $longitude . "&sensor=true";
         $json = json_decode(file_get_contents($request_url), true);
         if (count($json['results']) == 0) {
-            return false;
+            throw new LocationError("Lng lat combination not found on google.");
         }
         // assume the first is the best?
         $address = $json['results'][0];
@@ -45,7 +48,7 @@ class LocationFactory
         $location->country = 1;
         $location->latitude = $latitude;
         $location->longitude = $longitude;
-        if($save){
+        if ($save) {
             $location->user_id = \Yii::$app->user->id;
             $location->save();
         }
@@ -74,7 +77,7 @@ class LocationFactory
                 $location->street_number = $component['long_name'];
             }
         }
-        if($save){
+        if ($save) {
             $location->user_id = \Yii::$app->user->id;
             $location->save();
         }
@@ -110,7 +113,7 @@ class LocationFactory
         $location->city = $record->city;
         $location->longitude = $record->longitude;
         $location->latitude = $record->latitude;
-        if($save){
+        if ($save) {
             $location->user_id = \Yii::$app->user->id;
             $location->save();
         }
