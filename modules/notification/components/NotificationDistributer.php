@@ -34,13 +34,29 @@ class NotificationDistributer
         if (!$isMailTemplate && !$isPushTemplate) {
             throw new NotificationImplementationError("Template not found");
         }
-        if (!$isMailTemplate && $isPushTemplate && !$this->userAllowsPush) {
-            return false;
-        }
-        if ($this->userAllowsPush && $isPushTemplate) {
-            return new PushRenderer($template);
+        if ($this->userAllowsPush) {
+            if (!$isMailTemplate) {
+                if ($isPushTemplate) {
+                    echo 'push';exit();
+                    return new PushRenderer($template);
+                } else {
+                    echo 'mail';exit();
+                    return new MailRenderer($template);
+                }
+            } else {
+                echo 'mail';exit();
+                return new MailRenderer($template);
+            }
         } else {
-            return new MailRenderer($template);
+            // User does not allow push
+            if ($isPushTemplate) {
+                // Too bad
+                echo 'bad';exit();
+            } else {
+                // It is a mail template
+                echo 'mail';exit();
+                return new MailRenderer($template);
+            }
         }
     }
 
