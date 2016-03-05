@@ -8,6 +8,7 @@ use api\models\PayoutMethod;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
+use notification\models\base\MobileDevices;
 use notification\models\Token;
 use user\Finder;
 use user\helpers\Password;
@@ -539,6 +540,14 @@ class User extends base\User implements IdentityInterface
             ->innerJoinWith('item')
             ->count();
         return $c > 0;
+    }
+
+    public function getUserAcceptsPushNotifications(){
+        $devices = MobileDevices::find()->where([
+            'user_id' =>$this->id,
+            'is_subscribed' => 1
+        ])->count();
+        return $devices > 0;
     }
 
 

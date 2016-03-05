@@ -1,7 +1,7 @@
 <?php
 namespace notification\components\renderer;
 
-use booking\models\base\Payout;
+use booking\models\payout\Payout;
 use notification\components\Renderer;
 
 class PayoutRenderer

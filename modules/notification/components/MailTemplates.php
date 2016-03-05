@@ -21,7 +21,15 @@ class MailTemplates
             'variables' => ['recovery_url']
         ],
         'user_welcome' => [
-            'variables' => ['rent_url', 'rent_out_url', 'profile_url', 'social_media_url', 'email_support', 'faq_url', 'app_url']
+            'variables' => [
+                'rent_url',
+                'rent_out_url',
+                'profile_url',
+                'social_media_url',
+                'email_support',
+                'faq_url',
+                'app_url'
+            ]
         ],
     ];
 

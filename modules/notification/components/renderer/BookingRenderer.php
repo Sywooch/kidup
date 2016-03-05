@@ -1,7 +1,7 @@
 <?php
 namespace notification\components\renderer;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use notification\components\Renderer;
 
 class BookingRenderer

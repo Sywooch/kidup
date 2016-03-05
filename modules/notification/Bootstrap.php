@@ -46,6 +46,7 @@ class Bootstrap implements BootstrapInterface
             new SlackJob([
                 'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
             ]);
+            NotificationDistributer();
             // @todo
 
             //MailSender::send((new \mail\mails\user\WelcomeFactory())->create($event->sender));

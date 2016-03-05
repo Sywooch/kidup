@@ -3,9 +3,9 @@ namespace notification\components;
 
 // @todo: messaging tab = profielpagina van een persoon
 // mail for mail
-use booking\models\Booking;
-use booking\models\Payout;
-use Item\models\Item;
+use booking\models\booking\Booking;
+use booking\models\payout\Payout;
+use item\models\item\Item;
 use Carbon\Carbon;
 use notification\components\renderer\BookingRenderer;
 use notification\components\renderer\ItemRenderer;
@@ -199,7 +199,7 @@ class Renderer
     /**
      * Display a UNIX timestamp in a conventional way.
      *
-     * @param $unixTimestamp The UNIX timestamp.
+     * @param int $unixTimestamp The UNIX timestamp.
      * @return string The conventional display of the timestamp.
      */
     public static function displayDateTime($unixTimestamp) {
@@ -209,7 +209,7 @@ class Renderer
     /**
      * Make an in-app link.
      *
-     * @param $url In-app URL to go to.
+     * @param string $url In-app URL to go to.
      * @return string HTTP link which opens the in-app URL.
      */
     public static function inAppLink($url) {

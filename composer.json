@@ -62,7 +62,7 @@
     "eold/yii2-apidoc-generator": "^1.0.",
     "flow/jsonpath": "dev-master",
     "guzzle/guzzle": "~3.7",
-    "guzzlehttp/guzzle": "~5.0"
+    "guzzlehttp/guzzle": "~5.0",
     "trntv/yii2-aceeditor": "*",
     "pelago/emogrifier": "@dev"
   },

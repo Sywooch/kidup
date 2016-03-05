@@ -1,7 +1,7 @@
 <?php
 namespace notification\components\renderer;
 
-use item\models\Item;
+use item\models\item\Item;
 use notification\components\Renderer;
 
 class ItemRenderer

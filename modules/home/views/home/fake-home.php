@@ -6,8 +6,9 @@
                 <div style="margin: auto; width: 500px;margin-top:15px;">
                     <iframe src="https://player.vimeo.com/video/156308781" width="500" height="281" frameborder="0"
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
 
+                </div>
+                <br><br>
             </div>
 
             <div class="main__text col-md-4 col-md-offset-1">
@@ -35,7 +36,8 @@
                             </b>
                         </h2>
                         <h4>
-                            <?= Yii::t("home.fake-home.app_explanation", "KidUp has transformed to a full-app experience. You can still use our website, but we recommend checking out our awesome app!") ?>
+                            <?= Yii::t("home.fake-home.app_explanation",
+                                "KidUp has transformed to a full-app experience. You can still use our website, but we recommend checking out our awesome app!") ?>
                         </h4>
                         <a href="https://geo.itunes.apple.com/dk/app/kidup/id1066928173?mt=8">
                             <img class="applestore"

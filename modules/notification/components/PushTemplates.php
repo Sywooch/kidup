@@ -15,17 +15,39 @@ class PushTemplates
         ],
         'booking_request_owner' => [
             'fallback' => 'booking_request_owner',
-            'variables' => ['renter_name', 'item_name', 'total_payout_amount', 'time_before', 'accept_url', 'decline_url']
+            'variables' => [
+                'renter_name',
+                'item_name',
+                'total_payout_amount',
+                'time_before',
+                'accept_url',
+                'decline_url'
+            ]
         ],
         'booking_start_owner' => [
             'fallback' => 'booking_start_owner',
-            'variables' => ['renter_name', 'booking_start_date', 'item_name', 'total_payout_amount', 'renter_phone_url', 'renter_email_url']
+            'variables' => [
+                'renter_name',
+                'booking_start_date',
+                'item_name',
+                'total_payout_amount',
+                'renter_phone_url',
+                'renter_email_url'
+            ]
         ],
 
         // Booking renter
         'booking_confirmed_renter' => [
             'fallback' => 'booking_confirmed_renter',
-            'variables' => ['booking_start_date', 'booking_end_date', 'owner_name', 'item_name', 'contact_owner_url', 'owner_phone_url', 'owner_email_url']
+            'variables' => [
+                'booking_start_date',
+                'booking_end_date',
+                'owner_name',
+                'item_name',
+                'contact_owner_url',
+                'owner_phone_url',
+                'owner_email_url'
+            ]
         ],
         'booking_declined_renter' => [
             'fallback' => 'booking_declined_renter',
