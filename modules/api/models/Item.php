@@ -76,7 +76,15 @@ class Item extends \item\models\item\Item
             }
             return rtrim(ImageHelper::url($media->media->file_name), '?');
         };
-
+        $field['image'] = function($model){
+            $media = ItemHasMedia::find()->where([
+                'item_id' => $model->id
+            ])->orderBy('order')->one();
+            if ($media == null) {
+                return false;
+            }
+            return rtrim(ImageHelper::url($media->media->file_name), '?');
+        };
         return $fields;
     }
 

@@ -3,12 +3,11 @@ namespace api\controllers;
 
 use api\models\Item;
 use api\models\Review;
-use item\models\base\CategoryHasItemFacet;
-use item\models\base\ItemFacet;
-use item\models\base\ItemFacetValue;
-use item\models\base\ItemHasItemFacet;
+use item\models\categoryHasItemFacet\CategoryHasItemFacet;
+use item\models\itemFacet\ItemFacet;
+use item\models\itemFacetValue\ItemFacetValue;
+use item\models\itemHasItemFacet\ItemHasItemFacet;
 use search\components\ItemSearchDb;
-use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
