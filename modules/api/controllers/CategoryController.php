@@ -2,7 +2,6 @@
 namespace api\controllers;
 
 use api\models\Category;
-use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 
 class CategoryController extends Controller

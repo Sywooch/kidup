@@ -6,7 +6,6 @@ use api\models\Media;
 use images\components\ImageManager;
 use item\models\itemHasMedia\ItemHasMedia;
 use search\components\ItemSearchDb;
-use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
