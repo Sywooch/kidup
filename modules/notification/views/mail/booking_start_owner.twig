@@ -19,8 +19,9 @@
                     <h3>{{ t('mail.booking_start_owner.t1', 'Do you have everything planned?') }}</h3>
                     <p>
                         {{ t('mail.booking_start_owner.p1',
-                        'This is a reminder that your rent to {renter_name} is starting the date.', {
-                            'renter_name': renter_name
+                        'This is a reminder that your rent to {renter_name} is starting on {booking_start}.', {
+                            'renter_name': renter_name,
+                            'booking_start': booking_start_date
                         }) | raw }}
 
                         {% if renter_phone_url == null %}

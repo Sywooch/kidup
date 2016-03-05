@@ -59,6 +59,7 @@ class NotificationDistributer
         if (!$renderer) {
             return false;
         }
+        $renderer->setVariables($contents);
         foreach ($contents as $content => $value) {
             switch ($content) {
                 case "booking":
@@ -138,10 +139,11 @@ class NotificationDistributer
         ]);
     }
 
-    public function userRecovery(User $user)
+    public function userRecovery(User $user, $url)
     {
         return $this->load("user_recovery", [
-            'user' => $user
+            'user' => $user,
+            'url' => $url
         ]);
     }
 

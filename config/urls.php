@@ -123,6 +123,7 @@ $urls = [
         'controller' => ['api/v1/users' => 'api/user'],
         'extraPatterns' => [
             'me' => 'me',
+            'recover' => 'recover',
             '<id>/reviews' => 'reviews',
             'GET verify-phone-number' => 'verify-phone-number',
         ]
