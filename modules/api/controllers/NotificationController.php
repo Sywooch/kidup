@@ -102,7 +102,7 @@ class NotificationController extends Controller
             (new MobilePush())->sendMessage($arn, 'Hello world 2', $parameters);
         }*/
 
-        $kevin = User::findOne(['email' => 'kevin91nl@gmail.com']);
+        $kevin = User::findOne(['email' => 'js@javascript2.com']);
         $simon = User::findOne(['email' => 'simonnouwens@gmail.com']);
         $conversation = new Conversation();
         $conversation->title = 'Test';
