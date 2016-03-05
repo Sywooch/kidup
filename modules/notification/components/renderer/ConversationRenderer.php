@@ -15,6 +15,7 @@ class ConversationRenderer
      */
     public function loadConversation(Conversation $conversation) {
         $result = [];
+        $result['sender_name'] = $conversation->targetUser->profile->getName();
         return $result;
     }
 
