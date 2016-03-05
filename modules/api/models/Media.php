@@ -14,9 +14,14 @@ class Media extends \item\models\media\Media
         return [
             'id',
             'img' => function ($model) {
+                // legacy
                 return ImageHelper::urlSet($model->file_name, true);
             },
+            'image' => function ($model) {
+                return ImageHelper::url($model->file_name);
+            },
             'img_url' => function ($model) {
+                // legacy
                 return ImageHelper::url($model->file_name);
             },
             'order' => function($model){

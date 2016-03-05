@@ -48,8 +48,8 @@ class ConversationController extends Controller
             throw new BadRequestHttpException("Id should be an integer!");
         }
         // mark all as read
-        Message::updateAll(['read_by_receiver' => 0],
-            ['conversation_id' => $id, 'receiver_user_id' => \Yii::$app->user->id])->all();
+        Message::updateAll(['read_by_receiver' => 1],
+            ['conversation_id' => $id, 'receiver_user_id' => \Yii::$app->user->id]);
 
         return new ActiveDataProvider([
             'query' => Message::find()
@@ -61,7 +61,7 @@ class ConversationController extends Controller
 
     public function actionUnreadCount()
     {
-        return Message::find()->receiverUserId(\Yii::$app->user->id)->groupBy('conversation_id')->count();
+        return Message::find()->receiverUserId(\Yii::$app->user->id)->where(['read_by_receiver' => 0])->groupBy('conversation_id')->count();
     }
 
     /**

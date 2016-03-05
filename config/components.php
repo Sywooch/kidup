@@ -178,7 +178,7 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-            if (strpos("/api/", \Yii::$app->request->url) == 0) {
+            if (strpos("/api/", \Yii::$app->request->url) !== false) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
 
                 // change all bad requests to success: false, data: details format
