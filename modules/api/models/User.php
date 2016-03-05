@@ -32,6 +32,9 @@ class User extends \user\models\User
             'img' => function ($model) {
                 return ImageHelper::urlSet($model->profile->getAttribute('img'), true);
             },
+            'image' => function($model){
+                return ImageHelper::url($model->profile->getAttribute('img'));
+            },
             'email' => function ($model) {
                 return $model->email;
             },
