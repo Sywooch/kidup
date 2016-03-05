@@ -22,11 +22,13 @@
                         'If you {confirm_link} to confirm your email-address, that would help me so much.', {
                             'confirm_link': '<a href="' ~ confirm_url ~ '" target="_blank">' ~ t('mail.links.click_this_link', 'click this link') ~ '</a>'
                         }) | raw }}
-                        {{ t('mail.user_reconfirm.p3',
-                        'Thanks for being a part of KidUp.'
-                        ) | raw }}
                     </p>
                     <a class="button button--green" href="#">{{ t('mail.button.confirm_email', 'Confirm email') }}</a>
+                    <p>
+                        {{ t('mail.user_reconfirm.p3',
+                            'Thanks for being a part of KidUp.'
+                        ) | raw }}
+                    </p>
                 </td>
                 <td width="40%">
                     <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" alt="Image" width="100%">
