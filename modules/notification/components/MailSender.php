@@ -1,6 +1,7 @@
 <?php
 namespace notification\components;
 
+use notification\models\TemplateRenderer;
 use Swift_Message;
 use yii\swiftmailer\Mailer;
 
@@ -13,7 +14,7 @@ class MailSender
      * @param $renderer
      * @return bool Whether the mail was sent succesfully.
      */
-    public static function send($renderer)
+    public static function send(TemplateRenderer $renderer)
     {
         $view = $renderer->renderMail();
 

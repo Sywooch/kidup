@@ -100,6 +100,7 @@ class UserRenderer
         $result = [];
         $result['receiver_email'] = $user->email;
         $result['receiver_name'] = $user->profile->getName();
+        $result['user_id'] = $user->id;
         return $result;
     }
 

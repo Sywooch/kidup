@@ -121,6 +121,10 @@ class Renderer
         return $this->vars['receiver_email'];
     }
 
+    public function getUserId() {
+        return $this->vars['user_id'];
+    }
+
     /**
      * Load the booking.
      *
