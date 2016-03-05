@@ -4,7 +4,10 @@ namespace api\controllers;
 use api\models\Message;
 use Aws;
 use message\components\MobilePush;
+use message\models\conversation\Conversation;
+use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
+use user\models\User;
 use yii\web\NotFoundHttpException;
 
 class NotificationController extends Controller
@@ -82,7 +85,7 @@ class NotificationController extends Controller
     }
 
     public function actionTest() {
-        $parameters = [
+        /*$parameters = [
             'state' => 'app.create-booking',
             'params' => [
                 'itemId' => 6
@@ -97,7 +100,22 @@ class NotificationController extends Controller
         foreach ($devices as $device) {
             $arn = $device->endpoint_arn;
             (new MobilePush())->sendMessage($arn, 'Hello world 2', $parameters);
-        }
+        }*/
+
+        $kevin = User::findOne(['email' => 'kevin91nl@gmail.com']);
+        $simon = User::findOne(['email' => 'simonnouwens@gmail.com']);
+        $conversation = new Conversation();
+        $conversation->title = 'Test';
+        $conversation->initiater_user_id = $simon->id;
+        $conversation->target_user_id = $kevin->id;
+        $conversation->save();
+        $message = new Message();
+        $message->conversation_id = $conversation->id;
+        $message->message = 'Hello world!';
+        $message->save();
+        (new NotificationDistributer($kevin->id))->conversationMessageReceived($message);
+        //(new NotificationDistributer($simon->id))->userWelcome($simon);
+        return ['success' => true];
     }
 
 }
