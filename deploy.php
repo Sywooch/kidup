@@ -34,10 +34,10 @@ if (getenv('CIRCLECI_TEST_PASSWORD') != false) {
 
 task('deploy:set_dirs', function () {
     // test server cannot make writable dirs for some reason, but has 777, so this should work
-    set('shared_dirs', ['runtime', 'web/release-assets/js', 'web/release-assets/css']);
+    set('shared_dirs', ['runtime']);
     set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
 //    if (env('branch') == 'master') {
-    set('writable_dirs', ['web/assets', 'runtime', 'web/release-assets', 'web/packages']);
+    set('writable_dirs', ['web/assets', 'runtime']);
 //    }
 });
 
@@ -54,9 +54,9 @@ task('deploy:run_migrations', function () {
     run('php {{release_path}}/yii migrate up --interactive=0');
 })->desc('Run migrations');
 
-task('deploy:minify_assets', function () {
-    run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets.php {{release_path}}/config/assets/assets-prod.php');
-})->desc('Minifying assets');
+//task('deploy:minify_assets', function () {
+//    run('sudo php {{release_path}}/yii asset {{release_path}}/config/assets/assets.php {{release_path}}/config/assets/assets-prod.php');
+//})->desc('Minifying assets');
 
 task('deploy:enable_ssl', function () {
     // only do this for production
@@ -109,7 +109,7 @@ task('deploy', [
     'deploy:shared',
     'deploy:writable',
     'deploy:vendors',
-    'deploy:minify_assets',
+//    'deploy:minify_assets',
     'deploy:run_migrations',
     'deploy:enable_ssl',
     'deploy:symlink',

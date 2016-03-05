@@ -29,8 +29,8 @@ class NotificationDistributer
 
     private function newRenderer($template)
     {
-        $isPushTemplate = isset(PushTemplates::$templates[$template]);
-        $isMailTemplate = isset(MailTemplates::$templates[$template]) || (isset(MailTemplates::$templates[$template]));
+        $isMailTemplate = is_file(Yii::$aliases['@notification-mail'].'/'.$template.".twig");
+        $isPushTemplate = is_file(Yii::$aliases['@notification-push'].'/'.$template.".twig");
         if (!$isMailTemplate && !$isPushTemplate) {
             throw new NotificationImplementationError("Template not found");
         }
@@ -59,6 +59,7 @@ class NotificationDistributer
         if (!$renderer) {
             return false;
         }
+        $renderer->setVariables($contents);
         foreach ($contents as $content => $value) {
             switch ($content) {
                 case "booking":
@@ -78,49 +79,56 @@ class NotificationDistributer
     public function bookingConfirmedOwner(Booking $booking)
     {
         return $this->load("booking_confirmed_owner", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->item->owner
         ]);
     }
 
     public function bookingConfirmedRenter(Booking $booking)
     {
         return $this->load("booking_confirmed_renter", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->renter
         ]);
     }
 
     public function bookingDeclinedRenter(Booking $booking)
     {
         return $this->load("booking_declined_renter", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->renter
         ]);
     }
 
     public function bookingPayoutOwner(Booking $booking)
     {
         return $this->load("booking_payout_owner", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->item->owner
         ]);
     }
 
     public function bookingRequestOwner(Booking $booking)
     {
         return $this->load("booking_request_owner", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->item->owner
         ]);
     }
 
     public function bookingStartOwner(Booking $booking)
     {
         return $this->load("booking_start_owner", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->item->owner
         ]);
     }
 
     public function bookingStartRenter(Booking $booking)
     {
         return $this->load("booking_start_renter", [
-            'booking' => $booking
+            'booking' => $booking,
+            'user' => $booking->renter
         ]);
     }
 
@@ -131,10 +139,11 @@ class NotificationDistributer
         ]);
     }
 
-    public function userRecovery(User $user)
+    public function userRecovery(User $user, $url)
     {
         return $this->load("user_recovery", [
-            'user' => $user
+            'user' => $user,
+            'url' => $url
         ]);
     }
 
@@ -148,7 +157,8 @@ class NotificationDistributer
     public function conversationMessageReceived(Message $message)
     {
         return $this->load("conversation_message_received", [
-            'message' => $message
+            'message' => $message,
+            'user' => $message->receiverUser
         ]);
     }
 }

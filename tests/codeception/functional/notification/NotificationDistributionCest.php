@@ -7,6 +7,7 @@ use booking\models\payin\Payin;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\BookingMuffin;
 use codecept\muffins\ConversationMuffin;
+use codecept\muffins\MessageMuffin;
 use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
@@ -33,7 +34,6 @@ class NotificationDistributionCest
      */
     protected $I;
 
-    /*
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
@@ -65,9 +65,9 @@ class NotificationDistributionCest
             (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
         });
 
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
-        });
+//        $this->checkNewEmail(function() use ($booking){
+//            (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
+//        });
 
         $this->checkNewEmail(function() use ($booking){
             (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
@@ -85,10 +85,10 @@ class NotificationDistributionCest
             (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
         });
 
-        $conversation = $this->fm->create(ConversationMuffin::class);
-        $this->checkNewEmail(function() use ($conversation){
-            (new NotificationDistributer($conversation->renter_id))->conversationMessageReceived($conversation);
-        });
+//        $message = $this->fm->create(MessageMuffin::class);
+//        $this->checkNewEmail(function() use ($message){
+//            (new NotificationDistributer($message->receiver_user_id))->conversationMessageReceived($message);
+//        });
     }
 
     private function countNumberOfEmails(){
@@ -99,6 +99,6 @@ class NotificationDistributionCest
         $c1 = $this->countNumberOfEmails();
         $callback();
         $this->I->assertEquals($c1+1, $this->countNumberOfEmails());
-    }*/
+    }
 }
 

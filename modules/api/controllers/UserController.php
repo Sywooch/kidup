@@ -2,7 +2,8 @@
 namespace api\controllers;
 
 use api\models\Review;
-use api\models\User;
+use user\models\User;
+use app\helpers\Event;
 use notification\models\Token;
 use user\forms\Registration;
 use yii\data\ActiveDataProvider;
@@ -21,7 +22,7 @@ class UserController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['index', 'view', 'create', 'reviews', 'options'],
+            'guest' => ['index', 'view', 'create', 'reviews', 'options', 'recover'],
             'user' => ['update', 'me', 'verify-phone-number']
         ];
     }
@@ -163,4 +164,14 @@ class UserController extends Controller
             }
         }
     }
+
+    public function actionRecover() {
+        $email = \Yii::$app->request->getBodyParam('email');
+        $u = User::findOneOr404([
+            'email' => $email
+        ]);
+        Event::trigger($u, User::EVENT_USER_REQUEST_RECOVERY);
+        return ['success' => true];
+    }
+
 }
