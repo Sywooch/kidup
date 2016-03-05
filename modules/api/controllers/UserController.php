@@ -2,7 +2,7 @@
 namespace api\controllers;
 
 use api\models\Review;
-use user\models\User;
+use api\models\User;
 use app\helpers\Event;
 use notification\models\Token;
 use user\forms\Registration;
@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function init()
     {
-        $this->modelClass = User::className();
+        $this->modelClass =  User::className();
         parent::init();
     }
 
@@ -167,10 +167,10 @@ class UserController extends Controller
 
     public function actionRecover() {
         $email = \Yii::$app->request->getBodyParam('email');
-        $u = User::findOneOr404([
+        $u = \user\models\User::findOneOr404([
             'email' => $email
         ]);
-        Event::trigger($u, User::EVENT_USER_REQUEST_RECOVERY);
+        Event::trigger($u, \user\models\User::EVENT_USER_REQUEST_RECOVERY);
         return ['success' => true];
     }
 

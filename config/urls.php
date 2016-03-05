@@ -74,7 +74,8 @@ $urls = [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/conversations' => 'api/conversation'],
         'extraPatterns' => [
-            '<id>/messages' => 'messages'
+            '<id>/messages' => 'messages',
+            'GET unread-count' => 'unread-count',
         ]
     ],
     [
@@ -99,9 +100,6 @@ $urls = [
     [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/messages' => 'api/message'],
-        'extraPatterns' => [
-
-        ]
     ],
     [
         'class' => 'yii\rest\UrlRule',
