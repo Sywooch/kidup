@@ -57,6 +57,9 @@ class UserRenderer
      */
     public function loadOwner(User $user) {
         $result = [];
+        $result['owner_email'] = $user->email;
+        $result['owner_phone'] = $user->profile->phone_number;
+        $result['owner_name'] = $user->profile->getName();
         return $result;
     }
 
@@ -68,6 +71,9 @@ class UserRenderer
      */
     public function loadRenter(User $user) {
         $result = [];
+        $result['renter_email'] = $user->email;
+        $result['renter_phone'] = $user->profile->phone_number;
+        $result['renter_name'] = $user->profile->getName();
         return $result;
     }
 
@@ -79,6 +85,8 @@ class UserRenderer
      */
     public function loadSender(User $user) {
         $result = [];
+        $result['sender_email'] = $user->email;
+        $result['sender_name'] = $user->profile->getName();
         return $result;
     }
 
@@ -91,6 +99,7 @@ class UserRenderer
     public function loadReceiver(User $user) {
         $result = [];
         $result['receiver_email'] = $user->email;
+        $result['receiver_name'] = $user->profile->getName();
         return $result;
     }
 

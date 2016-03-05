@@ -7,7 +7,9 @@ use booking\models\booking\Booking;
 use booking\models\payout\Payout;
 use item\models\item\Item;
 use Carbon\Carbon;
+use message\models\conversation\Conversation;
 use notification\components\renderer\BookingRenderer;
+use notification\components\renderer\ConversationRenderer;
 use notification\components\renderer\ItemRenderer;
 use notification\components\renderer\PayoutRenderer;
 use notification\components\renderer\UserRenderer;
@@ -25,6 +27,8 @@ class Renderer
     public $itemRenderer;
     /** @var UserRenderer */
     public $userRenderer;
+    /** @var ConversationRenderer */
+    public $conversationRenderer;
 
     // E-mail sender
     public $sender_name = null;
@@ -89,6 +93,7 @@ class Renderer
         $this->itemRenderer = new ItemRenderer();
         $this->payoutRenderer = new PayoutRenderer();
         $this->userRenderer = new UserRenderer();
+        $this->conversationRenderer = new ConversationRenderer();
         $this->setVariables([
             'app_url' => self::inAppLink('/home'),
             'faq_url' => 'kidup:///home',
@@ -191,8 +196,18 @@ class Renderer
      *
      * @param User $user
      */
-    public function loadRetriever(User $user) {
-        $vars = $this->userRenderer->loadR($user);
+    public function loadReceiver(User $user) {
+        $vars = $this->userRenderer->loadReceiver($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load a conversation.
+     *
+     * @param Conversation $conversation
+     */
+    public function loadConversation(Conversation $conversation) {
+        $vars = $this->conversationRenderer->loadConversation($conversation);
         $this->setVariables($vars);
     }
 
