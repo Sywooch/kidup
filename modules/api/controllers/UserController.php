@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function init()
     {
-        $this->modelClass = User::className();
+        $this->modelClass = \api\models\User::className();
         parent::init();
     }
 
