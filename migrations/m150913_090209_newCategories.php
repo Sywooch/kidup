@@ -1,9 +1,5 @@
 <?php
 
-use item\models\base\Category;
-use item\models\base\CategoryHasFeature;
-use item\models\base\Feature;
-use item\models\base\FeatureValue;
 use yii\db\Migration;
 
 class m150913_090209_newCategories extends Migration
@@ -119,7 +115,7 @@ class m150913_090209_newCategories extends Migration
 
 
     private function transportExistingItems(){
-        $items = \item\models\base\Item::find()->all();
+        $items = \item\models\item\Item::find()->all();
         foreach ($items as $item) {
             $item->category_id = 1;
             $item->save();
@@ -129,7 +125,7 @@ class m150913_090209_newCategories extends Migration
     private function newCategories(){
         $generalFeatures = [];
 
-        Category::deleteAll();
+        \item\models\category\Category::deleteAll();
 
         $categories = [
             "Baby Clothes" => [
@@ -206,7 +202,7 @@ class m150913_090209_newCategories extends Migration
         ];
         $idCounter = 1;
         foreach ($categories as $mainCat => $subCats) {
-            $c = new Category();
+            $c = new \item\models\category\Category();
             $c->name = $mainCat;
             $c->id = $idCounter;
             $c->save();
@@ -219,7 +215,7 @@ class m150913_090209_newCategories extends Migration
                 } else {
                     $name = $features;
                 }
-                $c2 = new Category();
+                $c2 = new \item\models\category\Category();
                 $c2->name = $name;
                 $c2->parent_id = $c->id;
                 $c2->id = $idCounter;
