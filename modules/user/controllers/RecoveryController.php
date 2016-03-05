@@ -12,7 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use notifications\models\Token;
+use notification\models\Token;
 use user\Finder;
 use user\forms\Recovery;
 use yii\base\Model;
@@ -104,10 +104,7 @@ class RecoveryController extends Controller
         if ($token === null || $token->isExpired || $token->user === null) {
             \Yii::$app->session->setFlash('danger',
                 \Yii::t('user.reset_pasword.flash.link_expired', 'Recovery link is invalid or expired. Please try requesting a new one.'));
-            return $this->render('/message', [
-                'title' => \Yii::t('user.reset_pasword.flash.link_invalid', 'Invalid or expired link'),
-                'module' => $this->module,
-            ]);
+            return $this->goHome();
         }
 
         $model = \Yii::createObject([
