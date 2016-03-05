@@ -2,7 +2,7 @@
 
 namespace booking\models\booking;
 
-use app\extended\Exception;
+use app\extended\base\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;

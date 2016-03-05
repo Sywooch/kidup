@@ -88,7 +88,8 @@ class Renderer
     // Templating
     protected $templateFolder = null;
 
-    public function __construct() {
+    public function __construct($template) {
+        $this->template = $template;
         $this->bookingRenderer = new BookingRenderer();
         $this->itemRenderer = new ItemRenderer();
         $this->payoutRenderer = new PayoutRenderer();
@@ -106,6 +107,7 @@ class Renderer
 
     public function renderFromFile($template) {
         $vars = $this->getVariables();
+
         return \Yii::$app->view->renderFile($this->templateFolder . '/' . $template . '.twig', $vars);
     }
 

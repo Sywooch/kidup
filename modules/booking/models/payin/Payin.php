@@ -7,7 +7,7 @@ use booking\models\invoice\InvoiceFactory;
 use booking\models\payout\PayoutFactory;
 use Carbon\Carbon;
 use Yii;
-use yii\base\Exception;
+use app\extended\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\Json;
@@ -15,7 +15,7 @@ use yii\helpers\Json;
 /**
  * This is the model class for table "payin".
  */
-class PayinException extends \app\extended\Exception
+class PayinException extends \app\extended\base\Exception
 {
 }
 

@@ -6,7 +6,7 @@ use message\models\conversation\Conversation;
 use user\models\User;
 use Yii;
 
-class NotificationImplementationError extends \yii\base\Exception{};
+class NotificationImplementationError extends \app\extended\base\Exception{};
 
 class NotificationDistributer
 {
@@ -23,9 +23,8 @@ class NotificationDistributer
     }
 
     private function newRenderer($template){
-        $isMailTemplate = in_array($template, MailTemplates::$templates);
-        $isPushTemplate = in_array($template, PushTemplates::$templates);
-
+        $isMailTemplate = isset(MailTemplates::$templates[$template]);
+        $isPushTemplate = isset(PushTemplates::$templates[$template]);
         if(!$isMailTemplate && !$isPushTemplate){
             throw new NotificationImplementationError("Template not found");
         }
@@ -39,7 +38,7 @@ class NotificationDistributer
         }
     }
 
-    private function toSender(Renderer $renderer){
+    private function toSender($renderer){
         if($this->userAllowsPush){
             return PushSender::send($renderer);
         }else{

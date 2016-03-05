@@ -2,7 +2,7 @@
 
 namespace app\helpers;
 
-use app\extended\Exception;
+use app\extended\base\Exception;
 
 class Event extends \yii\base\Event
 {
@@ -13,6 +13,7 @@ class Event extends \yii\base\Event
         try{
             return \Yii::$app->trigger($obj->className().'-'. $trigger, new \yii\base\Event(['sender' => $obj]));
         }catch(Exception $e){
+
             \Yii::error("Triggering of event failed: ".$obj->className());
             return false;
         }

@@ -14,14 +14,14 @@ class MailSender
      * @param $renderer
      * @return bool Whether the mail was sent succesfully.
      */
-    public static function send(TemplateRenderer $renderer)
+    public static function send(MailRenderer $renderer)
     {
-        $view = $renderer->renderMail();
+        $view = $renderer->render();
 
         /** @var \yii\swiftmailer\Mailer $mailer */
         $mailer = \Yii::$app->mailer->compose();
         return $mailer
-            ->setTo($renderer->mailRenderer->getReceiverEmail())
+            ->setTo($renderer->getReceiverEmail())
             ->setReplyTo(['info@kidup.dk' => 'KidUp'])
             ->setFrom(['info@kidup.dk' => 'KidUp'])
             ->setSubject('KidUp')

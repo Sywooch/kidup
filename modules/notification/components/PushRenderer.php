@@ -8,9 +8,9 @@ class PushRenderer extends Renderer
 
     protected $templateFolder = '@notification-push';
 
-    public function render($template)
+    public function render()
     {
-        return $this->renderFromFile($template);
+        return $this->renderFromFile($this->template);
     }
 
 }

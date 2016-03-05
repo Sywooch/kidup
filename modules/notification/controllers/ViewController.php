@@ -2,6 +2,7 @@
 namespace notification\controllers;
 
 use app\extended\web\Controller;
+use app\helpers\Event;
 use notification\components\MailRenderer;
 use notification\components\MailSender;
 use notification\models\template\UserWelcomeRenderer;
@@ -14,17 +15,10 @@ class ViewController extends Controller
 
     public $layout;
 
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        $mailLog = MailLog::findOne($id);
-        if ($mailLog == null) {
-            throw new NotFoundHttpException("Email not found");
-        }
-
-        $mail = \mail\mails\MailType::getModel($mailLog->type);
-        $mail->loadData($mailLog->data);
-        $renderer = new MailRenderer($mail);
-        $renderer->render();
+        $user = User::findOne(\Yii::$app->user->id);
+        Event::trigger($user, User::EVENT_USER_CREATE_DONE);
     }
 
     public function actionLink($url, $mailId)
