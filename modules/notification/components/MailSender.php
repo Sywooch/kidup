@@ -16,6 +16,7 @@ class MailSender
      */
     public static function send(MailRenderer $renderer)
     {
+        \yii\helpers\VarDumper::dump(23213,10,true); exit();
         $view = $renderer->render();
 
         /** @var \yii\swiftmailer\Mailer $mailer */

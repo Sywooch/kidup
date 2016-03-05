@@ -6,9 +6,11 @@ use booking\models\booking\Booking;
 use booking\models\payin\Payin;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\BookingMuffin;
+use codecept\muffins\ConversationMuffin;
 use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
+use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
 use user\models\User;
 
@@ -40,21 +42,51 @@ class NotificationDistributionCest
     public function checkUnreadCount(FunctionalTester $I){
         $this->I= $I;
         $user = $this->fm->create(UserMuffin::class);
-        $c1 = $this->countNumberOfEmails();
-        Event::trigger($user, User::EVENT_USER_CREATE_DONE);
-        $this->I->assertEquals($c1+1, $this->countNumberOfEmails());
 
         $this->checkNewEmail(function() use ($user){
-            Event::trigger($user, User::EVENT_USER_CREATE_DONE);
+            (new NotificationDistributer($user->id))->userWelcome($user);
         });
 
         $this->checkNewEmail(function() use ($user){
-            Event::trigger($user, User::EVENT_USER_REQUEST_RECOVERY);
+            (new NotificationDistributer($user->id))->userReconfirm($user);
         });
 
-        $booking = $this->fm->create(BookingMuffin::className());
+        $this->checkNewEmail(function() use ($user){
+            (new NotificationDistributer($user->id))->userRecovery($user);
+        });
+
+        $booking = $this->fm->create(BookingMuffin::class);
         $this->checkNewEmail(function() use ($booking){
-            Event::trigger($booking->payin, Payin::EVENT_PAYIN_CONFIRMED);
+            (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->item->owner_id))->bookingConfirmedOwner($booking);
+        });
+
+        $this->checkNewEmail(function() use ($booking){
+            (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
+        });
+
+        $conversation = $this->fm->create(ConversationMuffin::class);
+        $this->checkNewEmail(function() use ($conversation){
+            (new NotificationDistributer($conversation->renter_id))->conversationMessageReceived($conversation);
         });
     }
 

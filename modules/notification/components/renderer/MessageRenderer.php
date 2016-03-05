@@ -1,19 +1,19 @@
 <?php
 namespace notification\components\renderer;
 
-use message\models\conversation\Conversation;
+use message\models\message\Message;
 use notification\components\Renderer;
 
-class ConversationRenderer
+class MessageRenderer
 {
 
     /**
      * Load a conversation.
      *
-     * @param Conversation $conversation The conversation.
+     * @param Message $conversation The conversation.
      * @return array All the render variables.
      */
-    public function loadConversation(Conversation $conversation) {
+    public function loadMessage(Message $conversation) {
         $result = [];
         $result['sender_name'] = $conversation->targetUser->profile->getName();
         return $result;

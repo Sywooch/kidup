@@ -3,9 +3,10 @@ namespace notification\controllers;
 
 use app\extended\web\Controller;
 use app\helpers\Event;
+use booking\models\booking\Booking;
 use notification\components\MailRenderer;
 use notification\components\MailSender;
-use notification\models\template\UserWelcomeRenderer;
+use notification\components\NotificationDistributer;
 use user\models\User;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -17,8 +18,8 @@ class ViewController extends Controller
 
     public function actionIndex()
     {
-        $user = User::findOne(\Yii::$app->user->id);
-        Event::trigger($user, User::EVENT_USER_CREATE_DONE);
+        $booking = Booking::find()->one();
+        $res = (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
     }
 
     public function actionLink($url, $mailId)

@@ -7,9 +7,9 @@ use booking\models\booking\Booking;
 use booking\models\payout\Payout;
 use item\models\item\Item;
 use Carbon\Carbon;
-use message\models\conversation\Conversation;
+use message\models\message\Message;
 use notification\components\renderer\BookingRenderer;
-use notification\components\renderer\ConversationRenderer;
+use notification\components\renderer\MessageRenderer;
 use notification\components\renderer\ItemRenderer;
 use notification\components\renderer\PayoutRenderer;
 use notification\components\renderer\UserRenderer;
@@ -27,8 +27,8 @@ class Renderer
     public $itemRenderer;
     /** @var UserRenderer */
     public $userRenderer;
-    /** @var ConversationRenderer */
-    public $conversationRenderer;
+    /** @var MessageRenderer */
+    public $messageRenderer;
 
     // E-mail sender
     public $sender_name = null;
@@ -94,7 +94,7 @@ class Renderer
         $this->itemRenderer = new ItemRenderer();
         $this->payoutRenderer = new PayoutRenderer();
         $this->userRenderer = new UserRenderer();
-        $this->conversationRenderer = new ConversationRenderer();
+        $this->messageRenderer = new MessageRenderer();
         $this->setVariables([
             'app_url' => self::inAppLink('/home'),
             'faq_url' => 'kidup:///home',
@@ -135,6 +135,10 @@ class Renderer
     public function loadBooking(Booking $booking) {
         $vars = $this->bookingRenderer->loadBooking($booking);
         $this->setVariables($vars);
+        $vars = $this->userRenderer->loadRenter($booking->renter);
+        $this->setVariables($vars);
+        $vars = $this->userRenderer->loadOwner($booking->item->owner);
+        $this->setVariables($vars);
     }
 
     /**
@@ -153,7 +157,7 @@ class Renderer
      * @param Item $item
      */
     public function loadItem(Item $item) {
-        $vars = $this->itemRenderer->loadPayout($item);
+        $vars = $this->itemRenderer->loadItem($item);
         $this->setVariables($vars);
     }
 
@@ -168,52 +172,17 @@ class Renderer
     }
 
     /**
-     * Load the renter.
+     * Load a message.
      *
-     * @param User $user
+     * @param Message $message
      */
-    public function loadRenter(User $user) {
-        $vars = $this->userRenderer->loadRenter($user);
+    public function loadMessage(Message $message) {
+        $vars = $this->messageRenderer->loadMessage($message);
         $this->setVariables($vars);
-    }
-
-    /**
-     * Load the owner.
-     *
-     * @param User $user
-     */
-    public function loadOwner(User $user) {
-        $vars = $this->userRenderer->loadOwner($user);
+        $vars = $this->userRenderer->loadSender($message->senderUser);
         $this->setVariables($vars);
-    }
 
-    /**
-     * Load the sender.
-     *
-     * @param User $user
-     */
-    public function loadSender(User $user) {
-        $vars = $this->userRenderer->loadSender($user);
-        $this->setVariables($vars);
-    }
-
-    /**
-     * Load the retriever.
-     *
-     * @param User $user
-     */
-    public function loadReceiver(User $user) {
-        $vars = $this->userRenderer->loadReceiver($user);
-        $this->setVariables($vars);
-    }
-
-    /**
-     * Load a conversation.
-     *
-     * @param Conversation $conversation
-     */
-    public function loadConversation(Conversation $conversation) {
-        $vars = $this->conversationRenderer->loadConversation($conversation);
+        $vars = $this->userRenderer->loadReceiver($message->receiverUser);
         $this->setVariables($vars);
     }
 

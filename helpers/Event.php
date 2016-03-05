@@ -13,7 +13,6 @@ class Event extends \yii\base\Event
         try{
             return \Yii::$app->trigger($obj->className().'-'. $trigger, new \yii\base\Event(['sender' => $obj]));
         }catch(Exception $e){
-
             \Yii::error("Triggering of event failed: ".$obj->className());
             return false;
         }

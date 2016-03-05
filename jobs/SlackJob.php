@@ -27,9 +27,9 @@ class SlackJob extends Job{
             'link_names' => true
         ];
 
-//        if(YII_ENV !== 'prod'){
-//            return true;
-//        }
+        if(YII_ENV !== 'prod'){
+            return true;
+        }
 
         $slackUrl = \Yii::$app->keyStore->get('slack_service_url');
 

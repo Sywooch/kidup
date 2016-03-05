@@ -2,15 +2,20 @@
 namespace notification\components;
 
 use booking\models\booking\Booking;
-use message\models\conversation\Conversation;
+use message\models\message\Message;
 use user\models\User;
 use Yii;
 
-class NotificationImplementationError extends \app\extended\base\Exception{};
+class NotificationImplementationError extends \app\extended\base\Exception
+{
+}
+
+;
 
 class NotificationDistributer
 {
     private $userAllowsPush = false;
+
     /**
      * Construct a notification distributor for a certain user id
      * NotificationDistributer constructor.
@@ -22,108 +27,128 @@ class NotificationDistributer
         $this->userAllowsPush = $user->getUserAcceptsPushNotifications();
     }
 
-    private function newRenderer($template){
-        $isMailTemplate = isset(MailTemplates::$templates[$template]);
+    private function newRenderer($template)
+    {
         $isPushTemplate = isset(PushTemplates::$templates[$template]);
-        if(!$isMailTemplate && !$isPushTemplate){
+        $isMailTemplate = isset(MailTemplates::$templates[$template]) || (isset(MailTemplates::$templates[$template]));
+        if (!$isMailTemplate && !$isPushTemplate) {
             throw new NotificationImplementationError("Template not found");
         }
-        if(!$isMailTemplate && $isPushTemplate && !$this->userAllowsPush){
+        if (!$isMailTemplate && $isPushTemplate && !$this->userAllowsPush) {
             return false;
         }
-        if($this->userAllowsPush && $isPushTemplate){
+        if ($this->userAllowsPush && $isPushTemplate) {
             return new PushRenderer($template);
-        }else{
+        } else {
             return new MailRenderer($template);
         }
     }
 
-    private function toSender($renderer){
-        if($this->userAllowsPush){
+    private function toSender($renderer)
+    {
+        if ($this->userAllowsPush) {
             return PushSender::send($renderer);
-        }else{
+        } else {
             return MailSender::send($renderer);
         }
     }
 
-    private function load($templateName, $contents){
+    private function load($templateName, $contents)
+    {
         $renderer = $this->newRenderer($templateName);
-        if(!$renderer){
+        if (!$renderer) {
             return false;
         }
         foreach ($contents as $content => $value) {
-            switch($content){
-                case "booking": $renderer->loadBooking($value); break;
-                case "user": $renderer->loadUser($value); break;
-                case "conversation": $renderer->loadConversation($value); break;
+            switch ($content) {
+                case "booking":
+                    $renderer->loadBooking($value);
+                    break;
+                case "user":
+                    $renderer->loadUser($value);
+                    break;
+                case "message":
+                    $renderer->loadMessage($value);
+                    break;
             }
         }
         return $this->toSender($renderer);
     }
 
-    public function bookingConfirmedOwner(Booking $booking){
+    public function bookingConfirmedOwner(Booking $booking)
+    {
         return $this->load("booking_confirmed_owner", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingConfirmedRenter(Booking $booking){
+    public function bookingConfirmedRenter(Booking $booking)
+    {
         return $this->load("booking_confirmed_renter", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingDeclinedRenter(Booking $booking){
+    public function bookingDeclinedRenter(Booking $booking)
+    {
         return $this->load("booking_declined_renter", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingPayoutOwner(Booking $booking){
+    public function bookingPayoutOwner(Booking $booking)
+    {
         return $this->load("booking_payout_owner", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingRequestOwner(Booking $booking){
+    public function bookingRequestOwner(Booking $booking)
+    {
         return $this->load("booking_request_owner", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingStartOwner(Booking $booking){
+    public function bookingStartOwner(Booking $booking)
+    {
         return $this->load("booking_start_owner", [
             'booking' => $booking
         ]);
     }
 
-    public function bookingStartRenter(Booking $booking){
+    public function bookingStartRenter(Booking $booking)
+    {
         return $this->load("booking_start_renter", [
             'booking' => $booking
         ]);
     }
 
-    public function userReconfirm(User $user){
+    public function userReconfirm(User $user)
+    {
         return $this->load("user_reconfirm", [
             'user' => $user
         ]);
     }
 
-    public function userRecovery(User $user){
+    public function userRecovery(User $user)
+    {
         return $this->load("user_recovery", [
             'user' => $user
         ]);
     }
 
-    public function userWelcome(User $user){
+    public function userWelcome(User $user)
+    {
         return $this->load("user_welcome", [
             'user' => $user
         ]);
     }
 
-    public function conversationMessageReceived(Conversation $conversation){
+    public function conversationMessageReceived(Message $message)
+    {
         return $this->load("conversation_message_received", [
-            'conversation' => $conversation
+            'message' => $message
         ]);
     }
 }
