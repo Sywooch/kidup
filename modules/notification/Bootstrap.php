@@ -9,6 +9,7 @@ use booking\models\payin\Payin;
 use item\models\item\Item;
 use message\models\message\Message;
 use notification\components\NotificationDistributer;
+use notification\models\Token;
 use notifications\components\MailSender;
 use notifications\mails\bookingOwner\StartFactory;
 use notifications\mails\bookingRenter\DeclineFactory;
@@ -71,7 +72,14 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(User::className(), User::EVENT_USER_REQUEST_RECOVERY, function ($event) {
-            (new NotificationDistributer($event->sender->id))->userRecovery($event->sender);
+            $token = new Token();
+            $token->setAttributes([
+                'user_id' => $event->sender->id,
+                'type' => Token::TYPE_RECOVERY,
+            ]);
+            $token->save();
+            $url = $token->getUrl();
+            (new NotificationDistributer($event->sender->id))->userRecovery($event->sender, $url);
         });
 
         Event::register(Message::className(), Message::EVENT_NEW_MESSAGE, function ($event) {
