@@ -8,6 +8,7 @@ use booking\models\booking\Booking;
 use booking\models\payin\Payin;
 use item\models\item\Item;
 use message\models\message\Message;
+use notification\components\NotificationDistributer;
 use notifications\components\MailSender;
 use notifications\mails\bookingOwner\StartFactory;
 use notifications\mails\bookingRenter\DeclineFactory;
@@ -41,114 +42,54 @@ class Bootstrap implements BootstrapInterface
         Yii::setAlias('@notification-layouts', '@notification-view/layouts/');
         Yii::setAlias('@notification-assets', '@notification/assets/');
 
+        $onNewUser = function ($event) {
+            $user = $event->sender;
+            $message = "New user registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50);
+            if (!is_null($user->profile->getName())) {
+                $message .= " please welcome " . $user->profile->getName();
+            }
+            new SlackJob([
+                'message' => $message
+            ]);
+            (new NotificationDistributer($user->id))->userWelcome($user);
+        };
+
         // user
-        Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
-            new SlackJob([
-                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
-            ]);
-            NotificationDistributer();
-            // @todo
+        Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, $onNewUser);
 
-            //MailSender::send((new \mail\mails\user\WelcomeFactory())->create($event->sender));
-        });
-
-        Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
-            new SlackJob([
-                'message' => "New user registered ".\yii\helpers\StringHelper::truncate(Url::previous(),50)
-            ]);
-            // @todo
-            //MailSender::send((new \mail\mails\user\WelcomeFactory())->create($event->sender));
-        });
+        Event::register(User::className(), User::EVENT_USER_CREATE_DONE, $onNewUser);
 
         Event::register(User::className(), User::EVENT_USER_REQUEST_EMAIL_RECONFIRM, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\user\ReconfirmFactory())->create($event->sender));
+            (new NotificationDistributer($event->sender->id))->userReconfirm($event->sender);
         });
 
         Event::register(User::className(), User::EVENT_USER_REQUEST_RECOVERY, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\user\RecoveryFactory())->create($event->sender));
+            (new NotificationDistributer($event->sender->id))->userRecovery($event->sender);
         });
 
-        // item
-        Event::register(Item::className(), Item::EVENT_UNFINISHED_REMINDER, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\item\UnfinishedReminder())->create($event->sender));
-        });
-
-        // message
         Event::register(Message::className(), Message::EVENT_NEW_MESSAGE, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\conversation\NewMessageFactory())->create($event->sender));
+            (new NotificationDistributer($event->sender->id))->conversationMessageReceived($event->sender->conversation);
         });
 
-        // booking owner
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
+            (new NotificationDistributer($event->booking->id))->bookingDeclinedRenter($event->sender->conversation);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_NO_RESPONSE, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingRenter\DeclineFactory())->create($event->sender->booking));
+            (new NotificationDistributer($event->sender->id))->bookingDeclinedRenter($event->sender);
         });
 
         Event::register(Booking::className(), Booking::EVENT_BOOKING_ALMOST_START, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingOwner\StartFactory())->create($event->sender->booking));
-            //MailSender::send((new \mail\mails\bookingRenter\StartFactory())->create($event->sender->booking));
-        });
-
-        Event::register(Payin::className(), Payin::EVENT_FAILED, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingOwner\FailedFactory())->create($event->sender->booking));
-            //MailSender::send((new \mail\mails\bookingRenter\FailedFactory())->create($event->sender->booking));
-        });
-
-        Event::register(Payin::className(), Payin::EVENT_AUTHORIZATION_CONFIRMED, function ($event) {
-            Yii::trace('EVENT_AUTHORIZATION_CONFIRMED');
-            // @todo
-            //MailSender::send((new \mail\mails\bookingRenter\RequestFactory())->create($event->sender->booking));
-            //MailSender::send((new \mail\mails\bookingOwner\RequestFactory())->create($event->sender->booking));
-        });
-
-        Event::register(Booking::className(), Booking::EVENT_OWNER_CONFIRMATION_REMINDER, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingOwner\RequestFactory())->create($event->sender->booking));
+            (new NotificationDistributer($event->sender->id))->bookingStartOwner($event->sender);
+            (new NotificationDistributer($event->sender->id))->bookingStartRenter($event->sender);
         });
 
         Event::register(Payin::className(), Payin::EVENT_PAYIN_CONFIRMED, function ($event) {
-            Yii::trace('EVENT_PAYIN_CONFIRMED');
-            // @todo
-            //MailSender::send((new \mail\mails\bookingRenter\ConfirmationFactory())->create($event->sender->booking));
-            //MailSender::send((new \mail\mails\bookingOwner\ConfirmationFactory())->create($event->sender->booking));
-            //MailSender::send((new \mail\mails\bookingRenter\ReceiptFactory())->create($event->sender->booking));
+            (new NotificationDistributer($event->sender->id))->bookingRequestOwner($event->sender);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_INVOICE_READY, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\bookingOwner\PayoutFactory())->create($event->sender->booking));
-        });
-
-        // reviews+
-        Event::register(Booking::className(), Booking::EVENT_BOOKING_ENDED, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender->booking, true));
-            //MailSender::send((new \mail\mails\review\RequestFactory())->create($event->sender->booking, false));
-        });
-
-        Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_OWNER, function ($event) {
-            // @todocircle.yml
-            //MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender->booking, true));
-        });
-        Event::register(Booking::className(), Booking::EVENT_REVIEW_REMINDER_RENTER, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\review\ReminderFactory())->create($event->sender->booking, false));
-        });
-
-        Event::register(Booking::className(), Booking::EVENT_REVIEWS_PUBLIC, function ($event) {
-            // @todo
-            //MailSender::send((new \mail\mails\review\PublishFactory())->create($event->sender->booking, true));
+            (new NotificationDistributer($event->sender->id))->bookingPayoutOwner($event->sender);
         });
     }
 }

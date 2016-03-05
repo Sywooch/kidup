@@ -2,6 +2,7 @@
 
 namespace booking\models\booking;
 
+use app\extended\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;
@@ -19,7 +20,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * This is the model class for table "Booking".
  */
-class BookingException extends \yii\base\Exception
+class BookingException extends Exception
 {
 }
 
