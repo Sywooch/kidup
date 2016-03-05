@@ -3,7 +3,7 @@ use yii\helpers\Url;
 
 /**
  * @var \yii\web\View $this
- * @var \message\models\Conversation $model
+ * @var \message\models\conversation\Conversation $model
  */
 ?>
 <tr>
@@ -22,7 +22,7 @@ use yii\helpers\Url;
             <div class="col-md-6">
                 <a href="<?= Url::to("@web/inbox/{$model->id}") ?>">
                     <?php
-                    if ($model->unreadMessages() > 0) {
+                    if ($model->getUnreadMessageCount() > 0) {
                         echo ' <div class="badge"></div>';
                     }
                     ?>

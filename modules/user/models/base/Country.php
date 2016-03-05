@@ -17,11 +17,11 @@ use Yii;
  *
  * @property \user\models\base\Currency $currency
  * @property \user\models\Language $mainLanguage
- * @property \item\models\Location[] $locations
- * @property \booking\models\base\PayoutMethod[] $payoutMethods
+ * @property \item\models\location\Location[] $locations
+ * @property \user\models\base\PayoutMethod[] $payoutMethods
  * @property \user\models\Profile[] $profiles
  */
-class Country extends \yii\db\ActiveRecord
+class Country extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -83,15 +83,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\item\models\Location::className(), ['country' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPayoutMethods()
-    {
-        return $this->hasMany(\booking\models\base\PayoutMethod::className(), ['country_id' => 'id']);
+        return $this->hasMany(\item\models\location\Location::className(), ['country' => 'id']);
     }
 
     /**

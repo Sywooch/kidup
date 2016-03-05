@@ -11,6 +11,8 @@
 
 namespace user\controllers;
 
+use app\components\PhoneTexter;
+use app\components\PhoneTextSendException;
 use app\extended\web\Controller;
 use app\helpers\Event;
 use app\helpers\SelectData;
@@ -262,16 +264,16 @@ class SettingsController extends Controller
                 'type' => Token::TYPE_PHONE_CODE,
             ]);
             $token->save();
-            if ($profile->sendPhoneVerification($token)) {
-                return $this->redirect('phonecode');
-            } else {
+            try{
+                PhoneTexter::text($token->code,  $this->phone_country . $this->phone_number);
+                return $profile->sendPhoneVerification($token);
+            }catch(PhoneTextSendException $e){
                 \Yii::$app->session->addFlash('info', \Yii::t('user.settings.validation.text_not_send',
                     'SMS could not be send, please try again.'));
                 $page = $this->renderPartial('verification', [
                     'user' => \Yii::$app->user->identity,
                     'profile' => Profile::findOne(['user_id' => \Yii::$app->user->id])
                 ]);
-
                 return $this->render('_wrapper', [
                     'page' => $page,
                     'title' => ucfirst(\Yii::t('user.settings.validation.title', 'Trust and Verification')) . ' - ' . \Yii::$app->name

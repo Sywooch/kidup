@@ -2,7 +2,6 @@
 
 namespace admin\controllers;
 
-use admin\controllers\Controller;
 use app\helpers\Event;
 use user\models\User;
 

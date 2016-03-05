@@ -3,7 +3,7 @@
 namespace pages\controllers;
 
 use app\extended\web\Controller;
-use pages\helpers\Pages;
+use pages\components\Pages;
 
 class DefaultController extends Controller
 {

@@ -3,20 +3,19 @@
 namespace item\controllers;
 
 use app\extended\web\Controller;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 use images\components\ImageManager;
 use item\forms\Create;
 use item\forms\Edit;
 use item\forms\LocationForm;
-use item\models\Item;
-use item\models\ItemHasMedia;
-use item\models\Media;
+use item\models\item\Item;
+use item\models\itemHasMedia\ItemHasMedia;
+use item\models\media\Media;
 use search\models\ItemSearch;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
@@ -271,8 +270,6 @@ class CreateController extends Controller
         $i->setAttributes([
             'user_id' => \Yii::$app->user->id,
             'file_name' => (new ImageManager())->upload($image),
-            'type' => Media::TYPE_IMG,
-            'storage' => Media::LOC_LOCAL,
             'created_at' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp,
             'updated_at' => Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp,
         ]);

@@ -14,9 +14,6 @@ p {
 #container {
     max-width: 980px;
 }
-#container tr td {
-    padding: 0px 20px;
-}
 .button {
     margin: 10px 0;
     display: inline-block;
@@ -58,7 +55,6 @@ p {
 #header p.subtitles { color: #fff; }
 #image-left, #image-right {
     background-color: #fff;
-    padding: 40px 40px;
 }
 #action-module {
     height: 175px;
@@ -116,12 +112,39 @@ p {
 img {
     max-width: 150px;
 }
-p {
-    color: #666666;
-    font-size: 16px;
+
+h1 {
+    color: #FFFFFF;
 }
 
-#text-center {
-    background-color: #fff;
-    padding: 40px 40px;
+#header p.subtitles { color: #fff; }
+
+p {
+    color: #666666;
+}
+
+@media screen and (max-width: 600px) {
+    #image-left, #image-right, #text-center {
+        background-color: #fff;
+        padding: 0px 40px;
+    }
+    #container tr td {
+        padding: 0px 0px;
+    }
+    p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #image-left, #image-right, #text-center {
+        background-color: #fff;
+        padding: 40px 40px;
+    }
+    #container tr td {
+        padding: 0px 20px;
+    }
+    p {
+        font-size: 16px;
+    }
 }

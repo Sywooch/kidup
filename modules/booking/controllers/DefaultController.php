@@ -6,12 +6,12 @@ use api\models\Currency;
 use app\extended\web\Controller;
 use app\jobs\SlackJob;
 use booking\forms\Confirm;
-use booking\models\Booking;
-use booking\models\Payin;
+use booking\models\booking\Booking;
+use booking\models\payin\Payin;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 use item\forms\CreateBooking;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\PayoutMethod;
 use Yii;
 use yii\helpers\Url;
@@ -83,10 +83,6 @@ class DefaultController extends Controller
                     ]);
                 }
                 return $this->redirect(['/booking/' . $booking->id]);
-            } elseif ($item->min_renting_days == 666) {
-                // fake product booking
-                new SlackJob(['message' => "Fake booking made on " . $booking->item_id]);
-                return $this->redirect("@web/booking/default/error?item_id=".$booking->item_id);
             }
         }
 

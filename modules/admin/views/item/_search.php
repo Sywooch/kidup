@@ -41,8 +41,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'updated_at') ?>
 
-    <?php // echo $form->field($model, 'min_renting_days') ?>
-
     <?php // echo $form->field($model, 'category_id') ?>
 
     <div class="form-group">

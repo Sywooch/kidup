@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \yii\web\View $this
- * @var \item\models\Item $model
+ * @var \item\models\item\Item $model
  */
 ?>
 

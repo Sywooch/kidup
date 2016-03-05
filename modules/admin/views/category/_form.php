@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var item\models\Category $model
+ * @var \item\models\category\Category $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -14,7 +14,7 @@ use yii\helpers\Html;
 <div class="category-form">
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]);
-    $options = \item\models\Category::find()->asArray()->where('parent_id IS NULL')->select('name, id')->indexBy('id')->all();
+    $options = \item\models\category\Category::find()->asArray()->where('parent_id IS NULL')->select('name, id')->indexBy('id')->all();
     foreach ($options as &$o) {
         $o = $o['name'];
     }

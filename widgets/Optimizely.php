@@ -2,8 +2,6 @@
 
 namespace app\widgets;
 
-use app\components\Cache;
-use yii\helpers\Url;
 use Yii;
 
 /**

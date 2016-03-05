@@ -3,7 +3,7 @@ namespace api\controllers;
 
 use admin\models\TrackingEvent;
 use app\extended\web\Controller;
-use item\models\Location;
+use item\models\location\LocationFactory;
 use Yii;
 
 class EventController extends Controller
@@ -20,7 +20,7 @@ class EventController extends Controller
         }
         $country = null;
         $city = null;
-        $location = Location::getByIP(\Yii::$app->request->getUserIP());
+        $location = LocationFactory::createByIp(\Yii::$app->request->getUserIP());
         if ($location) {
             $country = $location->country_code;
             $city = $location->city;

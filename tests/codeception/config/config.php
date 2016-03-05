@@ -2,7 +2,6 @@
 /**
  * Application configuration shared by all test types
  */
-
 $conf = [
     'controllerMap' => [
         'fixture' => [

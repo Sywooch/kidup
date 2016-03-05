@@ -2,8 +2,8 @@
 
 namespace review\models\base;
 
-use booking\models\Booking;
-use item\models\Item;
+use booking\models\booking\Booking;
+use item\models\item\Item;
 use user\models\User;
 use Yii;
 
@@ -22,11 +22,11 @@ use Yii;
  * @property integer $is_public
  *
  * @property Booking $booking
- * @property Item $item
+ * @property \item\models\item\Item $item
  * @property User $reviewer
  * @property User $reviewed
  */
-class Review extends \yii\db\ActiveRecord
+class Review extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -72,7 +72,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(\booking\models\Booking::className(), ['id' => 'booking_id']);
+        return $this->hasOne(\booking\models\booking\Booking::className(), ['id' => 'booking_id']);
     }
 
     /**
@@ -80,7 +80,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(\item\models\Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(\item\models\item\Item::className(), ['id' => 'item_id']);
     }
 
     /**

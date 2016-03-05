@@ -1,8 +1,6 @@
 <?php
 namespace user\models;
 
-use yii\db\ActiveRecord;
-
 /**
  * @property integer $id          Id
  * @property integer $user_id     User id, null if account is not bind to user

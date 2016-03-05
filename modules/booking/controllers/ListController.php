@@ -3,9 +3,9 @@
 namespace booking\controllers;
 
 use app\extended\web\Controller;
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
-use item\models\Item;
+use item\models\item\Item;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

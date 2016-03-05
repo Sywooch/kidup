@@ -1,11 +1,11 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.booking_confirmed_renter.title', title) | raw }}
+        {{ t('mail.booking_confirmed_renter.title', 'The rent is confirmed - celebrate!') | raw }}
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_3.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_3.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,10 +13,12 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-            <h3>Title h3</h3>
+            <h3>{{ t('mail.booking_confirmed_renter.t1', 'You have rented {item_name} - hurrah!', {
+                    'item_name': item_name
+                }) | raw }}</h3>
                     <p>
                         {{ t('mail.booking_confirmed_renter.p1',
                             'I am happy to tell you, that {owner_name} has accepted your request for item on the date.', {
@@ -30,7 +32,9 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.booking_confirmed_renter.t2', 'Now you can chat with {owner_name}', {
+                            'owner_name': owner_name
+                        }) | raw }}</h3>
                     <p>
                         {{ t('mail.booking_confirmed_renter.p2',
                         'To make the exchange even easier, I suggest you continue the conversation with {owner_name} in the app’s {messaging_link}.', {
@@ -52,7 +56,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-green-message.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-green-message.png') }}" width="100%" alt="Image">
                 </td>
             </tr>
         </table>
@@ -60,10 +64,10 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-yellow-girl.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-yellow-girl.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.booking_confirmed_renter.t3', 'So you can agree on a place to meet') }}</h3>
                     <p>
                         {{ t('mail.booking_confirmed_renter.p4',
                         'You should make sure you meet up at the same place, at the same time, and that no problems should arise before the rent starts.'

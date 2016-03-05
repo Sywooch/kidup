@@ -12,7 +12,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  */
-class MailTemplate extends \yii\db\ActiveRecord
+class MailTemplate extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

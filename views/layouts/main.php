@@ -1,10 +1,8 @@
 <?php
-use app\assets\FontAwesomeAsset;
+use app\assets\AppAsset;
 use app\components\Cache;
 use images\components\ImageHelper;
-use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
-use \app\assets\AppAsset;
 
 /* @var $this \app\extended\web\View */
 /* @var $content string */

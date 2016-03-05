@@ -15,7 +15,7 @@ use Yii;
  *
  * @property \user\models\User $user
  */
-class Child extends \yii\db\ActiveRecord
+class Child extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

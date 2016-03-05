@@ -28,11 +28,12 @@ $urls = [
     'booking/<id:\d+>/invoice' => 'booking/view/invoice',
     'booking/<id:\d+>/request' => 'booking/default/request',
     'booking/<id:\d+>/conversation' => 'booking/default/conversation',
-    'mail/show/<mail>' => 'mail/view/test',
-    'mail/overview' => 'mail/view/overview',
-    'mail/click' => 'mail/view/link',
-    'mail/<id>' => 'mail/view/index',
-    'sendgrid/webhook-apqcbec' => 'mail/sendgrid/webhook-apqcbec', // sendgrid incomming webhook
+    'mail/show/<mail>' => 'notification/view/test',
+    'mail/overview' => 'notification/view/overview',
+    'mail/click' => 'notification/view/link',
+    'mail/<id>' => 'notification/view/index',
+    'mail/view/test' => 'notification/view/test',
+    'sendgrid/webhook-apqcbec' => 'notification/sendgrid/webhook-apqcbec', // sendgrid incomming webhook
     'review/create/<bookingId:\d+>' => 'review/create/index',
     'inbox/<id:\d+>' => 'message/chat/conversation',
     'inbox' => 'message/chat/inbox',
@@ -87,6 +88,9 @@ $urls = [
     [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/categories' => 'api/category'],
+        'extraPatterns' => [
+            'GET unread-count' => 'unread-count',
+        ]
     ],
     [
         'class' => 'yii\rest\UrlRule',
@@ -96,7 +100,7 @@ $urls = [
         'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/messages' => 'api/message'],
         'extraPatterns' => [
-            'GET unread-count' => 'unread-count',
+
         ]
     ],
     [
@@ -120,7 +124,7 @@ $urls = [
         'extraPatterns' => [
             'me' => 'me',
             '<id>/reviews' => 'reviews',
-            'verify-phone-number' => 'verify-phone-number',
+            'GET verify-phone-number' => 'verify-phone-number',
         ]
     ],
     [

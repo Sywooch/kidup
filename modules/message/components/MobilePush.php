@@ -1,10 +1,11 @@
 <?php
 namespace message\components;
 
-use message\models\base\MobileDevices;
 use Aws;
+use notification\models\base\MobileDevices;
 
-class MobilePush {
+class MobilePush
+{
 
     private $sns;
     private $arns;
@@ -12,7 +13,8 @@ class MobilePush {
     /**
      * MobilePush constructor which initializes all required services.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $aws = new Aws\Sdk([
             'credentials' => [
                 'key' => "AKIAJZ4OT43S5DIZPMYQ",
@@ -38,7 +40,8 @@ class MobilePush {
     /**
      * Register a device.
      */
-    public function registerDevice($device_id, $token, $platform) {
+    public function registerDevice($device_id, $token, $platform)
+    {
         if (!array_key_exists($platform, $this->arns)) {
             $endpointArn = 'unknown_platform';
         } else {
@@ -63,7 +66,8 @@ class MobilePush {
     /**
      * Send a message to a device.
      */
-    public function sendMessage($arn, $message, $parameters = [], $title='KidUp app') {
+    public function sendMessage($arn, $message, $parameters = [], $title = 'KidUp app')
+    {
         $result = $this->sns->publish([
             'TargetArn' => $arn,
             'MessageStructure' => 'json',
@@ -86,7 +90,8 @@ class MobilePush {
         print_r($result);
     }
 
-    public function getTopics() {
+    public function getTopics()
+    {
         $result = [];
         $topics = $this->sns->listTopics();
         foreach ($topics['Topics'] as $topic) {
@@ -96,7 +101,8 @@ class MobilePush {
         return $result;
     }
 
-    public function subscribeToTopics($endpointArn, $topics) {
+    public function subscribeToTopics($endpointArn, $topics)
+    {
         foreach ($topics as $topic) {
             $this->sns->subscribe([
                 'TopicArn' => $topic,

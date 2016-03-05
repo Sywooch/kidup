@@ -13,11 +13,11 @@ use yii\widgets\ListView;
  * @var yii\web\View $this
  * @var array $images
  * @var string $bookingForm
- * @var \item\models\Item $model
- * @var \item\models\Location $location
+ * @var \item\models\item\Item $model
+ * @var \item\models\location\Location $location
  * @var bool $show_modal
  * @var \yii\data\ActiveDataProvider $reviewDataProvider
- * @var \item\models\Item[] $related_items
+ * @var \item\models\item\Item[] $related_items
  */
 
 

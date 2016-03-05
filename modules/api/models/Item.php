@@ -3,14 +3,13 @@
 namespace api\models;
 
 use images\components\ImageHelper;
-use images\components\ImageManager;
-use item\models\ItemHasMedia;
+use item\models\itemHasMedia\ItemHasMedia;
 use yii\helpers\Json;
 
 /**
  * This is the model class for table "item".
  */
-class Item extends \item\models\Item
+class Item extends \item\models\item\Item
 {
 
     public function scenarios()
@@ -36,7 +35,7 @@ class Item extends \item\models\Item
         $fields = parent::fields();
 
         // remove fields that contain sensitive information
-        unset($fields['updated_at'], $fields['min_renting_days']);
+        unset($fields['updated_at']);
 
         $fields['item_facets'] = function ($model) {
             $res = [];

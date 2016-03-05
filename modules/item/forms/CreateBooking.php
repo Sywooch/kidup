@@ -2,9 +2,9 @@
 
 namespace item\forms;
 
-use booking\models\Booking;
+use booking\models\booking\Booking;
 use Carbon\Carbon;
-use item\models\Item;
+use item\models\item\Item;
 use user\models\base\Currency;
 use yii\base\Model;
 use yii\helpers\Json;

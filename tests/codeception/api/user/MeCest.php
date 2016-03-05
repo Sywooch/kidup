@@ -1,8 +1,9 @@
 <?php
 use codecept\_support\MuffinHelper;
-use codecept\muffins\User;
-use League\FactoryMuffin\FactoryMuffin;
 use codecept\_support\UserHelper;
+use codecept\muffins\UserMuffin;
+use League\FactoryMuffin\FactoryMuffin;
+
 /**
  * functional test for the /me api point.
  *
@@ -20,7 +21,7 @@ class MeCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        $this->user = $this->fm->create(User::class);
+        $this->user = $this->fm->create(UserMuffin::class);
     }
 
     public function getMe(ApiTester $I)

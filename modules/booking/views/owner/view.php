@@ -4,8 +4,8 @@ use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var $booking \booking\models\Booking
- * @var $item \item\models\Item
+ * @var $booking \booking\models\booking\Booking
+ * @var $item \item\models\item\Item
  */
 \booking\assets\BookingViewsAsset::register($this);
 $this->assetPackage = \app\assets\Package::BOOKING;

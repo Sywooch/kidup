@@ -1,6 +1,6 @@
 <?php
 use codecept\_support\MuffinHelper;
-use codecept\muffins\User;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -41,7 +41,7 @@ class RegisterCest
     public function checkNoDoubeleEmailRegister(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
-        $user = $this->fm->create(User::className());
+        $user = $this->fm->create(UserMuffin::className());
         $I->wantTo('not register with an existing email');
         $I->sendPOST('users', [
             'email' => $user->email,

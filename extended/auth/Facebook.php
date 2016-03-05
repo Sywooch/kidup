@@ -1,7 +1,6 @@
 <?php
 namespace app\extended\auth;
 
-use yii\authclient\OAuth2;
 use yii\helpers\ArrayHelper;
 
 

@@ -1,11 +1,11 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.user_recovery.title', title) | raw }}
+        {{ t('mail.user_recovery.title', 'I got your password') | raw }}
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_6.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,20 +13,20 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.user_recovery.t1', 'I can get you a new password') }}</h3>
                     <p>
                         {{ t('mail.user_recovery.p1',
                         'Did you ask for me to try to recover you password? I could not find it, but if you want a new one you can {recovery_link}.', {
                             'recovery_link': '<a href="' ~ recovery_url ~ '" target="_blank">' ~ t('mail.links.click_this_link', 'click this link') ~ '</a>'
                         }) | raw }}
                         {{ t('mail.user_recovery.p2',
-                        'If this mail was not requested by you, then just ignore it.'
+                            'If this mail was not requested by you, then just ignore it.'
                         ) | raw }}
                     </p>
                     <a class="button button--green" href="#">{{ t('mail.button.recover_password', 'Recover password') }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-gull.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-blue-gull.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>

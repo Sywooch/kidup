@@ -2,13 +2,13 @@
 
 namespace admin\models\search;
 
-use booking\models\Booking as BookingModel;
+use booking\models\booking\Booking as BookingModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * Booking represents the model behind the search form about `\booking\models\Booking`.
+ * Booking represents the model behind the search form about `\booking\models\booking\Booking`.
  */
 class Booking extends BookingModel
 {

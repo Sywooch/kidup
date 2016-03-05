@@ -53,8 +53,4 @@ class MessageController extends Controller
 
     }
 
-    public function actionUnreadCount()
-    {
-        return Message::find()->receiverUserId(\Yii::$app->user->id)->count();
-    }
 }

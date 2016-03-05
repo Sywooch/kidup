@@ -1,11 +1,11 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.booking_start_owner.title', title) | raw }}
+        {{ t('mail.booking_start_owner.title', 'Remember your rent! It is starting soon') | raw }}
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/green_4.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/green_4.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,10 +13,10 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-green-stroller.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-green-stroller.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.booking_start_owner.t1', 'Do you have everything planned?') }}</h3>
                     <p>
                         {{ t('mail.booking_start_owner.p1',
                         'This is a reminder that your rent to {renter_name} is starting the date.', {
@@ -45,7 +45,7 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.booking_start_owner.t2', 'If problems occur, we have your back!') }}</h3>
                     <p>
                         {{ t('mail.booking_start_owner.p3',
                         'Remember that KidUp is all about trust and being together about being a parent. Therefore you should help {renter_name}. Make sure the equipment is cleaned before handing it over. Make sure everything is intact and okay. Give {renter_name} a nice brief guide, so they know how to correctly operate the equipment.', {
@@ -54,7 +54,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-pink-speen.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-pink-speen.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>

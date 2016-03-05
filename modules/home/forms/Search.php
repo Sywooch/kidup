@@ -5,7 +5,6 @@ namespace home\forms;
 use item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".

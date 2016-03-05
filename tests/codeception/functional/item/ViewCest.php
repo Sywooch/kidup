@@ -1,10 +1,11 @@
 <?php
 namespace codecept\functional\item;
 
-use codecept\muffins\Item;
+use codecept\_support\MuffinHelper;
+use codecept\muffins\ItemMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use codecept\_support\MuffinHelper;
+
 /**
  * functional test for the item module.
  *
@@ -18,16 +19,16 @@ class ItemViewCest
      */
     protected $fm;
 
-    public function _before() {
+    private function _before() {
         $this->fm = (new MuffinHelper())->init();
     }
 
-    public function checkItemView(functionalTester $I)
+    private function checkItemView(functionalTester $I)
     {
         /**
-         * @var Item $item
+         * @var ItemMuffin $item
          */
-        $item = $this->fm->create(Item::class);
+        $item = $this->fm->create(ItemMuffin::class);
         $I->amOnPage('/item/'.$item->id);
         $I->see($item->name);
         $I->see($item->description);

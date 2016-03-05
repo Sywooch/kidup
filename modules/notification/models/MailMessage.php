@@ -3,7 +3,7 @@
 namespace notification\models;
 
 use Carbon\Carbon;
-use message\models\Message;
+use message\models\message\Message;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -77,7 +77,7 @@ class MailMessage extends base\MailMessage
         $postData['html'] = \yii\helpers\HtmlPurifier::process($postData['html']);
 
         // create the message
-        $m = new Message();
+        $m = new message\Message();
         $m->setAttributes([
             'conversation_id' => $account->conversation_id,
             'message' => $postData['html'],

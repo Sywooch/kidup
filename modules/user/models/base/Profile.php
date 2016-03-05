@@ -2,6 +2,7 @@
 
 namespace user\models\base;
 
+use item\models\location\Location;
 use Yii;
 
 /**
@@ -24,12 +25,12 @@ use Yii;
  * @property integer $nationality
  * @property integer $location_id
  *
- * @property \item\models\Location $location
+ * @property \item\models\location\Location $location
  * @property \user\models\Country $nationality0
  * @property \user\models\base\Currency $currency
  * @property \user\models\User $user
  */
-class Profile extends \yii\db\ActiveRecord
+class Profile extends \app\models\BaseActiveRecord
 {
 
     /**
@@ -46,18 +47,66 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified'], 'required'],
-            [['user_id', 'email_verified', 'phone_verified', 'identity_verified', 'location_verified', 'currency_id', 'birthday', 'nationality', 'location_id'], 'integer'],
+            [
+                [
+                    'user_id',
+                    'first_name',
+                    'last_name',
+                    'email_verified',
+                    'phone_verified',
+                    'identity_verified',
+                    'location_verified'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'user_id',
+                    'email_verified',
+                    'phone_verified',
+                    'identity_verified',
+                    'location_verified',
+                    'currency_id',
+                    'birthday',
+                    'nationality',
+                    'location_id'
+                ],
+                'integer'
+            ],
             [['description'], 'string'],
             [['first_name'], 'string', 'max' => 128],
             [['last_name', 'img'], 'string', 'max' => 256],
             [['phone_country'], 'string', 'max' => 5],
             [['phone_number'], 'string', 'max' => 50],
             [['language'], 'string', 'max' => 6],
-            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
-            [['nationality'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['nationality' => 'id']],
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
+            [
+                ['location_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Location::className(),
+                'targetAttribute' => ['location_id' => 'id']
+            ],
+            [
+                ['nationality'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Country::className(),
+                'targetAttribute' => ['nationality' => 'id']
+            ],
+            [
+                ['currency_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Currency::className(),
+                'targetAttribute' => ['currency_id' => 'id']
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ]
         ];
     }
 
@@ -91,7 +140,7 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getLocation()
     {
-        return $this->hasOne(\item\models\Location::className(), ['id' => 'location_id']);
+        return $this->hasOne(\item\models\location\Location::className(), ['id' => 'location_id']);
     }
 
     /**
@@ -119,5 +168,4 @@ class Profile extends \yii\db\ActiveRecord
     }
 
 
-    
 }

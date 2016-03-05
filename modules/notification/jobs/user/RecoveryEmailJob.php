@@ -6,7 +6,6 @@ use app\extended\job\Job;
 use notifications\models\Mailer;
 use notifications\models\Token;
 use user\models\User;
-use yii\helpers\Url;
 
 class RecoveryEmailJob extends Job{
 

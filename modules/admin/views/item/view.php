@@ -40,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'location_id',
             'created_at',
             'updated_at',
-            'min_renting_days',
             'category_id',
         ],
         'deleteOptions'=>[

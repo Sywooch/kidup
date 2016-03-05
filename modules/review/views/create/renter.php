@@ -7,8 +7,8 @@ use yii\helpers\Html;
 
 /**
  * @var $this \app\extended\web\View
- * @var $booking \booking\models\Booking
- * @var $item \item\models\Item
+ * @var $booking \booking\models\booking\Booking
+ * @var $item \item\models\item\Item
  */
 $this->assetPackage = \app\assets\Package::REVIEW;
 ?>

@@ -1,9 +1,8 @@
 <?php
 use item\widgets\ItemCard;
-use yii\helpers\Url;
 
 /**
- * @var $model \item\models\Item
+ * @var $model \item\models\item\Item
  *
  */
 ?>

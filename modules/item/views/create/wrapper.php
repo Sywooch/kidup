@@ -2,12 +2,11 @@
 
 use kartik\icons\Icon;
 use kartik\sidenav\SideNav;
-use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
  * @var \item\forms\Edit $model
- * @var \item\models\Item $item
+ * @var \item\models\item\Item $item
  * @var array $pageParams
  * @var array $rightColumnParams
  */

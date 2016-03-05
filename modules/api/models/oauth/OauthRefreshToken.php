@@ -17,7 +17,7 @@ use Yii;
  * @property OauthClient $client
  * @property User $user
  */
-class OauthRefreshToken extends \yii\db\ActiveRecord
+class OauthRefreshToken extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,7 +38,6 @@ class OauthRefreshToken extends \yii\db\ActiveRecord
             [['expires'], 'safe'],
             [['refresh_token'], 'string', 'max' => 40],
             [['client_id'], 'string', 'max' => 32],
-            [['scope'], 'string', 'max' => 2000]
         ];
     }
 
@@ -52,7 +51,6 @@ class OauthRefreshToken extends \yii\db\ActiveRecord
             'client_id' => 'Client ID',
             'user_id' => 'User ID',
             'expires' => 'Expires',
-            'scope' => 'Scope',
         ];
     }
 

@@ -1,12 +1,12 @@
 <?php
 namespace codecept\functional\user;
 
-use League\FactoryMuffin\Faker as Faker;
-use user\models\User;
-use user\models\Profile;
+use codecept\_support\MuffinHelper;
 use FunctionalTester;
 use League\FactoryMuffin;
-use codecept\_support\MuffinHelper;
+use League\FactoryMuffin\Faker as Faker;
+use user\models\Profile;
+use user\models\User;
 
 /**
  * functional test for the login.

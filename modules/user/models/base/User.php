@@ -2,7 +2,7 @@
 
 namespace user\models\base;
 
-use \api\models\oauth\OauthAccessToken;
+use api\models\oauth\OauthAccessToken;
 use user\models\UserReferredUser;
 use Yii;
 
@@ -23,18 +23,17 @@ use Yii;
  * @property integer $updated_at
  * @property string $referral_code
  *
- * @property \booking\models\Booking[] $bookings
- * @property \user\models\Child[] $children
- * @property \message\models\Conversation[] $conversations
- * @property \message\models\Conversation[] $conversations0
- * @property \item\models\Item[] $items
- * @property \item\models\Location[] $locations
- * @property \mail\models\MailAccount[] $mailAccounts
- * @property \item\models\Media[] $media
- * @property \message\models\Message[] $messages
- * @property \message\models\Message[] $messages0
- * @property \booking\models\Payin[] $payins
- * @property \booking\models\Payout[] $payouts
+ * @property \booking\models\booking\Booking[] $bookings
+ * @property \message\models\conversation\Conversation[] $conversations
+ * @property \message\models\conversation\Conversation[] $conversations0
+ * @property \item\models\item\Item[] $items
+ * @property \item\models\location\Location[] $locations
+ * @property \notification\models\MailAccount[] $mailAccounts
+ * @property \item\models\media\Media[] $media
+ * @property \message\models\message\Message[] $messages
+ * @property \message\models\message\Message[] $messages0
+ * @property \booking\models\payin\Payin[] $payins
+ * @property \booking\models\payout\PayoutBase[] $payouts
  * @property \user\models\Profile $profile
  * @property \review\models\Review[] $reviews
  * @property \review\models\Review[] $reviews0
@@ -43,7 +42,7 @@ use Yii;
  * @property \user\models\base\Token[] $tokens
  * @property \api\models\oauth\OauthAccessToken[] $validOauthAccessTokens
  */
-class User extends \yii\db\ActiveRecord
+class User extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -94,7 +93,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getBookings()
     {
-        return $this->hasMany(\booking\models\Booking::className(), ['renter_id' => 'id']);
+        return $this->hasMany(\booking\models\booking\Booking::className(), ['renter_id' => 'id']);
     }
 
     /**
@@ -102,7 +101,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations()
     {
-        return $this->hasMany(\message\models\Conversation::className(), ['initiater_user_id' => 'id']);
+        return $this->hasMany(\message\models\conversation\Conversation::className(), ['initiater_user_id' => 'id']);
     }
 
     /**
@@ -110,7 +109,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getConversations0()
     {
-        return $this->hasMany(\message\models\Conversation::className(), ['target_user_id' => 'id']);
+        return $this->hasMany(\message\models\conversation\Conversation::className(), ['target_user_id' => 'id']);
     }
 
     /**
@@ -118,7 +117,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(\item\models\Item::className(), ['owner_id' => 'id']);
+        return $this->hasMany(\item\models\item\Item::className(), ['owner_id' => 'id']);
     }
 
     /**
@@ -126,7 +125,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(\item\models\Location::className(), ['user_id' => 'id']);
+        return $this->hasMany(\item\models\location\Location::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -134,7 +133,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMailAccounts()
     {
-        return $this->hasMany(\mail\models\MailAccount::className(), ['user_id' => 'id']);
+        return $this->hasMany(\notification\models\MailAccount::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -142,7 +141,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMedia()
     {
-        return $this->hasMany(\item\models\Media::className(), ['user_id' => 'id']);
+        return $this->hasMany(\item\models\media\Media::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -150,7 +149,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMessages()
     {
-        return $this->hasMany(\message\models\Message::className(), ['sender_user_id' => 'id']);
+        return $this->hasMany(\message\models\message\Message::className(), ['sender_user_id' => 'id']);
     }
 
     /**
@@ -158,7 +157,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getMessages0()
     {
-        return $this->hasMany(\message\models\Message::className(), ['receiver_user_id' => 'id']);
+        return $this->hasMany(\message\models\message\Message::className(), ['receiver_user_id' => 'id']);
     }
 
     /**
@@ -166,7 +165,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPayins()
     {
-        return $this->hasMany(\booking\models\Payin::className(), ['user_id' => 'id']);
+        return $this->hasMany(\booking\models\payin\Payin::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -174,7 +173,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getPayouts()
     {
-        return $this->hasMany(\booking\models\Payout::className(), ['user_id' => 'id']);
+        return $this->hasMany(\booking\models\payout\PayoutBase::className(), ['user_id' => 'id']);
     }
 
     /**

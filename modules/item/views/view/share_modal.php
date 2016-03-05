@@ -3,7 +3,7 @@ use yii\bootstrap\Modal;
 
 /**
  * @var \app\extended\web\View $this
- * @var  \item\models\Item $model
+ * @var  \item\models\item\Item $model
  */
 
 $this->assetPackage = \app\assets\Package::ITEM_VIEW;

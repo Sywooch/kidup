@@ -1,12 +1,9 @@
 <?php
 namespace app\extended\web;
 
-use admin\models\TrackingEvent;
 use search\models\IpLocation;
 use user\models\Profile;
 use Yii;
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Cookie;
 
@@ -38,7 +35,6 @@ class Controller extends \yii\web\Controller
         Yii::$app->setHomeUrl('@web/home');
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
-//            \yii\helpers\VarDumper::dump(\Yii::$app->language,10,true); exit();
         } else {
             if (!\Yii::$app->user->isGuest) {
                 $p = Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
@@ -48,14 +44,6 @@ class Controller extends \yii\web\Controller
                     Yii::$app->language = 'da-DK';
                 }
             } else {
-//                $location = IpLocation::get(\Yii::$app->request->getUserIP());
-//                if ($location->country == 'Netherlands' || $location->country == 'United States' ||
-//                    (YII_ENV == 'dev' || YII_ENV == 'test')
-//                ) {
-//                    Yii::$app->language = 'en-US';
-//                } else {
-//                    Yii::$app->language = 'da-DK';
-//                }
                 Yii::$app->language = 'da-DK';
                 Yii::$app->session->set('lang', Yii::$app->language);
             }

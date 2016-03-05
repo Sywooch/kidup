@@ -5,7 +5,7 @@ namespace api\models;
 /**
  * This is the model class for table "item".
  */
-class Booking extends \booking\models\Booking
+class Booking extends \booking\models\booking\Booking
 {
     public function fields()
     {

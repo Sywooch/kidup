@@ -2,10 +2,10 @@
 
 namespace app\helpers;
 
+use item\models\location\Location;
 use user\models\base\Currency;
-use \item\models\Location;
-use \user\models\Country;
-use \user\models\Language;
+use user\models\Country;
+use user\models\Language;
 use yii\base\Model;
 
 class SelectData extends Model
@@ -64,7 +64,7 @@ class SelectData extends Model
         $r = [];
         foreach($l as $loc){
             /**
-             * @var Location $loc
+             * @var \item\models\location\Location $loc
              */
             if(!$loc->isValid()) continue;
             $address = [$loc->street_name. ' '. $loc->street_number,];

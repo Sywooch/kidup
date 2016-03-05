@@ -5,14 +5,12 @@ use api\models\Booking;
 use api\models\Currency;
 use api\models\Item;
 use api\models\Review;
-use booking\forms\Confirm;
-use booking\models\BrainTree;
-use booking\models\Payin;
+use booking\models\booking\BookingException;
+use booking\models\booking\BookingFactory;
+use booking\models\payin\BrainTree;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
-use yii\base\Exception;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -51,8 +49,7 @@ class BookingController extends Controller
         return new ActiveDataProvider([
             'query' => Booking::find()->where([
                 'renter_id' => \Yii::$app->user->id
-            ])
-                ->orderBy('updated_at DESC')
+            ])->orderBy('updated_at DESC')
         ]);
     }
 
@@ -78,7 +75,7 @@ class BookingController extends Controller
         if ($b->canBeAccessedByUser(\Yii::$app->user->identity)) {
             return $b;
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException();
         }
     }
 
@@ -115,80 +112,28 @@ class BookingController extends Controller
             throw(new BadRequestHttpException("No payment_method_nonce (string) is set."));
         }
 
-        // load the parameters
-        $item_id = $params['item_id'];
-        $nonce = $params['payment_nonce'];
-        $message = $params['message'];
-
         /**
          * @var $item Item
          */
         $item = Item::find()->where([
-            'id' => $item_id,
+            'id' => $params['item_id'],
             'is_available' => 1
         ])->one();
+
+
 
         // check whether the item is found
         if ($item === null) {
             throw new NotFoundHttpException("Item not found.");
         }
 
-        // grab the currency of the user
-        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
 
-        // create a new booking
-        $bookingForm = new CreateBooking($item, $currency);
-        $bookingForm->dateFrom = date("d-m-Y", round($params['time_from']));
-        $bookingForm->dateTo = date("d-m-Y", round($params['time_to']));
-
-        // save the booking
-        if ($bookingForm->validateDates()) {
-
-            $booking = new Booking();
-            $booking->setScenario('init');
-            $booking->time_from = strtotime($bookingForm->dateFrom);
-            $booking->time_to = strtotime($bookingForm->dateTo);
-            $booking->item_id = $item->id;
-            $booking->renter_id = \Yii::$app->user->id;
-            $booking->currency_id = $currency->id;
-            $booking->status = Booking::AWAITING_PAYMENT;
-            $booking->setPayinPrices();
-
-            $payin = new Payin();
-            $payin->nonce = $params['payment_nonce'];
-            $payin->status = Payin::STATUS_INIT;
-            $payin->currency_id = 1;
-            $payin->user_id = \Yii::$app->user->id;
-            $payin->amount = $booking->amount_payin;
-
-            $payinAuth = $payin->authorize();
-            if ($payinAuth == false) {
-                throw new BadRequestHttpException('Error while saving payin');
-            }
-            if (isset($payinAuth['paymentFailed'])) {
-                return [
-                    'success' => false,
-                    'error' => "Payment failed",
-                    "message" => $payinAuth['message']
-                ];
-            }
-            if ($payinAuth) {
-                $booking->payin_id = $payin->id;
-                $booking->status = Booking::PENDING;
-                $booking->request_expires_at = time() + 48 * 60 * 60;
-                $booking->save();
-                $payin->status = Payin::STATUS_AUTHORIZED;
-                $payin->save();
-                $booking->startConversation($params['message']);
-                return $booking;
-            } else {
-                return [
-                    'success' => false,
-                    'error' => "Payment failed",
-                ];
-            }
-        } else {
-            throw new BadRequestHttpException('Dates are invalid');
+        try {
+            return (new BookingFactory)->create($params['time_from'], $params['time_to'], $item,
+                $params['payment_nonce'],
+                $params['message']);
+        } catch (BookingException $e) {
+            throw new BadRequestHttpException($e->getMessage());
         }
     }
 
@@ -214,18 +159,14 @@ class BookingController extends Controller
         $item = Item::find()->where([
             'id' => $item_id,
             'is_available' => 1
-        ]);
+        ])->one();
 
         // check whether the item is found
-        if ($item->count() != 1) {
+        if (count($item) == 0) {
             throw(new NotFoundHttpException("Item not found."));
         }
-
-        // set the item as the found item
-        $item = $item->one();
-
         // grab the currency of the user
-        $currency = \Yii::$app->user->isGuest ? Currency::find()->one() : \Yii::$app->user->identity->profile->currency;
+        $currency = Currency::getUserOrDefault(\Yii::$app->user);
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
@@ -262,35 +203,29 @@ class BookingController extends Controller
 
     public function actionDecline($id)
     {
+        /**
+         * @var Booking $booking
+         */
         $booking = Booking::find()->where(['id' => $id])->one();
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
-        /**
-         * @var Booking $booking
-         */
-        if ($booking->item->owner_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException("You are not the owner of this item");
-        }
 
         $booking->ownerDeclines();
+            return $booking;
     }
 
     public function actionAccept($id)
     {
+        /**
+         * @var Booking $booking
+         */
         $booking = Booking::find()->where(['id' => $id])->one();
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
-        /**
-         * @var Booking $booking
-         */
-        if ($booking->item->owner_id !== \Yii::$app->user->id) {
-            throw new ForbiddenHttpException("You are not the owner of this item");
-        }
-        if(!\Yii::$app->user->hasValidPayoutMethod()){
-            throw new BadRequestHttpException("There is no valid payout method set.");
-        }
+
         $booking->ownerAccepts();
+        return $booking;
     }
 }

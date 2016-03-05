@@ -1,11 +1,11 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.user_reconfirm.title', title) | raw }}
+        {{ t('mail.user_reconfirm.title', 'Is this the real mail?') | raw }}
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/blue_6.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/blue_6.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,7 +13,7 @@
         <table id="image-right" width="100%">
             <tr>
                 <td width="60%" class="image-right__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.user_reconfirm.t1', 'Press the green button to confirm') }}</h3>
                     <p>
                         {{ t('mail.user_reconfirm.p1',
                         'I am just sending you this email, to make sure it is the right email-address in the system.'
@@ -29,7 +29,7 @@
                     <a class="button button--green" href="#">{{ t('mail.button.confirm_email', 'Confirm email') }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-blue-girl.png') }}" alt="Image" width="100%">
+                    <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" alt="Image" width="100%">
                 </td>
             </tr>
         </table>

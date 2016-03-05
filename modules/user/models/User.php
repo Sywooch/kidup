@@ -7,11 +7,11 @@ use api\models\oauth\OauthAccessToken;
 use api\models\PayoutMethod;
 use app\helpers\Event;
 use images\components\ImageHelper;
-use item\models\Location;
-use notifications\models\Token;
+use item\models\location\Location;
+use notification\models\base\MobileDevices;
+use notification\models\Token;
 use user\Finder;
 use user\helpers\Password;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -131,7 +131,7 @@ class User extends base\User implements IdentityInterface
      */
     public function getIsAdmin()
     {
-        return false;
+        return $this->role == 9;
     }
 
     /**
@@ -289,11 +289,7 @@ class User extends base\User implements IdentityInterface
 
     public function canMakeBooking()
     {
-        if (strlen($this->profile->first_name) > 0 && strlen($this->profile->last_name) > 0) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public function canAcceptBooking()
@@ -544,6 +540,14 @@ class User extends base\User implements IdentityInterface
             ->innerJoinWith('item')
             ->count();
         return $c > 0;
+    }
+
+    public function getUserAcceptsPushNotifications(){
+        $devices = MobileDevices::find()->where([
+            'user_id' =>$this->id,
+            'is_subscribed' => 1
+        ])->count();
+        return $devices > 0;
     }
 
 

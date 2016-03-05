@@ -1,8 +1,8 @@
 <?php
 namespace oauth2;
-use \ApiTester;
-use League\FactoryMuffin\FactoryMuffin;
+use ApiTester;
 use codecept\_support\MuffinHelper;
+use League\FactoryMuffin\FactoryMuffin;
 
 class RefreshCest
 {

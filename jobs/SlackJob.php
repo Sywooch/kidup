@@ -27,6 +27,10 @@ class SlackJob extends Job{
             'link_names' => true
         ];
 
+        if(YII_ENV !== 'prod'){
+            return true;
+        }
+
         $slackUrl = \Yii::$app->keyStore->get('slack_service_url');
 
         $this->client = new \Maknz\Slack\Client('https://hooks.slack.com/services/'.$slackUrl, $settings);

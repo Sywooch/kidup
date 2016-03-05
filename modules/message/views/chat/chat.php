@@ -2,10 +2,9 @@
 use Carbon\Carbon;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\ListView;
 
 /**
- * @var \message\models\Conversation $conversation
+ * @var \message\models\conversation\Conversation $conversation
  * @var \app\extended\web\View $this
  */
 
@@ -30,7 +29,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                         <?php
                         if (isset($booking) && isset($booking->item)) {
                             if (\Yii::$app->user->id == $booking->item->owner_id
-                                && $booking->status == \booking\models\Booking::PENDING
+                                && $booking->status == \booking\models\booking\Booking::PENDING
                             ) {
                                 echo \yii\bootstrap\Alert::widget([
                                     'options' => [

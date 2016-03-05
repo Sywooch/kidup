@@ -2,10 +2,7 @@
 namespace images\components;
 
 use app\components\Cache;
-use League\Glide\Filesystem\FileNotFoundException;
 use yii\helpers\BaseHtml;
-use yii\helpers\Json;
-use yii\helpers\Url;
 
 class ImageHelper extends BaseHtml
 {

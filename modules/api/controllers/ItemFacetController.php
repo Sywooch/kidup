@@ -1,17 +1,9 @@
 <?php
 namespace api\controllers;
 
-use api\models\Item;
 use api\models\ItemFacet;
-use api\models\Review;
-use item\models\base\CategoryHasItemFacet;
-use search\forms\Filter;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
-use yii\web\NotAcceptableHttpException;
-use yii\web\NotFoundHttpException;
 
 class ItemFacetController extends Controller
 {
@@ -63,21 +55,6 @@ class ItemFacetController extends Controller
      */
     public function actionAvailableForItem($id)
     {
-//        $item = Item::find()->where(['id' => $id])->one();
-//        if($item == null){
-//            throw new NotFoundHttpException("Item not found");
-//        }
-//
-//        $itemFacets = CategoryHasItemFacet::find()
-//            ->where(['IN', 'category_id', [$item->category_id, $item->category->parent_id]])
-//            ->select('item_facet_id')
-//            ->asArray()
-//            ->all();
-//
-//        $res = [];
-//        foreach ($itemFacets as $itemFacet) {
-//            $res[] = $itemFacet['item_facet_id'];
-//        }
 
         return new ActiveDataProvider([
             'query' => ItemFacet::find()

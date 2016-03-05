@@ -2,8 +2,8 @@
 
 namespace item\forms;
 
-use item\models\Category;
-use item\models\Item;
+use item\models\category\Category;
+use item\models\item\Item;
 use item\models\ItemHasCategory;
 use Yii;
 use yii\base\Model;
@@ -93,7 +93,6 @@ class Create extends Model
         $item->setAttributes([
             'is_available' => 0,
             'owner_id' => \Yii::$app->user->id,
-            'min_renting_days' => 1,
             'category_id' => (int) $this->category
         ]);
         

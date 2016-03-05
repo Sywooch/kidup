@@ -50,7 +50,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                                 <?= Yii::t("message.inbox.inbox_is_empty", "Your inbox is empty at the moment.") ?>
                             </h4>
                             <?php
-                            $categories = \item\models\Category::find()->limit(2)->all();
+                            $categories = \item\models\category\Category::find()->limit(2)->all();
                             $name1 = $categories[0]->getTranslatedName();
                             $name2 = $categories[1]->getTranslatedName();
                             ?>

@@ -2,10 +2,7 @@
 namespace api\controllers;
 
 use api\models\Review;
-use api\Module;
 use user\models\User;
-use yii\db\Query;
-use yii\db\QueryBuilder;
 
 class RelationController extends \yii\base\Controller
 {

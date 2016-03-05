@@ -3,10 +3,10 @@
 namespace codecept\_support;
 
 use AcceptanceTester;
-use codecept\muffins\OauthAccessToken;
+use codecept\muffins\OauthAccessTokenMuffin;
 use Codeception\Util\Debug;
-use \user\models\User;
 use FunctionalTester;
+use user\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -48,7 +48,7 @@ class UserHelper
         }
         // no access tokens found
         $fm = (new MuffinHelper())->init();
-        $token = $fm->create(OauthAccessToken::className(),[
+        $token = $fm->create(OauthAccessTokenMuffin::className(),[
             'user_id' => $user->id
         ]);
         return ArrayHelper::merge($array, [

@@ -6,7 +6,7 @@ use images\components\ImageHelper;
 /**
  * This is the model class for table "item".
  */
-class Media extends \item\models\Media
+class Media extends \item\models\media\Media
 {
 
     public function fields()

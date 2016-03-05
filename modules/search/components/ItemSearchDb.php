@@ -2,7 +2,7 @@
 
 namespace search\components;
 
-use item\models\Item;
+use item\models\item\Item;
 use review\models\Review;
 
 class ItemSearchDb
@@ -26,11 +26,15 @@ class ItemSearchDb
 
     /**
      * Syncs items with the search database
-     * @param $items \item\models\Item[]
+     * @param $items \item\models\item\Item[]
      */
     public function sync($items)
     {
         $batch = [];
+
+        if(YII_ENV == 'test'){
+            return true;
+        }
 
         foreach ($items as $item) {
             $constructed = $this->constructItem($item);
@@ -53,10 +57,10 @@ class ItemSearchDb
 
     /**
      * Construct an item array for the search db from an item oject
-     * @param \item\models\Item $item
+     * @param \item\models\item\Item $item
      * @return array
      */
-    private function constructItem(\item\models\Item $item)
+    private function constructItem(item\Item $item)
     {
         $obj = [];
 
@@ -101,7 +105,7 @@ class ItemSearchDb
         return $obj;
     }
 
-    private function hierarchicalCat(\item\models\Item $item, $lang)
+    private function hierarchicalCat(\item\models\item\Item $item, $lang)
     {
         if($item->category_id == 44){
             return [];

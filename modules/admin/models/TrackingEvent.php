@@ -14,7 +14,7 @@ use Yii;
  * @property int $user_id
  * @property string $data
  */
-class TrackingEvent extends \yii\db\ActiveRecord
+class TrackingEvent extends \app\models\BaseActiveRecord
 {
     public $types = [
         'pages.click_modal',

@@ -2,21 +2,22 @@
 
 namespace codecept\_support;
 
-use codecept\muffins\Booking;
-use codecept\muffins\Conversation;
-use codecept\muffins\Currency;
-use codecept\muffins\Invoice;
-use codecept\muffins\Item;
-use codecept\muffins\Location;
-use codecept\muffins\Media;
-use codecept\muffins\Message;
-use codecept\muffins\OauthAccessToken;
-use codecept\muffins\OauthClient;
-use codecept\muffins\Payin;
-use codecept\muffins\Payout;
-use codecept\muffins\Profile;
-use codecept\muffins\Token;
-use codecept\muffins\User;
+use codecept\muffins\BookingMuffin;
+use codecept\muffins\ConversationMuffin;
+use codecept\muffins\CurrencyMuffin;
+use codecept\muffins\InvoiceMuffin;
+use codecept\muffins\ItemMuffin;
+use codecept\muffins\LocationMuffin;
+use codecept\muffins\MediaMuffin;
+use codecept\muffins\MessageMuffin;
+use codecept\muffins\OauthAccessTokenMuffin;
+use codecept\muffins\OauthClientMuffin;
+use codecept\muffins\PayinMuffin;
+use codecept\muffins\PayoutMethodMuffin;
+use codecept\muffins\PayoutMuffin;
+use codecept\muffins\ProfileMuffin;
+use codecept\muffins\TokenMuffin;
+use codecept\muffins\UserMuffin;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 use League\FactoryMuffin\Stores\ModelStore;
@@ -38,21 +39,22 @@ class MuffinHelper
     public static function getClasses()
     {
         return [
-            Booking::class,
-            Currency::class,
-            Invoice::class,
-            Item::class,
-            Payin::class,
-            Payout::class,
-            Profile::class,
-            Token::class,
-            User::class,
-            Location::class,
-            Conversation::class,
-            Message::class,
-            Media::class,
-            OauthAccessToken::class,
-            OauthClient::class,
+            BookingMuffin::class,
+            CurrencyMuffin::class,
+            InvoiceMuffin::class,
+            ItemMuffin::class,
+            PayinMuffin::class,
+            PayoutMethodMuffin::class,
+            PayoutMuffin::class,
+            ProfileMuffin::class,
+            TokenMuffin::class,
+            UserMuffin::class,
+            LocationMuffin::class,
+            ConversationMuffin::class,
+            MessageMuffin::class,
+            MediaMuffin::class,
+            OauthAccessTokenMuffin::class,
+            OauthClientMuffin::class,
         ];
     }
 

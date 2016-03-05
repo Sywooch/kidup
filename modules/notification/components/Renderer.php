@@ -1,14 +1,34 @@
 <?php
 namespace notification\components;
 
-use booking\models\Booking;
-use booking\models\Payout;
-use Item\models\Item;
+// @todo: messaging tab = profielpagina van een persoon
+// mail for mail
+use booking\models\booking\Booking;
+use booking\models\payout\Payout;
+use item\models\item\Item;
 use Carbon\Carbon;
+use message\models\message\Message;
+use notification\components\renderer\BookingRenderer;
+use notification\components\renderer\MessageRenderer;
+use notification\components\renderer\ItemRenderer;
+use notification\components\renderer\PayoutRenderer;
+use notification\components\renderer\UserRenderer;
+use user\models\User;
 use Yii;
 
 class Renderer
 {
+
+    /** @var BookingRenderer */
+    public $bookingRenderer;
+    /** @var PayoutRenderer */
+    public $payoutRenderer;
+    /** @var ItemRenderer */
+    public $itemRenderer;
+    /** @var UserRenderer */
+    public $userRenderer;
+    /** @var MessageRenderer */
+    public $messageRenderer;
 
     // E-mail sender
     public $sender_name = null;
@@ -58,81 +78,133 @@ class Renderer
     public $profile_url = null;
     public $social_media_url = null;
 
-    // General
-    public $app_url = null;
-    public $email_support = null;
-    public $faq_url = null;
-    public $title = null;
+    // Reviewer name, depending on receiver/sender
+    public $reviewer = null;
+    public $reviewed_user = null;
+
+    // Variables
+    public $vars = [];
 
     // Templating
     protected $templateFolder = null;
 
+    public function __construct($template = null) {
+        \Yii::$app->language = 'da-dk';
+        $this->template = $template;
+        $this->bookingRenderer = new BookingRenderer();
+        $this->itemRenderer = new ItemRenderer();
+        $this->payoutRenderer = new PayoutRenderer();
+        $this->userRenderer = new UserRenderer();
+        $this->messageRenderer = new MessageRenderer();
+        $this->setVariables([
+            'app_url' => self::inAppLink('/home'),
+            'faq_url' => 'kidup:///home',
+            'rent_url' => 'kidup:///home',
+            'rent_out_url' => 'kidup:///home',
+            'social_media_url' => 'https://www.facebook.com/kidup.social',
+            'email_support' => 'philip@kidup.dk',
+        ]);
+    }
+
     public function renderFromFile($template) {
         $vars = $this->getVariables();
+
         return \Yii::$app->view->renderFile($this->templateFolder . '/' . $template . '.twig', $vars);
     }
 
     public function getVariables() {
-        $vars = [];
-        foreach ($this as $key => $value) {
-            $vars[$key] = $value;
-        }
-        return $vars;
+        return $this->vars;
     }
 
     public function setVariables($vars) {
-        foreach ($vars as $key => $value) {
-            $this->$key = $value;
-        }
+        $this->vars = array_merge($vars, $this->vars);
     }
 
-    public function setTitle($title) {
-        $this->title = $title;
+    public function getReceiverEmail() {
+        return $this->vars['receiver_email'];
     }
 
-    public function displayDateTime($unixTimestamp) {
+    public function getUserId() {
+        return $this->vars['user_id'];
+    }
+
+    /**
+     * Load the booking.
+     *
+     * @param Booking $booking
+     */
+    public function loadBooking(Booking $booking) {
+        $vars = $this->bookingRenderer->loadBooking($booking);
+        $this->setVariables($vars);
+        $vars = $this->userRenderer->loadRenter($booking->renter);
+        $this->setVariables($vars);
+        $vars = $this->userRenderer->loadOwner($booking->item->owner);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the payout.
+     *
+     * @param Payout $payout
+     */
+    public function loadPayout(Payout $payout) {
+        $vars = $this->payoutRenderer->loadPayout($payout);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the item.
+     *
+     * @param Item $item
+     */
+    public function loadItem(Item $item) {
+        $vars = $this->itemRenderer->loadItem($item);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load the user.
+     *
+     * @param User $user
+     */
+    public function loadUser(User $user) {
+        $vars = $this->userRenderer->loadUser($user);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Load a message.
+     *
+     * @param Message $message
+     */
+    public function loadMessage(Message $message) {
+        $vars = $this->messageRenderer->loadMessage($message);
+        $this->setVariables($vars);
+        $vars = $this->userRenderer->loadSender($message->senderUser);
+        $this->setVariables($vars);
+
+        $vars = $this->userRenderer->loadReceiver($message->receiverUser);
+        $this->setVariables($vars);
+    }
+
+    /**
+     * Display a UNIX timestamp in a conventional way.
+     *
+     * @param int $unixTimestamp The UNIX timestamp.
+     * @return string The conventional display of the timestamp.
+     */
+    public static function displayDateTime($unixTimestamp) {
         return Carbon::createFromTimestamp($unixTimestamp)->format("d-m-y H:i");
     }
 
-    public function loadBooking(Booking $booking) {
-        // Renter
-        $this->renter_name = $booking->renter->profile->getName();
-        $this->renter_email_url = 'mailto:' . $booking->renter->email;
-        if (strlen($booking->renter->profile->phone_number) > 0) {
-            $this->renter_phone_url = 'tel:' . $booking->renter->profile->phone_number;
-        }
-
-        // Owner
-        $this->owner_name = $booking->item->owner->profile->getName();
-        $this->owner_email_url = 'mailto:' . $booking->renter->email;
-        if (strlen($booking->renter->profile->phone_number) > 0) {
-            $this->owner_phone_url = 'tel:' . $booking->renter->profile->phone_number;
-        }
-
-        // Booking
-        $this->booking_start_date = $this->displayDateTime($booking->time_from);
-        $this->booking_end_date= $this->displayDateTime($booking->time_to);
-
-        // Item
-        $this->loadItem($booking->item);
-    }
-
-    public function loadItem(Item $item) {
-        $this->item_name = $item->name;
-    }
-
-    public function loadPayout(Payout $payout) {
-        // Payout
-        $this->total_payout_amount = $payout->amount;
-
-        // Booking
-        $bookings = $payout->getBookings();
-        $this->loadBooking($bookings->one());
-    }
-
-    public function fillAutomatically() {
-        $payout = Payout::find()->one();
-        $this->loadPayout($payout);
+    /**
+     * Make an in-app link.
+     *
+     * @param string $url In-app URL to go to.
+     * @return string HTTP link which opens the in-app URL.
+     */
+    public static function inAppLink($url) {
+        return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 
-use booking\models\BrainTree;
-use booking\models\Payin;
+use booking\models\payout\BrainTree;
+use booking\models\payin\Payin;
 use images\components\ImageHelper;
 use review\widgets\ReviewScore;
 use yii\bootstrap\ActiveForm;
@@ -9,9 +9,9 @@ use yii\helpers\Html;
 
 /**
  * @var \app\extended\web\View $this
- * @var \booking\models\Booking $booking
+ * @var \booking\models\booking\Booking $booking
  * @var \booking\forms\Confirm $model
- * @var \item\models\Item $item
+ * @var \item\models\item\Item $item
  * @var \user\models\Profile $profile
  * @var array $tableData
  */

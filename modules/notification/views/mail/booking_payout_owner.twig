@@ -1,11 +1,11 @@
 {% embed "modules/notification/views/layouts/html.twig" %}
 
     {% block title %}
-        {{ t('mail.booking_payout_owner.title', title) | raw }}
+        {{ t('mail.booking_payout_owner.title', 'Here is the payout and a receipt') | raw }}
     {% endblock %}
 
     {% block headerimage %}
-        {{ base64_image('@notification-assets/images/headers/green_2.jpg') | raw }}
+        {{ imageUrl('kidup/email/headers/green_2.jpg') | raw }}
     {% endblock %}
 
     {% block content %}
@@ -13,10 +13,10 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ base64_image('@notification-assets/images/image-guy-green.png') }}" width="100%" alt="Image">
+                    <img src="{{ imageUrl('kidup/email/image-guy-green.png') }}" width="100%" alt="Image">
                 </td>
                 <td width="60%" class="image-left__content">
-                    <h3>Title h3</h3>
+                    <h3>{{ t('mail.booking_payout_owner.t1', 'I transfered the money to you') }}</h3>
                     <p>
                         {{ t('mail.booking_payout_owner.p1',
                         'I have sent you a payout on {total_payout_amount} by bank transfer. The payout should arrive in 5 days, excluding weekends and holidays.', {

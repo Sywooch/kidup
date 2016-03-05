@@ -2,7 +2,7 @@
 namespace codecept\functional\message;
 
 use codecept\_support\MuffinHelper;
-use codecept\muffins\Item;
+use codecept\muffins\ItemMuffin;
 use FunctionalTester;
 use item\widgets\ItemCard;
 use League\FactoryMuffin\FactoryMuffin;
@@ -19,8 +19,8 @@ class ItemCardCest
     /**
      * @var FactoryMuffin
      */
-    public $fm;
-    public function _before()
+    private $fm;
+    private function _before()
     {
         $this->fm = (new MuffinHelper())->init();
     }
@@ -29,8 +29,8 @@ class ItemCardCest
      *
      * @param functionalTester $I
      */
-    public function testItemCardDisplay(FunctionalTester $I) {
-        $item = $this->fm->create(Item::class);
+    private function testItemCardDisplay(FunctionalTester $I) {
+        $item = $this->fm->create(ItemMuffin::class);
         $card = ItemCard::widget([
             'model' => $item,
             'showDistance' => false

@@ -8,8 +8,6 @@
 namespace app\extended\web;
 
 use Yii;
-use yii\base\Component;
-use yii\base\Exception;
 use yii\web\AssetConverterInterface;
 
 

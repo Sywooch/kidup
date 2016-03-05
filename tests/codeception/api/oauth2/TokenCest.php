@@ -1,10 +1,10 @@
 <?php
 namespace oauth2;
-use \ApiTester;
-use codecept\muffins\OauthClient;
-use codecept\muffins\User;
-use League\FactoryMuffin\FactoryMuffin;
+use ApiTester;
 use codecept\_support\MuffinHelper;
+use codecept\muffins\OauthClientMuffin;
+use codecept\muffins\UserMuffin;
+use League\FactoryMuffin\FactoryMuffin;
 
 class TokenCest
 {
@@ -18,17 +18,17 @@ class TokenCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        $this->user = $this->fm->create(User::class, [
+        $this->user = $this->fm->create(UserMuffin::class, [
             'password_hash' => \Yii::$app->security->generatePasswordHash('testtest')
         ]);
 
-        $this->client = $this->fm->create(OauthClient::class);
+        $this->client = $this->fm->create(OauthClientMuffin::class);
     }
 
     public function _after()
     {
-        User::deleteAll();
-        OauthClient::deleteAll();
+        UserMuffin::deleteAll();
+        OauthClientMuffin::deleteAll();
     }
 
     public function getToken(ApiTester $I)
@@ -59,7 +59,7 @@ class TokenCest
         $I->seeResponseCodeIs(400);
     }
 
-    protected function sendPost(ApiTester $I, $user, $pass, OauthClient $client){
+    protected function sendPost(ApiTester $I, $user, $pass, OauthClientMuffin $client){
         $I->sendPOST('oauth2/token', [
             'username' => $user,
             'password' => $pass,

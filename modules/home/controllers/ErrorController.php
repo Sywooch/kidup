@@ -4,7 +4,7 @@ namespace home\controllers;
 
 use app\extended\web\Controller;
 use Yii;
-use yii\base\Exception;
+use app\extended\base\Exception;
 use yii\base\UserException;
 use yii\web\HttpException;
 use yii\web\Response;

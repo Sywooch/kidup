@@ -3,7 +3,7 @@ namespace codecept\unit\item\location;
 
 use FunctionalTester;
 use Codeception\Specify;
-use item\models\Location;
+use item\models\location\Location;
 use yii\codeception\TestCase;
 
 /**
@@ -22,7 +22,7 @@ class GoogleMapsAPI extends TestCase
      */
     public function testGoogleMapsAPI() {
         $this->specify('test that google maps gives right coordinated for aarhus', function () {
-            $location = Location::getByAddress('Aarhus Denmark');
+            $location = Location::addressToLngLat('Aarhus Denmark');
             // up to some rounding precision, the longitude and latitude should be correct
             expect('longitude to be 10', 10)->equals((int)$location['longitude']);
             expect('longitude to be 10', 56)->equals((int)$location['latitude']);

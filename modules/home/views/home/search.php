@@ -1,14 +1,12 @@
 <?php
 use app\helpers\ViewHelper;
-use item\widgets\GoogleAutoComplete;
-use kartik\typeahead\Typeahead;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 /**
  * @var \app\extended\web\View $this
  * @var \home\forms\Search $model
- * @var \item\models\Category $defaultCategory
+ * @var \item\models\category\Category $defaultCategory
  */
 
 $emptyLocation = \Yii::t('home.search.empty_location', 'Location: Near Me');

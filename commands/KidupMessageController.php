@@ -2,12 +2,10 @@
 
 namespace app\commands;
 
-use app\jobs\SlackJob;
-use item\models\base\Category;
-use item\models\base\Feature;
-use item\models\base\FeatureValue;
 use admin\models\I18nMessage;
 use admin\models\I18nSource;
+use app\jobs\SlackJob;
+use item\models\category\Category;
 use Yii;
 use yii\console\Exception;
 use yii\helpers\Console;
@@ -217,51 +215,20 @@ class KidupMessageController extends \yii\console\controllers\MessageController
         $this->stdout("Extracting messages from $coloredFileName...\n");
 
         $subject = file_get_contents($fileName);
+        $subject = str_replace("\n", '', $subject);
         $messages = [];
 
         if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
-            $expl = explode("{{ t(", $subject);
-            unset($expl[0]);
-            $messages = [];
-            foreach ($expl as $item) {
-                $arg1 = false;
-                $arg2 = false;
-                // basically find the first ) which is not enclosed by '' or ""
-                $isEnclosed = false;
-                $string = '';
-                foreach (str_split($item) as $char) {
-                    if (in_array($char, ['"', "'"])) {
-                        if (!$isEnclosed) {
-                            continue;
-                        }
-                        $isEnclosed = !$isEnclosed;
-                    }
-
-                    if ($char == "," && !$isEnclosed && $arg1 == false) {
-                        if ($arg1 == false) {
-                            $arg1 = $string;
-                        } elseif ($arg2 == false) {
-                            $arg2 = $string;
-                        }
-                        $string = '';
-                    }
-                    if ($char == ")" && !$isEnclosed) {
-                        if ($arg2 == false) {
-                            $arg2 = $string;
-                        }
-                        if (strpos($arg2, ', ') == 0) {
-                            $arg2 = substr($arg2, 1);
-                        }
-                        if (strpos($arg2, ',') == 0) {
-                            $arg2 = substr($arg2, 0);
-                        }
-                        // function ends
-                        $str = str_replace("    ", "", trim(preg_replace('/\s+/', ' ',$arg2)));
-                        $messages[$arg1][] = $str;
-                        break;
-                    }
-                    $string .= $char;
-                }
+            echo $fileName;
+            $subject = str_replace("\n", '', $subject);
+            preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*\'(.*?)\'/', $subject, $matches1);
+            preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*"(.*?)"/', $subject, $matches2);
+            preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*\'(.*?)\'/', $subject, $matches3);
+            preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*"(.*?)"/', $subject, $matches4);
+            $keys = array_merge($matches1[1], $matches2[1], $matches3[1], $matches4[1]);
+            $translations = array_merge($matches1[2], $matches2[2], $matches3[2], $matches4[2]);
+            for ($i = 0; $i < count($keys); $i++) {
+                $messages[$keys[$i]][] = $translations[$i];
             }
         } else {
             foreach ((array)$translator as $currentTranslator) {
