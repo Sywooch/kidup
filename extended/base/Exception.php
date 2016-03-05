@@ -2,6 +2,6 @@
 
 namespace app\extended\base;
 
-class Exception extends \yii\base\Exception{
+class Exception extends \yii\base\Exception {
 
 }

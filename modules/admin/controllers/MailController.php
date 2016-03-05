@@ -72,7 +72,6 @@ class MailController extends Controller
             }
         }
         $renderer->setVariables($vars);
-        $renderer->setTitle($title);
         return $renderer->render($template);
     }
 

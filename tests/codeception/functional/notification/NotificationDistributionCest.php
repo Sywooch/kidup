@@ -33,6 +33,7 @@ class NotificationDistributionCest
      */
     protected $I;
 
+    /*
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
@@ -98,6 +99,6 @@ class NotificationDistributionCest
         $c1 = $this->countNumberOfEmails();
         $callback();
         $this->I->assertEquals($c1+1, $this->countNumberOfEmails());
-    }
+    }*/
 }
 

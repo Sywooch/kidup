@@ -88,7 +88,8 @@ class Renderer
     // Templating
     protected $templateFolder = null;
 
-    public function __construct($template) {
+    public function __construct($template = null) {
+        \Yii::$app->language = 'da-dk';
         $this->template = $template;
         $this->bookingRenderer = new BookingRenderer();
         $this->itemRenderer = new ItemRenderer();

@@ -64,12 +64,6 @@ class PushTemplates
             'variables' => ['sender_name']
         ],
 
-        // Item
-        'item_unfinished_reminder' => [
-            'fallback' => 'item_unfinished_reminder',
-            'variables' => ['email_support', 'finish_product_url', 'faq_url']
-        ],
-
         // Review
         'review_publish' => [
             'fallback' => null,
