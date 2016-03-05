@@ -47,6 +47,10 @@ class ConversationController extends Controller
         if ((int)$id != $id) {
             throw new BadRequestHttpException("Id should be an integer!");
         }
+        // mark all as read
+        Message::updateAll(['read_by_receiver' => 0],
+            ['conversation_id' => $id, 'receiver_user_id' => \Yii::$app->user->id])->all();
+
         return new ActiveDataProvider([
             'query' => Message::find()
                 ->where(['conversation_id' => $id])
@@ -63,7 +67,8 @@ class ConversationController extends Controller
     /**
      * Overwrite the default create method.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $params = \Yii::$app->request->getBodyParams();
         $senderId = \Yii::$app->user->id;
         $targetId = $params['target_user_id'];
