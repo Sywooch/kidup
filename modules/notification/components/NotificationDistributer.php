@@ -45,11 +45,11 @@ class NotificationDistributer
             }
         } else {
             // User does not allow push
-            if ($isPushTemplate) {
-                // Too bad
-            } else {
+            if ($isMailTemplate) {
                 // It is a mail template
                 return new MailRenderer($template);
+            } else {
+                // Too bad
             }
         }
     }

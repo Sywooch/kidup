@@ -3,9 +3,10 @@ namespace codecept\functional\notification;
 
 use booking\models\booking\Booking;
 use codecept\_support\MuffinHelper;
-use codecept\_support\MuffinTrait;
 use codecept\_support\UserHelper;
 use codecept\muffins\BookingMuffin;
+use codecept\muffins\ConversationMuffin;
+use codecept\muffins\ItemMuffin;
 use codecept\muffins\MessageMuffin;
 use codecept\muffins\MobileDeviceMuffin;
 use codecept\muffins\UserMuffin;
@@ -50,6 +51,7 @@ class NotificationDistributionCest
     }
 
     private function setPushEnabled(User $user, $enabled) {
+        MobileDevices::deleteAll(['user_id' => $user->id]);
         return $this->fm->create(MobileDeviceMuffin::class, [
             'user_id' => $user->id,
             'is_subscribed' => $enabled
@@ -196,7 +198,14 @@ class NotificationDistributionCest
         $this->I = $I;
 
         /** @var Booking $booking */
-        $booking = $this->fm->create(BookingMuffin::class);
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
 
         $this->emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
@@ -211,10 +220,22 @@ class NotificationDistributionCest
     public function testConversationMessageReceived(functionalTester $I) {
         $this->I = $I;
 
-        /** @var Message $message */
-        $message = $this->fm->create(MessageMuffin::class);
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+        $conversation = $this->fm->create(ConversationMuffin::class, [
+            'booking_id' => $booking->id
+        ]);
+        $message = $this->fm->create(MessageMuffin::class, [
+            'conversation_id' => $conversation->id
+        ]);
 
-        $this->setPushEnabled($message->conversation->target_user_id, true);
+        $this->setPushEnabled($message->conversation->targetUser, true);
         $this->emptyNotifications();
         (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
@@ -233,11 +254,17 @@ class NotificationDistributionCest
 
     // Mails with fallbacks
 
-    private function testBookingConfirmedOwner(functionalTester $I) {
+    public function testBookingConfirmedOwner(functionalTester $I) {
         $this->I = $I;
 
-        /** @var Booking $booking */
-        $booking = $this->fm->create(BookingMuffin::class);
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
 
         $this->setPushEnabled($booking->item->owner, true);
         $this->emptyNotifications();
@@ -256,5 +283,152 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-}
+    public function testBookingRequestOwner(functionalTester $I) {
+        $this->I = $I;
 
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+
+        $this->setPushEnabled($booking->item->owner, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedPush);
+
+        $this->setPushEnabled($booking->item->owner, false);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertTrue($receivedMail);
+        $I->assertFalse($receivedPush);
+    }
+
+    public function testBookingStartOwner(functionalTester $I) {
+        $this->I = $I;
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+
+        $this->setPushEnabled($booking->item->owner, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->item->owner_id))->bookingStartOwner($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedPush);
+
+        $this->setPushEnabled($booking->item->owner, false);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->item->owner_id))->bookingStartOwner($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertTrue($receivedMail);
+        $I->assertFalse($receivedPush);
+    }
+
+    public function testBookingConfirmedRenter(functionalTester $I) {
+        $this->I = $I;
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        /** @var Booking $booking */
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+
+        $this->setPushEnabled($booking->renter, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedPush);
+
+        $this->setPushEnabled($booking->renter, false);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertTrue($receivedMail);
+        $I->assertFalse($receivedPush);
+    }
+
+    public function testBookingDeclinedRenter(functionalTester $I) {
+        $this->I = $I;
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        /** @var Booking $booking */
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+
+        $this->setPushEnabled($booking->renter, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedPush);
+
+        $this->setPushEnabled($booking->renter, false);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertTrue($receivedMail);
+        $I->assertFalse($receivedPush);
+    }
+
+    public function testBookingStartRenter(functionalTester $I) {
+        $this->I = $I;
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        /** @var Booking $booking */
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+
+        $this->setPushEnabled($booking->renter, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedPush);
+
+        $this->setPushEnabled($booking->renter, false);
+        $this->emptyNotifications();
+        (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        $I->assertTrue($receivedMail);
+        $I->assertFalse($receivedPush);
+    }
+
+}

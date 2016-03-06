@@ -60,8 +60,10 @@ class Currency extends \app\models\BaseActiveRecord
      */
     public static function getUserOrDefault(\yii\web\User $user = null){
         $user = is_null($user) || $user->isGuest ? \Yii::$app->user->identity : $user->identity;
-        if($user->profile->currency){
-            return $user->profile->currency;
+        if (isset($user->profile)) {
+            if ($user->profile->currency) {
+                return $user->profile->currency;
+            }
         }
         return self::getDefault();
     }
