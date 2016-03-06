@@ -4,7 +4,6 @@ namespace notification\components;
 use booking\models\booking\Booking;
 use message\models\message\Message;
 use user\models\User;
-use Yii;
 
 class NotificationImplementationError extends \app\extended\base\Exception
 {
@@ -29,20 +28,20 @@ class NotificationDistributer
 
     private function newRenderer($template)
     {
-        $isMailTemplate = is_file(Yii::$aliases['@notification-mail'].'/'.$template.".twig");
-        $isPushTemplate = is_file(Yii::$aliases['@notification-push'].'/'.$template.".twig");
+        $isMailTemplate = is_file(\Yii::$aliases['@notification-mail'].'/'.$template.".twig");
+        $isPushTemplate = is_file(\Yii::$aliases['@notification-push'].'/'.$template.".twig");
         if (!$isMailTemplate && !$isPushTemplate) {
             throw new NotificationImplementationError("Template not found");
         }
         if ($this->userAllowsPush) {
-            if (!$isMailTemplate) {
-                if ($isPushTemplate) {
-                    return new PushRenderer($template);
-                } else {
-                    return new MailRenderer($template);
-                }
-            } else {
+            if ($isMailTemplate && $isPushTemplate) {
+                return new PushRenderer($template);
+            } else if ($isMailTemplate && !$isPushTemplate) {
                 return new MailRenderer($template);
+            } else if (!$isMailTemplate && $isPushTemplate) {
+                return new PushRenderer($template);
+            } else if (!$isMailTemplate && !$isPushTemplate) {
+                // Too bad
             }
         } else {
             // User does not allow push
@@ -57,10 +56,14 @@ class NotificationDistributer
 
     private function toSender($renderer)
     {
-        if ($this->userAllowsPush) {
-            return PushSender::send($renderer);
-        } else {
+        if ($renderer->type == 'mail') {
             return MailSender::send($renderer);
+        } else {
+            if ($this->userAllowsPush) {
+                return PushSender::send($renderer);
+            } else {
+                return MailSender::send($renderer);
+            }
         }
     }
 
@@ -72,6 +75,7 @@ class NotificationDistributer
         }
         $renderer->setVariables($contents);
         foreach ($contents as $content => $value) {
+            if ($value === null) continue;
             switch ($content) {
                 case "booking":
                     $renderer->loadBooking($value);

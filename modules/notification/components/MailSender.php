@@ -18,13 +18,34 @@ class MailSender
     {
         $view = $renderer->render();
 
+        $replyTo = ['info@kidup.dk' => 'KidUp'];
+        $from = ['info@kidup.dk' => 'KidUp'];
+        $subject = 'KidUp';
+        $receiverEmail = $renderer->getReceiverEmail();
+
+        // Do some test magic
+        if (\Yii::$app->modules['notification']->useFileTransfer) {
+            $path = \Yii::$aliases['@runtime'] . '/notification/';
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+            file_put_contents($path . 'mail.view', $view);
+            file_put_contents($path . 'mail.params', json_encode([
+                'replyTo' => ['info@kidup.dk' => 'KidUp'],
+                'from' => $from,
+                'subject' => $subject,
+                'receiverEmail' => $receiverEmail
+            ]));
+            return true;
+        }
+
         /** @var \yii\swiftmailer\Mailer $mailer */
         $mailer = \Yii::$app->mailer->compose();
         return $mailer
-            ->setTo($renderer->getReceiverEmail())
-            ->setReplyTo(['info@kidup.dk' => 'KidUp'])
-            ->setFrom(['info@kidup.dk' => 'KidUp'])
-            ->setSubject('KidUp')
+            ->setTo($receiverEmail)
+            ->setReplyTo($replyTo)
+            ->setFrom($from)
+            ->setSubject($subject)
             ->setHtmlBody($view)
             ->send()
         ;

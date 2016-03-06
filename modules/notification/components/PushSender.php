@@ -4,6 +4,7 @@ namespace notification\components;
 use message\components\MobilePush;
 use notification\models\base\MobileDevices;
 use Swift_Message;
+use Yii;
 use yii\swiftmailer\Mailer;
 
 class PushSender
@@ -17,6 +18,7 @@ class PushSender
     public static function send(PushRenderer $renderer)
     {
         $view = $renderer->render();
+
         /*$parameters = [
             'state' => 'app.create-booking',
             'params' => [
@@ -26,6 +28,17 @@ class PushSender
         $parameters = [
             'state' => 'app.location'
         ];
+
+        // Do some test magic
+        if (\Yii::$app->modules['notification']->useFileTransfer) {
+            $path = \Yii::$aliases['@runtime'] . '/notification/';
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+            file_put_contents($path . 'push.view', $view);
+            file_put_contents($path . 'push.params', json_encode($parameters));
+            return true;
+        }
 
         // Send a message to the user
         $userId = $renderer->getUserId();
