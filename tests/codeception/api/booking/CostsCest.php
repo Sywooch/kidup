@@ -64,7 +64,7 @@ class CostsCest
         $I->assertTrue(array_key_exists('fee', $response));
         $I->assertTrue(array_key_exists('price', $response));
         $I->assertTrue(array_key_exists('total', $response));
-        $I->assertContains("2 days", $response['price'][0]);
+        $I->assertContains("2", $response['price'][0]);
         $I->assertContains("fee", $response['fee'][0]);
         $I->assertContains("tal", $response['total'][0]);
         $I->seeResponseContains($this->item->getDailyPrice()."");
