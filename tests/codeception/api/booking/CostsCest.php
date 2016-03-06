@@ -9,7 +9,7 @@ use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
 use Codeception\Util\Debug;
-use item\models\item\Item;
+use item\models\item\ItemBase;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -30,7 +30,7 @@ class CostsCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        \item\models\item\Item::deleteAll();
+        ItemBase::deleteAll();
         $this->user = $this->fm->create(UserMuffin::class);
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -64,7 +64,7 @@ class CostsCest
         $I->assertTrue(array_key_exists('fee', $response));
         $I->assertTrue(array_key_exists('price', $response));
         $I->assertTrue(array_key_exists('total', $response));
-        $I->assertContains("2 days", $response['price'][0]);
+        $I->assertContains("2", $response['price'][0]);
         $I->assertContains("fee", $response['fee'][0]);
         $I->assertContains("tal", $response['total'][0]);
         $I->seeResponseContains($this->item->getDailyPrice()."");
