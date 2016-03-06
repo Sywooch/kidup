@@ -9,6 +9,7 @@ use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
 use Codeception\Util\Debug;
+use item\models\item\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -24,12 +25,22 @@ class CostsCest
      */
     protected $fm = null;
     public $user;
+    public $item;
 
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
         \item\models\item\Item::deleteAll();
         $this->user = $this->fm->create(UserMuffin::class);
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        /** @var Item item */
+        $this->item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $this->item->is_available = 1;
+        $this->item->save();
     }
 
     /**
@@ -39,13 +50,10 @@ class CostsCest
      */
     public function checkBookingCosts(ApiTester $I) {
         $accessToken = UserHelper::apiLogin($this->user)['access-token'];
-        $item = $this->fm->create(ItemMuffin::className());
-        $item->is_available = 1;
-        $item->save();
         $I->wantTo("see the costs of a booking");
         $I->sendGET('bookings/costs',array_merge([
             'access-token' => $accessToken,
-            'item_id' => $item->id,
+            'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(5)->timestamp,
         ]));
@@ -59,11 +67,11 @@ class CostsCest
         $I->assertContains("2 days", $response['price'][0]);
         $I->assertContains("fee", $response['fee'][0]);
         $I->assertContains("tal", $response['total'][0]);
-        $I->seeResponseContains($item->getDailyPrice()."");
+        $I->seeResponseContains($this->item->getDailyPrice()."");
 
         $I->sendGET('bookings/costs',array_merge([
             'access-token' => $accessToken,
-            'item_id' => $item->id,
+            'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(10)->timestamp,
         ]));
@@ -71,11 +79,11 @@ class CostsCest
         $response = $I->grabResponse();
         $response = json_decode($response, true);
         $I->assertContains("1 week", $response['price'][0]);
-        $I->seeResponseContains($item->getWeeklyPrice()."");
+        $I->seeResponseContains($this->item->getWeeklyPrice()."");
 
         $I->sendGET('bookings/costs',array_merge([
             'access-token' => $accessToken,
-            'item_id' => $item->id,
+            'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(6)->addMonths(2)->timestamp,
         ]));
@@ -83,6 +91,6 @@ class CostsCest
         $response = $I->grabResponse();
         $response = json_decode($response, true);
         $I->assertContains("month", $response['price'][0]);
-        $I->seeResponseContains($item->getMonthlyPrice()."");
+        $I->seeResponseContains($this->item->getMonthlyPrice()."");
     }
 }
