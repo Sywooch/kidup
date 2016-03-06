@@ -67,7 +67,7 @@ class Item extends \item\models\item\Item
         $fields['price_year'] = function () {
             return round($this->getYearlyPrice());
         };
-        $fields['image_base_url'] = function ($model) {
+        $mainImage = function ($model) {
             $media = ItemHasMedia::find()->where([
                 'item_id' => $model->id
             ])->orderBy('order')->one();
@@ -76,15 +76,8 @@ class Item extends \item\models\item\Item
             }
             return rtrim(ImageHelper::url($media->media->file_name), '?');
         };
-        $field['image'] = function($model){
-            $media = ItemHasMedia::find()->where([
-                'item_id' => $model->id
-            ])->orderBy('order')->one();
-            if ($media == null) {
-                return false;
-            }
-            return rtrim(ImageHelper::url($media->media->file_name), '?');
-        };
+        $fields['image_base_url'] = $mainImage;
+        $fields['image'] = $mainImage;
         return $fields;
     }
 
@@ -118,5 +111,4 @@ class Item extends \item\models\item\Item
         return $this->hasMany(Media::className(), ['id' => 'media_id'])
             ->viaTable('item_has_media', ['item_id' => 'id']);
     }
-
 }

@@ -84,6 +84,6 @@ class User extends \user\models\User
 
     public function getItems()
     {
-        return $this->hasOne(Item::className(), ['id' => 'owner_id']);
+        return $this->hasOne(Item::className(), ['id' => 'owner_id'])->where(['is_available' => 1]);
     }
 }
