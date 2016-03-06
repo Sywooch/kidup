@@ -166,7 +166,7 @@ class UserController extends Controller
     }
 
     public function actionRecover() {
-        $email = \Yii::$app->request->getBodyParam('email');
+        $email = \Yii::$app->request->getQueryParam('email');
         $u = \user\models\User::findOneOr404([
             'email' => $email
         ]);

@@ -4,6 +4,7 @@ namespace app\commands;
 
 use admin\models\I18nMessage;
 use admin\models\I18nSource;
+use admin\models\VariableExtractor;
 use app\jobs\SlackJob;
 use item\models\category\Category;
 use Yii;
@@ -220,15 +221,9 @@ class KidupMessageController extends \yii\console\controllers\MessageController
 
         if (strpos($fileName, ".twig") == strlen($fileName) - 5) {
             echo $fileName;
-            $subject = str_replace("\n", '', $subject);
-            preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*\'(.*?)\'/', $subject, $matches1);
-            preg_match_all('/t\s*\(\s*\'(.*?)\'\s*,\s*"(.*?)"/', $subject, $matches2);
-            preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*\'(.*?)\'/', $subject, $matches3);
-            preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*"(.*?)"/', $subject, $matches4);
-            $keys = array_merge($matches1[1], $matches2[1], $matches3[1], $matches4[1]);
-            $translations = array_merge($matches1[2], $matches2[2], $matches3[2], $matches4[2]);
-            for ($i = 0; $i < count($keys); $i++) {
-                $messages[$keys[$i]][] = $translations[$i];
+            $result = VariableExtractor::extract($subject);
+            foreach ($result as $key => $value) {
+                $messages[$key][] = $value;
             }
         } else {
             foreach ((array)$translator as $currentTranslator) {

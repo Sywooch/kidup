@@ -62,7 +62,11 @@ $components = [
                 'cachePath' => '@runtime/Twig/cache',
                 // Array of twig options:
                 'options' => [
+                    'debug' => true,
                     'auto_reload' => true,
+                ],
+                'extensions' => [
+                    '\Twig_Extension_Debug',
                 ],
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image',

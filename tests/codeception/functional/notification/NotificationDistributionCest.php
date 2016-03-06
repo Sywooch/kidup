@@ -12,7 +12,6 @@ use codecept\muffins\MobileDeviceMuffin;
 use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use message\models\message\Message;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
 use user\models\User;
@@ -88,43 +87,6 @@ class NotificationDistributionCest
             $params = json_decode(file_get_contents($paramspath), true);
         }
         return [$received, $view, $params];
-    }
-
-    public function checkUnreadCount(functionalTester $I){
-        /*
-        $this->checkNewEmail(function() use ($user){
-            (new NotificationDistributer($user->id))->userReconfirm($user);
-        });
-
-        $this->checkNewEmail(function() use ($user){
-            (new NotificationDistributer($user->id))->userRecovery($user);
-        });
-
-        $booking = $this->fm->create(BookingMuffin::class);
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
-        });
-
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
-        });
-
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
-        });
-
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
-        });
-
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->item->owner_id))->bookingConfirmedOwner($booking);
-        });
-
-        $this->checkNewEmail(function() use ($booking){
-            (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
-        });*/
-
     }
 
     private function emptyNotifications() {
