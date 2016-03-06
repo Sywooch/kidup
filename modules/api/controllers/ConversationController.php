@@ -61,7 +61,10 @@ class ConversationController extends Controller
 
     public function actionUnreadCount()
     {
-        return Message::find()->receiverUserId(\Yii::$app->user->id)->where(['read_by_receiver' => 0])->groupBy('conversation_id')->count();
+        return Message::find()->receiverUserId(\Yii::$app->user->id)
+            ->andWhere(['read_by_receiver' => 0])
+            ->groupBy('conversation_id')
+            ->count();
     }
 
     /**
