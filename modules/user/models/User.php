@@ -543,7 +543,6 @@ class User extends base\User implements IdentityInterface
     }
 
     public function getUserAcceptsPushNotifications(){
-        echo $this->id;
         $devices = MobileDevices::find()->where([
             'user_id' =>$this->id,
             'is_subscribed' => 1

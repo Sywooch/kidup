@@ -6,6 +6,8 @@ use Yii;
 class MailRenderer extends Renderer
 {
 
+    public $type = 'mail';
+
     protected $templateFolder = '@notification-mail';
 
     public function render($template = null) {

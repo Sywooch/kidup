@@ -19,6 +19,8 @@ use Yii;
 class Renderer
 {
 
+    public $type = null;
+
     /** @var BookingRenderer */
     public $bookingRenderer;
     /** @var PayoutRenderer */
@@ -180,10 +182,10 @@ class Renderer
     public function loadMessage(Message $message) {
         $vars = $this->messageRenderer->loadMessage($message);
         $this->setVariables($vars);
-        $vars = $this->userRenderer->loadSender($message->senderUser);
+        $vars = $this->userRenderer->loadSender($message->conversation->initiaterUser);
         $this->setVariables($vars);
 
-        $vars = $this->userRenderer->loadReceiver($message->receiverUser);
+        $vars = $this->userRenderer->loadReceiver($message->conversation->targetUser);
         $this->setVariables($vars);
     }
 

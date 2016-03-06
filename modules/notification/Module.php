@@ -8,4 +8,6 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = '\notification\controllers';
 
+    public $useFileTransfer = false;
+
 }

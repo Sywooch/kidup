@@ -10,7 +10,13 @@ class MobileDeviceMuffin extends MobileDevices
     public function definitions()
     {
         $faker = Faker::create();
-        return [];
+        return [
+            'last_activity_at' => time(),
+            'created_at' => time(),
+            'device_id' => uniqid(),
+            'token' => uniqid(),
+            'platform' => 'test'
+        ];
     }
 
 }
