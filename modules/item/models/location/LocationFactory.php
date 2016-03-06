@@ -3,11 +3,17 @@
 namespace item\models\location;
 
 use item\models\location\Location;
+use user\models\Country;
 use Yii;
 use yii\db\ActiveRecord;
 
 
-class LocationError extends \app\extended\base\Exception{};
+class LocationError extends \app\extended\base\Exception
+{
+}
+
+;
+
 /**
  * This is the model class for table "location".
  */
@@ -109,10 +115,18 @@ class LocationFactory
         }
         $location = new Location();
         $location->zip_code = $record->postal_code;
-        $location->street_name = $record->postal_code;
+        $location->street_name = '';
+        $location->street_number = '';
+        $location->street_suffix = '';
         $location->city = $record->city;
         $location->longitude = $record->longitude;
         $location->latitude = $record->latitude;
+        $country = Country::findOne(['code' => $record->country_code]);
+        if ($country != null) {
+            $location->country = $country->id;
+        } else {
+            $location->country = 1;
+        }
         if ($save) {
             $location->user_id = \Yii::$app->user->id;
             $location->save();
