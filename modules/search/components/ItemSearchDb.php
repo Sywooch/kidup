@@ -60,7 +60,7 @@ class ItemSearchDb
      * @param \item\models\item\Item $item
      * @return array
      */
-    private function constructItem(item\Item $item)
+    private function constructItem(Item $item)
     {
         $obj = [];
 
@@ -105,7 +105,7 @@ class ItemSearchDb
         return $obj;
     }
 
-    private function hierarchicalCat(\item\models\item\Item $item, $lang)
+    private function hierarchicalCat(Item $item, $lang)
     {
         if($item->category_id == 44){
             return [];
