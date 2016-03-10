@@ -9,7 +9,7 @@ use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
 use Codeception\Util\Debug;
-use item\models\item\ItemBase;
+use item\models\item\Item;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -30,7 +30,7 @@ class CostsCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
-        ItemBase::deleteAll();
+        Item::deleteAll();
         $this->user = $this->fm->create(UserMuffin::class);
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -41,6 +41,7 @@ class CostsCest
         ]);
         $this->item->is_available = 1;
         $this->item->save();
+
     }
 
     /**

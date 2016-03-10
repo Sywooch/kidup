@@ -148,7 +148,7 @@ class ItemController extends Controller
         /**
          * @var Item $item
          */
-        $item = Item::find()->where(['is_available' => 1, 'id' => $itemId])->one();
+        $item = Item::find()->where(['id' => $itemId])->available()->one();
         if ($item === null) {
             throw new NotFoundHttpException('Item not found');
         }

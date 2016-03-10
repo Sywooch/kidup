@@ -63,7 +63,7 @@ class CreateCest
     public function checkSimpleBooking(ApiTester $I)
     {
         $accessToken = UserHelper::apiLogin($this->user)['access-token'];
-        $this->item->is_available = true;
+        $this->item->is_available = 1;
         $this->item->save();
         $I->wantTo("create a simple booking");
         $I->sendPOST('bookings?access-token=' . $accessToken, array_merge([
