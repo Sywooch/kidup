@@ -3,6 +3,7 @@
 namespace admin\controllers;
 
 use app\helpers\Event;
+use item\models\location\Location;
 use user\models\User;
 
 class TestController extends Controller
@@ -14,26 +15,7 @@ class TestController extends Controller
     }
 
     public function actionTest(){
-        $http = new \Braintree_HttpClientApi(\Braintree_Configuration::$global);
-        $nonce = $http->nonce_for_new_card([
-            "creditCard" => [
-                "number" => "4111111111111111",
-                "expirationMonth" => "11",
-                "expirationYear" => "2099"
-            ],
-            "share" => true
-        ]);
-        $gateway = new \Braintree_Gateway([
-            'environment' => 'development',
-            'merchantId' => 'integration_merchant_id',
-            'publicKey' => 'integration_public_key',
-            'privateKey' => 'integration_private_key'
-        ]);
-        $result = $gateway->transaction()->sale([
-            'amount' => '47.00',
-            'paymentMethodNonce' => $nonce
-        ]);
-
-        \yii\helpers\VarDumper::dump($result,10,true); exit();
+        $location = Location::addressToLngLat('Aarhus Denmark');
+        \yii\helpers\VarDumper::dump($location,10,true); exit();
     }
 }
