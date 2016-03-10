@@ -43,7 +43,10 @@ $config = [
         'images' =>         ['class' => '\images\Module'],
         'message' =>        ['class' => '\message\Module'],
         'booking' =>        ['class' => '\booking\Module'],
-        'notification' =>   ['class' => '\notification\Module'],
+        'notification' =>   [
+            'class' => '\notification\Module',
+            'useFileTransfer' => (YII_ENV == 'test' ? true : false)
+        ],
         'pages' =>          ['class' => '\pages\Module'],
         'review' =>         ['class' => '\review\Module'],
         'admin' =>          ['class' => '\admin\Module'],

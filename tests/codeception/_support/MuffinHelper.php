@@ -10,6 +10,7 @@ use codecept\muffins\ItemMuffin;
 use codecept\muffins\LocationMuffin;
 use codecept\muffins\MediaMuffin;
 use codecept\muffins\MessageMuffin;
+use codecept\muffins\MobileDeviceMuffin;
 use codecept\muffins\OauthAccessTokenMuffin;
 use codecept\muffins\OauthClientMuffin;
 use codecept\muffins\PayinMuffin;
@@ -55,6 +56,7 @@ class MuffinHelper
             MediaMuffin::class,
             OauthAccessTokenMuffin::class,
             OauthClientMuffin::class,
+            MobileDeviceMuffin::class
         ];
     }
 

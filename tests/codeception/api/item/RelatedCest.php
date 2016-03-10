@@ -6,7 +6,7 @@ use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\ItemMuffin;
 use League\FactoryMuffin\FactoryMuffin;
-
+use Codeception\Util\Debug;
 /**
  * API test for viewing related items of an item.
  *
@@ -38,14 +38,14 @@ class RelatedCest
         $I->wantTo("view related items");
 
         // create an item that is available
-        $item1 = $this->fm->create(ItemMuffin::className());
-        $item1->is_available = true;
-        $item1->save();
+        $item1 = $this->fm->create(ItemMuffin::className(), [
+            'is_available' => 1
+        ]);
 
         // and another 'related' one (since there are only two)
-        $item2 = $this->fm->create(ItemMuffin::className());
-        $item2->is_available = true;
-        $item2->save();
+        $item2 = $this->fm->create(ItemMuffin::className(),[
+            'is_available' => 1
+        ]);
 
         $I->sendGET('items/related?item_id=' . $item1->id);
         $I->seeResponseCodeIs(200);

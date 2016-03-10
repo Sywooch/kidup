@@ -25,7 +25,7 @@ class ErrorController extends Controller
         if ($exception instanceof Exception) {
             $name = $exception->getName();
         } else {
-            $name = $this->defaultName ?: Yii::t('kidup.error', 'Error');
+            $name = $exception->getMessage();
         }
         if ($code) {
             $name .= " (#$code)";
@@ -43,16 +43,6 @@ class ErrorController extends Controller
                 'An internal server error occurred.');
         }
         
-        $route = @\Yii::$app->request->getUrl();
-        if(strpos($route, '/api') === 0){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'name' => $name,
-                'message' => $message,
-                'exception' => $exception,
-            ];
-        }
-
         return $this->render('error', [
             'name' => $name,
             'message' => $message,

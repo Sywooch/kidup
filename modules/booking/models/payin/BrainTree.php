@@ -97,7 +97,7 @@ class BrainTree extends Model
             'options' => array(
                 'submitForSettlement' => false
             ),
-            'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
+//            'merchantAccountId' => \Yii::$app->keyStore->get('braintree_merchant')
         ));
         if ($transaction->success === false) {
             throw new BrainTreePaymentFailedException($transaction->_attributes['message']);

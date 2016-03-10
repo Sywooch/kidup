@@ -21,7 +21,7 @@
                         {{ t('mail.booking_start_renter.p1',
                             'This is a reminder that your renting {item_name} from {owner_name} on {booking_start}.', {
                             'item_name': item_name,
-                            'owner_name': owner_name
+                            'owner_name': owner_name,
                             'booking_start': booking_start_date
                         }) | raw }}
                         {% if owner_phone_url == null %}

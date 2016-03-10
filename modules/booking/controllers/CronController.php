@@ -4,7 +4,7 @@ namespace booking\controllers;
 
 use app\helpers\Event;
 use booking\models\booking\Booking;
-use booking\models\payout\BrainTree;
+use booking\models\payin\BrainTree;
 use booking\models\invoice\InvoiceFactory;
 use booking\models\payin\Payin;
 use booking\models\payout\Payout;

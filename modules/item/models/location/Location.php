@@ -6,6 +6,7 @@ use booking\models\booking\Booking;
 use Carbon\Carbon;
 use user\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -95,6 +96,12 @@ class Location extends LocationBase
      */
     public static function addressToLngLat($address)
     {
+        if (YII_ENV == 'test') {
+            return [
+                'longitude' => 0,
+                'latitude' => 0
+            ];
+        }
         $request_url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" . $address . "&sensor=true";
         $xml = simplexml_load_file($request_url);
         if ($xml === false) {

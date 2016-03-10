@@ -33,7 +33,7 @@ $components = [
             'port' => '25',
 //            'encryption' => 'tls',
         ],
-        'useFileTransport' => false,//YII_ENV == 'dev' ? true : false,
+        'useFileTransport' => YII_ENV == 'dev' || YII_ENV == 'prod' ? true : false,
         'viewPath' => '@app/modules/notifications/views',
     ],
     'authClientCollection' => [
@@ -62,7 +62,11 @@ $components = [
                 'cachePath' => '@runtime/Twig/cache',
                 // Array of twig options:
                 'options' => [
+                    'debug' => true,
                     'auto_reload' => true,
+                ],
+                'extensions' => [
+                    '\Twig_Extension_Debug',
                 ],
                 'globals' => [
                     'Image' => 'app/modules/images/widgets/Image',
@@ -178,7 +182,7 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-            if (strpos("/api/", \Yii::$app->request->url) == 0) {
+            if (strpos("/api/", \Yii::$app->request->url) !== false) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
 
                 // change all bad requests to success: false, data: details format

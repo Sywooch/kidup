@@ -13,9 +13,9 @@ class MessageRenderer
      * @param Message $conversation The conversation.
      * @return array All the render variables.
      */
-    public function loadMessage(Message $conversation) {
+    public function loadMessage(Message $message) {
         $result = [];
-        $result['sender_name'] = $conversation->targetUser->profile->getName();
+        $result['sender_name'] = $message->conversation->targetUser->profile->getName();
         return $result;
     }
 

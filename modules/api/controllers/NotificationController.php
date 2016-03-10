@@ -103,17 +103,19 @@ class NotificationController extends Controller
         }*/
 
         $kevin = User::findOne(['email' => 'js@javascript2.com']);
-        $simon = User::findOne(['email' => 'simonnouwens@gmail.com']);
+        $simon = User::findOne(['email' => 'simon@kidup.dk']);
         $conversation = new Conversation();
         $conversation->title = 'Test';
-        $conversation->initiater_user_id = $simon->id;
-        $conversation->target_user_id = $kevin->id;
+        $conversation->initiater_user_id = $kevin->id;
+        $conversation->target_user_id = $simon->id;
         $conversation->save();
+
         $message = new Message();
         $message->conversation_id = $conversation->id;
         $message->message = 'Hello world!';
         $message->save();
-        (new NotificationDistributer($kevin->id))->conversationMessageReceived($message);
+
+        (new NotificationDistributer($simon->id))->conversationMessageReceived($message);
         //(new NotificationDistributer($simon->id))->userWelcome($simon);
         return ['success' => true];
     }

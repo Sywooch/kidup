@@ -62,7 +62,7 @@ class Item extends ItemBase
             $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->currency_id = 1;
         }
-        if ($this->is_available !== 1) {
+        if (!$this->isAvailable()) {
             $this->is_available = 0;
         }
         $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
