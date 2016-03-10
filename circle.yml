@@ -27,7 +27,7 @@ dependencies:
 
 test:
   override:
-    - cd ~/kidup/tests && ../vendor/codeception/codeception/codecept run
+    - cd ~/kidup/tests && ../vendor/codeception/codeception/codecept run --debug
 
 deployment:
   production:

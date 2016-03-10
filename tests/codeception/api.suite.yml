@@ -21,4 +21,3 @@ modules:
           depends: PhpBrowser
           Part: Json
           depends: Yii2
-        test_entry_url: /index-test.php
