@@ -22,7 +22,7 @@ class EventController extends Controller
         $city = null;
         $location = LocationFactory::createByIp(\Yii::$app->request->getUserIP());
         if ($location) {
-            $country = $location->country_code;
+            $country = $location->country;
             $city = $location->city;
         }
         TrackingEvent::track($type, $data, $country, $city, $m, $t, $l, $s, \Yii::$app->request->getUserIP(), $uuid);
