@@ -33,7 +33,7 @@ $components = [
             'port' => '25',
 //            'encryption' => 'tls',
         ],
-        'useFileTransport' => false,//YII_ENV == 'dev' ? true : false,
+        'useFileTransport' => YII_ENV == 'dev' || YII_ENV == 'prod' ? true : false,
         'viewPath' => '@app/modules/notifications/views',
     ],
     'authClientCollection' => [

@@ -2,8 +2,8 @@
 
 namespace booking\models\payin;
 
-use booking\models\invoice\InvoiceBase;
-use booking\models\booking\BookingBase;
+use booking\models\invoice\Invoice;
+use booking\models\booking\Booking;
 use user\models\base\Currency;
 use user\models\User;
 use Yii;
@@ -23,7 +23,7 @@ use Yii;
  * @property integer $invoice_id
  *
  * @property \booking\models\booking\Booking $booking
- * @property \booking\models\invoice\InvoiceBase $invoice
+ * @property \booking\models\invoice\Invoice $invoice
  * @property User $user
  * @property Currency $currency
  */
@@ -84,7 +84,7 @@ class PayinBase extends \app\models\BaseActiveRecord
      */
     public function getInvoice()
     {
-        return $this->hasOne(InvoiceBase::className(), ['id' => 'invoice_id']);
+        return $this->hasOne(Invoice::className(), ['id' => 'invoice_id']);
     }
 
     /**
@@ -108,6 +108,6 @@ class PayinBase extends \app\models\BaseActiveRecord
      */
     public function getBooking()
     {
-        return $this->hasOne(BookingBase::className(), ['payin_id' => 'id']);
+        return $this->hasOne(Booking::className(), ['payin_id' => 'id']);
     }
 }

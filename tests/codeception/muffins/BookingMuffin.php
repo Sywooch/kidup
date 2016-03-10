@@ -33,7 +33,4 @@ class BookingMuffin extends \booking\models\booking\Booking
             'request_expires_at' => $faker->dateTimeBetween('+ 3 days', '+ 8 days')->getTimestamp(),
         ];
     }
-
-    public static function callback($object, $saved){
-    }
 }
