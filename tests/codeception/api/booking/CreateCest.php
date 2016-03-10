@@ -71,7 +71,7 @@ class CreateCest
             'time_from' => Carbon::now()->addDays(3)->timestamp,
             'time_to' => Carbon::now()->addDays(5)->timestamp,
             'message' => '',
-            'payment_nonce' => 'fake-valid-nonce'
+            'payment_nonce' => \Braintree_Test_Nonces::$transactable
         ]));
         $I->seeResponseCodeIs(200);
         $res = json_decode($I->grabResponse(), true);
