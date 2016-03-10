@@ -36,9 +36,9 @@ task('deploy:set_dirs', function () {
     // test server cannot make writable dirs for some reason, but has 777, so this should work
     set('shared_dirs', ['runtime']);
     set('shared_files', ['config/keys/keys.env', 'config/keys/keys.json', 'config/config-local.php']);
-//    if (env('branch') == 'master') {
-    set('writable_dirs', ['web/assets', 'runtime']);
-//    }
+    if (env('branch') == 'master') {
+        set('writable_dirs', ['web/assets', 'runtime']);
+    }
 });
 
 //$repo_password = getenv('CIRCLECI_GIT_OAUTH') ? getenv('CIRCLECI_GIT_OAUTH') : $keys['git_repo_password'];
