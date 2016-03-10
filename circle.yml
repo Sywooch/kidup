@@ -22,6 +22,7 @@ dependencies:
     - composer global require "fxp/composer-asset-plugin:1.1.1"
   post:
     - chmod 0777 ~/kidup/ && chmod 0777 ~/kidup/ -R && mkdir ~/kidup/runtime/mail && chmod 0777 ~/kidup/runtime/mail && cd ~/kidup/tests && codeception/bin/yii migrate --interactive=0
+    - cd ~/kidup/tests && ../vendor/codeception/codeception/codecept build
 
 test:
   override:
