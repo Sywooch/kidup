@@ -10,7 +10,6 @@ class EventController extends Controller
 {
     public function actionIndex($type, $data = null, $t = null, $s = null, $l = null, $m = null, $uuid = null)
     {
-        $detect = new \Mobile_Detect();
         $country = null;
         $city = null;
         $location = LocationFactory::createByIp(\Yii::$app->request->getUserIP());
