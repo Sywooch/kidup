@@ -103,6 +103,10 @@ $urls = [
     ],
     [
         'class' => 'yii\rest\UrlRule',
+        'controller' => ['api/v1/wish-list-items' => 'api/wish-list-item'],
+    ],
+    [
+        'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/media' => 'api/media'],
         'extraPatterns' => [
             'image-sort' => 'image-sort'
