@@ -2,6 +2,7 @@
 
 namespace item\models\wishListItem;
 
+use api\models\Item;
 use Yii;
 
 /**
@@ -9,4 +10,13 @@ use Yii;
  */
 class WishListItemApi extends WishListItem
 {
+    public function extraFields()
+    {
+        return ['item'];
+    }
+
+    public function getItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
+    }
 }
