@@ -29,6 +29,7 @@ class WishListItemController extends Controller
         $actions = parent::actions();
         unset($actions['create']);
         unset($actions['update']);
+        unset($actions['delete']);
         unset($actions['view']);
         unset($actions['index']);
         return $actions;
@@ -47,5 +48,13 @@ class WishListItemController extends Controller
         $user = User::findOneOr404(\Yii::$app->user->id);
         $item = Item::findOneOr404($params['item_id']);
         return (new WishListItemFactory())->create($user, $item);
+    }
+
+    public function actionDelete($id){
+        $w = WishListItem::findOneOr404([
+            'user_id' => \Yii::$app->user->id,
+            'item_id' => $id
+        ]);
+        return $w->delete();
     }
 }
