@@ -37,7 +37,7 @@ class WishListItemController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => WishListItem::find()->where(['user_id' => \Yii::$app->user->id])
+            'query' => WishListItemApi::find()->where(['user_id' => \Yii::$app->user->id])
         ]);
     }
 
