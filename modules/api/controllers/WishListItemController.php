@@ -2,8 +2,8 @@
 namespace api\controllers;
 
 use item\models\item\Item;
-use item\models\WishListItem\WishListItem;
-use item\models\WishListItem\WishListItemApi;
+use item\models\wishListItem\WishListItem;
+use item\models\wishListItem\WishListItemApi;
 use item\models\wishListItem\WishListItemFactory;
 use user\models\User;
 use yii\data\ActiveDataProvider;

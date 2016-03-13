@@ -4,7 +4,7 @@ namespace codecept\muffins;
 use item\models\wishListItem\WishListItem;
 use Faker\Factory as Faker;
 
-class UserMuffin extends WishListItem
+class WishListItemMuffin extends WishListItem
 {
     public function definitions()
     {
