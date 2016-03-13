@@ -74,10 +74,12 @@ class ItemSearchDb
         $obj['price_day'] = $item->price_day;
         $obj['price_week'] = $item->price_week;
         $obj['price_year'] = $item->price_year;
-        $obj['_geoloc'] = [
-            'lat' => $item->location->latitude,
-            'lng' => $item->location->longitude
-        ];
+        if($item->location_id !== null){
+            $obj['_geoloc'] = [
+                'lat' => $item->location->latitude,
+                'lng' => $item->location->longitude
+            ];
+        }
         $obj['location']['city'] = $item->location->city;
         $obj['location']['country'] = $item->location->country0->name;
         $obj['hierarchicalCategories_en'] = $this->hierarchicalCat($item, 'en-US');
