@@ -4,6 +4,7 @@ namespace api\models;
 
 use images\components\ImageHelper;
 use item\models\itemHasMedia\ItemHasMedia;
+use item\models\wishListItem\WishListItem;
 use yii\helpers\Json;
 
 /**
@@ -78,6 +79,12 @@ class Item extends \item\models\item\Item
         };
         $fields['image_base_url'] = $mainImage;
         $fields['image'] = $mainImage;
+        $fields['user_has_item_on_wishlist'] = function () {
+            if (!\Yii::$app->user->isGuest) {
+                return WishListItem::find()->where(['user_id' => \Yii::$app->user->id])->count() > 0;
+            }
+            return false;
+        };
         return $fields;
     }
 

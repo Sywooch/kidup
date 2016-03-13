@@ -19,6 +19,7 @@ use codecept\muffins\PayoutMuffin;
 use codecept\muffins\ProfileMuffin;
 use codecept\muffins\TokenMuffin;
 use codecept\muffins\UserMuffin;
+use codecept\muffins\WishListItemMuffin;
 use Codeception\Module;
 use League\FactoryMuffin\FactoryMuffin;
 use League\FactoryMuffin\Stores\ModelStore;
@@ -56,7 +57,8 @@ class MuffinHelper
             MediaMuffin::class,
             OauthAccessTokenMuffin::class,
             OauthClientMuffin::class,
-            MobileDeviceMuffin::class
+            MobileDeviceMuffin::class,
+            WishListItemMuffin::class,
         ];
     }
 

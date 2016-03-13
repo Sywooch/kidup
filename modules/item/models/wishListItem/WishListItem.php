@@ -2,7 +2,6 @@
 
 namespace item\models\wishListItem;
 
-use item\models\wishListItem\WishListItemBase;
 use Yii;
 
 class WishListItemError extends \app\extended\base\Exception
