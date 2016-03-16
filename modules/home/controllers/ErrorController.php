@@ -2,6 +2,7 @@
 
 namespace home\controllers;
 
+use app\components\UrlHelper;
 use app\extended\web\Controller;
 use Yii;
 use app\extended\base\Exception;
@@ -41,6 +42,15 @@ class ErrorController extends Controller
             }
             $message = $this->defaultMessage ?: Yii::t('kidup.internal_server_error',
                 'An internal server error occurred.');
+        }
+        
+        if((new UrlHelper())->isAPI()){
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'name' => $name,
+                'message' => $message,
+                'exception' => $exception,
+            ];
         }
         
         return $this->render('error', [

@@ -2,7 +2,7 @@
 
 namespace admin\models\search;
 
-use notifications\models\base\MailTemplate as MailTemplateModel;
+use notification\models\base\MailTemplate as MailTemplateModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

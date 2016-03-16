@@ -2,7 +2,7 @@
 
 namespace admin\models\search;
 
-use item\models\base\Item as ItemModel;
+use item\models\item\Item as ItemModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

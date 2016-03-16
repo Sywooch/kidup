@@ -5,6 +5,7 @@ namespace user\models;
 use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
 use api\models\PayoutMethod;
+use app\extended\base\Exception;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
@@ -91,7 +92,7 @@ class User extends base\User implements IdentityInterface
             return false;
         }
         if ($token->expires < time()) {
-            throw new HttpException(401, "Access Token expired");
+            throw new HttpException(401,"Access Token expired");
         }
         return $token->user;
     }

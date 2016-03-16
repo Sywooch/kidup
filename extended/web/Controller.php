@@ -1,7 +1,7 @@
 <?php
 namespace app\extended\web;
 
-use search\models\IpLocation;
+use app\components\UrlHelper;
 use user\models\Profile;
 use Yii;
 use yii\helpers\Url;
@@ -25,6 +25,7 @@ class Controller extends \yii\web\Controller
                 $_SERVER['REMOTE_ADDR'] = $_SERVER["REMOTE_ADDR"];
             }
         }
+
 
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
