@@ -1,6 +1,7 @@
 <?php
 namespace api\controllers;
 
+use app\extended\base\Exception;
 use yii\filters\AccessControl;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
@@ -32,7 +33,12 @@ class Controller extends \yii\rest\ActiveController
 
         // log in users manually if they set an access token
         if (\Yii::$app->request->get('access-token')) {
-            \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
+            try{
+                \Yii::$app->getUser()->loginByAccessToken(\Yii::$app->request->get('access-token'), get_class($this));
+            }catch(Exception $e){
+                \Yii::$app->response->data = $e;
+                \Yii::$app->end();
+            }
         }
         \Yii::$app->language = 'da-DK';
         if (\Yii::$app->request->get('lang')) {

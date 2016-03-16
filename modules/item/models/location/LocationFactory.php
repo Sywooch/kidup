@@ -33,10 +33,10 @@ class LocationFactory
         $loc = Location::find()->where(['user_id' => \Yii::$app->user->id])
             ->andWhere("latitude >= :latLower and latitude <= :latUpper and longitude >= :lngLower and longitude <= :lngUpper")
             ->addParams([
-                ':latLower' => $latitude - 0.0035,
-                ':latUpper' => $latitude + 0.0035,
-                ':lngLower' => $longitude - 0.0035,
-                ':lngUpper' => $longitude + 0.0035
+                ':latLower' => $latitude - 0.006,
+                ':latUpper' => $latitude + 0.006,
+                ':lngLower' => $longitude - 0.006,
+                ':lngUpper' => $longitude + 0.006
             ])
             ->one();
         if ($loc !== null) {
