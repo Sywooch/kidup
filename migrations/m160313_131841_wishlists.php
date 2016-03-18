@@ -17,6 +17,8 @@ class m160313_131841_wishlists extends Migration
 
         $this->addForeignKey('fk_wish_list_item_user', 'wish_list_item', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $this->addForeignKey('fk_wish_list_item_item', 'wish_list_item', 'item_id', 'item', 'id', 'CASCADE', 'NO ACTION');
+
+        
     }
 
 
