@@ -115,6 +115,7 @@ class NotificationController extends Controller
         $message->conversation_id = $conversation->id;
         $message->message = 'Hello world!';
         $message->sender_user_id = $kevin->id;
+        $message->receiver_user_id = $simon->id;
         $message->save();
 
         (new NotificationDistributer($simon->id))->conversationMessageReceived($message);
