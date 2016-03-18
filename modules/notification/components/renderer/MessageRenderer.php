@@ -15,7 +15,7 @@ class MessageRenderer
      */
     public function loadMessage(Message $message) {
         $result = [];
-        $result['sender_name'] = $message->conversation->targetUser->profile->getName();
+        $result['sender_name'] = $message->conversation->initiaterUser->profile->getName();
         return $result;
     }
 

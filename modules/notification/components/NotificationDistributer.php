@@ -173,7 +173,7 @@ class NotificationDistributer
     {
         return $this->load("conversation_message_received", [
             'message' => $message,
-            'user' => $message->receiverUser
+            'user' => $message->conversation->targetUser
         ]);
     }
 }

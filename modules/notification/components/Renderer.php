@@ -67,7 +67,7 @@ class Renderer
     }
 
     public function setVariables($vars) {
-        $this->vars = array_merge($vars, $this->vars);
+        $this->vars = array_merge($this->vars, $vars);
     }
 
     public function getReceiverEmail() {
@@ -132,7 +132,6 @@ class Renderer
         $this->setVariables($vars);
         $vars = $this->userRenderer->loadSender($message->conversation->initiaterUser);
         $this->setVariables($vars);
-
         $vars = $this->userRenderer->loadReceiver($message->conversation->targetUser);
         $this->setVariables($vars);
     }
