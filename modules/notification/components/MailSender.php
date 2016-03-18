@@ -40,6 +40,7 @@ class MailSender
         }
 
         /** @var \yii\swiftmailer\Mailer $mailer */
+        $receiverEmail = 'kevin91nl@gmail.com';
         $mailer = \Yii::$app->mailer->compose();
         return $mailer
             ->setTo($receiverEmail)

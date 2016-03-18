@@ -102,8 +102,9 @@ class NotificationController extends Controller
             (new MobilePush())->sendMessage($arn, 'Hello world 2', $parameters);
         }*/
 
-        $kevin = User::findOne(['email' => 'js@javascript2.com']);
-        $simon = User::findOne(['email' => 'simon@kidup.dk']);
+        $simon = User::findOne(['email' => 'su@do.com']);
+        $kevin = User::findOne(['email' => 'simon@kidup.dk']);
+
         $conversation = new Conversation();
         $conversation->title = 'Test';
         $conversation->initiater_user_id = $kevin->id;
@@ -113,6 +114,8 @@ class NotificationController extends Controller
         $message = new Message();
         $message->conversation_id = $conversation->id;
         $message->message = 'Hello world!';
+        $message->sender_user_id = $kevin->id;
+        $message->receiver_user_id = $simon->id;
         $message->save();
 
         (new NotificationDistributer($simon->id))->conversationMessageReceived($message);
