@@ -122,6 +122,14 @@ $urls = [
     ],
     [
         'class' => 'yii\rest\UrlRule',
+        'controller' => ['api/v1/kode-ups' => 'api/kode-up'],
+        'extraPatterns' => [
+            'recommendations' => 'recommendations',
+
+        ]
+    ],
+    [
+        'class' => 'yii\rest\UrlRule',
         'controller' => ['api/v1/users' => 'api/user'],
         'extraPatterns' => [
             'me' => 'me',
