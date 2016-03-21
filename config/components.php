@@ -152,10 +152,14 @@ $components = [
         'errorAction' => 'home/error/error',
     ],
     'log' => [
-        'traceLevel' => 5,
+//        'traceLevel' => 5,
         'targets' => [
-            'file' => [
+            [
                 'class' => 'yii\log\FileTarget',
+                'levels' => ['error', 'warning'],
+            ],
+            [
+                'class' => 'yii\log\DbTarget',
                 'levels' => ['error', 'warning'],
             ],
         ],

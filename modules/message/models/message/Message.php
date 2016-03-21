@@ -24,9 +24,7 @@ class Message extends MessageBase
 
     public function afterSave($insert, $changedVars)
     {
-        if ($this->isNewRecord) {
-            Event::trigger($this, self::EVENT_NEW_MESSAGE);
-        }
+        Event::trigger($this, self::EVENT_NEW_MESSAGE);
         parent::afterSave($insert, $changedVars);
     }
 }
