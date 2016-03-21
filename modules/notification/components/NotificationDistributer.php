@@ -28,20 +28,26 @@ class NotificationDistributer
 
     private function newRenderer($template)
     {
-        $isMailTemplate = is_file(\Yii::$aliases['@notification-mail'].'/'.$template.".twig");
-        $isPushTemplate = is_file(\Yii::$aliases['@notification-push'].'/'.$template.".twig");
+        $isMailTemplate = is_file(\Yii::$aliases['@notification-mail'] . '/' . $template . ".twig");
+        $isPushTemplate = is_file(\Yii::$aliases['@notification-push'] . '/' . $template . ".twig");
         if (!$isMailTemplate && !$isPushTemplate) {
             throw new NotificationImplementationError("Template not found");
         }
         if ($this->userAllowsPush) {
             if ($isMailTemplate && $isPushTemplate) {
                 return new PushRenderer($template);
-            } else if ($isMailTemplate && !$isPushTemplate) {
-                return new MailRenderer($template);
-            } else if (!$isMailTemplate && $isPushTemplate) {
-                return new PushRenderer($template);
-            } else if (!$isMailTemplate && !$isPushTemplate) {
-                // Too bad
+            } else {
+                if ($isMailTemplate && !$isPushTemplate) {
+                    return new MailRenderer($template);
+                } else {
+                    if (!$isMailTemplate && $isPushTemplate) {
+                        return new PushRenderer($template);
+                    } else {
+                        if (!$isMailTemplate && !$isPushTemplate) {
+                            // Too bad
+                        }
+                    }
+                }
             }
         } else {
             // User does not allow push
@@ -75,7 +81,9 @@ class NotificationDistributer
         }
         $renderer->setVariables($contents);
         foreach ($contents as $content => $value) {
-            if ($value === null) continue;
+            if ($value === null) {
+                continue;
+            }
             switch ($content) {
                 case "booking":
                     $renderer->loadBooking($value);
@@ -86,6 +94,8 @@ class NotificationDistributer
                 case "message":
                     $renderer->loadMessage($value);
                     break;
+                case "app_path":
+                    $renderer->setVariables(['app_path' => $value]);
             }
         }
         return $this->toSender($renderer);

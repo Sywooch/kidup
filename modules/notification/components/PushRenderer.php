@@ -1,10 +1,8 @@
 <?php
 namespace notification\components;
 
-use Yii;
-
 class PushRenderer extends Renderer
-{
+{ 
 
     public $type = 'push';
 
