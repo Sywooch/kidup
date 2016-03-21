@@ -94,8 +94,8 @@ class NotificationDistributer
                 case "message":
                     $renderer->loadMessage($value);
                     break;
-                case "app_path":
-                    $renderer->setVariables(['app_path' => $value]);
+                case "app_state":
+                    $renderer->setVariables(['app_state' => $value]);
             }
         }
         return $this->toSender($renderer);
@@ -105,7 +105,13 @@ class NotificationDistributer
     {
         return $this->load("booking_confirmed_owner", [
             'booking' => $booking,
-            'user' => $booking->item->owner
+            'user' => $booking->item->owner,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -113,7 +119,13 @@ class NotificationDistributer
     {
         return $this->load("booking_confirmed_renter", [
             'booking' => $booking,
-            'user' => $booking->renter
+            'user' => $booking->renter,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -121,7 +133,13 @@ class NotificationDistributer
     {
         return $this->load("booking_declined_renter", [
             'booking' => $booking,
-            'user' => $booking->renter
+            'user' => $booking->renter,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -129,7 +147,13 @@ class NotificationDistributer
     {
         return $this->load("booking_payout_owner", [
             'booking' => $booking,
-            'user' => $booking->item->owner
+            'user' => $booking->item->owner,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -137,7 +161,13 @@ class NotificationDistributer
     {
         return $this->load("booking_request_owner", [
             'booking' => $booking,
-            'user' => $booking->item->owner
+            'user' => $booking->item->owner,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -145,7 +175,13 @@ class NotificationDistributer
     {
         return $this->load("booking_start_owner", [
             'booking' => $booking,
-            'user' => $booking->item->owner
+            'user' => $booking->item->owner,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -153,7 +189,13 @@ class NotificationDistributer
     {
         return $this->load("booking_start_renter", [
             'booking' => $booking,
-            'user' => $booking->renter
+            'user' => $booking->renter,
+            'app_state' => [
+                'state' => 'app.booking-view',
+                'params' => [
+                    'id' => $booking->id
+                ]
+            ]
         ]);
     }
 
@@ -183,7 +225,13 @@ class NotificationDistributer
     {
         return $this->load("conversation_message_received", [
             'message' => $message,
-            'user' => $message->conversation->targetUser
+            'user' => $message->conversation->targetUser,
+            'app_state' => [
+                'state' => 'app.chat-conversation',
+                'params' => [
+                    'chatId' => $message->conversation_id
+                ]
+            ]
         ]);
     }
 }
