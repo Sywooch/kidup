@@ -45,7 +45,19 @@ class Bootstrap implements BootstrapInterface
         Yii::setAlias('@notification-layouts', '@notification-view/layouts/');
         Yii::setAlias('@notification-assets', '@notification/assets/');
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
+        Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
+            $user = $event->sender;
+            $message = "New user registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50);
+            if (!is_null($user->profile->getName())) {
+                $message .= " please welcome " . $user->profile->getName(). "@sherlockholmes: it's ".$user->id.' (#philter)';
+            }
+            new SlackJob([
+                'message' => $message
+            ]);
+            (new NotificationDistributer($user->id))->userWelcome($user);
+        });
+
+        Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
             $user = $event->sender;
             $message = "New user registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50);
             if (!is_null($user->profile->getName())) {
@@ -73,7 +85,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         \yii\base\Event::on(Message::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
-            (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender);
+            (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender->conversation);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
