@@ -22,6 +22,7 @@ use user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Module;
+use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 class Bootstrap implements BootstrapInterface
@@ -36,6 +37,7 @@ class Bootstrap implements BootstrapInterface
             Yii::setAlias('@notificationAssets', Yii::getAlias('@web') . '/assets_web/modules/notification');
         }
 
+
         Yii::setAlias('@notification', '@app/modules/notification');
         Yii::setAlias('@notification-view', '@notification/views/');
         Yii::setAlias('@notification-mail', '@notification-view/mail/');
@@ -43,19 +45,7 @@ class Bootstrap implements BootstrapInterface
         Yii::setAlias('@notification-layouts', '@notification-view/layouts/');
         Yii::setAlias('@notification-assets', '@notification/assets/');
 
-        Event::register(User::className(), User::EVENT_USER_CREATE_DONE, function ($event) {
-            $user = $event->sender;
-            $message = "New user registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50);
-            if (!is_null($user->profile->getName())) {
-                $message .= " please welcome " . $user->profile->getName(). "@sherlockholmes: it's ".$user->id.' (#philter)';
-            }
-            new SlackJob([
-                'message' => $message
-            ]);
-            (new NotificationDistributer($user->id))->userWelcome($user);
-        });
-
-        Event::register(User::className(), User::EVENT_USER_REGISTER_DONE, function ($event) {
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
             $user = $event->sender;
             $message = "New user registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50);
             if (!is_null($user->profile->getName())) {
@@ -82,8 +72,8 @@ class Bootstrap implements BootstrapInterface
             (new NotificationDistributer($event->sender->id))->userRecovery($event->sender, $url);
         });
 
-        Event::register(Message::className(), Message::EVENT_NEW_MESSAGE, function ($event) {
-            (new NotificationDistributer($event->sender->id))->conversationMessageReceived($event->sender->conversation);
+        \yii\base\Event::on(Message::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
+            (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
