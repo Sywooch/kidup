@@ -85,7 +85,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         \yii\base\Event::on(Message::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
-            (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender->conversation);
+            (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
