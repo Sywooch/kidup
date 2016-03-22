@@ -130,6 +130,7 @@ class BookingController extends Controller
                 $params['payment_nonce'],
                 $params['message']);
         } catch (BookingException $e) {
+            \Yii::error($e);
             throw new BadRequestHttpException($e->getMessage());
         }
     }

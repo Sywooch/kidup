@@ -89,7 +89,7 @@ class BrainTree extends Model
     public function autorize()
     {
         if (!is_float($this->payin->amount) && !is_int($this->payin->amount)) {
-            throw new BrainTreePayinAmountNotCorrect();
+            throw new BrainTreePayinAmountNotCorrect("Braintree payin amount not correct.");
         }
         $transaction = \Braintree_Transaction::sale(array(
             'amount' => $this->payin->amount,
