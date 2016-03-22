@@ -120,13 +120,10 @@ class BookingController extends Controller
             'is_available' => 1
         ])->one();
 
-
-
         // check whether the item is found
         if ($item === null) {
             throw new NotFoundHttpException("Item not found.");
         }
-
 
         try {
             return (new BookingFactory)->create($params['time_from'], $params['time_to'], $item,
