@@ -31,19 +31,5 @@ class ViewController extends Controller
             'appstore_ios_url' => Yii::$app->params['appstore-ios'],
         ]);
     }
-
-    public function actionTest()
-    {
-        $m = new MobileDevices();
-        $m->user_id = 1;
-        $m->last_activity_at = time();
-        $m->created_at = time();
-        $m->is_subscribed = 1;
-        $m->device_id = uniqid();
-        $m->token = uniqid();
-        $m->platform = 'test';
-        \yii\helpers\VarDumper::dump($m->save(), 10, true);
-        exit();
-    }
 }
 

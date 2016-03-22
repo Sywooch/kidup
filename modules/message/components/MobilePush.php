@@ -87,7 +87,6 @@ class MobilePush
                 ]),
             ])
         ]);
-        print_r($result);
     }
 
     public function getTopics()
