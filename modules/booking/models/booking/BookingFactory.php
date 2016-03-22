@@ -64,7 +64,7 @@ class BookingFactory
         try {
             $this->payin->authorize();
         } catch (PayinException $e) {
-            throw new BookingPaymentException("Payment failed", null, $e->getPrevious());
+            throw new BookingPaymentException("Payment failed", null, $e);
         }
 
 

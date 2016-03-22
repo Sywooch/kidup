@@ -20,18 +20,11 @@ class PushSender
     {
         $view = $renderer->render();
 
-        /*$parameters = [
-            'state' => 'app.create-booking',
-            'params' => [
-                'itemId' => 6
-            ]
-        ];*/
-        $parameters = [
-            'state' => 'app.chat-conversation',
-            'params' => [
-                'chatId' => 3674
-            ]
-        ];
+        if(isset($renderer->getVariables()['app_path'])){
+            $parameters = $renderer->getVariables()['app_path'];
+        }else{
+            $parameters = [];
+        }
 
         // Do some test magic
         if (\Yii::$app->modules['notification']->useFileTransfer) {

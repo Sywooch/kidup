@@ -16,7 +16,7 @@ class Booking extends BookingModel
     {
         return [
             [['id', 'item_id', 'renter_id', 'currency_id', 'time_from', 'time_to', 'updated_at', 'created_at', 'payin_id', 'payout_id', 'request_expires_at'], 'integer'],
-            [['status', 'refund_status', 'item_backup', 'amount_item', 'amount_payin', 'amount_payin_fee', 'amount_payin_fee_tax', 'amount_payin_costs', 'amount_payout', 'amount_payout_fee', 'amount_payout_fee_tax', 'promotion_code_id'], 'safe'],
+            [['status', 'refund_status', 'item_backup', 'amount_item', 'amount_payin', 'amount_payin_fee', 'amount_payin_fee_tax', 'amount_payin_costs', 'amount_payout', 'amount_payout_fee', 'amount_payout_fee_tax'], 'safe'],
         ];
     }
 
@@ -62,8 +62,7 @@ class Booking extends BookingModel
             ->andFilterWhere(['like', 'amount_payin_costs', $this->amount_payin_costs])
             ->andFilterWhere(['like', 'amount_payout', $this->amount_payout])
             ->andFilterWhere(['like', 'amount_payout_fee', $this->amount_payout_fee])
-            ->andFilterWhere(['like', 'amount_payout_fee_tax', $this->amount_payout_fee_tax])
-            ->andFilterWhere(['like', 'promotion_code_id', $this->promotion_code_id]);
+            ->andFilterWhere(['like', 'amount_payout_fee_tax', $this->amount_payout_fee_tax]);
 
         return $dataProvider;
     }
