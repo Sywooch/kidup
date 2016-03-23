@@ -39,13 +39,24 @@
                             <?= Yii::t("home.fake-home.app_explanation",
                                 "KidUp has transformed to a full-app experience. You can still use our website, but we recommend checking out our awesome app!") ?>
                         </h4>
-                        <a href="https://geo.itunes.apple.com/dk/app/kidup/id1066928173?mt=8">
-                            <img class="applestore"
-                                 src="https://kidup-static.imgix.net/home/fake-home/appstore.png"
-                                 width="200px" alt="Apple Store">
-                        </a>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="https://geo.itunes.apple.com/dk/app/kidup/id1066928173?mt=8">
+                                    <img class="applestore"
+                                         src="https://kidup-static.imgix.net/home/fake-home/appstore.png"
+                                         width="100%" alt="Apple Store">
+                                </a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="https://play.google.com/store/apps/details?id=dk.kidup.mobileapp">
+                                    <img class="playstore"
+                                         src="https://kidup-static.imgix.net/home/fake-home/google.png"
+                                         width="100%" alt="Play Store">
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-sm-4">
+                    <div class="col-md-6 col-sm-4 hidden-xs">
                         <img src="https://kidup-static.imgix.net/home/fake-home/iphone.png" alt="iPhone" width="100%">
                     </div>
                 </div>
