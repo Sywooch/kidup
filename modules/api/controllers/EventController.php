@@ -2,6 +2,7 @@
 namespace api\controllers;
 
 use admin\models\TrackingEvent;
+use api\models\oauth\OauthAccessToken;
 use app\extended\web\Controller;
 use item\models\location\LocationFactory;
 use Yii;
@@ -19,5 +20,13 @@ class EventController extends Controller
         }
         TrackingEvent::track($type, $data, $country, $city, $m, $t, $l, $s, \Yii::$app->request->getUserIP(), $uuid);
         return '';
+    }
+
+    public function actionError($data)
+    {
+        if (isset($_GET['access-token'])) {
+            \Yii::$app->user->loginByAccessToken($_GET['access-token']);
+        }
+        \Yii::error(urldecode($data), "kidup-app");
     }
 }
