@@ -63,17 +63,17 @@ class MobileDevices extends \app\models\BaseActiveRecord
 //    /**
 //     * @inheritdoc
 //     */
-//    public function behaviors()
-//    {
-//        return [
-//            'timestamp' => [
-//                'class' => 'yii\behaviors\TimestampBehavior',
-//                'attributes' => [
-//                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'last_activity_at'],
-//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['last_activity_at'],
-//                ],
-//            ],
-//        ];
-//    }
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'last_activity_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['last_activity_at'],
+                ],
+            ],
+        ];
+    }
 
 }
