@@ -27,6 +27,8 @@ class EventController extends Controller
         if (isset($_GET['access-token'])) {
             \Yii::$app->user->loginByAccessToken($_GET['access-token']);
         }
-        \Yii::error(urldecode($data), "kidup-app");
+        $data = urldecode($data);
+        $data = str_replace("\\n", PHP_EOL, $data);
+        \Yii::error($data, "kidup-app");
     }
 }
