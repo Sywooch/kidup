@@ -160,7 +160,8 @@ $urls = [
         ]
     ],
     'api/v1/pages/<page>' => 'api/pages/view',
-    'api/v1/event' => 'api/event/index'
+    'api/v1/event' => 'api/event/index',
+    'api/v1/event/error' => 'api/event/error'
 ];
 
 return $urls;
