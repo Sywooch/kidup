@@ -41,7 +41,6 @@ class PushSender
         $userId = $renderer->getUserId();
         $devices = MobileDevices::find()->where(['user_id' => $userId, 'is_subscribed' => true])->all();
         foreach ($devices as $device) {
-            echo $device->platform;
             $arn = $device->endpoint_arn;
             try {
                 (new MobilePush())->sendMessage($arn, $view, $parameters);
@@ -57,5 +56,4 @@ class PushSender
             }
         }
     }
-
 }

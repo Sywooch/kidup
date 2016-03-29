@@ -11,6 +11,7 @@ class EventController extends Controller
 {
     public function actionIndex($type, $data = null, $t = null, $s = null, $l = null, $m = null, $uuid = null)
     {
+        \Yii::$app->response->headers->add("Access-Control-Allow-Origin", "*");
         $country = null;
         $city = null;
         $location = LocationFactory::createByIp(\Yii::$app->request->getUserIP());
@@ -24,6 +25,7 @@ class EventController extends Controller
 
     public function actionError($data)
     {
+        \Yii::$app->response->headers->add("Access-Control-Allow-Origin", "*");
         if (isset($_GET['access-token'])) {
             \Yii::$app->user->loginByAccessToken($_GET['access-token']);
         }

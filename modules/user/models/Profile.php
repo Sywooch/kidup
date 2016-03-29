@@ -74,7 +74,9 @@ class Profile extends base\Profile
     }
 
     public function getName(){
-        return isset($this->first_name) ? $this->first_name : false;
+        return isset($this->first_name) ? $this->first_name : \Yii::t('profile.default_user_name', 'KidUp User {id}', [
+            'id' => $this->user_id
+        ]);
     }
 
     public function getFullName(){

@@ -109,8 +109,9 @@ class BookingController extends Controller
             throw(new BadRequestHttpException("No time_to (timestamp) is set."));
         }
         if (!isset($params['payment_nonce'])) {
-            throw(new BadRequestHttpException("No payment_method_nonce (string) is set."));
+            throw(new BadRequestHttpException("No payment_nonce (string) is set."));
         }
+        $params['message'] = isset($params['message']) ? $params['message'] : null;
 
         /**
          * @var $item Item

@@ -248,9 +248,10 @@ class Booking extends BookingBase
 
         if ($message == '' || $message == null) {
             $message = \Yii::t('booking.create.automated_new_message',
-                'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
+                '{renter_name} made a rent request for {item_name}', [
+                    'renter_name' => \Yii::$app->user->identity->profile->getName()
+                ]);
         }
-
         $messageBool = $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
         return $messageBool;
     }
