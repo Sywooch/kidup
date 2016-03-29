@@ -8,6 +8,7 @@ use codecept\_support\UserHelper;
 use codecept\muffins\BookingMuffin;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
+use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -54,7 +55,7 @@ class ViewBookingCest
         $I->sendGET('bookings/'.$this->booking->id,[
             'access-token' => $accessToken
         ]);
-        $I->seeResponseCodeIs(403);
+        ApiHelper::checkJsonResponse($I, 403);
     }
 
     public function ownerBooking(ApiTester $I) {
@@ -63,7 +64,7 @@ class ViewBookingCest
         $I->sendGET('bookings/'.$this->booking->id,[
             'access-token' => $accessToken
         ]);
-        $I->seeResponseCodeIs(200);
+        ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
     }
@@ -74,7 +75,7 @@ class ViewBookingCest
         $I->sendGET('bookings/'.$this->booking->id,[
             'access-token' => $accessToken
         ]);
-        $I->seeResponseCodeIs(200);
+        ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
         $I->cantSeeResponseContains('amount_payout');

@@ -4,6 +4,7 @@ namespace codecept\api\booking;
 
 use ApiTester;
 use codecept\_support\MuffinHelper;
+use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -32,8 +33,7 @@ class PaymentToken
     public function checkPaymentToken(ApiTester $I) {
         $I->wantTo("get a payment token");
         $I->sendGET('bookings/payment-token');
-        $I->seeResponseCodeIs(200);
-//        $I->seeResponseContains('"token":');
+        ApiHelper::checkJsonResponse($I);
     }
 
 }

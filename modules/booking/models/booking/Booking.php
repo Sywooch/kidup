@@ -70,10 +70,10 @@ class Booking extends BookingBase
     public function ownerAccepts()
     {
         if ($this->item->owner_id != \Yii::$app->user->id) {
-            throw new BookingException("You are not the owner of this item");
+            throw new ForbiddenHttpException("You are not the owner of this item");
         }
         if (!$this->item->owner->hasValidPayoutMethod()) {
-            throw new BookingException("There is no valid payout method set.");
+            throw new NoAccessToBookingException("There is no valid payout method set.");
         }
         /**
          * @var Payin $payin

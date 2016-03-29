@@ -8,9 +8,11 @@ use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
+use Codeception\Module\ApiHelper;
 use Codeception\Util\Debug;
 use item\models\item\Item;
 use League\FactoryMuffin\FactoryMuffin;
+use yii\helpers\ArrayHelper;
 
 /**
  * API test for checking the costs of a booking.
@@ -50,18 +52,13 @@ class CostsCest
      * @param ApiTester $I
      */
     public function checkBookingCosts(ApiTester $I) {
-        $accessToken = UserHelper::apiLogin($this->user)['access-token'];
         $I->wantTo("see the costs of a booking");
-        $I->sendGET('bookings/costs',array_merge([
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->user, 'bookings/costs',array_merge([
             'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(5)->timestamp,
         ]));
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-        $response = $I->grabResponse();
-        $response = json_decode($response, true);
+        $response = ApiHelper::checkJsonResponse($I);
         $I->assertTrue(array_key_exists('fee', $response));
         $I->assertTrue(array_key_exists('price', $response));
         $I->assertTrue(array_key_exists('total', $response));
@@ -70,27 +67,21 @@ class CostsCest
         $I->assertContains("tal", $response['total'][0]);
         $I->seeResponseContains($this->item->getDailyPrice()."");
 
-        $I->sendGET('bookings/costs',array_merge([
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->user, 'bookings/costs',array_merge([
             'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(10)->timestamp,
         ]));
-        $I->seeResponseCodeIs(200);
-        $response = $I->grabResponse();
-        $response = json_decode($response, true);
+        $response = ApiHelper::checkJsonResponse($I);
         $I->assertContains("1 week", $response['price'][0]);
         $I->seeResponseContains($this->item->getWeeklyPrice()."");
 
-        $I->sendGET('bookings/costs',array_merge([
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->user, 'bookings/costs',array_merge([
             'item_id' => $this->item->id,
             'time_from' =>  Carbon::now()->addDays(3)->timestamp,
             'time_to' =>  Carbon::now()->addDays(6)->addMonths(2)->timestamp,
         ]));
-        $I->seeResponseCodeIs(200);
-        $response = $I->grabResponse();
-        $response = json_decode($response, true);
+        $response = ApiHelper::checkJsonResponse($I);
         $I->assertContains("month", $response['price'][0]);
         $I->seeResponseContains($this->item->getMonthlyPrice()."");
     }
