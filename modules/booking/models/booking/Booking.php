@@ -6,6 +6,7 @@ use app\extended\base\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;
+use booking\models\payin\PayinException;
 use Carbon\Carbon;
 use message\models\conversation\Conversation;
 use user\models\User;
@@ -69,20 +70,22 @@ class Booking extends BookingBase
     public function ownerAccepts()
     {
         if ($this->item->owner_id != \Yii::$app->user->id) {
-            throw new ForbiddenHttpException("You are not the owner of this item");
+            throw new BookingException("You are not the owner of this item");
         }
         if (!$this->item->owner->hasValidPayoutMethod()) {
-            throw new BadRequestHttpException("There is no valid payout method set.");
+            throw new BookingException("There is no valid payout method set.");
         }
         /**
          * @var Payin $payin
          */
         $payin = Payin::find()->where(['id' => $this->payin_id])->one();
-        if ($payin->capture()) {
+        try{
+            $payin->capture();
             $this->status = self::ACCEPTED;
             $this->save();
             Event::trigger($this, self::EVENT_OWNER_ACCEPTED);
-            return true; // dont create payout yet, only when payin is successfull
+        }catch(PayinException $e){
+            throw new BookingException("Payin capture failed", null, $e);
         }
 
         return false;

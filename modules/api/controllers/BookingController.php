@@ -8,6 +8,7 @@ use api\models\Review;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
 use booking\models\payin\BrainTree;
+use Guzzle\Http\Exception\BadResponseException;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\data\ActiveDataProvider;
@@ -224,7 +225,13 @@ class BookingController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $booking->ownerAccepts();
+        try{
+            $booking->ownerAccepts();
+        }catch (BookingException $e){
+            \Yii::error($e);
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
         return $booking;
     }
 }

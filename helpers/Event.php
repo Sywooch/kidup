@@ -21,7 +21,6 @@ class Event extends \yii\base\Event
 
     public static function register($classname, $trigger, $function)
     {
-        
         return \Yii::$app->on($classname . '-' . $trigger, $function);
     }
 }

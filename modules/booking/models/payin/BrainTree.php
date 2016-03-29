@@ -108,7 +108,11 @@ class BrainTree extends Model
 
     public function capture()
     {
-        return \Braintree_Transaction::submitForSettlement($this->getBraintreeId());
+        $res = \Braintree_Transaction::submitForSettlement($this->getBraintreeId());
+        if($res instanceof \Braintree_Result_Error){
+            throw new BrainTreeError($res->__toString());
+        }
+        $this->updateStatus();
     }
 
     /*

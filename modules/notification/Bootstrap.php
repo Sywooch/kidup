@@ -102,7 +102,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Payin::className(), Payin::EVENT_PAYIN_CONFIRMED, function ($event) {
-            (new NotificationDistributer($event->sender->id))->bookingRequestOwner($event->sender);
+            (new NotificationDistributer($event->sender->id))->bookingRequestOwner($event->sender->booking);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_INVOICE_READY, function ($event) {

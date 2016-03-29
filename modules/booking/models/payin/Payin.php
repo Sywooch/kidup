@@ -111,11 +111,16 @@ class Payin extends PayinBase
     public function capture()
     {
         $brainTree = new BrainTree($this);
-        if(YII_ENV == 'test'){
-            return $brainTree->sandboxSettlementAccept();
-        }else{
-            $brainTree->capture();
+        try {
+            if (YII_ENV == 'test') {
+                $brainTree->sandboxSettlementAccept();
+            } else {
+                $brainTree->capture();
+            }
+        } catch (BrainTreeError $e) {
+            throw new PayinException("Braintree capture failed", null, $e);
         }
+
         return $this->updateStatus();
     }
 
@@ -125,10 +130,14 @@ class Payin extends PayinBase
     public function release()
     {
         $brainTree = new BrainTree($this);
-        if(YII_ENV == 'test'){
-            return $brainTree->sandboxSettlementDecline();
-        }else{
-            $brainTree->release();
+        try {
+            if (YII_ENV == 'test') {
+                $brainTree->sandboxSettlementDecline();
+            } else {
+                $brainTree->release();
+            }
+        } catch (BrainTreeError $e) {
+            throw new PayinException("Braintree release failed", null, $e);
         }
         return $this->updateStatus();
     }
@@ -152,7 +161,7 @@ class Payin extends PayinBase
             BrainTree::VOIDED => self::STATUS_VOIDED
         ];
 
-        return isset($status[$status]) ? $statusses[$status] : false;
+        return isset($statusses[$status]) ? $statusses[$status] : $status;
     }
 
 }
