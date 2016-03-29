@@ -5,6 +5,7 @@ namespace codecept\api\item;
 use ApiTester;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\ItemMuffin;
+use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 use Codeception\Util\Debug;
 /**
@@ -48,9 +49,7 @@ class RelatedCest
         ]);
 
         $I->sendGET('items/related?item_id=' . $item1->id);
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-        $response = json_decode($I->grabResponse(), true);
+        $response = ApiHelper::checkJsonResponse($I);;
 
         $I->assertTrue(array_key_exists('related_items', $response));
         $relatedItems = $response['related_items'];

@@ -23,4 +23,13 @@ class ApiTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+    public function sendGETAsUser($user, $request, $params = []){
+        $params['access-token'] = \codecept\_support\UserHelper::getUserAccessToken($user);
+        return $this->sendGET($request, $params);
+    }
+    
+    public function sendPOSTAsUser($user, $request, $params = []){
+        $params['access-token'] = \codecept\_support\UserHelper::getUserAccessToken($user);
+        return $this->sendPOST($request, $params);
+    }
 }

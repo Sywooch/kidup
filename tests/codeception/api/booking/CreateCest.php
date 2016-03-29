@@ -8,6 +8,7 @@ use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\UserMuffin;
+use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -22,7 +23,8 @@ class CreateCest
      * @var FactoryMuffin
      */
     protected $fm = null;
-    public $user;
+    private $user;
+    private $item;
 
     public function _before()
     {
@@ -51,8 +53,7 @@ class CreateCest
             'date_from' => Carbon::now()->addDays(3)->timestamp,
             'date_to' => Carbon::now()->addDays(5)->timestamp
         ]);
-        $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(401);
+        ApiHelper::checkJsonResponse($I, 401);
     }
 
     /**
@@ -73,12 +74,11 @@ class CreateCest
             'message' => '',
             'payment_nonce' => \Braintree_Test_Nonces::$transactable
         ]));
-        $I->seeResponseCodeIs(200);
-        $res = json_decode($I->grabResponse(), true);
-        $I->assertEquals($this->item->id, $res['item_id']);
-        $I->assertEquals($this->user->id, $res['renter_id']);
-        $I->assertEquals(Booking::PENDING, $res['status']);
-        $I->assertEquals($this->item->getDailyPrice() * 2, $res['amount_item']);
+        $response = ApiHelper::checkJsonResponse($I);
+        $I->assertEquals($this->item->id, $response['item_id']);
+        $I->assertEquals($this->user->id, $response['renter_id']);
+        $I->assertEquals(Booking::PENDING, $response['status']);
+        $I->assertEquals($this->item->getDailyPrice() * 2, $response['amount_item']);
     }
 
 }

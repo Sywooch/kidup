@@ -7,6 +7,7 @@ use api\models\Item;
 use api\models\Review;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
+use booking\models\booking\NoAccessToBookingException;
 use booking\models\payin\BrainTree;
 use Guzzle\Http\Exception\BadResponseException;
 use item\forms\CreateBooking;
@@ -210,9 +211,14 @@ class BookingController extends Controller
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
+        try {
+            $booking->ownerDeclines();
+        } catch (BookingException $e) {
+            \Yii::error($e);
+            throw new BadRequestHttpException($e->getMessage());
+        }
 
-        $booking->ownerDeclines();
-            return $booking;
+        return $booking;
     }
 
     public function actionAccept($id)
@@ -225,9 +231,9 @@ class BookingController extends Controller
             throw new NotFoundHttpException;
         }
 
-        try{
+        try {
             $booking->ownerAccepts();
-        }catch (BookingException $e){
+        } catch (BookingException $e) {
             \Yii::error($e);
             throw new BadRequestHttpException($e->getMessage());
         }
