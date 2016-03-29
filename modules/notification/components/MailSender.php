@@ -3,6 +3,7 @@ namespace notification\components;
 
 // @todo maillog is not working
 
+use notification\models\MailLog;
 use notification\models\TemplateRenderer;
 use Swift_Message;
 use yii\swiftmailer\Mailer;
@@ -44,7 +45,6 @@ class MailSender
         /** @var \yii\swiftmailer\Mailer $mailer */
         // @todo
         $mailer = \Yii::$app->mailer->compose();
-        $logEntry = MailLog::create($renderer->getTemplate(), $receiverEmail, $mail->getData(), $mail->mailId);
         return $mailer
             ->setTo($receiverEmail)
             ->setReplyTo($replyTo)
