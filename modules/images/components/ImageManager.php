@@ -139,44 +139,4 @@ class ImageManager
         // we don't delete content,nananana
         return false;
     }
-
-    public function getServer($isStatic = false)
-    {
-        $cache = $this->cacheFilesystem;
-
-        if ($isStatic) {
-            $source = new Filesystem(new Adapter(\Yii::$aliases['@app'] . '/modules/images/images/')); // souce is always local, push to S3 in production environvment
-        } else {
-            $source = $this->uploadFilesystem;
-        }
-
-        $imageManager = new \Intervention\Image\ImageManager([
-            'driver' => 'imagick',
-        ]);
-
-        $manipulators = [
-            new League\Glide\Manipulators\Orientation(),
-            new League\Glide\Manipulators\Crop(),
-            new League\Glide\Manipulators\Size(2000 * 2000),
-            new League\Glide\Manipulators\Brightness(),
-            new League\Glide\Manipulators\Contrast(),
-            new League\Glide\Manipulators\Gamma(),
-            new League\Glide\Manipulators\Sharpen(),
-            new League\Glide\Manipulators\Filter(),
-            new League\Glide\Manipulators\Blur(),
-            new League\Glide\Manipulators\Pixelate(),
-            new League\Glide\Manipulators\Background(),
-            new League\Glide\Manipulators\Border(),
-            new League\Glide\Manipulators\Encode(),
-        ];
-
-        $api = new League\Glide\Api\Api($imageManager, $manipulators);
-        $server = new League\Glide\Server(
-            $source,
-            $cache,
-            $api
-        );
-
-        return $server;
-    }
 }

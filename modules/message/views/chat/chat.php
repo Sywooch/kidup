@@ -132,7 +132,7 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                             </h5>
 
                             <div class="location">
-                                <?= $conversation->booking->item->location->city ?>
+                                <?= isset($conversation->booking->item->location) ? $conversation->booking->item->location->city : 'unknown' ?>
                             </div>
                             <div class="member-since">
                                 <?= Yii::t("message", "Member since {0}", [
@@ -141,7 +141,6 @@ $this->assetPackage = \app\assets\Package::MESSAGE;
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

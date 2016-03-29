@@ -156,6 +156,7 @@ class Oauth2Controller extends Controller
                 $basicData = $fb->api('me', 'GET', [
                     'fields' => implode(',', ['name', 'email']),
                 ]);
+                \Yii::error(json_decode($account->data, true));
                 $account->data = json_encode(array_merge(json_decode($account->data, true), [
                     'profile_img_url' => $fb->requestImage($basicData["id"] . '/picture?width=320&height=320', 'GET',
                         [])
