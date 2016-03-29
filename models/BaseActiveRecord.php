@@ -35,10 +35,30 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
         return parent::findOne($condition);
     }
 
+    // Overwrite event hooks
+
     public function beforeSave($insert)
     {
-        Event::trigger(__CLASS__, \yii\db\ActiveRecord::EVENT_AFTER_INSERT);
+        Event::trigger(__CLASS__, $insert ? \yii\db\ActiveRecord::EVENT_BEFORE_INSERT : \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE);
         return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        Event::trigger(__CLASS__, $insert ? \yii\db\ActiveRecord::EVENT_AFTER_INSERT : \yii\db\ActiveRecord::EVENT_AFTER_UPDATE);
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function beforeDelete()
+    {
+        Event::trigger(__CLASS__, \yii\db\ActiveRecord::EVENT_BEFORE_DELETE);
+        return parent::beforeDelete();
+    }
+
+    public function afterDelete()
+    {
+        Event::trigger(__CLASS__, \yii\db\ActiveRecord::EVENT_AFTER_DELETE);
+        return parent::afterDelete();
     }
     
 }

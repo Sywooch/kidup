@@ -33,9 +33,8 @@ class RegisterCest
         Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use ($event_triggered) {
             $event_triggered = true;
         }, true);
-        \yii\base\Event::on(user\models\User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
-            echo 'AFTER INSERT TRIGGER';
-            die();
+        \yii\base\Event::on(user\models\User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event) {
+            echo 'triggered' . "\n";
         });
 
         $faker = \Faker\Factory::create();
@@ -47,9 +46,12 @@ class RegisterCest
             'first_name' => $faker->firstName,
             'last_name' => $faker->lastName,
         ]);
+        echo $I->grabResponse();
+        die();
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['email' => $email]);
+
         $I->assertTrue($event_triggered);
     }
 
