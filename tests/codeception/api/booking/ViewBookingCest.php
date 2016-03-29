@@ -57,7 +57,7 @@ class ViewBookingCest
 
     public function ownerBooking(ApiTester $I) {
         $I->wantTo("check an owner can see a booking");
-        $I->sendGET($this->owner, 'bookings/'.$this->booking->id);
+        $I->sendGETAsUser($this->owner, 'bookings/'.$this->booking->id);
         ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
@@ -65,7 +65,7 @@ class ViewBookingCest
 
     public function renterBooking(ApiTester $I) {
         $I->wantTo("check an owner can see a booking");
-        $I->sendGET($this->renter, 'bookings/'.$this->booking->id);
+        $I->sendGETAsUser($this->renter, 'bookings/'.$this->booking->id);
         ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
