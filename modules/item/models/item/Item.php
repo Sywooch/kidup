@@ -3,6 +3,7 @@
 namespace item\models\item;
 
 use app\components\Cache;
+use app\extended\base\Exception;
 use Carbon\Carbon;
 use images\components\ImageHelper;
 use item\models\itemHasMedia\ItemHasMedia;
@@ -14,6 +15,9 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
+class ItemException extends Exception
+{
+}
 /**
  * This is the model class for table "item".
  */
@@ -73,7 +77,10 @@ class Item extends ItemBase
     public function beforeDelete()
     {
         if (!$this->hasModifyRights()) {
-            return false;
+            throw new ItemException("No deletion rights");
+        }
+        if($this->isAvailable()){
+            (new ItemSearchDb())->removeItem($this);
         }
         return parent::beforeDelete();
     }
@@ -85,7 +92,7 @@ class Item extends ItemBase
      */
     public function hasModifyRights($user = null)
     {
-        return $this->isOwner($user);
+        return $this->isOwner($user) || \Yii::$app->user->identity->isAdmin();
     }
 
     public function beforeValidate()
@@ -121,8 +128,13 @@ class Item extends ItemBase
         return false;
     }
 
-    public function isOwner($userId = null)
+    public function isOwner($user = null)
     {
+        if (!is_object($user)) {
+            $userId = $user;
+        } else {
+            $userId = $user->id;
+        }
         if ($userId == null) {
             $userId = \Yii::$app->user->id;
         }

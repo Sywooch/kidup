@@ -7,7 +7,9 @@ use api\models\Item;
 use api\models\Review;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
+use booking\models\booking\NoAccessToBookingException;
 use booking\models\payin\BrainTree;
+use Guzzle\Http\Exception\BadResponseException;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\data\ActiveDataProvider;
@@ -109,8 +111,9 @@ class BookingController extends Controller
             throw(new BadRequestHttpException("No time_to (timestamp) is set."));
         }
         if (!isset($params['payment_nonce'])) {
-            throw(new BadRequestHttpException("No payment_method_nonce (string) is set."));
+            throw(new BadRequestHttpException("No payment_nonce (string) is set."));
         }
+        $params['message'] = isset($params['message']) ? $params['message'] : null;
 
         /**
          * @var $item Item
@@ -208,9 +211,14 @@ class BookingController extends Controller
         if ($booking === null) {
             throw new NotFoundHttpException;
         }
+        try {
+            $booking->ownerDeclines();
+        } catch (BookingException $e) {
+            \Yii::error($e);
+            throw new BadRequestHttpException($e->getMessage());
+        }
 
-        $booking->ownerDeclines();
-            return $booking;
+        return $booking;
     }
 
     public function actionAccept($id)
@@ -223,7 +231,13 @@ class BookingController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $booking->ownerAccepts();
+        try {
+            $booking->ownerAccepts();
+        } catch (BookingException $e) {
+            \Yii::error($e);
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
         return $booking;
     }
 }

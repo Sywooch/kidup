@@ -67,7 +67,6 @@ class BookingFactory
             throw new BookingPaymentException("Payment failed", null, $e);
         }
 
-
         $this->booking->payin_id = $this->payin->id;
         $this->booking->status = Booking::PENDING;
         $this->booking->setExpireDate();
@@ -116,7 +115,7 @@ class BookingFactory
                 ':status' => Booking::ACCEPTED
             ])->count();
         if ($overlapping > 0) {
-            throw new BookingDatesOverlapException();
+            throw new BookingDatesOverlapException("The item is already rented in this period!");
         }
         return true;
     }

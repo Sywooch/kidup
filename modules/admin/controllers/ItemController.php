@@ -3,7 +3,9 @@
 namespace admin\controllers;
 
 use admin\models\search\Item as ItemSearch;
-use item\models\base\Item;
+use item\models\item\Item;
+use message\models\conversation\ConversationFactory;
+use message\models\message\MessageFactory;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -103,6 +105,38 @@ class ItemController extends Controller
     {
         $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
+    }
+
+    public function actionUnpublish($id){
+        /**
+         * @var Item $item
+         */
+        $item = $this->findModel($id);
+        $item->is_available = 0;
+        if(!$item->save()) {
+            \Yii::$app->session->addFlash("error", 'unpublishing failed');
+            return $this->redirect(['index']);
+        }
+        $conv = (new ConversationFactory())->getOrCreateKidUpConversation($item->owner);
+        (new MessageFactory())->addMessageToConversation(
+            \Yii::t('app.admin.conversation_message.unpublished_by_admin',
+                "Hi there, we've unpublished you're item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!", [
+                    'item_name' => !empty($item->name) ? $item->name : $item->id
+                ])
+            ,$conv, $conv->initiaterUser);
+        return $this->redirect(['index']);
+    }
+
+    public function actionPublish($id){
+        /**
+         * @var Item $item
+         */
+        $item = $this->findModel($id);
+        $item->is_available = 1;
+        if(!$item->save()) {
+            \Yii::$app->session->addFlash("error", 'publishing failed');
+        }
         return $this->redirect(['index']);
     }
 

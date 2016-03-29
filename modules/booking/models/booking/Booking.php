@@ -6,8 +6,11 @@ use app\extended\base\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;
+use booking\models\payin\PayinException;
 use Carbon\Carbon;
 use message\models\conversation\Conversation;
+use message\models\conversation\ConversationFactory;
+use message\models\message\MessageFactory;
 use user\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -72,17 +75,19 @@ class Booking extends BookingBase
             throw new ForbiddenHttpException("You are not the owner of this item");
         }
         if (!$this->item->owner->hasValidPayoutMethod()) {
-            throw new BadRequestHttpException("There is no valid payout method set.");
+            throw new NoAccessToBookingException("There is no valid payout method set.");
         }
         /**
          * @var Payin $payin
          */
         $payin = Payin::find()->where(['id' => $this->payin_id])->one();
-        if ($payin->capture()) {
+        try{
+            $payin->capture();
             $this->status = self::ACCEPTED;
             $this->save();
             Event::trigger($this, self::EVENT_OWNER_ACCEPTED);
-            return true; // dont create payout yet, only when payin is successfull
+        }catch(PayinException $e){
+            throw new BookingException("Payin capture failed", null, $e);
         }
 
         return false;
@@ -232,27 +237,12 @@ class Booking extends BookingBase
     {
         if ($this->conversation !== null) {
             if (count($this->conversation->messages) == 0) {
-                return $this->conversation->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+                (new MessageFactory())->addMessageToConversation($message, $this->conversation, \Yii::$app->user->identity);
             }
-            return true;
+        }else{
+            (new ConversationFactory())->createBookingConversation($this, $message);
         }
-        $c = new Conversation();
-        $c->initiater_user_id = Yii::$app->user->id;
-        $c->target_user_id = $this->item->owner_id;
-        $c->title = $this->item->name;
-        $c->booking_id = $this->id;
-        $c->created_at = time();
-        if (!$c->save()) {
-            throw new ServerErrorHttpException('Conversation couldn\'t be saved' . Json::encode($c->getErrors()));
-        }
-
-        if ($message == '' || $message == null) {
-            $message = \Yii::t('booking.create.automated_new_message',
-                'This is an automated message from KidUp: in this conversation you can for example chat about the product and exchange.');
-        }
-
-        $messageBool = $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
-        return $messageBool;
+        return true;
     }
 
     public function hasBookinger($id)

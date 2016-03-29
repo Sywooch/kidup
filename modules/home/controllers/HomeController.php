@@ -104,6 +104,6 @@ class HomeController extends Controller
     public function actionSuperSecretCacheFlush()
     {
         \Yii::$app->cache->flush();
-        echo 'dude.. the fu!';
+        echo 'dude.. the fu!!';
     }
 }

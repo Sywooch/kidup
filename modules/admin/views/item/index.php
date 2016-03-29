@@ -26,11 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'name',
             [
-                'attribute' => 'description',
+                'attribute' => 'name',
                 'value' => function ($model) {
-                    return substr($model->description, 0, 50) . "...";
+                    return Html::a($model->name, "@web/admin/item/view?id=" . $model->id);
                 },
                 'format' => 'raw'
             ],
@@ -44,11 +43,36 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'is_available:boolean',
             'created_at:datetime',
-            'updated_at:datetime',
+            [
+                'attribute' => 'media',
+                'value' => function ($model) {
+                    $str = '';
+                    foreach ($model->media as $i => $media) {
+                        if ($i >= 1) {
+                            break;
+                        }
+                        $str .= Html::img(\images\components\ImageHelper::url($media->file_name, ['w' => 120]),
+                            ['width' => '120px']);
+                    }
+                    return $str;
+                },
+                'format' => 'raw'
+            ],
             [
                 'attribute' => 'category_id',
                 'value' => function ($model) {
                     return $model->category->name;
+                },
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'publish_action',
+                'value' => function ($model) {
+                    if(!$model->isAvailable()){
+                        return Html::a(Html::button("Publish", ['class' => 'btn btn-sm btn-success']),"@web/admin/item/publish?id=".$model->id);
+                    }else{
+                        return Html::a(Html::button("UnPublish", ['class' => 'btn btn-sm btn-warning']),"@web/admin/item/unpublish?id=".$model->id);
+                    }
                 },
                 'format' => 'raw'
             ],
@@ -60,8 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             Yii::$app->urlManager->createUrl(['admin/item/view', 'id' => $model->id, 'edit' => 't']), [
                                 'title' => 'Edit',
                             ]);
-                    }
-
+                    },
                 ],
             ],
         ],

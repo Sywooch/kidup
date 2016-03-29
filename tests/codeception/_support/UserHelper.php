@@ -56,4 +56,7 @@ class UserHelper
         ]);
     }
 
+    public static function getUserAccessToken($user){
+        return (new UserHelper())->apiLogin($user)['access-token'];
+    }
 }

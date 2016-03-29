@@ -11,7 +11,7 @@ class PushTemplates
         // Booking owner
         'booking_confirmed_owner' => [
             'fallback' => 'booking_confirmed_owner',
-            'variables' => ['contact_renter_url', 'renter_name', 'booking_id', 'renter_phone_url', 'renter_email_url']
+            'variables' => ['contact_renter_url', 'renter_name', 'booking_id', 'renter_phone_url', 'renter_email_url'],
         ],
         'booking_request_owner' => [
             'fallback' => 'booking_request_owner',
@@ -61,7 +61,8 @@ class PushTemplates
         // Message
         'conversation_message_received' => [
             'fallback' => null,
-            'variables' => ['sender_name']
+            'variables' => ['sender_name'],
+            'state' => ''
         ],
 
         // Review

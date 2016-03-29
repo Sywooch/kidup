@@ -108,7 +108,11 @@ class BrainTree extends Model
 
     public function capture()
     {
-        return \Braintree_Transaction::submitForSettlement($this->getBraintreeId());
+        $res = \Braintree_Transaction::submitForSettlement($this->getBraintreeId());
+        if ($res instanceof \Braintree_Result_Error) {
+            throw new BrainTreeError($res->__toString());
+        }
+        $this->updateStatus();
     }
 
     /*
@@ -131,23 +135,21 @@ class BrainTree extends Model
         return $b->_attributes['status'];
     }
 
+    /**
+     * Testing method, faking accepting
+     */
     public function sandboxSettlementAccept()
     {
-        if ($this->getBraintreeId()) {
-            \Braintree_TestHelper::settle($this->getBraintreeId());
-        } else {
-            $this->payin->status = Payin::STATUS_ACCEPTED;
-            $this->payin->save();
-        }
+        $this->payin->status = Payin::STATUS_ACCEPTED;
+        $this->payin->save();
     }
 
+    /**
+     * Testing method, faking void
+     */
     public function sandboxSettlementDecline()
     {
-        if ($this->getBraintreeId()) {
-            \Braintree_TestHelper::settlementDecline($this->getBraintreeId());
-        } else {
-            $this->payin->status = Payin::STATUS_VOIDED;
-            $this->payin->save();
-        }
+        $this->payin->status = Payin::STATUS_VOIDED;
+        $this->payin->save();
     }
 }
