@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\Event;
 use Codeception\Lib\Interfaces\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
@@ -33,4 +34,11 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
     {
         return parent::findOne($condition);
     }
+
+    public function beforeSave($insert)
+    {
+        Event::trigger(__CLASS__, \yii\db\ActiveRecord::EVENT_AFTER_INSERT);
+        return parent::beforeSave($insert);
+    }
+    
 }

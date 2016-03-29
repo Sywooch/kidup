@@ -1,5 +1,5 @@
 <?php
-namespace codecept\api\messaging;
+namespace codecept\api\notification;
 
 use ApiTester;
 use codecept\_support\MuffinHelper;

@@ -1,5 +1,5 @@
 <?php
-
+// @todo test if correct sender ID
 namespace notification;
 
 use app\helpers\Event;
@@ -80,12 +80,12 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_ACCEPTED, function($event) {
-            (new NotificationDistributer($event->booking->id))->bookingConfirmedOwner($event->booking);
-            (new NotificationDistributer($event->booking->id))->bookingConfirmedRenter($event->booking);
+            (new NotificationDistributer($event->booking->id))->bookingConfirmedOwner($event->sender);
+            (new NotificationDistributer($event->booking->id))->bookingConfirmedRenter($event->sender);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {
-            (new NotificationDistributer($event->booking->id))->bookingDeclinedRenter($event->sender->conversation);
+            (new NotificationDistributer($event->sender->id))->bookingDeclinedRenter($event->sender->conversation);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_NO_RESPONSE, function ($event) {
@@ -98,6 +98,7 @@ class Bootstrap implements BootstrapInterface
         });
 
         Event::register(Payin::className(), Payin::EVENT_PAYIN_CONFIRMED, function ($event) {
+            // look at this
             (new NotificationDistributer($event->sender->id))->bookingRequestOwner($event->sender->booking);
         });
 

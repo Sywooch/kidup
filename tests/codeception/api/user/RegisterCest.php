@@ -3,6 +3,7 @@ use app\helpers\Event;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
+use yii\db\ActiveRecord;
 
 /**
  * functional test for the login.
@@ -25,8 +26,16 @@ class RegisterCest
 
     public function checkRegister(ApiTester $I)
     {
-        Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use ($I) {
-            echo 'hallo';
+        $event_triggered = false;
+        Event::register(user\models\User::className(), user\models\User::EVENT_USER_REGISTER_DONE, function ($event) use ($event_triggered) {
+            $event_triggered = true;
+        }, true);
+        Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use ($event_triggered) {
+            $event_triggered = true;
+        }, true);
+        \yii\base\Event::on(user\models\User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
+            echo 'AFTER INSERT TRIGGER';
+            die();
         });
 
         $faker = \Faker\Factory::create();
@@ -41,6 +50,7 @@ class RegisterCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['email' => $email]);
+        $I->assertTrue($event_triggered);
     }
 
     public function checkNoDoubeleEmailRegister(ApiTester $I)
