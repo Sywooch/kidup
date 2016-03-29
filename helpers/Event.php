@@ -12,7 +12,11 @@ class Event extends \yii\base\Event
 
     public static function trigger($obj, $trigger, $data = null)
     {
-        $classname = $obj->className();
+        if (is_string($obj)) {
+            $classname = $obj;
+        } else {
+            $classname = $obj->className();
+        }
         // Only use the last part of the class name
         if (strpos($classname, '\\') !== false) {
             $parts = explode('\\', $classname);
