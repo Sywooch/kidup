@@ -47,7 +47,7 @@ class CreateCest
      */
     public function checkBookingGuest(ApiTester $I)
     {
-        $I->wantTo("create a simple booking");
+        $I->wantTo("create a simple booking as guest and fail");
         $I->sendPOST('bookings', [
             'item_id' => $this->item->id,
             'date_from' => Carbon::now()->addDays(3)->timestamp,
@@ -63,11 +63,10 @@ class CreateCest
      */
     public function checkSimpleBooking(ApiTester $I)
     {
-        $accessToken = UserHelper::apiLogin($this->user)['access-token'];
         $this->item->is_available = 1;
         $this->item->save();
         $I->wantTo("create a simple booking");
-        $I->sendPOST('bookings?access-token=' . $accessToken, array_merge([
+        $I->sendPOSTAsUser($this->user, 'bookings', array_merge([
             'item_id' => $this->item->id,
             'time_from' => Carbon::now()->addDays(3)->timestamp,
             'time_to' => Carbon::now()->addDays(5)->timestamp,

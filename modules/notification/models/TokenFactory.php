@@ -22,7 +22,7 @@ class TokenFactory
 {
     /**
      * @param   User $user User to create the token for.
-     * @param   const $type Type of the token (see Token class for possible types).
+     * @param   int $type Type of the token (see Token class for possible types).
      * @return  Token The token.
      */
     public static function create(User $user, $type)
@@ -34,5 +34,10 @@ class TokenFactory
         ]);
         $token->save();
         return $token;
+    }
+
+    public static function createRecovery(User $user)
+    {
+        return self::create($user, Token::TYPE_RECOVERY);
     }
 }
