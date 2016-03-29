@@ -6,18 +6,9 @@ use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\booking\Booking;
 use booking\models\payin\Payin;
-use item\models\item\Item;
 use message\models\message\Message;
 use notification\components\NotificationDistributer;
 use notification\models\Token;
-use notifications\components\MailSender;
-use notifications\mails\bookingOwner\StartFactory;
-use notifications\mails\bookingRenter\DeclineFactory;
-use notifications\mails\conversation\NewMessage;
-use notifications\mails\item\UnfinishedReminder;
-use notifications\mails\user\ReconfirmFactory;
-use notifications\mails\user\RecoveryFactory;
-use notifications\mails\user\WelcomeFactory;
 use user\models\User;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -86,6 +77,11 @@ class Bootstrap implements BootstrapInterface
 
         \yii\base\Event::on(Message::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event){
             (new NotificationDistributer($event->sender->receiver_user_id))->conversationMessageReceived($event->sender);
+        });
+
+        Event::register(Booking::className(), Booking::EVENT_OWNER_ACCEPTED, function($event) {
+            (new NotificationDistributer($event->booking->id))->bookingConfirmedOwner($event->booking);
+            (new NotificationDistributer($event->booking->id))->bookingConfirmedRenter($event->booking);
         });
 
         Event::register(Booking::className(), Booking::EVENT_OWNER_DECLINES, function ($event) {

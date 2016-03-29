@@ -1,6 +1,8 @@
 <?php
 namespace notification\components;
 
+// @todo maillog is not working
+
 use notification\models\TemplateRenderer;
 use Swift_Message;
 use yii\swiftmailer\Mailer;
@@ -40,8 +42,9 @@ class MailSender
         }
 
         /** @var \yii\swiftmailer\Mailer $mailer */
-        $receiverEmail = 'kevin91nl@gmail.com';
+        // @todo
         $mailer = \Yii::$app->mailer->compose();
+        $logEntry = MailLog::create($renderer->getTemplate(), $receiverEmail, $mail->getData(), $mail->mailId);
         return $mailer
             ->setTo($receiverEmail)
             ->setReplyTo($replyTo)
@@ -50,27 +53,6 @@ class MailSender
             ->setHtmlBody($view)
             ->send()
         ;
-
-        /*$view = $renderer->render();
-        $mailer = \Yii::$app->mailer;
-        $mailer->getView()->theme = \Yii::$app->view->theme;
-
-        $logEntry = MailLog::create(MailType::getType($mail), $mail->getReceiverEmail(),
-            $mail->getData(), $mail->mailId);
-
-        if ($logEntry !== false) {
-            return $mailer->compose()
-                ->setTo($mail->getReceiverEmail())
-                ->setReplyTo([$mail->getSenderEmail() => $mail->getSenderName()])
-                ->setFrom(['info@kidup.dk' => $mail->getSenderName()])
-                ->setSubject($mail->getSubject())
-                ->setHtmlBody($view)
-                ->send();
-        } else {
-            // No log entry was found
-            return false;
-        }
-        */
     }
 
 }

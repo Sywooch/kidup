@@ -1,4 +1,5 @@
 <?php
+use app\helpers\Event;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
@@ -24,6 +25,10 @@ class RegisterCest
 
     public function checkRegister(ApiTester $I)
     {
+        Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use ($I) {
+            echo 'hallo';
+        });
+
         $faker = \Faker\Factory::create();
         $email = $faker->freeEmail;
         $I->wantTo('register via the api');
