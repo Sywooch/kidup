@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     $str = '';
                     foreach ($model->media as $i => $media) {
-                        if ($i >= 2) {
+                        if ($i >= 1) {
                             break;
                         }
                         $str .= Html::img(\images\components\ImageHelper::url($media->file_name, ['w' => 120]),
@@ -69,9 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'publish_action',
                 'value' => function ($model) {
                     if($model->isAvailable()){
-                        return Html::a("@web/admin/item/unpublish?id=".$model->id);
+                        return Html::a(Html::button("Publish", ['class' => 'btn btn-sm btn-success']),"@web/admin/item/unpublish?id=".$model->id);
                     }else{
-                        return Html::a("@web/admin/item/publish?id=".$model->id);
+                        return Html::a(Html::button("UnPublish", ['class' => 'btn btn-sm btn-warning']),"@web/admin/item/publish?id=".$model->id);
                     }
                 },
                 'format' => 'raw'

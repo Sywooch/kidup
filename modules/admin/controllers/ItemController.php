@@ -106,6 +106,16 @@ class ItemController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionUnpublish($id){
+        /**
+         * @var Item $item
+         */
+        $item = $this->findModel($id);
+        $item->is_available = 1;
+        $item->save();
+        return $this->redirect(['index']);
+    }
+
     /**
      * Finds the Item model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

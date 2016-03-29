@@ -23,5 +23,6 @@ return [
     'numberOfDaysForReview' => 14,
     'icon-framework' => 'fa',
     'appstore-google' => 'google',
-    'appstore-ios' => 'ios'
+    'appstore-ios' => 'ios',
+    'kidup-account-id' => 142 // this is the user id of the account used to send out messages to users
 ];

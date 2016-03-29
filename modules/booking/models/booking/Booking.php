@@ -9,6 +9,8 @@ use booking\models\payin\Payin;
 use booking\models\payin\PayinException;
 use Carbon\Carbon;
 use message\models\conversation\Conversation;
+use message\models\conversation\ConversationFactory;
+use message\models\message\MessageFactory;
 use user\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -235,28 +237,12 @@ class Booking extends BookingBase
     {
         if ($this->conversation !== null) {
             if (count($this->conversation->messages) == 0) {
-                return $this->conversation->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
+                (new MessageFactory())->addMessageToConversation($message, $this->conversation, \Yii::$app->user->identity);
             }
-            return true;
+        }else{
+            (new ConversationFactory())->createBookingConversation($this, $message);
         }
-        $c = new Conversation();
-        $c->initiater_user_id = Yii::$app->user->id;
-        $c->target_user_id = $this->item->owner_id;
-        $c->title = $this->item->name;
-        $c->booking_id = $this->id;
-        $c->created_at = time();
-        if (!$c->save()) {
-            throw new ServerErrorHttpException('Conversation couldn\'t be saved' . Json::encode($c->getErrors()));
-        }
-
-        if ($message == '' || $message == null) {
-            $message = \Yii::t('booking.create.automated_new_message',
-                '{renter_name} made a rent request for {item_name}', [
-                    'renter_name' => \Yii::$app->user->identity->profile->getName()
-                ]);
-        }
-        $messageBool = $c->addMessage($message, $this->item->owner_id, \Yii::$app->user->id);
-        return $messageBool;
+        return true;
     }
 
     public function hasBookinger($id)
