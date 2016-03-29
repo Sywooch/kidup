@@ -17,14 +17,9 @@ class Event extends \yii\base\Event
             $parts = explode('\\', $classname);
             $classname = $parts[count($parts) - 1];
         }
-        echo $classname;
         try {
-            echo 'test2';
-            die();
             return \Yii::$app->trigger($classname . '-' . $trigger, new \yii\base\Event(['sender' => $obj]));
         } catch (Exception $e) {
-            echo 'test';
-            die();
             \Yii::error("Triggering of event failed: " . $classname . '-' . $trigger);
             return false;
         }
