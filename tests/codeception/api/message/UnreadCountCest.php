@@ -39,7 +39,7 @@ class UnreadCountCest
         ]);
         $I->sendGETAsUser($user, 'conversations/unread-count');
         $response = ApiHelper::checkJsonResponse($I);
-        $I->assertEmpty($response, 1);
+        $I->assertEquals($response,"1");
     }
 }
 
