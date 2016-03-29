@@ -3,7 +3,9 @@ namespace codecept\api\item;
 
 use ApiTester;
 use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
+use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 
 /**
@@ -36,13 +38,21 @@ class RecommendedCest
     {
         $I->wantTo("view related items");
 
+        // Login (such that we are allowed to create and update the item)
+        $owner = $this->fm->create(UserMuffin::class);
+        UserHelper::login($owner);
+
         // create an item that is available
-        $item1 = $this->fm->create(ItemMuffin::className());
+        $item1 = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
         $item1->is_available = true;
         $item1->save();
 
         // and another 'related' one (since there are only two)
-        $item2 = $this->fm->create(ItemMuffin::className());
+        $item2 = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
         $item2->is_available = true;
         $item2->save();
 

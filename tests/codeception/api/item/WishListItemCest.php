@@ -32,8 +32,15 @@ class WishListItemCest
     public function _before()
     {
         $this->fm = (new MuffinHelper())->init();
+
+        // Login (such that we are allowed to create and update the item)
+        $owner = $this->fm->create(UserMuffin::class);
+        UserHelper::login($owner);
+
         $this->user = $this->fm->create(UserMuffin::class);
-        $this->item = $this->fm->create(ItemMuffin::class);
+        $this->item = $this->fm->create(ItemMuffin::class, [
+            'owner_id' => $owner->id
+        ]);
         $this->accessToken = UserHelper::apiLogin($this->user)['access-token'];
     }
 
@@ -41,8 +48,14 @@ class WishListItemCest
     public function testViewAll(ApiTester $I)
     {
         WishListItem::deleteAll();
-        $w1 = $this->fm->create(WishListItemMuffin::class, ['user_id' => $this->user->id]);
-        $w2 = $this->fm->create(WishListItemMuffin::class, ['user_id' => $this->user->id]);
+        $w1 = $this->fm->create(WishListItemMuffin::class, [
+            'user_id' => $this->user->id,
+            'item_id' => $this->item->id
+        ]);
+        $w2 = $this->fm->create(WishListItemMuffin::class, [
+            'user_id' => $this->user->id,
+            'item_id' => $this->item->id
+        ]);
         $I->sendGET('wish-list-items', array_merge([
             'access-token' => $this->accessToken,
         ]));

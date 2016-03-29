@@ -121,8 +121,13 @@ class Item extends ItemBase
         return false;
     }
 
-    public function isOwner($userId = null)
+    public function isOwner($user = null)
     {
+        if (!is_object($user)) {
+            $userId = $user;
+        } else {
+            $userId = $user->id;
+        }
         if ($userId == null) {
             $userId = \Yii::$app->user->id;
         }

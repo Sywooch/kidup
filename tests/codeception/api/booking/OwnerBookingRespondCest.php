@@ -35,6 +35,7 @@ class OwnerBookingRespondCest
     {
         $this->fm = (new MuffinHelper())->init();
         $this->owner = $this->fm->create(UserMuffin::class);
+        UserHelper::login($this->owner);
         $this->unknownUser = $this->fm->create(UserMuffin::class);
         $this->item = $this->fm->create(ItemMuffin::class, [
             'owner_id' => $this->owner->id

@@ -34,6 +34,8 @@ class ViewBookingCest
         $this->fm = (new MuffinHelper())->init();
         $this->renter = $this->fm->create(UserMuffin::class);
         $this->owner = $this->fm->create(UserMuffin::class);
+        // Login (such that we are allowed to create and update the item)
+        UserHelper::login($this->owner);
         $this->unknownUser = $this->fm->create(UserMuffin::class);
         $this->item = $this->fm->create(ItemMuffin::class, [
             'owner_id' => $this->owner->id

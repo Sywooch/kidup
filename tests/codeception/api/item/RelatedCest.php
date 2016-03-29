@@ -4,7 +4,9 @@ namespace codecept\api\item;
 
 use ApiTester;
 use codecept\_support\MuffinHelper;
+use codecept\_support\UserHelper;
 use codecept\muffins\ItemMuffin;
+use codecept\muffins\UserMuffin;
 use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 use Codeception\Util\Debug;
@@ -38,13 +40,19 @@ class RelatedCest
     {
         $I->wantTo("view related items");
 
+        // Login (such that we are allowed to create and update the item)
+        $owner = $this->fm->create(UserMuffin::class);
+        UserHelper::login($owner);
+
         // create an item that is available
         $item1 = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id,
             'is_available' => 1
         ]);
 
         // and another 'related' one (since there are only two)
         $item2 = $this->fm->create(ItemMuffin::className(),[
+            'owner_id' => $owner->id,
             'is_available' => 1
         ]);
 
