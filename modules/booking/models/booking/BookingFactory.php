@@ -67,7 +67,6 @@ class BookingFactory
             throw new BookingPaymentException("Payment failed", null, $e);
         }
 
-
         $this->booking->payin_id = $this->payin->id;
         $this->booking->status = Booking::PENDING;
         $this->booking->setExpireDate();

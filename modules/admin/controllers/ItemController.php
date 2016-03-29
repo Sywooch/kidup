@@ -121,7 +121,7 @@ class ItemController extends Controller
         $conv = (new ConversationFactory())->getOrCreateKidUpConversation($item->owner);
         (new MessageFactory())->addMessageToConversation(
             \Yii::t('app.admin.conversation_message.unpublished_by_admin',
-                'Hi there, we\'ve unpublished you\'re item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!', [
+                "Hi there, we've unpublished you're item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!", [
                     'item_name' => !empty($item->name) ? $item->name : $item->id
                 ])
             ,$conv, $conv->initiaterUser);

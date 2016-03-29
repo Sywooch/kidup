@@ -58,10 +58,11 @@ class ConversationFactory
         }
 
         if ($message == '' || $message == null) {
-            $message = \Yii::t('booking.create.automated_new_message',
+            $message = Message::automatedMessageWrapper(\Yii::t('booking.create.automated_new_message',
                 '{renter_name} made a rent request for {item_name}', [
-                    'renter_name' => \Yii::$app->user->identity->profile->getName()
-                ]);
+                    'renter_name' => \Yii::$app->user->identity->profile->getName(),
+                    'item_name' => !empty($booking->item->name) ? $booking->item->name : $booking->item_id
+                ]));
         }
         return (new MessageFactory())->addMessageToConversation($message, $c, $booking->renter);
     }

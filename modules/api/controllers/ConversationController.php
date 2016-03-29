@@ -38,7 +38,10 @@ class ConversationController extends Controller
             'query' => Conversation::find()->where(['target_user_id' => \Yii::$app->user->id])
                 ->orWhere(['initiater_user_id' => \Yii::$app->user->id])
                 ->innerJoinWith('lastMessage')
-                ->orderBy('message.created_at ASC')
+                ->orderBy('message.created_at ASC'),
+            'pagination' => [
+                'pageSize' => 50,
+            ],
         ]);
     }
 
@@ -55,7 +58,10 @@ class ConversationController extends Controller
             'query' => Message::find()
                 ->where(['conversation_id' => $id])
                 ->orWhere(['sender_user_id' => \Yii::$app->user->id, 'receiver_user_id' => \Yii::$app->user->id])
-                ->orderBy('created_at ASC')
+                ->orderBy('created_at ASC'),
+            'pagination' => [
+                'pageSize' => 200,
+            ],
         ]);
     }
 
