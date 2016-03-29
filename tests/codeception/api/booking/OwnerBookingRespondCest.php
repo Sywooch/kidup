@@ -13,6 +13,7 @@ use codecept\muffins\UserMuffin;
 use Codeception\Module\ApiHelper;
 use League\FactoryMuffin\FactoryMuffin;
 use ApiTester;
+
 /**
  * API test for checking the costs of a booking.
  *
@@ -44,29 +45,30 @@ class OwnerBookingRespondCest
         ]);
     }
 
-    private function createBooking(\ApiTester $I, $authorize = true){
-        $this->booking = $this->fm->create(BookingMuffin::class,[
+    private function createBooking(\ApiTester $I, $authorize = true)
+    {
+        $this->booking = $this->fm->create(BookingMuffin::class, [
             'item_id' => $this->item->id,
         ]);
-        if($authorize){
+        if ($authorize) {
             $this->booking->payin->authorize();
             $this->booking->status = Booking::PENDING;
             $this->booking->save();
         }
     }
+
     /**
      * Check if I can accept a booking
      *
      * @param ApiTester $I
      */
-    public function canAcceptBooking(ApiTester $I) {
+    public function canAcceptBooking(ApiTester $I)
+    {
         $this->createBooking($I);
-        $accessToken = UserHelper::apiLogin($this->owner)['access-token'];
         $I->wantTo("an owner can accept a booking");
         $this->booking->status = BookingMuffin::PENDING;
         $this->booking->save();
-        $I->sendGET('bookings/accept',[
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->owner, 'bookings/accept', [
             'id' => $this->booking->id
         ]);
         ApiHelper::checkJsonResponse($I);
@@ -81,14 +83,13 @@ class OwnerBookingRespondCest
      *
      * @param ApiTester $I
      */
-    public function canDeclineBooking(ApiTester $I) {
+    public function canDeclineBooking(ApiTester $I)
+    {
         $this->createBooking($I);
-        $accessToken = UserHelper::apiLogin($this->owner)['access-token'];
         $I->wantTo("as owner decline a booking");
         $this->booking->status = Booking::PENDING;
         $this->booking->save();
-        $I->sendGET('bookings/decline',[
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->owner, 'bookings/decline', [
             'id' => $this->booking->id
         ]);
         ApiHelper::checkJsonResponse($I);
@@ -103,18 +104,16 @@ class OwnerBookingRespondCest
      *
      * @param ApiTester $I
      */
-    public function cantAcceptOrDeclineAsUnknownUser(ApiTester $I) {
+    public function cantAcceptOrDeclineAsUnknownUser(ApiTester $I)
+    {
         $this->createBooking($I);
-        $accessToken = UserHelper::apiLogin($this->unknownUser)['access-token'];
         $I->wantTo("have no access as unknown user");
-        $I->sendGET('bookings/accept',[
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->unknownUser, 'bookings/accept', [
             'id' => $this->booking->id
         ]);
         // @todo response codes should be equal here. not 403 / 400
         ApiHelper::checkJsonResponse($I, 403);
-        $I->sendGET('bookings/decline',[
-            'access-token' => $accessToken,
+        $I->sendGETAsUser($this->unknownUser, 'bookings/decline', [
             'id' => $this->booking->id
         ]);
         ApiHelper::checkJsonResponse($I, 400);

@@ -50,31 +50,22 @@ class ViewBookingCest
      * @param ApiTester $I
      */
     public function cantAccessOtherBooking(ApiTester $I) {
-        $accessToken = UserHelper::apiLogin($this->unknownUser)['access-token'];
         $I->wantTo("check an outsider cant see a booking");
-        $I->sendGET('bookings/'.$this->booking->id,[
-            'access-token' => $accessToken
-        ]);
+        $I->sendGETAsUser($this->unknownUser, 'bookings/'.$this->booking->id);
         ApiHelper::checkJsonResponse($I, 403);
     }
 
     public function ownerBooking(ApiTester $I) {
-        $accessToken = UserHelper::apiLogin($this->owner)['access-token'];
         $I->wantTo("check an owner can see a booking");
-        $I->sendGET('bookings/'.$this->booking->id,[
-            'access-token' => $accessToken
-        ]);
+        $I->sendGETAsUser($this->owner, 'bookings/'.$this->booking->id);
         ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
     }
 
     public function renterBooking(ApiTester $I) {
-        $accessToken = UserHelper::apiLogin($this->renter)['access-token'];
         $I->wantTo("check an owner can see a booking");
-        $I->sendGET('bookings/'.$this->booking->id,[
-            'access-token' => $accessToken
-        ]);
+        $I->sendGETAsUser($this->renter, 'bookings/'.$this->booking->id);
         ApiHelper::checkJsonResponse($I);
         $I->seeResponseContainsJson(['item_id' => $this->item->id]);
         $I->seeResponseContainsJson(['id' => $this->booking->id]);
