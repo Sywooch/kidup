@@ -125,5 +125,6 @@ class Bootstrap implements BootstrapInterface
             $booking = $event->sender;
             (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
         });
+        
     }
 }
