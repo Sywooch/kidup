@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use admin\models\search\Item as ItemSearch;
-use item\models\base\Item;
+use item\models\item\Item;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
