@@ -1,6 +1,7 @@
 <?php
 namespace codecept\functional\user;
 
+use app\helpers\Event;
 use codecept\_support\MuffinHelper;
 use FunctionalTester;
 use League\FactoryMuffin;

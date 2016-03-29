@@ -156,4 +156,14 @@ class Renderer
         return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
     }
 
+    /**
+     * Get the template which is being rendered.
+     *
+     * @return String filename of the template.
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
 }
