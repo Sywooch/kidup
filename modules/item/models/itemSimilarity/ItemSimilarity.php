@@ -87,8 +87,12 @@ class ItemSimilarity extends ItemSimilarityBase
         // this is ugly, but gives some property overloading error if not done like this
 
         $id = $this->item->id;
-        $lat = $this->item->location->latitude;
-        $long = $this->item->location->longitude;
+        $lat = 0;
+        $long = 0;
+        if (isset($this->item->location)) {
+            $lat = $this->item->location->latitude;
+            $long = $this->item->location->longitude;
+        }
         $price = $this->item->price_week;
         $catId = $this->item->category_id;
 

@@ -64,8 +64,12 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                 <?= ReviewScore::widget(['user_id' => $model->owner_id]); ?>
                             </div>
                             <div class="item-category">
-                                <?= $model->category->parent->getTranslatedName() . " - " .
-                                $model->category->getTranslatedName() ?>
+                                <?php if (isset($model->category)) {
+                                    if (isset($model->category->parent)) {
+                                        echo $model->category->parent->getTranslatedName() . " - ";
+                                    }
+                                    echo $model->category->getTranslatedName();
+                                } ?>
                             </div>
                         </div>
                     </div>
@@ -146,7 +150,7 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                                     if (is_int($model->price_year)) {
                                                         echo "<br>" . $model->price_year . ' ' . Yii::t("item.view.per_year",
                                                                 "per year") . "<br>";
-                                                    }?>
+                                                    } ?>
                                                 </b>
                                             </td>
                                         </tr>
@@ -154,17 +158,19 @@ $this->assetPackage = \app\assets\Package::ITEM_VIEW;
                                 </div>
                                 <div class="col-sm-6">
                                     <table class="table">
-                                        <?php foreach ($model->itemHasItemFacets as $ihf): ?>
-                                            <tr>
-                                                <td>
-                                                    <?= $ihf->itemFacet->getTranslatedName() ?>
-                                                </td>
-                                                <td>
-                                                    <b>
-                                                        <?= $ihf->itemFacetValue->getTranslatedName() ?>
-                                                    </b>
-                                                </td>
-                                            </tr>
+                                        <?php foreach ($model->itemHasItemFacets as $ihf):
+                                            if (isset($ihf->itemFacet) && isset($ihf->itemFacetValue)): ?>
+                                                <tr>
+                                                    <td>
+                                                        <?= $ihf->itemFacet->getTranslatedName() ?>
+                                                    </td>
+                                                    <td>
+                                                        <b>
+                                                            <?= $ihf->itemFacetValue->getTranslatedName() ?>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </table>
                                 </div>

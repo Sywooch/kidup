@@ -124,14 +124,21 @@ class Oauth2Controller extends Controller
             throw new BadRequestHttpException("Data should be set in post");
         }
         $account = Account::find()->where(['provider' => 'facebook', 'client_id' => $params['id']])->one();
+
         if ($account === null) {
+            if ($params['data'] == "[object Object]") {
+                $data = [];
+            } else {
+                $data = $params['data'];
+            }
 
             $account = \Yii::createObject([
                 'class' => Account::className(),
                 'provider' => 'facebook',
                 'client_id' => $params['id'],
-                'data' => json_encode($params['data']),
+                'data' => json_encode($data),
             ]);
+
 
             // see if user already exists
             $user = User::findOne(['email' => $params['email']]);
@@ -151,15 +158,18 @@ class Oauth2Controller extends Controller
 
                 $fb = new Facebook();
                 $oauthToken = new OAuthToken();
-                $oauthToken->setToken( $params['access_token']);
+                $oauthToken->setToken($params['access_token']);
                 $fb->setAccessToken($oauthToken);
                 $basicData = $fb->api('me', 'GET', [
                     'fields' => implode(',', ['name', 'email']),
                 ]);
-                $account->data = json_encode(array_merge(json_decode($account->data, true), [
-                    'profile_img_url' => $fb->requestImage($basicData["id"] . '/picture?width=320&height=320', 'GET',
-                        [])
+
+                $data = json_decode($account->data, true);
+                $account->data = json_encode(array_merge($data, [
+                    'profile_img_url' =>
+                        $fb->requestImage($basicData["id"] . '/picture?width=320&height=320', 'GET', [])
                 ]));
+
                 $account->save(false);
 
                 /**
