@@ -68,10 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'publish_action',
                 'value' => function ($model) {
-                    if($model->isAvailable()){
-                        return Html::a(Html::button("Publish", ['class' => 'btn btn-sm btn-success']),"@web/admin/item/unpublish?id=".$model->id);
+                    if(!$model->isAvailable()){
+                        return Html::a(Html::button("Publish", ['class' => 'btn btn-sm btn-success']),"@web/admin/item/publish?id=".$model->id);
                     }else{
-                        return Html::a(Html::button("UnPublish", ['class' => 'btn btn-sm btn-warning']),"@web/admin/item/publish?id=".$model->id);
+                        return Html::a(Html::button("UnPublish", ['class' => 'btn btn-sm btn-warning']),"@web/admin/item/unpublish?id=".$model->id);
                     }
                 },
                 'format' => 'raw'
