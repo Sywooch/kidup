@@ -156,7 +156,8 @@ $urls = [
             'POST unsubscribe' => 'unsubscribe',
             'POST set-user' => 'set-user',
             'POST is-subscribed' => 'is-subscribed',
-            'GET test' => 'test'
+            'GET test' => 'test',
+            'GET mail-view' => 'mail-view'
         ]
     ],
     'api/v1/pages/<page>' => 'api/pages/view',

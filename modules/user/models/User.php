@@ -237,7 +237,6 @@ class User extends base\User implements IdentityInterface
         $this->trigger(self::EVENT_USER_CREATE_INIT);
         if ($this->save()) {
             $this->trigger(self::EVENT_USER_CREATE_DONE);
-
             return true;
         }
 
@@ -262,8 +261,6 @@ class User extends base\User implements IdentityInterface
         if (!isset($this->password)) {
             $this->password = Password::generate(8);
         }
-
-        Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
 
         if ($this->save()) {
             try{

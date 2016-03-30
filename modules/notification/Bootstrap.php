@@ -42,7 +42,7 @@ class Bootstrap implements BootstrapInterface
              */
             $user = $event->sender;
             new SlackJob([
-                'message' => "New user '{$user->profile->getName()}' with id {$user->id} registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50)
+                'message' => "New user with id {$user->id} registered " . \yii\helpers\StringHelper::truncate(Url::previous(), 50)
             ]);
             (new NotificationDistributer($user->id))->userWelcome($user);
         };

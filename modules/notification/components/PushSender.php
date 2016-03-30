@@ -4,6 +4,7 @@ namespace notification\components;
 use Exception;
 use message\components\MobilePush;
 use notification\models\base\MobileDevices;
+use notification\models\NotificationPushLog;
 use Swift_Message;
 use Yii;
 use yii\swiftmailer\Mailer;
@@ -28,6 +29,16 @@ class PushSender
 
         // Do some test magic
         if (\Yii::$app->modules['notification']->useFileTransfer) {
+            // Log it
+            $log = new NotificationPushLog();
+            $log->template = $renderer->getTemplate();
+            $log->receiver_id = $renderer->getReceiverId();
+            $log->receiver_arn_endpoint = 'file_system_used';
+            $log->receiver_platform = 'test';
+            $log->variables = json_encode($renderer->getVariables());
+            $log->view = $view;
+            $log->save();
+
             $path = \Yii::$aliases['@runtime'] . '/notification/';
             if (!is_dir($path)) {
                 mkdir($path);
@@ -44,6 +55,16 @@ class PushSender
             $arn = $device->endpoint_arn;
             try {
                 (new MobilePush())->sendMessage($arn, $view, $parameters);
+
+                // Log it
+                $log = new NotificationPushLog();
+                $log->template = $renderer->getTemplate();
+                $log->receiver_id = $renderer->getReceiverId();
+                $log->receiver_arn_endpoint = $arn;
+                $log->receiver_platform = $device->platform;
+                $log->variables = json_encode($renderer->getVariables());
+                $log->view = $view;
+                $log->save();
             } catch (Exception $e) {
                 if (strpos($e->getMessage(), 'EndpointDisabled') !== false) {
                     // Endpoint was disabled
