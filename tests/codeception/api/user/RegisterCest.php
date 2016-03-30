@@ -26,14 +26,6 @@ class RegisterCest
 
     public function checkRegister(ApiTester $I)
     {
-        $event_triggered = false;
-        Event::register(user\models\User::className(), user\models\User::EVENT_USER_REGISTER_DONE, function ($event) use (&$event_triggered) {
-            $event_triggered = true;
-        }, true);
-        Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use (&$event_triggered) {
-            $event_triggered = true;
-        }, true);
-
         $faker = \Faker\Factory::create();
         $email = $faker->freeEmail;
         $I->wantTo('register via the api');
@@ -46,7 +38,6 @@ class RegisterCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['email' => $email]);
-        $I->assertTrue($event_triggered, 'user_register_done or user_create_done event should be triggered.');
     }
 
     public function checkNoDoubeleEmailRegister(ApiTester $I)

@@ -262,6 +262,7 @@ class User extends base\User implements IdentityInterface
             $this->password = Password::generate(8);
         }
 
+        Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
         if ($this->save()) {
             try{
                 Event::trigger($this, self::EVENT_USER_REGISTER_DONE);
