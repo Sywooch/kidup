@@ -68,8 +68,8 @@
                     <h3>{{ t('mail.welcome.t4', 'Other I answer all your questions') }}</h3>
                     <p>
                         {{ t('mail.welcome.p4',
-                            'If you have questions, feedback or just wants to chat feel free to contact me - Philip, in the {app_link}. Read the {faq_link} or send me an {mail_link_support}.', {
-                            'app_link': '<a href="' ~ app_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
+                            'If you have questions, feedback or just wants to chat feel free to contact me - Philip, in the {chats_link}. Read the {faq_link} or send me an {mail_link_support}.', {
+                            'app_link': '<a href="' ~ chats_url ~ '" target="_blank">' ~ t('mail.links.app', 'app') ~ '</a>',
                             'mail_link_support': '<a href="mailto:' ~ email_support ~ '" target="_blank">' ~ t('mail.links.email', 'email') ~ '</a>',
                             'faq_link': '<a href="' ~ faq_url ~ '">' ~ t('mail.links.faq', 'FAQ') ~ '</a>'
                         }) | raw }}

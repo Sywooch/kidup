@@ -47,10 +47,11 @@ class Renderer
         $this->userRenderer = new UserRenderer();
         $this->messageRenderer = new MessageRenderer();
         $this->setVariables([
-            'app_url' => self::inAppLink('/home'),
-            'faq_url' => self::inAppLink('/home'),
-            'rent_url' => self::inAppLink('/item/home'),
-            'rent_out_url' => self::inAppLink('/item/create'),
+            'app_url' => self::inAppLink('/app/home'),
+            'chats_url' => self::inAppLink('/app/chat'),
+            'faq_url' => self::inAppLink('/app/page/help'),
+            'rent_url' => self::inAppLink('/app/home'),
+            'rent_out_url' => self::inAppLink('/app/item/create'),
             'social_media_url' => 'https://www.facebook.com/kidup.social',
             'email_support' => 'philip@kidup.dk',
         ]);
@@ -72,6 +73,10 @@ class Renderer
 
     public function getReceiverEmail() {
         return $this->vars['receiver_email'];
+    }
+
+    public function getReceiverId() {
+        return $this->vars['receiver_id'];
     }
 
     public function getUserId() {
@@ -153,7 +158,8 @@ class Renderer
      * @return string HTTP link which opens the in-app URL.
      */
     public static function inAppLink($url) {
-        return \yii\helpers\Url::to('@web/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
+        // Hardcode the production server for redirects
+        return \yii\helpers\Url::to('https://www.kidup.dk/mail/click?mailId=0&url=' . base64_encode('kidup://' . $url), true);
     }
 
     /**

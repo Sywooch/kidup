@@ -8,6 +8,7 @@ use message\components\MobilePush;
 use message\models\conversation\Conversation;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
+use notification\models\NotificationMailLog;
 use user\models\User;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
@@ -25,7 +26,7 @@ class NotificationController extends Controller
     public function accessControl()
     {
         return [
-            'guest' => ['register', 'subscribe', 'unsubscribe', 'is-subscribed', 'test'],
+            'guest' => ['register', 'subscribe', 'unsubscribe', 'is-subscribed', 'test', 'mail-click', 'mail-view'],
             'user' => ['set-user']
         ];
     }
@@ -110,6 +111,15 @@ class NotificationController extends Controller
             \Yii::error($e);
             throw new BadRequestHttpException("Went wrong!");
         }
+    }
+
+    public function actionMailView($hash) {
+        $mail = NotificationMailLog::findOneOr404(['hash' => $hash]);
+        echo $mail->view;
+    }
+
+    public function actionMailClick() {
+        echo 'test456';
     }
 
 }

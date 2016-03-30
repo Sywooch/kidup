@@ -31,5 +31,10 @@ class ViewController extends Controller
             'appstore_ios_url' => Yii::$app->params['appstore-ios'],
         ]);
     }
+
+    public function actionTest() {
+        
+    }
+
 }
 
