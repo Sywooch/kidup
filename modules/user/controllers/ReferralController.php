@@ -12,8 +12,7 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use notifications\models\Token;
-use user\models\UserReferredUser;
+use user\models\userReferredUser\UserReferredUser;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 

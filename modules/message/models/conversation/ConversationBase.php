@@ -4,7 +4,7 @@ namespace message\models\conversation;
 
 use booking\models\booking\Booking;
 use notification\models\MailAccount;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -19,8 +19,8 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $booking_id
  *
- * @property \user\models\User $initiaterUser
- * @property \user\models\User $targetUser
+ * @property \user\models\user\User $initiaterUser
+ * @property \user\models\user\User $targetUser
  * @property MailAccount[] $mailAccounts
  * @property \message\models\message\Message[] $messages
  * @property \message\models\message\Message $lastMessage

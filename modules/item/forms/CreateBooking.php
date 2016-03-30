@@ -5,7 +5,7 @@ namespace item\forms;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
 use item\models\item\Item;
-use user\models\base\Currency;
+use user\models\currency\Currency;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\helpers\Url;

@@ -8,7 +8,6 @@ use yii\helpers\Url;
         'class' => 'modal modal-small'
     ]
 ]);
-
 ?>
 
 <div class="modal-body">
@@ -21,7 +20,8 @@ use yii\helpers\Url;
         <?php foreach ($authAuthChoice->getClients() as $client): ?>
             <?php $authAuthChoice->clientLink($client,
                 '<i class="fa fa-' . strtolower($client->getTitle()) . '-square"></i> ' .
-                \Yii::t('user.login.login_social', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
+                \Yii::t('user.login.login_social', 'Login with {socialNetwork}',
+                    ['socialNetwork' => $client->getTitle()])
                 , ['class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle())]) ?>
         <?php endforeach; ?>
     </div>
@@ -40,18 +40,22 @@ use yii\helpers\Url;
 
     <?= $form->field($model, 'login')->textInput(['placeholder' => \Yii::t('user.login.email_placeholder', 'Email')]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['placeholder' => \Yii::t('user.login.password_placeholder', 'Password')]) ?>
+    <?= $form->field($model, 'password')->passwordInput([
+        'placeholder' => \Yii::t('user.login.password_placeholder', 'Password')
+    ]) ?>
 
     <?= $form->field($model, 'rememberMe')->checkbox(['style' => 'margin-left:-15px']) ?>
 
-    <?= \yii\helpers\Html::submitButton(Yii::t('user.login.login_button', 'Login'), ['class' => 'btn btn-danger btn-fill btn-block']) ?>
+    <?= \yii\helpers\Html::submitButton(Yii::t('user.login.login_button', 'Login'),
+        ['class' => 'btn btn-danger btn-fill btn-block']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 <div class="modal-footer">
     <!-- this dismisses the current modal and calls the register modal-->
     <div data-dismiss="modal">
         <button class="btn btn-simple" data-toggle="modal" data-target="#registerModal">
-            <span class="text-muted"><a id="ChangeToRegisterModal"><?= Yii::t("user.login.new_to_kidup_link", "New to KidUp?") ?></a></span>
+            <span class="text-muted"><a id="ChangeToRegisterModal"><?= Yii::t("user.login.new_to_kidup_link",
+                        "New to KidUp?") ?></a></span>
         </button>
     </div>
     <span class="text-muted"><a href="<?= Url::to('@web/user/recovery/request') ?>">

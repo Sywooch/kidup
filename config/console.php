@@ -50,7 +50,7 @@ return [
 
     'components' => [
         'user' => [
-            'class' => 'user\models\User', // User must implement the IdentityInterface
+            'class' => 'user\models\user\User', // User must implement the IdentityInterface
         ],
         'cache' => [
             'class' => 'yii\caching\DummyCache',

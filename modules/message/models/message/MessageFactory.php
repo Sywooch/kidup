@@ -3,7 +3,7 @@
 namespace message\models\message;
 
 use message\models\conversation\Conversation;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\helpers\Json;
 

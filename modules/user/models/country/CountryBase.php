@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\country;
 
 use Yii;
 
@@ -15,13 +15,13 @@ use Yii;
  * @property integer $phone_prefix
  * @property double $vat
  *
- * @property \user\models\base\Currency $currency
- * @property \user\models\Language $mainLanguage
+ * @property \user\models\currency\Currency $currency
+ * @property \user\models\language\Language $mainLanguage
  * @property \item\models\location\Location[] $locations
- * @property \user\models\base\PayoutMethod[] $payoutMethods
- * @property \user\models\Profile[] $profiles
+ * @property \user\models\payoutMethod\PayoutMethod[] $payoutMethods
+ * @property \user\models\profile\Profile[] $profiles
  */
-class Country extends \app\models\BaseActiveRecord
+class CountryBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -67,7 +67,7 @@ class Country extends \app\models\BaseActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\user\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\user\models\currency\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -75,7 +75,7 @@ class Country extends \app\models\BaseActiveRecord
      */
     public function getMainLanguage()
     {
-        return $this->hasOne(\user\models\Language::className(), ['language_id' => 'main_language_id']);
+        return $this->hasOne(\user\models\language\Language::className(), ['language_id' => 'main_language_id']);
     }
 
     /**
@@ -91,6 +91,6 @@ class Country extends \app\models\BaseActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\user\models\Profile::className(), ['nationality' => 'id']);
+        return $this->hasMany(\user\models\profile\Profile::className(), ['nationality' => 'id']);
     }
 }

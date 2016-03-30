@@ -3,7 +3,7 @@
 namespace item\models\location;
 
 use item\models\location\Location;
-use user\models\Country;
+use user\models\country\Country;
 use Yii;
 use yii\db\ActiveRecord;
 

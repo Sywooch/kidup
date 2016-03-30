@@ -1,12 +1,12 @@
 <?php
 
-namespace user\models;
+namespace user\models\country;
 
 use Yii;
 
 /**
  * This is the model class for table "country".
  */
-class Country extends base\Country
+class Country extends CountryBase
 {
 }

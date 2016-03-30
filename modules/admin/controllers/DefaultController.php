@@ -4,7 +4,7 @@ namespace admin\controllers;
 
 use admin\forms\Query;
 use item\models\item\Item;
-use user\models\base\User;
+use user\models\user\User;
 use Yii;
 
 class DefaultController extends Controller

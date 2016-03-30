@@ -27,10 +27,10 @@ class RegisterCest
     public function checkRegister(ApiTester $I)
     {
         $event_triggered = false;
-        Event::register(user\models\User::className(), user\models\User::EVENT_USER_REGISTER_DONE, function ($event) use (&$event_triggered) {
+        Event::register(user\models\user\User::className(), user\models\user\User::EVENT_USER_REGISTER_DONE, function ($event) use (&$event_triggered) {
             $event_triggered = true;
         }, true);
-        Event::register(user\models\User::className(), user\models\User::EVENT_USER_CREATE_DONE, function ($event) use (&$event_triggered) {
+        Event::register(user\models\user\User::className(), user\models\user\User::EVENT_USER_CREATE_DONE, function ($event) use (&$event_triggered) {
             $event_triggered = true;
         }, true);
 

@@ -7,7 +7,7 @@ use kartik\widgets\FileInput;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var \user\models\Profile $profile
+ * @var \user\models\profile\Profile $profile
  */
 
 ?>
@@ -46,7 +46,7 @@ if ($model->getAttribute('img') !== null) {
         ['q' => 70, 'w' => 200, 'h' => 200, 'fit' => 'crop'],
         ['class' => 'file-preview-image', 'title' => 'Profile Image']);
 }
-echo $form->field($model, 'img')->widget(FileInput::classname(), [
+echo $form->field($model, 'img')->widget(FileInput::className(), [
     'options' => ['multiple' => false, 'accept' => 'image/*'],
     'pluginOptions' => $settings,
     'language' => \Yii::$app->session->get('lang')

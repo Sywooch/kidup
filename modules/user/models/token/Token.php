@@ -9,34 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace notification\models;
+namespace user\models\token;
 
-use Carbon\Carbon;
-use user\models\User;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
  * Class Token.
- *
- * @package mail\models
  */
-class Token extends \user\models\base\Token
+class Token extends TokenBase
 {
     const TYPE_CONFIRMATION = 0;
     const TYPE_RECOVERY = 1;
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
     const TYPE_PHONE_CODE = 4;
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
 
     /**
      * @return string
@@ -89,7 +75,6 @@ class Token extends \user\models\base\Token
     public function beforeValidate()
     {
         if ($this->isNewRecord) {
-            $this->setAttribute('created_at', time());
             if ($this->type == self::TYPE_PHONE_CODE) {
                 $this->setAttribute('code', '' . rand(10000, 99999));
             } else {
@@ -98,32 +83,5 @@ class Token extends \user\models\base\Token
         }
 
         return parent::beforeValidate();
-    }
-
-    /** @inheritdoc */
-    public static function tableName()
-    {
-        return '{{%token}}';
-    }
-
-    /** @inheritdoc */
-    public static function primaryKey()
-    {
-        return ['user_id', 'code', 'type'];
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at']
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
     }
 }

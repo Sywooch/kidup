@@ -1,19 +1,10 @@
 <?php
 
-/*
- * This file is part of the  project.
- *
- * (c)  project <http://github.com//>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace user\forms;
 
 use app\helpers\Encrypter;
-use user\models\Country;
-use user\models\PayoutMethod;
+use user\models\country\Country;
+use user\models\payoutMethod\PayoutMethod;
 use yii\base\Model;
 use yii\helpers\Json;
 
@@ -86,6 +77,7 @@ class PayoutPreference extends Model
 
     public function save()
     {
+        // todo put in factory
         if ($this->validate()) {
             if (!isset($this->method)) {
                 $method = new PayoutMethod();

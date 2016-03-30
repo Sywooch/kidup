@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var \user\models\User $user
+ * @var \user\models\user\User $user
  * @var \user\Module $module
  */
 
@@ -44,6 +44,7 @@ $this->assetPackage = \app\assets\Package::USER;
                 'enableClientValidation' => false
             ]); ?>
 
+          
             <?= $form->field($model, 'email') ?>
 
             <?php if ($module->enableGeneratingPassword == false): ?>

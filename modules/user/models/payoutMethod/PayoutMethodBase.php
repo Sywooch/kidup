@@ -1,9 +1,10 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\payoutMethod;
 
+use user\models\country\Country;
+use user\models\user\User;
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the base-model class for table "payout_method".
@@ -21,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property User $user
  * @property Country $country
  */
-class PayoutMethod extends \app\models\BaseActiveRecord
+class PayoutMethodBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -67,7 +68,7 @@ class PayoutMethod extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -75,23 +76,7 @@ class PayoutMethod extends \app\models\BaseActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne(\user\models\base\Country::className(), ['id' => 'country_id']);
+        return $this->hasOne(\user\models\country\Country::className(), ['id' => 'country_id']);
     }
 
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ],
-        ];
-    }
 }

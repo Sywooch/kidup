@@ -5,7 +5,7 @@ use api\models\Media;
 use images\components\ImageHelper;
 use api\models\KodeUp;
 use item\models\itemHasMedia\ItemHasMedia;
-use user\models\Profile;
+use user\models\profile\Profile;
 
 class KodeUpController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace api\models\oauth;
 
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

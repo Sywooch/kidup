@@ -32,6 +32,7 @@ use yii\widgets\ActiveForm;
 
         <span class="divider"> <?= Yii::t("user.register.register_options_devider", "or") ?> </span>
 
+
         <?php $form = ActiveForm::begin([
             'id' => 'registration-form',
             'enableAjaxValidation' => true,
@@ -44,6 +45,7 @@ use yii\widgets\ActiveForm;
                 'class' => "form-control",
                 'placeholder' => \Yii::t('user.register.email_placeholder', 'Email')
             ])->label(false) ?>
+
 
         <?= $form->field($model, 'password')->passwordInput([
             'class' => "form-control",

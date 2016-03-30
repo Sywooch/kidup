@@ -13,7 +13,7 @@ use notification\components\renderer\MessageRenderer;
 use notification\components\renderer\ItemRenderer;
 use notification\components\renderer\PayoutRenderer;
 use notification\components\renderer\UserRenderer;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 class Renderer

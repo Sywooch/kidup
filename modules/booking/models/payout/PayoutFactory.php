@@ -3,7 +3,7 @@
 namespace booking\models\payout;
 
 use booking\models\booking\Booking;
-use user\models\base\Currency;
+use user\models\currency\Currency;
 use Yii;
 
 /**

@@ -5,7 +5,7 @@ namespace message\models\conversation;
 use booking\models\booking\Booking;
 use message\models\message\Message;
 use message\models\message\MessageFactory;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

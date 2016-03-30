@@ -1,16 +1,14 @@
 <?php
 
-namespace user\models;
+namespace user\models\payoutMethod;
 
 use Yii;
 
-class PayoutMethod extends \user\models\base\PayoutMethod
+class PayoutMethod extends PayoutMethodBase
 {
     const TYPE_DK_KONTO = 'dk-konto';
 
-    /**
-     * @inheritdoc
-     */
+  
     public function rules()
     {
         return [

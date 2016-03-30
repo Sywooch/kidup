@@ -22,8 +22,8 @@ use Yii;
  * @property integer $updated_at
  *
  * @property \item\models\item\Item[] $items
- * @property \user\models\base\Country $country0
- * @property \user\models\base\User $user
+ * @property \user\models\country\Country $country0
+ * @property \user\models\user\User $user
  */
 class LocationBase extends \app\models\BaseActiveRecord
 {
@@ -86,7 +86,7 @@ class LocationBase extends \app\models\BaseActiveRecord
      */
     public function getCountry0()
     {
-        return $this->hasOne(\user\models\base\Country::className(), ['id' => 'country']);
+        return $this->hasOne(\user\models\country\Country::className(), ['id' => 'country']);
     }
 
     /**
@@ -94,6 +94,6 @@ class LocationBase extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\base\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 }

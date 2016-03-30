@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var \user\models\base\User $model
+ * @var \user\models\user\User $model
  */
 
 $this->title = $model->id;

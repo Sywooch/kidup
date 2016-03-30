@@ -12,7 +12,7 @@ use yii\helpers\Html;
  * @var \booking\models\booking\Booking $booking
  * @var \booking\forms\Confirm $model
  * @var \item\models\item\Item $item
- * @var \user\models\Profile $profile
+ * @var \user\models\profile\Profile $profile
  * @var array $tableData
  */
 

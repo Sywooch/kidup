@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
         <br/>
 
 
-        <?= $form->field($model, 'country')->widget(Select2::classname(), [
+        <?= $form->field($model, 'country')->widget(Select2::className(), [
             'data' => SelectData::nationality(),
             'options' => ['placeholder' => \Yii::t('user.settings.address.select_country_placeholder', 'Select a Country')],
             'pluginOptions' => [

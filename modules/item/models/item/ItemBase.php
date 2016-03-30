@@ -11,8 +11,8 @@ use item\models\itemSimilarity\ItemSimilarity;
 use item\models\location\Location;
 use item\models\media\Media;
 use review\models\Review;
-use user\models\base\Currency;
-use user\models\User;
+use user\models\currency\Currency;
+use user\models\user\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 

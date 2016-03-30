@@ -5,7 +5,7 @@
 //use app\components\Job;
 //use \mail\models\Mailer;
 //use \mail\models\Token;
-//use \user\models\User;
+//use \user\models\user\User;
 //use yii\helpers\Url;
 //
 //class WelcomeEmailJob extends Job{

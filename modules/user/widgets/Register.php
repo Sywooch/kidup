@@ -13,7 +13,7 @@ namespace user\widgets;
 
 use kartik\form\ActiveForm;
 use user\forms\Registration;
-use user\models\User;
+use user\models\user\User;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\web\Response;

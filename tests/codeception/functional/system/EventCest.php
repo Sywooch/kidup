@@ -6,7 +6,7 @@ use codecept\_support\MuffinTrait;
 use codecept\muffins\UserMuffin;
 use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
-use user\models\User;
+use user\models\user\User;
 use yii\db\ActiveRecord;
 
 /**

@@ -4,7 +4,7 @@ namespace api\models;
 
 use item\models\item\Item;
 use item\models\media\Media;
-use user\models\Profile;
+use user\models\profile\Profile;
 
 
 /**

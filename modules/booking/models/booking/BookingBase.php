@@ -7,8 +7,8 @@ use booking\models\payout\Payout;
 use item\models\item\Item;
 use message\models\conversation\Conversation;
 use review\models\Review;
-use user\models\base\Currency;
-use user\models\User;
+use user\models\currency\Currency;
+use user\models\user\User;
 use Yii;
 
 /**

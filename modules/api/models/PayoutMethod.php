@@ -6,7 +6,7 @@ use app\helpers\Encrypter;
 /**
  * This is the model class for table "item".
  */
-class PayoutMethod extends \user\models\PayoutMethod
+class PayoutMethod extends \user\models\payoutMethod\PayoutMethod
 {
     public function fields()
     {

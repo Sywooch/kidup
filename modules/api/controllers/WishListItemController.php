@@ -5,7 +5,7 @@ use item\models\item\Item;
 use item\models\wishListItem\WishListItem;
 use item\models\wishListItem\WishListItemApi;
 use item\models\wishListItem\WishListItemFactory;
-use user\models\User;
+use user\models\user\User;
 use yii\data\ActiveDataProvider;
 
 class WishListItemController extends Controller

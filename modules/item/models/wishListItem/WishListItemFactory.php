@@ -3,7 +3,7 @@
 namespace item\models\wishListItem;
 
 use item\models\item\Item;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

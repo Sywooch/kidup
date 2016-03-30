@@ -1,15 +1,38 @@
 <?php
-namespace user\models;
+
+namespace user\models\socialAccount;
 
 use images\components\ImageManager;
+use user\models\user\User;
+use Yii;
 
-/**
- *
- * @property \user\Module $module
- *
- */
-class SocialAccount extends base\SocialAccount
+class SocialAccount extends SocialAccountBase
 {
+
+    /**
+     * @return bool Whether this social account is connected to user.
+     */
+    public function getIsConnected()
+    {
+        return $this->user_id != null;
+    }
+
+    /**
+     * @return mixed Json decoded properties.
+     */
+    public function getDecodedData()
+    {
+        if ($this->_data == null) {
+            $this->_data = json_decode($this->data);
+        }
+        return $this->_data;
+    }
+
+    /**
+     * Uses data from the social account provider to save some user properties
+     * @param User $user
+     * @return bool
+     */
     public function fillUserDetails(User $user)
     {
         $data = \yii\helpers\Json::decode($this->data);
@@ -35,11 +58,13 @@ class SocialAccount extends base\SocialAccount
             if ($uploadedFile !== false) {
                 $user->profile->setScenario('social-connect-image');
                 $user->profile->setAttribute('img', $uploadedFile);
-                if(!$user->profile->save()){
-                    \yii\helpers\VarDumper::dump($user->profile->getErrors(),10,true); exit();
+                if (!$user->profile->save()) {
+                    Yii::error("User profile update from social accout failed");
+                    Yii::error($user->profile->getErrors());
                 }
             }
         }
         return true;
     }
+
 }

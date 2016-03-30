@@ -8,7 +8,7 @@ use notification\components\MailRenderer;
 use notification\components\MailSender;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\web\NotFoundHttpException;
 

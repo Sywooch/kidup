@@ -2,7 +2,7 @@
 
 /**
  * @var \app\extended\web\View $this
- * @var \user\models\User $owner
+ * @var \user\models\user\User $owner
  * @var int $itemId
  */
 

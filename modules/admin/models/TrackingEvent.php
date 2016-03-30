@@ -102,7 +102,6 @@ class TrackingEvent extends \app\models\BaseActiveRecord
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->created_at = time();
             $this->user_id = \Yii::$app->user->isGuest ? null : \Yii::$app->user->id;
             $this->session = \Yii::$app->session->hasSessionId ? \Yii::$app->session->id : $this->session;
         }

@@ -11,7 +11,7 @@ use booking\models\payin\Payin;
 use booking\models\payin\PayinException;
 use Carbon\Carbon;
 use item\models\item\Item;
-use user\models\base\Currency;
+use user\models\currency\Currency;
 
 /**
  * @property Item $item

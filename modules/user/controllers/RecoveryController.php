@@ -12,9 +12,8 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use notification\models\Token;
-use user\Finder;
 use user\forms\Recovery;
+use user\models\token\Token;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -25,25 +24,9 @@ use yii\widgets\ActiveForm;
  * RecoveryController manages password recovery process.
  *
  * @property \user\Module $module
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class RecoveryController extends Controller
 {
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param \yii\base\Module $module
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
 
     /** @inheritdoc */
     public function behaviors()
@@ -69,10 +52,8 @@ class RecoveryController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $model = \Yii::createObject([
-            'class' => Recovery::className(),
-            'scenario' => 'request',
-        ]);
+        $model = new Recovery();
+        $model->setScenario('request');
 
         $this->performAjaxValidation($model);
 
@@ -107,10 +88,8 @@ class RecoveryController extends Controller
             return $this->goHome();
         }
 
-        $model = \Yii::createObject([
-            'class' => Recovery::className(),
-            'scenario' => 'reset',
-        ]);
+        $model = new Recovery();
+        $model->setScenario('reset');
 
         $this->performAjaxValidation($model);
 

@@ -4,7 +4,7 @@ namespace item\forms;
 
 use item\models\item\Item;
 use item\models\location\Location;
-use user\models\Country;
+use user\models\country\Country;
 use Yii;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;

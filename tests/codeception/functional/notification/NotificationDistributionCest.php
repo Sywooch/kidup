@@ -14,7 +14,7 @@ use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
-use user\models\User;
+use user\models\user\User;
 
 
 /**

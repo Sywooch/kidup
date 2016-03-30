@@ -17,7 +17,7 @@ class m150824_092746_addLocationApt extends Migration
         $this->execute('SET foreign_key_checks = 1');
 
         // update all existing
-        $users = user\models\User::find()->all();
+        $users = user\models\user\User::find()->all();
         foreach ($users as $u) {
             $location = \item\models\location\Location::findOne(['user_id' => $u->id]);
             if($location == null) continue;

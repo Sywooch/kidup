@@ -13,7 +13,7 @@ namespace notification\models;
 
 use booking\models\booking\Booking;
 use item\models\item\Item;
-use user\models\User;
+use user\models\user\User;
 use yii\helpers\Url;
 
 /**

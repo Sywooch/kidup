@@ -1,9 +1,10 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\user;
 
 use api\models\oauth\OauthAccessToken;
-use user\models\UserReferredUser;
+use item\models\wishListItem\WishListItem;
+use user\models\userReferredUser\UserReferredUser;
 use Yii;
 
 /**
@@ -34,15 +35,18 @@ use Yii;
  * @property \message\models\message\Message[] $messages0
  * @property \booking\models\payin\Payin[] $payins
  * @property \booking\models\payout\PayoutBase[] $payouts
- * @property \user\models\Profile $profile
+ * @property \user\models\profile\Profile $profile
  * @property \review\models\Review[] $reviews
  * @property \review\models\Review[] $reviews0
- * @property \user\models\Setting[] $settings
- * @property \user\models\SocialAccount[] $socialAccounts
- * @property \user\models\base\Token[] $tokens
+ * @property \user\models\setting\Setting[] $settings
+ * @property \user\models\socialAccount\SocialAccount[] $socialAccounts
+ * @property \user\models\token\Token[] $tokens
  * @property \api\models\oauth\OauthAccessToken[] $validOauthAccessTokens
+ * @property User[] $referringUsers
+ * @property User[] $referredUsers
+ * @property WishListItem[] $withListItems
  */
-class User extends \app\models\BaseActiveRecord
+class UserBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -63,7 +67,32 @@ class User extends \app\models\BaseActiveRecord
             [['email', 'unconfirmed_email', 'referral_code'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
             [['registration_ip'], 'string', 'max' => 45],
-            [['referral_code'], 'unique']
+            [['referral_code'], 'unique'],
+            // email rules
+            ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique'],
+            ['email', 'trim'],
+            // password rules
+            ['password', 'required', 'on' => ['register']],
+            ['password', 'string', 'min' => 6, 'on' => ['register', 'create']],
+            ['country', 'required', 'on' => ['register', 'connect']],
+            ['registerFirstName', 'required', 'on' => ['register', 'connect']],
+            ['registerLastName', 'required', 'on' => ['register', 'connect']],
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'default' => ['email', 'password'],
+            'register' => ['email', 'password'],
+            'connect' => ['email'],
+            'create' => ['email', 'password'],
+            'update' => ['email', 'password'],
+            'settings' => ['email', 'password'],
+            'splash' => ['email']
         ];
     }
 
@@ -74,17 +103,18 @@ class User extends \app\models\BaseActiveRecord
     {
         return [
             'id' => 'ID',
-            'email' => 'Email',
-            'password_hash' => 'Password Hash',
-            'confirmed_at' => 'Confirmed At',
-            'unconfirmed_email' => 'Unconfirmed Email',
             'blocked_at' => 'Blocked At',
-            'registration_ip' => 'Registration Ip',
             'flags' => 'Flags',
             'status' => 'Status',
             'role' => 'Role',
-            'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'email' => \Yii::t('user.attributes.email', 'Email'),
+            'registration_ip' => \Yii::t('user.attributes.registration_ip', 'Registration ip'),
+            'unconfirmed_email' => \Yii::t('user.attributes.new_email', 'New email'),
+            'password' => \Yii::t('user.attributes.password', 'Password'),
+            'password_hash' => \Yii::t('user.attributes.password', 'Password'),
+            'created_at' => \Yii::t('user.attributes.registration_time', 'Registration time'),
+            'confirmed_at' => \Yii::t('user.attributes.confirmation_time', 'Confirmation time'),
         ];
     }
 
@@ -181,7 +211,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getProfile()
     {
-        return $this->hasOne(\user\models\Profile::className(), ['user_id' => 'id']);
+        return $this->hasOne(\user\models\profile\Profile::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -205,7 +235,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getSettings()
     {
-        return $this->hasMany(\user\models\Setting::className(), ['user_id' => 'id']);
+        return $this->hasMany(\user\models\setting\Setting::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -213,7 +243,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getSocialAccounts()
     {
-        return $this->hasMany(\user\models\SocialAccount::className(), ['user_id' => 'id']);
+        return $this->hasMany(\user\models\socialAccount\SocialAccount::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -221,7 +251,7 @@ class User extends \app\models\BaseActiveRecord
      */
     public function getTokens()
     {
-        return $this->hasMany(\user\models\base\Token::className(), ['user_id' => 'id']);
+        return $this->hasMany(\user\models\token\Token::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -229,10 +259,10 @@ class User extends \app\models\BaseActiveRecord
      * @param int $since timestamp since when count should count
      * @return int|string
      */
-    public function getReferredUserCount($since = false)
+    public function getReferredUserCount($since = null)
     {
         $q = $this->hasMany(UserReferredUser::className(), ['referring_user_id' => 'id']);
-        if ($since !== false) {
+        if ($since !== null) {
             $q->andWhere('user_referred_user.created_at >= :t')->addParams([':t' => $since]);
         }
 
@@ -246,5 +276,28 @@ class User extends \app\models\BaseActiveRecord
     {
         return $this->hasMany(OauthAccessToken::className(),
             ['user_id' => 'id'])->andWhere('expires >= :t')->params([':t' => time()]);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReferringUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'referring_user_id'])->viaTable('user_referred_user', ['referred_user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReferredUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'referred_user_id'])->viaTable('user_referred_user', ['referring_user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWishListItems()
+    {
+        return $this->hasMany(WishListItem::className(), ['user_id' => 'id']);
     }
 }

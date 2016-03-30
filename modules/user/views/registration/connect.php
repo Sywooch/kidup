@@ -7,8 +7,8 @@ use yii\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var \user\models\User $model
- * @var \user\models\Account $account
+ * @var \user\models\user\User $model
+ * @var \user\models\socialAccount\SocialAccount $account
  */
 $this->title = ViewHelper::getPageTitle(\Yii::t('user.connect.title', 'Connect your account to {0}', $account->provider));
 $this->assetPackage = \app\assets\Package::USER;

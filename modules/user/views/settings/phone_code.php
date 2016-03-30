@@ -14,7 +14,7 @@ use yii\helpers\Url;
 
 /**
  * @var yii\web\View $this
- * @var \user\models\Profile $profile
+ * @var \user\models\profile\Profile $profile
  */
 $this->title = ucfirst(\Yii::t('user.settings.phone_confirm.title', 'Confirm your telephone')) . ' - ' . Yii::$app->name;
 ?>
