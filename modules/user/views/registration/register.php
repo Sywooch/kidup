@@ -31,7 +31,8 @@ $this->assetPackage = \app\assets\Package::USER;
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
                     <?php $authAuthChoice->clientLink($client,
                         '<i class="fa fa-' . strtolower($client->getTitle()) . '-square"></i> ' .
-                        \Yii::t('user.registation.login_with_social', 'Login with {socialNetwork}', ['socialNetwork' => $client->getTitle()])
+                        \Yii::t('user.registation.login_with_social', 'Login with {socialNetwork}',
+                            ['socialNetwork' => $client->getTitle()])
                         , ['class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle())]) ?>
                     <br/><br/>
                 <?php endforeach; ?>
@@ -44,19 +45,19 @@ $this->assetPackage = \app\assets\Package::USER;
                 'enableClientValidation' => false
             ]); ?>
 
-          
+
             <?= $form->field($model, 'email') ?>
 
-            <?php if ($module->enableGeneratingPassword == false): ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-            <?php endif ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
 
-            <?= Html::submitButton(Yii::t('user.registation.sign_up_button', 'Sign up'), ['class' => 'btn btn-danger btn-fill']) ?>
+            <?= Html::submitButton(Yii::t('user.registation.sign_up_button', 'Sign up'),
+                ['class' => 'btn btn-danger btn-fill']) ?>
 
             <?php ActiveForm::end(); ?>
             <hr/>
             <div class="text-center">
-                <?= Html::a(Yii::t('user.registation.existing_user_use_signin_link', 'Already registered? Sign in!'), ['/user/security/login']) ?>
+                <?= Html::a(Yii::t('user.registation.existing_user_use_signin_link', 'Already registered? Sign in!'),
+                    ['/user/security/login']) ?>
             </div>
             <br/>
         </div>

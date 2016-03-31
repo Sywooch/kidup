@@ -164,7 +164,7 @@ class User extends UserBase implements IdentityInterface
     /**
      * This method is used to register new user account. If Module::enableConfirmation is set true, this method
      * will generate new confirmation token and use mailer to send it to the user. Otherwise it will log the user in.
-     * If Module::enableGeneratingPassword is set true, this method will generate new 8-char password. After saving user
+     * After saving user
      * to database, this method uses mailer component to send credentials (username and password) to user via email.
      *
      * @return bool
