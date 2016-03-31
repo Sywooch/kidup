@@ -103,15 +103,12 @@ class KodeUp extends \app\models\BaseActiveRecord
     }
 
     private function removeFromSet($topSet, $toRemove){
-        foreach ($topSet as &$item) {
-            $item = explode("?", $item)[0];
-            $item = str_replace(".jpg", '', $item);
-            $item = str_replace(".png", '', $item);
-        }
-        foreach ($toRemove as &$item) {
-            $item = explode("?", $item)[0];
-            $item = str_replace(".jpg", '', $item);
-            $item = str_replace(".png", '', $item);
+        foreach ([$topSet, $toRemove] as &$set) {
+            foreach ($set as &$item) {
+                $item = explode("?", $item)[0];
+                $item = str_replace(".jpg", '', $item);
+                $item = str_replace(".png", '', $item);
+            }
         }
         return array_diff($topSet, $toRemove);
     }
