@@ -2,6 +2,8 @@
 
 namespace api\models;
 
+use user\models\user\User;
+
 /**
  * This is the model class for table "item".
  */
@@ -43,7 +45,7 @@ class Booking extends \booking\models\booking\Booking
 
     public function extraFields()
     {
-        return ['item', 'conversation'];
+        return ['item', 'conversation', 'renter'];
     }
 
     public function getConversation()
@@ -54,5 +56,10 @@ class Booking extends \booking\models\booking\Booking
     public function getItem()
     {
         return $this->hasOne(Item::className(), ['id' => 'item_id']);
+    }
+
+    public function getRenter()
+    {
+        return $this->hasOne(User::className(), ['id' => 'renter_id']);
     }
 }

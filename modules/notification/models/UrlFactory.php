@@ -80,6 +80,7 @@ class UrlFactory
 
     public static function url($to)
     {
+        // TODO to only takes 2 arguments
         return Url::to("@web/" . $to, [
             'mail_id' => 'x'
         ], true);

@@ -76,7 +76,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                         <?= Yii::t("review.create.communication.text", "How easy was it to communicate with the owner?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'communication')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'communication')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,
@@ -93,7 +93,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                         <?= Yii::t("review.create.exchange_text", "How did the exchange of product go?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'exchange')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'exchange')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,
@@ -111,7 +111,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                             "How did the renter treat the product, was it returned in the same state as it was rented out?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'handling')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'handling')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,

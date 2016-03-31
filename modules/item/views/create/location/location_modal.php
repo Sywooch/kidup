@@ -25,7 +25,7 @@ $form = \yii\bootstrap\ActiveForm::begin([
 ]);
 ?>
 <?= $form->field($model, 'item_id')->hiddenInput(['value' => $itemId])->label(false) ?>
-<?= $form->field($model, 'country')->widget(Select2::classname(), [
+<?= $form->field($model, 'country')->widget(Select2::className(), [
     'data' => SelectData::nationality(),
     'options' => ['placeholder' => \Yii::t('item.create.location_modal.select_country', 'Select a country')],
     'pluginOptions' => [

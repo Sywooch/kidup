@@ -17,7 +17,7 @@ $this->assetPackage = \app\assets\Package::USER;
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <h3>
-                <center><?= Html::encode($this->title) ?></center>
+                <div style="text-align: center;"><?= Html::encode($this->title) ?></div>
             </h3>
             <div class="panel panel-default">
 
