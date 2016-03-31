@@ -48,15 +48,11 @@ class RecoveryController extends Controller
      */
     public function actionRequest()
     {
-        if (!$this->module->enablePasswordRecovery) {
-            throw new NotFoundHttpException;
-        }
-
         $model = new Recovery();
         $model->setScenario('request');
 
         $this->performAjaxValidation($model);
-
+        
         if ($model->load(\Yii::$app->request->post()) && $model->sendRecoveryMessage()) {
             return $this->redirect('@web/home');
         }
@@ -75,10 +71,6 @@ class RecoveryController extends Controller
      */
     public function actionReset($id, $code)
     {
-        if (!$this->module->enablePasswordRecovery) {
-            throw new NotFoundHttpException;
-        }
-
         /** @var Token $token */
         $token = Token::find()->where(['user_id' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
 

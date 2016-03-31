@@ -58,7 +58,7 @@ class Recovery extends Model
             [
                 'email',
                 function ($attribute) {
-                    $this->user = User::findOne($this->email);
+                    $this->user = User::findOne(['email' => $this->email]);
                 }
             ],
             ['password', 'required'],

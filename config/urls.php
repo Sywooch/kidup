@@ -9,6 +9,7 @@ $urls = [
     'search' => 'search/search',
     'search/<query>' => 'search/search',
     'login' => 'user/security/login',
+    'site/login' => 'user/security/login',
     'user/login' => 'user/security/login',
     'user/register' => 'user/registration/register',
     'logout' => 'user/security/logout',

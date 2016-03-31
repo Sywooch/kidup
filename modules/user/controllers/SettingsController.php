@@ -217,7 +217,7 @@ class SettingsController extends Controller
     public function actionVerification($confirm_email = false, $confirm_phone = false)
     {
         $user = User::findOneOr404(\Yii::$app->user->id);
-        $model = new Verification(\$user, $user->profile);
+        $model = new Verification($user, $user->profile);
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post())) {
