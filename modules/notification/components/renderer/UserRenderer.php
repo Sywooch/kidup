@@ -8,9 +8,9 @@ use user\models\user\User;
 class UserRenderer
 {
 
-    private function loadProfileUrl(User $user) {
+    private function loadProfileUrl() {
         return [
-            'profile_url' => 'kidup:///'
+            'profile_url' => 'kidup:///app/user/edit'
         ];
     }
 
@@ -99,6 +99,7 @@ class UserRenderer
     public function loadReceiver(User $user) {
         $result = [];
         $result['receiver_email'] = $user->email;
+        $result['receiver_id'] = $user->id;
         $result['receiver_name'] = $user->profile->getName();
         $result['user_id'] = $user->id;
         return $result;

@@ -155,7 +155,6 @@ class User extends UserBase implements IdentityInterface
         $this->trigger(self::EVENT_USER_CREATE_INIT);
         if ($this->save()) {
             $this->trigger(self::EVENT_USER_CREATE_DONE);
-
             return true;
         }
 
@@ -182,7 +181,6 @@ class User extends UserBase implements IdentityInterface
         }
 
         Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
-
         if ($this->save()) {
             try{
                 Event::trigger($this, self::EVENT_USER_REGISTER_DONE);
