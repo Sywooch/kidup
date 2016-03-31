@@ -23,22 +23,6 @@ class Payout extends \booking\models\payout\PayoutBase
     const STATUS_CANCELLED = 'cancelled';
     const EVENT_PAYOUT_PROCESSED = 'event_payout_processed';
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
-
     public function markAsProcessed()
     {
         $this->status = self::STATUS_PROCESSED;
@@ -68,7 +52,8 @@ class Payout extends \booking\models\payout\PayoutBase
             return false;
         }
         // 4 number bank identifier + bank account number (no spaces in between)
-        $field[3] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted, $key).Encrypter::decrypt($payoutMethod->identifier_1_encrypted,$key);
+        $field[3] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted,
+                $key) . Encrypter::decrypt($payoutMethod->identifier_1_encrypted, $key);
         $field[4] = str_replace(".", ",", $this->amount); // to account
         $field[6] = "DKK";
         $field[7] = "N"; // todo check

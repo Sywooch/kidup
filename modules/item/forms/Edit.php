@@ -2,8 +2,8 @@
 
 namespace item\forms;
 
-use item\models\base\ItemFacetValue;
-use item\models\base\ItemHasItemFacet;
+use item\models\itemFacetValue\ItemFacetValue;
+use item\models\itemHasItemFacet\ItemHasItemFacet;
 use item\models\category\Category;
 use item\models\item\Item;
 use Yii;
@@ -37,17 +37,7 @@ class Edit extends Model
 
     public function __construct(Item $item)
     {
-        $this->item = $item;
-
-        $this->location_id = $item->location_id;
-        $this->name = $item->name;
-        $this->price_week = $item->price_week;
-        $this->price_day = $item->price_day;
-        $this->price_month = $item->price_month;
-        $this->price_year = $item->price_year;
-        $this->description = $item->description;
-        $this->is_available = $item->is_available;
-        $this->category_id = $item->category_id;
+        $this->item = $this->loadItem();
 
         $this->images = $item->media;
 
@@ -58,7 +48,7 @@ class Edit extends Model
         $cats = Category::find()->where('parent_id IS NOT NULL')->all();
 
         foreach ($cats as $cat) {
-            $this->categoryData[$cat->id] = $cat->parent->getTranslatedName() . ' - '. $cat->getTranslatedName();
+            $this->categoryData[$cat->id] = $cat->parent->getTranslatedName() . ' - ' . $cat->getTranslatedName();
         }
 
         return parent::__construct();
@@ -76,7 +66,8 @@ class Edit extends Model
                 'isEmpty' => function () {
                     return count($this->item->itemHasMedia) == 0;
                 },
-                'message' => \Yii::t('item.edit.should_have_one_photo', 'Please provide atleast one photo of your product')
+                'message' => \Yii::t('item.edit.should_have_one_photo',
+                    'Please provide atleast one photo of your product')
             ]
         ];
     }
@@ -118,13 +109,13 @@ class Edit extends Model
             ItemHasItemFacet::deleteAll(['item_id' => $this->item->id]);
             foreach ($this->item_facets as $id => $val) {
                 $itemFacetValue = ItemFacetValue::find()->where(['id' => $val])->one();
-                if($itemFacetValue !== null){
+                if ($itemFacetValue !== null) {
                     $f = new ItemHasItemFacet();
                     $f->item_facet_id = $id;
                     $f->item_id = $this->item->id;
                     $f->item_facet_value_id = $itemFacetValue->id;
                     $f->save();
-                }else{
+                } else {
                     Yii::warning("ItemFacet ID {$val} not found");
                 }
             }
@@ -136,17 +127,8 @@ class Edit extends Model
         if (!$this->validate()) {
             return false;
         }
-        
-        $item = $this->item;
-        $item->location_id = $this->location_id;
-        $item->name = $this->name;
-        $item->price_week = $this->price_week;
-        $item->price_day = $this->price_day;
-        $item->price_month = $this->price_month;
-        $item->price_year = $this->price_year;
-        $item->description = $this->description;
-        $item->is_available = $this->is_available;
-        $item->category_id = $this->category_id;
+
+        $item = $this->loadItem();
 
         $item->scenario = 'create';
         if ($item->save()) {
@@ -178,5 +160,20 @@ class Edit extends Model
             }
         }
         return $c;
+    }
+
+    private function loadItem()
+    {
+        $item = $this->item;
+        $item->location_id = $this->location_id;
+        $item->name = $this->name;
+        $item->price_week = $this->price_week;
+        $item->price_day = $this->price_day;
+        $item->price_month = $this->price_month;
+        $item->price_year = $this->price_year;
+        $item->description = $this->description;
+        $item->is_available = $this->is_available;
+        $item->category_id = $this->category_id;
+        return $item;
     }
 }

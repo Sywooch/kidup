@@ -10,15 +10,15 @@ use Yii;
  * This is the base-model class for table "notification_mail_log".
  *
  * @property integer $id
- * @property string  $template
+ * @property string $template
  * @property integer $receiver_id
- * @property string  $subject
- * @property string  $to
- * @property string  $reply_to
- * @property string  $from
- * @property string  $variables
- * @property string  $view
- * @property string  $hash
+ * @property string $subject
+ * @property string $to
+ * @property string $reply_to
+ * @property string $from
+ * @property string $variables
+ * @property string $view
+ * @property string $hash
  * @property integer $created_at
  */
 class NotificationMailLog extends \app\models\BaseActiveRecord
@@ -73,7 +73,6 @@ class NotificationMailLog extends \app\models\BaseActiveRecord
     public function beforeSave($insert)
     {
         if ($insert == true) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->hash = md5(uniqid() . microtime(true)) . uniqid();
         }
 

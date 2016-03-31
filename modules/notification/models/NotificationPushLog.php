@@ -69,7 +69,6 @@ class NotificationPushLog extends \app\models\BaseActiveRecord
     public function beforeSave($insert)
     {
         if ($insert == true) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->hash = md5(uniqid() . microtime(true)) . uniqid();
         }
 

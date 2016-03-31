@@ -19,19 +19,13 @@ class InvoiceFactory
     {
         $i = new Invoice();
 
-        $l = $booking->item->location;
-        $loc = [];
-        $loc[] = $l->street_name . ' ' . $l->street_number;
-        $loc[] = $l->zip_code;
-        $loc[] = $l->country0->name;
-        $ownerAddress = implode(',', $loc);
+        $ownerAddress = $booking->item->location->getFormattedAddress();
 
-        $l = $booking->renter->locations[0];
-        $loc = [];
-        $loc[] = $l->street_name . ' ' . $l->street_number;
-        $loc[] = $l->zip_code;
-        $loc[] = $l->country0->name;
-        $renterAddress = implode(',', $loc);
+        try{
+            $renterAddress = $booking->renter->locations[0]->getFormattedAddress();
+        }catch (\Error $e){
+            $renterAddress = 'unknown';
+        }
 
         $i->setAttributes([
             'invoice_number' => (int)$this->getNewNumber(),
@@ -53,6 +47,10 @@ class InvoiceFactory
         return $i;
     }
 
+    /**
+     * Get a new invoice number
+     * @return int|mixed
+     */
     public function getNewNumber()
     {
         $i = Invoice::find()->orderBy('invoice_number DESC')->one();
