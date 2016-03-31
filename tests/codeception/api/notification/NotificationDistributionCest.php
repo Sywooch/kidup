@@ -1,6 +1,8 @@
 <?php
-namespace codecept\functional\notification;
+namespace codecept\api\notification;
 
+use ApiTester;
+use app\helpers\Event;
 use booking\models\booking\Booking;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;
@@ -10,10 +12,12 @@ use codecept\muffins\ItemMuffin;
 use codecept\muffins\MessageMuffin;
 use codecept\muffins\MobileDeviceMuffin;
 use codecept\muffins\UserMuffin;
-use functionalTester;
 use League\FactoryMuffin\FactoryMuffin;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
+use notification\models\NotificationMailClickLog;
+use notification\models\NotificationMailLog;
+use notification\models\NotificationPushLog;
 use user\models\User;
 
 
@@ -21,7 +25,7 @@ use user\models\User;
  * API test the notification endpoint.
  *
  * Class NotificationDistributionCest
- * @package codecept\functional\notification
+ * @package codecept\api\notification
  */
 class NotificationDistributionCest
 {
@@ -31,7 +35,7 @@ class NotificationDistributionCest
      */
     protected $fm = null;
     /**
-     * @var FunctionalTester
+     * @var ApiTester
      */
     protected $I;
 
@@ -91,6 +95,9 @@ class NotificationDistributionCest
 
     private function emptyNotifications() {
         // Empty notifications
+        NotificationMailLog::deleteAll();
+        NotificationMailClickLog::deleteAll();
+        NotificationPushLog::deleteAll();
         if (strlen($this->notificationPath) == 0) {
             echo 'NOTIFICATION PATH NOT SET CORRECTLY!';
             exit();
@@ -117,20 +124,27 @@ class NotificationDistributionCest
 
     // Mails only (no push)
 
-    public function testUserWelcome(functionalTester $I) {
+    public function testUserWelcome(ApiTester $I) {
         $this->I = $I;
-
-        $user = $this->makeUser('user@kidup.dk', true);
-
         $this->emptyNotifications();
-        (new NotificationDistributer($user->id))->userWelcome($user);
+
+        // Trigger user create event
+        $faker = \Faker\Factory::create();
+        $email = $faker->freeEmail;
+        $I->sendPOST('users', [
+            'email' => $email,
+            'password' => $faker->password(6),
+            'first_name' => $faker->firstName,
+            'last_name' => $faker->lastName,
+        ]);
+
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
 
-    public function testUserReconfirm(functionalTester $I) {
+    public function testUserReconfirm(ApiTester $I) {
         $this->I = $I;
 
         $user = $this->makeUser('user@kidup.dk', true);
@@ -143,7 +157,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testUserRecovery(functionalTester $I) {
+    public function testUserRecovery(ApiTester $I) {
         $this->I = $I;
 
         $user = $this->makeUser('user@kidup.dk', true);
@@ -156,7 +170,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingPayoutOwner(functionalTester $I) {
+    public function testBookingPayoutOwner(ApiTester $I) {
         $this->I = $I;
 
         /** @var Booking $booking */
@@ -179,7 +193,7 @@ class NotificationDistributionCest
 
     // Push only (no mail)
 
-    public function testConversationMessageReceived(functionalTester $I) {
+    public function testConversationMessageReceived(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -216,7 +230,7 @@ class NotificationDistributionCest
 
     // Mails with fallbacks
 
-    public function testBookingConfirmedOwner(functionalTester $I) {
+    public function testBookingConfirmedOwner(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -245,7 +259,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingRequestOwner(functionalTester $I) {
+    public function testBookingRequestOwner(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -274,7 +288,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingStartOwner(functionalTester $I) {
+    public function testBookingStartOwner(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -303,7 +317,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingConfirmedRenter(functionalTester $I) {
+    public function testBookingConfirmedRenter(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -333,7 +347,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingDeclinedRenter(functionalTester $I) {
+    public function testBookingDeclinedRenter(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -363,7 +377,7 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingStartRenter(functionalTester $I) {
+    public function testBookingStartRenter(ApiTester $I) {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -391,6 +405,66 @@ class NotificationDistributionCest
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
+    }
+
+    // Just test the logging for one push notification and for one mail notification
+    public function testMailLog(ApiTester $I) {
+        $this->I = $I;
+        $this->emptyNotifications();
+
+        // Trigger user create event
+        $faker = \Faker\Factory::create();
+        $email = $faker->freeEmail;
+        $I->sendPOST('users', [
+            'email' => $email,
+            'password' => $faker->password(6),
+            'first_name' => $faker->firstName,
+            'last_name' => $faker->lastName,
+        ]);
+
+        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        $logs = NotificationMailLog::find()->all();
+        $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
+        $log = reset($logs);
+        $I->assertEquals($email, $log->to, 'Receiver should be correct.');
+        $I->assertEquals($mailView, $log->view, 'View should be correct.');
+        $I->assertNotEquals(0, strlen($log->hash), 'Hash should be set.');
+
+        // Test whether it is visible at the endpoint
+        $I->sendGET('notifications/mail-view', [
+            'hash' => $log->hash
+        ]);
+        $I->assertEquals($log->view, $I->grabResponse(), 'Response should be equal.');
+    }
+
+    public function testPushLog(ApiTester $I) {
+        $this->I = $I;
+
+        $owner = $this->fm->create(UserMuffin::className());
+        UserHelper::login($owner);
+        $item = $this->fm->create(ItemMuffin::className(), [
+            'owner_id' => $owner->id
+        ]);
+        $booking = $this->fm->create(BookingMuffin::class, [
+            'item_id' => $item->id
+        ]);
+        $conversation = $this->fm->create(ConversationMuffin::class, [
+            'booking_id' => $booking->id
+        ]);
+        $message = $this->fm->create(MessageMuffin::class, [
+            'conversation_id' => $conversation->id
+        ]);
+
+        $this->setPushEnabled($message->conversation->targetUser, true);
+        $this->emptyNotifications();
+        (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
+        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+
+        $logs = NotificationPushLog::find()->all();
+        $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
+        $log = reset($logs);
+        $I->assertEquals($pushView, $log->view);
+        $I->assertNotEquals(0, strlen($log->hash));
     }
 
 }

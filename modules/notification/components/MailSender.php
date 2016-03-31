@@ -1,9 +1,8 @@
 <?php
 namespace notification\components;
 
-// @todo maillog is not working
-
 use notification\models\MailLog;
+use notification\models\NotificationMailLog;
 use notification\models\TemplateRenderer;
 use Swift_Message;
 use yii\swiftmailer\Mailer;
@@ -25,6 +24,18 @@ class MailSender
         $from = ['info@kidup.dk' => 'KidUp'];
         $subject = 'KidUp';
         $receiverEmail = $renderer->getReceiverEmail();
+        
+        // Log it
+        $log = new NotificationMailLog();
+        $log->template = $renderer->getTemplate();
+        $log->receiver_id = $renderer->getReceiverId();
+        $log->to = $receiverEmail;
+        $log->reply_to = json_encode($replyTo);
+        $log->from = json_encode($from);
+        $log->subject = $subject;
+        $log->variables = json_encode($renderer->getVariables());
+        $log->view = $view;
+        $log->save();
 
         // Do some test magic
         if (\Yii::$app->modules['notification']->useFileTransfer) {
@@ -34,7 +45,7 @@ class MailSender
             }
             file_put_contents($path . 'mail.view', $view);
             file_put_contents($path . 'mail.params', json_encode([
-                'replyTo' => ['info@kidup.dk' => 'KidUp'],
+                'replyTo' => $replyTo,
                 'from' => $from,
                 'subject' => $subject,
                 'receiverEmail' => $receiverEmail
@@ -43,7 +54,6 @@ class MailSender
         }
 
         /** @var \yii\swiftmailer\Mailer $mailer */
-        // @todo
         $mailer = \Yii::$app->mailer->compose();
         return $mailer
             ->setTo($receiverEmail)

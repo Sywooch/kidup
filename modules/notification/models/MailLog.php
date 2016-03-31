@@ -8,10 +8,9 @@ use Yii;
  */
 class MailLog extends base\MailLog
 {
-    public static function create($type, $email, $data, $id)
+    public static function create($type, $email, $data)
     {
         $log = new MailLog();
-        $log->id = $id;
         $log->type = $type;
         $log->email = $email;
         $log->data = $data;
