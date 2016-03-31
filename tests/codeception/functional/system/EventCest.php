@@ -23,7 +23,8 @@ class EventCest
      */
     protected $fm = null;
 
-    public function checkActiveRecordHooks(functionalTester $I) {
+    public function checkActiveRecordHooks(functionalTester $I)
+    {
         $num_before_insert_triggers = 0;
         $num_after_insert_triggers = 0;
         $num_before_update_triggers = 0;
@@ -31,29 +32,35 @@ class EventCest
         $num_before_delete_triggers = 0;
         $num_after_delete_triggers = 0;
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_INSERT, function($event) use (&$num_before_insert_triggers) {
-            $num_before_insert_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_INSERT,
+            function ($event) use (&$num_before_insert_triggers) {
+                $num_before_insert_triggers += 1;
+            });
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_INSERT, function($event) use (&$num_after_insert_triggers) {
-            $num_after_insert_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_INSERT,
+            function ($event) use (&$num_after_insert_triggers) {
+                $num_after_insert_triggers += 1;
+            });
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_UPDATE, function($event) use (&$num_before_update_triggers) {
-            $num_before_update_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_UPDATE,
+            function ($event) use (&$num_before_update_triggers) {
+                $num_before_update_triggers += 1;
+            });
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_UPDATE, function($event) use (&$num_after_update_triggers) {
-            $num_after_update_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_UPDATE,
+            function ($event) use (&$num_after_update_triggers) {
+                $num_after_update_triggers += 1;
+            });
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_DELETE, function($event) use (&$num_before_delete_triggers) {
-            $num_before_delete_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_BEFORE_DELETE,
+            function ($event) use (&$num_before_delete_triggers) {
+                $num_before_delete_triggers += 1;
+            });
 
-        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_DELETE, function($event) use (&$num_after_delete_triggers) {
-            $num_after_delete_triggers += 1;
-        });
+        \yii\base\Event::on(User::className(), ActiveRecord::EVENT_AFTER_DELETE,
+            function ($event) use (&$num_after_delete_triggers) {
+                $num_after_delete_triggers += 1;
+            });
 
         $this->fm = (new MuffinHelper())->init();
         $user = $this->fm->create(UserMuffin::class, [
@@ -88,4 +95,5 @@ class EventCest
     }
 
 }
+
 ?>

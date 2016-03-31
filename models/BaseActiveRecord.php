@@ -23,9 +23,15 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
     {
         $res = parent::findOne($params);
         if (count($res) == 0) {
-            throw new NotFoundHttpException("The instance of ".__CLASS__ .' was not found');
+
+            throw new NotFoundHttpException("We could not find '".self::friendlyClassName() ."' with the specified parameters");
         }
         return $res;
+    }
+
+    public static function friendlyClassName(){
+        $expl = explode("\\", parent::className());
+        return $expl[count($expl)-1];
     }
 
     /**
@@ -35,6 +41,12 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
     public static function findOne($condition)
     {
         return parent::findOne($condition);
+    }
+
+
+    public static function find()
+    {
+        return new BaseQuery(get_called_class());
     }
 
     // Overwrite event hooks
@@ -50,7 +62,7 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
     {
         Event::trigger(__CLASS__,
             $insert ? \yii\db\ActiveRecord::EVENT_AFTER_INSERT : \yii\db\ActiveRecord::EVENT_AFTER_UPDATE);
-        return parent::afterSave($insert, $changedAttributes);
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function beforeDelete()

@@ -90,7 +90,7 @@ class Payin extends PayinBase
      */
     private function onStatusChange()
     {
-        if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null) {
+        if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null && $this->booking !== null) {
             $this->invoice_id = (new InvoiceFactory)->createForBooking($this->booking)->id;
             $this->save();
             Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);

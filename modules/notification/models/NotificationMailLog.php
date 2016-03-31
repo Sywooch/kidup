@@ -3,7 +3,7 @@
 namespace notification\models;
 
 use Carbon\Carbon;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

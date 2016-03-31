@@ -9,7 +9,7 @@ use message\models\conversation\Conversation;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
 use notification\models\NotificationMailLog;
-use user\models\User;
+use user\models\user\User;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;

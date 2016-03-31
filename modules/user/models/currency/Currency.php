@@ -47,6 +47,6 @@ class Currency extends CurrencyBase
      */
     public static function getDefault()
     {
-        return Currency::findOneOr404([]);
+        return Currency::find()->oneOr404();
     }
 }
