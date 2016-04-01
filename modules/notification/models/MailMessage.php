@@ -2,32 +2,15 @@
 
 namespace notification\models;
 
-use Carbon\Carbon;
 use message\models\message\Message;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "mail_message".
  */
 class MailMessage extends base\MailMessage
 {
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
 
     public function rules()
     {
@@ -55,29 +38,16 @@ class MailMessage extends base\MailMessage
         }
 
         /**
-         * @var \mail\models\MailAccount $account ;
+         * @var MailAccount $account;
          */
 
         $senderId = $account->user_id == $account->conversation->initiater_user_id ? $account->conversation->target_user_id : $account->conversation->initiater_user_id;
-
-        // see if already exists
-        // todo should this be here or not?
-//        $m = Message::find()->where([
-//            'conversation_id' => $account->conversation_id,
-//            'message' => $postData['html'],
-//            'sender_user_id' => $senderId,
-//            'receiver_user_id' => $account->user_id,
-//        ])->one();
-//
-//        if (count($m) > 0) {
-//            return false;
-//        }
 
         // make the incomming html safe
         $postData['html'] = \yii\helpers\HtmlPurifier::process($postData['html']);
 
         // create the message
-        $m = new message\Message();
+        $m = new Message();
         $m->setAttributes([
             'conversation_id' => $account->conversation_id,
             'message' => $postData['html'],
@@ -99,7 +69,7 @@ class MailMessage extends base\MailMessage
 
         if (!$mm->save()) {
             Yii::error('MailMessage not created');
-            throw new InternalErrorException("Incomming email not parsed");
+            throw new ServerErrorHttpException("Incomming email not parsed");
         }
 
         return true;

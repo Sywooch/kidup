@@ -16,13 +16,7 @@ $components = [
     'session' => [
         'class' => 'yii\web\DbSession'
     ],
-    'sendGrid' => [
-        'class' => 'bryglen\sendgrid\Mailer',
-        'username' => $keys['sendgrid_user'],
-        'password' => $keys['sendgrid_password'],
-        'viewPath' => '@app/modules/notifications/views',
-        'useFileTransport' => YII_ENV == 'dev' ? true : false
-    ],
+
     'mailer' => [
         'class' => 'yii\swiftmailer\Mailer',
         'transport' => [
@@ -152,7 +146,7 @@ $components = [
         'errorAction' => 'home/error/error',
     ],
     'log' => [
-//        'traceLevel' => 5,
+        'traceLevel' => 5,
         'targets' => [
             [
                 'class' => 'yii\log\FileTarget',
@@ -161,6 +155,15 @@ $components = [
             [
                 'class' => 'yii\log\DbTarget',
                 'levels' => ['error', 'warning'],
+                'logTable' => 'log_application'
+            ],
+            [
+                'class' => 'yii\log\DbTarget',
+                'levels' => ['error', 'warning'],
+                'logTable' => 'log_error',
+                'except' => [
+                    'yii\web\*',
+                ],
             ],
         ],
     ],
@@ -186,8 +189,10 @@ $components = [
         'class' => 'yii\web\Response',
         'on beforeSend' => function ($event) {
             // auto adds access control if an api request
-           
-            if (strpos(\Yii::$app->request->url, "/api/") !== false && \app\helpers\ApiHelper::isApiLikeResponse($event->sender->data)) {
+
+            if (strpos(\Yii::$app->request->url,
+                    "/api/") !== false && \app\helpers\ApiHelper::isApiLikeResponse($event->sender->data)
+            ) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
                 // change all bad requests to success: false, data: details format
                 $response = $event->sender;
@@ -226,17 +231,9 @@ $components = [
             'api_key' => '[YOUR_API_KEY]',
         ],
     ],
-//    'docGenerator' => [
-//        'class' => 'eold\apidocgen\src\ApiDocGenerator',
-//        'isActive' => true,
-//        // Flag to set plugin active
-//        'versionRegexFind' => '/\/api\/(\d+)/i',
-//        // regex used in preg_replace function to find Yii api version format (usually 'v1', 'vX') ...
-//        'versionRegexReplace' => '${2}.0.0',
-//        // .. and replace it in Apidoc format (usually 'x.x.x')
-//        'docDataAlias' => '@runtime/api_docs'
-//        // Folder to save output. make sure is writable.
-//    ],
+    'authManager' => [
+        'class' => 'yii\rbac\PhpManager',
+    ],
 ];
 
 if ($keys['yii_env'] == 'test' || YII_ENV == 'test') {

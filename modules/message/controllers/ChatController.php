@@ -56,7 +56,7 @@ class ChatController extends Controller
 
     public function actionConversation($id)
     {
-        $c = Conversation::find()->where(['conversation.id' => $id])->one();
+        $c = Conversation::findOneOr404($id);
         if ($c->initiater_user_id !== \Yii::$app->user->id && $c->target_user_id !== \Yii::$app->user->id) {
             throw new ForbiddenHttpException("Conversation doesn't belong to you");
         }

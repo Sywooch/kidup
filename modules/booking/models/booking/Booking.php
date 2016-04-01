@@ -2,23 +2,19 @@
 
 namespace booking\models\booking;
 
+use app\components\behaviors\PermissionBehavior;
+use app\components\Permission;
 use app\extended\base\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\payin\Payin;
 use booking\models\payin\PayinException;
-use Carbon\Carbon;
 use message\models\conversation\Conversation;
 use message\models\conversation\ConversationFactory;
 use message\models\message\MessageFactory;
 use user\models\user\User;
-use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
-use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "Booking".
@@ -27,7 +23,10 @@ class BookingException extends Exception
 {
 }
 
-class NoAccessToBookingException extends BookingException{};
+class NoAccessToBookingException extends BookingException
+{
+}
+
 
 class Booking extends BookingBase
 {
@@ -52,6 +51,27 @@ class Booking extends BookingBase
     const EVENT_REVIEW_REMINDER_OWNER = 'event_review_reminder_owner';
     const EVENT_REVIEW_REMINDER_RENTER = 'event_review_reminder_renter';
     const EVENT_REVIEWS_PUBLIC = 'event_reviews_public';
+
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => PermissionBehavior::className(),
+                'permissions' => [
+                    Permission::ACTION_CREATE => Permission::USER,
+                    Permission::ACTION_READ => Permission::OWNER,
+                    Permission::ACTION_UPDATE => Permission::OWNER,
+                    Permission::ACTION_DELETE => Permission::ROOT,
+                ],
+            ],
+        ];
+    }
+
+    public function isOwner(){
+        $yuid = \Yii::$app->user->id;
+        return $yuid === $this->renter_id || $yuid === $this->item->owner_id;
+    }
 
     public function scenarios()
     {
@@ -81,12 +101,12 @@ class Booking extends BookingBase
          * @var Payin $payin
          */
         $payin = Payin::find()->where(['id' => $this->payin_id])->one();
-        try{
+        try {
             $payin->capture();
             $this->status = self::ACCEPTED;
             $this->save();
             Event::trigger($this, self::EVENT_OWNER_ACCEPTED);
-        }catch(PayinException $e){
+        } catch (PayinException $e) {
             throw new BookingException("Payin capture failed", null, $e);
         }
 
@@ -162,27 +182,6 @@ class Booking extends BookingBase
         return isset($statusses[$this->status]) ? $statusses[$this->status] : false;
     }
 
-
-    public function getConversationId()
-    {
-        $conv = Conversation::find()->where(['booking_id' => $this->id])->one();
-        if ($conv == null) {
-            return false;
-        }
-        return $conv->id;
-    }
-
-    public function getLocation($HTMLNewLines = false)
-    {
-        $newLine = PHP_EOL;
-        if ($HTMLNewLines) {
-            $newLine = '<br />';
-        }
-        return $this->item->location->street_name . ' ' . $this->item->location->street_number . ',' . $newLine .
-        $this->item->location->zip_code . ' ' . $this->item->location->city . $newLine . ', ' . $newLine .
-        $this->item->location->country0->name;
-    }
-
     /**
      * Get the number of days of this booking.
      *
@@ -220,82 +219,4 @@ class Booking extends BookingBase
         }
     }
 
-    public function setExpireDate()
-    {
-        $expireDate = time() + 6 * 24 * 60 * 60;
-        if ($this->time_to < $expireDate && $this->time_to > time() - 24 * 60 * 60) {
-            $expireDate = $this->time_to - 24 * 60 * 60;
-        } else {
-            if ($this->time_to < $expireDate) {
-                $expireDate = $this->time_to - 5 * 60; // 5 min
-            }
-        }
-        $this->request_expires_at = $expireDate;
-    }
-
-    public function startConversation($message)
-    {
-        if ($this->conversation !== null) {
-            if (count($this->conversation->messages) == 0) {
-                (new MessageFactory())->addMessageToConversation($message, $this->conversation, \Yii::$app->user->identity);
-            }
-        }else{
-            (new ConversationFactory())->createBookingConversation($this, $message);
-        }
-        return true;
-    }
-
-    public function hasBookinger($id)
-    {
-        if ($this->renter_id !== $id) {
-            throw new ForbiddenHttpException("You are not the renter");
-        }
-
-        return $this;
-    }
-
-    public function hasStatus($statusId)
-    {
-        if ($this->status !== $statusId) {
-            throw new BadRequestHttpException("This action cannot be performed when the rent is in this status");
-        }
-
-        return $this;
-    }
-
-    public function setPayinPrices()
-    {
-        $prices = $this->item->getPriceForPeriod($this->time_from, $this->time_to, $this->currency);
-
-        $this->amount_item = $prices['price'];
-        $this->amount_payin = $prices['total'];
-        $this->amount_payin_fee = round($prices['_detailed']['fee'], 4);
-        $this->amount_payin_fee_tax = round($prices['_detailed']['feeTax'], 4);
-        $this->amount_payin_costs = $this->amount_payin * 0.028 + 1.25; // todo make this dynamic
-
-        $payoutFee = \Yii::$app->params['payoutServiceFeePercentage'] * $prices['price'];
-        $payoutFeeTax = $payoutFee * 0.25; // static tax for now
-        $this->amount_payout = round($this->amount_item - $payoutFee - $payoutFeeTax);
-        $this->amount_payout_fee = round($payoutFee, 4);
-        $this->amount_payout_fee_tax = round($payoutFeeTax, 4);
-
-        return $this;
-    }
-
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
 }

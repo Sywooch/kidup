@@ -3,9 +3,10 @@
 namespace message\forms;
 
 use message\models\message\Message;
+use message\models\message\MessageFactory;
 use yii\base\Model;
 
-class ChatMessage extends Model
+class ChatMessage extends MessageFactory
 {
     public $message;
 

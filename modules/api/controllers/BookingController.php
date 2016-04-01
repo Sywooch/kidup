@@ -9,7 +9,10 @@ use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
 use booking\models\payin\BrainTree;
 use item\forms\CreateBooking;
+use message\models\conversation\Conversation;
+use message\models\message\MessageFactory;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use yii\base\DynamicModel;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
@@ -98,34 +101,20 @@ class BookingController extends Controller
         // fetch the parameters
         $params = \Yii::$app->request->post();
 
-        // check the parameters
-        if (!isset($params['item_id'])) {
-            throw(new BadRequestHttpException("No item_id is set."));
-        }
-        if (!isset($params['time_from'])) {
-            throw(new BadRequestHttpException("No time_from (timestamp) is set."));
-        }
-        if (!isset($params['time_to'])) {
-            throw(new BadRequestHttpException("No time_to (timestamp) is set."));
-        }
-        if (!isset($params['payment_nonce'])) {
-            throw(new BadRequestHttpException("No payment_nonce (string) is set."));
-        }
-        $params['message'] = isset($params['message']) ? $params['message'] : null;
-
-        /**
-         * @var $item Item
-         */
-
-        $item = Item::findOneOr404([
-            'id' => $params['item_id'],
-            'is_available' => 1
-        ]);
+        $userMessage = isset($params['message']) ? $params['message'] : null;
 
         try {
-            return (new BookingFactory)->create($params['time_from'], $params['time_to'], $item,
-                $params['payment_nonce'],
-                $params['message']);
+            $booking = new BookingFactory();
+            $booking->payment_nonce = $params['payment_nonce'];
+            $booking = $booking->createForApi($params, $this->modelClass);
+            if($booking->hasErrors()){
+                return $booking;
+            }
+            \yii\helpers\VarDumper::dump($booking,10,true); exit();
+            $booking = Booking::findOne($booking->id);
+            $message = new MessageFactory();
+            $message->createInitialBookingMessage($userMessage, $booking->conversation, $booking);
+            return $booking;
         } catch (BookingException $e) {
             \Yii::error($e);
             throw new BadRequestHttpException($e->getMessage());
@@ -194,9 +183,6 @@ class BookingController extends Controller
 
     public function actionDecline($id)
     {
-        /**
-         * @var Booking $booking
-         */
         $booking = Booking::findOneOr404(['id' => $id]);
 
         try {
@@ -211,9 +197,6 @@ class BookingController extends Controller
 
     public function actionAccept($id)
     {
-        /**
-         * @var Booking $booking
-         */
         $booking = Booking::findOneOr404(['id' => $id]);
 
         try {

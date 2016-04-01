@@ -2,17 +2,23 @@
 
 namespace message\models\conversation;
 
+use app\components\models\FactoryTrait;
 use booking\models\booking\Booking;
 use message\models\message\Message;
 use message\models\message\MessageFactory;
+use React\Dns\BadServerException;
 use user\models\user\User;
 use Yii;
+use yii\web\BadRequestHttpException;
 
 /**
  * This is the model class for table "conversation".
  */
-class ConversationFactory
+class ConversationFactory extends Conversation
 {
+
+    use FactoryTrait;
+
     /**
      * gets or creates a conversation from kidup to a user
      * @param User $user
@@ -26,16 +32,36 @@ class ConversationFactory
             'target_user_id' => $user->id,
         ]);
         if ($conv == null) {
-            $conv = new Conversation();
-            $conv->setAttributes([
+            $this->setAttributes([
                 'initiater_user_id' => $this->getKidUpUserId(),
                 'target_user_id' => $user->id,
                 'title' => \Yii::t('app.conversation.from_kidup.title', 'KidUp'),
                 'booking_id' => null
             ]);
-            $conv->save();
+            return $this->create();
         }
         return $conv;
+    }
+
+    public function beforeValidate()
+    {
+        $this->initiater_user_id = \Yii::$app->user->id;
+
+        return parent::beforeValidate();
+    }
+
+    public function create(){
+        $this->validate();
+        $conv = Conversation::find()->where([
+            'target_user_id' => $this->target_user_id,
+            'initiater_user_id' => $this->initiater_user_id,
+            'booking_id' => $this->booking_id
+        ])->one();
+        if($conv !== null){
+            return $conv;
+        }
+        $this->save();
+        return $this;
     }
 
     /**
@@ -46,25 +72,14 @@ class ConversationFactory
      * @throws ConversationException
      * @throws \message\models\message\MessageException
      */
-    public function createBookingConversation(Booking $booking, $message){
-        $c = new Conversation();
-        $c->initiater_user_id = $booking->renter_id;
-        $c->target_user_id = $booking->item->owner_id;
-        $c->title = $booking->item->name;
-        $c->booking_id = $booking->id;
-        $c->created_at = time();
-        if (!$c->save()) {
-            throw new ConversationException('Conversation couldn\'t be saved' . Json::encode($c->getErrors()));
-        }
-
-        if ($message == '' || $message == null) {
-            $message = Message::automatedMessageWrapper(\Yii::t('booking.create.automated_new_message',
-                '{renter_name} made a rent request for {item_name}', [
-                    'renter_name' => \Yii::$app->user->identity->profile->getName(),
-                    'item_name' => !empty($booking->item->name) ? $booking->item->name : $booking->item_id
-                ]));
-        }
-        return (new MessageFactory())->addMessageToConversation($message, $c, $booking->renter);
+    public function createFromBooking(Booking $booking){
+        $this->setAttributes([
+            'initiater_user_id' => $booking->renter_id,
+            'target_user_id' => $booking->item->owner_id,
+            'title' => $booking->item->name,
+            'booking_id' => $booking->id
+        ]);
+        return $this->create();
     }
 
     /**

@@ -43,7 +43,7 @@ class Payin extends PayinBase
         try {
             $transaction = $brainTree->autorize();
         } catch (BrainTreeError $e) {
-            throw new PayinException("Payin failed", null, $e);
+            throw new PayinException($e->getMessage(), null, $e);
         }
         $this->status = $this->brainTreeToPayinStatus($transaction['status']);
         $this->braintree_backup = Json::encode($transaction);

@@ -2,6 +2,10 @@
 
 namespace message\models\message;
 
+use app\components\behaviors\PermissionBehavior;
+use app\components\behaviors\PurifierBehavior;
+use app\components\behaviors\UtfEncodeBehavior;
+use app\components\Permission;
 use app\extended\base\Exception;
 use app\helpers\Event;
 use Yii;
@@ -15,34 +19,40 @@ class MessageException extends Exception
  */
 class Message extends MessageBase
 {
-    const EVENT_NEW_MESSAGE = 'new_message';
-
-    public $fromMe;
-
-    public function beforeValidate()
+    public function behaviors()
     {
-        if ($this->isAttributeChanged('message')) {
-            $this->message = \yii\helpers\HtmlPurifier::process($this->message);
-        }
-        return parent::beforeValidate();
+        return [
+            [
+                'class' => PermissionBehavior::className(),
+                'permissions' => [
+                    Permission::ACTION_CREATE => Permission::USER,
+                    Permission::ACTION_READ => Permission::OWNER,
+                    Permission::ACTION_UPDATE => Permission::OWNER,
+                    Permission::ACTION_DELETE => Permission::OWNER,
+                ],
+            ],
+            [
+                'class' => PurifierBehavior::className(),
+                'textAttributes' => [
+                    self::EVENT_BEFORE_VALIDATE => ['message']
+                ]
+            ],
+            [
+                'class' => UtfEncodeBehavior::className(),
+                'attributes' => ['message']
+            ]
+        ];
     }
 
-    public function beforeSave($insert)
+    public function canCreate(self $self)
     {
-        $this->message = utf8_encode($this->message);
-        return parent::beforeSave($insert);
+        return \Yii::$app->user->id == $self->conversation->target_user_id ||
+        \Yii::$app->user->id == $self->conversation->initiater_user_id;
     }
 
-    public function afterFind()
+    public function isOwner()
     {
-        $this->message = utf8_decode($this->message);
-        parent::afterFind();
-    }
-
-    public function afterSave($insert, $changedVars)
-    {
-        Event::trigger($this, self::EVENT_NEW_MESSAGE);
-        parent::afterSave($insert, $changedVars);
+        return $this->sender_user_id == \Yii::$app->user->id;
     }
 
     /**

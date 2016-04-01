@@ -53,19 +53,8 @@ class PurifierBehavior extends Behavior
         'AutoFormat.Linkify' => true,
         'HTML.Nofollow' => true
     ];
-    /**
-     * @inheritdoc
-     */
-    public function attach($owner)
-    {
-        parent::attach($owner);
-        if (!is_array($this->attributes) || empty($this->attributes)) {
-            throw new InvalidParamException('Invalid or empty attributes array.');
-        }
-        if (!empty($this->attributes) && !is_array($this->attributes)) {
-            throw new InvalidParamException('Invalid or text attributes array.');
-        }
-    }
+
+    
     /**
      * @inheritdoc
      */

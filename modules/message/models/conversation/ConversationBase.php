@@ -4,6 +4,7 @@ namespace message\models\conversation;
 
 use booking\models\booking\Booking;
 use notification\models\MailAccount;
+use user\models\profile\Profile;
 use user\models\user\User;
 use Yii;
 use yii\db\ActiveRecord;
@@ -24,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property MailAccount[] $mailAccounts
  * @property \message\models\message\Message[] $messages
  * @property \message\models\message\Message $lastMessage
+ * @property User $otherUser
  */
 class ConversationBase extends \app\models\BaseActiveRecord
 {
@@ -43,7 +45,19 @@ class ConversationBase extends \app\models\BaseActiveRecord
         return [
             [['initiater_user_id', 'target_user_id', 'title', 'created_at'], 'required'],
             [['initiater_user_id', 'target_user_id', 'created_at', 'updated_at', 'booking_id'], 'integer'],
-            [['title'], 'string', 'max' => 50]
+            [['title'], 'string', 'max' => 50],
+            [
+                ['target_user_id'],
+                'exist',
+                'targetClass' => User::className(),
+                'targetAttribute' => ['target_user_id' => 'id']
+            ],
+            [
+                ['initiater_user_id'],
+                'exist',
+                'targetClass' => User::className(),
+                'targetAttribute' => ['initiater_user_id' => 'id']
+            ],
         ];
     }
 
@@ -110,4 +124,18 @@ class ConversationBase extends \app\models\BaseActiveRecord
     {
         return $this->hasOne(Booking::className(), ['id' => 'booking_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOtherUser()
+    {
+        if (Yii::$app->user->id == $this->target_user_id) {
+            $target = "initiater_user_id";
+        } else {
+            $target = "target_user_id";
+        }
+        return $this->hasOne(User::className(), ['id' => $target]);
+    }
+
 }

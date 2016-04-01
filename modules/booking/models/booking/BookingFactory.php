@@ -1,122 +1,87 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: simon
- * Date: 4-3-2016
- * Time: 12:50
- */
 namespace booking\models\booking;
 
-use booking\models\payin\Payin;
+use app\components\models\FactoryTrait;
+use app\helpers\Event;
 use booking\models\payin\PayinException;
+use booking\models\payin\PayinFactory;
 use Carbon\Carbon;
-use item\models\item\Item;
 use user\models\currency\Currency;
-
-/**
- * @property Item $item
- * @property Booking $booking
- */
 
 /**
  * BookingFactory is responsible for the creation of bookings
  */
-class BookingDatesOverlapException extends BookingException
-{
-}
-
-class BookingInvalideDatesException extends BookingException
-{
-}
-
 class BookingPaymentException extends BookingException
 {
 }
 
-class BookingFactory
+class BookingFactory extends Booking
 {
-    private $booking;
-    /**
-     * @var Payin
-     */
-    private $payin;
-    private $item;
+    const EVENT_AFTER_BOOKING_CREATE = 'after-booking-create';
 
-    public function create($from, $to, Item $item, $paymentNonce, $message)
+    use FactoryTrait;
+
+    public $payment_nonce;
+
+
+    public function rules()
     {
-        $this->item = $item;
-        $this->booking = new Booking();
-
-        if (!$this->setDatesAndValidate($from, $to)) {
-            return false;
-        }
-
-        $this->booking->setScenario('init');
-        $this->booking->item_id = $item->id;
-        $this->booking->renter_id = \Yii::$app->user->id;
-        $this->booking->currency_id = Currency::getUserOrDefault()->id;
-        $this->booking->status = Booking::AWAITING_PAYMENT;
-        $this->booking->setPayinPrices();
-
-
-        $this->createPayin($paymentNonce);
-
-        try {
-            $this->payin->authorize();
-        } catch (PayinException $e) {
-            throw new BookingPaymentException("Payment failed", null, $e);
-        }
-
-        $this->booking->payin_id = $this->payin->id;
-        $this->booking->status = Booking::PENDING;
-        $this->booking->setExpireDate();
-        $this->booking->save();
-        $this->payin->status = Payin::STATUS_AUTHORIZED;
-        $this->payin->save();
-
-        $this->booking->startConversation($message);
-        return $this->booking;
+        return array_merge(parent::rules(), [
+            ['payment_nonce', 'required']
+        ]);
     }
 
-    private function createPayin($paymentNonce)
-    {
-        $this->payin = new Payin();
-        $this->payin->nonce = $paymentNonce;
-        $this->payin->status = Payin::STATUS_INIT;
-        $this->payin->currency_id = Currency::getUserOrDefault()->id;
-        $this->payin->user_id = \Yii::$app->user->id;
-        $this->payin->amount = $this->booking->amount_payin;
-        return $this->payin->save();
+    public function create(){
+
+        $this->convertDates();
+        $this->setScenario('init');
+        $this->renter_id = \Yii::$app->user->id;
+        $this->currency_id = Currency::getUserOrDefault()->id;
+        $this->status = Booking::AWAITING_PAYMENT;
+        $this->setPayinPrices();
+
+        if(!$this->validate()){
+            return $this;
+        }
+        if ($this->payin_id === null) {
+            $payin = new PayinFactory();
+            $payin = $payin->createFromBooking($this->payment_nonce, $this);
+
+            $this->payin_id = $payin->id;
+            $this->status = Booking::PENDING;
+        }
+        $this->save();
+        Event::trigger($this, self::EVENT_AFTER_BOOKING_CREATE);
+        return $this;
     }
 
-    private function setDatesAndValidate($from, $to)
+    private function convertDates()
     {
-        if (is_numeric($from)) {
-            $this->booking->time_from = $from;
-        } else {
-            $this->booking->time_from = Carbon::createFromFormat('d-m-Y g:i:s', $from . ' 12:00:00')->timestamp;
+        if (!is_numeric($this->time_from)) {
+            $this->time_from = Carbon::createFromFormat('d-m-Y g:i:s', $this->time_from . ' 12:00:00')->timestamp;
         }
 
-        if (is_numeric($to)) {
-            $this->booking->time_to = $to;
-        } else {
-            $this->booking->time_to = Carbon::createFromFormat('d-m-Y g:i:s', $to . ' 12:00:00')->timestamp;
+        if (!is_numeric($this->time_to)) {
+            $this->time_to = Carbon::createFromFormat('d-m-Y g:i:s', $this->time_to . ' 12:00:00')->timestamp;
         }
-        if ($this->booking->time_to <= $this->booking->time_from) {
-            throw new BookingInvalideDatesException("To date should be larger then from date");
-        }
-        // see if it clashes with another booking
-        // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-        $overlapping = Booking::find()->where(':from < time_to and :to > time_from and item_id = :item_id and status = :status',
-            [
-                ':from' => $this->booking->time_from,
-                ':to' => $this->booking->time_to,
-                ':item_id' => $this->item->id,
-                ':status' => Booking::ACCEPTED
-            ])->count();
-        if ($overlapping > 0) {
-            throw new BookingDatesOverlapException("The item is already rented in this period!");
-        }
-        return true;
+    }
+
+    public function setPayinPrices()
+    {
+        $prices = $this->item->getPriceForPeriod($this->time_from, $this->time_to, $this->currency);
+
+        $this->amount_item = $prices['price'];
+        $this->amount_payin = $prices['total'];
+        $this->amount_payin_fee = round($prices['_detailed']['fee'], 4);
+        $this->amount_payin_fee_tax = round($prices['_detailed']['feeTax'], 4);
+        $this->amount_payin_costs = $this->amount_payin * 0.028 + 1.25;
+
+        $payoutFee = \Yii::$app->params['payoutServiceFeePercentage'] * $prices['price'];
+        $payoutFeeTax = $payoutFee * 0.25; // static tax for now
+        $this->amount_payout = round($this->amount_item - $payoutFee - $payoutFeeTax);
+        $this->amount_payout_fee = round($payoutFee, 4);
+        $this->amount_payout_fee_tax = round($payoutFeeTax, 4);
+
+        return $this;
     }
 }

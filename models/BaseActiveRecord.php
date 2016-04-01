@@ -23,7 +23,6 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
     {
         $res = parent::findOne($params);
         if (count($res) == 0) {
-
             throw new NotFoundHttpException("We could not find '".self::friendlyClassName() ."' with the specified parameters");
         }
         return $res;
@@ -91,4 +90,7 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
+    public function isOwner(){
+        return false;
+    }
 }

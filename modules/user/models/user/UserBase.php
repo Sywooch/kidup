@@ -4,6 +4,7 @@ namespace user\models\user;
 
 use api\models\oauth\OauthAccessToken;
 use item\models\wishListItem\WishListItem;
+use user\models\payoutMethod\PayoutMethod;
 use user\models\userReferredUser\UserReferredUser;
 use Yii;
 
@@ -277,12 +278,14 @@ class UserBase extends \app\models\BaseActiveRecord
         return $this->hasMany(OauthAccessToken::className(),
             ['user_id' => 'id'])->andWhere('expires >= :t')->params([':t' => time()]);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getReferringUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'referring_user_id'])->viaTable('user_referred_user', ['referred_user_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'referring_user_id'])->viaTable('user_referred_user',
+            ['referred_user_id' => 'id']);
     }
 
     /**
@@ -290,7 +293,8 @@ class UserBase extends \app\models\BaseActiveRecord
      */
     public function getReferredUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'referred_user_id'])->viaTable('user_referred_user', ['referring_user_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'referred_user_id'])->viaTable('user_referred_user',
+            ['referring_user_id' => 'id']);
     }
 
     /**
@@ -300,4 +304,13 @@ class UserBase extends \app\models\BaseActiveRecord
     {
         return $this->hasMany(WishListItem::className(), ['user_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayoutMethod()
+    {
+        return $this->hasOne(PayoutMethod::className(), ['user_id' => 'id']);
+    }
+
 }

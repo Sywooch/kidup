@@ -120,7 +120,7 @@ class ItemController extends Controller
             return $this->redirect(['index']);
         }
         $conv = (new ConversationFactory())->getOrCreateKidUpConversation($item->owner);
-        (new MessageFactory())->addMessageToConversation(
+        (new MessageFactory())->addToConversation(
             \Yii::t('app.admin.conversation_message.unpublished_by_admin',
                 "Hi there, we've unpublished you're item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!",
                 [

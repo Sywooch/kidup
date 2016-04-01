@@ -106,4 +106,8 @@ class HomeController extends Controller
         \Yii::$app->cache->flush();
         echo 'dude.. the fu!!';
     }
+
+    public function actionTest(){
+        Yii::error('test');
+    }
 }

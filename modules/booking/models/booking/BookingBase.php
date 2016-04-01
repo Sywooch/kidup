@@ -125,6 +125,62 @@ class BookingBase extends \app\models\BaseActiveRecord
                 'skipOnError' => true,
                 'targetClass' => User::className(),
                 'targetAttribute' => ['renter_id' => 'id']
+            ],
+            [
+                'time_to',
+                function ($attribute, $params) {
+                    if ($this->time_to < $this->time_from - 1 * 24 * 60 * 60) {
+                        $this->addError('time_to', 'The booking should atleast span over 1 day');
+                    }
+                }
+            ],
+            [
+                'time_from',
+                function ($attribute, $params) {
+                    if ($this->$attribute > time()) {
+                        $this->addError('time_from', 'The booking can only start in the future');
+                    }
+                }
+            ],
+            [
+                'time_to',
+                function () {
+                    $overlapping = Booking::find()
+                        ->where(':from < time_to and :to > time_from and item_id = :item_id and status = :status',
+                            [
+                                ':from' => $this->time_from,
+                                ':to' => $this->time_to,
+                                ':item_id' => $this->item_id,
+                                ':status' => Booking::ACCEPTED
+                            ])->count();
+                    if ($overlapping > 0) {
+                        $this->addError('time_to', 'The item is already booked in that period');
+                    }
+                }
+            ],
+            [
+                'request_expires_at',
+                'default',
+                'value' => function ($model, $attribute) {
+                    $expireDate = time() + 6 * 24 * 60 * 60;
+                    if ($this->time_to < $expireDate && $this->time_to > time() - 24 * 60 * 60) {
+                        return $this->time_to - 24 * 60 * 60;
+                    } else {
+                        if ($this->time_to < $expireDate) {
+                            return $this->time_to - 5 * 60; // 5 min
+                        }
+                    }
+                    return $expireDate;
+                }
+            ],
+            [
+                'item_id',
+                function () {
+                    $item = Item::findOne($this->item_id);
+                    if (!$item->isAvailable()) {
+                        $this->addError("item_id", "This item is not available for rent");
+                    }
+                }
             ]
         ];
     }

@@ -37,6 +37,7 @@ class Event extends \yii\base\Event
             $parts = explode('\\', $classname);
             $classname = $parts[count($parts) - 1];
         }
+        \Yii::error($classname.$trigger);
 
         return \Yii::$app->on($classname . '-' . $trigger, $function);
     }

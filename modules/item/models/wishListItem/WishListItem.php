@@ -36,7 +36,7 @@ class WishListItem extends WishListItemBase
         if ($this->user_id == \Yii::$app->user->id) {
             return true;
         }
-        if (\Yii::$app->user->identity->getIsAdmin()) {
+        if (\Yii::$app->user->identity->isAdmin()) {
             return true;
         }
         return false;

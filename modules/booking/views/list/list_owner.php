@@ -68,7 +68,7 @@ $this->assetPackage = \app\assets\Package::BOOKING;
                         $links[] = Html::a(\Yii::t('booking.list.link_view_booking', 'View Booking'), '@web/booking/' . $model->id);
                         $links[] = Html::a(\Yii::t('booking.list.link_contact_owner', 'Contact {0}', [
                             $model->renter->profile->first_name
-                        ]), ['/inbox/' . $model->getConversationId()]);
+                        ]), ['/inbox/' . $model->conversation->id]);
 
                         return implode("<br/>", $links);
                     },

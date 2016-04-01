@@ -123,7 +123,7 @@ class Oauth2Controller extends Controller
         if (!isset($params['data'])) {
             throw new BadRequestHttpException("Data should be set in post");
         }
-        $account = Account::find()->where(['provider' => 'facebook', 'client_id' => $params['id']])->one();
+        $account = SocialAccount::find()->where(['provider' => 'facebook', 'client_id' => $params['id']])->one();
 
         if ($account === null) {
             if ($params['data'] == "[object Object]") {
@@ -133,7 +133,7 @@ class Oauth2Controller extends Controller
             }
 
             $account = \Yii::createObject([
-                'class' => Account::className(),
+                'class' => SocialAccount::className(),
                 'provider' => 'facebook',
                 'client_id' => $params['id'],
                 'data' => json_encode($data),

@@ -4,6 +4,8 @@ namespace user\models\user;
 
 use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
+use app\components\behaviors\PermissionBehavior;
+use app\components\Permission;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
@@ -17,6 +19,7 @@ use user\models\token\Token;
 use user\models\userReferredUser\UserReferredUser;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\rbac\Role;
 use yii\web\HttpException;
 use yii\web\IdentityInterface;
 
@@ -52,25 +55,41 @@ class User extends UserBase implements IdentityInterface
     const EVENT_USER_REQUEST_EMAIL_RECONFIRM = 'user_request_email_reconfirm';
     const EVENT_USER_REQUEST_RECOVERY = 'user_request_recovery';
 
-    // following constants are used on secured email changing process
-    const OLD_EMAIL_CONFIRMED = 0b1;
-    const NEW_EMAIL_CONFIRMED = 0b10;
-
-    const STATUS_SPLASH = -1;
-
     const ROLE_USER = 0;
     const ROLE_ADMIN = 9;
+    const ROLE_ROOT = 1;
 
     /** @var string Plain password. Used for model validation. */
     public $password;
-
-    /** @var \user\Module */
-    protected $module;
 
     private $first_name;
     private $last_name;
 
     /** @inheritdoc */
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => PermissionBehavior::className(),
+                'permissions' => [
+                    Permission::ACTION_CREATE => Permission::GUEST,
+                    Permission::ACTION_READ => Permission::GUEST,
+                    Permission::ACTION_UPDATE => Permission::OWNER,
+                    Permission::ACTION_DELETE => Permission::OWNER,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Defines whether this user is the owner
+     * @return bool
+     */
+    public function isOwner(){
+        return \Yii::$app->user->id === $this->id;
+    }
+
     public static function tableName()
     {
         return '{{%user}}';
@@ -96,14 +115,6 @@ class User extends UserBase implements IdentityInterface
     }
 
     /**
-     * @return bool Whether the user is confirmed or not.
-     */
-    public function getIsConfirmed()
-    {
-        return $this->confirmed_at != null;
-    }
-
-    /**
      * @return bool Whether the user is blocked or not.
      */
     public function getIsBlocked()
@@ -114,9 +125,17 @@ class User extends UserBase implements IdentityInterface
     /**
      * @return bool Whether the user is an admin or not.
      */
-    public function getIsAdmin()
+    public function isAdmin()
     {
-        return $this->role == 9;
+        return $this->role == self::ROLE_ADMIN;
+    }
+
+    /**
+     * @return bool Whether the user is an admin or not.
+     */
+    public function isRoot()
+    {
+        return $this->role == self::ROLE_ROOT;
     }
 
   
@@ -148,10 +167,6 @@ class User extends UserBase implements IdentityInterface
 
         $this->confirmed_at = time();
 
-        if ($this->password == null) {
-            $this->password = Password::generate(8);
-        }
-
         $this->trigger(self::EVENT_USER_CREATE_INIT);
         if ($this->save()) {
             $this->trigger(self::EVENT_USER_CREATE_DONE);
@@ -176,9 +191,6 @@ class User extends UserBase implements IdentityInterface
             throw new \RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
         }
         $this->confirmed_at = time();
-        if (!isset($this->password)) {
-            $this->password = Password::generate(8);
-        }
 
         Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
         if ($this->save()) {
@@ -330,10 +342,6 @@ class User extends UserBase implements IdentityInterface
             $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
         }
 
-        if (!empty($this->password)) {
-            $this->setAttribute('password_hash', Password::hash($this->password));
-        }
-
         return parent::beforeSave($insert);
     }
 
@@ -409,26 +417,12 @@ class User extends UserBase implements IdentityInterface
         return true;
     }
 
-
-    public function isAdmin()
-    {
-        return ($this->role === self::ROLE_ADMIN);
-    }
-
     /**
      * @return string
      */
     protected function getFlashMessage()
     {
         return false;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPayoutMethod()
-    {
-        return $this->hasOne(PayoutMethod::className(), ['user_id' => 'id']);
     }
 
     public function getAuthKey()
