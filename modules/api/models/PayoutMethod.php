@@ -39,11 +39,6 @@ class PayoutMethod extends \user\models\payoutMethod\PayoutMethod
         parent::afterSave($insert, $changedAttributes);
     }
 
-    private function transformToSafe($input, $leaveUntouched = 4)
-    {
-        $length = strlen($input);
-        $input = substr($input, $length - $leaveUntouched);
-        return str_repeat("*", $length - $leaveUntouched) . $input;
-    }
+  
 
 }

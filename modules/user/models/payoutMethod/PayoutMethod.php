@@ -17,4 +17,11 @@ class PayoutMethod extends PayoutMethodBase
         $user = $user ? $user : \Yii::$app->user;
         return $user->id === $this->user_id;
     }
+
+    public function transformToSafe($input, $leaveUntouched = 4)
+    {
+        $length = strlen($input);
+        $input = substr($input, $length - $leaveUntouched);
+        return str_repeat("*", $length - $leaveUntouched) . $input;
+    }
 }
