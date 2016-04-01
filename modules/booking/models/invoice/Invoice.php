@@ -12,19 +12,5 @@ use yii\db\ActiveRecord;
  */
 class Invoice extends InvoiceBase
 {
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
+
 }

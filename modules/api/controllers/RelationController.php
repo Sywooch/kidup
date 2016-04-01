@@ -2,7 +2,7 @@
 namespace api\controllers;
 
 use api\models\Review;
-use user\models\User;
+use user\models\user\User;
 
 class RelationController extends \yii\base\Controller
 {

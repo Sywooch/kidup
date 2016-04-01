@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\language;
 
 use Yii;
 
@@ -14,9 +14,9 @@ use Yii;
  * @property string $status
  * @property string $country
  *
- * @property \user\models\Country[] $countries
+ * @property \user\models\country\Country[] $countries
  */
-class Language extends \app\models\BaseActiveRecord
+class LanguageBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -60,6 +60,6 @@ class Language extends \app\models\BaseActiveRecord
      */
     public function getCountries()
     {
-        return $this->hasMany(\user\models\Country::className(), ['main_language_id' => 'language_id']);
+        return $this->hasMany(\user\models\country\Country::className(), ['main_language_id' => 'language_id']);
     }
 }

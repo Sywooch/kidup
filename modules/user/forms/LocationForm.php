@@ -3,7 +3,7 @@
 namespace user\forms;
 
 use item\models\location\Location;
-use user\models\User;
+use user\models\user\User;
 use user\Module;
 use yii\base\Model;
 
@@ -45,7 +45,6 @@ class LocationForm extends Model
     /** @inheritdoc */
     public function __construct($config = [])
     {
-        $this->module = \Yii::$app->getModule('user');
         $location = Location::find()->where(['user_id' => \Yii::$app->user->id, 'type' => Location::TYPE_MAIN])->one();
         if ($location === null) {
             $location = new Location();

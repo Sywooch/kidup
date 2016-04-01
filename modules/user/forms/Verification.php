@@ -11,9 +11,8 @@
 
 namespace user\forms;
 
-use user\models\Profile;
-use user\models\User;
-use user\Module;
+use user\models\profile\Profile;
+use user\models\user\User;
 use yii\base\Model;
 
 /**
@@ -29,20 +28,17 @@ class Verification extends Model
     /** @var string */
     public $phone_country;
     public $phone_number;
-    /** @var Module */
-    protected $module;
     /** @var User */
     private $_user;
     /** @var Profile */
     private $_profile;
 
     /** @inheritdoc */
-    public function __construct($user, $profile, $config = [])
+    public function __construct(User $user, Profile $profile, $config = [])
     {
         $this->_user = $user;
         $this->_profile = $profile;
 
-        $this->module = \Yii::$app->getModule('user');
         $this->setAttributes([
             'phone_country' => $this->_profile->phone_country,
             'phone_number' => $this->_profile->phone_number,
@@ -85,10 +81,8 @@ class Verification extends Model
             $profile->phone_country = $this->phone_country;
             $profile->phone_number = $this->phone_number;
             $profile->save();
-
             return $this->_user->save();
         }
-
         return false;
     }
 }

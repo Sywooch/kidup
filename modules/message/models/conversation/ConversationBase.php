@@ -4,7 +4,7 @@ namespace message\models\conversation;
 
 use booking\models\booking\Booking;
 use notification\models\MailAccount;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -19,8 +19,8 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $booking_id
  *
- * @property \user\models\User $initiaterUser
- * @property \user\models\User $targetUser
+ * @property \user\models\user\User $initiaterUser
+ * @property \user\models\user\User $targetUser
  * @property MailAccount[] $mailAccounts
  * @property \message\models\message\Message[] $messages
  * @property \message\models\message\Message $lastMessage
@@ -33,22 +33,6 @@ class ConversationBase extends \app\models\BaseActiveRecord
     public static function tableName()
     {
         return 'conversation';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ],
-        ];
     }
 
     /**

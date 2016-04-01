@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use message\models\conversation\Conversation;
 use message\models\conversation\ConversationFactory;
 use message\models\message\MessageFactory;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

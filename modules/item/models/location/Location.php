@@ -4,7 +4,7 @@ namespace item\models\location;
 
 use booking\models\booking\Booking;
 use Carbon\Carbon;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
@@ -51,16 +51,11 @@ class Location extends LocationBase
 
     public function beforeValidate()
     {
-        $this->updated_at = time();
-        if ($this->isNewRecord) {
-            $this->created_at = time();
+        $changed = false;
+        foreach (['street_name', 'street_number', 'city', 'zip_code', 'country'] as $attr){
+            $changed = $this->isAttributeChanged($attr) || $changed;
         }
-        if ($this->isAttributeChanged('street_name') ||
-            $this->isAttributeChanged('street_number') ||
-            $this->isAttributeChanged('city') ||
-            $this->isAttributeChanged('zip_code') ||
-            $this->isAttributeChanged('country')
-        ) {
+        if ($changed) {
             $this->calculateLongitudeLatitude();
         }
         foreach (['city', 'zip_code', 'street_name', "zip_code", "street_name"] as $item) {

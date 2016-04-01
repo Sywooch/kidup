@@ -12,10 +12,9 @@
 namespace user\controllers;
 
 use app\extended\web\Controller;
-use user\Finder;
 use user\forms\Login;
-use user\models\Account;
-use user\models\User;
+use user\models\socialAccount\SocialAccount;
+use user\models\user\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -27,25 +26,9 @@ use yii\widgets\ActiveForm;
  * Controller that manages user authentication process.
  *
  * @property \user\Module $module
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class SecurityController extends Controller
 {
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param \yii\base\Module $module
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
 
     /** @inheritdoc */
     public function behaviors()
@@ -88,7 +71,7 @@ class SecurityController extends Controller
             return $this->redirect(User::afterLoginUrl('login'));
         }
 
-        $model = \Yii::createObject(Login::className());
+        $model = new Login();
 
         $this->performAjaxValidation($model);
 
@@ -122,12 +105,15 @@ class SecurityController extends Controller
         $attributes = $client->getUserAttributes();
         $provider = $client->getId();
         $clientId = $attributes['id'];
-
-        $account = $this->finder->findAccountByProviderAndClientId($provider, $clientId);
+        
+        $account = SocialAccount::findOne([
+            'provider' => $provider,
+            'client_id' => $clientId
+        ]);
 
         if ($account === null) {
             $account = \Yii::createObject([
-                'class' => Account::className(),
+                'class' => SocialAccount::className(),
                 'provider' => $provider,
                 'client_id' => $clientId,
                 'data' => json_encode($attributes),

@@ -8,7 +8,7 @@ use review\models\Review;
 /**
  * This is the model class for table "item".
  */
-class User extends \user\models\User
+class User extends \user\models\user\User
 {
     public function fields()
     {

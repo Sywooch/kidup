@@ -4,7 +4,7 @@ namespace api\controllers;
 use api\models\Review;
 use api\models\User;
 use app\helpers\Event;
-use notification\models\Token;
+use user\models\token\Token;
 use user\forms\Registration;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
@@ -125,7 +125,7 @@ class UserController extends Controller
             if($profile->phone_verified){
                 return ['success' => false, 'message' => 'Already has valid phone number.'];
             }
-            $tokens = \notification\models\Token::find()->where([
+            $tokens = \user\models\token\Token::find()->where([
                 'user_id' => \Yii::$app->user->id,
                 'type' => Token::TYPE_PHONE_CODE
             ])->andWhere('created_at > :time')->addParams([':time' => time()-5*60])->count();
@@ -167,10 +167,10 @@ class UserController extends Controller
 
     public function actionRecover() {
         $email = \Yii::$app->request->getQueryParam('email');
-        $u = \user\models\User::findOneOr404([
+        $u = \user\models\user\User::findOneOr404([
             'email' => $email
         ]);
-        Event::trigger($u, \user\models\User::EVENT_USER_REQUEST_RECOVERY);
+        Event::trigger($u, \user\models\user\User::EVENT_USER_REQUEST_RECOVERY);
         return ['success' => true];
     }
 

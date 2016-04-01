@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\currency;
 
 use Yii;
 
@@ -13,13 +13,13 @@ use Yii;
  * @property string $forex_name
  *
  * @property \booking\models\booking\Booking[] $bookings
- * @property \user\models\Country[] $countries
+ * @property \user\models\country\Country[] $countries
  * @property \item\models\item\Item[] $items
  * @property \booking\models\payin\Payin[] $payins
  * @property \booking\models\payout\PayoutBase[] $payouts
- * @property \user\models\Profile[] $profiles
+ * @property \user\models\profile\Profile[] $profiles
  */
-class Currency extends \app\models\BaseActiveRecord
+class CurrencyBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -55,24 +55,6 @@ class Currency extends \app\models\BaseActiveRecord
     }
 
     /**
-     * Gets the currency of a user, or the default if the user is guest or none is set
-     * @return Currency|\yii\db\ActiveRecord
-     */
-    public static function getUserOrDefault(\yii\web\User $user = null){
-        $user = is_null($user) || $user->isGuest ? \Yii::$app->user->identity : $user->identity;
-        if (isset($user->profile)) {
-            if ($user->profile->currency) {
-                return $user->profile->currency;
-            }
-        }
-        return self::getDefault();
-    }
-
-    public static function getDefault(){
-        return Currency::find()->one();
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getBookings()
@@ -85,7 +67,7 @@ class Currency extends \app\models\BaseActiveRecord
      */
     public function getCountries()
     {
-        return $this->hasMany(\user\models\Country::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\user\models\country\Country::className(), ['currency_id' => 'id']);
     }
 
     /**
@@ -117,6 +99,6 @@ class Currency extends \app\models\BaseActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(\user\models\Profile::className(), ['currency_id' => 'id']);
+        return $this->hasMany(\user\models\profile\Profile::className(), ['currency_id' => 'id']);
     }
 }

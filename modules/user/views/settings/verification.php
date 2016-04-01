@@ -15,7 +15,7 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var \user\models\Profile $profile
+ * @var \user\models\profile\Profile $profile
  */
 
 ?>

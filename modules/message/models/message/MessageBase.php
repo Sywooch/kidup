@@ -18,8 +18,8 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  *
  * @property \notification\models\MailMessage[] $mailMessages
- * @property \user\models\User $senderUser
- * @property \user\models\User $receiverUser
+ * @property \user\models\user\User $senderUser
+ * @property \user\models\user\User $receiverUser
  * @property \message\models\conversation\Conversation $conversation
  */
 class MessageBase extends \app\models\BaseActiveRecord
@@ -66,23 +66,6 @@ class MessageBase extends \app\models\BaseActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ],
-        ];
-    }
-
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getMailMessages()
@@ -95,7 +78,7 @@ class MessageBase extends \app\models\BaseActiveRecord
      */
     public function getSenderUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'sender_user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'sender_user_id']);
     }
 
     /**
@@ -103,7 +86,7 @@ class MessageBase extends \app\models\BaseActiveRecord
      */
     public function getReceiverUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'receiver_user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'receiver_user_id']);
     }
 
     /**

@@ -18,7 +18,7 @@ use notification\models\base\MobileDevices;
 use notification\models\NotificationMailClickLog;
 use notification\models\NotificationMailLog;
 use notification\models\NotificationPushLog;
-use user\models\User;
+use user\models\user\User;
 
 
 /**
@@ -46,14 +46,15 @@ class NotificationDistributionCest
 
     public function _before()
     {
-        $this->notificationPath = \Yii::$aliases['@runtime'].'/notification/';
+        $this->notificationPath = \Yii::$aliases['@runtime'] . '/notification/';
         MobileDevices::deleteAll();
         User::deleteAll();
         $this->fm = (new MuffinHelper())->init();
         $this->emptyNotifications();
     }
 
-    private function setPushEnabled(User $user, $enabled) {
+    private function setPushEnabled(User $user, $enabled)
+    {
         MobileDevices::deleteAll(['user_id' => $user->id]);
         return $this->fm->create(MobileDeviceMuffin::class, [
             'user_id' => $user->id,
@@ -61,7 +62,8 @@ class NotificationDistributionCest
         ]);
     }
 
-    private function getMail() {
+    private function getMail()
+    {
         $view = null;
         $params = null;
         $received = false;
@@ -77,7 +79,8 @@ class NotificationDistributionCest
         return [$received, $view, $params];
     }
 
-    private function getPush() {
+    private function getPush()
+    {
         $view = null;
         $params = null;
         $received = false;
@@ -93,7 +96,8 @@ class NotificationDistributionCest
         return [$received, $view, $params];
     }
 
-    private function emptyNotifications() {
+    private function emptyNotifications()
+    {
         // Empty notifications
         NotificationMailLog::deleteAll();
         NotificationMailClickLog::deleteAll();
@@ -108,7 +112,8 @@ class NotificationDistributionCest
         }
     }
 
-    private function makeUser($email, $enablePush = true) {
+    private function makeUser($email, $enablePush = true)
+    {
         $user = $this->fm->create(UserMuffin::class, [
             'email' => $email
         ]);
@@ -124,7 +129,8 @@ class NotificationDistributionCest
 
     // Mails only (no push)
 
-    public function testUserWelcome(ApiTester $I) {
+    public function testUserWelcome(ApiTester $I)
+    {
         $this->I = $I;
         $this->emptyNotifications();
 
@@ -144,7 +150,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testUserReconfirm(ApiTester $I) {
+    public function testUserReconfirm(ApiTester $I)
+    {
         $this->I = $I;
 
         $user = $this->makeUser('user@kidup.dk', true);
@@ -157,7 +164,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testUserRecovery(ApiTester $I) {
+    public function testUserRecovery(ApiTester $I)
+    {
         $this->I = $I;
 
         $user = $this->makeUser('user@kidup.dk', true);
@@ -170,7 +178,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingPayoutOwner(ApiTester $I) {
+    public function testBookingPayoutOwner(ApiTester $I)
+    {
         $this->I = $I;
 
         /** @var Booking $booking */
@@ -193,7 +202,8 @@ class NotificationDistributionCest
 
     // Push only (no mail)
 
-    public function testConversationMessageReceived(ApiTester $I) {
+    public function testConversationMessageReceived(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -230,7 +240,8 @@ class NotificationDistributionCest
 
     // Mails with fallbacks
 
-    public function testBookingConfirmedOwner(ApiTester $I) {
+    public function testBookingConfirmedOwner(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -259,7 +270,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingRequestOwner(ApiTester $I) {
+    public function testBookingRequestOwner(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -288,7 +300,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingStartOwner(ApiTester $I) {
+    public function testBookingStartOwner(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -317,7 +330,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingConfirmedRenter(ApiTester $I) {
+    public function testBookingConfirmedRenter(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -347,7 +361,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingDeclinedRenter(ApiTester $I) {
+    public function testBookingDeclinedRenter(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -377,7 +392,8 @@ class NotificationDistributionCest
         $I->assertFalse($receivedPush);
     }
 
-    public function testBookingStartRenter(ApiTester $I) {
+    public function testBookingStartRenter(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -408,7 +424,8 @@ class NotificationDistributionCest
     }
 
     // Just test the logging for one push notification and for one mail notification
-    public function testMailLog(ApiTester $I) {
+    public function testMailLog(ApiTester $I)
+    {
         $this->I = $I;
         $this->emptyNotifications();
 
@@ -437,7 +454,8 @@ class NotificationDistributionCest
         $I->assertEquals($log->view, $I->grabResponse(), 'Response should be equal.');
     }
 
-    public function testPushLog(ApiTester $I) {
+    public function testPushLog(ApiTester $I)
+    {
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());

@@ -6,7 +6,7 @@ use AcceptanceTester;
 use codecept\muffins\OauthAccessTokenMuffin;
 use Codeception\Util\Debug;
 use FunctionalTester;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 

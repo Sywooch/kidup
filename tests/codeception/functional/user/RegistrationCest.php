@@ -6,8 +6,8 @@ use codecept\_support\MuffinHelper;
 use FunctionalTester;
 use League\FactoryMuffin;
 use League\FactoryMuffin\Faker as Faker;
-use user\models\Profile;
-use user\models\User;
+use user\models\profile\Profile;
+use user\models\user\User;
 
 /**
  * functional test for the login.

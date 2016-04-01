@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace notification\models;
+namespace user\models\token;
 
-use user\models\User;
+use user\models\user\User;
 
 /**
  * Class TokenFactory can create a token for a given user.

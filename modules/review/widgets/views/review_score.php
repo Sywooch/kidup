@@ -16,4 +16,3 @@ if($model->reviewCount){
 }
 $output .= "</div>";
 echo $output;
-?>

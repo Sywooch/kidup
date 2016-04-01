@@ -76,7 +76,7 @@ class HomeController extends Controller
 
     public function actionChangeLanguage($lang)
     {
-        $l = \user\models\Language::findOne($lang);
+        $l = \user\models\language\Language::findOne($lang);
 
         if ($l !== null) {
             if (!\Yii::$app->user->isGuest) {

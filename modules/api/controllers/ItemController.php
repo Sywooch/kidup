@@ -78,13 +78,7 @@ class ItemController extends Controller
     }
 
     public function actionDelete($id){
-        $item = Item::find()->where(['id' => $id])->one();
-        if ($item === null) {
-            throw new NotFoundHttpException('Item not found');
-        }
-        /**
-         * @var $item Item
-         */
+        $item = Item::findOneOr404($id);
         if(!$item->hasModifyRights()){
             throw new ForbiddenHttpException("Item not yours");
         }
@@ -94,14 +88,7 @@ class ItemController extends Controller
     }
 
     public function actionUpdate($id){
-        $where = ['id' => $id];
-        $item = Item::find()->where($where)->one();
-        if ($item === null) {
-            throw new NotFoundHttpException('Item not found');
-        }
-        /**
-         * @var $item Item
-         */
+        $item = Item::findOneOr404($id);
         if(!$item->hasModifyRights()){
             throw new ForbiddenHttpException("Item not yours");
         }
@@ -211,13 +198,7 @@ class ItemController extends Controller
      */
     public function actionPublish($id)
     {
-        $item = Item::find()->where(['id' => $id])->one();
-        if($item == null){
-            throw new NotFoundHttpException("Item not found");
-        }
-        /**
-         * @var $item Item
-         */
+        $item = Item::findOneOr404(['id' => $id]);
         if(!$item->hasModifyRights()){
             throw new ForbiddenHttpException("Item not yours");
         }
@@ -237,13 +218,7 @@ class ItemController extends Controller
 
     public function actionUnpublish($id)
     {
-        $item = Item::find()->where(['id' => $id])->one();
-        if($item == null){
-            throw new NotFoundHttpException("Item not found");
-        }
-        /**
-         * @var $item Item
-         */
+        $item = Item::findOneOr404(['id' => $id]);
         if(!$item->hasModifyRights()){
             throw new ForbiddenHttpException("Item not yours");
         }

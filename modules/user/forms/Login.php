@@ -1,18 +1,10 @@
 <?php
 
-/*
- * This file is part of the  project.
- *
- * (c)  project <http://github.com//>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace user\forms;
 
-use user\Finder;
 use user\helpers\Password;
+use user\models\user\User;
 use yii\base\Model;
 
 /**
@@ -32,25 +24,8 @@ class Login extends Model
     /** @var string Whether to remember the user */
     public $rememberMe = false;
 
-    /** @var \user\models\User */
+    /** @var \user\models\user\User */
     protected $user;
-
-    /** @var \user\Module */
-    protected $module;
-
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct(Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        $this->module = \Yii::$app->getModule('user');
-        parent::__construct($config);
-    }
 
     /** @inheritdoc */
     public function attributeLabels()
@@ -113,7 +88,7 @@ class Login extends Model
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            $this->user = $this->finder->findUserByEmail($this->login);
+            $this->user = User::findOne(['email' => $this->login]);
             return true;
         } else {
             return false;

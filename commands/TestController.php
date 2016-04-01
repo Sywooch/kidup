@@ -4,7 +4,7 @@ namespace app\commands;
 
 use api\models\Media;
 use images\components\ImageHelper;
-use user\models\Profile;
+use user\models\profile\Profile;
 use yii\console\Controller;
 
 class TestController extends Controller

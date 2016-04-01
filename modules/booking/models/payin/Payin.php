@@ -33,22 +33,6 @@ class Payin extends PayinBase
     const EVENT_AUTHORIZATION_CONFIRMED = 'event_authorization_confirmed';
     const EVENT_FAILED = 'event_failed';
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
-
     /**
      * Authorizes the payment
      * @return BrainTreeError|bool|\Exception
@@ -90,7 +74,7 @@ class Payin extends PayinBase
      */
     private function onStatusChange()
     {
-        if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null) {
+        if ($this->status == self::STATUS_ACCEPTED && $this->invoice_id == null && $this->booking !== null) {
             $this->invoice_id = (new InvoiceFactory)->createForBooking($this->booking)->id;
             $this->save();
             Event::trigger($this, self::EVENT_PAYIN_CONFIRMED);

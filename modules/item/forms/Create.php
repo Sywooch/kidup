@@ -63,7 +63,7 @@ class Create extends Model
     public function save()
     {
         /**
-         * @var \user\models\Profile $profile
+         * @var \user\models\profile\Profile $profile
          */
         $profile = \Yii::$app->user->identity->profile;
 

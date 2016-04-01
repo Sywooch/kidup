@@ -11,6 +11,7 @@ class VariableExtractor {
         preg_match_all('/t\s*\(\s*"(.*?)"\s*,\s*"(.*?)"/', $template, $matches4);
         $keys = array_merge($matches1[1], $matches2[1], $matches3[1], $matches4[1]);
         $translations = array_merge($matches1[2], $matches2[2], $matches3[2], $matches4[2]);
+        $result = [];
         for ($i = 0; $i < count($keys); $i++) {
             $result[$keys[$i]] = $translations[$i];
         }

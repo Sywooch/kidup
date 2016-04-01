@@ -52,10 +52,10 @@ class ItemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-        return $this->render('view', ['model' => $model]);
-}
+            return $this->render('view', ['model' => $model]);
+        }
     }
 
     /**
@@ -108,33 +108,36 @@ class ItemController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionUnpublish($id){
+    public function actionUnpublish($id)
+    {
         /**
          * @var Item $item
          */
         $item = $this->findModel($id);
         $item->is_available = 0;
-        if(!$item->save()) {
+        if (!$item->save()) {
             \Yii::$app->session->addFlash("error", 'unpublishing failed');
             return $this->redirect(['index']);
         }
         $conv = (new ConversationFactory())->getOrCreateKidUpConversation($item->owner);
         (new MessageFactory())->addMessageToConversation(
             \Yii::t('app.admin.conversation_message.unpublished_by_admin',
-                "Hi there, we've unpublished you're item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!", [
+                "Hi there, we've unpublished you're item {item_name} temporarily. Please make sure it is up to date and well presented before publishing it again!",
+                [
                     'item_name' => !empty($item->name) ? $item->name : $item->id
                 ])
-            ,$conv, $conv->initiaterUser);
+            , $conv, $conv->initiaterUser);
         return $this->redirect(['index']);
     }
 
-    public function actionPublish($id){
+    public function actionPublish($id)
+    {
         /**
          * @var Item $item
          */
         $item = $this->findModel($id);
         $item->is_available = 1;
-        if(!$item->save()) {
+        if (!$item->save()) {
             \Yii::$app->session->addFlash("error", 'publishing failed');
         }
         return $this->redirect(['index']);

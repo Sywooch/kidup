@@ -6,7 +6,7 @@ use app\helpers\Encrypter;
 /**
  * This is the model class for table "item".
  */
-class PayoutMethod extends \user\models\PayoutMethod
+class PayoutMethod extends \user\models\payoutMethod\PayoutMethod
 {
     public function fields()
     {
@@ -39,11 +39,6 @@ class PayoutMethod extends \user\models\PayoutMethod
         parent::afterSave($insert, $changedAttributes);
     }
 
-    private function transformToSafe($input, $leaveUntouched = 4)
-    {
-        $length = strlen($input);
-        $input = substr($input, $length - $leaveUntouched);
-        return str_repeat("*", $length - $leaveUntouched) . $input;
-    }
+  
 
 }

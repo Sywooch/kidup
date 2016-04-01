@@ -9,7 +9,7 @@ use message\models\conversation\Conversation;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
 use notification\models\NotificationMailLog;
-use user\models\User;
+use user\models\user\User;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
@@ -52,11 +52,7 @@ class NotificationController extends Controller
     public function actionSubscribe()
     {
         $params = \Yii::$app->getRequest()->getBodyParams();
-        $deviceId = $params['device_id'];
-        $device = MobileDevices::find()->where(['device_id' => $deviceId])->one();
-        if ($device == null) {
-            throw new NotFoundHttpException("Device not found");
-        }
+        $device = MobileDevices::findOneOr404(['device_id' => $params['device_id']]);
         $device->is_subscribed = true;
         return $device->save();
     }
@@ -64,11 +60,7 @@ class NotificationController extends Controller
     public function actionUnsubscribe()
     {
         $params = \Yii::$app->getRequest()->getBodyParams();
-        $deviceId = $params['device_id'];
-        $device = MobileDevices::find()->where(['device_id' => $deviceId])->one();
-        if ($device == null) {
-            throw new NotFoundHttpException("Device not found");
-        }
+        $device = MobileDevices::findOneOr404(['device_id' => $params['device_id']]);
         $device->is_subscribed = false;
         return $device->save();
     }

@@ -7,7 +7,7 @@ use user\widgets\UserImage;
 
 /**
  * @var \yii\web\View $this
- * @var \user\models\Profile $profile
+ * @var \user\models\profile\Profile $profile
  * @var \yii\data\ActiveDataProvider $itemProvider
  * @var bool $fbVerified
  * @var bool $twVerified

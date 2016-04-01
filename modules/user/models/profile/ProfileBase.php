@@ -1,8 +1,8 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\profile;
 
-use item\models\location\Location;
+use app\models\BaseActiveRecord;
 use Yii;
 
 /**
@@ -26,11 +26,11 @@ use Yii;
  * @property integer $location_id
  *
  * @property \item\models\location\Location $location
- * @property \user\models\Country $nationality0
- * @property \user\models\base\Currency $currency
- * @property \user\models\User $user
+ * @property \user\models\country\Country $nationality0
+ * @property \user\models\currency\Currency $currency
+ * @property \user\models\user\User $user
  */
-class Profile extends \app\models\BaseActiveRecord
+class ProfileBase extends BaseActiveRecord
 {
 
     /**
@@ -40,25 +40,13 @@ class Profile extends \app\models\BaseActiveRecord
     {
         return 'profile';
     }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [
-                [
-                    'user_id',
-                    'first_name',
-                    'last_name',
-                    'email_verified',
-                    'phone_verified',
-                    'identity_verified',
-                    'location_verified'
-                ],
-                'required'
-            ],
+            [['user_id', 'first_name', 'last_name'], 'required'],
             [
                 [
                     'user_id',
@@ -67,9 +55,9 @@ class Profile extends \app\models\BaseActiveRecord
                     'identity_verified',
                     'location_verified',
                     'currency_id',
-                    'birthday',
                     'nationality',
-                    'location_id'
+                    'phone_country',
+                    'phone_number'
                 ],
                 'integer'
             ],
@@ -79,34 +67,9 @@ class Profile extends \app\models\BaseActiveRecord
             [['phone_country'], 'string', 'max' => 5],
             [['phone_number'], 'string', 'max' => 50],
             [['language'], 'string', 'max' => 6],
-            [
-                ['location_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Location::className(),
-                'targetAttribute' => ['location_id' => 'id']
-            ],
-            [
-                ['nationality'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Country::className(),
-                'targetAttribute' => ['nationality' => 'id']
-            ],
-            [
-                ['currency_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Currency::className(),
-                'targetAttribute' => ['currency_id' => 'id']
-            ],
-            [
-                ['user_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => User::className(),
-                'targetAttribute' => ['user_id' => 'id']
-            ]
+            [['img'], 'safe'],
+            [['img'], 'file', 'extensions' => 'jpg, gif, png'],
+            [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
         ];
     }
 
@@ -148,7 +111,7 @@ class Profile extends \app\models\BaseActiveRecord
      */
     public function getNationality0()
     {
-        return $this->hasOne(\user\models\Country::className(), ['id' => 'nationality']);
+        return $this->hasOne(\user\models\country\Country::className(), ['id' => 'nationality']);
     }
 
     /**
@@ -156,7 +119,7 @@ class Profile extends \app\models\BaseActiveRecord
      */
     public function getCurrency()
     {
-        return $this->hasOne(\user\models\base\Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(\user\models\currency\Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -164,7 +127,7 @@ class Profile extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 
 

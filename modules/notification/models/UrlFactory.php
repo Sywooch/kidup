@@ -13,7 +13,7 @@ namespace notification\models;
 
 use booking\models\booking\Booking;
 use item\models\item\Item;
-use user\models\User;
+use user\models\user\User;
 use yii\helpers\Url;
 
 /**
@@ -80,6 +80,7 @@ class UrlFactory
 
     public static function url($to)
     {
+        // TODO to only takes 2 arguments
         return Url::to("@web/" . $to, [
             'mail_id' => 'x'
         ], true);

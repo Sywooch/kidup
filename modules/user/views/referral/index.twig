@@ -62,7 +62,7 @@
                         <div class="btn btn-danger btn-fill btn-lg"
                              style="border-radius: 0;margin-top:15px;height:54px;" onclick="FB.ui({
                                 method: 'share',
-                                href: '{{ referralLink }}',
+                                href: '{{ referralLink }}'
                                 }, function(response){});">
                             <script>
                                 {# yes shit is ugly, no we dont care #}
@@ -95,7 +95,8 @@
 </div>
 
 <br>
-<div style="{{ bgImage("kidup/user/referral/baby-bg.png", {w: 2000, q:90}) }};margin-top:10px;min-height:30vh;width:100%;text-align: center;" class="container">
+<div style="{{ bgImage("kidup/user/referral/baby-bg.png", {w: 2000, q:90}) }};margin-top:10px;min-height:30vh;width:100%;text-align: center;"
+     class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="padding: 25px;">
             {% if(userIsGuest() == false) %}
@@ -152,7 +153,7 @@
             <br>
             <br>
             <a href="{{ url("p/konkurrencebetingelser") }}">
-                {{ t("referral_page.bottom.rules_link", "Click here for all rules.")}}
+                {{ t("referral_page.bottom.rules_link", "Click here for all rules.") }}
             </a>
         </div>
     </div>

@@ -4,7 +4,7 @@ namespace admin\controllers;
 
 use app\helpers\Event;
 use item\models\location\Location;
-use user\models\User;
+use user\models\user\User;
 
 class TestController extends Controller
 {

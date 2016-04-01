@@ -2,13 +2,13 @@
 
 namespace admin\models\search;
 
-use user\models\base\User as UserModel;
+use user\models\user\User as UserModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * User represents the model behind the search form about `\user\models\base\User`.
+ * User represents the model behind the search form about `\user\models\user\User`.
  */
 class User extends UserModel
 {

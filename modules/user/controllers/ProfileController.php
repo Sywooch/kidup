@@ -14,35 +14,17 @@ namespace user\controllers;
 use app\extended\web\Controller;
 use item\models\item\Item;
 use review\models\Review;
-use user\Finder;
-use user\models\Profile;
+use user\models\profile\Profile;
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\NotFoundHttpException;
 
 /**
  * ProfileController shows users profiles.
  *
  * @property \user\Module $module
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class ProfileController extends Controller
 {
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param \yii\base\Module $module
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
 
     /** @inheritdoc */
     public function behaviors()
@@ -76,12 +58,9 @@ class ProfileController extends Controller
     public function actionShow($id)
     {
         /**
-         * @var $profile \user\models\Profile
+         * @var $profile \user\models\profile\Profile
          */
-        $profile = Profile::find()->where(['user_id' => $id])->one();
-        if ($profile === null) {
-            throw new NotFoundHttpException;
-        }
+        $profile = Profile::findOneOr404(['user_id' => $id]);
 
         $items = Item::find()
             ->where([

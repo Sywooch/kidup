@@ -3,14 +3,16 @@
 namespace notification\jobs\user;
 
 use app\extended\job\Job;
-use notifications\models\Mailer;
-use notifications\models\Token;
-use user\models\User;
+use notification\models\Mailer;
+use user\models\token\Token;
+use user\models\user\User;
 
 class RecoveryEmailJob extends Job{
 
     public $user_id;
     public $email;
+
+    // TODO what does this do?
 
     public function handle(){
         $user = User::find()->where(['id' => $this->user_id])->one();
