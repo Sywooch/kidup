@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\socialAccount;
 
 use Yii;
 
@@ -13,9 +13,9 @@ use Yii;
  * @property string $data
  * @property integer $user_id
  *
- * @property \user\models\User $user
+ * @property \user\models\user\User $user
  */
-class SocialAccount extends \app\models\BaseActiveRecord
+class SocialAccountBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -64,6 +64,6 @@ class SocialAccount extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 }

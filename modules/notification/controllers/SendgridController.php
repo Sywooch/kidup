@@ -2,7 +2,7 @@
 
 namespace notification\controllers;
 
-use notifications\models\MailMessage;
+use notification\models\MailMessage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -11,7 +11,7 @@
 
 namespace user\widgets;
 
-use user\models\User;
+use user\models\user\User;
 use yii\base\Widget;
 
 /**

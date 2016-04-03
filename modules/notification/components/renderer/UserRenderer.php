@@ -3,7 +3,7 @@ namespace notification\components\renderer;
 
 use booking\models\payout\Payout;
 use notification\components\Renderer;
-use user\models\User;
+use user\models\user\User;
 
 class UserRenderer
 {

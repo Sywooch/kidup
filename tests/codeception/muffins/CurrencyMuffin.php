@@ -3,7 +3,7 @@ namespace codecept\muffins;
 
 use Faker\Factory as Faker;
 
-class CurrencyMuffin extends \user\models\base\Currency
+class CurrencyMuffin extends \user\models\currency\Currency
 {
 
     public function definitions()

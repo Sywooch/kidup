@@ -6,7 +6,7 @@ use app\helpers\Event;
 use app\jobs\SlackJob;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

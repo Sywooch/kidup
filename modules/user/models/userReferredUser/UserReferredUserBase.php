@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\userReferredUser;
 
 use Yii;
 
@@ -11,9 +11,9 @@ use Yii;
  * @property integer $referring_user_id
  * @property integer $created_at
  *
- * @property \user\models\User $user
+ * @property \user\models\user\User $user
  */
-class UserReferredUser extends \app\models\BaseActiveRecord
+class UserReferredUserBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -51,7 +51,7 @@ class UserReferredUser extends \app\models\BaseActiveRecord
      */
     public function getReferredUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'referred_user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'referred_user_id']);
     }
 
     /**
@@ -59,6 +59,6 @@ class UserReferredUser extends \app\models\BaseActiveRecord
      */
     public function getReferringUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'referring_user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'referring_user_id']);
     }
 }

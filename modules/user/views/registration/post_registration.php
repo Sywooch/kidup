@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var \user\models\User $user
+ * @var \user\models\user\User $user
  * @var \user\Module $module
  */
 
@@ -30,6 +30,7 @@ $this->assetPackage = \app\assets\Package::USER;
                 </h4>
             </div>
             <br/>
+
             <?php $form = ActiveForm::begin([
                 'id' => 'registration-form',
                 'enableAjaxValidation' => true,
@@ -62,7 +63,7 @@ $this->assetPackage = \app\assets\Package::USER;
                                 'What is interesting for other users to know? Do you have any kids? How old are they?')
                         ]); ?>
                     </div>
-                    <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::classname(), [
+                    <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::className(), [
                         'data' => \app\helpers\SelectData::languages(),
                         'options' => ['placeholder' => \Yii::t('user.post_registration.select_language_propdown_plceholder',
                             'Select your preferred language')],

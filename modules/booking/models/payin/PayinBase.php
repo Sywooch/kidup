@@ -4,8 +4,8 @@ namespace booking\models\payin;
 
 use booking\models\invoice\Invoice;
 use booking\models\booking\Booking;
-use user\models\base\Currency;
-use user\models\User;
+use user\models\currency\Currency;
+use user\models\user\User;
 use Yii;
 
 /**

@@ -3,7 +3,7 @@ namespace user\widgets;
 
 use images\components\ImageHelper;
 use kartik\widgets\Widget;
-use user\models\Profile;
+use user\models\profile\Profile;
 
 class UserImage extends Widget
 {
@@ -29,5 +29,7 @@ class UserImage extends Widget
                 'fit' => 'crop'
             ], ['class' => "avatar img-circle"]);
         }
+
+        return '';
     }
 }

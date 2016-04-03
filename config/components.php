@@ -213,7 +213,7 @@ $components = [
         ],
     ],
     'user' => [
-        'identityClass' => 'user\models\User', // User must implement the IdentityInterface
+        'identityClass' => 'user\models\user\User', // User must implement the IdentityInterface
         'enableAutoLogin' => true,
     ],
     'keyStore' => ['class' => 'app\components\KeyStore'],

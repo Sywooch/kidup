@@ -1,21 +1,11 @@
 <?php
 
-/*
- * This file is part of the  project.
- *
- * (c)  project <http://github.com//>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace user\forms;
 
 use app\helpers\Event;
-use notifications\models\Mailer;
-use notifications\models\Token;
-use user\Finder;
-use user\models\User;
+use user\models\token\Token;
+use user\models\user\User;
 use yii\base\Model;
 
 /**
@@ -33,24 +23,6 @@ class Recovery extends Model
 
     /** @var User */
     protected $user;
-
-    /** @var \user\Module */
-    protected $module;
-
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param Mailer $mailer
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct(Finder $finder, $config = [])
-    {
-        $this->module = \Yii::$app->getModule('user');
-        $this->finder = $finder;
-        parent::__construct($config);
-    }
 
     /** @inheritdoc */
     public function attributeLabels()
@@ -80,13 +52,13 @@ class Recovery extends Model
             [
                 'email',
                 'exist',
-                'targetClass' => $this->module->modelMap['User'],
+                'targetClass' => User::className(),
                 'message' => \Yii::t('user.recovery.error_not_found', 'There is no user with this email address')
             ],
             [
                 'email',
                 function ($attribute) {
-                    $this->user = $this->finder->findUserByEmail($this->email);
+                    $this->user = User::findOne(['email' => $this->email]);
                 }
             ],
             ['password', 'required'],

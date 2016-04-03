@@ -2,7 +2,7 @@
 
 namespace app\widgets;
 
-use user\models\User;
+use user\models\user\User;
 use Yii;
 use yii\helpers\Url;
 

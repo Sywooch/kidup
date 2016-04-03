@@ -6,7 +6,7 @@ use app\extended\web\Controller;
 use item\forms\CreateBooking;
 use item\models\item\Item;
 use review\models\base\Review;
-use user\models\base\Currency;
+use user\models\currency\Currency;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;

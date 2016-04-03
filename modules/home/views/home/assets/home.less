@@ -71,7 +71,7 @@
     }
   }
   section {
-    margin: 0px;
+    margin: 0;
   }
   ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    rgba(0,0,0,0.8);
@@ -218,7 +218,7 @@
     }
 
     @media (max-width: @max-mobile) {
-      border-radius: 0px;
+      border-radius: 0;
       width: 100%;
       .form-control, button {
         height: 50px !important;
@@ -276,7 +276,7 @@
 
   .divider {
     position: absolute;
-    top: 0%;
+    top: 0;
     left: 0;
     right: 0;
     width: 100%;
@@ -309,7 +309,7 @@
 
   /*Steps*/
   #content-home-steps {
-    padding: 80px 0px;
+    padding: 80px 0;
     background-color: @bg-white;
     position: relative;
     h4 {
@@ -439,7 +439,7 @@
     position: relative;
 
     #content-owl {
-      padding: 80px 0px;
+      padding: 80px 0;
       padding-bottom: 35%;
       background-size: cover !important;
       max-height: 650px;
@@ -453,7 +453,7 @@
         color: #fff;
         text-align: center;
         width: 100%;
-        left: 0%;
+        left: 0;
       }
       h2, h4 {
         color: white;
@@ -538,7 +538,7 @@
       }
       h3, h4 {
         color: @text-gray;
-        padding: 30px 20px 0px 20px;
+        padding: 30px 20px 0 20px;
         &.one, &.two {
           margin-top: 40%;
           @media (max-width: 992px) {
@@ -568,7 +568,7 @@
         .full-text {
           position: absolute;
           bottom: 20px;
-          left: 0px;
+          left: 0;
           h4, p {
             color: white;
           }
@@ -679,8 +679,8 @@
     margin-right: 7px;
     width: 4px;
     background: @primary-color;
-    animation: blink 1s step-start 0s infinite;
-    -webkit-animation: blink 1s step-start 0s infinite;
+    animation: blink 1s step-start 0 infinite;
+    -webkit-animation: blink 1s step-start 0 infinite;
   }
 }
 

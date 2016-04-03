@@ -6,8 +6,8 @@ use app\helpers\Encrypter;
 use app\helpers\Event;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
-use user\models\base\Currency;
-use user\models\PayoutMethod;
+use user\models\currency\Currency;
+use user\models\payoutMethod\PayoutMethod;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -22,22 +22,6 @@ class Payout extends \booking\models\payout\PayoutBase
     const STATUS_PROCESSED = 'processed';
     const STATUS_CANCELLED = 'cancelled';
     const EVENT_PAYOUT_PROCESSED = 'event_payout_processed';
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_INIT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
-        ];
-    }
 
     public function markAsProcessed()
     {
@@ -68,7 +52,8 @@ class Payout extends \booking\models\payout\PayoutBase
             return false;
         }
         // 4 number bank identifier + bank account number (no spaces in between)
-        $field[3] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted, $key).Encrypter::decrypt($payoutMethod->identifier_1_encrypted,$key);
+        $field[3] = Encrypter::decrypt($payoutMethod->identifier_2_encrypted,
+                $key) . Encrypter::decrypt($payoutMethod->identifier_1_encrypted, $key);
         $field[4] = str_replace(".", ",", $this->amount); // to account
         $field[6] = "DKK";
         $field[7] = "N"; // todo check

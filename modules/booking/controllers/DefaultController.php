@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use images\components\ImageHelper;
 use item\forms\CreateBooking;
 use item\models\item\Item;
-use user\models\PayoutMethod;
+use user\models\payoutMehod\PayoutMethod;
 use Yii;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;

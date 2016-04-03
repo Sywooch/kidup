@@ -72,7 +72,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                 <h4>
                     <?= Yii::t("review.create.experience", "Overall Experience") ?>
                 </h4>
-                <?= $form->field($model, 'experience')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'experience')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,
@@ -90,7 +90,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                             "How easy was it to communicate with the owner?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'communication')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'communication')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,
@@ -107,7 +107,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                         <?= Yii::t("review.create.exchange_text", "How did the exchange of product go?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'exchange')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'exchange')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,
@@ -125,7 +125,7 @@ $this->assetPackage = \app\assets\Package::REVIEW;
                             "How well did the photo's and description describe the actual item?") ?>
                     </small>
                 </h4>
-                <?= $form->field($model, 'adAccuracy')->label(false)->widget(StarRating::classname(), [
+                <?= $form->field($model, 'adAccuracy')->label(false)->widget(StarRating::className(), [
                     'pluginOptions' => [
                         'size' => 'lg',
                         'step' => 1,

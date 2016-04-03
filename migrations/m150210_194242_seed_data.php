@@ -51,7 +51,7 @@ class m150210_194242_seed_data extends Migration
 
 
 
-        $user = new user\models\User();
+        $user = new user\models\user\User();
         $user->setScenario('create');
         $user->setAttributes(array(
             'id' => 1,
@@ -69,7 +69,7 @@ class m150210_194242_seed_data extends Migration
             'updated_at' => 1432405898,
         ));
         $user->save();
-        $profile = new user\models\Profile();
+        $profile = new user\models\profile\Profile();
         $profile->setAttributes([
             'user_id' => 1,
             'description' => 'KidUp Admin - ask me anything!',

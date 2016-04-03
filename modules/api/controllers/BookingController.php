@@ -7,9 +7,7 @@ use api\models\Item;
 use api\models\Review;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
-use booking\models\booking\NoAccessToBookingException;
 use booking\models\payin\BrainTree;
-use Guzzle\Http\Exception\BadResponseException;
 use item\forms\CreateBooking;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\data\ActiveDataProvider;
@@ -118,15 +116,11 @@ class BookingController extends Controller
         /**
          * @var $item Item
          */
-        $item = Item::find()->where([
+
+        $item = Item::findOneOr404([
             'id' => $params['item_id'],
             'is_available' => 1
-        ])->one();
-
-        // check whether the item is found
-        if ($item === null) {
-            throw new NotFoundHttpException("Item not found.");
-        }
+        ]);
 
         try {
             return (new BookingFactory)->create($params['time_from'], $params['time_to'], $item,
@@ -157,17 +151,13 @@ class BookingController extends Controller
         $time_to = date("d-m-Y", (int)$time_to);
 
         // fetch the item
-        $item = Item::find()->where([
+        $item = Item::findOneOr404([
             'id' => $item_id,
             'is_available' => 1
-        ])->one();
+        ]);
 
-        // check whether the item is found
-        if (count($item) == 0) {
-            throw(new NotFoundHttpException("Item not found."));
-        }
         // grab the currency of the user
-        $currency = Currency::getUserOrDefault(\Yii::$app->user);
+        $currency = Currency::getUserOrDefault(\Yii::$app->user->identity);
 
         // create a new booking
         $booking = new CreateBooking($item, $currency);
@@ -176,7 +166,7 @@ class BookingController extends Controller
 
         // do not save, display the table data
         $booking->calculateTableData();
-
+        
         return $booking->tableData;
     }
 
@@ -207,10 +197,8 @@ class BookingController extends Controller
         /**
          * @var Booking $booking
          */
-        $booking = Booking::find()->where(['id' => $id])->one();
-        if ($booking === null) {
-            throw new NotFoundHttpException;
-        }
+        $booking = Booking::findOneOr404(['id' => $id]);
+
         try {
             $booking->ownerDeclines();
         } catch (BookingException $e) {
@@ -226,10 +214,7 @@ class BookingController extends Controller
         /**
          * @var Booking $booking
          */
-        $booking = Booking::find()->where(['id' => $id])->one();
-        if ($booking === null) {
-            throw new NotFoundHttpException;
-        }
+        $booking = Booking::findOneOr404(['id' => $id]);
 
         try {
             $booking->ownerAccepts();

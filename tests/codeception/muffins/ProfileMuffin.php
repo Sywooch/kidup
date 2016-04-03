@@ -4,7 +4,7 @@ namespace codecept\muffins;
 use Faker\Factory as Faker;
 use images\components\ImageHelper;
 
-class ProfileMuffin extends \user\models\Profile
+class ProfileMuffin extends \user\models\profile\Profile
 {
     public function definitions()
     {

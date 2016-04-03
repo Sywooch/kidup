@@ -13,11 +13,10 @@ namespace user\controllers;
 
 use app\extended\web\Controller;
 use app\helpers\Event;
-use user\Finder;
 use user\forms\PostRegistrationProfile;
 use user\forms\Registration;
-use user\models\SocialAccount;
-use user\models\User;
+use user\models\socialAccount\SocialAccount;
+use user\models\user\User;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -29,27 +28,9 @@ use yii\widgets\ActiveForm;
  * resending confirmation tokens, email confirmation and registration via social networks.
  *
  * @property \user\Module $module
- *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class RegistrationController extends Controller
 {
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param \yii\base\Module $module
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
-
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -77,10 +58,6 @@ class RegistrationController extends Controller
      */
     public function actionRegister()
     {
-        if (!$this->module->enableRegistration) {
-            throw new NotFoundHttpException;
-        }
-
         $model = new Registration();
 
         $this->performAjaxValidation($model);
@@ -103,11 +80,7 @@ class RegistrationController extends Controller
      */
     public function actionConnect($account_id)
     {
-        $account = $this->finder->findAccountById($account_id);
-
-        if ($account === null) {
-            throw new NotFoundHttpException("We couldn't find the social account with that ID, please try again.");
-        }
+        $account = SocialAccount::findOneOr404($account_id);
 
         if ($account->getIsConnected()) {
             if ($account->user !== null) {
@@ -128,7 +101,7 @@ class RegistrationController extends Controller
             if ($u !== null) {
                 $account->user_id = $u->id;
                 $account->save(false);
-                \Yii::$app->user->login($u, $this->module->rememberFor);
+                \Yii::$app->user->login($u, 30*24*60*60);
                 return $this->redirect(User::afterLoginUrl('connect'));
             } else {
                 $user->email = $data['email'];
@@ -143,7 +116,7 @@ class RegistrationController extends Controller
                     $socialAccount->fillUserDetails($user);
                     Event::trigger($user, User::EVENT_USER_REGISTER_DONE);
                 }
-                \Yii::$app->user->login($user, $this->module->rememberFor);
+                \Yii::$app->user->login($user, 30*24*60*60);
                 return $this->redirect(User::afterLoginUrl('connect_new'));
             }
         }
@@ -151,7 +124,7 @@ class RegistrationController extends Controller
         if ($user->load(\Yii::$app->request->post()) && $user->create()) {
             $account->user_id = $user->id;
             $account->save(false);
-            \Yii::$app->user->login($user, $this->module->rememberFor);
+            \Yii::$app->user->login($user, 30*24*60*60);
             return $this->redirect(User::afterLoginUrl('connect_new'));
         }
 
@@ -171,11 +144,7 @@ class RegistrationController extends Controller
      */
     public function actionConfirm($id, $code)
     {
-        $user = $this->finder->findUserById($id);
-
-        if ($user === null || $this->module->enableConfirmation == false) {
-            throw new NotFoundHttpException;
-        }
+        $user = User::findOneOr404($id);
 
         $user->attemptConfirmation($code);
 
@@ -188,9 +157,7 @@ class RegistrationController extends Controller
      */
     public function actionPostRegistration()
     {
-        $user = User::find()->where(['id' => \Yii::$app->user->id])->one();
-
-        $model = \Yii::createObject(PostRegistrationProfile::className());
+        $model = new PostRegistrationProfile();
 
         $this->performAjaxValidation($model);
 

@@ -26,7 +26,7 @@ class Password
      */
     public static function hash($password)
     {
-        return \Yii::$app->security->generatePasswordHash($password, \Yii::$app->getModule('user')->cost);
+        return \Yii::$app->security->generatePasswordHash($password, 12);
     }
 
     /**

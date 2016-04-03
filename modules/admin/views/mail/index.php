@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'template',
-                'value' => 'template',
                 'format' => 'raw',
                 'value' => function ($data) {
                     return '<a href="' . Url::to('admin/mail/view?id=' . $data['template'], true) . '" target="_blank">' . $data['template'] . '</a>';

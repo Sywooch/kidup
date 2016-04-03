@@ -243,7 +243,7 @@ a:focus {
     float: none;
   }
   .navbar-collapse .main-header .navbar-right {
-    margin: 7.5px -15px;
+    margin: 7px -15px;
   }
   .main-header .navbar-right > li {
     color: inherit;

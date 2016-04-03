@@ -13,7 +13,7 @@ use app\helpers\SelectData;
 use kartik\checkbox\CheckboxX;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
-use user\models\Setting;
+use user\models\setting\Setting;
 
 /**
  * @var $this  yii\web\View
@@ -42,7 +42,7 @@ use user\models\Setting;
         </h4>
         <?= $form->field($model, 'email')->input(['class' => 'form-control']) ?>
 
-        <?= $form->field($model, 'language')->widget(Select2::classname(), [
+        <?= $form->field($model, 'language')->widget(Select2::className(), [
             'data' => SelectData::languages(),
             'options' => ['placeholder' => \Yii::t('user.settings.account.select_language_placeholder', 'Select a language')],
             'pluginOptions' => [
@@ -50,7 +50,7 @@ use user\models\Setting;
             ],
         ])->label(\Yii::t('user.settings.account.language_label', 'Language')); ?>
 
-        <?= $form->field($model, 'currency_id')->widget(Select2::classname(), [
+        <?= $form->field($model, 'currency_id')->widget(Select2::className(), [
             'data' => SelectData::currencies(),
             'options' => [
                 'placeholder' => \Yii::t('user.settings.account.select_country_placeholder', 'Select a currency'),
@@ -66,7 +66,7 @@ use user\models\Setting;
 
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'phone_country')->widget(Select2::classname(), [
+                    <?= $form->field($model, 'phone_country')->widget(Select2::className(), [
                         'data' => SelectData::phoneCountries(),
                         'options' => ['placeholder' => \Yii::t('user.settings.account.country_code_phone', 'Country code')],
                         'pluginOptions' => [

@@ -6,7 +6,7 @@ namespace item\models\wishListItem;
 
 use app\models\BaseActiveRecord;
 use item\models\item\Item;
-use user\models\User;
+use user\models\user\User;
 use Yii;
 
 /**

@@ -43,7 +43,7 @@ class Booking extends \booking\models\booking\Booking
 
     public function extraFields()
     {
-        return ['item', 'conversation'];
+        return ['item', 'conversation', 'renter'];
     }
 
     public function getConversation()
@@ -54,5 +54,10 @@ class Booking extends \booking\models\booking\Booking
     public function getItem()
     {
         return $this->hasOne(Item::className(), ['id' => 'item_id']);
+    }
+
+    public function getRenter()
+    {
+        return $this->hasOne(User::className(), ['id' => 'renter_id']);
     }
 }

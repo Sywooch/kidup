@@ -2,7 +2,7 @@
 namespace app\extended\web;
 
 use app\components\UrlHelper;
-use user\models\Profile;
+use user\models\profile\Profile;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Cookie;

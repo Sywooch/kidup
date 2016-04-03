@@ -1,19 +1,20 @@
 <?php
 
-namespace user\models;
+namespace user\models\user;
 
 use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
-use api\models\PayoutMethod;
-use app\extended\base\Exception;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
 use notification\models\base\MobileDevices;
-use notification\models\Token;
-use user\Finder;
 use user\helpers\Password;
-use yii\behaviors\TimestampBehavior;
+use user\models\payoutMethod\PayoutMethod;
+use user\models\profile\Profile;
+use user\models\setting\Setting;
+use user\models\socialAccount\SocialAccount;
+use user\models\token\Token;
+use user\models\userReferredUser\UserReferredUser;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\HttpException;
@@ -36,12 +37,12 @@ use yii\web\IdentityInterface;
  * @property integer $flags
  *
  * Defined relations:
- * @property Account[] $accounts
- * @property \user\models\Profile $profile
+ * @property SocialAccount[] $accounts
+ * @property \user\models\profile\Profile $profile
  *
- * @property \user\models\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
+ * @property \user\models\user\User|\yii\web\IdentityInterface|null $identity The identity object associated with the currently logged-in user. null is returned if the user is not logged in (not authenticated).
  */
-class User extends base\User implements IdentityInterface
+class User extends UserBase implements IdentityInterface
 {
     // events
     const EVENT_USER_CREATE_INIT = 'user_create_init';
@@ -65,9 +66,6 @@ class User extends base\User implements IdentityInterface
 
     /** @var \user\Module */
     protected $module;
-
-    /** @var \user\Finder */
-    protected $finder;
 
     private $first_name;
     private $last_name;
@@ -97,20 +95,6 @@ class User extends base\User implements IdentityInterface
         return $token->user;
     }
 
-    public function scenarios()
-    {
-        return [
-            'default' => ['email', 'password'],
-            'register' => ['email', 'password'],
-            'connect' => ['email'],
-            'create' => ['email', 'password'],
-            'update' => ['email', 'password'],
-            'settings' => ['email', 'password'],
-            'splash' => ['email']
-        ];
-    }
-
-
     /**
      * @return bool Whether the user is confirmed or not.
      */
@@ -135,83 +119,17 @@ class User extends base\User implements IdentityInterface
         return $this->role == 9;
     }
 
-    /**
-     * @return Account[] Connected accounts ($provider => $account)
-     */
-    public function getAccounts()
-    {
-        $this->init();
-        $connected = [];
-        $accounts = $this->hasMany($this->module->modelMap['Account'], ['user_id' => 'id'])->all();
-
-        /** @var Account $account */
-        foreach ($accounts as $account) {
-            $connected[$account->provider] = $account;
-        }
-
-        return $connected;
-    }
-
+  
     /** @inheritdoc */
-    public function init()
+    public function validateAuthKey($authKey)
     {
-        $this->finder = \Yii::$container->get(Finder::className());
-        $this->module = \Yii::$app->getModule('user');
-
-        parent::init();
+        return User::find()->where(['auth_key' => $authKey])->count() > 0;
     }
 
     /** @inheritdoc */
     public function getId()
     {
         return $this->getAttribute('id');
-    }
-
-
-    /** @inheritdoc */
-    public function attributeLabels()
-    {
-        return [
-            'email' => \Yii::t('user.attributes.email', 'Email'),
-            'registration_ip' => \Yii::t('user.attributes.registration_ip', 'Registration ip'),
-            'unconfirmed_email' => \Yii::t('user.attributes.new_email', 'New email'),
-            'password' => \Yii::t('user.attributes.password', 'Password'),
-            'created_at' => \Yii::t('user.attributes.registration_time', 'Registration time'),
-            'confirmed_at' => \Yii::t('user.attributes.confirmation_time', 'Confirmation time'),
-        ];
-    }
-
-    /** @inheritdoc */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /** @inheritdoc */
-    public function rules()
-    {
-        return [
-            // email rules
-            ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique'],
-            ['email', 'trim'],
-            // password rules
-            ['password', 'required', 'on' => ['register']],
-            ['password', 'string', 'min' => 6, 'on' => ['register', 'create']],
-            ['country', 'required', 'on' => ['register', 'connect']],
-            ['registerFirstName', 'required', 'on' => ['register', 'connect']],
-            ['registerLastName', 'required', 'on' => ['register', 'connect']],
-        ];
-    }
-
-    /** @inheritdoc */
-    public function validateAuthKey($authKey)
-    {
-        return User::find()->where(['auth_key' => $authKey])->count() > 0;
     }
 
     /**
@@ -246,7 +164,7 @@ class User extends base\User implements IdentityInterface
     /**
      * This method is used to register new user account. If Module::enableConfirmation is set true, this method
      * will generate new confirmation token and use mailer to send it to the user. Otherwise it will log the user in.
-     * If Module::enableGeneratingPassword is set true, this method will generate new 8-char password. After saving user
+     * After saving user
      * to database, this method uses mailer component to send credentials (username and password) to user via email.
      *
      * @return bool
@@ -279,11 +197,7 @@ class User extends base\User implements IdentityInterface
     public function hasValidPayoutMethod()
     {
         $payoutMethod = PayoutMethod::findOne(['user_id' => $this->id]);
-        if ($payoutMethod == null) {
-            return false;
-        }
-
-        return true;
+        return $payoutMethod != null;
     }
 
     public function canMakeBooking()
@@ -298,11 +212,7 @@ class User extends base\User implements IdentityInterface
         }
 
         $payoutMethod = PayoutMethod::find()->where(['user_id' => \Yii::$app->user->id])->count();
-        if($payoutMethod == 0){
-            return false;
-        }
-
-        return true;
+        return $payoutMethod != null;
     }
 
     /**
@@ -329,7 +239,7 @@ class User extends base\User implements IdentityInterface
         if ($type == 'registration' || $type == 'connect_new') {
             return Url::to('@web/user/registration/post-registration');
         }
-        return Url::to('@web/home');
+        return Url::previous();
     }
 
     /**
@@ -357,7 +267,7 @@ class User extends base\User implements IdentityInterface
 
             $this->confirmed_at = time();
 
-            \Yii::$app->user->login($this, $this->module->rememberFor);
+            \Yii::$app->user->login($this, 30*24*60*60);
 
             if ($this->save(false)) {
                 $p = Profile::findOne(['user_id' => \Yii::$app->user->id]);
@@ -548,6 +458,4 @@ class User extends base\User implements IdentityInterface
         ])->count();
         return $devices > 0;
     }
-
-
 }

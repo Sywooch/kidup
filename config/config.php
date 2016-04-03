@@ -28,15 +28,7 @@ $config = [
         require($vendorDir . '/yiisoft/extensions.php')
     ),
     'modules' => [
-        'user' => [
-            'class' => '\user\Module',
-            'enableUnconfirmedLogin' => true,
-            'confirmWithin' => 365 * 24 * 60 * 60,
-            'cost' => 13,
-            'admins' => ['admin'],
-            'enableConfirmation' => true,
-            'enableFlashMessages' => false,
-        ],
+        'user' =>           ['class' => '\user\Module'],
         'gridview' =>       ['class' => '\kartik\grid\Module'],
         'home' =>           ['class' => '\home\Module'],
         'item' =>           ['class' => '\item\Module'],

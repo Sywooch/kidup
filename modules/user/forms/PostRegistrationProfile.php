@@ -1,17 +1,9 @@
 <?php
 
-/*
- * This file is part of the  project.
- *
- * (c)  project <http://github.com//>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace user\forms;
 
-use user\models\Profile;
+use user\models\profile\Profile;
 use yii\base\Model;
 
 /**

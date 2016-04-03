@@ -19,7 +19,6 @@ class ItemCard extends Widget
     public $showDistance = false;
 
     public function init() {
-        $this->model->name = $this->model->name;
         if($this->numberOfCards == 4){
             $this->rowClass = "item-card card-width col-xs-12 col-sm-6 col-md-3 col-lg-3";
         }

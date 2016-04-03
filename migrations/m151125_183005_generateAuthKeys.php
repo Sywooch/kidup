@@ -10,7 +10,7 @@ class m151125_183005_generateAuthKeys extends Migration
 {
     public function up()
     {
-        $users = \user\models\User::find()->where('auth_key = ""')->all();
+        $users = \user\models\user\User::find()->where('auth_key = ""')->all();
         foreach ($users as $user) {
             $user->auth_key = \Yii::$app->security->generateRandomString();
             $user->save();

@@ -3,9 +3,9 @@
 namespace app\helpers;
 
 use item\models\location\Location;
-use user\models\base\Currency;
-use user\models\Country;
-use user\models\Language;
+use user\models\currency\Currency;
+use user\models\country\Country;
+use user\models\language\Language;
 use yii\base\Model;
 
 class SelectData extends Model

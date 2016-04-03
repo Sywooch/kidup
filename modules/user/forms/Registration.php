@@ -3,8 +3,7 @@
 
 namespace user\forms;
 
-use user\models\User;
-use user\Module;
+use user\models\user\User;
 use yii\base\Model;
 
 /**
@@ -22,9 +21,6 @@ class Registration extends Model
     /** @var User */
     protected $user;
 
-    /** @var Module */
-    protected $module;
-
     /** @inheritdoc */
     public function init()
     {
@@ -32,7 +28,6 @@ class Registration extends Model
             'class' => User::className(),
             'scenario' => 'register'
         ]);
-        $this->module = \Yii::$app->getModule('user');
     }
 
     /** @inheritdoc */
@@ -45,10 +40,9 @@ class Registration extends Model
             [
                 'email',
                 'unique',
-                'targetClass' => $this->module->modelMap['User'],
+                'targetClass' => User::className(),
                 'message' => \Yii::t('user.registration.email_already_in_use', 'This email address has already been taken')
             ],
-            ['password', 'required', 'skipOnEmpty' => $this->module->enableGeneratingPassword],
             ['password', 'string', 'min' => 6],
         ];
     }
@@ -82,15 +76,13 @@ class Registration extends Model
 
         $this->user->setAttributes([
             'email' => $this->email,
-            // 'first_name' => $this->first_name,
-            // 'last_name' => $this->last_name,
             'password' => $this->password
         ]);
 
         if ($reg = $this->user->register()) {
-            $u = User::find()->where(['email' => $this->email])->one();
+            $u = User::findOne(['email' => $this->email]);
             if(!YII_CONSOLE){
-                return \Yii::$app->user->login($u, $this->module->rememberFor);
+                return \Yii::$app->user->login($u, 24*30*60*60);
             }else{
                 return true;
             }

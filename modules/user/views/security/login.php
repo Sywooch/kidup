@@ -19,7 +19,7 @@ $this->assetPackage = \app\assets\Package::USER;
 
         <div class="col-md-4 col-md-offset-4 card col-sm-8 col-sm-offset-2">
             <h3>
-                <center><?= Yii::t('user.login.header', "Login to KidUp") ?></center>
+                <div style="text-align: center;"><?= Yii::t('user.login.header', "Login to KidUp") ?></div>
             </h3>
             <?php $authAuthChoice = \yii\authclient\widgets\AuthChoice::begin([
                 'baseAuthUrl' => ['/user/security/auth'],

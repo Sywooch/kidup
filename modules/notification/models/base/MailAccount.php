@@ -12,7 +12,7 @@ use Yii;
  * @property integer $conversation_id
  * @property integer $created_at
  *
- * @property \user\models\User $user
+ * @property \user\models\user\User $user
  * @property \message\models\conversation\Conversation $conversation
  */
 class MailAccount extends \app\models\BaseActiveRecord
@@ -55,7 +55,7 @@ class MailAccount extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 
     /**

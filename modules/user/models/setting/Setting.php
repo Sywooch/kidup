@@ -1,19 +1,20 @@
 <?php
 
-namespace user\models;
+namespace user\models\setting;
 
-use Carbon\Carbon;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
-class Setting extends base\Setting
+class Setting extends SettingBase
 {
     const MAIL_BOOKING_REMINDER = 'rent_reminder';
     const MESSAGE_UPDATE = 'message_update';
     const BOOKING_STATUS_CHANGE = 'rent_status_change';
     const NEWSLETTER = 'newsletter';
 
+    /**
+     * Returns an array of email setting strings
+     * @return array
+     */
     public static function getEmailSettings()
     {
         return [
@@ -25,31 +26,6 @@ class Setting extends base\Setting
                 'My outstanding booking request is accepted or declined.'),
             Setting::NEWSLETTER => \Yii::t('user.settings.mail.kidup_newsletter_promo',
                 'Kidup wants to share some exciting news or updates.'),
-        ];
-    }
-
-    public function rules()
-    {
-        return [
-            [['user_id'], 'required'],
-            [['user_id'], 'integer'],
-            [['type'], 'string', 'max' => 50],
-        ];
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => function () {
-                    return Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
-                }
-            ],
         ];
     }
 }

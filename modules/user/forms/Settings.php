@@ -11,9 +11,9 @@
 
 namespace user\forms;
 
-use user\models\Profile;
-use user\models\Setting;
-use user\models\User;
+use user\models\profile\Profile;
+use user\models\setting\Setting;
+use user\models\user\User;
 use user\Module;
 use yii\base\Model;
 

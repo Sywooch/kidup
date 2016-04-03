@@ -10,8 +10,8 @@ class PhoneTexter extends Component
 {
     public static function text($code, $phoneNumber){
         $message = urlencode('KidUp code ' . $code);
-        $key = Yii::$app->keyStore->get('nexmo_api_key');
-        $secret = Yii::$app->keyStore->get('nexmo_api_secret');
+        $key = \Yii::$app->keyStore->get('nexmo_api_key');
+        $secret = \Yii::$app->keyStore->get('nexmo_api_secret');
         // Create a client with a base URI
         $client = new \GuzzleHttp\Client();
         $url = 'https://rest.nexmo.com/sms/json?'.

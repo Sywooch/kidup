@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the  project.
- *
- * (c)  project <http://github.com/app\models/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace user\controllers;
 
@@ -17,21 +9,19 @@ use app\extended\web\Controller;
 use app\helpers\Event;
 use app\helpers\SelectData;
 use images\components\ImageManager;
-use notifications\models\Token;
-use user\Finder;
 use user\forms\LocationForm;
 use user\forms\Settings;
 use user\forms\Verification;
-use user\models\Account;
-use user\models\Profile;
-use user\models\User;
+use user\models\profile\Profile;
+use user\models\socialAccount\SocialAccount;
+use user\models\token\Token;
+use user\models\user\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
@@ -45,21 +35,6 @@ class SettingsController extends Controller
 {
     /** @inheritdoc */
     public $defaultAction = 'profile';
-
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param \yii\base\Module $module
-     * @param Finder $finder
-     * @param array $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = [])
-    {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
 
     /** @inheritdoc */
     public function behaviors()
@@ -112,7 +87,7 @@ class SettingsController extends Controller
      */
     public function actionProfile()
     {
-        /** @var \user\models\Profile $model * */
+        /** @var \user\models\profile\Profile $model * */
         $model = Profile::findOne(['user_id' => \Yii::$app->user->identity->getId()]);
 
         $this->performAjaxValidation($model);
@@ -120,7 +95,8 @@ class SettingsController extends Controller
             $image = UploadedFile::getInstance($model, 'img');
             if ($image !== null) {
                 if (!in_array($image->extension, ['png', 'jpg'])) {
-                    \Yii::$app->session->addFlash('warning', \Yii::t('user.settings.profile.file_format_not_allowed', "File format not allowed"));
+                    \Yii::$app->session->addFlash('warning',
+                        \Yii::t('user.settings.profile.file_format_not_allowed', "File format not allowed"));
                     $model->save();
                     return $this->refresh();
                 }
@@ -129,7 +105,8 @@ class SettingsController extends Controller
                 $model->setAttribute('img', $model->oldAttributes['img']);
             }
             if ($model->save()) {
-                \Yii::$app->getSession()->setFlash('success', \Yii::t('user.settings.profile.profile_updates', 'Your profile has been updated'));
+                \Yii::$app->getSession()->setFlash('success',
+                    \Yii::t('user.settings.profile.profile_updates', 'Your profile has been updated'));
                 return $this->refresh();
             }
         }
@@ -145,7 +122,7 @@ class SettingsController extends Controller
 
     public function actionLocation()
     {
-        $model = \Yii::createObject(LocationForm::className());
+        $model = new LocationForm();
 
         $this->performAjaxValidation($model);
 
@@ -224,19 +201,23 @@ class SettingsController extends Controller
         ]);
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('user.settings.payout_preference.title', 'Payout Preference')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.payout_preference.title',
+                    'Payout Preference')) . ' - ' . \Yii::$app->name
         ]);
     }
 
     /**
      * Displays list of connected network accounts.
-     * @return string
+     * @param bool $confirm_email
+     * @param bool $confirm_phone
+     * @return string|Response
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function actionVerification($confirm_email = false, $confirm_phone = false)
     {
-        /** @var \user\models\Profile $profile * */
-        $profile = Profile::findOne(\Yii::$app->user->id);
-        $model = new Verification(\Yii::$app->user->identity, $profile);
+        $user = User::findOneOr404(\Yii::$app->user->id);
+        $model = new Verification($user, $user->profile);
         $this->performAjaxValidation($model);
 
         if ($model->load(\Yii::$app->request->post())) {
@@ -247,13 +228,13 @@ class SettingsController extends Controller
             }
         }
 
-        if ($confirm_email && !$profile->email_verified) {
+        if ($confirm_email && !$user->profile->email_verified) {
             // resend email verification
             $user = User::findOne(\Yii::$app->user->id);
             Event::trigger($user, User::EVENT_USER_REQUEST_EMAIL_RECONFIRM);
         }
 
-        if ($confirm_phone && !$profile->phone_verified) {
+        if ($confirm_phone && !$user->profile->phone_verified) {
             Token::deleteAll([
                 'user_id' => \Yii::$app->user->id,
                 'type' => Token::TYPE_PHONE_CODE
@@ -264,10 +245,9 @@ class SettingsController extends Controller
                 'type' => Token::TYPE_PHONE_CODE,
             ]);
             $token->save();
-            try{
-                PhoneTexter::text($token->code,  $this->phone_country . $this->phone_number);
-                return $profile->sendPhoneVerification($token);
-            }catch(PhoneTextSendException $e){
+            try {
+                PhoneTexter::text($token->code, $this->phone_country . $this->phone_number);
+            } catch (PhoneTextSendException $e) {
                 \Yii::$app->session->addFlash('info', \Yii::t('user.settings.validation.text_not_send',
                     'SMS could not be send, please try again.'));
                 $page = $this->renderPartial('verification', [
@@ -276,7 +256,8 @@ class SettingsController extends Controller
                 ]);
                 return $this->render('_wrapper', [
                     'page' => $page,
-                    'title' => ucfirst(\Yii::t('user.settings.validation.title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+                    'title' => ucfirst(\Yii::t('user.settings.validation.title',
+                            'Trust and Verification')) . ' - ' . \Yii::$app->name
                 ]);
             }
         }
@@ -289,17 +270,18 @@ class SettingsController extends Controller
 
         return $this->render('_wrapper', [
             'page' => $page,
-            'title' => ucfirst(\Yii::t('user.settings.validation.title', 'Trust and Verification')) . ' - ' . \Yii::$app->name
+            'title' => ucfirst(\Yii::t('user.settings.validation.title',
+                    'Trust and Verification')) . ' - ' . \Yii::$app->name
         ]);
     }
 
     public function actionPhonecode($code = null)
     {
-        /** @var \user\models\Profile $p * */
+        /** @var \user\models\profile\Profile $p * */
         $p = Profile::findOne(\Yii::$app->user->id);
 
         if ($code !== null) {
-            /** @var \mail\models\Token $token * */
+            /** @var Token $token * */
             $token = Token::findOne([
                 'user_id' => \Yii::$app->user->id,
                 'code' => $code,
@@ -315,7 +297,8 @@ class SettingsController extends Controller
 
                 $token->delete();
                 \Yii::$app->session->setFlash('success',
-                    \Yii::t('user.settings.validation.phone_validated_flash', "Thank you, your phone number has been verified!"));
+                    \Yii::t('user.settings.validation.phone_validated_flash',
+                        "Thank you, your phone number has been verified!"));
 
                 return $this->redirect(['/user/settings/verification']);
             }
@@ -335,10 +318,7 @@ class SettingsController extends Controller
      */
     public function actionDisconnect($id)
     {
-        $account = $this->finder->findAccountById($id);
-        if ($account === null) {
-            throw new NotFoundHttpException;
-        }
+        $account = SocialAccount::findOneOr404($id);
         if ($account->user_id != \Yii::$app->user->id) {
             throw new ForbiddenHttpException;
         }
@@ -358,11 +338,14 @@ class SettingsController extends Controller
         $provider = $client->getId();
         $clientId = $attributes['id'];
 
-        $account = $this->finder->findAccountByProviderAndClientId($provider, $clientId);
+        $account = SocialAccount::findOne([
+            'provider' => $provider,
+            'client_id' => $clientId
+        ]);
 
         if ($account === null) {
             $account = \Yii::createObject([
-                'class' => Account::className(),
+                'class' => SocialAccount::className(),
                 'provider' => $provider,
                 'client_id' => $clientId,
                 'data' => json_encode($attributes),

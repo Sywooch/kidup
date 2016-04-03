@@ -4,13 +4,12 @@ namespace item\models\item;
 
 use app\components\Cache;
 use app\extended\base\Exception;
-use Carbon\Carbon;
 use images\components\ImageHelper;
 use item\models\itemHasMedia\ItemHasMedia;
 use item\models\itemSimilarity\ItemSimilarity;
 use item\models\media\Media;
 use search\components\ItemSearchDb;
-use user\models\base\Currency;
+use user\models\currency\Currency;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -63,13 +62,11 @@ class Item extends ItemBase
             return false;
         }
         if ($insert == true) {
-            $this->created_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
             $this->currency_id = 1;
         }
         if (!$this->isAvailable()) {
             $this->is_available = 0;
         }
-        $this->updated_at = Carbon::now(\Yii::$app->params['serverTimeZone'])->timestamp;
 
         return parent::beforeSave($insert);
     }

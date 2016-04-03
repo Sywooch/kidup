@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\token;
 
 use Yii;
 
@@ -12,9 +12,9 @@ use Yii;
  * @property integer $type
  * @property integer $created_at
  *
- * @property \user\models\User $user
+ * @property \user\models\user\User $user
  */
-class Token extends \app\models\BaseActiveRecord
+class TokenBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -49,11 +49,18 @@ class Token extends \app\models\BaseActiveRecord
         ];
     }
 
+
+    /** @inheritdoc */
+    public static function primaryKey()
+    {
+        return ['user_id', 'code', 'type'];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 }

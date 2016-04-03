@@ -1,6 +1,6 @@
 <?php
 
-namespace user\models\base;
+namespace user\models\setting;
 
 use Yii;
 
@@ -14,9 +14,9 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \user\models\User $user
+ * @property \user\models\user\User $user
  */
-class Setting extends \app\models\BaseActiveRecord
+class SettingBase extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,11 +33,11 @@ class Setting extends \app\models\BaseActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'created_at', 'updated_at'], 'integer'],
+            [['user_id'], 'integer'],
             [['type'], 'string', 'max' => 50],
-            [['value'], 'string', 'max' => 256]
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -59,6 +59,6 @@ class Setting extends \app\models\BaseActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\user\models\user\User::className(), ['id' => 'user_id']);
     }
 }
