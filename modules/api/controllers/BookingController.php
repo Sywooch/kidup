@@ -166,7 +166,7 @@ class BookingController extends Controller
 
         // do not save, display the table data
         $booking->calculateTableData();
-
+        
         return $booking->tableData;
     }
 
