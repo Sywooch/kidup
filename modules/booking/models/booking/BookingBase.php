@@ -48,6 +48,10 @@ use Yii;
  */
 class BookingBase extends \app\models\BaseActiveRecord
 {
+
+    const SCENARIO_INIT = 'init';
+    const SCENARIO_OWNER_RESPOND = 'owner_respond';
+
     /**
      * @inheritdoc
      */
@@ -63,7 +67,40 @@ class BookingBase extends \app\models\BaseActiveRecord
     {
         return [
             [
-                ['status', 'item_id', 'time_from', 'time_to', 'updated_at', 'created_at', 'request_expires_at'],
+                // sets the default request_expires_at values
+                'request_expires_at',
+                'default',
+                'value' => function ($model, $attribute) {
+                    $expireDate = time() + 6 * 24 * 60 * 60;
+                    if ($this->time_to < $expireDate && $this->time_to > time() - 24 * 60 * 60) {
+                        return $this->time_to - 24 * 60 * 60;
+                    } else {
+                        if ($this->time_to < $expireDate) {
+                            return $this->time_to - 5 * 60; // 5 min
+                        }
+                    }
+                    return $expireDate;
+                }
+            ],
+            [
+                [
+                    'status',
+                    'item_id',
+                    'time_from',
+                    'time_to',
+                    'updated_at',
+                    'created_at',
+                    'renter_id',
+                    'request_expires_at',
+                    'amount_item',
+                    'amount_payin',
+                    'amount_payin_fee',
+                    'amount_payin_fee_tax',
+                    'amount_payin_costs',
+                    'amount_payout',
+                    'amount_payout_fee',
+                    'amount_payout_fee_tax'
+                ],
                 'required'
             ],
             [
@@ -118,7 +155,13 @@ class BookingBase extends \app\models\BaseActiveRecord
                 'targetClass' => Payin::className(),
                 'targetAttribute' => ['payin_id' => 'id']
             ],
-
+            [
+                ['payout_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Payout::className(),
+                'targetAttribute' => ['payout_id' => 'id']
+            ],
             [
                 ['renter_id'],
                 'exist',
@@ -127,6 +170,7 @@ class BookingBase extends \app\models\BaseActiveRecord
                 'targetAttribute' => ['renter_id' => 'id']
             ],
             [
+                // bookings should atleast last one day
                 'time_to',
                 function ($attribute, $params) {
                     if ($this->time_to < $this->time_from - 1 * 24 * 60 * 60) {
@@ -135,14 +179,17 @@ class BookingBase extends \app\models\BaseActiveRecord
                 }
             ],
             [
+                // bookings can only be in the future
                 'time_from',
                 function ($attribute, $params) {
                     if ($this->$attribute > time()) {
                         $this->addError('time_from', 'The booking can only start in the future');
                     }
-                }
+                },
+                'on' => [self::SCENARIO_INIT]
             ],
             [
+                // bookings cannot overlap with other accepted bookings
                 'time_to',
                 function () {
                     $overlapping = Booking::find()
@@ -156,31 +203,50 @@ class BookingBase extends \app\models\BaseActiveRecord
                     if ($overlapping > 0) {
                         $this->addError('time_to', 'The item is already booked in that period');
                     }
-                }
+                },
+                'on' => [self::SCENARIO_INIT, self::SCENARIO_OWNER_RESPOND]
             ],
+
             [
-                'request_expires_at',
-                'default',
-                'value' => function ($model, $attribute) {
-                    $expireDate = time() + 6 * 24 * 60 * 60;
-                    if ($this->time_to < $expireDate && $this->time_to > time() - 24 * 60 * 60) {
-                        return $this->time_to - 24 * 60 * 60;
-                    } else {
-                        if ($this->time_to < $expireDate) {
-                            return $this->time_to - 5 * 60; // 5 min
-                        }
-                    }
-                    return $expireDate;
-                }
-            ],
-            [
+                // an item can only be booked if the item is available
                 'item_id',
                 function () {
                     $item = Item::findOne($this->item_id);
                     if (!$item->isAvailable()) {
                         $this->addError("item_id", "This item is not available for rent");
                     }
-                }
+                },
+                'on' => [self::SCENARIO_INIT]
+            ],
+            [
+                // an booking request can only be replied to if not expired
+                'request_expires_at',
+                function () {
+                    if($this->request_expires_at < time()){
+                        $this->addError("request_expires_at", "This item is not available for rent");
+                    }
+                },
+                'on' => [self::SCENARIO_OWNER_RESPOND]
+            ],
+            [
+                // an booking request can only be replied to if not expired
+                'request_expires_at',
+                function () {
+                    if($this->status != Booking::PENDING){
+                        $this->addError("status", "A booking can only be accepted when the status is pending");
+                    }
+                },
+                'on' => [self::SCENARIO_OWNER_RESPOND]
+            ],
+            [
+                // an booking request can only be replied to if not expired
+                'renter_id',
+                function () {
+                    if($this->item->owner_id == $this->renter_id){
+                        $this->addError("renter_id", "You cannot book your own item");
+                    }
+                },
+                'on' => [self::SCENARIO_INIT]
             ]
         ];
     }

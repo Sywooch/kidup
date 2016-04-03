@@ -21,9 +21,7 @@ trait FactoryTrait
         if($this->hasErrors()){
             return $this;
         }
-        $x = \Yii::createObject($apiObjectClassname, $obj->attributes);
-        $x->setAttributes($obj->attributes);
-
+        $x = $apiObjectClassname::findOne($obj->getPrimaryKey());
         return $x;
     }
 }

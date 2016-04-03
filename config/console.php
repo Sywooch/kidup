@@ -2,8 +2,9 @@
 
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
 Yii::setAlias('@web', YII_ENV == 'dev' ? '/web' : YII_ENV == 'test' ? '/' : '/'); // required to bootstrap the modules
-Yii::setAlias('@assets', YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test' ? '/assets_web' : '/assets_web'); // required to bootstrap the modules
-include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
+Yii::setAlias('@assets',
+    YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test' ? '/assets_web' : '/assets_web'); // required to bootstrap the modules
+include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 $params = require(__DIR__ . '/params.php');
 $allComponents = require(__DIR__ . '/components.php');
 
@@ -27,16 +28,16 @@ return [
 
     'modules' => [
         'gii' => 'yii\gii\Module',
-        'gridview' =>       ['class' => '\kartik\grid\Module'],
-        'home' =>           ['class' => '\home\Module'],
-        'item' =>           ['class' => '\item\Module'],
-        'message' =>        ['class' => '\message\Module'],
-        'booking' =>        ['class' => '\booking\Module'],
-        'mail' =>        ['class' => '\mail\Module'],
-        'pages' =>        ['class' => '\pages\Module'],
-        'review' =>        ['class' => '\review\Module'],
-        'admin' =>        ['class' => '\admin\Module'],
-        'api' =>        ['class' => '\api\Module'],
+        'gridview' => ['class' => '\kartik\grid\Module'],
+        'home' => ['class' => '\home\Module'],
+        'item' => ['class' => '\item\Module'],
+        'message' => ['class' => '\message\Module'],
+        'booking' => ['class' => '\booking\Module'],
+        'mail' => ['class' => '\mail\Module'],
+        'pages' => ['class' => '\pages\Module'],
+        'review' => ['class' => '\review\Module'],
+        'admin' => ['class' => '\admin\Module'],
+        'api' => ['class' => '\api\Module'],
         'user' => [
             'class' => '\user\Module',
             'enableUnconfirmedLogin' => true,
@@ -83,10 +84,12 @@ return [
             ],
         ],
         'keyStore' => ['class' => 'app\components\KeyStore'],
-        'sendGrid' => $allComponents['sendGrid'],
         'mailer' => $allComponents['mailer'],
         'urlManager' => [
             'scriptUrl' => '/web'
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
         ],
     ],
     'aliases' => [

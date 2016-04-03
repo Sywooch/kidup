@@ -51,6 +51,11 @@ class Item extends ItemBase
         parent::afterSave($insert, $changedAttributes);
     }
 
+    public function extraFields()
+    {
+        return ['owner', 'category', 'location', 'currency', 'media'];
+    }
+
     public function isAvailable()
     {
         return $this->is_available == 1;

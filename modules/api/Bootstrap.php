@@ -16,5 +16,6 @@ class Bootstrap implements BootstrapInterface
         if ($app->hasModule('api') && ($module = $app->getModule('api')) instanceof Module) {
             Yii::setAlias('@api', __DIR__);
         }
+
     }
 }

@@ -4,8 +4,6 @@ namespace user\models\user;
 
 use api\models\Booking;
 use api\models\oauth\OauthAccessToken;
-use app\components\behaviors\PermissionBehavior;
-use app\components\Permission;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
@@ -55,9 +53,12 @@ class User extends UserBase implements IdentityInterface
     const EVENT_USER_REQUEST_EMAIL_RECONFIRM = 'user_request_email_reconfirm';
     const EVENT_USER_REQUEST_RECOVERY = 'user_request_recovery';
 
-    const ROLE_USER = 0;
-    const ROLE_ADMIN = 9;
-    const ROLE_ROOT = 1;
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+
+    const STATUS_NOT_ACTIVE = 1;
+    const STATUS_ACTIVE = 2;
+    const STATUS_DELETED = 3;
 
     /** @var string Plain password. Used for model validation. */
     public $password;
@@ -69,17 +70,7 @@ class User extends UserBase implements IdentityInterface
 
     public function behaviors()
     {
-        return [
-            [
-                'class' => PermissionBehavior::className(),
-                'permissions' => [
-                    Permission::ACTION_CREATE => Permission::GUEST,
-                    Permission::ACTION_READ => Permission::GUEST,
-                    Permission::ACTION_UPDATE => Permission::OWNER,
-                    Permission::ACTION_DELETE => Permission::OWNER,
-                ],
-            ],
-        ];
+        return parent::behaviors();
     }
 
     /**
@@ -128,14 +119,6 @@ class User extends UserBase implements IdentityInterface
     public function isAdmin()
     {
         return $this->role == self::ROLE_ADMIN;
-    }
-
-    /**
-     * @return bool Whether the user is an admin or not.
-     */
-    public function isRoot()
-    {
-        return $this->role == self::ROLE_ROOT;
     }
 
   

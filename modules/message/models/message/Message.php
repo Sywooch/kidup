@@ -2,10 +2,8 @@
 
 namespace message\models\message;
 
-use app\components\behaviors\PermissionBehavior;
 use app\components\behaviors\PurifierBehavior;
 use app\components\behaviors\UtfEncodeBehavior;
-use app\components\Permission;
 use app\extended\base\Exception;
 use app\helpers\Event;
 use Yii;
@@ -22,15 +20,6 @@ class Message extends MessageBase
     public function behaviors()
     {
         return [
-            [
-                'class' => PermissionBehavior::className(),
-                'permissions' => [
-                    Permission::ACTION_CREATE => Permission::USER,
-                    Permission::ACTION_READ => Permission::OWNER,
-                    Permission::ACTION_UPDATE => Permission::OWNER,
-                    Permission::ACTION_DELETE => Permission::OWNER,
-                ],
-            ],
             [
                 'class' => PurifierBehavior::className(),
                 'textAttributes' => [

@@ -2,7 +2,7 @@
 $vendorDir = dirname(__DIR__) . '/vendor';
 $params = require(__DIR__ . '/params.php');
 $components = require(__DIR__ . '/components.php');
-include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
+include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 
 $config = [
     'id' => 'KidUp',
@@ -22,28 +22,36 @@ $config = [
         'admin\\Bootstrap',
         'search\\Bootstrap',
         'api\\Bootstrap',
+        'api\\v1\\Bootstrap',
+        'api\\v2\\Bootstrap',
 //        'docGenerator'
     ],
     'extensions' => array_merge(
         require($vendorDir . '/yiisoft/extensions.php')
     ),
     'modules' => [
-        'user' =>           ['class' => '\user\Module'],
-        'gridview' =>       ['class' => '\kartik\grid\Module'],
-        'home' =>           ['class' => '\home\Module'],
-        'item' =>           ['class' => '\item\Module'],
-        'images' =>         ['class' => '\images\Module'],
-        'message' =>        ['class' => '\message\Module'],
-        'booking' =>        ['class' => '\booking\Module'],
-        'notification' =>   [
+        'user' => ['class' => '\user\Module'],
+        'gridview' => ['class' => '\kartik\grid\Module'],
+        'home' => ['class' => '\home\Module'],
+        'item' => ['class' => '\item\Module'],
+        'images' => ['class' => '\images\Module'],
+        'message' => ['class' => '\message\Module'],
+        'booking' => ['class' => '\booking\Module'],
+        'notification' => [
             'class' => '\notification\Module',
             'useFileTransfer' => (YII_ENV == 'test' ? true : false)
         ],
-        'pages' =>          ['class' => '\pages\Module'],
-        'review' =>         ['class' => '\review\Module'],
-        'admin' =>          ['class' => '\admin\Module'],
-        'search' =>         ['class' => '\search\Module'],
-        'api' =>            ['class' => '\api\Module'],
+        'pages' => ['class' => '\pages\Module'],
+        'review' => ['class' => '\review\Module'],
+        'admin' => ['class' => '\admin\Module'],
+        'search' => ['class' => '\search\Module'],
+        'api' => [
+            'class' => 'api\Module',
+            'modules' => [
+                'v1' => 'api\v1\Module',
+                'v2' => 'api\v2\Module'
+            ]
+        ],
         'social' => [
             // the module class
             'class' => 'kartik\social\Module',
@@ -81,7 +89,7 @@ $config = [
 if (YII_ENV == 'dev') {
     // configuration adjustments for 'dev' environment
 
-    if(YII_DEBUG && !YII_CACHE){
+    if (YII_DEBUG && !YII_CACHE) {
         $config['bootstrap'][] = 'debug';
         $config['modules']['debug'] = [
             'class' => 'yii\debug\Module',

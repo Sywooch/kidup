@@ -2,8 +2,6 @@
 
 namespace booking\models\booking;
 
-use app\components\behaviors\PermissionBehavior;
-use app\components\Permission;
 use app\extended\base\Exception;
 use app\helpers\Event;
 use app\jobs\SlackJob;
@@ -52,42 +50,12 @@ class Booking extends BookingBase
     const EVENT_REVIEW_REMINDER_RENTER = 'event_review_reminder_renter';
     const EVENT_REVIEWS_PUBLIC = 'event_reviews_public';
 
-
-    public function behaviors()
+    public function isOwner()
     {
-        return [
-            [
-                'class' => PermissionBehavior::className(),
-                'permissions' => [
-                    Permission::ACTION_CREATE => Permission::USER,
-                    Permission::ACTION_READ => Permission::OWNER,
-                    Permission::ACTION_UPDATE => Permission::OWNER,
-                    Permission::ACTION_DELETE => Permission::ROOT,
-                ],
-            ],
-        ];
-    }
-
-    public function isOwner(){
         $yuid = \Yii::$app->user->id;
         return $yuid === $this->renter_id || $yuid === $this->item->owner_id;
     }
 
-    public function scenarios()
-    {
-        return array_merge(parent::scenarios(), [
-            'init' => [
-                'time_from',
-                'time_to',
-                'renter_id',
-                'price',
-                'status',
-                'time_created',
-                'item_id',
-                'status',
-            ],
-        ]);
-    }
 
     public function ownerAccepts()
     {

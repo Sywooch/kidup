@@ -89,8 +89,4 @@ class BaseActiveRecord extends \yii\db\ActiveRecord
         }
         return parent::beforeValidate();
     }
-
-    public function isOwner(){
-        return false;
-    }
 }

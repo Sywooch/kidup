@@ -108,6 +108,6 @@ class HomeController extends Controller
     }
 
     public function actionTest(){
-        Yii::error('test');
+        echo utf8_decode(utf8_encode("Æ"));
     }
 }
