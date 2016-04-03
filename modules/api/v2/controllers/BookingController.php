@@ -5,6 +5,7 @@ use api\v2\models\Booking;
 use api\v2\models\Currency;
 use api\v2\models\Item;
 use api\v2\models\Review;
+use app\components\filters\OwnModelAccessFilter;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
 use booking\models\payin\BrainTree;
@@ -12,10 +13,40 @@ use item\forms\CreateBooking;
 use message\models\message\MessageFactory;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 
 class BookingController extends Controller
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'modelAccess' => [
+                'class' => OwnModelAccessFilter::className(),
+                'only' => ['update', 'delete'],
+                'modelClass' => Item::className()
+            ],
+            'ownerAccess' => [
+                'class' => AccessControl::className(),
+                'only' => ['accept', 'decline', 'as-owner'],
+                'rules' => [
+                    'allow' => true,
+                    'roles' => ['editBookingAsRenter']
+                ]
+            ],
+            'renterAccess' => [
+                'class' => AccessControl::className(),
+                'only' => ['accept', 'decline'],
+                'rules' => [
+                    'allow' => true,
+                    'roles' => ['editBookingAsRenter']
+                ]
+            ]
+        ]);
+    }
+
     public function init()
     {
         $this->modelClass = Booking::className();
@@ -92,7 +123,7 @@ class BookingController extends Controller
             $booking = new BookingFactory();
             $booking->payment_nonce = $params['payment_nonce'];
             $booking = $booking->createForApi($params, $this->modelClass);
-            if($booking->hasErrors()){
+            if ($booking->hasErrors()) {
                 return $booking;
             }
             $booking = Booking::findOne($booking->id);
@@ -139,7 +170,7 @@ class BookingController extends Controller
 
         // do not save, display the table data
         $booking->calculateTableData();
-        
+
         return $booking->tableData;
     }
 

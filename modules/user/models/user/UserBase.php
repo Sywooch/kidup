@@ -2,7 +2,7 @@
 
 namespace user\models\user;
 
-use api\models\oauth\OauthAccessToken;
+use user\models\oauth\OauthAccessToken;
 use item\models\wishListItem\WishListItem;
 use user\models\payoutMethod\PayoutMethod;
 use user\models\userReferredUser\UserReferredUser;
@@ -42,7 +42,7 @@ use Yii;
  * @property \user\models\setting\Setting[] $settings
  * @property \user\models\socialAccount\SocialAccount[] $socialAccounts
  * @property \user\models\token\Token[] $tokens
- * @property \api\models\oauth\OauthAccessToken[] $validOauthAccessTokens
+ * @property \user\models\oauth\OauthAccessToken[] $validOauthAccessTokens
  * @property User[] $referringUsers
  * @property User[] $referredUsers
  * @property WishListItem[] $withListItems

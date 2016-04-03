@@ -1,14 +1,14 @@
 <?php
 
-namespace api\v1\models\oauth;
+namespace user\models\oauth;
 
 use user\models\user\User;
 use Yii;
 
 /**
- * This is the model class for table "oauth_access_tokens".
+ * This is the model class for table "oauth_refresh_tokens".
  *
- * @property string $access_token
+ * @property string $refresh_token
  * @property string $client_id
  * @property integer $user_id
  * @property string $expires
@@ -17,14 +17,14 @@ use Yii;
  * @property OauthClient $client
  * @property User $user
  */
-class OauthAccessToken extends \app\models\BaseActiveRecord
+class OauthRefreshToken extends \app\models\BaseActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'oauth_access_token';
+        return 'oauth_refresh_token';
     }
 
     /**
@@ -33,10 +33,10 @@ class OauthAccessToken extends \app\models\BaseActiveRecord
     public function rules()
     {
         return [
-            [['access_token', 'client_id', 'expires'], 'required'],
-            [['user_id', 'expires'], 'integer'],
+            [['refresh_token', 'client_id', 'expires'], 'required'],
+            [['user_id'], 'integer'],
             [['expires'], 'safe'],
-            [['access_token'], 'string', 'max' => 40],
+            [['refresh_token'], 'string', 'max' => 40],
             [['client_id'], 'string', 'max' => 32],
         ];
     }
@@ -47,7 +47,7 @@ class OauthAccessToken extends \app\models\BaseActiveRecord
     public function attributeLabels()
     {
         return [
-            'access_token' => 'Access Token',
+            'refresh_token' => 'Refresh Token',
             'client_id' => 'Client ID',
             'user_id' => 'User ID',
             'expires' => 'Expires',
@@ -71,29 +71,19 @@ class OauthAccessToken extends \app\models\BaseActiveRecord
     }
 
     /**
-     * Makes a new OauthAccessToken
+     * Makes a new OauthRefreshToken
      * @param User $user
      * @param OauthClient $client
-     * @return OauthAccessToken
+     * @return OauthRefreshToken
      */
     public static function make(User $user, OauthClient $client)
     {
-        $token = new OauthAccessToken();
-        $token->expires = time() + 3600*24;
+        $token = new OauthRefreshToken();
+        $token->expires = time() + 31*3600*24;
         $token->user_id = $user->id;
         $token->client_id = $client->client_id;
-        $token->access_token = self::getRandomToken() ;
+        $token->refresh_token = OauthAccessToken::getRandomToken();
         $token->save();
         return $token;
-    }
-
-    /**
-     * Generates a random token, [a-z0-9]
-     * @return mixed
-     */
-    public static function getRandomToken(){
-        $var = strtolower(\Yii::$app->security->generateRandomString(40));
-        $var = str_replace('-', rand(0,9),$var);
-        return str_replace('_', rand(0,9),$var);
     }
 }

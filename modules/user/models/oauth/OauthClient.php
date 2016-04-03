@@ -1,6 +1,6 @@
 <?php
 
-namespace api\v1\models\oauth;
+namespace user\models\oauth;
 
 use Yii;
 

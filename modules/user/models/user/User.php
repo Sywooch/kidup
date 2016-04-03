@@ -2,8 +2,7 @@
 
 namespace user\models\user;
 
-use api\models\Booking;
-use api\models\oauth\OauthAccessToken;
+use user\models\oauth\OauthAccessToken;
 use app\helpers\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
