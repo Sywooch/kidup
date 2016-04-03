@@ -72,7 +72,7 @@ class Login extends Model
     public function login()
     {
         if ($this->validate()) {
-            return \Yii::$app->getUser()->login($this->user, $this->rememberMe ? $this->module->rememberFor : 0);
+            return \Yii::$app->getUser()->login($this->user, 30*24*60*60);
         } else {
             return false;
         }

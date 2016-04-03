@@ -101,7 +101,7 @@ class RegistrationController extends Controller
             if ($u !== null) {
                 $account->user_id = $u->id;
                 $account->save(false);
-                \Yii::$app->user->login($u, $this->module->rememberFor);
+                \Yii::$app->user->login($u, 30*24*60*60);
                 return $this->redirect(User::afterLoginUrl('connect'));
             } else {
                 $user->email = $data['email'];
@@ -116,7 +116,7 @@ class RegistrationController extends Controller
                     $socialAccount->fillUserDetails($user);
                     Event::trigger($user, User::EVENT_USER_REGISTER_DONE);
                 }
-                \Yii::$app->user->login($user, $this->module->rememberFor);
+                \Yii::$app->user->login($user, 30*24*60*60);
                 return $this->redirect(User::afterLoginUrl('connect_new'));
             }
         }
@@ -124,7 +124,7 @@ class RegistrationController extends Controller
         if ($user->load(\Yii::$app->request->post()) && $user->create()) {
             $account->user_id = $user->id;
             $account->save(false);
-            \Yii::$app->user->login($user, $this->module->rememberFor);
+            \Yii::$app->user->login($user, 30*24*60*60);
             return $this->redirect(User::afterLoginUrl('connect_new'));
         }
 
