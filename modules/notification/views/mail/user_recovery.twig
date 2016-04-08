@@ -26,7 +26,7 @@
                     <a class="button button--green" href="{{ url }}">{{ t('mail.button.recover_password', 'Recover password') }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-blue-gull.png') }}" alt="Image" width="100%">
+                    {{ responsiveImage('kidup/email/image-blue-gull.png') | raw }}
                 </td>
             </tr>
         </table>

@@ -34,6 +34,15 @@
     </style>
 </head>
 <body>
+
+<!-- Max-width hack for MSO -->
+<!--[if (gte mso 9)|(IE)]>
+<center>
+<table>
+<tr>
+<td width="980">
+<![endif]-->
+
 <div style="text-align: center;">
     <table id="container" width="100%">
         <tr>
@@ -55,15 +64,32 @@
                 </table>
                 {% endblock %}
 
+                <center>
+                <!--[if mso]>
+                <table width=680>
+                <div style="width:0px; height:0px; overflow:hidden; display:none; visibility:hidden; mso-hide:all;">
+                <![endif]-->
+                <table style="width: 100%; max-width: 680px;"
+                <!--[if mso]>
+                </div>
+                <![endif]-->
+                <tr>
+                <td>
+
                 {% block content %}
                     Content
                 {% endblock %}
+
+                </td>
+                </tr>
+                </table>
+                </center>
 
                 <!-- Logo -->
                 <table id="logo-blue" width="100%">
                     <tr>
                         <td>
-                            <img src="{{ imageUrl('kidup/email/logo.png') | raw }}" alt="KidUp" width="30%">
+                            {{ responsiveImage('kidup/email/logo.png') | raw }}
                         </td>
 
                     </tr>
@@ -103,5 +129,14 @@
         </tr>
     </table>
 </div>
+
+<!-- Max-width hack for MSO -->
+<!--[if mso]>
+</td>
+</tr>
+</table>
+</center>
+<![endif]-->
+
 </body>
 </html>

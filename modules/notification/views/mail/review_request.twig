@@ -26,7 +26,7 @@
                     <a class="button button--green" href="{{ review_url | raw }}" target="_blank">{{ t('mail.links.review_now', 'Review now') | raw }}</a>
                 </td>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-blue-couple.png') }}" width="100%" alt="Image">
+                    {{ responsiveImage('kidup/email/image-blue-couple.png') | raw }}
                 </td>
             </tr>
         </table>

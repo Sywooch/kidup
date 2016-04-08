@@ -13,7 +13,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-green-stroller.png') }}" width="100%" alt="Image">
+                    {{ responsiveImage('kidup/email/image-green-stroller.png') | raw }}
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.booking_start_owner.t1', 'Do you have everything planned?') }}</h3>
@@ -55,7 +55,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-pink-speen.png') }}" alt="Image" width="100%">
+                    {{ responsiveImage('kidup/email/image-pink-speen.png') | raw }}
                 </td>
             </tr>
         </table>
