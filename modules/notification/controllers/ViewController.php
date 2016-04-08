@@ -35,6 +35,5 @@ class ViewController extends Controller
     public function actionTest() {
         
     }
-
 }
 
