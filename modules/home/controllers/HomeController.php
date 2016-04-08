@@ -6,8 +6,12 @@ use app\extended\web\Controller;
 use home\forms\Search;
 use item\models\category\Category;
 use item\models\item\Item;
+use user\models\profile\Profile;
+use user\models\user\User;
 use Yii;
+use yii\helpers\FormatConverter;
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 
 class HomeController extends Controller
 {
@@ -40,7 +44,8 @@ class HomeController extends Controller
         ];
     }
 
-    public function actionFakeHome(){
+    public function actionFakeHome()
+    {
         return $this->render("fake-home");
     }
 
@@ -107,7 +112,36 @@ class HomeController extends Controller
         echo 'dude.. the fu!!';
     }
 
-    public function actionTest(){
-        echo utf8_decode(utf8_encode("Æ"));
+    public function actionTest()
+    {
+//        \Yii::$app->runAction('v2/items', []);
+//        $item = Item::find()->innerJoinWith('wishListItems.user')->andWhere(['user_id' => 1])->all();
+        $params = [
+            'users',
+            1,
+            'wish-list-items',
+            'items',
+            'owners'
+        ];
+        foreach ($params as $i => &$param) {
+            if(is_string($param)){
+                $param = ucwords(str_replace("-", ' ', $param));
+                $param = lcfirst(str_replace(" ", '', $param));
+            }
+            if($i == 0){
+                $param = \yii\helpers\Inflector::pluralize($param);
+            }
+            if($i == 2){
+                $param = \yii\helpers\Inflector::pluralize($param);
+            }
+            if($i > 2){
+                $param = \yii\helpers\Inflector::singularize($param);
+            }
+        }
+        $innerJoin = implode('.', array_slice($params, 2));
+        $url = 'api/v2/'.$params[0];
+//        \yii\helpers\VarDumper::dump($url,10,true); exit();
+        \Yii::$app->runAction($url, ['id' => $params[1]]);
+//        $profile = User::find()->innerJoinWith("wishListItems.item.owner as rel")->andWhere(['user_id' => 1]);
     }
 }

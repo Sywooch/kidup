@@ -22,4 +22,12 @@ class BaseQuery extends ActiveQuery
         }
         return $res;
     }
+
+    public function orderByLastUpdated(){
+        return $this->orderBy('updated_at DESC');
+    }
+
+    public function orderByLastCreated(){
+        return $this->orderBy('created_at DESC');
+    }
 }

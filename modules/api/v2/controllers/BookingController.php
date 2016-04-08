@@ -1,11 +1,11 @@
 <?php
 namespace api\v2\controllers;
 
-use api\v2\models\Booking;
 use api\v2\models\Currency;
 use api\v2\models\Item;
 use api\v2\models\Review;
 use app\components\filters\OwnModelAccessFilter;
+use booking\models\booking\Booking;
 use booking\models\booking\BookingException;
 use booking\models\booking\BookingFactory;
 use booking\models\payin\BrainTree;
@@ -77,19 +77,14 @@ class BookingController extends Controller
     function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => Booking::find()->where([
-                'renter_id' => \Yii::$app->user->id
-            ])->orderBy('updated_at DESC')
+            'query' => Booking::find()->renter(\Yii::$app->user)->orderByLastUpdated()
         ]);
     }
 
     function actionAsOwner()
     {
         return new ActiveDataProvider([
-            'query' => Booking::find()->where([
-                'item.owner_id' => \Yii::$app->user->id
-            ])->innerJoinWith("item")
-                ->orderBy('updated_at DESC')
+            'query' => Booking::find()->owner(\Yii::$app->user)->orderByLastUpdated()
         ]);
     }
 

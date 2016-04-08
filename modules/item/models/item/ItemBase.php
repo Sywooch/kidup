@@ -10,6 +10,7 @@ use item\models\itemHasMedia\ItemHasMedia;
 use item\models\itemSimilarity\ItemSimilarity;
 use item\models\location\Location;
 use item\models\media\Media;
+use item\models\wishListItem\WishListItem;
 use review\models\Review;
 use user\models\currency\Currency;
 use user\models\user\User;
@@ -46,6 +47,7 @@ use yii\helpers\ArrayHelper;
  * @property ItemFacet[] $singularItemFacets
  * @property ItemSimilarity[] $itemSimilarities
  * @property ItemSimilarity[] $itemSimilarities0
+ * @property WishListItem[] $wishListItems
  * @property Review[] $reviews
  */
 class ItemBase extends \app\models\BaseActiveRecord
@@ -159,6 +161,8 @@ class ItemBase extends \app\models\BaseActiveRecord
             'location' => ['location_id']
         ]);
     }
+    
+    
 
     /**
      * @return \yii\db\ActiveQuery
@@ -271,5 +275,11 @@ class ItemBase extends \app\models\BaseActiveRecord
             ['item_id' => 'id'])->where(['item_facet.is_singular' => 0]);
     }
 
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWishListItems()
+    {
+        return $this->hasMany(WishListItem::className(), ['item_id' => 'id']);
+    }
 }

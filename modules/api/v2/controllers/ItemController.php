@@ -49,7 +49,16 @@ class ItemController extends Controller
     {
         return [
             'guest' => ['search', 'recommended', 'related', 'reviews', 'options', 'view', 'search-suggestions'],
-            'user' => ['update', 'create', 'delete', 'index', 'publish', 'unpublish', 'available-facets', 'set-facet-value']
+            'user' => [
+                'update',
+                'create',
+                'delete',
+                'index',
+                'publish',
+                'unpublish',
+                'available-facets',
+                'set-facet-value'
+            ]
         ];
     }
 
@@ -67,8 +76,8 @@ class ItemController extends Controller
     // returns all the items from a user
     public function actionIndex($is_available = false)
     {
-        $where = [ 'owner_id' => \Yii::$app->user->id];
-        if($is_available){
+        $where = ['owner_id' => \Yii::$app->user->id];
+        if ($is_available) {
             $where['is_available'] = 1;
         }
         return new ActiveDataProvider([
@@ -77,14 +86,16 @@ class ItemController extends Controller
     }
 
     // default action, does not need documentation
-    public function actionView($id)
+    public function actionView($id, $relationKey)
     {
-        return Item::findOneOr404($id);
+        $item = \item\models\item\Item::findOneOr404($id);
+        return $item->{$relationKey};
     }
 
-    public function actionDelete($id){
+    public function actionDelete($id)
+    {
         $item = Item::findOneOr404($id);
-        if(!$item->hasModifyRights()){
+        if (!$item->hasModifyRights()) {
             throw new ForbiddenHttpException("Item not yours");
         }
 
@@ -92,27 +103,39 @@ class ItemController extends Controller
         return $item->delete();
     }
 
-    public function actionUpdate($id){
+    public function actionUpdate($id)
+    {
         $item = Item::findOneOr404($id);
         $d = \Yii::$app->request->getBodyParams();
         return $this->processItemDataUpdate($item, $d);
     }
 
-    public function actionCreate(){
+    public function actionCreate()
+    {
         $item = new Item();
         $d = \Yii::$app->request->getBodyParams();
         return $this->processItemDataUpdate($item, $d);
     }
 
-    private function processItemDataUpdate(Item $item, $data){
+    private function processItemDataUpdate(Item $item, $data)
+    {
         $item->setScenario('validate');
-        foreach(['location_id', 'name', 'description', 'price_day', 'price_week', 'price_month', 'price_year', 'category_id'] as $i){
-            if(isset($data[$i])){
+        foreach ([
+                     'location_id',
+                     'name',
+                     'description',
+                     'price_day',
+                     'price_week',
+                     'price_month',
+                     'price_year',
+                     'category_id'
+                 ] as $i) {
+            if (isset($data[$i])) {
                 $item->{$i} = $data[$i];
             }
         }
         $item->owner_id = \Yii::$app->user->id;
-        if($item->save(false)){
+        if ($item->save(false)) {
             return $item;
         }
         return $item->getErrors();
@@ -201,12 +224,12 @@ class ItemController extends Controller
     public function actionPublish($id)
     {
         $item = Item::findOneOr404(['id' => $id]);
-        if(!$item->hasModifyRights()){
+        if (!$item->hasModifyRights()) {
             throw new ForbiddenHttpException("Item not yours");
         }
         $item->setScenario("default");
         $item->validate();
-        if(!$item->validate()){
+        if (!$item->validate()) {
             return [
                 'success' => false,
                 'reason' => "Item not complete yet",
@@ -221,7 +244,7 @@ class ItemController extends Controller
     public function actionUnpublish($id)
     {
         $item = Item::findOneOr404(['id' => $id]);
-        if(!$item->hasModifyRights()){
+        if (!$item->hasModifyRights()) {
             throw new ForbiddenHttpException("Item not yours");
         }
         $item->setScenario("default");
@@ -242,7 +265,7 @@ class ItemController extends Controller
     public function actionAvailableFacets($id)
     {
         $item = Item::find()->where(['id' => $id])->one();
-        if($item == null){
+        if ($item == null) {
             throw new NotFoundHttpException("Item not found");
         }
 
@@ -255,35 +278,36 @@ class ItemController extends Controller
         return $itemFacets;
     }
 
-    public function actionSetFacetValue($id){
+    public function actionSetFacetValue($id)
+    {
 
 
         $item = Item::find()->where(['id' => $id])->one();
-        if($item == null){
+        if ($item == null) {
             throw new NotFoundHttpException("Item not found");
         }
 
         /**
          * @var $item Item
          */
-        if(!$item->hasModifyRights()){
+        if (!$item->hasModifyRights()) {
             throw new ForbiddenHttpException("Item not yours");
         }
         $data = \Yii::$app->request->getBodyParams();
         $facet_id = $data['facet_id'];
 
         $f = ItemFacet::find()->where(['id' => $facet_id])->count();
-        if($f == 0){
+        if ($f == 0) {
             throw new ForbiddenHttpException("Item facet is not found");
         }
 
-        if(isset($data['value_id'])){
+        if (isset($data['value_id'])) {
             $f = ItemFacetValue::find()->where(['id' => $data['value_id']])->count();
-            if($f == 0){
+            if ($f == 0) {
                 throw new ForbiddenHttpException("Item facet value is not found");
             }
             $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
-            if($itemHIF == null){
+            if ($itemHIF == null) {
                 $itemHIF = new ItemHasItemFacet();
                 $itemHIF->item_id = $item->id;
                 $itemHIF->item_facet_id = $facet_id;
@@ -291,27 +315,30 @@ class ItemController extends Controller
             $itemHIF->item_facet_value_id = $data['value_id'];
             $itemHIF->save();
             return 1;
-        }else if(isset($data['value'])){
-            $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
-            if($data['value'] == 1){
-                if($itemHIF !== null){
+        } else {
+            if (isset($data['value'])) {
+                $itemHIF = ItemHasItemFacet::find()->where(['item_id' => $id, 'item_facet_id' => $facet_id])->one();
+                if ($data['value'] == 1) {
+                    if ($itemHIF !== null) {
+                        return 1;
+                    }
+                    $itemHIF = new ItemHasItemFacet();
+                    $itemHIF->item_id = $item->id;
+                    $itemHIF->item_facet_id = $facet_id;
+                    $itemHIF->save();
+                    return 1;
+                } else {
+                    $itemHIF->delete();
                     return 1;
                 }
-                $itemHIF = new ItemHasItemFacet();
-                $itemHIF->item_id = $item->id;
-                $itemHIF->item_facet_id = $facet_id;
-                $itemHIF->save();
-                return 1;
-            }else{
-                $itemHIF->delete();
-                return 1;
+            } else {
+                throw new ForbiddenHttpException("Either a value (boolean) or a value_id should be defined");
             }
-        }else{
-            throw new ForbiddenHttpException("Either a value (boolean) or a value_id should be defined");
         }
     }
 
-    public function actionSearchSuggestions(){
+    public function actionSearchSuggestions()
+    {
         return [
             \Yii::t('item_api.search_suggestion.stroller', 'Stroller'),
             \Yii::t('item_api.search_suggestion.trampolin', 'Trampolin'),

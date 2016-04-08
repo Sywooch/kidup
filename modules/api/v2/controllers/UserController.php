@@ -103,7 +103,7 @@ class UserController extends Controller
         return $user;
     }
 
-    public function actionView($id)
+    public function actionView($id, $innerjoin = '')
     {
         return User::findOne($id);
     }

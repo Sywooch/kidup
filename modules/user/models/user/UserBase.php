@@ -96,6 +96,8 @@ class UserBase extends \app\models\BaseActiveRecord
             'splash' => ['email']
         ];
     }
+    
+    
 
     /**
      * @inheritdoc

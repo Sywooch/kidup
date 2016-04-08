@@ -251,6 +251,11 @@ class BookingBase extends \app\models\BaseActiveRecord
         ];
     }
 
+    public static function find()
+    {
+        return new BookingQuery(get_called_class());
+    }
+
     /**
      * @inheritdoc
      */
