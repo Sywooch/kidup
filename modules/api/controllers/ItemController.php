@@ -67,7 +67,7 @@ class ItemController extends Controller
             $where['is_available'] = 1;
         }
         return new ActiveDataProvider([
-            'query' => Item::find()->where($where)
+            'query' => Item::find()->where($where)->orderBy("updated_at DESC")
         ]);
     }
 
