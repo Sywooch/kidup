@@ -5,9 +5,6 @@ use Exception;
 use message\components\MobilePush;
 use notification\models\base\MobileDevices;
 use notification\models\NotificationPushLog;
-use Swift_Message;
-use Yii;
-use yii\swiftmailer\Mailer;
 
 class PushSender
 {
@@ -21,14 +18,16 @@ class PushSender
     {
         $view = $renderer->render();
 
-        if(isset($renderer->getVariables()['app_path'])){
+        if (isset($renderer->getVariables()['app_path'])) {
             $parameters = $renderer->getVariables()['app_path'];
-        }else{
+        } else {
             $parameters = [];
         }
 
         // Do some test magic
-        if (\Yii::$app->modules['notification']->useFileTransfer) {
+        if (array_key_exists('notification',
+                \Yii::$app->modules) && \Yii::$app->modules['notification']->useFileTransfer
+        ) {
             // Log it
             $log = new NotificationPushLog();
             $log->template = $renderer->getTemplate();
@@ -51,6 +50,7 @@ class PushSender
         // Send a message to the user
         $userId = $renderer->getUserId();
         $devices = MobileDevices::find()->where(['user_id' => $userId, 'is_subscribed' => true])->all();
+        $success = true;
         foreach ($devices as $device) {
             $arn = $device->endpoint_arn;
             try {
@@ -74,7 +74,9 @@ class PushSender
                         $disabled_device->save();
                     }
                 }
+                $success = false;
             }
         }
+        return $success;
     }
 }
