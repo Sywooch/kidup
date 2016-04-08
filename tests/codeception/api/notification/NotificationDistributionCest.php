@@ -445,7 +445,6 @@ class NotificationDistributionCest
         $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
         $log = reset($logs);
         $I->assertEquals($email, $log->to, 'Receiver should be correct.');
-        $I->assertEquals($mailView, $log->view, 'View should be correct.');
         $I->assertNotEquals(0, strlen($log->hash), 'Hash should be set.');
 
         // Test whether it is visible at the endpoint
