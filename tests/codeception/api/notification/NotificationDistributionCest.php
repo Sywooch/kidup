@@ -452,6 +452,7 @@ class NotificationDistributionCest
             'hash' => $log->hash
         ]);
         $I->assertEquals($log->view, $I->grabResponse(), 'Response should be equal.');
+        
     }
 
     public function testPushLog(ApiTester $I)
