@@ -35,16 +35,17 @@ class NotificationDistributer
         }
         if ($this->userAllowsPush) {
             if ($isMailTemplate && $isPushTemplate) {
-                return new PushRenderer($template);
+                return [new MailRenderer($template), new PushRenderer($template)];
             } else {
                 if ($isMailTemplate && !$isPushTemplate) {
-                    return new MailRenderer($template);
+                    return [new MailRenderer($template)];
                 } else {
                     if (!$isMailTemplate && $isPushTemplate) {
-                        return new PushRenderer($template);
+                        return [new PushRenderer($template)];
                     } else {
                         if (!$isMailTemplate && !$isPushTemplate) {
                             // Too bad
+                            return [];
                         }
                     }
                 }
@@ -53,52 +54,60 @@ class NotificationDistributer
             // User does not allow push
             if ($isMailTemplate) {
                 // It is a mail template
-                return new MailRenderer($template);
+                return [new MailRenderer($template)];
             } else {
                 // Too bad
-            }
-        }
-    }
-
-    private function toSender($renderer)
-    {
-        if ($renderer->type == 'mail') {
-            return MailSender::send($renderer);
-        } else {
-            if ($this->userAllowsPush) {
-                return PushSender::send($renderer);
-            } else {
-                return MailSender::send($renderer);
+                return [];
             }
         }
     }
 
     private function load($templateName, $contents)
     {
-        $renderer = $this->newRenderer($templateName);
-        if (!$renderer) {
+        $renderers = $this->newRenderer($templateName);
+        if (count($renderers) == 0) {
+            $isMailTemplate = is_file(\Yii::$aliases['@notification-mail'] . '/' . $templateName . ".twig");
+            $isPushTemplate = is_file(\Yii::$aliases['@notification-push'] . '/' . $templateName . ".twig");
+            \Yii::error(json_encode([
+                'message' => 'No renderers retrieved.',
+                'template' => $templateName,
+                'contents' => $contents,
+                'userAllowsPush' => $this->userAllowsPush,
+                'isMailTemplate' => $isMailTemplate,
+                'isPushTemplate' => $isPushTemplate
+            ]), 'notifications');
             return false;
         }
-        $renderer->setVariables($contents);
-        foreach ($contents as $content => $value) {
-            if ($value === null) {
-                continue;
+        $success = true;
+        foreach ($renderers as $renderer) {
+            $renderer->setVariables($contents);
+            foreach ($contents as $content => $value) {
+                if ($value === null) {
+                    continue;
+                }
+                switch ($content) {
+                    case "booking":
+                        $renderer->loadBooking($value);
+                        break;
+                    case "user":
+                        $renderer->loadUser($value);
+                        break;
+                    case "message":
+                        $renderer->loadMessage($value);
+                        break;
+                    case "app_state":
+                        $renderer->setVariables(['app_state' => $value]);
+                }
             }
-            switch ($content) {
-                case "booking":
-                    $renderer->loadBooking($value);
-                    break;
-                case "user":
-                    $renderer->loadUser($value);
-                    break;
-                case "message":
-                    $renderer->loadMessage($value);
-                    break;
-                case "app_state":
-                    $renderer->setVariables(['app_state' => $value]);
+
+            // Use the appropriate sender to send the rendering
+            if ($renderer->type == 'mail') {
+                $success = $success && MailSender::send($renderer);
+            } else {
+                $success = $success && PushSender::send($renderer);
             }
         }
-        return $this->toSender($renderer);
+        return $success;
     }
 
     public function bookingConfirmedOwner(Booking $booking)

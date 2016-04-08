@@ -59,10 +59,10 @@ class MobileDevices extends \app\models\BaseActiveRecord
             'created_at' => 'Created At',
         ];
     }
-//
-//    /**
-//     * @inheritdoc
-//     */
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
