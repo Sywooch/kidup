@@ -13,7 +13,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-blue-girl.png') }}" width="100%" alt="Image">
+                    {{ responsiveImage('kidup/email/image-blue-girl.png') | raw }}
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.welcome.t1', 'Welcome, welcome!') }}</h3>
@@ -40,7 +40,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-yellow-girl.png') }}" alt="Image" width="100%">
+                    {{ responsiveImage('kidup/email/image-yellow-girl.png') | raw }}
                 </td>
             </tr>
         </table>
@@ -48,7 +48,7 @@
         <table id="image-left" width="100%">
             <tr>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-blue-couple.png') }}" width="100%" alt="Image">
+                    {{ responsiveImage('kidup/email/image-blue-couple.png') | raw }}
                 </td>
                 <td width="60%" class="image-left__content">
                     <h3>{{ t('mail.welcome.t3', 'Or you could implement it with social media!') }}</h3>
@@ -76,7 +76,7 @@
                     </p>
                 </td>
                 <td width="40%">
-                    <img src="{{ imageUrl('kidup/email/image-green-message.png') }}" alt="Image" width="100%">
+                    {{ responsiveImage('kidup/email/image-green-message.png') | raw }}
                 </td>
             </tr>
         </table>
