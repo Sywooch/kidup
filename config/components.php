@@ -85,6 +85,18 @@ $components = [
                     'imageUrl' => function ($file, $options = []) {
                         return \images\components\ImageHelper::url($file, $options);
                     },
+                    'responsiveImage' => function($file, $options = []) {
+                        return '
+                        <!--[if mso]>
+                            <img src="' . \images\components\ImageHelper::url($file, $options) . '" alt="Image" width="128">
+                            <div style="width:0px; height:0px; overflow:hidden; display:none; visibility:hidden; mso-hide:all;">
+                        <![endif]-->
+                        
+                        <img src="' . \images\components\ImageHelper::url($file, $options) . '" alt="Image" width="100%">
+                        
+                        <!--[if mso]></div><![endif]-->
+                        ';
+                    },
                     'bgImage' => function ($file, $options = []) {
                         return \images\components\ImageHelper::bgCoverImg($file, $options);
                     },

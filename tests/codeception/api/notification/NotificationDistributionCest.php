@@ -226,6 +226,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        // There is no such e-mail
         $I->assertFalse($receivedMail);
         $I->assertTrue($receivedPush);
 
@@ -258,7 +259,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->item->owner_id))->bookingConfirmedOwner($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
@@ -288,7 +289,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
@@ -318,7 +319,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->item->owner_id))->bookingStartOwner($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
@@ -349,7 +350,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->renter, false);
@@ -380,7 +381,7 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
+        $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->renter, false);
@@ -411,8 +412,8 @@ class NotificationDistributionCest
         (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
         list($receivedMail, $mailView, $mailParams) = $this->getMail();
         list($receivedPush, $pushView, $pushParams) = $this->getPush();
-        $I->assertFalse($receivedMail);
-        $I->assertTrue($receivedPush);
+        $I->assertTrue($receivedMail, 'Should receive an e-mail');
+        $I->assertTrue($receivedPush, 'Should receive a push notification');
 
         $this->setPushEnabled($booking->renter, false);
         $this->emptyNotifications();
@@ -444,7 +445,6 @@ class NotificationDistributionCest
         $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
         $log = reset($logs);
         $I->assertEquals($email, $log->to, 'Receiver should be correct.');
-        $I->assertEquals($mailView, $log->view, 'View should be correct.');
         $I->assertNotEquals(0, strlen($log->hash), 'Hash should be set.');
 
         // Test whether it is visible at the endpoint
@@ -452,6 +452,7 @@ class NotificationDistributionCest
             'hash' => $log->hash
         ]);
         $I->assertEquals($log->view, $I->grabResponse(), 'Response should be equal.');
+        
     }
 
     public function testPushLog(ApiTester $I)
