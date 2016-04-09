@@ -17,7 +17,7 @@ class PayoutFactory
         $payout->setAttributes([
             'status' => Payout::STATUS_WAITING_FOR_BOOKING_START,
             'amount' => $booking->amount_payout,
-            'currency_id' => Currency::getUserOrDefault($booking->item->owner),
+            'currency_id' => Currency::getUserOrDefault($booking->item->owner)->id,
             'user_id' => $booking->item->owner_id,
             'created_at' => time(),
         ]);

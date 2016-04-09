@@ -46,6 +46,10 @@ return [
             'enableConfirmation' => true,
             'enableFlashMessages' => false,
         ],
+        'notification' =>   [
+            'class' => '\notification\Module',
+            'useFileTransfer' => (YII_ENV == 'test' ? true : false)
+        ],
     ],
 
     'components' => [
