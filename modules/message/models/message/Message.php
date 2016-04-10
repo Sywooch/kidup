@@ -35,7 +35,12 @@ class Message extends MessageBase
 
     public function afterFind()
     {
-        $this->message = utf8_decode($this->message);
+        try{
+            $this->message = utf8_decode($this->message);
+            \yii\helpers\BaseJson::encode($this->message);
+        }catch(\Exception $e){
+            $this->message = utf8_encode($this->message);
+        }
         parent::afterFind();
     }
 
