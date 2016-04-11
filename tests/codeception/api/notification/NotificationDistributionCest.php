@@ -290,12 +290,12 @@ class NotificationDistributionCest
         I18nSource::deleteAll(['category' => 'notification.push.booking_confirmed_renter']);
         $message = $this->fm->create(I18nSourceMuffin::class, [
             'category' => 'notification.push.booking_confirmed_renter',
-            'message' => '-'
+            'message' => 'The rent has been accepted contact {owner_name} and plan the rest.'
         ]);
         $this->fm->create(I18nMessageMuffin::class, [
             'id' => $message->id,
             'language' => 'da-dk',
-            'translation' => 'blaaaa'
+            'translation' => '{owner_name} har accepteret din forespørgsel på {item_name}.'
         ]);
 
         $owner = $this->fm->create(UserMuffin::className());
@@ -308,21 +308,16 @@ class NotificationDistributionCest
             'item_id' => $item->id
         ]);
 
-        $profile = $booking->renter->profile;
-        $profile->first_name = 'First';
-        $profile->last_name = 'Last';
-        $profile->language = 'da-DK';
-        $profile->save();
-
         $this->setPushEnabled($booking->renter, true);
         NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
         list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
         list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
-        print_r($pushView);
-        die();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
+
+        // Should be translated
+        $I->assertNotContains('{item_name}', $pushView);
 
         $this->setPushEnabled($booking->renter, false);
         NotificationHelper::emptyNotifications();
