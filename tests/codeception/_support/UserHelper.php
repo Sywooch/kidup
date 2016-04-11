@@ -16,14 +16,14 @@ class UserHelper
     /**
      * Login a user.
      */
-    public static function login(User $user)
+    public static function login(User $user, $lang='en')
     {
         if (!Yii::$app->getUser()->getIsGuest()) {
             UserHelper::logout();
         }
 
         Yii::$app->user->login($user);
-        Yii::$app->session->set('lang', 'en');
+        Yii::$app->session->set('lang', $lang);
     }
 
 

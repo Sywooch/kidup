@@ -1,13 +1,17 @@
 <?php
 namespace codecept\api\notification;
 
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 use ApiTester;
-use app\helpers\Event;
 use booking\models\booking\Booking;
 use codecept\_support\MuffinHelper;
+use codecept\_support\NotificationHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\BookingMuffin;
 use codecept\muffins\ConversationMuffin;
+use codecept\muffins\I18nMessageMuffin;
+use codecept\muffins\I18nSourceMuffin;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\MessageMuffin;
 use codecept\muffins\MobileDeviceMuffin;
@@ -15,7 +19,6 @@ use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
-use notification\models\NotificationMailClickLog;
 use notification\models\NotificationMailLog;
 use notification\models\NotificationPushLog;
 use user\models\user\User;
@@ -46,11 +49,10 @@ class NotificationDistributionCest
 
     public function _before()
     {
-        $this->notificationPath = \Yii::$aliases['@runtime'] . '/notification/';
         MobileDevices::deleteAll();
         User::deleteAll();
         $this->fm = (new MuffinHelper())->init();
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
     }
 
     private function setPushEnabled(User $user, $enabled)
@@ -60,56 +62,6 @@ class NotificationDistributionCest
             'user_id' => $user->id,
             'is_subscribed' => $enabled
         ]);
-    }
-
-    private function getMail()
-    {
-        $view = null;
-        $params = null;
-        $received = false;
-        $viewpath = \Yii::$aliases['@runtime'] . '/notification/mail.view';
-        if (file_exists($viewpath)) {
-            $received = true;
-            $view = file_get_contents($viewpath);
-        }
-        $paramspath = \Yii::$aliases['@runtime'] . '/notification/mail.params';
-        if (file_exists($paramspath)) {
-            $params = json_decode(file_get_contents($paramspath), true);
-        }
-        return [$received, $view, $params];
-    }
-
-    private function getPush()
-    {
-        $view = null;
-        $params = null;
-        $received = false;
-        $viewpath = \Yii::$aliases['@runtime'] . '/notification/push.view';
-        if (file_exists($viewpath)) {
-            $received = true;
-            $view = file_get_contents($viewpath);
-        }
-        $paramspath = \Yii::$aliases['@runtime'] . '/notification/push.params';
-        if (file_exists($paramspath)) {
-            $params = json_decode(file_get_contents($paramspath), true);
-        }
-        return [$received, $view, $params];
-    }
-
-    private function emptyNotifications()
-    {
-        // Empty notifications
-        NotificationMailLog::deleteAll();
-        NotificationMailClickLog::deleteAll();
-        NotificationPushLog::deleteAll();
-        if (strlen($this->notificationPath) == 0) {
-            echo 'NOTIFICATION PATH NOT SET CORRECTLY!';
-            exit();
-        }
-        $path = $this->notificationPath . '*';
-        foreach (glob($path) as $file) {
-            unlink($file);
-        }
     }
 
     private function makeUser($email, $enablePush = true)
@@ -132,7 +84,7 @@ class NotificationDistributionCest
     public function testUserWelcome(ApiTester $I)
     {
         $this->I = $I;
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
 
         // Trigger user create event
         $faker = \Faker\Factory::create();
@@ -144,8 +96,8 @@ class NotificationDistributionCest
             'last_name' => $faker->lastName,
         ]);
 
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -156,10 +108,10 @@ class NotificationDistributionCest
 
         $user = $this->makeUser('user@kidup.dk', true);
 
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($user->id))->userReconfirm($user);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -170,10 +122,10 @@ class NotificationDistributionCest
 
         $user = $this->makeUser('user@kidup.dk', true);
 
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($user->id))->userRecovery($user, 'recovery-url');
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -192,10 +144,10 @@ class NotificationDistributionCest
             'item_id' => $item->id
         ]);
 
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingPayoutOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -222,19 +174,19 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($message->conversation->targetUser, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         // There is no such e-mail
         $I->assertFalse($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($message->conversation->targetUser, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertFalse($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -255,18 +207,18 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->item->owner, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingConfirmedOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingConfirmedOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -285,18 +237,18 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->item->owner, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingRequestOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -315,18 +267,18 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->item->owner, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingStartOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->item->owner, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->item->owner_id))->bookingStartOwner($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -335,8 +287,19 @@ class NotificationDistributionCest
     {
         $this->I = $I;
 
+        I18nSource::deleteAll(['category' => 'notification.push.booking_confirmed_renter']);
+        $message = $this->fm->create(I18nSourceMuffin::class, [
+            'category' => 'notification.push.booking_confirmed_renter',
+            'message' => 'The rent has been accepted contact {owner_name} and plan the rest.'
+        ]);
+        $this->fm->create(I18nMessageMuffin::class, [
+            'id' => $message->id,
+            'language' => 'da-dk',
+            'translation' => '{owner_name} har accepteret din forespørgsel på {item_name}.'
+        ]);
+
         $owner = $this->fm->create(UserMuffin::className());
-        UserHelper::login($owner);
+        UserHelper::login($owner, 'da-dk');
         $item = $this->fm->create(ItemMuffin::className(), [
             'owner_id' => $owner->id
         ]);
@@ -346,18 +309,21 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->renter, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
+        // Should be translated
+        $I->assertNotContains('{item_name}', $pushView);
+
         $this->setPushEnabled($booking->renter, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -377,18 +343,18 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->renter, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
         $this->setPushEnabled($booking->renter, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingDeclinedRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -408,18 +374,18 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($booking->renter, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail, 'Should receive an e-mail');
         $I->assertTrue($receivedPush, 'Should receive a push notification');
 
         $this->setPushEnabled($booking->renter, false);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingStartRenter($booking);
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
         $I->assertTrue($receivedMail);
         $I->assertFalse($receivedPush);
     }
@@ -428,7 +394,7 @@ class NotificationDistributionCest
     public function testMailLog(ApiTester $I)
     {
         $this->I = $I;
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
 
         // Trigger user create event
         $faker = \Faker\Factory::create();
@@ -440,7 +406,7 @@ class NotificationDistributionCest
             'last_name' => $faker->lastName,
         ]);
 
-        list($receivedMail, $mailView, $mailParams) = $this->getMail();
+        list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
         $logs = NotificationMailLog::find()->all();
         $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
         $log = reset($logs);
@@ -452,7 +418,7 @@ class NotificationDistributionCest
             'hash' => $log->hash
         ]);
         $I->assertEquals($log->view, $I->grabResponse(), 'Response should be equal.');
-        
+
     }
 
     public function testPushLog(ApiTester $I)
@@ -475,9 +441,9 @@ class NotificationDistributionCest
         ]);
 
         $this->setPushEnabled($message->conversation->targetUser, true);
-        $this->emptyNotifications();
+        NotificationHelper::emptyNotifications();
         (new NotificationDistributer($message->conversation->target_user_id))->conversationMessageReceived($message);
-        list($receivedPush, $pushView, $pushParams) = $this->getPush();
+        list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
 
         $logs = NotificationPushLog::find()->all();
         $I->assertEquals(1, count($logs), 'There should exactly be one log item.');
