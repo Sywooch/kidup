@@ -74,7 +74,7 @@ class CronController extends Model
             if ($booking->payout->status == Payout::STATUS_WAITING_FOR_BOOKING_START) {
                 $payout = $booking->payout;
                 $payout->status = Payout::STATUS_TO_BE_PROCESSED;
-                $payout->invoice_id = (new InvoiceFactory())->createForBooking($booking);
+                $payout->invoice_id = (new InvoiceFactory())->createForBooking($booking)->id;
                 $payout->save();
                 Event::trigger($booking, Booking::EVENT_OWNER_INVOICE_READY);
             }
