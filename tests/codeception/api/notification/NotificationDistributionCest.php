@@ -1,6 +1,8 @@
 <?php
 namespace codecept\api\notification;
 
+use admin\models\I18nMessage;
+use admin\models\I18nSource;
 use ApiTester;
 use booking\models\booking\Booking;
 use codecept\_support\MuffinHelper;
@@ -8,6 +10,8 @@ use codecept\_support\NotificationHelper;
 use codecept\_support\UserHelper;
 use codecept\muffins\BookingMuffin;
 use codecept\muffins\ConversationMuffin;
+use codecept\muffins\I18nMessageMuffin;
+use codecept\muffins\I18nSourceMuffin;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\MessageMuffin;
 use codecept\muffins\MobileDeviceMuffin;
@@ -283,8 +287,19 @@ class NotificationDistributionCest
     {
         $this->I = $I;
 
+        I18nSource::deleteAll(['category' => 'notification.push.booking_confirmed_renter']);
+        $message = $this->fm->create(I18nSourceMuffin::class, [
+            'category' => 'notification.push.booking_confirmed_renter',
+            'message' => '-'
+        ]);
+        $this->fm->create(I18nMessageMuffin::class, [
+            'id' => $message->id,
+            'language' => 'da-dk',
+            'translation' => 'blaaaa'
+        ]);
+
         $owner = $this->fm->create(UserMuffin::className());
-        UserHelper::login($owner);
+        UserHelper::login($owner, 'da-dk');
         $item = $this->fm->create(ItemMuffin::className(), [
             'owner_id' => $owner->id
         ]);
@@ -293,11 +308,19 @@ class NotificationDistributionCest
             'item_id' => $item->id
         ]);
 
+        $profile = $booking->renter->profile;
+        $profile->first_name = 'First';
+        $profile->last_name = 'Last';
+        $profile->language = 'da-DK';
+        $profile->save();
+
         $this->setPushEnabled($booking->renter, true);
         NotificationHelper::emptyNotifications();
         (new NotificationDistributer($booking->renter_id))->bookingConfirmedRenter($booking);
         list($receivedMail, $mailView, $mailParams) = NotificationHelper::getMail();
         list($receivedPush, $pushView, $pushParams) = NotificationHelper::getPush();
+        print_r($pushView);
+        die();
         $I->assertTrue($receivedMail);
         $I->assertTrue($receivedPush);
 
