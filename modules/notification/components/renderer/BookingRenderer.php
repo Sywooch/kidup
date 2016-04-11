@@ -34,6 +34,9 @@ class BookingRenderer
         $result['booking_id'] = $booking->id;
         $result['booking_start_date'] = Renderer::displayDateTime($booking->time_from);
         $result['booking_end_date']= Renderer::displayDateTime($booking->time_to);
+        
+        // Item
+        $result['item_name'] = $booking->item->name;
 
         return $result;
     }
