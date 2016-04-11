@@ -5,6 +5,8 @@ namespace codecept\_support;
 use codecept\muffins\BookingMuffin;
 use codecept\muffins\ConversationMuffin;
 use codecept\muffins\CurrencyMuffin;
+use codecept\muffins\I18nMessageMuffin;
+use codecept\muffins\I18nSourceMuffin;
 use codecept\muffins\InvoiceMuffin;
 use codecept\muffins\ItemMuffin;
 use codecept\muffins\LocationMuffin;
@@ -59,6 +61,8 @@ class MuffinHelper
             OauthClientMuffin::class,
             MobileDeviceMuffin::class,
             WishListItemMuffin::class,
+            I18nSourceMuffin::class,
+            I18nMessageMuffin::class
         ];
     }
 
