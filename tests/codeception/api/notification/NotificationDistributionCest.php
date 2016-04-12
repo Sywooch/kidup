@@ -364,7 +364,7 @@ class NotificationDistributionCest
         $this->I = $I;
 
         $owner = $this->fm->create(UserMuffin::className());
-        UserHelper::login($owner);
+        UserHelper::login($owner, 'da-dk');
         $item = $this->fm->create(ItemMuffin::className(), [
             'owner_id' => $owner->id
         ]);
