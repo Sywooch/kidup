@@ -19,6 +19,7 @@ class BookingRenderer
         // Renter
         $result['renter_name'] = $booking->renter->profile->getName();
         $result['renter_email_url'] = 'mailto:' . $booking->renter->email;
+        $result['renter_phone_url'] = '#';
         if (strlen($booking->renter->profile->phone_number) > 0) {
             $result['renter_phone_url'] = 'tel:' . $booking->renter->profile->phone_number;
         }
@@ -26,6 +27,7 @@ class BookingRenderer
         // Owner
         $result['owner_name'] = $booking->item->owner->profile->getName();
         $result['owner_email_url'] = 'mailto:' . $booking->renter->email;
+        $result['owner_phone_url'] = '#';
         if (strlen($booking->renter->profile->phone_number) > 0) {
             $result['owner_phone_url'] = 'tel:' . $booking->renter->profile->phone_number;
         }
