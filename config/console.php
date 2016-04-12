@@ -2,8 +2,9 @@
 
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
 Yii::setAlias('@web', YII_ENV == 'dev' ? '/web' : YII_ENV == 'test' ? '/' : '/'); // required to bootstrap the modules
-Yii::setAlias('@assets', YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test' ? '/assets_web' : '/assets_web'); // required to bootstrap the modules
-include_once (__DIR__ . '/keys/load_keys.php'); // sets the var keys
+Yii::setAlias('@assets',
+    YII_ENV == 'dev' ? '/web/assets_web' : YII_ENV == 'test' ? '/assets_web' : '/assets_web'); // required to bootstrap the modules
+include_once(__DIR__ . '/keys/load_keys.php'); // sets the var keys
 $params = require(__DIR__ . '/params.php');
 $allComponents = require(__DIR__ . '/components.php');
 
@@ -27,16 +28,16 @@ return [
 
     'modules' => [
         'gii' => 'yii\gii\Module',
-        'gridview' =>       ['class' => '\kartik\grid\Module'],
-        'home' =>           ['class' => '\home\Module'],
-        'item' =>           ['class' => '\item\Module'],
-        'message' =>        ['class' => '\message\Module'],
-        'booking' =>        ['class' => '\booking\Module'],
-        'mail' =>        ['class' => '\mail\Module'],
-        'pages' =>        ['class' => '\pages\Module'],
-        'review' =>        ['class' => '\review\Module'],
-        'admin' =>        ['class' => '\admin\Module'],
-        'api' =>        ['class' => '\api\Module'],
+        'gridview' => ['class' => '\kartik\grid\Module'],
+        'home' => ['class' => '\home\Module'],
+        'item' => ['class' => '\item\Module'],
+        'message' => ['class' => '\message\Module'],
+        'booking' => ['class' => '\booking\Module'],
+        'mail' => ['class' => '\mail\Module'],
+        'pages' => ['class' => '\pages\Module'],
+        'review' => ['class' => '\review\Module'],
+        'admin' => ['class' => '\admin\Module'],
+        'api' => ['class' => '\api\Module'],
         'user' => [
             'class' => '\user\Module',
             'enableUnconfirmedLogin' => true,
@@ -46,7 +47,7 @@ return [
             'enableConfirmation' => true,
             'enableFlashMessages' => false,
         ],
-        'notification' =>   [
+        'notification' => [
             'class' => '\notification\Module',
             'useFileTransfer' => (YII_ENV == 'test' ? true : false)
         ],
@@ -91,6 +92,85 @@ return [
         'mailer' => $allComponents['mailer'],
         'urlManager' => [
             'scriptUrl' => '/web'
+        ],
+        'view' => [
+            'class' => 'app\extended\web\View',
+            'renderers' => [
+                'twig' => [
+                    'class' => 'app\extended\web\TwigRenderer',
+                    // set cachePath to false in order to disable template caching
+                    'cachePath' => '@runtime/Twig/cache',
+                    // Array of twig options:
+                    'options' => [
+                        'debug' => true,
+                        'auto_reload' => true,
+                    ],
+                    'extensions' => [
+                        '\Twig_Extension_Debug',
+                    ],
+                    'globals' => [
+                        'Image' => 'app/modules/images/widgets/Image',
+                        'urlHelper' => 'app/components/UrlHelper'
+                    ],
+                    'functions' => [
+                        't' => function ($cat, $default, $params = []) {
+                            return \Yii::t($cat, $default, $params);
+                        },
+                        'userIsGuest' => function () {
+                            return \Yii::$app->user->isGuest;
+                        },
+                        'image' => function ($file, $options, $htmlOptions = []) {
+                            return \images\components\ImageHelper::image($file, $options, $htmlOptions);
+                        },
+                        'imageUrl' => function ($file, $options = []) {
+                            return \images\components\ImageHelper::url($file, $options);
+                        },
+                        'responsiveImage' => function ($file, $options = []) {
+                            return '
+                        <!--[if mso]>
+                            <img src="' . \images\components\ImageHelper::url($file, $options) . '" alt="Image" width="128">
+                            <div style="width:0px; height:0px; overflow:hidden; display:none; visibility:hidden; mso-hide:all;">
+                        <![endif]-->
+                        
+                        <img src="' . \images\components\ImageHelper::url($file, $options) . '" alt="Image" width="100%">
+                        
+                        <!--[if mso]></div><![endif]-->
+                        ';
+                        },
+                        'bgImage' => function ($file, $options = []) {
+                            return \images\components\ImageHelper::bgCoverImg($file, $options);
+                        },
+                        'timestampToDate' => function ($timestamp) {
+                            Carbon\Carbon::setToStringFormat("d-m-y");
+                            return Carbon\Carbon::createFromTimestamp($timestamp);
+                        },
+                        'url' => function ($url) {
+                            return \yii\helpers\Url::to("@web/" . $url, true);
+                        },
+                        'now' => function () {
+                            return date('d-m-y H:i');
+                        },
+                        'setTitle' => function ($viewModel, $title) {
+                            return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
+                        },
+                        'base64_image' => function ($file) {
+                            $path = \Yii::getAlias($file);
+                            $data = file_get_contents($path);
+                            $type = pathinfo($path, PATHINFO_EXTENSION);
+                            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                            return $base64;
+                        },
+                        'base64_font' => function ($file) {
+                            $data = \Yii::$app->view->renderFile($file);
+                            return 'data:application/octet-stream;base64,' . base64_encode($data);
+                        },
+                        'load_file' => function ($file) {
+                            $path = \Yii::getAlias($file);
+                            return \Yii::$app->view->renderFile($path);
+                        }
+                    ]
+                ],
+            ],
         ],
     ],
     'aliases' => [
