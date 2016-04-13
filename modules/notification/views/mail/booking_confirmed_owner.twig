@@ -21,7 +21,8 @@
                         {{ t('mail.booking_confirmed_owner.p1',
                         'I am happy to tell you, that another parent have booked item. To make the exchange even easier, I suggest you continue the conversation with {renter_name} in the app’s {messaging_link}.', {
                             'messaging_link': '<a href="' ~ contact_renter_url ~ '" target="_blank">' ~ t('mail.links.messaging_tab', 'messaging tab') ~ '</a>',
-                            'renter_name': renter_name
+                            'renter_name': renter_name,
+                            'item_name': item_name
                         }) | raw }}
 
                         {% if renter_phone_url == null %}

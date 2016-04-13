@@ -23,7 +23,9 @@
                         {{ t('mail.booking_confirmed_renter.p1',
                             'I am happy to tell you, that {owner_name} has accepted your request for item on {booking_start}.', {
                             'owner_name': owner_name,
-                            'booking_start': booking_start_date
+                            'booking_start': booking_start_date,
+                            'start_date': booking_start_date,
+                            'item_name': item_name
                         }) | raw }}
                     </p>
                 </td>
