@@ -58,6 +58,9 @@ class Renderer
 
     public function renderFromFile($template)
     {
+        $user_id = $this->getReceiverId();
+        $user = User::find()->where(['id' => $user_id])->one();
+        \Yii::$app->language = $user->profile->language;
         $vars = $this->getVariables();
 
         return \Yii::$app->view->renderFile($this->templateFolder . '/' . $template . '.twig', $vars);
