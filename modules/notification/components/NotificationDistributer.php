@@ -234,7 +234,7 @@ class NotificationDistributer
     {
         return $this->load("conversation_message_received", [
             'message' => $message,
-            'user' => $message->conversation->targetUser,
+            'user' => $message->senderUser,
             'app_state' => [
                 'state' => 'app.chat-conversation',
                 'params' => [

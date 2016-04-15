@@ -324,6 +324,9 @@ class User extends UserBase implements IdentityInterface
     public function beforeSave($insert)
     {
         if ($insert) {
+            $this->flags = 0;
+            $this->status = 0;
+            $this->role = self::ROLE_USER;
             if (\Yii::$app instanceof \yii\web\Application) {
                 $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
             }
