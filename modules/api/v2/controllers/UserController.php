@@ -2,10 +2,10 @@
 namespace api\v2\controllers;
 
 use api\v2\models\Review;
+use api\v2\models\User;
 use app\components\Event;
 use user\models\token\Token;
 use user\forms\Registration;
-use user\models\user\User;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;

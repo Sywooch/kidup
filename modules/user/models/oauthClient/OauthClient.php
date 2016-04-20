@@ -1,7 +1,9 @@
 <?php
 
-namespace api\v2\models\oauth;
+namespace user\models\oauthClient;
 
+use user\oauthAccessToken\OauthAccessToken;
+use user\models\oauthRefreshToken\OauthRefreshToken;
 use Yii;
 
 /**
@@ -14,7 +16,7 @@ use Yii;
  * @property string $scope
  * @property integer $user_id
  *
- * @property OauthAccessToken[] $oauthAccessTokens
+ * @property \user\oauthAccessToken\OauthAccessToken[] $oauthAccessTokens
  * @property OauthRefreshToken[] $oauthRefreshTokens
  */
 class OauthClient extends \app\components\models\BaseActiveRecord

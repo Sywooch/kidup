@@ -93,16 +93,8 @@ class NotificationController extends Controller
 
     public function actionTest()
     {
-        try {
-            try {
-                throw new BookingException("Kut!");
-            } catch (Exception $e) {
-                throw new BookingException("poes", null, $e);
-            }
-        } catch (Exception $e) {
-            \Yii::error($e);
-            throw new BadRequestHttpException("Went wrong!");
-        }
+        $user = User::find()->one();
+        \yii\helpers\VarDumper::dump($user->review_score,10,true); exit();
     }
 
     public function actionMailView($hash) {

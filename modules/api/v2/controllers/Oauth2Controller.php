@@ -2,9 +2,9 @@
 
 namespace api\v2\controllers;
 
-use api\v2\models\oauth\OauthAccessToken;
-use api\v2\models\oauth\OauthClient;
-use api\v2\models\oauth\OauthRefreshToken;
+use user\oauthAccessToken\OauthAccessToken;
+use user\models\oauthClient\OauthClient;
+use user\models\oauthRefreshToken\OauthRefreshToken;
 use user\helpers\Facebook;
 use app\components\Event;
 use user\models\Account;
@@ -62,7 +62,7 @@ class Oauth2Controller extends Controller
         $params = \Yii::$app->request->post('refresh_token');
 
         /**
-         * @var OauthRefreshToken $oldRefreshToken
+         * @var \user\models\oauthRefreshToken\OauthRefreshToken $oldRefreshToken
          */
         $oldRefreshToken = OauthRefreshToken::findOne(['refresh_token' => $params]);
         if ($oldRefreshToken == null) {

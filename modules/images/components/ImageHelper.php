@@ -96,7 +96,7 @@ class ImageHelper extends BaseHtml
             $url = 'https://kidup.imgix.net/' . substr($filename, 0, 1) . '/' .
                 substr($filename, 1, 1) . '/' .
                 substr($filename, 2, 1) . '/' .
-                $filename . '?' .
+                $filename .
                 http_build_query($options);
         }
         return $url;
