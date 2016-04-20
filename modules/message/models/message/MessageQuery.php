@@ -1,7 +1,7 @@
 <?php
 namespace message\models\message;
 
-use app\models\BaseQuery;
+use app\components\models\BaseQuery;
 use Yii;
 
 /**

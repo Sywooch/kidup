@@ -2,7 +2,7 @@
 
 namespace user\forms;
 
-use app\helpers\Encrypter;
+use app\components\Encrypter;
 use user\models\country\Country;
 use user\models\payoutMethod\PayoutMethod;
 use yii\base\Model;
@@ -84,10 +84,10 @@ class PayoutPreference extends Model
             $method->payee_name = $this->payee_name;
 
             $method->identifier_1 = $method->transformToSafe($this->identifier_1_encrypted, 4);
-            $method->identifier_1_encrypted = \app\helpers\Encrypter::encrypt($this->identifier_1_encrypted,
+            $method->identifier_1_encrypted = \app\components\Encrypter::encrypt($this->identifier_1_encrypted,
                 Encrypter::SIZE_1024);
             $method->identifier_2 = $method->transformToSafe($this->identifier_2_encrypted, 2);
-            $method->identifier_2_encrypted = \app\helpers\Encrypter::encrypt($this->identifier_2_encrypted,
+            $method->identifier_2_encrypted = \app\components\Encrypter::encrypt($this->identifier_2_encrypted,
                 Encrypter::SIZE_1024);
 
             if ($method->save()) {

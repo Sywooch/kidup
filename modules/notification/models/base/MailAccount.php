@@ -15,7 +15,7 @@ use Yii;
  * @property \user\models\user\User $user
  * @property \message\models\conversation\Conversation $conversation
  */
-class MailAccount extends \app\models\BaseActiveRecord
+class MailAccount extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

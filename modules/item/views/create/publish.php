@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \item\forms\Create $model
  */
 \item\assets\CreateAsset::register($this);

@@ -2,7 +2,7 @@
 
 namespace user\models\profile;
 
-use app\models\BaseActiveRecord;
+use app\components\models\BaseActiveRecord;
 use Yii;
 
 /**

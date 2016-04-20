@@ -18,7 +18,7 @@ use Yii;
  * @property \item\models\item\Item[] $items
  * @property \user\models\user\User $user
  */
-class MediaBase extends \app\models\BaseActiveRecord
+class MediaBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

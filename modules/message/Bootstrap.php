@@ -2,7 +2,7 @@
 
 namespace message;
 
-use app\helpers\Event;
+use app\components\Event;
 use booking\models\booking\Booking;
 use booking\models\booking\BookingFactory;
 use message\models\conversation\ConversationFactory;

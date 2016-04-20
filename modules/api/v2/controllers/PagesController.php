@@ -1,7 +1,7 @@
 <?php
 namespace api\v2\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use pages\components\Pages;
 use yii\filters\ContentNegotiator;
 use yii\filters\Cors;

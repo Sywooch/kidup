@@ -22,7 +22,7 @@ use Yii;
  * @property User $user
  * @property Country $country
  */
-class PayoutMethodBase extends \app\models\BaseActiveRecord
+class PayoutMethodBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

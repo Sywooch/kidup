@@ -1,8 +1,8 @@
 <?php
 namespace notification\controllers;
 
-use app\extended\web\Controller;
-use app\helpers\Event;
+use app\components\web\Controller;
+use app\components\Event;
 use booking\models\booking\Booking;
 use notification\components\MailRenderer;
 use notification\components\MailSender;

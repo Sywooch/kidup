@@ -2,7 +2,7 @@
 
 namespace booking\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use booking\models\booking\Booking;
 use kartik\mpdf\Pdf;
 use yii\helpers\Json;

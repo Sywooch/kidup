@@ -27,7 +27,7 @@ use Yii;
  * @property User $user
  * @property Currency $currency
  */
-class PayinBase extends \app\models\BaseActiveRecord
+class PayinBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

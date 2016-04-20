@@ -25,7 +25,7 @@ use Yii;
  * @property \user\models\country\Country $country0
  * @property \user\models\user\User $user
  */
-class LocationBase extends \app\models\BaseActiveRecord
+class LocationBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

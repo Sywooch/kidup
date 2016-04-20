@@ -3,7 +3,7 @@ namespace api\v2\controllers;
 
 use admin\models\TrackingEvent;
 use api\v2\models\oauth\OauthAccessToken;
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use item\models\location\LocationFactory;
 use Yii;
 

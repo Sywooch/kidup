@@ -19,7 +19,7 @@ use Yii;
  * @property CategoryHasItemFacet[] $categoryHasItemFacets
  * @property ItemFacet[] $itemFacets
  */
-class CategoryBase extends \app\models\BaseActiveRecord
+class CategoryBase extends \app\components\models\BaseActiveRecord
 {
 
     /**

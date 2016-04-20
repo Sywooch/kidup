@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 $this->title = \Yii::t('booking.list.title_previous_bookings', 'Your Previous Bookings') . ' - ' . Yii::$app->name;
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \yii\data\ActiveDataProvider $provider
  */
 $this->assetPackage = \app\assets\Package::BOOKING;

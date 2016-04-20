@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\Json;
 
-class BrainTreeError extends \app\extended\base\Exception
+class BrainTreeError extends \app\components\Exception
 {
 }
 

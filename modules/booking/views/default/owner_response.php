@@ -3,7 +3,7 @@ use Carbon\Carbon;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \booking\models\booking\Booking $booking
  * @var \item\models\item\Item $item
  * @var \user\models\profile\Profile $profile

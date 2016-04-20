@@ -2,7 +2,7 @@
 
 namespace admin\controllers;
 
-use app\helpers\Event;
+use app\components\Event;
 use item\models\location\Location;
 use user\models\user\User;
 

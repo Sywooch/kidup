@@ -7,7 +7,7 @@ use user\widgets\UserImage;
 use yii\helpers\Url;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var $model \review\models\Review
  */
 

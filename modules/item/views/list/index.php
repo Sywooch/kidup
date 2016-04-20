@@ -5,7 +5,7 @@ use yii\helpers\Url;
  * @var \yii\data\ActiveDataProvider $unpublishedProvider
  * @var \yii\data\ActiveDataProvider $publishedProvider
  * @var \yii\data\ActiveDataProvider $requestProvider
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  */
 
 \item\assets\ListAsset::register($this);

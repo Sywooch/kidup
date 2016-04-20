@@ -47,7 +47,7 @@ use Yii;
  * @property User[] $referredUsers
  * @property WishListItem[] $withListItems
  */
-class UserBase extends \app\models\BaseActiveRecord
+class UserBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

@@ -16,7 +16,7 @@ use Yii;
  *
  * @property \user\models\country\Country[] $countries
  */
-class LanguageBase extends \app\models\BaseActiveRecord
+class LanguageBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

@@ -11,7 +11,7 @@
 
 namespace user\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use user\forms\Recovery;
 use user\models\token\Token;
 use yii\base\Model;

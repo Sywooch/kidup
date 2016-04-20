@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \yii\data\ActiveDataProvider $provider
  */
 $this->assetPackage = \app\assets\Package::BOOKING;

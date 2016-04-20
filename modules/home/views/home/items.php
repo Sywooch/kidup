@@ -1,6 +1,6 @@
 <?php
 
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use item\widgets\ItemCard;
 
 ?>

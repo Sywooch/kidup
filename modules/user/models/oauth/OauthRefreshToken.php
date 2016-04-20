@@ -17,7 +17,7 @@ use Yii;
  * @property OauthClient $client
  * @property User $user
  */
-class OauthRefreshToken extends \app\models\BaseActiveRecord
+class OauthRefreshToken extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

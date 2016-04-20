@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\extended\job\JobWorker;
+use app\components\jobs\JobWorker;
 use Yii;
 use yii\console\Controller;
 

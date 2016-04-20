@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\item\Item
  */

@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\jobs\SlackJob;
+use admin\jobs\SlackJob;
 use Yii;
 use yii\console\Controller;
 
@@ -14,7 +14,7 @@ class JobController extends Controller
     public function actionWorker()
     {
         while (true) {
-            @(new \app\extended\job\JobWorker())->doJob();
+            @(new \app\components\jobs\JobWorker())->doJob();
             sleep(1);
         }
     }

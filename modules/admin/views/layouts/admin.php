@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
-/* @var $this \app\extended\web\View */
+/* @var $this \app\components\view\View */
 /* @var $content string */
 \admin\assets\AdminThemeAsset::register($this);
 \yii\web\JqueryAsset::register($this);

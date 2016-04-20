@@ -3,7 +3,7 @@ namespace api\v1\controllers;
 
 use api\v1\models\Review;
 use api\v1\models\User;
-use app\helpers\Event;
+use app\components\Event;
 use user\models\token\Token;
 use user\forms\Registration;
 use yii\data\ActiveDataProvider;

@@ -1,5 +1,5 @@
 <?php
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use images\components\ImageHelper;
 use message\models\message\Message;
 use yii\helpers\Url;

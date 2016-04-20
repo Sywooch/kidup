@@ -56,7 +56,7 @@ $this->registerJsVariables([
 </div>
 
 <?= Html::submitButton(Yii::t("item.menu_search.search_button", "Search"),
-    ['class' => "btn btn-fill btn-danger", 'onclick' => \app\helpers\ViewHelper::trackClick("menu.click_search")]) ?>
+    ['class' => "btn btn-fill btn-danger", 'onclick' => \app\components\web\ViewHelper::trackClick("menu.click_search")]) ?>
 
 <?php ActiveForm::end() ?>
 

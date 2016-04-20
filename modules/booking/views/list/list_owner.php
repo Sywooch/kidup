@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \booking\models\booking\Booking $model
  * @var \yii\data\ActiveDataProvider $provider
  */

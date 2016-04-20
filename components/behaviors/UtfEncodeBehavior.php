@@ -1,9 +1,9 @@
 <?php
 namespace app\components\behaviors;
 
-use app\models\BaseActiveRecord;
+use app\components\models\BaseActiveRecord;
 use yii\base\Behavior;
-use app\helpers\Event;
+use app\components\Event;
 use yii\base\InvalidParamException;
 use yii\helpers\HtmlPurifier;
 
@@ -59,7 +59,7 @@ class UtfEncodeBehavior extends Behavior
     /**
      * Encode attributes
      *
-     * @param Event $event Current event
+     * @param \app\components\Event $event Current event
      */
     public function encode($event)
     {

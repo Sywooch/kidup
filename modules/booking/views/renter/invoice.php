@@ -3,7 +3,7 @@ use Carbon\Carbon;
 use images\components\ImageHelper;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var array $invoice
  */
 \booking\assets\BookingViewsAsset::register($this);

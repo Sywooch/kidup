@@ -13,7 +13,7 @@ use Yii;
  *
  * @property I18nMessage[] $i18nMessages
  */
-class I18nSource extends \app\models\BaseActiveRecord
+class I18nSource extends \app\components\models\BaseActiveRecord
 {
     public static function tableName()
     {

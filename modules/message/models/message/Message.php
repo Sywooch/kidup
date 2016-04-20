@@ -4,8 +4,8 @@ namespace message\models\message;
 
 use app\components\behaviors\PurifierBehavior;
 use app\components\behaviors\UtfEncodeBehavior;
-use app\extended\base\Exception;
-use app\helpers\Event;
+use app\components\Exception;
+use app\components\Event;
 use Yii;
 
 class MessageException extends Exception

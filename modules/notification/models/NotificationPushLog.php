@@ -19,7 +19,7 @@ use Yii;
  * @property string  $hash
  * @property integer $created_at
  */
-class NotificationPushLog extends \app\models\BaseActiveRecord
+class NotificationPushLog extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

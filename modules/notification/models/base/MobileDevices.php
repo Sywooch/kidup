@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  * @property integer $last_activity_at
  * @property integer $created_at
  */
-class MobileDevices extends \app\models\BaseActiveRecord
+class MobileDevices extends \app\components\models\BaseActiveRecord
 {
 
     /**

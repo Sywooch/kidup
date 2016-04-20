@@ -15,7 +15,7 @@ use Yii;
  * @property ItemFacet $item_facet
  * @property Category $category
  */
-class CategoryHasItemFacetBase extends \app\models\BaseActiveRecord
+class CategoryHasItemFacetBase extends \app\components\models\BaseActiveRecord
 {
 
 

@@ -15,7 +15,7 @@ use user\models\profile\Profile;
  * @property string $image_url
  * @property int $rating
  */
-class KodeUp extends \app\models\BaseActiveRecord
+class KodeUp extends \app\components\models\BaseActiveRecord
 {
     private $kfcServer = 'http://178.62.234.114';
 

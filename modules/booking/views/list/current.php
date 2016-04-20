@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \yii\data\ActiveDataProvider $provider
  */
 

@@ -2,7 +2,7 @@
 namespace codecept\api\notification;
 
 use ApiTester;
-use app\helpers\Event;
+use app\components\Event;
 use booking\models\booking\Booking;
 use codecept\_support\MuffinHelper;
 use codecept\_support\UserHelper;

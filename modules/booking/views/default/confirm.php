@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \booking\models\booking\Booking $booking
  * @var \booking\forms\Confirm $model
  * @var \item\models\item\Item $item

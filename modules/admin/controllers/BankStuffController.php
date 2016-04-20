@@ -3,7 +3,7 @@
 namespace admin\controllers;
 
 use admin\forms\UploadKey;
-use app\helpers\Encrypter;
+use app\components\Encrypter;
 use booking\models\payout\PayoutBase;
 use Yii;
 use yii\web\UploadedFile;

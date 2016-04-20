@@ -2,7 +2,7 @@
 use yii\bootstrap\Modal;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var  \item\models\item\Item $model
  */
 

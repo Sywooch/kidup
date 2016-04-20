@@ -2,7 +2,7 @@
 namespace api\v2\controllers;
 
 use api\v2\models\Review;
-use app\helpers\Event;
+use app\components\Event;
 use user\models\token\Token;
 use user\forms\Registration;
 use user\models\user\User;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  */
 $this->registerJsVariables([
     'daily_price' => Yii::t("item.create.pricing.suggestion.daily_price", "Daily Price"),

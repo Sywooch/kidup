@@ -93,7 +93,7 @@ class Item extends \item\models\item\Item
 
     public function extraFields()
     {
-        return ['owner', 'category', 'location', 'currency', 'media'];
+        return ['owner', 'category', 'location', 'currency', 'media', 'review'];
     }
 
     public function getOwner()

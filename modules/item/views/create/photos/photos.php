@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \item\forms\Edit $model
  * @var string $preload
  * @var string $fileUrl

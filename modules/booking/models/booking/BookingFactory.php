@@ -2,7 +2,7 @@
 namespace booking\models\booking;
 
 use app\components\models\FactoryTrait;
-use app\helpers\Event;
+use app\components\Event;
 use booking\models\payin\PayinException;
 use booking\models\payin\PayinFactory;
 use Carbon\Carbon;

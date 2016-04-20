@@ -4,7 +4,7 @@ namespace user\models\user;
 
 use review\models\Review;
 use user\models\oauth\OauthAccessToken;
-use app\helpers\Event;
+use app\components\Event;
 use images\components\ImageHelper;
 use item\models\location\Location;
 use notification\models\base\MobileDevices;

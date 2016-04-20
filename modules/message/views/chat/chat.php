@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var \message\models\conversation\Conversation $conversation
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  */
 
 \message\assets\MessageAsset::register($this);

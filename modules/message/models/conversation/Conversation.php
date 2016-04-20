@@ -3,7 +3,7 @@
 namespace message\models\conversation;
 
 use app\components\behaviors\UtfEncodeBehavior;
-use app\extended\base\Exception;
+use app\components\Exception;
 use message\models\message\Message;
 use notification\models\MailAccount;
 use user\models\user\User;

@@ -2,7 +2,7 @@
 
 namespace item\models\item;
 
-use app\models\BaseQuery;
+use app\components\models\BaseQuery;
 use Yii;
 
 /**

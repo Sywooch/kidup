@@ -8,7 +8,7 @@ use Yii;
 use yii\db\ActiveRecord;
 
 
-class LocationError extends \app\extended\base\Exception
+class LocationError extends \app\components\Exception
 {
 }
 

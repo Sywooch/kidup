@@ -3,7 +3,7 @@ use yii\widgets\ListView;
 
 /**
  * @var yii\data\ActiveDataProvider $conversationDataProvider
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  */
 
 \message\assets\MessageAsset::register($this);

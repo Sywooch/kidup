@@ -1,5 +1,5 @@
 <?php
-use app\helpers\SelectData;
+use app\components\view\SelectData;
 use kartik\select2\Select2;
 use yii\bootstrap\Modal;
 

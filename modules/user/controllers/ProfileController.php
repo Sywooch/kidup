@@ -11,7 +11,7 @@
 
 namespace user\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use item\models\item\Item;
 use review\models\Review;
 use user\models\profile\Profile;

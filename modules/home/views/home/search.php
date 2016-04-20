@@ -1,10 +1,10 @@
 <?php
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \home\forms\Search $model
  * @var \item\models\category\Category $defaultCategory
  */

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var $this \app\extended\web\View
+ * @var $this \app\components\view\View
  */
 $x = "dataLayer.push(
     'event': 'playVideo',
@@ -16,7 +16,7 @@ $this->registerJs(" dataLayer = [{
             'productSku': 'pbz00123',
             'productName': 'The Original Rider Waite Tarot cards',
             'productPrice': '9.99'
-        }];", \app\extended\web\View::POS_BEGIN);
+        }];", \app\components\view\View::POS_BEGIN);
 ?>
 
 test

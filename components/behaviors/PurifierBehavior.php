@@ -2,7 +2,7 @@
 namespace app\components\behaviors;
 
 use yii\base\Behavior;
-use app\helpers\Event;
+use app\components\Event;
 use yii\base\InvalidParamException;
 use yii\helpers\HtmlPurifier;
 /**
@@ -72,7 +72,7 @@ class PurifierBehavior extends Behavior
     /**
      * Purify attributes
      *
-     * @param Event $event Current event
+     * @param \app\components\Event $event Current event
      */
     public function purify($event)
     {

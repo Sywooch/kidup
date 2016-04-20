@@ -1,7 +1,7 @@
 <?php
 namespace api\v1\controllers;
 
-use app\extended\base\Exception;
+use app\components\Exception;
 use yii\filters\AccessControl;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;

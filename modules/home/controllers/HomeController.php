@@ -2,7 +2,7 @@
 
 namespace home\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use home\forms\Search;
 use item\models\category\Category;
 use item\models\item\Item;

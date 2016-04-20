@@ -4,7 +4,7 @@ use app\components\Cache;
 use images\components\ImageHelper;
 use yii\helpers\Html;
 
-/* @var $this \app\extended\web\View */
+/* @var $this \app\components\view\View */
 /* @var $content string */
 
 $url = @Yii::$app->request->getUrl();
@@ -37,7 +37,7 @@ AppAsset::register($this);
     <?php
     $this->beginBody();
     echo \admin\widgets\Tracker::widget();
-    echo \app\helpers\ViewHelper::trackPageView();
+    echo \app\components\web\ViewHelper::trackPageView();
     echo \app\widgets\FacebookTracker::widget();
     echo \app\widgets\GoogleTagManager::widget();
     echo \app\widgets\MobileAppBanner::widget();

@@ -34,7 +34,7 @@ $components = [
         'class' => 'yii\authclient\Collection',
         'clients' => [
             'facebook' => [
-                'class' => 'app\extended\auth\Facebook',
+                'class' => 'user\helpers\Facebook',
                 'clientId' => '1515825585365803',
                 'clientSecret' => $keys['facebook_oauth_secret'],
                 'viewOptions' => ['popupWidth' => 800, 'popupHeight' => 500],
@@ -48,10 +48,10 @@ $components = [
         ],
     ],
     'view' => [
-        'class' => 'app\extended\web\View',
+        'class' => 'app\components\view\View',
         'renderers' => [
             'twig' => [
-                'class' => 'app\extended\web\TwigRenderer',
+                'class' => 'app\components\view\TwigRenderer',
                 // set cachePath to false in order to disable template caching
                 'cachePath' => '@runtime/Twig/cache',
                 // Array of twig options:
@@ -93,7 +93,7 @@ $components = [
                         return date('d-m-y H:i');
                     },
                     'setTitle' => function ($viewModel, $title) {
-                        return $viewModel->title = \app\helpers\ViewHelper::getPageTitle($title);
+                        return $viewModel->title = \app\components\web\ViewHelper::getPageTitle($title);
                     },
                     'base64_image' => function ($file) {
                         $path = \Yii::getAlias($file);
@@ -115,7 +115,7 @@ $components = [
         ],
     ],
     'assetManager' => [
-        'class' => 'app\extended\web\AssetManager',
+        'class' => 'app\components\web\AssetManager',
 //        'bundles' => (YII_ENV == 'stage' || YII_ENV == 'prod') ? require(__DIR__ . '/assets/assets-prod.php') : [],
         'bundles' => [],
         'converter' => [
@@ -191,7 +191,7 @@ $components = [
             // auto adds access control if an api request
 
             if (strpos(\Yii::$app->request->url,
-                    "/api/") !== false && \app\helpers\ApiHelper::isApiLikeResponse($event->sender->data)
+                    "/api/") !== false && \app\components\web\ApiHelper::isApiLikeResponse($event->sender->data)
             ) {
                 \Yii::$app->response->headers->set("Access-Control-Allow-Origin", "*");
                 // change all bad requests to success: false, data: details format

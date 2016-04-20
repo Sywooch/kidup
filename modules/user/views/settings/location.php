@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use app\helpers\SelectData;
+use app\components\view\SelectData;
 use kartik\widgets\Select2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;

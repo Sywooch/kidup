@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var $this \app\extended\web\View
+ * @var $this \app\components\view\View
  * @var $booking \booking\models\booking\Booking
  * @var $item \item\models\item\Item
  */

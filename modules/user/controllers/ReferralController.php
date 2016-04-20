@@ -11,7 +11,7 @@
 
 namespace user\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use user\models\userReferredUser\UserReferredUser;
 use yii\filters\AccessControl;
 use yii\helpers\Url;

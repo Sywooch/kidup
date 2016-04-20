@@ -2,7 +2,7 @@
 
 namespace item\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
 use images\components\ImageHelper;

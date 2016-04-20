@@ -13,7 +13,7 @@ use Yii;
  * @property string $type
  * @property integer $created_at
  */
-class MailLog extends \app\models\BaseActiveRecord
+class MailLog extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

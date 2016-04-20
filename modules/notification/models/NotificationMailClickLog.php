@@ -14,7 +14,7 @@ use Yii;
  * @property string  $url
  * @property integer $created_at
  */
-class NotificationMailClickLog extends \app\models\BaseActiveRecord
+class NotificationMailClickLog extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

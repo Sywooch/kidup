@@ -25,7 +25,7 @@ use Yii;
  * @property Item[] $items
  * @property Item[] $items0
  */
-class ItemFacetBase extends \app\models\BaseActiveRecord
+class ItemFacetBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

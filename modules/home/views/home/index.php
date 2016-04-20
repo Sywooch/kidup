@@ -1,9 +1,9 @@
 <?php
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use images\components\ImageHelper;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var array $images
  * @var \item\models\item\Item $model
  * @var \item\models\category\Category $categories

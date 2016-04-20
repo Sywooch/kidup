@@ -50,7 +50,7 @@ use yii\helpers\ArrayHelper;
  * @property WishListItem[] $wishListItems
  * @property Review[] $reviews
  */
-class ItemBase extends \app\models\BaseActiveRecord
+class ItemBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

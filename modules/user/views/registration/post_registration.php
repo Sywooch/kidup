@@ -1,6 +1,6 @@
 <?php
 
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use images\components\ImageHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -64,7 +64,7 @@ $this->assetPackage = \app\assets\Package::USER;
                         ]); ?>
                     </div>
                     <?= $form->field($model, 'language')->widget(\kartik\select2\Select2::className(), [
-                        'data' => \app\helpers\SelectData::languages(),
+                        'data' => \app\components\view\SelectData::languages(),
                         'options' => ['placeholder' => \Yii::t('user.post_registration.select_language_propdown_plceholder',
                             'Select your preferred language')],
                         'pluginOptions' => [

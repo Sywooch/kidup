@@ -41,7 +41,7 @@ $ret = [
             'class' => 'yii\web\AssetBundle',
             'basePath' => '@app/web/release-assets',
             'baseUrl' => '@web/release-assets',
-            // DO NOT RENAME! (see depencendy in \app\extended\web\View
+            // DO NOT RENAME! (see depencendy in \app\components\view\View
             'js' => 'js/common-{hash}.js',
             'css' => 'css/common-{hash}.css',
             // catches all leftovers

@@ -3,7 +3,7 @@
 namespace booking\models\booking;
 
 
-use app\models\BaseQuery;
+use app\components\models\BaseQuery;
 use user\models\user\User;
 
 class BookingQuery extends BaseQuery

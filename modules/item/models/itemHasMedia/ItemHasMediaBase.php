@@ -14,7 +14,7 @@ use Yii;
  * @property \item\models\item\Item $item
  * @property \item\models\media\Media $media
  */
-class ItemHasMediaBase extends \app\models\BaseActiveRecord
+class ItemHasMediaBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

@@ -1,5 +1,5 @@
 <?php
-use app\helpers\Event;
+use app\components\Event;
 use codecept\_support\MuffinHelper;
 use codecept\muffins\UserMuffin;
 use League\FactoryMuffin\FactoryMuffin;

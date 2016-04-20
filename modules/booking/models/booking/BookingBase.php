@@ -46,7 +46,7 @@ use Yii;
  * @property Review[] $reviews
  * @property \message\models\conversation\Conversation $conversation
  */
-class BookingBase extends \app\models\BaseActiveRecord
+class BookingBase extends \app\components\models\BaseActiveRecord
 {
 
     const SCENARIO_INIT = 'init';

@@ -5,7 +5,7 @@ use user\widgets\UserImage;
 use yii\helpers\Url;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \item\models\item\Item $model
  * @var string $rowClass
  */

@@ -13,7 +13,7 @@ use Yii;
  *
  * @property \user\models\user\User $user
  */
-class UserReferredUserBase extends \app\models\BaseActiveRecord
+class UserReferredUserBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

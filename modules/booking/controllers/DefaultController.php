@@ -3,8 +3,8 @@
 namespace booking\controllers;
 
 use api\models\Currency;
-use app\extended\web\Controller;
-use app\jobs\SlackJob;
+use app\components\web\Controller;
+use admin\jobs\SlackJob;
 use booking\forms\Confirm;
 use booking\models\booking\Booking;
 use booking\models\payin\Payin;

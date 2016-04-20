@@ -2,7 +2,7 @@
 use app\helpers\ViewHelper;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  */
 $this->assetPackage = \app\assets\Package::PAGES;
 

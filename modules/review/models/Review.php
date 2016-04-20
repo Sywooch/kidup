@@ -2,8 +2,8 @@
 
 namespace review\models;
 
-use app\helpers\Event;
-use app\jobs\SlackJob;
+use app\components\Event;
+use admin\jobs\SlackJob;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
 use user\models\user\User;

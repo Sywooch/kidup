@@ -4,7 +4,7 @@ namespace item\models\wishListItem;
 
 use Yii;
 
-class WishListItemError extends \app\extended\base\Exception
+class WishListItemError extends \app\components\Exception
 {
 }
 

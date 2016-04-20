@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property \user\models\user\User $receiverUser
  * @property \message\models\conversation\Conversation $conversation
  */
-class MessageBase extends \app\models\BaseActiveRecord
+class MessageBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

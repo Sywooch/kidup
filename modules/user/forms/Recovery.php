@@ -3,7 +3,7 @@
 
 namespace user\forms;
 
-use app\helpers\Event;
+use app\components\Event;
 use user\models\token\Token;
 use user\models\user\User;
 use yii\base\Model;

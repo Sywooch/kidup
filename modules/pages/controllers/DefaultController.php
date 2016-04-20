@@ -2,7 +2,7 @@
 
 namespace pages\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use pages\components\Pages;
 
 class DefaultController extends Controller

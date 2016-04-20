@@ -11,7 +11,7 @@
 
 namespace user\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use user\forms\Login;
 use user\models\socialAccount\SocialAccount;
 use user\models\user\User;

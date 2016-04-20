@@ -2,7 +2,7 @@
 use yii\bootstrap\Modal;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \false|string $referral_user
  * @var \false|string $referral_user_image
  */
@@ -54,7 +54,7 @@ echo \images\components\ImageHelper::image($img, $settings, $settings2) ?>
                     ['socialNetwork' => $client->getTitle()])
                 , [
                     'class' => 'btn btn-fill btn-social btn-' . strtolower($client->getTitle()),
-                    'onclick' => \app\helpers\ViewHelper::trackClick("signup_modal.click_facebook", null, false)
+                    'onclick' => \app\components\web\ViewHelper::trackClick("signup_modal.click_facebook", null, false)
                 ]) ?>
         <?php endforeach; ?>
     </div>

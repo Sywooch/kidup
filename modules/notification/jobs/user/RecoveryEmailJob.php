@@ -2,7 +2,7 @@
 
 namespace notification\jobs\user;
 
-use app\extended\job\Job;
+use app\components\jobs\Job;
 use notification\models\Mailer;
 use user\models\token\Token;
 use user\models\user\User;

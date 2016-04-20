@@ -1,7 +1,7 @@
 <?php
 
 namespace api\v1\models;
-use app\helpers\Encrypter;
+use app\components\Encrypter;
 
 /**
  * This is the model class for table "item".
@@ -25,10 +25,10 @@ class PayoutMethod extends \user\models\payoutMethod\PayoutMethod
             $this->bank_name = 'unknown';
 
             $this->identifier_1 = $this->transformToSafe($this->identifier_1, 4);
-            $this->identifier_1_encrypted = \app\helpers\Encrypter::encrypt($this->identifier_1_encrypted,
+            $this->identifier_1_encrypted = \app\components\Encrypter::encrypt($this->identifier_1_encrypted,
                 Encrypter::SIZE_1024);
             $this->identifier_2 = $this->transformToSafe($this->identifier_2, 2);
-            $this->identifier_2_encrypted = \app\helpers\Encrypter::encrypt($this->identifier_2_encrypted,
+            $this->identifier_2_encrypted = \app\components\Encrypter::encrypt($this->identifier_2_encrypted,
                 Encrypter::SIZE_1024);
         }
         return parent::beforeValidate();

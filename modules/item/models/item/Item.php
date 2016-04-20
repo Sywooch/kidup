@@ -3,7 +3,7 @@
 namespace item\models\item;
 
 use app\components\Cache;
-use app\extended\base\Exception;
+use app\components\Exception;
 use images\components\ImageHelper;
 use item\models\itemHasMedia\ItemHasMedia;
 use item\models\itemSimilarity\ItemSimilarity;

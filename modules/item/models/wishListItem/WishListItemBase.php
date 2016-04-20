@@ -4,7 +4,7 @@
 
 namespace item\models\wishListItem;
 
-use app\models\BaseActiveRecord;
+use app\components\models\BaseActiveRecord;
 use item\models\item\Item;
 use user\models\user\User;
 use Yii;

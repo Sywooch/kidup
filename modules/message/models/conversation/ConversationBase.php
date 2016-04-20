@@ -27,7 +27,7 @@ use yii\db\ActiveRecord;
  * @property \message\models\message\Message $lastMessage
  * @property User $otherUser
  */
-class ConversationBase extends \app\models\BaseActiveRecord
+class ConversationBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

@@ -3,7 +3,7 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \user\forms\PayoutPreference $model
  */
 ?>

@@ -2,7 +2,7 @@
 
 namespace item\controllers;
 
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use item\forms\CreateBooking;
 use item\models\item\Item;
 use review\models\base\Review;

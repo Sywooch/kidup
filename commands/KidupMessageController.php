@@ -5,7 +5,7 @@ namespace app\commands;
 use admin\models\I18nMessage;
 use admin\models\I18nSource;
 use admin\models\VariableExtractor;
-use app\jobs\SlackJob;
+use admin\jobs\SlackJob;
 use item\models\category\Category;
 use Yii;
 use yii\console\Exception;

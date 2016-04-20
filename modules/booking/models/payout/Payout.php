@@ -2,8 +2,8 @@
 
 namespace booking\models\payout;
 
-use app\helpers\Encrypter;
-use app\helpers\Event;
+use app\components\Encrypter;
+use app\components\Event;
 use booking\models\booking\Booking;
 use Carbon\Carbon;
 use user\models\currency\Currency;

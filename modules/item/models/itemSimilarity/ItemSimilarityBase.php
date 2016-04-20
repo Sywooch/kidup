@@ -17,7 +17,7 @@ use Yii;
  * @property \item\models\item\Item $itemId2
  * @property \item\models\item\Item $itemId1
  */
-class ItemSimilarityBase extends \app\models\BaseActiveRecord
+class ItemSimilarityBase extends \app\components\models\BaseActiveRecord
 {
 
     /**

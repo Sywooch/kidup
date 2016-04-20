@@ -20,7 +20,7 @@ use Yii;
  * @property Payout[] $payouts
  */
 
-class InvoiceBase extends \app\models\BaseActiveRecord
+class InvoiceBase extends \app\components\models\BaseActiveRecord
 {
     /**
      * @inheritdoc

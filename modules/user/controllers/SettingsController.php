@@ -5,9 +5,9 @@ namespace user\controllers;
 
 use app\components\PhoneTexter;
 use app\components\PhoneTextSendException;
-use app\extended\web\Controller;
-use app\helpers\Event;
-use app\helpers\SelectData;
+use app\components\web\Controller;
+use app\components\Event;
+use app\components\view\SelectData;
 use images\components\ImageManager;
 use user\forms\LocationForm;
 use user\forms\Settings;

@@ -1,11 +1,11 @@
 <?php
 
-use app\helpers\ViewHelper;
+use app\components\web\ViewHelper;
 use images\components\ImageHelper;
 use yii\helpers\Url;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \item\models\category\Category[] $categories
  * @property \item\models\item\Item[] $items
  */

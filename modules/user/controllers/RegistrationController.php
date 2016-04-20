@@ -11,8 +11,8 @@
 
 namespace user\controllers;
 
-use app\extended\web\Controller;
-use app\helpers\Event;
+use app\components\web\Controller;
+use app\components\Event;
 use user\forms\PostRegistrationProfile;
 use user\forms\Registration;
 use user\models\socialAccount\SocialAccount;

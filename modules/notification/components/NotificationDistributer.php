@@ -5,7 +5,7 @@ use booking\models\booking\Booking;
 use message\models\message\Message;
 use user\models\user\User;
 
-class NotificationImplementationError extends \app\extended\base\Exception
+class NotificationImplementationError extends \app\components\Exception
 {
 }
 

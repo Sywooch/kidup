@@ -4,7 +4,7 @@ use kartik\icons\Icon;
 use kartik\sidenav\SideNav;
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \item\forms\Edit $model
  * @var \item\models\item\Item $item
  * @var array $pageParams

@@ -3,9 +3,9 @@
 namespace home\controllers;
 
 use app\components\UrlHelper;
-use app\extended\web\Controller;
+use app\components\web\Controller;
 use Yii;
-use app\extended\base\Exception;
+use app\components\Exception;
 use yii\base\UserException;
 use yii\web\HttpException;
 use yii\web\Response;

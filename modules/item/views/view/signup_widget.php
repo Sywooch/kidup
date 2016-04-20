@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var \app\extended\web\View $this
+ * @var \app\components\view\View $this
  * @var \user\models\user\User $owner
  * @var int $itemId
  */
@@ -15,7 +15,7 @@ JS
 ?>
 
 <div class="signup-widget">
-    <div class="header" <?= \app\helpers\ViewHelper::trackClick("item.click_do_like", $itemId) ?>>
+    <div class="header" <?= \app\components\web\ViewHelper::trackClick("item.click_do_like", $itemId) ?>>
         <?= Yii::t("item.view.signup_widget.header", "Do like {owner} & earn some money!",[
             'owner' => $owner->profile->first_name
         ]) ?>
