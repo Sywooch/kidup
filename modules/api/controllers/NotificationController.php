@@ -93,6 +93,9 @@ class NotificationController extends Controller
 
     public function actionTest()
     {
+        $user = User::find()->where(['email' => 'kevin91nl@gmail.com'])->one();
+        (new NotificationDistributer($user->id, true))->userRecovery($user, 'recovery-url');
+        die();
         try {
             try {
                 throw new BookingException("Kut!");

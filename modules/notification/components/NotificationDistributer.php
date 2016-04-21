@@ -19,10 +19,13 @@ class NotificationDistributer
      * Construct a notification distributor for a certain user id
      * NotificationDistributer constructor.
      * @param $userId
+     * @param bool $viewOnly
+     * @throws \yii\web\NotFoundHttpException
      */
-    public function __construct($userId)
+    public function __construct($userId, $viewOnly=false)
     {
         $user = User::findOneOr404($userId);
+        $this->viewOnly = $viewOnly;
         $this->userAllowsPush = $user->getUserAcceptsPushNotifications();
     }
 
@@ -100,11 +103,22 @@ class NotificationDistributer
                 }
             }
 
+            // Set the language
+            $receiverId = $renderer->getReceiverId();
+            $receiver = User::find()->where(['id' => $receiverId])->one();
+            $language = $receiver->profile->language;
+            \Yii::$app->language = $language;
+            if ($this->viewOnly) {
+                echo $renderer->render();
+            }
+
             // Use the appropriate sender to send the rendering
-            if ($renderer->type == 'mail') {
-                $success = $success && MailSender::send($renderer);
-            } else {
-                $success = $success && PushSender::send($renderer);
+            if (!$this->viewOnly) {
+                if ($renderer->type == 'mail') {
+                    $success = $success && MailSender::send($renderer, $this->viewOnly);
+                } else {
+                    $success = $success && PushSender::send($renderer, $this->viewOnly);
+                }
             }
         }
         return $success;
