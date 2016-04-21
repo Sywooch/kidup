@@ -38,7 +38,7 @@ class Renderer
 
     public function __construct($template = null)
     {
-        \Yii::$app->language = 'da-dk';
+        \Yii::$app->language = 'da-DK';
         $this->template = $template;
         $this->bookingRenderer = new BookingRenderer();
         $this->itemRenderer = new ItemRenderer();
