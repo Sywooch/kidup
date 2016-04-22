@@ -38,7 +38,6 @@ class Renderer
 
     public function __construct($template = null)
     {
-        \Yii::$app->language = 'da-DK';
         $this->template = $template;
         $this->bookingRenderer = new BookingRenderer();
         $this->itemRenderer = new ItemRenderer();
@@ -58,12 +57,15 @@ class Renderer
 
     public function renderFromFile($template)
     {
+        // Make sure to set the language temporarily to the user language
         $user_id = $this->getReceiverId();
         $user = User::find()->where(['id' => $user_id])->one();
+        $language_backup = \Yii::$app->language;
         \Yii::$app->language = $user->profile->language;
         $vars = $this->getVariables();
-
-        return \Yii::$app->view->renderFile($this->templateFolder . '/' . $template . '.twig', $vars);
+        $view = \Yii::$app->view->renderFile($this->templateFolder . '/' . $template . '.twig', $vars);
+        \Yii::$app->language = $language_backup;
+        return $view;
     }
 
     public function getVariables()

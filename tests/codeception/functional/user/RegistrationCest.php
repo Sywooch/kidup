@@ -8,6 +8,7 @@ use League\FactoryMuffin;
 use League\FactoryMuffin\Faker as Faker;
 use user\models\profile\Profile;
 use user\models\user\User;
+use Yii;
 
 /**
  * functional test for the login.

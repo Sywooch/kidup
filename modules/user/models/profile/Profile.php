@@ -102,8 +102,6 @@ class Profile extends ProfileBase
 
     public function beforeSave($insert)
     {
-        $this->last_name = '';
-        $this->first_name = '';
         $this->birthday = strtotime($this->birthday);
         if ($this->isAttributeChanged('language') && \Yii::$app->has('session')) {
             Yii::$app->session->set('lang', $this->language);
