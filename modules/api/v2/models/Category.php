@@ -2,9 +2,8 @@
 
 namespace api\v2\models;
 
-/**
- * This is the model class for table "item".
- */
+use item\models\categoryHasItemFacet\CategoryHasItemFacet;
+
 class Category extends \item\models\category\Category
 {
     public function fields()
@@ -23,10 +22,32 @@ class Category extends \item\models\category\Category
 
     public function extraFields()
     {
-        return ['parent'];
+        return ['parent', 'itemFacets', 'children'];
     }
 
     public function getParent(){
         return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
+
+    public function getChildren(){
+        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
+    }
+
+    public function getItemFacets()
+    {
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
+            ['category_id' => 'id']);
+    }
+
+    public function getNonSingularItemFacets()
+    {
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
+            ['category_id' => 'id'])->where(['item_facet.is_singular' => 0]);
+    }
+
+    public function getSingularItemFacets()
+    {
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
+            ['category_id' => 'id'])->where(['item_facet.is_singular' => 1]);
     }
 }

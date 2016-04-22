@@ -63,9 +63,6 @@ class Item extends ItemBase
 
     public function beforeSave($insert)
     {
-        if (!$insert && !$this->hasModifyRights()) {
-            return false;
-        }
         if ($insert == true) {
             $this->currency_id = 1;
         }
@@ -78,23 +75,10 @@ class Item extends ItemBase
 
     public function beforeDelete()
     {
-        if (!$this->hasModifyRights()) {
-            throw new ItemException("No deletion rights");
-        }
         if($this->isAvailable()){
             (new ItemSearchDb())->removeItem($this);
         }
         return parent::beforeDelete();
-    }
-
-    /**
-     * Whether or not the current logged in user has the rights to modify this item.
-     *
-     * @return bool  True if modifications by the logged in user are allowed, false otherwise.
-     */
-    public function hasModifyRights($user = null)
-    {
-        return $this->isOwner($user) || \Yii::$app->user->identity->isAdmin();
     }
 
     public function beforeValidate()

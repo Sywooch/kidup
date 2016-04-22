@@ -107,7 +107,7 @@ class CategoryBase extends \app\components\models\BaseActiveRecord
      */
     public function getItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
             ['category_id' => 'id']);
     }
 
@@ -116,7 +116,7 @@ class CategoryBase extends \app\components\models\BaseActiveRecord
      */
     public function getNonSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
             ['category_id' => 'id'])->where(['item_facet.is_singular' => 0]);
     }
 
@@ -126,7 +126,7 @@ class CategoryBase extends \app\components\models\BaseActiveRecord
      */
     public function getSingularItemFacets()
     {
-        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable('category_has_item_facet',
+        return $this->hasMany(ItemFacet::className(), ['id' => 'item_facet_id'])->viaTable(CategoryHasItemFacet::tableName(),
             ['category_id' => 'id'])->where(['item_facet.is_singular' => 1]);
     }
 

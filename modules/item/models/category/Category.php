@@ -11,6 +11,11 @@ use Yii;
  */
 class Category extends CategoryBase
 {
+
+    public function beforeSave(){
+        
+    }
+
     public function getTranslatedName($lang = null)
     {
         $lower = str_replace(" ", "_", strtolower($this->name));

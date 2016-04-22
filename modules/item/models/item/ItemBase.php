@@ -49,6 +49,7 @@ use yii\helpers\ArrayHelper;
  * @property ItemSimilarity[] $itemSimilarities0
  * @property WishListItem[] $wishListItems
  * @property Review[] $reviews
+ * @property Item[] $similarItems
  */
 class ItemBase extends \app\components\models\BaseActiveRecord
 {
@@ -161,8 +162,7 @@ class ItemBase extends \app\components\models\BaseActiveRecord
             'location' => ['location_id']
         ]);
     }
-    
-    
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -281,5 +281,16 @@ class ItemBase extends \app\components\models\BaseActiveRecord
     public function getWishListItems()
     {
         return $this->hasMany(WishListItem::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSimilarItems()
+    {
+        return $this->hasMany(Item::className(), ['id' => 'item_id_2'])
+            ->viaTable(ItemSimilarity::tableName(), ['item_id_1' => 'id'], function($query){
+                $query->orderBy("similarity DESC");
+            });
     }
 }

@@ -29,7 +29,6 @@ class User extends \user\models\user\User
             'phone_verified' => function ($model) {
                 return (bool)$model->profile->phone_verified;
             },
-           
             'email' => function ($model) {
                 return $model->email;
             },
@@ -81,6 +80,10 @@ class User extends \user\models\user\User
 
     public function getItems()
     {
-        return $this->hasOne(Item::className(), ['id' => 'owner_id'])->where(['is_available' => 1]);
+        if($this->id == \Yii::$app->user->id){
+            return $this->hasMany(Item::className(), ['id' => 'owner_id']);
+        }else{
+            return $this->hasMany(Item::className(), ['id' => 'owner_id'])->isAvailable();
+        }
     }
 }
