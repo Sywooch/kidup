@@ -92,6 +92,9 @@ class NotificationDistributer
                     case "booking":
                         $renderer->loadBooking($value);
                         break;
+                    case "receiver":
+                        $renderer->loadUser($value);
+                        break;
                     case "user":
                         $renderer->loadUser($value);
                         break;
@@ -102,7 +105,7 @@ class NotificationDistributer
                         $renderer->setVariables(['app_state' => $value]);
                 }
             }
-            
+
             if ($this->viewOnly) {
                 echo $renderer->render();
             }
@@ -124,6 +127,7 @@ class NotificationDistributer
         return $this->load("booking_confirmed_owner", [
             'booking' => $booking,
             'user' => $booking->item->owner,
+            'receiver' => $booking->item->owner,
             'app_state' => [
                 'state' => 'app.booking-view',
                 'params' => [

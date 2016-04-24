@@ -1,11 +1,11 @@
 <?php
 namespace api\controllers;
 
+use api\models\Booking;
 use api\models\Message;
 use Aws;
 use booking\models\booking\BookingException;
 use message\components\MobilePush;
-use message\models\conversation\Conversation;
 use notification\components\NotificationDistributer;
 use notification\models\base\MobileDevices;
 use notification\models\NotificationMailLog;
@@ -94,7 +94,8 @@ class NotificationController extends Controller
     public function actionTest()
     {
         $user = User::find()->where(['email' => 'kevin91nl@gmail.com'])->one();
-        (new NotificationDistributer($user->id, true))->userRecovery($user, 'recovery-url');
+        $booking = Booking::find()->where(['renter_id' => 5712])->one();
+        (new NotificationDistributer($user->id, true))->bookingConfirmedRenter($booking);
         die();
         try {
             try {
@@ -108,12 +109,14 @@ class NotificationController extends Controller
         }
     }
 
-    public function actionMailView($hash) {
+    public function actionMailView($hash)
+    {
         $mail = NotificationMailLog::findOneOr404(['hash' => $hash]);
         echo $mail->view;
     }
 
-    public function actionMailClick() {
+    public function actionMailClick()
+    {
         echo 'test456';
     }
 

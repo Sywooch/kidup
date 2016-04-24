@@ -14,7 +14,7 @@
             <div class="main__text col-md-4 col-md-offset-1">
                 <h2><b><?= Yii::t("home.fake-home.title", "We are KidUp,") ?></b></h2>
                 <h4>
-                    <?= /*Yii::t("home.fake-home.text", "Your parent community for sharing local children’s equipment. Find equipment near you and rent it
+                    <?php /*Yii::t("home.fake-home.text", "Your parent community for sharing local children’s equipment. Find equipment near you and rent it
                     from local parents.")*/ ?>
                     Stedet hvor vi deler børneudstyr. Find udstyr i dit lokalområde, og lej det af andre forældre.
                 </h4>
