@@ -30,7 +30,7 @@ class LanguageCest
     {
         $this->fm = (new MuffinHelper())->init();
     }
-    
+
     public function testMailLanguage(ApiTester $I)
     {
         I18nMessage::deleteAll();
