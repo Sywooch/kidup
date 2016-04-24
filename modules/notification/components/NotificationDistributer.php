@@ -102,12 +102,7 @@ class NotificationDistributer
                         $renderer->setVariables(['app_state' => $value]);
                 }
             }
-
-            // Set the language
-            $receiverId = $renderer->getReceiverId();
-            $receiver = User::find()->where(['id' => $receiverId])->one();
-            $language = $receiver->profile->language;
-            \Yii::$app->language = $language;
+            
             if ($this->viewOnly) {
                 echo $renderer->render();
             }
