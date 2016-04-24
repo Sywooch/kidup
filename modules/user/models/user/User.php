@@ -90,7 +90,7 @@ class User extends UserBase implements IdentityInterface
             return false;
         }
         if ($token->expires < time()) {
-            throw new HttpException(401,"Access Token expired");
+            throw new HttpException(401, "Access Token expired");
         }
         return $token->user;
     }
@@ -119,7 +119,7 @@ class User extends UserBase implements IdentityInterface
         return $this->role == 9;
     }
 
-  
+
     /** @inheritdoc */
     public function validateAuthKey($authKey)
     {
@@ -182,9 +182,9 @@ class User extends UserBase implements IdentityInterface
 
         Event::trigger($this, self::EVENT_USER_REGISTER_INIT);
         if ($this->save()) {
-            try{
+            try {
                 Event::trigger($this, self::EVENT_USER_REGISTER_DONE);
-            }catch(\yii\base\UnknownMethodException $e){
+            } catch (\yii\base\UnknownMethodException $e) {
                 return true;
             }
 
@@ -267,7 +267,7 @@ class User extends UserBase implements IdentityInterface
 
             $this->confirmed_at = time();
 
-            \Yii::$app->user->login($this, 30*24*60*60);
+            \Yii::$app->user->login($this, 30 * 24 * 60 * 60);
 
             if ($this->save(false)) {
                 $p = Profile::findOne(['user_id' => \Yii::$app->user->id]);
@@ -454,9 +454,10 @@ class User extends UserBase implements IdentityInterface
         return $c > 0;
     }
 
-    public function getUserAcceptsPushNotifications(){
+    public function getUserAcceptsPushNotifications()
+    {
         $devices = MobileDevices::find()->where([
-            'user_id' =>$this->id,
+            'user_id' => $this->id,
             'is_subscribed' => 1
         ])->count();
         return $devices > 0;

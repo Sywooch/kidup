@@ -142,6 +142,16 @@ class Renderer
     }
 
     /**
+     * Load the receiver.
+     *
+     * @param User $user
+     */
+    public function loadReceiver(User $user) {
+        $vars = $this->userRenderer->loadReceiver($user);
+        $this->setVariables($vars);
+    }
+
+    /**
      * Load a message.
      *
      * @param Message $message
