@@ -38,11 +38,14 @@ class Controller extends \yii\web\Controller
         } else {
             if ((new UrlHelper())->isEnglishDomain()) {
                 Yii::$app->language = 'en-US';
-                Yii::$app->session->set('lang', Yii::$app->language);
+            } elseif ((new UrlHelper())->isDanishDomain()) {
+                Yii::$app->language = 'da-DK';
+            } elseif (YII_ENV !== 'prod') {
+                Yii::$app->language = 'en-US';
             } else {
                 Yii::$app->language = 'da-DK';
-                Yii::$app->session->set('lang', Yii::$app->language);
             }
+            Yii::$app->session->set('lang', Yii::$app->language);
         }
 
         if (\Yii::$app->request->get("ref") !== null) {
@@ -55,7 +58,7 @@ class Controller extends \yii\web\Controller
             \Yii::$app->session->set('after_login_url', Url::to('@web/user/referral/index', true));
         }
 
-        // set the locale for Carbon
+        // set the locale for CarbonP
         \Carbon\Carbon::setLocale(Yii::$app->language[0] . \Yii::$app->language[1]);
         setlocale(LC_TIME, str_replace('-', '_', Yii::$app->language));
         return \yii\web\Controller::__construct($id, $controller);
