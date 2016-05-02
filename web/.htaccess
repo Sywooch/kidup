@@ -4,8 +4,14 @@ IndexIgnore */*
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
+RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"'
+RewriteRule ^(.*)$ https://www.%{SERVER_NAME}%{REQUEST_URI} [L,R]
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{SERVER_NAME}%{REQUEST_URI} [L,R]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^.*$ index.php [L] 
+RewriteRule ^.*$ index.php [L]
 </IfModule>
