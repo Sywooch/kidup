@@ -14,4 +14,4 @@
 - name: composer require composer-asset
   shell: composer -dmemory_limit=600M global require "{{item}}"
   with_items:
-    - fxp/composer-asset-plugin:1.0.3
+    - fxp/composer-asset-plugin:1.1.4
