@@ -26,7 +26,6 @@ class Controller extends \yii\web\Controller
             }
         }
 
-
         if (YII_ENV == 'test') {
             Yii::setAlias('@web', Yii::getAlias('@web') . '/index-test.php');
         }
@@ -37,13 +36,9 @@ class Controller extends \yii\web\Controller
         if (Yii::$app->session->has('lang')) {
             Yii::$app->language = Yii::$app->session->get('lang');
         } else {
-            if (!\Yii::$app->user->isGuest) {
-                $p = Profile::find()->where(['user_id' => \Yii::$app->user->id])->select('language')->one();
-                if ($p->language !== null) {
-                    Yii::$app->language = $p->language;
-                } else {
-                    Yii::$app->language = 'da-DK';
-                }
+            if ((new UrlHelper())->isEnglishDomain()) {
+                Yii::$app->language = 'en-US';
+                Yii::$app->session->set('lang', Yii::$app->language);
             } else {
                 Yii::$app->language = 'da-DK';
                 Yii::$app->session->set('lang', Yii::$app->language);
