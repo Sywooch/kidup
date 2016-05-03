@@ -5,10 +5,10 @@ IndexIgnore */*
 RewriteEngine on
 
 RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"'
-RewriteRule ^(.*)$ https://www.kidup.dk/$1 [L]
+RewriteRule ^(.*)$ https://www.%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
 RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.kidup.dk/$1 [L]
+RewriteRule ^(.*)$ https://www.%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
